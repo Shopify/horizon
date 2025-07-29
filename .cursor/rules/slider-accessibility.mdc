@@ -1,0 +1,206 @@
+---
+description: Slider component accessibility compliance pattern
+globs: *.vue, *.jsx, *.tsx, *.html, *.php, *.js, *.ts, *.liquid
+alwaysApply: false
+---
+
+# Slider Component Accessibility Standards
+
+Ensures slider components follow WCAG compliance and WAI-ARIA Slider Pattern specifications.
+
+<rule>
+name: slider_accessibility_standards
+description: Enforce slider component accessibility standards and WAI-ARIA Slider Pattern compliance
+filters:
+  - type: file_extension
+    pattern: "\\.(vue|jsx|tsx|html|php|js|ts|liquid)$"
+
+actions:
+
+- type: enforce
+  conditions:
+
+  # Slider role requirement
+
+  - pattern: "(?i)<(div|input)[^>]_(?:slider|range)[^>]_>"
+    pattern_negate: "role=\"slider\""
+    message: "Slider controls must have role='slider' attribute."
+
+  # aria-valuenow requirement
+
+  - pattern: "(?i)<[^>]_role=\"slider\"[^>]_>"
+    pattern_negate: "aria-valuenow=\"[0-9.-]+\""
+    message: "Slider elements must have aria-valuenow attribute set to the current value."
+
+  # aria-valuemin requirement
+
+  - pattern: "(?i)<[^>]_role=\"slider\"[^>]_>"
+    pattern_negate: "aria-valuemin=\"[0-9.-]+\""
+    message: "Slider elements must have aria-valuemin attribute set to the minimum allowed value."
+
+  # aria-valuemax requirement
+
+  - pattern: "(?i)<[^>]_role=\"slider\"[^>]_>"
+    pattern_negate: "aria-valuemax=\"[0-9.-]+\""
+    message: "Slider elements must have aria-valuemax attribute set to the maximum allowed value."
+
+  # Missing keyboard event handlers
+
+  - pattern: "(?i)<[^>]_role=\"slider\"[^>]_>"
+    pattern_negate: "(onKeyDown|onkeydown|@keydown|v-on:keydown)"
+    message: "Slider elements should handle keyboard events (Arrow keys, Home, End, Page Up/Down)."
+
+  # Missing label
+
+  - pattern: "(?i)<[^>]_role=\"slider\"[^>]_>"
+    pattern_negate: "(aria-labelledby|aria-label)"
+    message: "Slider elements must have either aria-labelledby or aria-label for accessibility."
+
+- type: suggest
+  message: |
+  **Slider Component Accessibility Best Practices:**
+
+  **Required ARIA Attributes:**
+
+  - **role='slider':** Set on the slider control element
+  - **aria-valuenow:** Current value of the slider
+  - **aria-valuemin:** Minimum allowed value
+  - **aria-valuemax:** Maximum allowed value
+  - **aria-valuetext:** (Optional) User-friendly text representation of the value
+  - **aria-orientation:** (Optional) 'vertical' for vertical sliders, defaults to 'horizontal'
+  - **aria-labelledby:** Reference to visible label, OR
+  - **aria-label:** Descriptive label if no visible label exists
+
+  **Keyboard Interaction Requirements:**
+
+  - **Right/Up Arrow:** Increase value by one step
+  - **Left/Down Arrow:** Decrease value by one step
+  - **Home:** Set to minimum value
+  - **End:** Set to maximum value
+  - **Page Up:** (Optional) Increase by larger step
+  - **Page Down:** (Optional) Decrease by larger step
+
+  **Implementation Example:**
+
+  ```html
+  <div class="slider-container">
+    <label
+      id="slider-label"
+      for="slider"
+      >Select a value:</label
+    >
+    <div class="slider-wrapper">
+      <div
+        role="slider"
+        id="slider"
+        tabindex="0"
+        aria-labelledby="slider-label"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="50"
+        aria-valuetext="50%"
+      >
+        <div class="slider-track">
+          <div
+            class="slider-fill"
+            style="width: 50%"
+          ></div>
+          <div
+            class="slider-thumb"
+            style="left: 50%"
+          ></div>
+        </div>
+      </div>
+      <div
+        class="slider-value"
+        aria-hidden="true"
+      >
+        50%
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const slider = document.querySelector('[role="slider"]');
+    const thumb = slider.querySelector('.slider-thumb');
+    const fill = slider.querySelector('.slider-fill');
+    const valueDisplay = document.querySelector('.slider-value');
+
+    const min = parseInt(slider.getAttribute('aria-valuemin'));
+    const max = parseInt(slider.getAttribute('aria-valuemax'));
+    const step = 1; // Define step value
+
+    function updateSlider(value) {
+      // Ensure value is within bounds
+      value = Math.max(min, Math.min(max, value));
+
+      // Update ARIA attributes
+      slider.setAttribute('aria-valuenow', value);
+      slider.setAttribute('aria-valuetext', `${value}%`);
+
+      // Update visual elements
+      thumb.style.left = `${value}%`;
+      fill.style.width = `${value}%`;
+      valueDisplay.textContent = `${value}%`;
+    }
+
+    // Keyboard interaction
+    slider.addEventListener('keydown', (event) => {
+      let newValue = parseInt(slider.getAttribute('aria-valuenow'));
+
+      switch (event.key) {
+        case 'ArrowRight':
+        case 'ArrowUp':
+          newValue += step;
+          break;
+        case 'ArrowLeft':
+        case 'ArrowDown':
+          newValue -= step;
+          break;
+        case 'Home':
+          newValue = min;
+          break;
+        case 'End':
+          newValue = max;
+          break;
+        case 'PageUp':
+          newValue += step * 10; // Larger step
+          break;
+        case 'PageDown':
+          newValue -= step * 10; // Larger step
+          break;
+        default:
+          return;
+      }
+
+      event.preventDefault();
+      updateSlider(newValue);
+    });
+  </script>
+  ```
+
+  **JavaScript Considerations:**
+
+  - Implement all required keyboard interactions
+  - Update ARIA attributes dynamically
+  - Ensure values stay within min/max bounds
+  - Provide visual feedback for value changes
+  - Handle both mouse and touch interactions
+  - Consider implementing smooth animations
+  - Support both horizontal and vertical orientations
+
+  **Accessibility Notes:**
+
+  - Ensure proper focus management
+  - Provide clear visual focus indicators
+  - Support high contrast mode
+  - Test with screen readers
+  - Consider touch target sizes
+  - Provide visual feedback for interactions
+  - Support both mouse and keyboard users
+  - Consider adding value announcements for screen readers
+
+metadata:
+priority: high
+version: 1.0
+</rule>

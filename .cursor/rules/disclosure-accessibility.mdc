@@ -1,0 +1,150 @@
+---
+description: Disclosure component accessibility compliance pattern
+globs: *.vue, *.jsx, *.tsx, *.html, *.php, *.js, *.ts, *.liquid
+alwaysApply: false
+---
+
+# Disclosure Component Accessibility Standards
+
+Ensures disclosure components follow WCAG compliance and WAI-ARIA Disclosure Pattern specifications.
+
+<rule>
+name: disclosure_accessibility_standards
+description: Enforce disclosure component accessibility standards and WAI-ARIA Disclosure Pattern compliance
+filters:
+  - type: file_extension
+    pattern: "\\.(vue|jsx|tsx|html|php|js|ts|liquid)$"
+
+actions:
+
+- type: enforce
+  conditions:
+
+  # Button role requirement
+
+  - pattern: "(?i)<(button|div|span)[^>]_(?:disclosure|expand|collapse)[^>]_>"
+    pattern_negate: "role=\"button\""
+    message: "Disclosure controls must have role='button' (or use native button element which has implicit role)."
+
+  # aria-expanded requirement
+
+  - pattern: "(?i)<[^>]_role=\"button\"[^>]_(?:disclosure|expand|collapse)[^>]\*>"
+    pattern_negate: "aria-expanded=\"(true|false)\""
+    message: "Disclosure controls must have aria-expanded attribute set to 'true' or 'false'."
+
+  # Missing keyboard event handlers
+
+  - pattern: "(?i)<[^>]_role=\"button\"[^>]_(?:disclosure|expand|collapse)[^>]\*>"
+    pattern_negate: "(onKeyDown|onkeydown|@keydown|v-on:keydown)"
+    message: "Disclosure controls should handle keyboard events (Enter and Space)."
+
+- type: suggest
+  message: |
+  **Disclosure Component Accessibility Best Practices:**
+
+  **Required ARIA Attributes:**
+
+  - **role='button':** Set on the disclosure control element (or use native button)
+  - **aria-expanded:** 'true' if content is visible, 'false' if hidden
+  - **aria-controls:** (Optional) Reference to the ID of the associated content
+
+  **DOM Structure Requirements:**
+
+  - The disclosure content MUST be a sibling to the disclosure control in the DOM
+  - This ensures proper content discovery and navigation for all users
+  - Avoid placing content in different containers or far from the control
+  - Maintain a logical reading order in the DOM
+
+  **Keyboard Interaction Requirements:**
+
+  - **Enter:** Toggle disclosure content visibility
+  - **Space:** Toggle disclosure content visibility
+  - **Tab:** Move focus to next focusable element
+  - **Shift+Tab:** Move focus to previous focusable element
+
+  **Implementation Example:**
+
+  ```html
+  <!-- ✅ Correct: Content is a sibling to the control -->
+  <div class="disclosure">
+    <button
+      type="button"
+      role="button"
+      aria-expanded="false"
+      aria-controls="disclosure-content"
+    >
+      Disclosure Title
+    </button>
+    <div
+      id="disclosure-content"
+      hidden
+    >
+      Disclosure content goes here...
+    </div>
+  </div>
+
+  <!-- ❌ Incorrect: Content is not a sibling to the control -->
+  <div class="disclosure">
+    <button
+      type="button"
+      role="button"
+      aria-expanded="false"
+      aria-controls="disclosure-content"
+    >
+      Disclosure Title
+    </button>
+  </div>
+  <div class="some-other-container">
+    <p>Other content...</p>
+    <div
+      id="disclosure-content"
+      hidden
+    >
+      Disclosure content goes here...
+    </div>
+  </div>
+
+  <script>
+    const button = document.querySelector('[role="button"]');
+    const content = document.getElementById('disclosure-content');
+
+    function toggleDisclosure() {
+      const isExpanded = button.getAttribute('aria-expanded') === 'true';
+      button.setAttribute('aria-expanded', !isExpanded);
+      content.hidden = isExpanded;
+    }
+
+    // Click handler
+    button.addEventListener('click', toggleDisclosure);
+
+    // Keyboard handler
+    button.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        toggleDisclosure();
+      }
+    });
+  </script>
+  ```
+
+  **JavaScript Considerations:**
+
+  - Implement Enter and Space key handlers for toggling
+  - Update aria-expanded state when content toggles
+  - Use hidden attribute or CSS to show/hide content
+  - Consider implementing smooth transitions
+
+  **Accessibility Notes:**
+
+  - Button should be the only element inside the control
+  - Content MUST be a sibling to the control in the DOM
+  - Visual focus indicators should be clear
+  - Test with screen readers to ensure proper announcement
+  - Consider adding aria-label if the button text is not descriptive
+  - Maintain proper reading order for screen reader users
+  - Avoid complex DOM structures that could confuse navigation
+
+metadata:
+priority: high
+version: 1.0
+</rule>

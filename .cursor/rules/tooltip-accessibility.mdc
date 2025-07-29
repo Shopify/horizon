@@ -1,0 +1,151 @@
+---
+description: Tooltip component accessibility compliance pattern
+globs: *.vue, *.jsx, *.tsx, *.html, *.php, *.js, *.ts, *.liquid
+alwaysApply: false
+---
+
+# Tooltip Component Accessibility Standards
+
+Ensures tooltip components follow WCAG compliance and WAI-ARIA Tooltip Pattern specifications.
+
+<rule>
+name: tooltip_accessibility_standards
+description: Enforce tooltip component accessibility standards and WAI-ARIA Tooltip Pattern compliance
+filters:
+  - type: file_extension
+    pattern: "\\.(vue|jsx|tsx|html|php|js|ts|liquid)$"
+
+actions:
+
+- type: enforce
+  conditions:
+
+  # Tooltip trigger role requirement
+
+  - pattern: "(?i)<button[^>]_(?:tooltip|info|help)[^>]_>"
+    pattern_negate: "role=\"button\""
+    message: "Tooltip trigger buttons should have role='button' (or use native button element which has implicit role)."
+
+  # Tooltip trigger missing aria-expanded
+
+  - pattern: "(?i)<button[^>]_(?:tooltip|info|help)[^>]_>"
+    pattern_negate: "aria-expanded=\"(true|false)\""
+    message: "Tooltip trigger buttons must have aria-expanded attribute set to 'true' or 'false'."
+
+  # Tooltip trigger missing aria-controls
+
+  - pattern: "(?i)<button[^>]_(?:tooltip|info|help)[^>]_>"
+    pattern_negate: "aria-controls=\"[^\"]+\""
+    message: "Tooltip trigger buttons must have aria-controls attribute referencing the ID of the associated tooltip."
+
+  # Tooltip container missing role
+
+  - pattern: "(?i)<(div|span)[^>]_(?:tooltip|info|help)[^>]_>"
+    pattern_negate: "role=\"tooltip\""
+    message: "Tooltip containers must have role='tooltip' attribute."
+
+  # Tooltip missing proper identification
+
+  - pattern: "(?i)<[^>]_role=\"tooltip\"[^>]_>"
+    pattern_negate: "id=\"[^\"]+\""
+    message: "Tooltip containers must have unique ID attributes for aria-controls reference."
+
+  # Missing keyboard event handlers
+
+  - pattern: "(?i)<button[^>]_(?:tooltip|info|help)[^>]_>"
+    pattern_negate: "(onKeyDown|onkeydown|@keydown|v-on:keydown)"
+    message: "Tooltip trigger buttons should handle keyboard events (Enter, Space, Escape)."
+
+- type: suggest
+  message: |
+  **Tooltip Component Accessibility Best Practices:**
+
+  **Required ARIA Attributes:**
+
+  - **role='button':** Set on tooltip trigger elements (or use native button)
+  - **role='tooltip':** Set on tooltip container elements
+  - **aria-expanded:** 'true' if tooltip is visible, 'false' if hidden
+  - **aria-controls:** Reference to the ID of the associated tooltip content
+
+  **Interaction Patterns:**
+
+  **Mouse Hover Interaction:**
+
+  - Show tooltip on activator mouse hover
+  - Hide tooltip on activator mouse leave
+  - Keep tooltip visible when hovering over tooltip container
+  - No click required for hover interaction
+
+  **Mouse Click Interaction:**
+
+  - Show tooltip on activator mouse hover
+  - Hide tooltip on activator mouse click
+  - Show tooltip again on activator mouse click
+  - Toggle behavior for click interaction
+
+  **Keyboard Interaction:**
+
+  - Show tooltip on Enter or Space keypress
+  - Hide tooltip on Escape keypress
+  - Focus management should be handled appropriately
+
+  **Mobile/Touch Interaction:**
+
+  - Show tooltip on activator click/touch
+  - Hide tooltip on activator or document click/touch
+  - No hover events on touch devices
+
+  **DOM Structure Requirements:**
+
+  - Tooltip content must be a sibling to the trigger element
+  - Tooltip should be positioned after the trigger in DOM order
+  - Use CSS positioning for visual placement
+  - Ensure tooltip is visible in the viewport
+
+  **Implementation Patterns:**
+
+  **Basic Tooltip Structure:**
+
+  ```html
+  <div class="tooltip-wrapper">
+    <button
+      class="tooltip-trigger"
+      role="button"
+      aria-expanded="false"
+      aria-controls="tooltip-1"
+    >
+      Trigger Text
+    </button>
+    <div
+      id="tooltip-1"
+      role="tooltip"
+    >
+      Tooltip content
+    </div>
+  </div>
+  ```
+
+  **JavaScript Considerations:**
+
+  - Implement proper event listeners for each interaction type
+  - Handle touch device detection
+  - Manage focus and blur events
+  - Ensure proper event cleanup
+  - Handle viewport positioning
+  - Implement proper event delegation for document clicks
+  - Track click state to prevent hover interference
+  - Handle state transitions between interaction types
+  - Maintain tooltip visibility when hovering over tooltip content
+
+  **Accessibility Notes:**
+
+  - Tooltips should not contain interactive elements
+  - Consider using native title attribute for simple tooltips
+  - Ensure tooltip content is accessible to screen readers
+  - Test with screen readers to ensure proper announcement
+  - Consider using aria-live regions for dynamic content
+
+metadata:
+priority: high
+version: 1.0
+</rule>

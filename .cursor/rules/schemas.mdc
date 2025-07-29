@@ -1,0 +1,137 @@
+---
+description:
+globs: blocks/*.liquid,sections/*.liquid,schemas/*
+alwaysApply: false
+---
+# Schema Standards
+
+Every section and block must include a `{% schema %}` tag with valid JSON structure.
+
+We write our schemas in the schemas folder and then run `npm run build:schemas` to push them to the `.liquid` files.  This allows us to take advantage of Typescript for validation and reuse parts of schemas to avoid re-writing them many times.
+
+## Schema Structure
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["name", "settings"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "maxLength": 50
+    },
+    "tag": {
+      "type": "string",
+      "enum": ["div", "section", "aside", "header", "footer", "main"]
+    },
+    "class": {
+      "type": "string"
+    },
+    "settings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "id", "label"],
+        "properties": {
+          "type": {
+            "enum": ["text", "textarea", "number", "range", "color", "checkbox", "select", "radio", "collection", "product", "blog", "page", "header", "paragraph", "image_picker", "font_picker", "video", "richtext"]
+          },
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "label": {
+            "type": "string",
+            "maxLength": 30
+          },
+          "visible_if": {
+            "type": "string",
+            "pattern": "\\{\\{\\s+[a-zA-Z_][a-zA-Z0-9_]*\\s+\\}\\}"
+          }
+        }
+      }
+    },
+    "blocks": {
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "type": "object",
+        "required": ["type", "name", "settings"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "pattern": "^(@theme|@app|[a-z][a-z0-9_]*)$"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 30
+          },
+          "settings": {
+            "type": "array"
+          }
+        }
+      }
+    },
+    "presets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "settings": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+## Setting Types and Usage
+
+### Input settings
+
+These are the bulk of the settings with which the merchant will interact.
+
+See [input settings documentation](mdc:https:/shopify.dev/docs/storefronts/themes/architecture/settings/input-settings)
+
+### Sidebar settings
+
+These are informative settings to guide the merchant.
+
+See [sidebar settings documentation](mdc:https:/shopify.dev/docs/storefronts/themes/architecture/settings/sidebar-settings)
+
+
+## Best practices
+
+### Label Guidelines
+
+- Keep labels concise (under 30 characters)
+- Setting type provides context - "Columns" not "Number of columns"
+- No verb-based labels for checkboxes
+- Use title case: "Show Vendor" not "show vendor"
+
+
+### Setting Organization Rules
+
+**1. Resource Pickers First**
+- Collection, product, blog, page pickers come first
+- These are required for section functionality
+
+**2. Visual Impact Order**
+- Layout settings (columns, spacing)
+- Typography settings (fonts, sizes)
+- Color settings (background, text)
+- Padding/margin last
+
+**3. Group settings using Headers**
+```json
+{
+  "type": "header",
+  "content": "Layout"
+}
+```

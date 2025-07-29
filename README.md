@@ -8,14 +8,12 @@
 [Theme Store submission](#theme-store-submission) |
 [License](#license)
 
-Horizon is the first of a new generation of first party Shopify themes. It incorporates the latest Liquid Storefronts features, including [theme blocks](https://shopify.dev/docs/storefronts/themes/architecture/blocks/theme-blocks/quick-start?framework=liquid).
+Horizon is the flagship of a new generation of first party Shopify themes. It incorporates the latest Liquid Storefronts features, including [theme blocks](https://shopify.dev/docs/storefronts/themes/architecture/blocks/theme-blocks/quick-start?framework=liquid).
 
 - **Web-native in its purest form:** Themes run on the [evergreen web](https://www.w3.org/2001/tag/doc/evergreen-web/). We leverage the latest web browsers to their fullest, while maintaining support for the older ones through progressive enhancement—not polyfills.
 - **Lean, fast, and reliable:** Functionality and design defaults to “no” until it meets this requirement. Code ships on quality. Themes must be built with purpose. They shouldn’t support each and every feature in Shopify.
 - **Server-rendered:** HTML must be rendered by Shopify servers using Liquid. Business logic and platform primitives such as translations and money formatting don’t belong on the client. Async and on-demand rendering of parts of the page is OK, but we do it sparingly as a progressive enhancement.
 - **Functional, not pixel-perfect:** The Web doesn’t require each page to be rendered pixel-perfect by each browser engine. Using semantic markup, progressive enhancement, and clever design, we ensure that themes remain functional regardless of the browser.
-
-You can find a more detailed version of our theme code principles in the [contribution guide](https://github.com/Shopify/horizon/blob/main/.github/CONTRIBUTING.md#theme-code-principles).
 
 ## Getting started
 
@@ -88,10 +86,6 @@ Horizon runs [Theme Check](#Theme-Check) on every commit via [Shopify/theme-chec
 ## Contributing
 
 We are not accepting contributions to Horizon at this time.
-
-## Code of conduct
-
-All developers who wish to contribute through code, please first read our [Code of Conduct](https://github.com/Shopify/horizon/blob/main/.github/CODE_OF_CONDUCT.md).
 
 ## Theme Store submission
 

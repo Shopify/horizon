@@ -1,0 +1,79 @@
+---
+description:
+globs: *.liquid
+alwaysApply: false
+---
+# Liquid Syntax Standards
+
+## Valid Tags with Parameters
+
+**Control Flow:**
+- `if condition` / `endif` - Conditional logic
+- `unless condition` / `endunless` - Negative conditional
+- `case variable` / `when value` / `endcase` - Switch statement
+- `for item in array` / `endfor` - Loop with optional `limit:`, `offset:`
+
+**Variable Assignment:**
+- `assign variable = value` - Create variable
+- `capture variable` / `endcapture` - Capture output
+- `increment variable` - Add 1 to counter
+- `decrement variable` - Subtract 1 from counter
+
+**Template Inclusion:**
+- `render 'snippet-name'` - Include snippet
+- `render 'snippet-name', param: value` - With parameters
+- `section 'section-name'` - Include section
+
+**Forms:**
+- `form 'cart'` / `endform` - Cart form
+- `form 'product'` / `endform` - Product form
+- `form 'customer_login'` / `endform` - Login form
+
+**Other:**
+- `paginate collection.products by 12` / `endpaginate` - Paginate results
+- `liquid` / `endliquid` - Multiline Liquid block
+- `comment` / `endcomment` - Block comments
+- `raw` / `endraw` - Output without processing
+
+## Valid Filters
+
+**Array Filters:**
+- `compact` - Remove nil values: `array | compact`
+- `concat` - Join arrays: `array | concat: array`
+- `find` - Find object: `array | find: property, value`
+- `where` - Filter objects: `array | where: property, value`
+- `map` - Extract property: `array | map: property`
+- `sort` - Sort array: `array | sort`
+- `reverse` - Reverse order: `array | reverse`
+- `first` - First item: `array | first`
+- `last` - Last item: `array | last`
+- `size` - Count items: `array | size`
+
+**String Filters:**
+- `escape` - HTML escape: `string | escape`
+- `truncate` - Limit length: `string | truncate: 150`
+- `handleize` - URL handle: `string | handleize`
+- `replace` - Replace text: `string | replace: 'old', 'new'`
+- `split` - Split string: `string | split: 'delimiter'`
+- `upcase` - Uppercase: `string | upcase`
+- `downcase` - Lowercase: `string | downcase`
+- `capitalize` - Capitalize: `string | capitalize`
+
+**Money Filters:**
+- `money` - Format price: `price | money`
+- `money_with_currency` - With symbol: `price | money_with_currency`
+- `money_without_currency` - No symbol: `price | money_without_currency`
+
+**Media Filters:**
+- `image_url` - Responsive image: `image | image_url: width: 800`
+- `image_tag` - Complete img tag: `image | image_tag`
+- `asset_url` - Theme asset: `'style.css' | asset_url`
+
+## Syntax Rules
+
+- Use `{% liquid %}` for multiline code blocks
+- Use `{% # comment %}` for inline comments
+- Never invent new filters, tags, or objects
+- Follow proper tag closing order (last opened, first closed)
+- Use object dot notation: `product.title` not `product['title']`
+- Respect object scope and availability

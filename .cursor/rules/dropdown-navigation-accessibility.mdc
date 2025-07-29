@@ -1,0 +1,442 @@
+# Dropdown Navigation Component Accessibility Standards
+
+Ensures dropdown navigation components follow WCAG compliance and proper navigation semantics, including mobile modal patterns and disclosure controls.
+
+<rule>
+name: dropdown_navigation_accessibility_standards
+description: Enforce dropdown navigation component accessibility standards and proper navigation semantics
+filters:
+  - type: file_extension
+    pattern: "\\.(vue|jsx|tsx|html|php|js|ts|liquid)$"
+
+actions:
+
+- type: enforce
+  conditions:
+
+  # Navigation landmark requirement
+
+  - pattern: "(?i)<nav[^>]_(?:navigation|menu|dropdown)[^>]_>"
+    pattern_negate: "(aria-label|aria-labelledby)=\"[^\"]+\""
+    message: "Navigation elements must have aria-label or aria-labelledby attribute for accessibility."
+
+  # Navigation list structure requirement
+
+  - pattern: "(?i)<nav[^>]_(?:navigation|menu|dropdown)[^>]_>"
+    pattern_negate: "<ul[^>]\*>"
+    message: "Navigation should use unordered list (ul) for proper semantic structure."
+
+  # Dropdown button role requirement
+
+  - pattern: "(?i)<(button|div|span)[^>]_(?:dropdown|expand|collapse)[^>]_>"
+    pattern_negate: "role=\"button\""
+    message: "Dropdown controls must have role='button' (or use native button element which has implicit role)."
+
+  # Dropdown button aria-expanded requirement
+
+  - pattern: "(?i)<[^>]_role=\"button\"[^>]_(?:dropdown|expand|collapse)[^>]\*>"
+    pattern_negate: "aria-expanded=\"(true|false)\""
+    message: "Dropdown controls must have aria-expanded attribute set to 'true' or 'false'."
+
+  # Dropdown content missing proper identification
+
+  - pattern: "(?i)<(div|section)[^>]*(?:dropdown.*content|content._dropdown)[^>]_>"
+    pattern_negate: "id=\"[^\"]+\""
+    message: "Dropdown content must have unique ID attributes for aria-controls reference."
+
+  # Missing aria-current on navigation items
+
+  - pattern: "(?i)<a[^>]_(?:nav|navigation)[^>]_>"
+    pattern_negate: "aria-current=\"(page|false)\""
+    message: "Navigation links should have aria-current attribute set to 'page' for active items or 'false' for inactive."
+
+  # Mobile modal missing dialog role
+
+  - pattern: "(?i)<(div|section)[^>]*(?:mobile.*nav|nav.*mobile|modal.*nav)[^>]\*>"
+    pattern_negate: "role=\"dialog\""
+    message: "Mobile navigation modal containers must have role='dialog' attribute."
+
+  # Mobile modal missing aria-modal
+
+  - pattern: "(?i)<[^>]_role=\"dialog\"[^>]_(?:mobile.*nav|nav.*mobile)[^>]\*>"
+    pattern_negate: "aria-modal=\"true\""
+    message: "Mobile navigation dialog elements must have aria-modal='true' attribute."
+
+  # Mobile modal missing proper labeling
+
+  - pattern: "(?i)<[^>]_role=\"dialog\"[^>]_(?:mobile.*nav|nav.*mobile)[^>]\*>"
+    pattern_negate: "(aria-labelledby|aria-label)"
+    message: "Mobile navigation dialog elements must have either aria-labelledby or aria-label for accessibility."
+
+  # Mobile launcher missing aria-haspopup
+
+  - pattern: "(?i)<button[^>]*(?:mobile.*nav|nav._mobile|hamburger|menu)[^>]_>"
+    pattern_negate: "aria-haspopup=\"dialog\""
+    message: "Mobile navigation launcher buttons must include aria-haspopup='dialog' to inform users a dialog will open."
+
+  # Mobile close button missing aria-label
+
+  - pattern: "(?i)<button[^>]_(?:close|dismiss|×|&times;)[^>]_(?:mobile.*nav|nav.*mobile)[^>]_>"
+    pattern_negate: "aria-label=\"[^\"]_[Cc]lose[^\"]\*\""
+    message: "Mobile navigation close buttons should have aria-label='Close navigation' or similar descriptive text."
+
+  # Missing keyboard event handlers for dropdown
+
+  - pattern: "(?i)<[^>]_role=\"button\"[^>]_(?:dropdown|expand|collapse)[^>]\*>"
+    pattern_negate: "(onKeyDown|onkeydown|@keydown|v-on:keydown)"
+    message: "Dropdown controls should handle keyboard events (Enter, Space, and Escape)."
+
+  # Missing Escape key support for dropdown content
+
+  - pattern: "(?i)<div[^>]*(?:dropdown.*content|content._dropdown)[^>]_>"
+    pattern_negate: "(onKeyDown|onkeydown|@keydown|v-on:keydown)"
+    message: "Dropdown content areas should handle Escape key to close dropdown and return focus to launcher."
+
+  # Incorrect menu role usage
+
+  - pattern: "(?i)role=\"(menu|menuitem|menubar|menuitemcheckbox|menuitemradio)\""
+    message: "Navigation components should NOT use menu roles. Use proper navigation semantics with ul/li/a elements."
+
+  # Incorrect aria-haspopup usage
+
+  - pattern: "(?i)aria-haspopup=\"(true|menu|listbox)\""
+    pattern_negate: "aria-haspopup=\"dialog\""
+    message: "Navigation components should NOT use aria-haspopup except for mobile modal launchers with aria-haspopup='dialog'."
+
+- type: suggest
+  message: |
+  **Dropdown Navigation Component Accessibility Best Practices:**
+
+  **Navigation Semantics:**
+
+  - **role='navigation':** Implicit on nav element, provides landmark
+  - **aria-label/aria-labelledby:** On nav element to describe the navigation
+  - **aria-current:** Set on active navigation items ('page' for current page, 'false' for inactive)
+  - **ul + li + a:** Use semantic list structure for navigation items
+  - **NO menu roles:** Do not use role="menu", role="menuitem", etc.
+
+  **Dropdown Disclosure Pattern:**
+
+  - **role='button':** Set on dropdown launcher elements (or use native button)
+  - **aria-expanded:** 'true' if dropdown content is visible, 'false' if hidden
+  - **aria-controls:** Reference to the ID of the associated dropdown content
+  - **aria-current:** Set on active dropdown items
+
+  **Mobile Modal Pattern:**
+
+  - **role='dialog':** Set on mobile navigation modal container
+  - **aria-modal='true':** Indicates the dialog is modal
+  - **aria-labelledby/aria-label:** On mobile dialog for accessibility
+  - **aria-haspopup='dialog':** Set on mobile launcher button
+  - **aria-label:** Set on mobile close button
+
+  **Keyboard Interaction Requirements:**
+
+  - **Tab:** Move through natural tab order on page
+  - **Enter:** Activate links
+  - **Space/Enter:** Open/close dropdown when launcher is focused
+  - **Escape:** Close dropdown component (launcher focused or not)
+  - **NO auto-open:** Do not open dropdown on keyboard focus
+  - **Mobile:** Focus management for modal open/close
+
+  **Mouse Interaction Requirements:**
+
+  - **Hover:** Show underline on links
+  - **Hover:** Open dropdown, close on mouse-away
+  - **Click:** Activate links (include mouse-specific click handlers)
+  - **Mobile:** Click launcher opens modal, click close button closes modal
+  - **Double-click:** Mobile dropdown launchers navigate to associated page
+
+  **Mobile Interaction Requirements:**
+
+  - **Three-line button:** Opens modal, focus moves to first focusable item
+  - **X close button:** Closes modal, focus returns to launcher
+  - **Dropdown launcher:** Reveals content section, single-click toggles, double-click navigates
+  - **Focus management:** Proper focus trapping and restoration
+
+  **Implementation Patterns:**
+
+  **Desktop Navigation Structure:**
+
+  ```html
+  <header>
+    <nav aria-label="Main navigation">
+      <ul>
+        <li>
+          <a
+            href="/home"
+            aria-current="page"
+            >Home</a
+          >
+        </li>
+        <li>
+          <button
+            type="button"
+            role="button"
+            aria-expanded="false"
+            aria-controls="products-dropdown"
+          >
+            Products
+            <span class="chevron">▼</span>
+          </button>
+          <div
+            id="products-dropdown"
+            hidden
+          >
+            <ul>
+              <li><a href="/products/category1">Category 1</a></li>
+              <li><a href="/products/category2">Category 2</a></li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <a
+            href="/about"
+            aria-current="false"
+            >About</a
+          >
+        </li>
+      </ul>
+    </nav>
+  </header>
+  ```
+
+  **Mobile Navigation Structure:**
+
+  ```html
+  <header>
+    <button
+      type="button"
+      aria-haspopup="dialog"
+      aria-label="Open navigation menu"
+      onclick="openMobileNav()"
+    >
+      <span class="hamburger">☰</span>
+    </button>
+  </header>
+
+  <div
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="mobile-nav-title"
+    class="mobile-nav-modal"
+    hidden
+  >
+    <button
+      type="button"
+      aria-label="Close navigation menu"
+      onclick="closeMobileNav()"
+    >
+      ×
+    </button>
+    <h2 id="mobile-nav-title">Navigation</h2>
+    <nav aria-label="Mobile navigation">
+      <ul>
+        <li>
+          <a
+            href="/home"
+            aria-current="page"
+            >Home</a
+          >
+        </li>
+        <li>
+          <button
+            type="button"
+            role="button"
+            aria-expanded="false"
+            aria-controls="mobile-products-dropdown"
+            data-href="/products"
+          >
+            Products
+            <span class="chevron">▼</span>
+          </button>
+          <div
+            id="mobile-products-dropdown"
+            hidden
+          >
+            <ul>
+              <li><a href="/products/category1">Category 1</a></li>
+              <li><a href="/products/category2">Category 2</a></li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <a
+            href="/about"
+            aria-current="false"
+            >About</a
+          >
+        </li>
+      </ul>
+    </nav>
+  </div>
+  ```
+
+  **JavaScript for Dropdown Toggle:**
+
+  ```javascript
+  function toggleDropdown(button) {
+    const isExpanded = button.getAttribute('aria-expanded') === 'true';
+    const content = document.getElementById(button.getAttribute('aria-controls'));
+
+    button.setAttribute('aria-expanded', !isExpanded);
+    content.hidden = isExpanded;
+
+    // Update chevron icon
+    const chevron = button.querySelector('.chevron');
+    if (chevron) {
+      chevron.textContent = isExpanded ? '▼' : '▲';
+    }
+
+    if (!isExpanded) {
+      // Add escape key listener to content
+      content.addEventListener('keydown', handleDropdownEscapeKey);
+    } else {
+      // Remove escape key listener
+      content.removeEventListener('keydown', handleDropdownEscapeKey);
+    }
+  }
+
+  function handleDropdownEscapeKey(event) {
+    if (event.key === 'Escape') {
+      const content = event.target.closest('[hidden]');
+      if (content) {
+        const button = document.querySelector(`[aria-controls="${content.id}"]`);
+        if (button) {
+          button.setAttribute('aria-expanded', 'false');
+          content.hidden = true;
+          button.focus(); // Return focus to launcher
+          content.removeEventListener('keydown', handleDropdownEscapeKey);
+        }
+      }
+    }
+  }
+  ```
+
+  **JavaScript for Mobile Modal:**
+
+  ```javascript
+  function openMobileNav() {
+    const modal = document.querySelector('.mobile-nav-modal');
+    const closeButton = modal.querySelector('button[aria-label*="Close"]');
+
+    modal.hidden = false;
+    closeButton.focus(); // Focus first focusable element
+  }
+
+  function closeMobileNav() {
+    const modal = document.querySelector('.mobile-nav-modal');
+    const launcher = document.querySelector('[aria-haspopup="dialog"]');
+
+    modal.hidden = true;
+    launcher.focus(); // Return focus to launcher
+  }
+
+  // Handle escape key for mobile modal
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+      const modal = document.querySelector('.mobile-nav-modal');
+      if (!modal.hidden) {
+        closeMobileNav();
+      }
+    }
+  });
+
+  // Mobile dropdown click and double-click handlers
+  document.addEventListener('DOMContentLoaded', function () {
+    const mobileDropdownButtons = document.querySelectorAll('.mobile-dropdown-button');
+
+    mobileDropdownButtons.forEach((button) => {
+      // Single click toggles dropdown
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        toggleDropdown(button);
+      });
+
+      // Double click navigates to page
+      button.addEventListener('dblclick', (event) => {
+        event.preventDefault();
+        const href = button.getAttribute('data-href') || '/default';
+        window.location.href = href;
+      });
+    });
+  });
+  ```
+
+  **CSS for Hover Interactions:**
+
+  ```css
+  /* Link hover underline */
+  nav a:hover {
+    text-decoration: underline;
+  }
+
+  /* Dropdown hover behavior */
+  .dropdown-launcher:hover + .dropdown-content,
+  .dropdown-content:hover {
+    display: block;
+  }
+
+  .dropdown-content {
+    display: none;
+  }
+
+  /* Chevron rotation */
+  .chevron {
+    transition: transform 0.2s ease;
+  }
+
+  button[aria-expanded='true'] .chevron {
+    transform: rotate(180deg);
+  }
+  ```
+
+  **JavaScript Considerations:**
+
+  - Implement proper event listeners for all keyboard interactions
+  - Handle mouse hover events for dropdown display
+  - Manage focus for mobile modal open/close
+  - Update aria-current states based on current page
+  - Handle chevron icon rotation
+  - Implement proper escape key handling
+  - Ensure no auto-opening on keyboard focus
+  - Handle mouse-specific click events for navigation
+  - Implement double-click navigation for mobile dropdown launchers
+
+  **Accessibility Notes:**
+
+  - Navigation is NOT a menu - use proper navigation semantics
+  - Avoid menu roles and aria-haspopup (except mobile modal)
+  - Ensure proper focus management for mobile modal
+  - Test with screen readers for proper announcement
+  - Maintain clear visual indicators for active states
+  - Consider implementing skip links for large navigation
+  - Ensure sufficient color contrast for all navigation elements
+  - Test keyboard navigation flow thoroughly
+
+  **Testing Requirements:**
+
+  - Test keyboard navigation through all navigation items
+  - Verify dropdown opens/closes with keyboard and mouse
+  - Test mobile modal focus management
+  - Verify screen reader announcement of navigation structure
+  - Test aria-current updates correctly
+  - Ensure escape key closes dropdowns and modals
+  - Test hover interactions work as expected
+  - Verify no auto-opening on keyboard focus
+
+metadata:
+priority: high
+version: 1.0
+</rule>
+description:
+globs:
+alwaysApply: false
+
+---
+
+description:
+globs:
+alwaysApply: false
+
+---

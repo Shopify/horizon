@@ -1,0 +1,427 @@
+---
+description: Carousel component accessibility compliance pattern
+globs: *.vue, *.jsx, *.tsx, *.html, *.php, *.js, *.ts, *.liquid
+alwaysApply: false
+---
+
+# Carousel Accessibility Standards
+
+Ensures carousel components follow WCAG compliance and WAI-ARIA Carousel Pattern specifications.
+
+<rule>
+name: carousel_accessibility_standards
+description: Enforce carousel component accessibility standards and WAI-ARIA Carousel Pattern compliance
+filters:
+  - type: file_extension
+    pattern: "\\.(vue|jsx|tsx|html|php|js|ts|liquid)$"
+
+actions:
+
+- type: enforce
+  conditions:
+
+  # Carousel container role requirement
+
+  - pattern: "(?i)<(div|section)[^>]_(?:carousel|slider|slideshow)[^>]_>"
+    pattern_negate: "(role=\"(region|group)\"|aria-roledescription=\"carousel\")"
+    message: "Carousel container must have role='region' or role='group' and aria-roledescription='carousel'."
+
+  # Carousel label requirement
+
+  - pattern: "(?i)<[^>]*role=\"(region|group)\"[^>]*aria-roledescription=\"carousel\"[^>]\*>"
+    pattern_negate: "(aria-labelledby|aria-label)=\"[^\"]+\""
+    message: "Carousel must have either aria-labelledby or aria-label for accessibility."
+
+  # Slide role requirement
+
+  - pattern: "(?i)<(div|section)[^>]_(?:slide|carousel-item)[^>]_>"
+    pattern_negate: "(role=\"group\"|aria-roledescription=\"slide\")"
+    message: "Slide containers must have role='group' and aria-roledescription='slide'."
+
+  # Slide label requirement
+
+  - pattern: "(?i)<[^>]*role=\"group\"[^>]*aria-roledescription=\"slide\"[^>]\*>"
+    pattern_negate: "(aria-labelledby|aria-label)=\"[^\"]+\""
+    message: "Slides must have either aria-labelledby or aria-label for accessibility."
+
+  # Rotation control requirement
+
+  - pattern: "(?i)<button[^>]_(?:rotation|auto-play|autoplay)[^>]_>"
+    pattern_negate: "aria-label=\"[^\"]*(?:Start|Stop)[^\"]*slide[^\"]_rotation[^\"]_\""
+    message: "Rotation control must have aria-label indicating its current state (Start/Stop slide rotation)."
+
+  # Navigation controls requirement
+
+  - pattern: "(?i)<button[^>]_(?:next|previous|prev)[^>]_>"
+    pattern_negate: "aria-label=\"[^\"]*(?:Next|Previous)[^\"]*slide[^\"]\*\""
+    message: "Navigation controls must have aria-label indicating their purpose (Next/Previous slide)."
+
+  # Missing keyboard event handlers
+
+  - pattern: "(?i)<button[^>]_(?:rotation|next|previous|prev)[^>]_>"
+    pattern_negate: "(onKeyDown|onkeydown|@keydown|v-on:keydown)"
+    message: "Carousel controls should handle keyboard events (Enter, Space)."
+
+  # Auto-rotation interval check (WCAG 2.2.2)
+
+  - pattern: "setInterval\\([^,]+,\\s\*(?:[0-4]\\d{3}|[0-9]{1,4})\\)"
+    message: "Auto-rotation interval must be at least 5000ms (5 seconds) to comply with WCAG 2.2.2 Pause, Stop, Hide."
+
+  # Mouse hover event handlers check
+
+  - pattern: "(?i)<(div|section)[^>]_(?:carousel|slider|slideshow)[^>]_>"
+    pattern_negate: "(onMouseEnter|onmouseenter|@mouseenter|v-on:mouseenter|onMouseLeave|onmouseleave|@mouseleave|v-on:mouseleave)"
+    message: "Carousel must handle mouseenter/mouseleave events to pause/resume auto-rotation."
+
+  # aria-live attribute check
+
+  - pattern: "(?i)<[^>]_aria-live=\"[^\"]_\"[^>]\*>"
+    pattern_negate: "aria-live=\"(off|polite)\""
+    message: "Carousel container must have aria-live set to 'off' during rotation and 'polite' when paused."
+
+- type: suggest
+  message: |
+  **Carousel Component Accessibility Best Practices:**
+
+  **Required ARIA Attributes:**
+
+  - **role='region' or role='group':** Set on carousel container
+  - **aria-roledescription='carousel':** Set on carousel container
+  - **aria-labelledby/aria-label:** Set on carousel container
+  - **role='group':** Set on slide containers
+  - **aria-roledescription='slide':** Set on slide containers
+  - **aria-labelledby/aria-label:** Set on slide containers
+  - **aria-label:** Set on rotation control (changes with state)
+  - **aria-label:** Set on navigation controls
+  - **aria-live:** Set to 'off' during rotation, 'polite' when paused
+
+  **Optional ARIA Attributes:**
+
+  - **aria-atomic='false':** On slide wrapper
+  - **aria-hidden:** Set on inactive slides
+
+  **Keyboard Interaction Requirements:**
+
+  - **Tab/Shift+Tab:** Navigate through interactive elements
+  - **Enter/Space:** Activate controls
+  - **Auto-rotation:** Stops on focus or mouse hover, resumes on blur or mouse away
+  - **Rotation Control:** First in tab sequence
+
+  **Auto-rotation Requirements (WCAG 2.2.2):**
+
+  - Minimum interval between slides: 5 seconds
+  - Must provide pause/stop control
+  - Must stop on user interaction
+  - Must stop when any element receives focus
+  - Must stop when mouse hovers over carousel
+  - Must resume when mouse leaves carousel (unless manually paused)
+  - Must not restart automatically after manual pause
+
+  **Mouse Interaction Requirements:**
+
+  - Pause auto-rotation on mouseenter
+  - Resume auto-rotation on mouseleave (unless manually paused)
+  - Maintain pause state when manually stopped
+  - Clear visual indication of pause state
+
+  **Play/Pause Button Requirements:**
+
+  - Button state should reflect user's explicit choice
+  - Button state should not change with temporary auto-rotation pauses
+  - Button should maintain its state across mouse/focus events
+  - Button should only change state when explicitly activated
+  - Button should provide clear visual feedback of current state
+  - Button state should be independent of focus/hover pause behavior
+
+  **State Management Requirements:**
+
+  - Track rotation state (isRotating)
+  - Track manual pause state (wasManuallyPaused)
+  - Track focus/hover pause state (isPausedByFocus)
+  - Update aria-live attribute based on rotation state
+  - Maintain button state across temporary pauses
+  - Handle state transitions appropriately
+
+  **Structure Requirements:**
+
+  - Use native button elements for controls
+  - Handle auto-rotation state changes
+  - Provide clear visual indicators
+  - Ensure proper slide labeling
+
+  **Implementation Patterns:**
+
+  **Basic Carousel:**
+
+  ```html
+  <div
+    role="region"
+    aria-roledescription="carousel"
+    aria-label="Featured Products"
+    onmouseenter="pauseRotation()"
+    onmouseleave="resumeRotation()"
+  >
+    <div
+      class="carousel-container"
+      aria-live="off"
+    >
+      <button aria-label="Stop slide rotation">Pause</button>
+      <div
+        role="group"
+        aria-roledescription="slide"
+        aria-label="Product 1 of 3"
+      >
+        <img
+          src="product1.jpg"
+          alt="Product 1"
+        />
+        <h3>Product 1</h3>
+      </div>
+      <button aria-label="Previous slide">Previous</button>
+      <button aria-label="Next slide">Next</button>
+    </div>
+  </div>
+  ```
+
+  **Tab Controls Implementation:**
+
+  ```html
+  <div
+    role="region"
+    aria-roledescription="carousel"
+    aria-label="Featured Products"
+    onmouseenter="pauseRotation()"
+    onmouseleave="resumeRotation()"
+  >
+    <div
+      class="carousel-container"
+      aria-live="off"
+    >
+      <!-- Play/Pause Button -->
+      <button
+        aria-label="Stop slide rotation"
+        onclick="toggleRotation()"
+        onkeydown="handleKeyPress(event)"
+      >
+        Pause
+      </button>
+
+      <!-- Slides -->
+      <div
+        role="group"
+        aria-roledescription="slide"
+        aria-label="Product 1 of 3"
+      >
+        <img
+          src="product1.jpg"
+          alt="Product 1"
+        />
+        <h3>Product 1</h3>
+      </div>
+
+      <!-- Navigation Controls -->
+      <button
+        aria-label="Previous slide"
+        onclick="previousSlide()"
+        onkeydown="handleKeyPress(event)"
+      >
+        Previous
+      </button>
+      <button
+        aria-label="Next slide"
+        onclick="nextSlide()"
+        onkeydown="handleKeyPress(event)"
+      >
+        Next
+      </button>
+
+      <!-- Tab Controls -->
+      <div
+        role="tablist"
+        aria-label="Slide navigation"
+        class="carousel-tabs"
+      >
+        <button
+          role="tab"
+          aria-selected="true"
+          aria-controls="slide-1"
+          id="tab-1"
+          onclick="goToSlide(0)"
+          onkeydown="handleTabKeyPress(event)"
+        >
+          Slide 1
+        </button>
+        <button
+          role="tab"
+          aria-selected="false"
+          aria-controls="slide-2"
+          id="tab-2"
+          onclick="goToSlide(1)"
+          onkeydown="handleTabKeyPress(event)"
+        >
+          Slide 2
+        </button>
+        <button
+          role="tab"
+          aria-selected="false"
+          aria-controls="slide-3"
+          id="tab-3"
+          onclick="goToSlide(2)"
+          onkeydown="handleTabKeyPress(event)"
+        >
+          Slide 3
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    /* Tab Controls Styles with WCAG 2.2 compliant contrast */
+    .carousel-tabs {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .carousel-tabs [role='tab'] {
+      padding: 0.5rem 1rem;
+      border: 2px solid #495057; /* 8.3:1 contrast with white */
+      background: #ffffff;
+      color: #212529; /* 16.6:1 contrast with white */
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    /* Selected tab state */
+    .carousel-tabs [role='tab'][aria-selected='true'] {
+      background: #0056b3; /* 7.7:1 contrast with white */
+      color: #ffffff;
+      border-color: #004085;
+    }
+
+    /* Unselected tab state - still maintaining 4.5:1 contrast */
+    .carousel-tabs [role='tab'][aria-selected='false'] {
+      background: #ffffff;
+      color: #495057; /* 8.3:1 contrast with white */
+      border-color: #6c757d; /* 5.4:1 contrast with white */
+    }
+
+    /* Focus state */
+    .carousel-tabs [role='tab']:focus {
+      outline: 3px solid #0056b3; /* 7.7:1 contrast with white */
+      outline-offset: 2px;
+    }
+
+    /* Hover state */
+    .carousel-tabs [role='tab']:hover {
+      background: #f8f9fa;
+      border-color: #0056b3;
+    }
+
+    /* Hover state for selected tab */
+    .carousel-tabs [role='tab'][aria-selected='true']:hover {
+      background: #004085;
+    }
+
+    /* High contrast mode support */
+    @media (prefers-contrast: more) {
+      .carousel-tabs [role='tab'] {
+        border: 3px solid #000000;
+        color: #000000;
+      }
+
+      .carousel-tabs [role='tab'][aria-selected='true'] {
+        background: #000000;
+        color: #ffffff;
+      }
+
+      .carousel-tabs [role='tab']:focus {
+        outline: 3px solid #000000;
+      }
+    }
+  </style>
+
+  <script>
+    // Tab Controls JavaScript
+    function handleTabKeyPress(event) {
+      const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
+      const currentTab = event.target;
+      const currentIndex = tabs.indexOf(currentTab);
+
+      switch (event.key) {
+        case 'ArrowLeft':
+          event.preventDefault();
+          const prevTab = tabs[currentIndex - 1] || tabs[tabs.length - 1];
+          prevTab.focus();
+          break;
+        case 'ArrowRight':
+          event.preventDefault();
+          const nextTab = tabs[currentIndex + 1] || tabs[0];
+          nextTab.focus();
+          break;
+        case 'Home':
+          event.preventDefault();
+          tabs[0].focus();
+          break;
+        case 'End':
+          event.preventDefault();
+          tabs[tabs.length - 1].focus();
+          break;
+      }
+    }
+
+    function goToSlide(index) {
+      // Update tab states
+      const tabs = document.querySelectorAll('[role="tab"]');
+      tabs.forEach((tab, i) => {
+        tab.setAttribute('aria-selected', i === index);
+      });
+
+      // Update slide visibility
+      const slides = document.querySelectorAll('[role="group"]');
+      slides.forEach((slide, i) => {
+        slide.setAttribute('aria-hidden', i !== index);
+      });
+
+      // Pause rotation when manually navigating
+      pauseRotation();
+    }
+  </script>
+  ```
+
+  **JavaScript Considerations:**
+
+  - Implement auto-rotation pause on focus or mouse hover
+  - Handle keyboard navigation
+  - Update ARIA labels for rotation state
+  - Implement proper tab sequence
+  - Handle slide picker controls
+  - Consider touch/swipe interactions
+  - Ensure minimum 5-second interval between slides
+  - Stop rotation on user interaction
+  - Do not restart rotation automatically after manual pause
+  - Handle mouse enter/leave events for pause/resume
+  - Maintain manual pause state across mouse events
+  - Separate auto-rotation pause behavior from Play/Pause button state
+  - Update button state only on explicit user interaction
+  - Update aria-live attribute based on rotation state
+  - Track and manage multiple pause states (manual vs. focus/hover)
+
+  **Accessibility Notes:**
+
+  - Auto-rotation should be paused by default
+  - Provide clear visual focus indicators
+  - Ensure sufficient color contrast
+  - Test with screen readers
+  - Consider motion sensitivity
+  - Provide alternative navigation methods
+  - Comply with WCAG 2.2.2 Pause, Stop, Hide requirement
+  - Ensure mouse hover behavior is consistent and predictable
+  - Maintain clear distinction between temporary and permanent pause states
+  - Ensure screen reader announcements are appropriate for current state
+
+metadata:
+priority: high
+version: 1.0
+</rule>
