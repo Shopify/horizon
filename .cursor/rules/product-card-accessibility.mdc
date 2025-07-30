@@ -1,0 +1,345 @@
+---
+description: Product card accessibility compliance pattern
+globs: *.vue, *.jsx, *.tsx, *.html, *.php, *.js, *.ts, *.liquid
+alwaysApply: false
+---
+
+# Product Card Component Accessibility Standards
+
+Ensures product card components follow WCAG compliance and implement proper single tab-stop navigation for keyboard and screen reader users.
+
+<rule>
+name: product_card_accessibility_standards
+description: Enforce product card component accessibility standards and single tab-stop navigation compliance
+filters:
+  - type: file_extension
+    pattern: "\\.(vue|jsx|tsx|html|php|js|ts|liquid)$"
+
+actions:
+
+- type: enforce
+  conditions:
+
+  # Product card missing article wrapper
+
+  - pattern: "(?i)<(div|section)[^>]*(?:product.*card|card._product)[^>]_>"
+    pattern_negate: "<article"
+    message: "Product cards should be wrapped with the article element for semantic structure."
+
+  # Product card missing proper link structure
+
+  - pattern: "(?i)<article[^>]*(?:product.*card|card._product)[^>]_>"
+    pattern_negate: "<a[^>]_>._?</a>"
+    message: "Product cards must contain a link element for keyboard navigation and screen reader accessibility."
+
+  # Product title not wrapped in link
+
+  - pattern: "(?i)<(h1|h2|h3|h4|h5|h6)[^>]*(?:product.*title|title._product)[^>]_>"
+    pattern_negate: "<a[^>]_>._?</a>"
+    message: "Product titles should be wrapped in link elements to provide proper navigation context."
+
+  # Heading not wrapping link element
+
+  - pattern: "(?i)<(h1|h2|h3|h4|h5|h6)[^>]*(?:product.*title|title._product)[^>]_>"
+    pattern_negate: "<a[^>]\*>"
+    message: "Product card headings should wrap link elements to maintain proper heading semantics."
+
+  # Missing product image alt text
+
+  - pattern: "(?i)<img[^>]_(?:product|card)[^>]_>"
+    pattern_negate: "alt=\"[^\"]+\""
+    message: "Product card images must have descriptive alt text for screen reader users."
+
+  # Empty alt text on product images
+
+  - pattern: "(?i)<img[^>]*(?:product|card)[^>]*alt=\"\"[^>]\*>"
+    message: "Product card images should not have empty alt text; provide descriptive text or use alt=\"\" only for decorative images."
+
+  # Product price missing proper semantic structure
+
+  - pattern: "(?i)<(div|span)[^>]_(?:price|cost)[^>]_>"
+    pattern_negate: "(<span[^>]*aria-label|aria-label=\"[^\"]*price[^\"]\*\")"
+    message: "Product prices should have proper semantic labeling for screen readers."
+
+  # Product description not in paragraph element
+
+  - pattern: "(?i)<(div|span)[^>]*(?:product.*description|description._product)[^>]_>"
+    pattern_negate: "<p"
+    message: "Product descriptions should be wrapped in paragraph elements for proper semantic structure."
+
+  # Missing focus indicators
+
+  - pattern: "(?i)<a[^>]*(?:product.*card|card._product)[^>]_>"
+    pattern_negate: "(focus|hover|active)"
+    message: "Product card links should have visible focus indicators for keyboard navigation."
+
+  # Product card without proper positioning context
+
+  - pattern: "(?i)<article[^>]*(?:product.*card|card._product)[^>]_>"
+    pattern_negate: "(position.\*relative|position: relative)"
+    message: "Product card containers should have position: relative for proper link overlay positioning."
+
+  # Product card missing aria-labelledby
+
+  - pattern: "(?i)<article[^>]*(?:product.*card|card._product)[^>]_>"
+    pattern_negate: "aria-labelledby=\"[^\"]+\""
+    message: "Product card articles should have aria-labelledby referencing the heading ID for better screen reader context."
+
+  # Product card heading missing ID
+
+  - pattern: "(?i)<(h1|h2|h3|h4|h5|h6)[^>]*(?:product.*title|title._product)[^>]_>"
+    pattern_negate: "id=\"[^\"]+\""
+    message: "Product card headings should have unique ID attributes for aria-labelledby reference."
+
+  # Mouse-only link missing tabindex="-1"
+
+  - pattern: "(?i)<a[^>]*class=\"[^\"]*product-link-mouse[^\"]_\"[^>]_>"
+    pattern_negate: "tabindex=\"-1\""
+    message: "Mouse-only product links should have tabindex='-1' to remove them from tab order."
+
+- type: suggest
+  message: |
+  **Product Card Component Accessibility Best Practices:**
+
+  **Required Structure:**
+
+  - **article element:** Wrap each product card with the article element for semantic meaning
+  - **Single tab-stop:** Each product card should contain only one keyboard tab-stop
+  - **Link overlay:** Use absolutely positioned link that covers the entire card area
+  - **Heading wraps link:** The heading should wrap the link element to maintain proper heading semantics
+
+  **ARIA and Semantic Requirements:**
+
+  - **article role:** Implicit with article element, provides semantic structure
+  - **aria-labelledby:** Reference to the heading ID for article labeling
+  - **Heading ID:** Unique ID attribute for aria-labelledby reference
+  - **Link text:** Product title should be descriptive and unique
+  - **Image alt text:** Provide descriptive alt text for product images
+  - **Price text:** Use visible text for pricing information
+  - **Description text:** Use paragraph elements for product descriptions
+
+  **Keyboard Navigation Requirements:**
+
+  - **Single tab-stop:** Each product card should be navigable with one tab key press
+  - **Enter key:** Activate the link to navigate to product detail page
+  - **Focus indicators:** Provide clear visual focus indicators for keyboard users
+  - **Logical order:** Ensure tab order follows visual layout
+  - **Mouse-only links:** Use tabindex="-1" to remove mouse-only links from tab order
+
+  **CSS Positioning Requirements:**
+
+  - **position: relative:** Set on card container for absolute positioning context
+  - **position: absolute:** Set on link element to cover card area
+  - **z-index:** Ensure link appears above other card content
+  - **pointer-events:** May need to manage pointer events for interactive elements
+
+  **Implementation Patterns:**
+
+  **Basic Product Card Structure:**
+
+  ```html
+  <article
+    class="product-card"
+    aria-labelledby="product-123-title"
+  >
+    <a
+      href="/product/123"
+      class="product-link-mouse"
+      aria-hidden="true"
+      tabindex="-1"
+    ></a>
+    <h2
+      id="product-123-title"
+      class="product-title"
+    >
+      <a
+        href="/product/123"
+        class="product-link"
+        >Product Name</a
+      >
+    </h2>
+    <img
+      src="product-image.jpg"
+      alt="Product description"
+      class="product-image"
+    />
+    <div class="product-price">$29.99</div>
+    <p class="product-description">Product description text...</p>
+  </article>
+  ```
+
+  **CSS for Visual Layout:**
+
+  ```css
+  .product-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product-title {
+    order: 2; /* Move heading after image visually */
+    margin: 0;
+    padding: 16px;
+  }
+
+  .product-image {
+    order: 1; /* Move image before heading visually */
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  ```
+
+  **CSS for Link Overlay:**
+
+  ```css
+  .product-card {
+    position: relative;
+    /* Other card styling */
+  }
+
+  .product-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    text-decoration: none;
+    /* Ensure link text is visible */
+    color: inherit;
+  }
+
+  .product-title {
+    /* Style the title within the link */
+    margin: 0;
+    padding: 1rem;
+  }
+  ```
+
+  **Advanced Product Card with Interactive Elements:**
+
+  ```html
+  <article
+    class="product-card"
+    aria-labelledby="product-123-title"
+  >
+    <a
+      href="/product/123"
+      class="product-link-mouse"
+      aria-hidden="true"
+      tabindex="-1"
+    ></a>
+    <h2
+      id="product-123-title"
+      class="product-title"
+    >
+      <a
+        href="/product/123"
+        class="product-link"
+        >Product Name</a
+      >
+    </h2>
+    <img
+      src="product-image.jpg"
+      alt="Product description"
+      class="product-image"
+    />
+    <div class="product-price">$29.99</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </article>
+  ```
+
+  **CSS for Advanced Layout:**
+
+  ```css
+  .product-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product-title {
+    order: 2; /* Heading appears after image visually */
+    margin: 0;
+    padding: 16px;
+  }
+
+  .product-image {
+    order: 1; /* Image appears before heading visually */
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .product-content {
+    order: 3; /* Content appears after heading */
+    padding: 0 16px 16px;
+    position: relative;
+  }
+  ```
+
+  **CSS for Interactive Elements:**
+
+  ```css
+  .product-card {
+    position: relative;
+  }
+
+  .product-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    /* Allow clicks to pass through to buttons */
+    pointer-events: none;
+  }
+
+  .product-title {
+    pointer-events: auto;
+  }
+
+  .add-to-cart {
+    position: relative;
+    z-index: 2;
+    /* Ensure button is above link overlay */
+  }
+  ```
+
+  **JavaScript Considerations:**
+
+  - Ensure proper event handling for interactive elements within cards
+  - Manage pointer events appropriately for overlay links
+  - Test keyboard navigation flow with screen readers
+  - Verify that screen readers can access all card content
+  - Consider implementing skip links for large product grids
+
+  **Accessibility Notes:**
+
+  - Screen readers will announce the link text (product title) when focusing
+  - Other card content remains discoverable through normal screen reader navigation
+  - The article element provides semantic structure for screen readers
+  - Ensure sufficient color contrast for all text elements
+  - Test with various screen reader and browser combinations
+  - Consider implementing skip links for large product grids (10+ items)
+
+  **Testing Requirements:**
+
+  - Navigate using Tab key only - each card should be one tab-stop
+  - Use screen reader to verify all content is accessible
+  - Test with keyboard-only navigation
+  - Verify focus indicators are visible and clear
+  - Test with high contrast mode enabled
+
+metadata:
+priority: high
+version: 1.0
+</rule>
+description:
+globs:
+alwaysApply: false
+
+---

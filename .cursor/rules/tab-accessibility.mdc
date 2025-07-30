@@ -1,0 +1,208 @@
+---
+description: Tab component accessibility compliance pattern
+globs: *.vue, *.jsx, *.tsx, *.html, *.php, *.js, *.ts, *.liquid
+alwaysApply: false
+---
+
+# Tab Component Accessibility Standards
+
+Ensures tab components follow WCAG compliance and WAI-ARIA Tab Pattern specifications.
+
+<rule>
+name: tab_accessibility_standards
+description: Enforce tab component accessibility standards and WAI-ARIA Tab Pattern compliance
+filters:
+  - type: file_extension
+    pattern: "\\.(vue|jsx|tsx|html|php|js|ts|liquid)$"
+
+actions:
+
+- type: enforce
+  conditions:
+
+  # Tablist role requirement
+
+  - pattern: "(?i)<(div|nav|section)[^>]*(?:tab.*list|list._tab)[^>]_>"
+    pattern_negate: "role=\"tablist\""
+    message: "Tab list container must have role='tablist' attribute."
+
+  # Tab role requirement
+
+  - pattern: "(?i)<(button|a|div)[^>]_(?:tab)[^>]_>"
+    pattern_negate: "role=\"tab\""
+    message: "Tab elements must have role='tab' attribute."
+
+  # Tabpanel role requirement
+
+  - pattern: "(?i)<(div|section)[^>]*(?:tab.*panel|panel._tab)[^>]_>"
+    pattern_negate: "role=\"tabpanel\""
+    message: "Tab panel elements must have role='tabpanel' attribute."
+
+  # Missing aria-selected state
+
+  - pattern: "(?i)<[^>]_role=\"tab\"[^>]_>"
+    pattern_negate: "aria-selected=\"(true|false)\""
+    message: "Tab elements must have aria-selected attribute set to 'true' or 'false'."
+
+  # Missing aria-controls
+
+  - pattern: "(?i)<[^>]_role=\"tab\"[^>]_>"
+    pattern_negate: "aria-controls=\"[^\"]+\""
+    message: "Tab elements must have aria-controls attribute referencing their associated panel."
+
+  # Missing aria-labelledby on tabpanel
+
+  - pattern: "(?i)<[^>]_role=\"tabpanel\"[^>]_>"
+    pattern_negate: "aria-labelledby=\"[^\"]+\""
+    message: "Tab panel elements must have aria-labelledby referencing their associated tab."
+
+  # Missing keyboard event handlers
+
+  - pattern: "(?i)<[^>]_role=\"tab\"[^>]_>"
+    pattern_negate: "(onKeyDown|onkeydown|@keydown|v-on:keydown)"
+    message: "Tab elements should handle keyboard events (Arrow keys, Space, Enter, Home, End)."
+
+  # Missing tablist label
+
+  - pattern: "(?i)<[^>]_role=\"tablist\"[^>]_>"
+    pattern_negate: "(aria-labelledby|aria-label)"
+    message: "Tab list must have either aria-labelledby or aria-label for accessibility."
+
+  # Empty aria-label check
+
+  - pattern: "(?i)<[^>]*role=\"tablist\"[^>]*aria-label=\"\"[^>]\*>"
+    message: "Tab list aria-label should not be empty; provide a meaningful description."
+
+- type: suggest
+  message: |
+  **Tab Component Accessibility Best Practices:**
+
+  **Required ARIA Attributes:**
+
+  - **role='tablist':** Set on the container of tab elements
+  - **role='tab':** Set on each tab element
+  - **role='tabpanel':** Set on each panel element
+  - **aria-selected:** 'true' for active tab, 'false' for inactive tabs
+  - **aria-controls:** On tab elements, referencing their panel
+  - **aria-labelledby:** On tab panels, referencing their tab
+  - **aria-labelledby/aria-label:** On tablist for accessibility
+
+  **Optional ARIA Attributes:**
+
+  - **aria-orientation:** 'vertical' if tabs are vertically oriented
+  - **aria-haspopup:** Set on tabs with popup menus
+  - **aria-disabled:** 'true' if tab cannot be activated
+
+  **Keyboard Interaction Requirements:**
+
+  - **Tab:** Move focus into/out of tab list
+  - **Left/Right Arrow:** Move between tabs (horizontal)
+  - **Up/Down Arrow:** Move between tabs (vertical)
+  - **Space/Enter:** Activate focused tab
+  - **Home:** Move to first tab
+  - **End:** Move to last tab
+  - **Shift + F10:** Open popup menu if available
+  - **Delete:** (Optional) Remove tab
+
+  **Structure Requirements:**
+
+  - Tab list must contain all tab elements
+  - Each tab must be associated with exactly one panel
+  - Active tab must be visually distinct
+  - Tab panels must be properly labeled
+  - Consider using native button elements for tabs
+
+  **Implementation Patterns:**
+
+  **Basic Tab Structure:**
+
+  ```html
+  <div
+    role="tablist"
+    aria-label="Settings"
+  >
+    <button
+      role="tab"
+      aria-selected="true"
+      aria-controls="panel-1"
+      id="tab-1"
+    >
+      Account
+    </button>
+    <button
+      role="tab"
+      aria-selected="false"
+      aria-controls="panel-2"
+      id="tab-2"
+    >
+      Security
+    </button>
+  </div>
+
+  <div
+    role="tabpanel"
+    id="panel-1"
+    aria-labelledby="tab-1"
+  >
+    Account settings content...
+  </div>
+  <div
+    role="tabpanel"
+    id="panel-2"
+    aria-labelledby="tab-2"
+    hidden
+  >
+    Security settings content...
+  </div>
+  ```
+
+  **Vertical Tab List:**
+
+  ```html
+  <div
+    role="tablist"
+    aria-label="Settings"
+    aria-orientation="vertical"
+  >
+    <button
+      role="tab"
+      aria-selected="true"
+      aria-controls="panel-1"
+      id="tab-1"
+    >
+      Account
+    </button>
+    <button
+      role="tab"
+      aria-selected="false"
+      aria-controls="panel-2"
+      id="tab-2"
+    >
+      Security
+    </button>
+  </div>
+  ```
+
+  **JavaScript Considerations:**
+
+  - Implement keyboard navigation between tabs
+  - Handle tab activation on Space/Enter
+  - Update aria-selected states
+  - Manage focus when switching tabs
+  - Handle optional features (Home/End, Delete)
+  - Consider implementing automatic activation
+  - Ensure proper focus management
+
+  **Accessibility Notes:**
+
+  - Choose between automatic and manual activation
+  - Ensure visual focus indicators are clear
+  - Test with screen readers for proper announcement
+  - Consider implementing skip links for long tab lists
+  - Maintain proper heading structure within panels
+  - Ensure sufficient color contrast for active/inactive states
+
+metadata:
+priority: high
+version: 1.0
+</rule>

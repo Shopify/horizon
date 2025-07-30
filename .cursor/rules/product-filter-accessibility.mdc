@@ -1,0 +1,625 @@
+---
+description: Product filter component accessibility compliance pattern
+globs: *.vue, *.jsx, *.tsx, *.html, *.php, *.js, *.ts, *.liquid
+alwaysApply: false
+---
+
+# Product Filter Component Accessibility Standards
+
+Ensures product filter components follow WCAG compliance and WAI-ARIA Disclosure Pattern specifications, including sort controls and grid layout buttons.
+
+<rule>
+name: product_filter_accessibility_standards
+description: Enforce product filter component accessibility standards and WAI-ARIA Disclosure Pattern compliance
+filters:
+  - type: file_extension
+    pattern: "\\.(vue|jsx|tsx|html|php|js|ts|liquid)$"
+
+actions:
+
+- type: enforce
+  conditions:
+
+  # Filter disclosure button role requirement
+
+  - pattern: "(?i)<(button|div|span)[^>]_(?:filter|disclosure|expand|collapse)[^>]_>"
+    pattern_negate: "role=\"button\""
+    message: "Filter disclosure controls must have role='button' (or use native button element which has implicit role)."
+
+  # Filter disclosure aria-expanded requirement
+
+  - pattern: "(?i)<[^>]_role=\"button\"[^>]_(?:filter|disclosure|expand|collapse)[^>]\*>"
+    pattern_negate: "aria-expanded=\"(true|false)\""
+    message: "Filter disclosure controls must have aria-expanded attribute set to 'true' or 'false'."
+
+  # Filter disclosure missing keyboard event handlers
+
+  - pattern: "(?i)<[^>]_role=\"button\"[^>]_(?:filter|disclosure|expand|collapse)[^>]\*>"
+    pattern_negate: "(onKeyDown|onkeydown|@keydown|v-on:keydown)"
+    message: "Filter disclosure controls should handle keyboard events (Enter, Space, and Escape)."
+
+  # Missing Escape key support for filter content
+
+  - pattern: "(?i)<div[^>]*(?:filter.*content|content._filter)[^>]_>"
+    pattern_negate: "(onKeyDown|onkeydown|@keydown|v-on:keydown)"
+    message: "Filter content areas should handle Escape key to close filter and return focus to launcher."
+
+  # Filter disclosure content not a sibling
+
+  - pattern: "(?i)<[^>]_role=\"button\"[^>]_(?:filter|disclosure)[^>]*>"
+    pattern_negate: "<(div|section)[^>]*id=\"[^\"]+\"[^>]\*>"
+    message: "Filter disclosure content must be a sibling to the disclosure control in the DOM."
+
+  # Grid layout buttons missing aria-current
+
+  - pattern: "(?i)<(button|div|span)[^>]_(?:grid|layout|view)[^>]_>"
+    pattern_negate: "aria-current=\"(true|false)\""
+    message: "Grid layout buttons must have aria-current attribute set to 'true' or 'false'."
+
+  # Sort filter missing proper labeling
+
+  - pattern: "(?i)<(button|div|span)[^>]_(?:sort|order)[^>]_>"
+    pattern_negate: "(aria-label|aria-labelledby)"
+    message: "Sort filter controls should have proper labeling for screen reader context."
+
+  # Sort filter using checkboxes instead of radio buttons
+
+  - pattern: "(?i)<input[^>]_type=\"checkbox\"[^>]_(?:sort|order)[^>]\*>"
+    message: "Sort filter options should use radio buttons since only one option can be selected at a time."
+
+  # Checkbox groups missing fieldset
+
+  - pattern: "(?i)<input[^>]_type=\"checkbox\"[^>]_(?:filter|option)[^>]\*>"
+    pattern_negate: "<fieldset"
+    message: "Filter checkbox groups should be wrapped in fieldset elements for proper grouping."
+
+  # Fieldset missing legend
+
+  - pattern: "(?i)<fieldset[^>]_(?:filter|option)[^>]_>"
+    pattern_negate: "<legend"
+    message: "Filter fieldsets must have legend elements to provide context for the group."
+
+  # Filter options missing proper IDs
+
+  - pattern: "(?i)<input[^>]_type=\"checkbox\"[^>]_(?:filter|option)[^>]\*>"
+    pattern_negate: "id=\"[^\"]+\""
+    message: "Filter checkboxes should have unique ID attributes for proper labeling."
+
+  # Missing product count live region
+
+  - pattern: "(?i)<[^>]*(?:product.*count|count._product)[^>]_>"
+    pattern_negate: "role=\"status\""
+    message: "Product count displays should use role='status' for screen reader announcements."
+
+  # Missing main products heading
+
+  - pattern: "(?i)<[^>]*(?:product.*filter|filter._product)[^>]_>"
+    pattern_negate: "<h1[^>]_>._[Pp]roducts?[^<]\*</h1>"
+    message: "Product filter pages should have an h1 heading with 'Products' for proper page structure."
+
+- type: suggest
+  message: |
+  **Product Filter Component Accessibility Best Practices:**
+
+  **Page Structure Requirements:**
+
+  - Use `<h1>` for the main "Products" heading
+  - Wrap filter controls and product count in a `<div class="products-header">`
+  - Remove separate section headings for filters and product cards
+  - Present filters, count, and products as one cohesive section
+
+  **Product Count Live Region:**
+
+  - Add product count display with `role="status"`
+  - Use unique ID for the count text element (e.g., `id="product-count-text"`)
+  - Update count dynamically as filters are applied/removed
+  - Ensure count is announced to screen readers when it changes
+
+  **Required ARIA Attributes:**
+
+  - **role='button':** Set on filter disclosure controls (or use native button)
+  - **aria-expanded:** 'true' if filter content is visible, 'false' if hidden
+  - **aria-controls:** Reference to the ID of the associated filter content
+  - **aria-current:** Set on grid layout buttons ('true' for active, 'false' for inactive)
+  - **aria-label/aria-labelledby:** Provide context for sort controls
+
+  **DOM Structure Requirements:**
+
+  - Filter disclosure content MUST be a sibling to the disclosure control
+  - Checkbox groups should be wrapped in fieldset with legend
+  - Grid layout buttons should be grouped together
+  - Maintain logical reading order in the DOM
+
+  **Keyboard Interaction Requirements:**
+
+  - **Enter/Space:** Toggle filter disclosure content visibility
+  - **Tab:** Navigate through filter controls and options
+  - **Arrow keys:** Navigate within checkbox groups
+  - **Escape:** Close open filter disclosures and return focus to launcher button
+
+  **Implementation Patterns:**
+
+          **Complete Page Structure:**
+
+  ```html
+  <h1>Products</h1>
+
+  <div class="products-header">
+    <form
+      action="/products/filter"
+      method="get"
+      id="product-filters-form"
+    >
+      <div class="filter-section">
+        <!-- Filter groups here -->
+      </div>
+    </form>
+
+    <div
+      role="status"
+      class="product-count"
+    >
+      <span id="product-count-text">3 products</span>
+    </div>
+  </div>
+
+  <div
+    class="product-grid"
+    id="product-grid"
+  >
+    <!-- Product cards here -->
+  </div>
+  ```
+
+  **Basic Filter Disclosure:**
+
+  ```html
+  <form
+    action="/products/filter"
+    method="get"
+    id="product-filters-form"
+  >
+    <div class="filter-group">
+      <button
+        type="button"
+        role="button"
+        aria-expanded="false"
+        aria-controls="size-filter-content"
+      >
+        Size Filter
+      </button>
+      <div
+        id="size-filter-content"
+        hidden
+      >
+        <fieldset>
+          <legend>Select sizes</legend>
+          <label for="size-s">
+            <input
+              type="checkbox"
+              id="size-s"
+              name="size"
+              value="s"
+            />
+            Small
+          </label>
+          <label for="size-m">
+            <input
+              type="checkbox"
+              id="size-m"
+              name="size"
+              value="m"
+            />
+            Medium
+          </label>
+          <label for="size-l">
+            <input
+              type="checkbox"
+              id="size-l"
+              name="size"
+              value="l"
+            />
+            Large
+          </label>
+        </fieldset>
+      </div>
+    </div>
+  </form>
+  ```
+
+  **Sort Filter with Disclosure:**
+
+  ```html
+  <form
+    action="/products/filter"
+    method="get"
+    id="product-filters-form"
+  >
+    <div class="sort-filter">
+      <button
+        type="button"
+        role="button"
+        aria-expanded="false"
+        aria-controls="sort-options-content"
+      >
+        Sort by
+      </button>
+      <div
+        id="sort-options-content"
+        hidden
+      >
+        <fieldset>
+          <legend>Sort options</legend>
+          <label for="sort-featured">
+            <input
+              type="radio"
+              id="sort-featured"
+              name="sort"
+              value="featured"
+            />
+            Featured
+          </label>
+          <label for="sort-date-newest">
+            <input
+              type="radio"
+              id="sort-date-newest"
+              name="sort"
+              value="date-newest"
+            />
+            Date (Newest to Oldest)
+          </label>
+          <label for="sort-date-oldest">
+            <input
+              type="radio"
+              id="sort-date-oldest"
+              name="sort"
+              value="date-oldest"
+            />
+            Date (Oldest to Newest)
+          </label>
+          <label for="sort-alphabetical-az">
+            <input
+              type="radio"
+              id="sort-alphabetical-az"
+              name="sort"
+              value="alphabetical-az"
+            />
+            Alphabetical (A-Z)
+          </label>
+          <label for="sort-alphabetical-za">
+            <input
+              type="radio"
+              id="sort-alphabetical-za"
+              name="sort"
+              value="alphabetical-za"
+            />
+            Alphabetical (Z-A)
+          </label>
+        </fieldset>
+      </div>
+    </div>
+  </form>
+  ```
+
+  **Grid Layout Controls:**
+
+  ```html
+  <div class="layout-controls">
+    <button
+      type="button"
+      aria-current="true"
+      aria-label="Grid layout"
+      onclick="setLayout('grid')"
+    >
+      <span class="sr-only">Grid layout</span>
+      <svg><!-- Grid icon --></svg>
+    </button>
+    <button
+      type="button"
+      aria-current="false"
+      aria-label="List layout"
+      onclick="setLayout('list')"
+    >
+      <span class="sr-only">List layout</span>
+      <svg><!-- List icon --></svg>
+    </button>
+  </div>
+  ```
+
+  **JavaScript for Grid Layout:**
+
+  ```javascript
+  function setLayout(layout) {
+    const buttons = document.querySelectorAll('[aria-label*="layout"]');
+
+    buttons.forEach((button) => {
+      if (button.getAttribute('aria-label').includes(layout)) {
+        button.setAttribute('aria-current', 'true');
+      } else {
+        button.setAttribute('aria-current', 'false');
+      }
+    });
+
+    // Update visual layout
+    updateProductLayout(layout);
+  }
+  ```
+
+  **JavaScript for Filter Toggle with Escape Support:**
+
+  ```javascript
+  function toggleFilter(button) {
+    const isExpanded = button.getAttribute('aria-expanded') === 'true';
+    const content = document.getElementById(button.getAttribute('aria-controls'));
+
+    button.setAttribute('aria-expanded', !isExpanded);
+    content.hidden = isExpanded;
+
+    if (!isExpanded) {
+      // Add escape key listener to content
+      content.addEventListener('keydown', handleEscapeKey);
+    } else {
+      // Remove escape key listener
+      content.removeEventListener('keydown', handleEscapeKey);
+    }
+  }
+
+  function handleEscapeKey(event) {
+    if (event.key === 'Escape') {
+      const content = event.target.closest('[hidden]');
+      if (content) {
+        const button = document.querySelector(`[aria-controls="${content.id}"]`);
+        if (button) {
+          button.setAttribute('aria-expanded', 'false');
+          content.hidden = true;
+          button.focus(); // Return focus to launcher
+          content.removeEventListener('keydown', handleEscapeKey);
+        }
+      }
+    }
+  }
+
+  // Update product count
+  function updateProductCount() {
+    const visibleProducts = document.querySelectorAll('.product-card:not([hidden])');
+    const count = visibleProducts.length;
+    const countText = document.getElementById('product-count-text');
+    countText.textContent = `${count} product${count !== 1 ? 's' : ''}`;
+  }
+
+  // Initialize product count on page load
+  document.addEventListener('DOMContentLoaded', function () {
+    updateProductCount();
+  });
+  ```
+
+  **Complete Filter Implementation:**
+
+  ```html
+  <h1>Products</h1>
+
+  <div class="products-header">
+    <form
+      action="/products/filter"
+      method="get"
+      id="product-filters-form"
+    >
+      <div class="filter-section">
+        <!-- Size Filter -->
+        <div class="filter-group">
+          <button
+            type="button"
+            role="button"
+            aria-expanded="false"
+            aria-controls="size-filter-content"
+          >
+            Size
+          </button>
+          <div
+            id="size-filter-content"
+            hidden
+          >
+            <fieldset>
+              <legend>Select sizes</legend>
+              <label for="size-s">
+                <input
+                  type="checkbox"
+                  id="size-s"
+                  name="size"
+                  value="s"
+                />
+                Small
+              </label>
+              <label for="size-m">
+                <input
+                  type="checkbox"
+                  id="size-m"
+                  name="size"
+                  value="m"
+                />
+                Medium
+              </label>
+              <label for="size-l">
+                <input
+                  type="checkbox"
+                  id="size-l"
+                  name="size"
+                  value="l"
+                />
+                Large
+              </label>
+            </fieldset>
+          </div>
+        </div>
+
+        <!-- Color Filter -->
+        <div class="filter-group">
+          <button
+            type="button"
+            role="button"
+            aria-expanded="false"
+            aria-controls="color-filter-content"
+          >
+            Color
+          </button>
+          <div
+            id="color-filter-content"
+            hidden
+          >
+            <fieldset>
+              <legend>Select colors</legend>
+              <label for="color-red">
+                <input
+                  type="checkbox"
+                  id="color-red"
+                  name="color"
+                  value="red"
+                />
+                Red
+              </label>
+              <label for="color-blue">
+                <input
+                  type="checkbox"
+                  id="color-blue"
+                  name="color"
+                  value="blue"
+                />
+                Blue
+              </label>
+              <label for="color-green">
+                <input
+                  type="checkbox"
+                  id="color-green"
+                  name="color"
+                  value="green"
+                />
+                Green
+              </label>
+            </fieldset>
+          </div>
+        </div>
+
+        <!-- Sort Filter -->
+        <div class="sort-filter">
+          <button
+            type="button"
+            role="button"
+            aria-expanded="false"
+            aria-controls="sort-options-content"
+          >
+            Sort by
+          </button>
+          <div
+            id="sort-options-content"
+            hidden
+          >
+            <fieldset>
+              <legend>Sort options</legend>
+              <label for="sort-featured">
+                <input
+                  type="radio"
+                  id="sort-featured"
+                  name="sort"
+                  value="featured"
+                />
+                Featured
+              </label>
+              <label for="sort-date">
+                <input
+                  type="radio"
+                  id="sort-date"
+                  name="sort"
+                  value="date"
+                />
+                Date
+              </label>
+              <label for="sort-alphabetical">
+                <input
+                  type="radio"
+                  id="sort-alphabetical"
+                  name="sort"
+                  value="alphabetical"
+                />
+                Alphabetical
+              </label>
+            </fieldset>
+          </div>
+        </div>
+
+        <!-- Layout Controls -->
+        <div class="layout-controls">
+          <button
+            type="button"
+            aria-current="true"
+            aria-label="Grid layout"
+            onclick="setLayout('grid')"
+          >
+            <span class="sr-only">Grid layout</span>
+            <svg><!-- Grid icon --></svg>
+          </button>
+          <button
+            type="button"
+            aria-current="false"
+            aria-label="List layout"
+            onclick="setLayout('list')"
+          >
+            <span class="sr-only">List layout</span>
+            <svg><!-- List icon --></svg>
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <div
+      role="status"
+      class="product-count"
+    >
+      <span id="product-count-text">3 products</span>
+    </div>
+  </div>
+
+  <div
+    class="product-grid"
+    id="product-grid"
+  >
+    <!-- Product cards here -->
+  </div>
+  ```
+
+  **JavaScript Considerations:**
+
+  - Implement Enter and Space key handlers for disclosure toggles
+  - Update aria-expanded state when filter content toggles
+  - Manage aria-current state for layout buttons
+  - Handle filter state changes and update product display
+  - Implement proper focus management when filters open/close
+  - Consider implementing live regions for dynamic content updates
+
+  **Accessibility Notes:**
+
+  - Filter content MUST be a sibling to the control in the DOM
+  - Use fieldset and legend for checkbox/radio groups
+  - Provide clear labels for all filter controls
+  - Test with screen readers to ensure proper announcement
+  - Consider adding aria-live regions for dynamic filter results
+  - Maintain proper focus management when filters toggle
+  - Ensure grid layout buttons have clear visual and screen reader indicators
+
+  **Testing Requirements:**
+
+  - Test keyboard navigation through all filter controls
+  - Verify disclosure content opens/closes with keyboard
+  - Test screen reader announcement of filter states
+  - Verify aria-current updates correctly on layout changes
+  - Test focus management when filters open/close
+  - Ensure filter results update properly with screen readers
+
+metadata:
+priority: high
+version: 1.0
+</rule>
+description:
+globs:
+alwaysApply: false
+
+---

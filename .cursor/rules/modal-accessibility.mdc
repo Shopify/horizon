@@ -1,0 +1,142 @@
+---
+description: Modal window accessibility compliance and ARIA Dialog Pattern
+globs: *.vue, *.jsx, *.tsx, *.html, *.php, *.js, *.ts, *.liquid
+alwaysApply: false
+---
+
+# Modal Window Accessibility Standards
+
+Ensures modal windows follow WCAG compliance and ARIA Dialog Pattern specifications.
+
+<rule>
+name: modal_accessibility_standards
+description: Enforce modal window accessibility standards and ARIA Dialog Pattern compliance
+filters:
+  - type: file_extension
+    pattern: "\\.(vue|jsx|tsx|html|php|js|ts|liquid)$"
+
+actions:
+
+- type: enforce
+  conditions:
+
+  # Dialog role requirement
+
+  - pattern: "(?i)<(div|section|article)[^>]_(?:modal|dialog)[^>]_>"
+    pattern_negate: "role=\"dialog\""
+    message: "Modal containers must have role='dialog' attribute."
+
+  # aria-modal requirement
+
+  - pattern: "(?i)<[^>]_role=\"dialog\"[^>]_>"
+    pattern_negate: "aria-modal=\"true\""
+    message: "Dialog elements must have aria-modal='true' attribute."
+
+  # aria-labelledby or aria-label requirement
+
+  - pattern: "(?i)<[^>]_role=\"dialog\"[^>]_>"
+    pattern_negate: "(aria-labelledby|aria-label)"
+    message: "Dialog elements must have either aria-labelledby or aria-label for accessibility."
+
+  # Empty aria-label check
+
+  - pattern: "(?i)<[^>]*role=\"dialog\"[^>]*aria-label=\"\"[^>]\*>"
+    message: "Dialog aria-label should not be empty; provide a meaningful description."
+
+  # Button without proper close functionality
+
+  - pattern: "(?i)<button[^>]_(?:close|dismiss|cancel)[^>]_>"
+    pattern_negate: "(onClick|onclick|@click|v-on:click)"
+    message: "Modal close buttons should have proper click handlers to close the dialog."
+
+  # Close button should have aria-label
+
+  - pattern: "(?i)<button[^>]_(?:close|dismiss|×|&times;)[^>]_>"
+    pattern_negate: "aria-label=\"[^\"]_[Cc]lose[^\"]_\""
+    message: "Modal close buttons should have aria-label='Close' or similar descriptive text for screen readers."
+
+  # Missing focus trap indicators
+
+  - pattern: "(?i)(?:showModal|openModal|displayModal)\\s\*\\("
+    message: "When opening modals, ensure focus management is implemented (focus should move to an element inside the dialog)."
+
+  # Modal launcher should have aria-haspopup
+
+  - pattern: "(?i)<button[^>]_(?:open|show|launch)[^>]_(?:modal|dialog)[^>]\*>"
+    pattern_negate: "aria-haspopup=\"dialog\""
+    message: "Buttons that open modals should include aria-haspopup='dialog' to inform users a dialog will open."
+
+- type: suggest
+  message: |
+  **Modal Window Accessibility Best Practices:**
+
+  **Required ARIA Attributes:**
+
+  - **role='dialog':** Set on the modal container element
+  - **aria-modal='true':** Indicates the dialog is modal
+  - **aria-labelledby:** Reference to visible dialog title, OR
+  - **aria-label:** Descriptive label if no visible title exists
+  - **aria-haspopup='dialog':** Set on buttons/elements that trigger the modal to inform users a dialog will open
+
+  **Keyboard Interaction Requirements:**
+
+  - **Initial Focus:** When dialog opens, focus must move to an element inside the dialog
+  - **Tab Cycling:** Tab key should cycle through tabbable elements within the dialog only
+  - **Shift+Tab:** Should cycle backwards through tabbable elements within the dialog
+  - **Escape Key:** Must close the dialog
+  - **Focus Trap:** Focus should be contained within the modal while open
+
+  **Focus Management:**
+
+  - Implement focus trapping to prevent tab navigation outside the modal
+  - Return focus to the triggering element when modal closes
+  - Move focus to the close button (first focusable element) when modal opens
+  - Ensure close button is positioned first in DOM order within the dialog
+
+  **Structure Requirements:**
+
+  - All interactive elements must be descendants of the dialog container
+  - Position close button first in DOM order within the dialog container
+  - Use semantic HTML within the modal (headings, buttons, form labels)
+  - Provide clear visual focus indicators
+  - Close buttons should use aria-label="Close" with &times; entity for visual 'x' icon
+
+  **Example Implementation:**
+
+  ```html
+  <!-- Modal launcher -->
+  <button
+    aria-haspopup="dialog"
+    onclick="openModal()"
+  >
+    Open Settings
+  </button>
+
+  <!-- Modal dialog -->
+  <div
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-title"
+  >
+    <button
+      type="button"
+      aria-label="Close"
+      onclick="closeModal()"
+    >
+      &times;
+    </button>
+    <h2 id="modal-title">Modal Title</h2>
+    <p>Modal content...</p>
+  </div>
+  ```
+
+  **JavaScript Considerations:**
+
+  - Implement proper event listeners for Escape key
+  - Manage body scroll when modal is open
+  - Handle focus restoration on modal close
+
+metadata:
+priority: high
+version: 1.0
+</rule>

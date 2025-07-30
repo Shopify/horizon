@@ -1,0 +1,167 @@
+---
+description: Switch component accessibility compliance pattern
+globs: *.vue, *.jsx, *.tsx, *.html, *.php, *.js, *.ts, *.liquid
+alwaysApply: false
+---
+
+# Switch Component Accessibility Standards
+
+Ensures switch components follow WCAG compliance and WAI-ARIA Switch Pattern specifications.
+
+<rule>
+name: switch_accessibility_standards
+description: Enforce switch component accessibility standards and WAI-ARIA Switch Pattern compliance
+filters:
+  - type: file_extension
+    pattern: "\\.(vue|jsx|tsx|html|php|js|ts|liquid)$"
+
+actions:
+
+- type: enforce
+  conditions:
+
+  # Switch role requirement
+
+  - pattern: "(?i)<(div|span|button)[^>]_(?:switch|toggle)[^>]_>"
+    pattern_negate: "role=\"switch\""
+    message: "Switch elements must have role='switch' attribute."
+
+  # Missing aria-checked state
+
+  - pattern: "(?i)<[^>]_role=\"switch\"[^>]_>"
+    pattern_negate: "aria-checked=\"(true|false)\""
+    message: "Switch elements must have aria-checked attribute set to 'true' or 'false'."
+
+  # Missing accessible label
+
+  - pattern: "(?i)<[^>]_role=\"switch\"[^>]_>"
+    pattern_negate: "(aria-labelledby|aria-label)"
+    message: "Switch elements must have either aria-labelledby or aria-label for accessibility."
+
+  # Empty aria-label check
+
+  - pattern: "(?i)<[^>]*role=\"switch\"[^>]*aria-label=\"\"[^>]\*>"
+    message: "Switch aria-label should not be empty; provide a meaningful description."
+
+  # Missing keyboard event handlers
+
+  - pattern: "(?i)<[^>]_role=\"switch\"[^>]_>"
+    pattern_negate: "(onKeyDown|onkeydown|@keydown|v-on:keydown)"
+    message: "Switch elements should handle keyboard events (Space, optionally Enter)."
+
+  # Switch group missing proper structure
+
+  - pattern: "(?i)<(div|section)[^>]*(?:switch.*group|group._switch)[^>]_>"
+    pattern_negate: "(role=\"group\"|fieldset)"
+    message: "Switch groups must use role='group' or fieldset element."
+
+  # Switch group missing label
+
+  - pattern: "(?i)<[^>]_role=\"group\"[^>]_>"
+    pattern_negate: "(aria-labelledby|legend)"
+    message: "Switch groups must have aria-labelledby or legend element for labeling."
+
+- type: suggest
+  message: |
+  **Switch Component Accessibility Best Practices:**
+
+  **Required ARIA Attributes:**
+
+  - **role='switch':** Set on the input element
+  - **aria-checked:** 'true' if switch is on, 'false' if off
+  - **aria-labelledby:** Reference to visible label, OR
+  - **aria-label:** Descriptive label if no visible label exists
+
+  **Optional ARIA Attributes:**
+
+  - **aria-describedby:** Reference to additional descriptive text
+  - **aria-disabled:** 'true' if switch cannot be toggled
+
+  **Keyboard Interaction Requirements:**
+
+  - **Space:** Toggle switch state
+  - **Enter:** (Optional) Toggle switch state
+  - **Tab/Shift+Tab:** Move through all focusable elements in page order
+
+  **Structure Requirements:**
+
+  - Switch must have a visible label that doesn't change with state
+  - Use semantic HTML within the switch (buttons, spans)
+  - Provide clear visual focus indicators
+  - Consider using native checkbox input with role='switch' for better semantics
+
+  **Implementation Patterns:**
+
+  **Basic Switch:**
+
+  ```html
+  <div class="switch">
+    <input
+      type="checkbox"
+      id="notifications"
+      role="switch"
+      aria-checked="false"
+      tabindex="0"
+    />
+    <span class="switch-slider"></span>
+  </div>
+  <label for="notifications">Notifications</label>
+  ```
+
+  **Switch with Description:**
+
+  ```html
+  <div class="switch">
+    <input
+      type="checkbox"
+      id="dark-mode"
+      role="switch"
+      aria-checked="false"
+      tabindex="0"
+      aria-describedby="dark-mode-desc"
+    />
+    <span class="switch-slider"></span>
+  </div>
+  <label for="dark-mode">Dark Mode</label>
+  <span id="dark-mode-desc">Enable dark mode for reduced eye strain</span>
+  ```
+
+  **Switch Group:**
+
+  ```html
+  <fieldset>
+    <legend>Notification Settings</legend>
+    <div class="switch">
+      <input
+        type="checkbox"
+        id="email-notifications"
+        role="switch"
+        aria-checked="false"
+        tabindex="0"
+      />
+      <span class="switch-slider"></span>
+    </div>
+    <label for="email-notifications">Email Notifications</label>
+  </fieldset>
+  ```
+
+  **JavaScript Considerations:**
+
+  - Implement Space and optional Enter key handlers
+  - Update aria-checked state when switch toggles
+  - Ensure focus management is maintained
+  - Consider implementing disabled state
+  - Use CSS transitions for smooth state changes
+
+  **Accessibility Notes:**
+
+  - Choose between switch, checkbox, or toggle button based on semantics
+  - Use switch when on/off semantics are clearer than checked/unchecked
+  - Ensure visual state changes are clear and maintainable
+  - Test with screen readers to ensure proper announcement
+  - Consider implementing a visible focus indicator
+
+metadata:
+priority: high
+version: 1.0
+</rule>

@@ -1,0 +1,299 @@
+---
+description:
+globs: *.liquid
+alwaysApply: false
+---
+# Modern HTML Standards
+
+Use the latest evergreen browser features for better user experience and simpler code.
+All features should be supported in the last two versions of all major browsers.
+All necessary features must be "Baseline widely available".
+Progressive enhancement features may be "Baseline 2024".
+These are strictly for UX improvements that are non-blocking for conversions.
+
+## Native Interactive Elements
+
+**Expandable Content:**
+- Use `<details>` and `<summary>` instead of JavaScript toggles
+- Perfect for FAQs, product details, filters
+- See the [accordion component](mdc:assets/accordion-custom.js) for cases where animation is involved
+
+**Modals and Popups:**
+- Use `<dialog>` for modals instead of custom overlays
+- Built-in focus management and backdrop clicks
+- See the [dialog component](mdc:assets/dialog.js) for how we use these
+
+**Tooltips and Menus:**
+- Use `popover` attribute for floating content
+- Automatic positioning and dismissal
+
+**Forms:**
+- Use `<search>` element for search forms
+- Use `<output>` for form calculations and results
+
+### Input Types (HTML5+)
+```html
+<input type="text">        <!-- Basic text input -->
+<input type="email">       <!-- Email with validation -->
+<input type="tel">         <!-- Telephone numbers -->
+<input type="url">         <!-- URLs with validation -->
+<input type="search">      <!-- Search field with clear button -->
+<input type="password">    <!-- Password field -->
+
+<!-- Numeric inputs -->
+<input type="number">      <!-- Numeric input with spinner -->
+<input type="range">       <!-- Slider control -->
+
+<!-- Date/Time inputs -->
+<input type="date">        <!-- Date picker -->
+<input type="time">        <!-- Time picker -->
+<input type="datetime-local"> <!-- Date and time picker -->
+<input type="month">       <!-- Month picker -->
+<input type="week">        <!-- Week picker -->
+
+<!-- Selection inputs -->
+<input type="checkbox">    <!-- Checkbox -->
+<input type="radio">       <!-- Radio button -->
+<input type="color">       <!-- Color picker -->
+<input type="file">        <!-- File upload -->
+
+<!-- Action inputs -->
+<input type="submit">      <!-- Submit button -->
+<input type="reset">       <!-- Reset button -->
+<input type="button">      <!-- Generic button -->
+<input type="image">       <!-- Image button -->
+
+<!-- Hidden -->
+<input type="hidden">      <!-- Hidden data -->
+```
+
+### Container Elements
+```html
+<!-- Form container -->
+<form>                     <!-- Form wrapper -->
+<fieldset>                 <!-- Group related inputs -->
+<legend>                   <!-- Fieldset label -->
+
+<!-- Modern semantic containers -->
+<search>                   <!-- Search form container (HTML5.3) -->
+```
+
+### Text Areas
+```html
+<textarea>                 <!-- Multi-line text input -->
+```
+
+### Selection Elements
+```html
+<select>                   <!-- Dropdown menu -->
+<option>                   <!-- Option in dropdown -->
+<optgroup>                 <!-- Group options -->
+<datalist>                 <!-- Autocomplete suggestions -->
+```
+
+### Labels and Output
+```html
+<label>                    <!-- Input label -->
+<output>                   <!-- Calculation/result display -->
+```
+
+### Buttons
+```html
+<button type="submit">     <!-- Submit form -->
+<button type="reset">      <!-- Reset form -->
+<button type="button">     <!-- Generic button -->
+```
+
+### Progress and Meters
+```html
+<progress>                 <!-- Progress indicator -->
+<meter>                    <!-- Gauge/measurement display -->
+```
+
+### Modern Form Attributes
+```html
+<!-- Validation attributes -->
+required                   <!-- Field must be filled -->
+pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" <!-- Regex validation -->
+minlength="5"              <!-- Minimum character length -->
+maxlength="50"             <!-- Maximum character length -->
+min="1"                    <!-- Minimum numeric value -->
+max="100"                  <!-- Maximum numeric value -->
+step="0.01"                <!-- Numeric increment -->
+
+<!-- Autocomplete attributes -->
+autocomplete="name"        <!-- Enable specific autocomplete -->
+autocomplete="off"         <!-- Disable autocomplete -->
+list="suggestions"         <!-- Link to datalist -->
+
+<!-- Input hints -->
+placeholder="Enter email"  <!-- Placeholder text -->
+autofocus                  <!-- Focus on page load -->
+readonly                   <!-- Read-only field -->
+disabled                   <!-- Disabled field -->
+multiple                   <!-- Multiple file/email selection -->
+
+<!-- Form behavior -->
+formnovalidate            <!-- Skip validation (on submit buttons) -->
+formaction="/alt-submit"  <!-- Alternative submission URL -->
+formmethod="post"         <!-- Override form method -->
+formenctype="multipart/form-data" <!-- Override encoding -->
+```
+
+Use [client-side form validation](mdc:https:/developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Form_validation) to ensure valid date is being sent to the server.
+
+## Modern CSS Features
+
+**Layout:**
+- `container-queries` for responsive components
+- `aspect-ratio` for maintaining proportions
+- `scroll-snap` for carousel behavior
+
+**Styling:**
+- `color-mix()` for dynamic color generation (used for progressive enhancement)
+- `view-transitions` for smooth page transitions
+- `@layer` for CSS cascade control
+
+**Interactions:**
+- `:has()` selector for parent styling
+- `@media (prefers-reduced-motion)` for accessibility
+
+## Progressive Enhancement
+
+Use features that are `Baseline Widely Available`.
+
+1. **Start with semantic HTML** that works without JavaScript
+2. **Layer on CSS** for visual enhancement
+3. **Add JavaScript** for advanced interactions and accessibility
+4. **Polyfill** for modern browsers if necessary for critical interactions
+5. **Never break core functionality** for older browsers
+
+## Accessibility Features
+
+**Focus Management:**
+- Use `tabindex="0"` for custom interactive elements
+- Never use positive tabindex values
+- Ensure keyboard navigation works naturally
+- Ensure focus is trapped in modal contexts
+
+**Screen Readers:**
+- Use semantic HTML elements
+- Add `aria-label` when visual context isn't enough
+- Use `aria-expanded` for collapsible content
+- Use `aria-role` where appropriate
+
+**Motion Preferences:**
+
+Write CSS where animations can be disabled if reduced motion is preferred.
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  .carousel {
+    scroll-behavior: auto;
+  }
+}
+```
+
+## ID Naming Convention
+
+Use `CamelCase` for IDs and append section/block identifiers:
+
+```html
+<!-- Section IDs -->
+<section id="FeaturedCollection-{{ section.id }}">
+
+<!-- Block IDs -->
+<div id="ProductCard-{{ block.id }}">
+
+<!-- Element IDs -->
+<dialog id="ProductModal-{{ product.id }}-{{ section|block.id }}">
+<form id="ProductForm-{{ product.id }}-{{ section|block.id }}">
+```
+
+Section and block IDs are the only things we can guarantee are unique, and so should always be included in `id`s.
+
+## Examples
+
+**Expandable FAQ:**
+```html
+<details class="faq">
+  <summary class="faq__question">
+    {{ 'faq.shipping_question' | t }}
+  </summary>
+  <div class="faq__answer">
+    {{ 'faq.shipping_answer' | t }}
+  </div>
+</details>
+```
+
+**Modal Dialog:**
+```html
+<button class="product__quick-view" onclick="ProductModal{{ product.id }}.showModal()">
+  {{ 'products.quick_view' | t }}
+</button>
+
+<dialog id="ProductModal{{ product.id }}" class="product-modal">
+  <form method="dialog">
+    <button type="submit" class="modal__close">
+      {{ 'general.close' | t }}
+    </button>
+  </form>
+  <div class="modal__content">
+    {% render 'product-details', product: product %}
+  </div>
+</dialog>
+```
+
+**Popover Menu:**
+```html
+<button popovertarget="CartMenu" class="header__cart">
+  {{ 'cart.title' | t }} ({{ cart.item_count }})
+</button>
+
+<div id="CartMenu" popover class="cart-popover">
+  {% render 'cart-drawer' %}
+</div>
+```
+
+**Search Form:**
+```html
+<search class="header__search">
+  <form action="{{ routes.search_url }}" method="get">
+    <input
+      type="search"
+      name="q"
+      placeholder="{{ 'general.search_placeholder' | t }}"
+      value="{{ search.terms | escape }}"
+    >
+    <button type="submit">{{ 'general.search' | t }}</button>
+  </form>
+</search>
+```
+
+**Responsive Product Card:**
+```html
+<div class="product-card" style="container-type: inline-size;">
+  <div class="product-card__media">
+    {{ product.featured_image | image_url: width: 800 | image_tag }}
+  </div>
+  <div class="product-card__info">
+    <h3>{{ product.title | escape }}</h3>
+    <output class="product-card__price">
+      {{ product.price | money }}
+    </output>
+  </div>
+</div>
+```
+
+## Avoid These Patterns
+
+**Don't use custom JavaScript for:**
+- Show/hide toggles (use `<details>`)
+- Modal overlays (use `<dialog>`)
+- Tooltips (use `popover`)
+- Form validation (use native HTML5)
+
+**Don't create:**
+- Custom dropdown menus (use `<select>` or `popover`)
+- Custom accordions (use `<details>`)
+- Custom tabs (use CSS `:target` or native behavior)

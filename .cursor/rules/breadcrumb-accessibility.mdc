@@ -1,0 +1,129 @@
+---
+description: Breadcrumb component accessibility compliance pattern
+globs: *.vue, *.jsx, *.tsx, *.html, *.php, *.js, *.ts, *.liquid
+alwaysApply: false
+---
+
+# Breadcrumb Accessibility
+
+Ensures breadcrumb components follow WCAG compliance and WAI-ARIA Breadcrumb Pattern specifications.
+
+<rule>
+name: breadcrumb_accessibility_standards
+description: Enforce breadcrumb component accessibility standards and WAI-ARIA Breadcrumb Pattern compliance
+filters:
+  - type: file_extension
+    pattern: "\\.(vue|jsx|tsx|html|php|js|ts|liquid)$"
+
+actions:
+
+- type: enforce
+  conditions:
+
+  # Navigation landmark requirement
+
+  - pattern: "(?i)<nav[^>]_(?:breadcrumb|navigation)[^>]_>"
+    pattern_negate: "(aria-label|aria-labelledby)=\"[^\"]+\""
+    message: "Breadcrumb navigation must have aria-label or aria-labelledby attribute."
+
+  # Current page aria-current requirement
+
+  - pattern: "(?i)<[^>]*(?:breadcrumb.*current|current._breadcrumb)[^>]_>"
+    pattern_negate: "aria-current=\"page\""
+    message: "Current page in breadcrumb must have aria-current='page' attribute."
+
+  # List structure requirement
+
+  - pattern: "(?i)<nav[^>]_(?:breadcrumb|navigation)[^>]_>"
+    pattern_negate: "<ol[^>]\*>"
+    message: "Breadcrumb navigation should use ordered list (ol) for proper structure."
+
+- type: suggest
+  message: |
+  **Breadcrumb Component Accessibility Best Practices:**
+
+  **Required ARIA Attributes:**
+
+  - **aria-label/aria-labelledby:** On navigation element to describe the breadcrumb trail
+  - **aria-current="page":** On the current page link or element
+  - **role="navigation":** Implicit on nav element, but can be explicit if needed
+
+  **Structure Requirements:**
+
+  - Use `<nav>` element as container
+  - Use ordered list (`<ol>`) for breadcrumb items
+  - Use list items (`<li>`) for each breadcrumb level
+  - Current page should be the last item in the list
+  - Use appropriate heading level for the breadcrumb container
+
+  **Implementation Patterns:**
+
+  **Basic Breadcrumb:**
+
+  ```html
+  <nav aria-label="Breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="/">Home</a>
+      </li>
+      <li class="breadcrumb-item">
+        <a href="/products">Products</a>
+      </li>
+      <li
+        class="breadcrumb-item"
+        aria-current="page"
+      >
+        <a href="/products/electronics">Electronics</a>
+      </li>
+    </ol>
+  </nav>
+  ```
+
+  **With aria-labelledby:**
+
+  ```html
+  <nav aria-labelledby="breadcrumb-heading">
+    <h2
+      id="breadcrumb-heading"
+      class="visually-hidden"
+    >
+      Breadcrumb Navigation
+    </h2>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="/">Home</a>
+      </li>
+      <li
+        class="breadcrumb-item"
+        aria-current="page"
+      >
+        <span>Current Page</span>
+      </li>
+    </ol>
+  </nav>
+  ```
+
+  **Accessibility Notes:**
+
+  - Navigation landmark helps screen readers identify the breadcrumb trail
+  - Ordered list provides semantic structure for the navigation hierarchy
+  - aria-current helps users identify their current location
+  - Consider using visually-hidden text for better screen reader context
+  - Ensure sufficient color contrast for all breadcrumb elements
+  - Maintain clear visual separation between items
+  - Use clear, descriptive labels for each level
+
+  **Testing Checklist:**
+
+  - Verify navigation landmark is present and properly labeled
+  - Confirm ordered list structure is used
+  - Check aria-current is present on current page
+  - Test with screen readers to ensure proper announcement
+  - Verify visual hierarchy is clear and consistent
+  - Ensure all links are keyboard accessible
+  - Check color contrast meets WCAG requirements
+
+metadata:
+priority: high
+version: 1.0
+</rule>
