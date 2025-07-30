@@ -1,4 +1,3 @@
-{% # import schema from '../schemas/blocks/buy-buttons.js' %}
 {% liquid
   assign product = closest.product
   if request.visual_preview_mode and product == blank
@@ -226,7 +225,7 @@
 
   .product-form-buttons > *:not(.quantity-selector) {
     flex: 1;
-    min-width: 185px;
+    min-width: fit-content;
   }
 
   .product-form-buttons--stacked > *:not(.quantity-selector) {

@@ -173,6 +173,15 @@
     }
   }
 
+  /* This triggers iOS < 16.4 */
+  @supports not (background-color: rgb(from red 150 g b / alpha)) {
+    /* Force aspect ratio to auto for iOS < 16.4 since it's not compatible with the infinite pagination */
+    .product-grid .product-media,
+    .product-grid .product-media-container {
+      aspect-ratio: auto;
+    }
+  }
+
   .main-collection-grid {
     padding: var(--grid--margin--mobile);
 

@@ -9,6 +9,7 @@
     <script type="importmap">
       {
         "imports": {
+          "@theme/critical": "{{ 'critical.js' | asset_url }}",
           "@theme/component": "{{ 'component.js' | asset_url }}",
           "@theme/utilities": "{{ 'utilities.js' | asset_url }}",
           "@theme/qr-code-generator": "{{ 'qr-code-generator.js' | asset_url }}"
@@ -16,9 +17,12 @@
       }
     </script>
 
-    {% # theme-check-disable ParserBlockingScript %}
-    <script src="{{ 'critical.js' | asset_url }}"></script>
-    {% # theme-check-enable ParserBlockingScript %}
+    <script
+      src="{{ 'critical.js' | asset_url }}"
+      type="module"
+      async
+      blocking="render"
+    ></script>
 
     <script
       src="{{ 'qr-code-image.js' | asset_url }}"

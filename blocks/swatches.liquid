@@ -1,5 +1,3 @@
-{% # import schema from '../schemas/blocks/swatches.js' %}
-
 {%- liquid
   for product_option in closest.product.options_with_values
     assign swatch_count = product_option.values | map: 'swatch' | compact | size
@@ -17,8 +15,8 @@
     style="
       --overflow-list-alignment: {{ block.settings.product_swatches_alignment }};
       --overflow-list-alignment-mobile: {{ block.settings.product_swatches_alignment_mobile }};
-      --product-swatches-alignment: {% if block.settings.product_swatches_alignment == 'flex-start' %}start{% elsif closest.product_swatches_alignment == 'flex-end' %}end{% else %}center{% endif %};
-      --product-swatches-alignment-mobile: {% if block.settings.product_swatches_alignment_mobile == 'flex-start' %}start{% elsif closest.product_swatches_alignment_mobile == 'flex-end' %}end{% else %}center{% endif %};
+      --product-swatches-alignment: {% if block.settings.product_swatches_alignment == 'flex-start' %}start{% elsif block.settings.product_swatches_alignment == 'flex-end' %}end{% else %}center{% endif %};
+      --product-swatches-alignment-mobile: {% if block.settings.product_swatches_alignment_mobile == 'flex-start' %}start{% elsif block.settings.product_swatches_alignment_mobile == 'flex-end' %}end{% else %}center{% endif %};
       --product-swatches-padding-block-start: {{ block.settings.product_swatches_padding_top }}px;
       --product-swatches-padding-block-end: {{ block.settings.product_swatches_padding_bottom }}px;
       --product-swatches-padding-inline-start: {{ block.settings.product_swatches_padding_left }}px;
@@ -35,22 +33,21 @@
   product-swatches {
     width: 100%;
     display: flex;
-    justify-content: var(--product-swatches-alignment);
-    flex-direction: row;
     position: relative;
     overflow: hidden;
     gap: 0;
     flex-shrink: 0;
-
-    @media (max-width: 749px) {
-      justify-content: var(--product-swatches-alignment-mobile);
-    }
   }
 
   swatches-variant-picker-component {
     display: flex;
     width: 100%;
     flex-direction: row;
+    justify-content: var(--product-swatches-alignment-mobile);
+
+    @media (min-width: 750px) {
+      justify-content: var(--product-swatches-alignment);
+    }
   }
 
   swatches-variant-picker-component .variant-option--swatches {

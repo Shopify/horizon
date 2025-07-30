@@ -1,5 +1,5 @@
 import { Component } from '@theme/component';
-import { debounce, onAnimationEnd, prefersReducedMotion, onDocumentReady } from '@theme/utilities';
+import { debounce, onAnimationEnd, prefersReducedMotion, onDocumentLoaded } from '@theme/utilities';
 import { sectionRenderer } from '@theme/section-renderer';
 import { morph } from '@theme/morph';
 import { ThemeEvents } from '@theme/events';
@@ -29,12 +29,6 @@ class PredictiveSearchComponent extends Component {
    */
   #activeFetch = null;
 
-  #resizeObserver = new ResizeObserver((entries) => {
-    for (const entry of entries) {
-      this.style.setProperty('--predictive-search-results-height', `${entry.contentRect.height}px`);
-    }
-  });
-
   /**
    * Get the dialog component.
    * @returns {DialogComponent | null} The dialog component.
@@ -62,13 +56,7 @@ class PredictiveSearchComponent extends Component {
       document.addEventListener(ThemeEvents.megaMenuHover, this.#blurSearch, { signal });
     }
 
-    onDocumentReady(this.#getRecentlyViewed);
-
-    const results = this.refs.predictiveSearchResults.firstElementChild;
-
-    if (results) {
-      this.#resizeObserver.observe(results);
-    }
+    onDocumentLoaded(this.#getRecentlyViewed);
   }
 
   /**
@@ -93,7 +81,6 @@ class PredictiveSearchComponent extends Component {
   disconnectedCallback() {
     super.disconnectedCallback();
     this.#controller.abort();
-    this.#resizeObserver.disconnect();
   }
 
   /**
@@ -221,7 +208,7 @@ class PredictiveSearchComponent extends Component {
         this.#currentIndex = currentIndex > 0 ? currentIndex - 1 : totalItems - 1;
         break;
 
-      case 'Enter':
+      case 'Enter': {
         const singleResultContainer = this.refs.predictiveSearchResults.querySelector('[data-single-result-url]');
         if (singleResultContainer instanceof HTMLElement && singleResultContainer.dataset.singleResultUrl) {
           event.preventDefault();
@@ -238,6 +225,7 @@ class PredictiveSearchComponent extends Component {
           window.location.href = searchUrl.toString();
         }
         break;
+      }
     }
   };
 

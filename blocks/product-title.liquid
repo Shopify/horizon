@@ -1,12 +1,17 @@
-{% # import schema from '../schemas/blocks/product-title' %}
-
 {% if closest.product == blank %}
   {% assign text = 'placeholders.product_title' | t %}
   {% assign product_title = '<p>' | append: text | append: '</p>' %}
   {% render 'text', fallback_text: product_title, block: block %}
 {% elsif closest.product != blank %}
   {% assign product_title = '<p>' | append: closest.product.title | append: '</p>' %}
-  {% render 'text', fallback_text: product_title, block: block %}
+  <a
+    class="contents user-select-text"
+    ref="productTitleLink"
+    href="{% render 'product-card-variant-url', product: closest.product %}"
+    aria-hidden="true"
+  >
+    {% render 'text', fallback_text: product_title, block: block %}
+  </a>
 {% endif %}
 
 {% schema %}

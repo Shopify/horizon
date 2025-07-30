@@ -41,6 +41,13 @@
       {% sections 'header-group' %}
     </div>
 
+    <script
+      src="{{ 'critical.js' | asset_url }}"
+      type="module"
+      async
+      blocking="render"
+    ></script>
+
     <main
       id="MainContent"
       class="content-for-layout"
@@ -53,10 +60,6 @@
     </main>
 
     {% sections 'footer-group' %}
-
-    {% # theme-check-disable ParserBlockingScript %}
-    <script src="{{ 'critical.js' | asset_url }}"></script>
-    {% # theme-check-enable ParserBlockingScript %}
 
     {% render 'search-modal' %}
 

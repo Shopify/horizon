@@ -511,6 +511,10 @@ p:empty {
   }
 }
 
+.contents {
+  display: contents;
+}
+
 .flex {
   display: flex;
   gap: var(--gap-md);
@@ -604,6 +608,10 @@ p:empty {
 
 .text-inherit {
   color: inherit;
+}
+
+.user-select-text {
+  user-select: text;
 }
 
 .justify-left {
@@ -1526,10 +1534,20 @@ media-gallery {
     margin-right: auto;
     margin-left: auto;
   }
+
+  @media screen and (min-width: 750px) {
+    /* The desktop layout doesn't stretch vertically as it should in Safari */
+    height: var(--constrained-height, auto);
+  }
 }
 
 media-gallery:where(.media-gallery--grid) .media-gallery__grid {
   display: none;
+}
+
+media-gallery.media-gallery--grid .media-gallery__grid .product-media-container {
+  /* Needed for safari to stretch to full grid height */
+  height: 100%;
 }
 
 .product-media :is(deferred-media, product-model) {
@@ -1565,6 +1583,7 @@ media-gallery:where(.media-gallery--grid) .media-gallery__grid {
 
   media-gallery:where(.media-gallery--grid) .media-gallery__grid {
     display: grid;
+    align-items: stretch;
   }
 }
 

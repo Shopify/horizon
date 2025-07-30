@@ -1,5 +1,3 @@
-{% # import schema from '../schemas/blocks/_collection-image' %}
-
 {% if block.settings.image_ratio == 'custom' %}
   {% assign image_width = block.settings.collection_image_width | at_most: 100 %}
   {% assign image_height = block.settings.collection_image_height %}

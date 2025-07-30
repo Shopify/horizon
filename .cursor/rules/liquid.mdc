@@ -3,33 +3,39 @@ description:
 globs: *.liquid
 alwaysApply: false
 ---
+
 # Liquid Syntax Standards
 
 ## Valid Tags with Parameters
 
 **Control Flow:**
+
 - `if condition` / `endif` - Conditional logic
 - `unless condition` / `endunless` - Negative conditional
 - `case variable` / `when value` / `endcase` - Switch statement
 - `for item in array` / `endfor` - Loop with optional `limit:`, `offset:`
 
 **Variable Assignment:**
+
 - `assign variable = value` - Create variable
 - `capture variable` / `endcapture` - Capture output
 - `increment variable` - Add 1 to counter
 - `decrement variable` - Subtract 1 from counter
 
 **Template Inclusion:**
+
 - `render 'snippet-name'` - Include snippet
 - `render 'snippet-name', param: value` - With parameters
 - `section 'section-name'` - Include section
 
 **Forms:**
+
 - `form 'cart'` / `endform` - Cart form
 - `form 'product'` / `endform` - Product form
 - `form 'customer_login'` / `endform` - Login form
 
 **Other:**
+
 - `paginate collection.products by 12` / `endpaginate` - Paginate results
 - `liquid` / `endliquid` - Multiline Liquid block
 - `comment` / `endcomment` - Block comments
@@ -38,6 +44,7 @@ alwaysApply: false
 ## Valid Filters
 
 **Array Filters:**
+
 - `compact` - Remove nil values: `array | compact`
 - `concat` - Join arrays: `array | concat: array`
 - `find` - Find object: `array | find: property, value`
@@ -50,6 +57,7 @@ alwaysApply: false
 - `size` - Count items: `array | size`
 
 **String Filters:**
+
 - `escape` - HTML escape: `string | escape`
 - `truncate` - Limit length: `string | truncate: 150`
 - `handleize` - URL handle: `string | handleize`
@@ -60,11 +68,13 @@ alwaysApply: false
 - `capitalize` - Capitalize: `string | capitalize`
 
 **Money Filters:**
+
 - `money` - Format price: `price | money`
 - `money_with_currency` - With symbol: `price | money_with_currency`
 - `money_without_currency` - No symbol: `price | money_without_currency`
 
 **Media Filters:**
+
 - `image_url` - Responsive image: `image | image_url: width: 800`
 - `image_tag` - Complete img tag: `image | image_tag`
 - `asset_url` - Theme asset: `'style.css' | asset_url`
@@ -77,3 +87,80 @@ alwaysApply: false
 - Follow proper tag closing order (last opened, first closed)
 - Use object dot notation: `product.title` not `product['title']`
 - Respect object scope and availability
+
+## Inline Variables Pattern
+
+For props that are relatively straightforward, prefer to inline the liquid instead of declaring extra variables. In smaller components it doesn't make a big difference, but in bigger ones it helps not having to scroll up and down to know what is being applied where.
+
+**✅ Do this (inline approach):**
+
+```liquid
+<div
+  class='component component--{{ settings.style_modifier }}'
+  style='
+    color: {{ settings.text_color }};
+    {% if settings.show_border %}
+      border: 1px solid {{ settings.border_color }};
+    {% endif %}
+  '
+>
+  <h2>{{ 'sections.component.title' | t }}</h2>
+
+  {{ content | truncate: settings.max_length | default: 200 }}
+
+  <a
+    href='{{ link_url }}'
+    class='link--{{ settings.link_style | default: 'primary' }}'
+  >
+    {{ 'general.read_more' | t }}
+  </a>
+</div>
+```
+
+**❌ Don't do this (variable declaration approach):**
+
+```liquid
+{% liquid
+  assign component_class = 'component component--' | append: settings.style_modifier
+  assign text_color = settings.text_color
+  assign truncate_length = settings.max_length | default: 200
+  assign link_class = 'link--' | append: settings.link_style | default: 'primary'
+%}
+
+{% capture component_style %}
+  color: {{ text_color }};
+  {% if settings.show_border %}
+    border: 1px solid {{ settings.border_color }};
+  {% endif %}
+{% endcapture %}
+
+<div
+  class='{{ component_class }}'
+  style='{{ component_style }}'
+>
+  <h2>{{ 'sections.component.title' | t }}</h2>
+
+  {{ content | truncate: truncate_length }}
+
+  <a
+    href='{{ link_url }}'
+    class='{{ link_class }}'
+  >
+    {{ 'general.read_more' | t }}
+  </a>
+</div>
+```
+
+**Exceptions:**
+
+- When Liquid filter parameters require string values and complex logic cannot be inlined
+- When the same complex calculation is used multiple times
+- When the logic is extremely complex and would harm readability
+- When you need to build a string incrementally with conditional parts
+
+**Benefits:**
+
+- Easier to understand what's being applied where
+- No need to scroll up and down to find variable definitions
+- Reduces cognitive load in larger components
+- Makes the code more maintainable

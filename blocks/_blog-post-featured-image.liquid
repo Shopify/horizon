@@ -1,126 +1,89 @@
-{% liquid
-  assign ratio = 1
+{%- doc -%}
+  Renders the blog post featured image block.
 
-  case block.settings.image_ratio
-    when 'landscape'
-      assign ratio = '16 / 9'
-    when 'portrait'
-      assign ratio = '4 / 5'
-    when 'adapt'
-      assign ratio = block.settings.image.aspect_ratio
-  endcase
+  @param {object} image - The image object from article.image
+{%- enddoc -%}
 
-  if ratio == 0 or ratio == null
-    assign ratio = 1
-  endif
-%}
+<div
+  class="blog-post-featured-image blog-post-featured-image--{{ block.id }} blog-post-featured-image--height-{{ block.settings.height }} spacing-style size-style"
+  style="
+    --ratio: {% case block.settings.image_ratio %}
+      {% when 'landscape' %}16 / 9
+      {% when 'portrait' %}4 / 5
+      {% when 'adapt' %}{{ image.aspect_ratio | default: 1 }}
+      {% else %}1
+    {% endcase %};
+    {% render 'size-style', settings: block.settings %}
+    {% render 'spacing-style', settings: block.settings %}
+  "
+  {{ block.shopify_attributes }}
+>
+  {%- capture image_border_style -%}
+    {% render 'border-override', settings: block.settings %}
+  {%- endcapture -%}
 
-{% capture class %}
-  image-block image-block--{{ block.id }} image-block--height-{{ block.settings.height }} spacing-style size-style
-{% endcapture %}
-
-{% capture style %}
-  --ratio: {{ ratio }};
-  {% render 'size-style', settings: block.settings %}
-  {% render 'spacing-style', settings: block.settings %}
-{% endcapture %}
-
-{% capture image_border_style %}
-  --ratio: {{ ratio }};
-  {% render 'border-override', settings: block.settings %}
-{% endcapture %}
-
-{% liquid
-  assign media_width_desktop = '100vw'
-  assign media_width_mobile = '100vw'
-  assign sizes = 'auto, (min-width: 750px) ' | append: media_width_desktop | append: ', ' | append: media_width_mobile
-  assign widths = '300, 450, 600, 750, 900, 1050, 1200, 1350, 1500, 1650, 1800, 1950, 2000, 2500, 3000, 3500, 4000, 5000'
-%}
-
-{% capture image %}
-  {%- if block.settings.image -%}
-    {{
-      block.settings.image
-      | image_url: width: 3840
-      | image_tag:
-        width: block.settings.image.width,
-        widths: widths,
-        height: block.settings.image.height,
-        class: 'image-block__image border-style',
-        style: image_border_style,
-        sizes: sizes
-    }}
-  {%- else -%}
-    <div class="placeholder-image border-style size-style" style="{{ image_border_style }}">
-      {{ 'detailed-apparel-1' | placeholder_svg_tag: 'hero__image' }}
-    </div>
-  {%- endif -%}
-{% endcapture %}
-
-{% if block.settings.link == blank %}
-  <div
-    class="{{ class }}"
-    style="{{ style }}"
-    {{ block.shopify_attributes }}
-  >
-    {{ image }}
-  </div>
-{% else %}
-  <a
-    href="{{ block.settings.link }}"
-    class="{{ class }}"
-    style="{{ style }}"
-    {{ block.shopify_attributes }}
-  >
-    {{ image }}
-  </a>
-{% endif %}
+  {{
+    image
+    | image_url: width: 3840
+    | image_tag:
+      width: image.width,
+      widths: '300, 450, 600, 750, 900, 1050, 1200, 1350, 1500, 1650, 1800, 1950, 2000, 2500, 3000, 3500, 4000, 5000',
+      height: image.height,
+      class: 'blog-post-featured-image__image border-style',
+      style: image_border_style,
+      sizes: 'auto, (min-width: 750px) 100vw, 100vw',
+      loading: 'eager',
+      fetchpriority: 'high',
+      alt: image.alt
+  }}
+</div>
 
 {% stylesheet %}
-  .placeholder-image {
+  .blog-post-featured-image {
+    --width: 100%;
+    --custom-width: 100%;
+    display: block;
     position: relative;
-    aspect-ratio: var(--ratio);
-    overflow: hidden;
+    width: var(--width);
   }
 
-  placeholder-image img {
+  .blog-post-featured-image.size-style {
+    --width: var(--size-style-width, 100%);
+  }
+
+  .blog-post-featured-image--height-fit {
+    height: fit-content;
+  }
+
+  .blog-post-featured-image--height-fill {
+    height: 100%;
+  }
+
+  .blog-post-featured-image__image {
+    aspect-ratio: var(--ratio);
     width: 100%;
     height: 100%;
-    aspect-ratio: var(--ratio);
-  }
-
-  .image-block {
-    display: flex;
-
-    /* When the image is nested in a group, section, etc, respect the parent's horizontal alignment */
-    justify-content: var(--horizontal-alignment, 'inline-start');
-  }
-
-  .image-block--height-fill .image-block__image {
-    height: 100%;
-  }
-
-  .image-block__image {
     object-fit: cover;
-    aspect-ratio: var(--ratio);
+    object-position: center center;
+  }
+
+  @media screen and (max-width: 749px) {
+    .blog-post-featured-image {
+      --width: var(--width-mobile, var(--width));
+      --custom-width: var(--custom-width-mobile, var(--custom-width));
+    }
+
+    .blog-post-featured-image.size-style {
+      --width: var(--size-style-width-mobile, var(--size-style-width, 100%));
+    }
   }
 {% endstylesheet %}
 
 {% schema %}
 {
-  "name": "t:names.image",
-  "tag": null,
+  "name": "t:names.featured_image",
+  "blocks": [],
   "settings": [
-    {
-      "type": "image_picker",
-      "id": "image",
-      "label": "t:settings.image"
-    },
-    {
-      "type": "url",
-      "id": "link",
-      "label": "t:settings.link"
-    },
     {
       "type": "header",
       "content": "t:content.size"
@@ -323,12 +286,6 @@
       "step": 1,
       "unit": "px",
       "default": 0
-    }
-  ],
-  "presets": [
-    {
-      "name": "t:names.image",
-      "category": "t:categories.basic"
     }
   ]
 }

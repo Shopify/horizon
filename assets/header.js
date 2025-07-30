@@ -1,5 +1,6 @@
+import { calculateHeaderGroupHeight } from '@theme/critical';
 import { Component } from '@theme/component';
-import { onDocumentReady, changeMetaThemeColor } from '@theme/utilities';
+import { onDocumentLoaded, changeMetaThemeColor } from '@theme/utilities';
 
 /**
  * @typedef {Object} HeaderComponentRefs
@@ -136,12 +137,12 @@ class HeaderComponent extends Component {
     }
 
     if (stickyMode === 'always') {
-      if (isScrollingUp) {
-        if (this.getBoundingClientRect().top >= 0) {
-          this.dataset.scrollDirection = 'none';
-        } else {
-          this.dataset.scrollDirection = 'up';
-        }
+      const isAtTop = this.getBoundingClientRect().top >= 0;
+
+      if (isAtTop) {
+        this.dataset.scrollDirection = 'none';
+      } else if (isScrollingUp) {
+        this.dataset.scrollDirection = 'up';
       } else {
         this.dataset.scrollDirection = 'down';
       }
@@ -209,7 +210,7 @@ if (!customElements.get('header-component')) {
   customElements.define('header-component', HeaderComponent);
 }
 
-onDocumentReady(() => {
+onDocumentLoaded(() => {
   const header = document.querySelector('#header-component');
   const headerGroup = document.querySelector('#header-group');
 

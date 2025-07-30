@@ -1,5 +1,3 @@
-{% # import schema from '../schemas/blocks/_announcement' %}
-
 {% assign plain_text = block.settings.text | strip_newlines | strip_html | strip %}
 {%- assign block_index = section.blocks | find_index: 'id', block.id -%}
 

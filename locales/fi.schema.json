@@ -162,7 +162,8 @@
     "pills": "Pillerikuvakkeet",
     "product_title": "Tuotteen nimi",
     "large_logo": "Suuri logo",
-    "description": "Kuvaus"
+    "description": "Kuvaus",
+    "featured_image": "Esittelykuva"
   },
   "settings": {
     "alignment": "Tasaus",
@@ -491,7 +492,8 @@
     "product_card_carousel": "Näytä karuselli",
     "show_second_image_on_hover": "Näytä toinen kuva osoitettaessa",
     "media_fit": "Median sovitus",
-    "scroll_speed": "Aikaa seuraavaan ilmoitukseen"
+    "scroll_speed": "Aikaa seuraavaan ilmoitukseen",
+    "show_powered_by_shopify": "Näytä Powered by Shopify"
   },
   "options": {
     "adapt_to_image": "Sovita kuvaan",
@@ -838,7 +840,6 @@
     "carousel": "Karuselli",
     "colors": "Värit",
     "collection_page": "Kokoelmasivu",
-    "copyright_info": "Lisätietoja [tekijänoikeusilmoituksen muokkaamisesta](https://help.shopify.com/manual/online-store/themes/customizing-themes/remove-powered-by-shopify-message)",
     "customer_account": "Asiakastili",
     "edit_empty_state_collection_in_theme_settings": "Muokkaa tyhjän tilan kokoelmaa kohdassa [teema-asetukset](/editor?context=theme&category=search)",
     "grid_layout": "Ruudukkoasettelu",

@@ -1,5 +1,3 @@
-{% # import schema from '../schemas/blocks/product-inventory' %}
-
 {%- liquid
   assign variant = closest.product.selected_or_first_available_variant
   if variant.inventory_management == 'shopify'

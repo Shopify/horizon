@@ -1,3 +1,4 @@
+import { OverflowList } from '@theme/critical';
 import VariantPicker from '@theme/variant-picker';
 import { Component } from '@theme/component';
 import { debounce, isDesktopBreakpoint, mediaQueryLarge, requestYieldCallback } from '@theme/utilities';
@@ -185,7 +186,16 @@ export class ProductCard extends Component {
       // If the href is empty, don't update the product URL eg: unavailable variant
       if (anchorElement.getAttribute('href')?.trim() === '') return;
 
-      this.refs.productCardLink.href = anchorElement.href;
+      const productUrl = anchorElement.href;
+      const { productCardLink, productTitleLink, cardGalleryLink } = this.refs;
+
+      productCardLink.href = productUrl;
+      if (cardGalleryLink instanceof HTMLAnchorElement) {
+        cardGalleryLink.href = productUrl;
+      }
+      if (productTitleLink instanceof HTMLAnchorElement) {
+        productTitleLink.href = productUrl;
+      }
     }
   }
 
@@ -366,10 +376,10 @@ export class ProductCard extends Component {
     // Don't navigate if this product card is marked as no-navigation (e.g., in theme editor)
     if (this.hasAttribute('data-no-navigation')) return;
 
-    const interactiveElement = event.target.closest('button, input, label, select, a, [tabindex="1"]');
+    const interactiveElement = event.target.closest('button, input, label, select, [tabindex="1"]');
 
-    // If the click was on an interactive element which is not the main link, do nothing.
-    if (interactiveElement && interactiveElement !== this.refs.productCardLink) {
+    // If the click was on an interactive element, do nothing.
+    if (interactiveElement) {
       return;
     }
 
@@ -393,7 +403,11 @@ export class ProductCard extends Component {
       });
     }
 
-    this.#navigateToURL(event, linkURL);
+    const targetLink = event.target.closest('a');
+    // Let the native navigation handle the click if it was on a link.
+    if (!targetLink) {
+      this.#navigateToURL(event, linkURL);
+    }
   };
 
   /**

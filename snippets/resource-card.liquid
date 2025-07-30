@@ -8,6 +8,7 @@
   @param {number} [image_width] - The maximum width of the image, value influences the srcset attribute. Defaults to 1200px.
   @param {string} [image_aspect_ratio] - The aspect ratio to display the image. Defaults to image's natural ratio
   @param {boolean} [image_hover] - Whether to show a secondary image on hover and focus
+  @param {string} [image_sizes] - The sizes attribute for responsive images. Defaults to 'auto'
 {%- enddoc -%}
 
 {% liquid
@@ -17,7 +18,8 @@
     assign ratio = image_aspect_ratio
   endif
   assign image_width = image_width | default: 1200
-  assign widths = '300, 450, 600, 750, 900, 1050, 1200'
+  assign widths = '240, 352, 832, 1200'
+  assign image_sizes = image_sizes | default: 'auto'
   assign single_thumbnail_collection = false
   if resource_type == 'collection' and collection_thumbnails != 'multiple'
     assign single_thumbnail_collection = true
@@ -69,7 +71,7 @@
             loading: 'lazy',
             class: 'resource-card__image',
             widths: widths,
-            sizes: 'auto',
+            sizes: image_sizes,
             transitionToProduct: settings.transition_to_main_product,
             data-media-id: featured_image.id
         }}
@@ -81,7 +83,7 @@
               loading: 'lazy',
               class: 'resource-card__image resource-card__image--secondary',
               widths: widths,
-              sizes: 'auto',
+              sizes: image_sizes,
               transitionToProduct: settings.transition_to_main_product,
               data-media-id: resource.media[1].id
           }}
@@ -102,7 +104,7 @@
             {{
               product.featured_image
               | image_url: width: image_width
-              | image_tag: loading: 'lazy', class: 'resource-card__collection-image', sizes: 'auto', widths: widths
+              | image_tag: loading: 'lazy', class: 'resource-card__collection-image', sizes: image_sizes, widths: widths
             }}
           {% endfor %}
         </div>

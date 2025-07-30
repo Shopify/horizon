@@ -2,6 +2,7 @@ import { Component } from '@theme/component';
 import { sectionRenderer } from '@theme/section-renderer';
 import { requestIdleCallback, viewTransition } from '@theme/utilities';
 import { ThemeEvents } from '@theme/events';
+import { PaginatedListAspectRatioHelper } from '@theme/paginated-list-aspect-ratio';
 
 /**
  * A custom element that renders a paginated list of items.
@@ -29,13 +30,19 @@ export default class PaginatedList extends Component {
   /** @type {((value: void) => void) | null} */
   #resolvePreviousPagePromise = null;
 
-  /** @type {string | null} */
-  #imageRatioSetting = null;
+  /** @type {PaginatedListAspectRatioHelper} */
+  #aspectRatioHelper;
 
   connectedCallback() {
     super.connectedCallback();
 
-    this.#storeImageRatioSettings();
+    /** @type {HTMLElement | null} */
+    const templateCard = this.querySelector('[ref="cardGallery"]');
+    if (templateCard) {
+      this.#aspectRatioHelper = new PaginatedListAspectRatioHelper({
+        templateCard,
+      });
+    }
 
     this.#fetchPage('next');
     this.#fetchPage('previous');
@@ -43,16 +50,6 @@ export default class PaginatedList extends Component {
 
     // Listen for filter updates to clear cached pages
     document.addEventListener(ThemeEvents.FilterUpdate, this.#handleFilterUpdate);
-  }
-
-  /**
-   * Store the image ratio from the first product card for later use
-   */
-  #storeImageRatioSettings() {
-    const firstCardGallery = this.querySelector('[ref="cardGallery"]');
-    if (!firstCardGallery) return;
-
-    this.#imageRatioSetting = firstCardGallery.getAttribute('data-image-ratio');
   }
 
   disconnectedCallback() {
@@ -192,7 +189,7 @@ export default class PaginatedList extends Component {
 
     grid.append(...nextPageItemElements);
 
-    this.#processNewElements();
+    this.#aspectRatioHelper.processNewElements();
 
     history.pushState('', '', nextPage.url.toString());
 
@@ -231,7 +228,7 @@ export default class PaginatedList extends Component {
     // Prepend the new elements
     grid.prepend(...previousPageItemElements);
 
-    this.#processNewElements();
+    this.#aspectRatioHelper.processNewElements();
 
     history.pushState('', '', previousPage.url.toString());
 
@@ -248,151 +245,6 @@ export default class PaginatedList extends Component {
     requestIdleCallback(() => {
       this.#fetchPage('previous');
     });
-  }
-
-  /**
-   * Process newly added elements and apply correct aspect ratios
-   */
-  #processNewElements() {
-    // Wait for the DOM to update
-    requestAnimationFrame(() => {
-      this.#imageRatioSetting === 'adapt' ? this.#fixAdaptiveAspectRatios() : this.#applyFixedAspectRatio();
-    });
-  }
-
-  /**
-   * Get all unprocessed card galleries
-   * @returns {NodeListOf<Element>} List of unprocessed galleries
-   */
-  #getUnprocessedGalleries() {
-    return this.querySelectorAll('.card-gallery:not([data-aspect-ratio-applied])');
-  }
-
-  /**
-   * Mark gallery as processed
-   * @param {HTMLElement} gallery - The gallery element to mark as processed
-   */
-  #markAsProcessed(gallery) {
-    if (!(gallery instanceof HTMLElement)) return;
-    gallery.setAttribute('data-aspect-ratio-applied', 'true');
-  }
-
-  /**
-   * Calculate a safe aspect ratio value from image dimensions
-   * Ensures the ratio stays within reasonable bounds and has consistent decimal places
-   * @param {number} width - Natural width of the image
-   * @param {number} height - Natural height of the image
-   * @returns {string} Normalized aspect ratio as a string
-   */
-  #getSafeImageAspectRatio(width, height) {
-    const rawRatio = width / height;
-    return Math.max(0.1, Math.min(10, rawRatio)).toFixed(3);
-  }
-
-  /**
-   * Apply an aspect ratio to a gallery and all its media containers
-   * @param {HTMLElement} gallery - The gallery element
-   * @param {string} aspectRatio - The aspect ratio to apply
-   */
-  #applyAspectRatioToGallery(gallery, aspectRatio) {
-    if (!(gallery instanceof HTMLElement)) return;
-
-    gallery.style.setProperty('--gallery-aspect-ratio', aspectRatio);
-
-    const mediaContainers = gallery.querySelectorAll('.product-media-container');
-    mediaContainers.forEach((container) => {
-      if (container instanceof HTMLElement) {
-        container.style.aspectRatio = aspectRatio;
-      }
-    });
-
-    this.#markAsProcessed(gallery);
-  }
-
-  /**
-   * Fix adaptive aspect ratios for newly added cards
-   * For the 'adapt' setting, each product should use its own image's aspect ratio
-   */
-  #fixAdaptiveAspectRatios() {
-    const newCardGalleries = this.#getUnprocessedGalleries();
-    if (!newCardGalleries.length) return;
-
-    const productRatioCache = new Map();
-
-    newCardGalleries.forEach((gallery) => {
-      if (!(gallery instanceof HTMLElement)) return;
-
-      const productId = gallery.getAttribute('data-product-id');
-      if (productId && productRatioCache.has(productId)) {
-        this.#applyAspectRatioToGallery(gallery, productRatioCache.get(productId));
-        return;
-      }
-
-      const img = gallery.querySelector('img');
-      if (!img) {
-        this.#applyAspectRatioToGallery(gallery, '1');
-        return;
-      }
-
-      const loadAndSetRatio = () => {
-        if (!img.naturalWidth || !img.naturalHeight) return;
-
-        const imgRatio = this.#getSafeImageAspectRatio(img.naturalWidth, img.naturalHeight);
-
-        if (productId) {
-          productRatioCache.set(productId, imgRatio);
-        }
-
-        this.#applyAspectRatioToGallery(gallery, imgRatio);
-      };
-
-      if (img.complete) {
-        loadAndSetRatio();
-      } else {
-        img.addEventListener('load', loadAndSetRatio, { once: true });
-      }
-    });
-  }
-
-  /**
-   * Apply a fixed aspect ratio to all card-gallery and media container elements
-   * Only used for non-adaptive modes (square, portrait, landscape)
-   */
-  #applyFixedAspectRatio() {
-    if (!this.#imageRatioSetting) return;
-
-    const aspectRatio = this.#getAspectRatioValue(this.#imageRatioSetting);
-    if (!aspectRatio) return;
-
-    const newCardGalleries = this.#getUnprocessedGalleries();
-    if (!newCardGalleries.length) return;
-
-    // Batch DOM operations for better performance
-    requestAnimationFrame(() => {
-      newCardGalleries.forEach((gallery) => {
-        if (!(gallery instanceof HTMLElement)) return;
-        this.#applyAspectRatioToGallery(gallery, aspectRatio);
-      });
-    });
-  }
-
-  /**
-   * Aspect ratio values matching the theme's standardized values
-   * @type {Object.<string, string>}
-   */
-  static ASPECT_RATIOS = {
-    square: '1',
-    portrait: '0.8',
-    landscape: '1.778',
-  };
-
-  /**
-   * Get aspect ratio value based on setting
-   * @param {string} ratioSetting - The ratio setting name
-   * @returns {string|null} - The aspect ratio value or null
-   */
-  #getAspectRatioValue(ratioSetting) {
-    return PaginatedList.ASPECT_RATIOS[ratioSetting] || null;
   }
 
   /**

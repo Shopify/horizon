@@ -1,3 +1,2 @@
-{{ 'base.css' | asset_url | preload_tag: as: 'style' }}
 {{ 'overflow-list.css' | asset_url | preload_tag: as: 'style' }}
-{{ 'base.css' | asset_url | stylesheet_tag }}
+{{ 'base.css' | asset_url | stylesheet_tag: preload: true }}

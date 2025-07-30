@@ -146,7 +146,7 @@
                               {% endif %}
                             >
                               {% if render_link_image %}
-                                {% render 'link-featured-image', link: childlink, class: 'menu-drawer__link-image' %}
+                                {% render 'link-featured-image', link: childlink, class: 'menu-drawer__link-image', sizes: 'auto, 400px' %}
                               {% endif %}
                               <span class="menu-drawer__menu-item-text">{{ childlink.title | escape }}</span>
                             </a>
@@ -195,7 +195,7 @@
                           class="menu-drawer__menu-item menu-drawer__menu-item--child menu-drawer__animated-element focus-inset{% if childlink.current %} menu-drawer__menu-item--active{% endif %}"
                         >
                           {% if render_link_image %}
-                            {% render 'link-featured-image', link: childlink, class: 'menu-drawer__link-image' %}
+                            {% render 'link-featured-image', link: childlink, class: 'menu-drawer__link-image', sizes: 'auto, 400px' %}
                           {% endif %}
                           <span class="menu-drawer__menu-item-text">{{ childlink.title | escape }}</span>
                         </a>
@@ -321,7 +321,8 @@
                                   {% if render_link_image and link.levels == 1 %}
                                     {% render 'link-featured-image',
                                       link: childlink,
-                                      class: 'menu-drawer__link-image'
+                                      class: 'menu-drawer__link-image',
+                                      sizes: 'auto, 400px'
                                     %}
                                   {% endif %}
                                   <span class="menu-drawer__menu-item-text">
@@ -386,7 +387,8 @@
                                               {% if render_link_image %}
                                                 {% render 'link-featured-image',
                                                   link: grandchildlink,
-                                                  class: 'menu-drawer__link-image'
+                                                  class: 'menu-drawer__link-image',
+                                                  sizes: 'auto, 400px'
                                                 %}
                                               {% endif %}
                                               <span class="menu-drawer__menu-item-text">
@@ -441,7 +443,8 @@
                                           {% if render_link_image %}
                                             {% render 'link-featured-image',
                                               link: grandchildlink,
-                                              class: 'menu-drawer__link-image'
+                                              class: 'menu-drawer__link-image',
+                                              sizes: 'auto, 400px'
                                             %}
                                           {% endif %}
                                           <span class="menu-drawer__menu-item-text">
@@ -480,7 +483,8 @@
                                       resource: collection.object,
                                       resource_type: 'collection',
                                       style: 'overlay',
-                                      image_aspect_ratio: ratio
+                                      image_aspect_ratio: ratio,
+                                      image_sizes: 'auto, 400px'
                                     %}
                                   </li>
                                 {%- endfor -%}
@@ -490,7 +494,8 @@
                                     {% render 'resource-card',
                                       resource: product,
                                       resource_type: 'product',
-                                      image_aspect_ratio: ratio
+                                      image_aspect_ratio: ratio,
+                                      image_sizes: 'auto, 400px'
                                     %}
                                   </li>
                                 {%- endfor -%}
@@ -576,14 +581,20 @@
                     resource: collection.object,
                     resource_type: 'collection',
                     style: 'overlay',
-                    image_aspect_ratio: ratio
+                    image_aspect_ratio: ratio,
+                    image_sizes: 'auto, 400px'
                   %}
                 </li>
               {%- endfor -%}
             {% elsif top_level_featured_products.size > 0 %}
               {%- for product in top_level_featured_products limit: max_featured_items -%}
                 <li class="menu-drawer__featured-content-list-item menu-drawer__featured-content-list-item--product">
-                  {% render 'resource-card', resource: product, resource_type: 'product', image_aspect_ratio: ratio %}
+                  {% render 'resource-card',
+                    resource: product,
+                    resource_type: 'product',
+                    image_aspect_ratio: ratio,
+                    image_sizes: 'auto, 400px'
+                  %}
                 </li>
               {%- endfor -%}
             {% endif %}

@@ -46,6 +46,11 @@ export class DialogComponent extends Component {
 
     if (dialog.open) return;
 
+    document.body.style.width = '100%';
+    const scrollY = window.scrollY;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollY}px`;
+
     dialog.showModal();
     this.dispatchEvent(new DialogOpenEvent());
 
@@ -73,6 +78,12 @@ export class DialogComponent extends Component {
     await onAnimationEnd(dialog, undefined, {
       subtree: false,
     });
+
+    document.body.style.width = '';
+    const scrollY = document.body.style.top;
+    document.body.style.position = '';
+    document.body.style.top = '';
+    window.scrollTo({ top: parseInt(scrollY) * -1, behavior: 'instant' });
 
     dialog.close();
     dialog.classList.remove('dialog-closing');

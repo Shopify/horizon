@@ -1,5 +1,3 @@
-{% # import schema from '../schemas/blocks/page.js' %}
-
 <div
   class="page-block spacing-style{% if block.settings.inherit_color_scheme == false %} color-{{ block.settings.color_scheme }}{% endif %}"
   style="{% render 'spacing-padding', settings: block.settings %}{% if block.settings.background %} background-color: {{ block.settings.background_color }};{% endif %}"

@@ -249,10 +249,10 @@ export function formatMoney(value) {
 }
 
 /**
- * Check if the document is ready and call the callback when it is.
+ * Check if the document is ready/loaded and call the callback when it is.
  * @param {() => void} callback The function to call when the document is ready.
  */
-export function onDocumentReady(callback) {
+export function onDocumentLoaded(callback) {
   if (document.readyState === 'complete') {
     callback();
   } else {

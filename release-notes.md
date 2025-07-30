@@ -1,34 +1,22 @@
-This release focuses on improving the user interface with updated product cards, better mobile compatibility, and performance enhancements. Key changes include fixing iOS-specific issues, updating the product display components, and optimizing the overall user experience across different browsers and devices.
+This release focused on performance optimizations and mobile compatibility fixes. Key improvements included refactoring the critical loading path and product card links behavior, fixing iOS-specific image distortion and Safari scrolling issues, and resolving various UI alignment problems. Additionally, a new toggle was added for the "Powered by Shopify" footer option.
 
 ## What's Changed
 
 ### Changed
 
-- Fixed user account transition whilst reworking to popover
-- Renamed Product List section to Featured Collection
-- Changed default aspect ratio from Portrait to Auto for product/collection cards
-- Updated product cards
-- Changed placeholder images
+- Added toggle for "Show 'Powered by Shopify'" to Copyrights footer block
 
 ### Fixes and improvements
 
-- Fixed featured products scroll on iOS
-- Fixed quick-add causing unresponsive UI on iOS 16
-- Fixed zoom on input fields in iOS
-- Fixed quick add variant picker layout in Safari
-- Fixed product cards overflowList on Safari
-- Restored Custom Liquid block option for product cards
-- Swatches border is no longer cut off in editorial featured collection
-- Fixed swatches on quick add modal
-- Fixed swatch availability on product cards
-- Restored predictive search category titles
-- Fixed mega menu featured collections alignment for single item
-- Fixed Header menu overflow logicon first edit
-- Fixed featured content in header menu for all products and all collections
-- Updated speed label to scroll to next announcement
-- Cleaned up header hovers
-- Improved page transition performance
-- Improved slideshow image loading time
-- Changed placeholders to display on live site
-- Fixed carousel navigation icons not displaying background shapes
-- Fixed text color in signup input
+- Fixed swatch block alignment setting
+- [Performance] Refactored the critical loading path
+- [Performance] Refactored product card links behaviour
+- [Performance] Improved image loading for mega menu and drawer
+- Fixed hide logo on home page
+- Fixed page scrolling behind drawers in Safari
+- Fixed Add to Cart Button cutoff on mobile
+- Fixed product images appearing distorted on iOS devices
+- Fixed Minimum height being too small in search bar
+- Ensured password footer does not overlap other content
+- Connected featured image to main blog post dynamically
+- Fixed several issues with "auto" aspect ratio in product media

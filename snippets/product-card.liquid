@@ -35,44 +35,34 @@
   # Logic to determine which variant URL to use (matching swatch selection logic)
   assign variant_to_link = product.selected_or_first_available_variant
   assign combined_listing_count = product.options_with_values | map: 'values' | map: 'product_url' | compact | size
+  assign no_swatch_selected = null
 
   unless combined_listing_count > 0
-    assign first_image = product.media.first
-    assign variant_images = product.images | where: 'attached_to_variant?', true
-    # Get swatchable options (options that have swatch values)
-    assign swatch_variant_picker = null
-    for option in product.options_with_values
-      assign swatch_count = option.values | map: 'swatch' | compact | size
-      if swatch_count > 0
-        assign swatch_variant_picker = option
-        break
-      endif
-    endfor
+    # Simple direct check: which variant owns the featured image?
+    if product.featured_media
+      assign found_variant = false
 
-    if swatch_variant_picker
-      assign swatch_count = swatch_variant_picker.values | map: 'swatch' | compact | size
-      assign no_swatch_selected = null
-
-      if swatch_count == 1
-        # Single swatch: use that variant
-        assign variant_to_link = swatch_variant_picker.values.first.variant
-      elsif swatch_count > 1
-        if first_image and variant_images contains first_image
-          # First image is a variant image - find which variant it belongs to
-          for option_value in swatch_variant_picker.values
-            if option_value.variant.featured_media.id == first_image.id
-              assign variant_to_link = option_value.variant
-              break
-            endif
-          endfor
-        elsif variant_images.size == 0
-          # No variants have images - use first swatch variant
-          assign variant_to_link = swatch_variant_picker.values.first.variant
-        else
-          assign no_swatch_selected = true
+      for variant in product.variants
+        if variant.featured_media.id == product.featured_media.id
+          assign variant_to_link = variant
+          assign found_variant = true
+          break
         endif
-        # else: First image is NOT a variant image - keep default (selected_or_first_available_variant)
-      endif
+      endfor
+
+      # Check if we need to set no_swatch_selected
+      unless found_variant
+        # Featured image is not a variant image
+        # Check if product has swatches
+        for option in product.options_with_values
+          assign swatch_count = option.values | map: 'swatch' | compact | size
+          if swatch_count > 1
+            # Multiple swatches exist but featured image doesn't match any
+            assign no_swatch_selected = true
+            break
+          endif
+        endfor
+      endunless
     endif
   endunless
 
@@ -115,7 +105,6 @@
     id="{{ product_card_id | md5 }}"
     {% unless onboarding %}
       href="{{ variant_to_link.url }}"
-      on:click="/navigateToProduct"
     {% endunless %}
     class="product-card__link"
     ref="productCardLink"

@@ -1,5 +1,3 @@
-{% # import schema from '../schemas/sections/main-blog-post.js' %}
-
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div class="section color-{{ section.settings.color_scheme }}">
   <div
@@ -20,7 +18,9 @@
       {%- content_for 'block', id: 'blog-post-details', type: '_blog-post-info-text' %}
     </header>
 
-    {%- content_for 'block', id: 'blog-post-image', type: 'image' %}
+    {%- if article.image -%}
+      {%- content_for 'block', id: 'blog-post-image', type: '_blog-post-featured-image', image: article.image %}
+    {%- endif -%}
     {%- content_for 'block', id: 'blog-post-content', type: '_blog-post-content' %}
 
     {% if blog.comments_enabled? %}

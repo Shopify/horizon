@@ -162,7 +162,8 @@
     "pills": "Knappar",
     "large_logo": "Stor logotyp",
     "product_inventory": "Produktlager",
-    "description": "Beskrivning"
+    "description": "Beskrivning",
+    "featured_image": "Utvald bild"
   },
   "settings": {
     "alignment": "Justering",
@@ -491,7 +492,8 @@
     "media": "Media",
     "product_card_carousel": "Visa karusell",
     "media_fit": "Mediaanpassning",
-    "scroll_speed": "Tid till nästa meddelande"
+    "scroll_speed": "Tid till nästa meddelande",
+    "show_powered_by_shopify": "Visa ”Drivs av Shopify”"
   },
   "options": {
     "adapt_to_image": "Anpassa till bild",
@@ -836,7 +838,6 @@
     "carousel": "Karusell",
     "colors": "Färger",
     "collection_page": "Produktseriesida",
-    "copyright_info": "Läs om hur du [redigerar upphovsrättsinformationen](https://help.shopify.com/manual/online-store/themes/customizing-themes/remove-powered-by-shopify-message)",
     "customer_account": "Kundkonto",
     "edit_empty_state_collection_in_theme_settings": "Redigera tomt tillstånd för kollektion i [temainställningar](/editor?context=theme&category=search)",
     "grid_layout": "Rutnätslayout",

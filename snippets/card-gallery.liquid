@@ -194,17 +194,31 @@
     {% if hover_behavior == 'none' or settings.product_card_carousel == false %}
       {% assign slideshow_attributes = slideshow_attributes | append: ' disabled="true"' %}
     {% endif %}
-    {% render 'slideshow',
-      ref: 'slideshow',
-      initial_slide: 0,
-      slides: slides,
-      slide_count: all_media.size,
-      show_arrows: show_arrows,
-      attributes: slideshow_attributes
-    %}
+    <a
+      class="contents"
+      ref="cardGalleryLink"
+      href="{% render 'product-card-variant-url', product: product %}"
+      aria-label="{{- product.title -}}"
+    >
+      {% render 'slideshow',
+        ref: 'slideshow',
+        initial_slide: 0,
+        slides: slides,
+        slide_count: all_media.size,
+        show_arrows: show_arrows,
+        attributes: slideshow_attributes
+      %}
+    </a>
   {% elsif product != blank and product.media.size == 0 %}
     <product-title class="product-card-gallery__title-placeholder">
-      <span class="title-text">{{- product.title -}}</span>
+      <a
+        class="contents"
+        ref="productTitleLink"
+        href="{% render 'product-card-variant-url', product: product %}"
+        aria-hidden="true"
+      >
+        <span class="title-text">{{- product.title -}}</span>
+      </a>
     </product-title>
   {% elsif product == blank %}
     {% capture placeholder_image %}
@@ -257,6 +271,10 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  .product-card-gallery__title-placeholder a {
+    color: var(--color-foreground);
   }
 
   @media screen and (min-width: 750px) {

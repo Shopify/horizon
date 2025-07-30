@@ -1,5 +1,3 @@
-{% # import schema from '../schemas/blocks/_footer-copyright.js' %}
-
 <div
   class="
     footer-utilities__group-copyright
@@ -12,7 +10,9 @@
   <span class="footer-utilities__text">
     &copy; {{ 'now' | date: '%Y' }}
     {{ shop.name | link_to: routes.root_url -}}
-    , {{ powered_by_link }}
+    {%- if block.settings.show_powered_by -%}
+      , {{ powered_by_link }}
+    {%- endif -%}
   </span>
 </div>
 
@@ -22,8 +22,14 @@
   "tag": null,
   "settings": [
     {
+      "type": "checkbox",
+      "id": "show_powered_by",
+      "label": "t:settings.show_powered_by_shopify",
+      "default": true
+    },
+    {
       "type": "paragraph",
-      "content": "t:content.copyright_info"
+      "content": "t:content.manage_store_name"
     },
     {
       "type": "select",

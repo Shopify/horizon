@@ -3,7 +3,7 @@
  * If the component is mounted after the browser finishes the initial render,
  * the shadow root needs to be manually hydrated.
  */
-class DeclarativeShadowElement extends HTMLElement {
+export class DeclarativeShadowElement extends HTMLElement {
   connectedCallback() {
     if (!this.shadowRoot) {
       const template = this.querySelector(':scope > template[shadowrootmode="open"]');
@@ -20,7 +20,7 @@ class DeclarativeShadowElement extends HTMLElement {
  * A custom ResizeObserver that only calls the callback when the element is resized.
  * By default the ResizeObserver callback is called when the element is first observed.
  */
-class ResizeNotifier extends ResizeObserver {
+export class ResizeNotifier extends ResizeObserver {
   #initialized = false;
 
   /**
@@ -43,7 +43,7 @@ class ResizeNotifier extends ResizeObserver {
  * Event class for overflow minimum items updates
  * @extends {Event}
  */
-class OverflowMinimumEvent extends Event {
+export class OverflowMinimumEvent extends Event {
   /**
    * Creates a new OverflowMinimumEvent
    * @param {boolean} minimumReached - Whether the minimum number of visible items has been reached
@@ -56,7 +56,7 @@ class OverflowMinimumEvent extends Event {
   }
 }
 
-class ReflowEvent extends Event {
+export class ReflowEvent extends Event {
   /**
    * @param {HTMLElement} lastVisibleElement - The element to move to the last visible position
    */
@@ -75,7 +75,7 @@ class ReflowEvent extends Event {
  *   <!-- list items -->
  * </overflow-list>
  */
-class OverflowList extends DeclarativeShadowElement {
+export class OverflowList extends DeclarativeShadowElement {
   static get observedAttributes() {
     return ['disabled', 'minimum-items'];
   }
@@ -97,6 +97,34 @@ class OverflowList extends DeclarativeShadowElement {
 
   connectedCallback() {
     super.connectedCallback();
+
+    if (this.hasAttribute('defer')) {
+      const deferredReflow = () => {
+        // Remove attribute first to change layout before calculating the actual size
+        this.removeAttribute('defer');
+        this.#initialize();
+      };
+      const { schedule } = this;
+
+      const requestIdleCallback =
+        typeof window.requestIdleCallback === 'function' ? window.requestIdleCallback : setTimeout;
+
+      requestIdleCallback(() => schedule(deferredReflow));
+    } else if (this.shadowRoot) {
+      this.#initialize();
+    } else {
+      // Not all element children has been parsed yet, try again in the next tick
+      // <overflow-list> is a special case as critical.js can execute before DOMContentLoaded
+      setTimeout(() => {
+        this.#initialize();
+      }, 0);
+    }
+  }
+
+  /**
+   * Initialize the element
+   */
+  #initialize() {
     const { shadowRoot } = this;
 
     if (!shadowRoot) throw new Error('Missing shadow root');
@@ -136,20 +164,7 @@ class OverflowList extends DeclarativeShadowElement {
       }
     );
 
-    if (this.hasAttribute('defer')) {
-      const deferredReflow = () => {
-        // Remove attribute first to change layout before calculating the actual size
-        this.removeAttribute('defer');
-        this.#reflowItems();
-      };
-      const { schedule } = this;
-
-      const idleCallback = typeof requestIdleCallback === 'function' ? requestIdleCallback : setTimeout;
-
-      idleCallback(() => schedule(deferredReflow));
-    } else {
-      this.#reflowItems();
-    }
+    this.#reflowItems();
   }
 
   disconnectedCallback() {
@@ -159,7 +174,8 @@ class OverflowList extends DeclarativeShadowElement {
   get schedule() {
     return typeof Theme?.utilities?.scheduler?.schedule === 'function'
       ? Theme.utilities.scheduler.schedule
-      : /** @param {FrameRequestCallback} callback */ (callback) => requestAnimationFrame(callback);
+      : /** @param {FrameRequestCallback} callback */ (callback) =>
+          requestAnimationFrame(() => setTimeout(callback, 0));
   }
 
   #scheduled = false;
@@ -408,7 +424,7 @@ if (!customElements.get('overflow-list')) {
 }
 
 // Function to calculate total height of header group children
-function calculateHeaderGroupHeight(
+export function calculateHeaderGroupHeight(
   header = document.querySelector('#header-component'),
   headerGroup = document.querySelector('#header-group')
 ) {

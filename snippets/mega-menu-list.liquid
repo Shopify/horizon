@@ -93,7 +93,24 @@
         class="mega-menu__link {% if link.links != blank %}mega-menu__link--parent{% endif %}"
       >
         {% if menu_content_type == 'collection_images' %}
-          {% render 'link-featured-image', link: link, class: 'mega-menu__link-image' %}
+          {%- capture collection_image_sizes -%}
+            {%- if parent_link.links.size < 5 -%}
+              {%- assign columns_per_item = 2 -%}
+            {%- else -%}
+              {%- assign columns_per_item = 1 -%}
+            {%- endif -%}
+            {%- render 'util-mega-menu-img-sizes-attr',
+              menu_content_type: 'collection_images',
+              settings: settings,
+              grid_columns: grid_columns_count,
+              grid_columns_tablet: grid_columns_count_tablet,
+              grid_columns_collection_images: grid_columns_count_collection_images,
+              parent_links_size: parent_link.links.size,
+              columns_per_item: columns_per_item
+            -%}
+          {%- endcapture -%}
+
+          {% render 'link-featured-image', link: link, class: 'mega-menu__link-image', sizes: collection_image_sizes %}
         {% endif %}
         <span
           class="mega-menu__link-title"
@@ -232,6 +249,15 @@
 
 {% case menu_content_type %}
   {% when 'featured_products' %}
+    {%- capture image_sizes -%}
+      {%- render 'util-mega-menu-img-sizes-attr',
+        menu_content_type: 'featured_products',
+        settings: settings,
+        grid_columns: grid_columns_count,
+        grid_columns_tablet: grid_columns_count_tablet
+      -%}
+    {%- endcapture -%}
+
     <span
       class="mega-menu__content"
       style="--menu-content-columns-desktop: {{ max_product_columns }}; --menu-content-columns-tablet: {{ max_product_columns_tablet }}; --resource-card-corner-radius: {{ image_border_radius }}px;"
@@ -246,7 +272,8 @@
                 resource: item,
                 resource_type: 'product',
                 image_hover: true,
-                image_aspect_ratio: content_aspect_ratio
+                image_aspect_ratio: content_aspect_ratio,
+                image_sizes: image_sizes
               %}
             </li>
           {% endfor %}
@@ -255,6 +282,12 @@
     </span>
   {% when 'featured_collections' %}
     {% assign collection_handles = collection_handles | split: ',' | uniq %}
+    {%- capture image_sizes -%}
+      {%- render 'util-mega-menu-img-sizes-attr',
+        menu_content_type: 'featured_collections',
+        settings: settings
+      -%}
+    {%- endcapture -%}
 
     {% if collection_handles.size == 1 %}
       {% assign max_featured_collections = 1 %}
@@ -279,7 +312,8 @@
               resource: collection_object,
               resource_type: 'collection',
               style: 'overlay',
-              image_aspect_ratio: content_aspect_ratio
+              image_aspect_ratio: content_aspect_ratio,
+              image_sizes: image_sizes
             %}
           </li>
         {% endfor %}
