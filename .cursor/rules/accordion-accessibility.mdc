@@ -1,0 +1,218 @@
+---
+description: Accordion component accessibility compliance and WAI-ARIA Accordion Pattern
+globs: *.vue, *.jsx, *.tsx, *.html, *.php, *.js, *.ts, *.liquid
+alwaysApply: false
+---
+
+# Accordion Component Accessibility Standards
+
+Ensures accordion components follow WCAG compliance and WAI-ARIA Accordion Pattern specifications.
+
+<rule>
+name: accordion_accessibility_standards
+description: Enforce accordion component accessibility standards and WAI-ARIA Accordion Pattern compliance
+filters:
+  - type: file_extension
+    pattern: "\\.(vue|jsx|tsx|html|php|js|ts|liquid)$"
+
+actions:
+
+- type: enforce
+  conditions:
+
+  # Accordion header button role requirement
+
+  - pattern: "(?i)<button[^>]_(?:accordion|expand|collapse)[^>]_>"
+    pattern_negate: "role=\"button\""
+    message: "Accordion header buttons should have role='button' (or use native button element which has implicit role)."
+
+  # Accordion header missing aria-expanded
+
+  - pattern: "(?i)<button[^>]_(?:accordion|expand|collapse)[^>]_>"
+    pattern_negate: "aria-expanded=\"(true|false)\""
+    message: "Accordion header buttons must have aria-expanded attribute set to 'true' or 'false'."
+
+  # Accordion header missing aria-controls
+
+  - pattern: "(?i)<button[^>]_(?:accordion|expand|collapse)[^>]_>"
+    pattern_negate: "aria-controls=\"[^\"]+\""
+    message: "Accordion header buttons must have aria-controls attribute referencing the ID of the associated panel."
+
+  # Heading wrapper missing role
+
+  - pattern: "(?i)<(div|section)[^>]*(?:accordion.*header|header._accordion)[^>]_>"
+    pattern_negate: "role=\"heading\""
+    message: "Accordion header wrappers should have role='heading' or use native heading elements (h1-h6)."
+
+  # Heading role missing aria-level
+
+  - pattern: "(?i)<[^>]_role=\"heading\"[^>]_>"
+    pattern_negate: "aria-level=\"[1-6]\""
+    message: "Elements with role='heading' must have aria-level attribute set to appropriate level (1-6)."
+
+  # Panel missing proper identification
+
+  - pattern: "(?i)<(div|section)[^>]*(?:accordion.*panel|panel._accordion)[^>]_>"
+    pattern_negate: "id=\"[^\"]+\""
+    message: "Accordion panels must have unique ID attributes for aria-controls reference."
+
+  # Panel with region role missing aria-labelledby
+
+  - pattern: "(?i)<[^>]_role=\"region\"[^>]_>"
+    pattern_negate: "aria-labelledby=\"[^\"]+\""
+    message: "Accordion panels with role='region' must have aria-labelledby referencing the controlling button."
+
+  # Missing keyboard event handlers
+
+  - pattern: "(?i)<button[^>]_(?:accordion|expand|collapse)[^>]_>"
+    pattern_negate: "(onKeyDown|onkeydown|@keydown|v-on:keydown)"
+    message: "Accordion header buttons should handle keyboard events (Enter, Space, optionally Arrow keys)."
+
+  # Missing Escape key support for accordion content
+
+  - pattern: "(?i)<(div|section)[^>]*(?:accordion.*panel|panel._accordion)[^>]_>"
+    pattern_negate: "(onKeyDown|onkeydown|@keydown|v-on:keydown)"
+    message: "Accordion panels should handle Escape key to close panel and return focus to header."
+
+- type: suggest
+  message: |
+  **Accordion Component Accessibility Best Practices:**
+
+  **Required ARIA Attributes:**
+
+  - **role='button':** Set on accordion header elements (or use native button)
+  - **role='heading':** Set on accordion header container with aria-level
+  - **aria-expanded:** 'true' if panel is visible, 'false' if collapsed
+  - **aria-controls:** Reference to the ID of the associated panel content
+  - **aria-level:** Appropriate heading level (1-6) for information architecture
+  - **aria-disabled:** 'true' if panel cannot be collapsed (optional)
+
+  **Optional ARIA Attributes:**
+
+  - **role='region':** On panel content containers (avoid with >6 panels)
+  - **aria-labelledby:** On panels with role='region', referencing the header button
+
+  **Keyboard Interaction Requirements:**
+
+  - **Enter/Space:** Toggle panel expansion/collapse
+  - **Tab/Shift+Tab:** Move through all focusable elements in page order
+  - **Down/Up Arrow:** (Optional) Navigate between accordion headers
+  - **Home/End:** (Optional) Jump to first/last accordion header
+  - **Escape:** Close open panel and return focus to header button
+
+  **Structure Requirements:**
+
+  - Header button must be the only element inside heading container
+  - Each panel must have unique ID for aria-controls reference
+  - Use native heading elements (h1-h6) when possible instead of role='heading'
+  - Avoid role='region' on panels when many accordions exist (>6 panels)
+
+  **Implementation Patterns:**
+
+  **Single Accordion Item:**
+
+  ```html
+  <div class="accordion-item">
+    <h3
+      role="heading"
+      aria-level="3"
+    >
+      <button
+        aria-expanded="false"
+        aria-controls="panel-1"
+        id="header-1"
+      >
+        Section Title
+      </button>
+    </h3>
+    <div
+      id="panel-1"
+      role="region"
+      aria-labelledby="header-1"
+      hidden
+    >
+      <p>Panel content...</p>
+    </div>
+  </div>
+  ```
+
+  **JavaScript for Accordion with Escape Support:**
+
+  ```javascript
+  function toggleAccordion(button) {
+    const isExpanded = button.getAttribute('aria-expanded') === 'true';
+    const panel = document.getElementById(button.getAttribute('aria-controls'));
+
+    button.setAttribute('aria-expanded', !isExpanded);
+    panel.hidden = isExpanded;
+
+    if (!isExpanded) {
+      // Add escape key listener to panel
+      panel.addEventListener('keydown', handleAccordionEscapeKey);
+    } else {
+      // Remove escape key listener
+      panel.removeEventListener('keydown', handleAccordionEscapeKey);
+    }
+  }
+
+  function handleAccordionEscapeKey(event) {
+    if (event.key === 'Escape') {
+      const panel = event.target.closest('[hidden]');
+      if (panel) {
+        const button = document.querySelector(`[aria-controls="${panel.id}"]`);
+        if (button) {
+          button.setAttribute('aria-expanded', 'false');
+          panel.hidden = true;
+          button.focus(); // Return focus to header
+          panel.removeEventListener('keydown', handleAccordionEscapeKey);
+        }
+      }
+    }
+  }
+  ```
+
+  **Using Native Heading:**
+
+  ```html
+  <div class="accordion-item">
+    <h3>
+      <button
+        aria-expanded="false"
+        aria-controls="panel-2"
+        id="header-2"
+      >
+        Section Title
+      </button>
+    </h3>
+    <div
+      id="panel-2"
+      aria-labelledby="header-2"
+    >
+      <p>Panel content...</p>
+    </div>
+  </div>
+  ```
+
+  **JavaScript Considerations:**
+
+  - Implement Enter and Space key handlers for expansion/collapse
+  - Optionally implement Arrow key navigation between headers
+  - Update aria-expanded state when panels toggle
+  - Consider implementing single-expand vs multi-expand behavior
+  - Use hidden attribute or CSS to show/hide panels (note: CSS visibility property can be animated)
+  - Ensure smooth keyboard navigation flow
+  - Implement Escape key handler to close open panel and return focus to header
+  - Add/remove event listeners when panels open/close to manage Escape key support
+
+  **Accessibility Notes:**
+
+  - Role 'region' helps screen readers understand panel structure
+  - Avoid role='region' proliferation with many simultaneous panels
+  - Button should be direct child of heading element
+  - Consider aria-disabled='true' for panels that cannot be collapsed
+  - Test with screen readers to ensure proper announcement
+
+metadata:
+priority: high
+version: 1.0
+</rule>

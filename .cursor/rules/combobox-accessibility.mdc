@@ -1,0 +1,242 @@
+---
+description: Combobox component accessibility compliance pattern
+globs: *.vue, *.jsx, *.tsx, *.html, *.php, *.js, *.ts, *.liquid
+alwaysApply: false
+---
+
+# Combobox Component Accessibility Standards
+
+Ensures combobox components follow WCAG compliance and WAI-ARIA Combobox Pattern specifications.
+
+<rule>
+name: combobox_accessibility_standards
+description: Enforce combobox component accessibility standards and WAI-ARIA Combobox Pattern compliance
+filters:
+  - type: file_extension
+    pattern: "\\.(vue|jsx|tsx|html|php|js|ts|liquid)$"
+
+actions:
+
+- type: enforce
+  conditions:
+
+  # Combobox role requirement
+
+  - pattern: "(?i)<(div|section)[^>]_(?:combobox|autocomplete)[^>]_>"
+    pattern_negate: "role=\"combobox\""
+    message: "Combobox containers must have role='combobox' attribute."
+
+  # aria-expanded requirement
+
+  - pattern: "(?i)<[^>]_role=\"combobox\"[^>]_>"
+    pattern_negate: "aria-expanded=\"(true|false)\""
+    message: "Combobox elements must have aria-expanded attribute set to 'true' or 'false'."
+
+  # aria-haspopup requirement
+
+  - pattern: "(?i)<[^>]_role=\"combobox\"[^>]_>"
+    pattern_negate: "aria-haspopup=\"listbox\""
+    message: "Combobox elements must have aria-haspopup='listbox' attribute."
+
+  # aria-controls requirement
+
+  - pattern: "(?i)<[^>]_role=\"combobox\"[^>]_>"
+    pattern_negate: "aria-controls=\"[^\"]+\""
+    message: "Combobox elements must have aria-controls attribute referencing the ID of the associated listbox."
+
+  # aria-autocomplete requirement
+
+  - pattern: "(?i)<[^>]_role=\"combobox\"[^>]_>"
+    pattern_negate: "aria-autocomplete=\"(list|both|inline|none)\""
+    message: "Combobox elements must have aria-autocomplete attribute set to 'list', 'both', 'inline', or 'none'."
+
+  # aria-activedescendant requirement when expanded
+
+  - pattern: "(?i)<[^>]*role=\"combobox\"[^>]*aria-expanded=\"true\"[^>]\*>"
+    pattern_negate: "aria-activedescendant=\"[^\"]+\""
+    message: "Expanded combobox elements must have aria-activedescendant attribute referencing the ID of the active option."
+
+  # Listbox role requirement
+
+  - pattern: "(?i)<(div|ul)[^>]_(?:listbox|dropdown|popup)[^>]_>"
+    pattern_negate: "role=\"listbox\""
+    message: "Listbox containers must have role='listbox' attribute."
+
+  # Option role requirement
+
+  - pattern: "(?i)<(div|li)[^>]_(?:option|item)[^>]_>"
+    pattern_negate: "role=\"option\""
+    message: "Listbox options must have role='option' attribute."
+
+  # aria-selected requirement for options
+
+  - pattern: "(?i)<[^>]_role=\"option\"[^>]_>"
+    pattern_negate: "aria-selected=\"(true|false)\""
+    message: "Listbox options must have aria-selected attribute set to 'true' or 'false'."
+
+  # Missing keyboard event handlers
+
+  - pattern: "(?i)<[^>]_role=\"combobox\"[^>]_>"
+    pattern_negate: "(onKeyDown|onkeydown|@keydown|v-on:keydown)"
+    message: "Combobox elements should handle keyboard events (Arrow keys, Enter, Escape, etc.)."
+
+  # Missing status region
+
+  - pattern: "(?i)<[^>]_role=\"combobox\"[^>]_>"
+    pattern_negate: "aria-controls=\"[^\"]+\".*?<[^>]*role=\"status\""
+    message: "Combobox should have a status region to announce available options."
+
+- type: suggest
+  message: |
+  **Combobox Component Accessibility Best Practices:**
+
+  **Required ARIA Attributes:**
+
+  - **role='combobox':** Set on the input container element
+  - **aria-expanded:** 'true' if listbox is visible, 'false' if hidden
+  - **aria-haspopup='listbox':** Indicates the combobox has a listbox popup
+  - **aria-controls:** Reference to the ID of the associated listbox
+  - **aria-autocomplete:** 'list', 'both', 'inline', or 'none' based on behavior
+  - **aria-activedescendant:** Reference to the ID of the currently active option
+  - **role='listbox':** Set on the popup container element
+  - **role='option':** Set on each selectable item in the listbox
+  - **aria-selected:** 'true' or 'false' on each option
+  - **role='status':** Set on a visually hidden element to announce available options
+
+  **Keyboard Interaction Requirements:**
+
+  - **Down Arrow:** Open listbox and move focus to first option
+  - **Up Arrow:** Open listbox and move focus to last option
+  - **Enter/Space:** Select focused option and close listbox
+  - **Escape:** Close listbox without selection
+  - **Tab:** Move focus to next focusable element
+  - **Shift+Tab:** Move focus to previous focusable element
+  - **Home/End:** Move focus to first/last option
+  - **Character Keys:** Filter options based on input
+
+  **Focus Management:**
+
+  - Focus should remain on the input while navigating options
+  - Use aria-activedescendant to indicate the currently focused option
+  - Return focus to input after selection or closing
+  - Ensure focus is trapped within the combobox while open
+
+  **Status Region Requirements:**
+
+  - Must announce number of available options when listbox opens
+  - Must announce when no options are available
+  - Must use proper pluralization ("1 item available" vs "2 items available")
+  - Must be visually hidden but available to screen readers
+  - Should update dynamically as options are filtered
+
+  **Implementation Example:**
+
+  ```html
+  <div class="combobox-container">
+    <label for="combobox-input">Select an option:</label>
+    <div class="combobox-wrapper">
+      <input
+        type="text"
+        id="combobox-input"
+        role="combobox"
+        aria-expanded="false"
+        aria-haspopup="listbox"
+        aria-controls="listbox-popup"
+        aria-autocomplete="list"
+      />
+      <button
+        type="button"
+        aria-label="Toggle options"
+        tabindex="-1"
+      >
+        ▼
+      </button>
+    </div>
+    <div
+      id="listbox-popup"
+      role="listbox"
+      hidden
+    >
+      <div
+        role="option"
+        id="option-1"
+        aria-selected="false"
+      >
+        Option 1
+      </div>
+      <div
+        role="option"
+        id="option-2"
+        aria-selected="false"
+      >
+        Option 2
+      </div>
+    </div>
+    <div
+      id="listbox-status"
+      role="status"
+      class="visually-hidden"
+    >
+      <!-- Status messages will be dynamically updated -->
+    </div>
+  </div>
+
+  <style>
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
+
+  <script>
+    // Status message handling
+    function updateStatusMessage(count) {
+      const statusElement = document.getElementById('listbox-status');
+      if (count === 0) {
+        statusElement.textContent = 'No items available';
+      } else {
+        statusElement.textContent = `${count} ${count === 1 ? 'item' : 'items'} available`;
+      }
+    }
+
+    // Example usage:
+    // When opening listbox with options:
+    updateStatusMessage(5); // "5 items available"
+    // When filtering to one option:
+    updateStatusMessage(1); // "1 item available"
+    // When no options match:
+    updateStatusMessage(0); // "No items available"
+    // When closing listbox:
+    document.getElementById('listbox-status').textContent = '';
+  </script>
+  ```
+
+  **JavaScript Considerations:**
+
+  - Implement proper event listeners for all keyboard interactions
+  - Update ARIA attributes dynamically based on state
+  - Handle focus management and trapping
+  - Implement proper filtering and selection logic
+  - Update status messages for all state changes
+  - Ensure proper pluralization in status messages
+  - Handle edge cases (no matches, empty input, etc.)
+
+  **Accessibility Notes:**
+
+  - Status region helps screen readers understand available options
+  - Proper pluralization improves user experience
+  - Clear status messages help users understand the current state
+  - Visual feedback should match announced status
+  - Test with screen readers to ensure proper announcement
+
+metadata:
+priority: high
+version: 1.0
+</rule>

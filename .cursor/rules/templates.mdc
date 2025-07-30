@@ -1,0 +1,154 @@
+---
+description:
+globs: templates/*.json
+alwaysApply: false
+---
+# Templates
+
+All JSON templates must follow this exact structure:
+
+## Required Schema
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["sections"],
+  "properties": {
+    "sections": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-zA-Z0-9_-]+$": {
+          "type": "object",
+          "required": ["type"],
+          "properties": {
+            "type": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9_-]+$"
+            },
+            "settings": {
+              "type": "object"
+            },
+            "blocks": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["type"],
+                "properties": {
+                  "type": {
+                    "type": "string"
+                  },
+                  "settings": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "order": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
+```
+
+## Template Structure Rules
+
+- Every template must have a `sections` object
+- Section keys must be alphanumeric with dashes/underscores
+- Each section must have a `type` property
+- `settings` and `blocks` are optional
+- `order` array defines section sequence
+- Blocks must have a `type` property
+
+
+## Template Types
+
+**Standard Templates:**
+- `index.json` - Homepage
+- `product.json` - Product pages
+- `collection.json` - Collection pages
+- `page.json` - Static pages
+- `blog.json` - Blog listing
+- `article.json` - Blog posts
+- `cart.json` - Shopping cart
+- `search.json` - Search results
+
+**Alternate Templates:**
+Alternative templates may exist for any of the standard templates, following the structure `template-name.template-suffix.template-file-type`, for example: `product.alternate.json`
+
+## Valid Template Examples
+
+**Product Template:**
+```json
+{
+  "sections": {
+    "header": {
+      "type": "header"
+    },
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "show_vendor": true,
+        "show_sku": false,
+        "media_size": "medium"
+      },
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "show_compare_at": true
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "dropdown"
+          }
+        }
+      },
+      "block_order": ["title", "price", "variant_picker"]
+    },
+    "footer": {
+      "type": "footer"
+    }
+  },
+  "order": ["header", "main", "footer"]
+}
+```
+
+**Collection Template:**
+```json
+{
+  "sections": {
+    "header": {
+      "type": "header"
+    },
+    "collection-banner": {
+      "type": "collection-banner",
+      "settings": {
+        "show_collection_description": true,
+        "show_collection_image": false
+      }
+    },
+    "main": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_page": 24,
+        "columns_desktop": 4,
+        "columns_mobile": 2
+      }
+    }
+  },
+  "order": ["header", "collection-banner", "main"]
+}
+```

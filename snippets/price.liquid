@@ -1,0 +1,79 @@
+{%- doc -%}
+  This snippet is used to render a product card.
+  It is used in the product block,featured product block, and the product card block.
+
+  @param {product} product_resource - The product to render
+  @param {boolean} [show_unit_price] - Whether to show the unit price
+  @param {boolean} [show_sale_price_first] - Whether to show the sale price first
+{%- enddoc -%}
+
+{%- liquid
+  assign show_unit_price = show_unit_price | default: false
+  assign show_sale_price_first = show_sale_price_first | default: false
+  assign selected_variant = product_resource.selected_or_first_available_variant
+  assign price = selected_variant.price
+  assign compare_at_price = selected_variant.compare_at_price
+
+  assign show_compare_price = false
+  if compare_at_price > price
+    assign show_compare_price = true
+  endif
+
+  if product_resource == blank
+    assign price = 1999
+  endif
+
+  # Checks if product handle matches the closest product's handle (i.e. product page)
+  # and if the currency code is enabled for product pages
+  if product.handle == closest.product.handle and settings.currency_code_enabled_product_pages
+    assign price = price | money_with_currency
+    assign compare_at_price = compare_at_price | money_with_currency
+
+    # Checks if product handle does not match the closest product's handle (i.e. product card)
+    # and if the currency code is enabled for product cards
+  elsif product.handle != closest.product.handle and settings.currency_code_enabled_product_cards
+    assign price = price | money_with_currency
+    assign compare_at_price = compare_at_price | money_with_currency
+
+  else
+    assign price = price | money
+    assign compare_at_price = compare_at_price | money
+  endif
+-%}
+
+<div ref="priceContainer">
+  {% if show_sale_price_first == false and show_compare_price %}
+    <span role="group">
+      <span class="visually-hidden">{{ 'content.price_regular' | t }}&nbsp;</span>
+      <span class="compare-at-price">{{- compare_at_price -}}</span>
+    </span>
+  {% endif %}
+
+  {% if show_compare_price %}
+    <span role="group">
+      <span class="visually-hidden">{{ 'content.price_sale' | t }}&nbsp;</span>
+      <span class="price">{{ price | default: '&nbsp;' }}</span>
+    </span>
+  {% else %}
+    <span class="price">{{ price | default: '&nbsp;' }}</span>
+  {% endif %}
+
+  {% if show_sale_price_first == true and show_compare_price %}
+    <span role="group">
+      <span class="visually-hidden">{{ 'content.price_regular' | t }}&nbsp;</span>
+      <span class="compare-at-price">{{- compare_at_price -}}</span>
+    </span>
+  {% endif %}
+  {%- if selected_variant.unit_price and show_unit_price %}
+    {%- liquid
+      if product.handle == closest.product.handle and settings.currency_code_enabled_product_pages
+        assign unit_price = selected_variant.unit_price | money_with_currency
+      elsif product.handle != closest.product.handle and settings.currency_code_enabled_product_cards
+        assign unit_price = selected_variant.unit_price | money_with_currency
+      else
+        assign unit_price = selected_variant.unit_price | money
+      endif
+    -%}
+    {% render 'unit-price', price: unit_price, measurement: selected_variant.unit_price_measurement %}
+  {%- endif -%}
+</div>

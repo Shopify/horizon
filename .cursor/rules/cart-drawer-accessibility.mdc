@@ -1,0 +1,206 @@
+---
+description: Cart drawer component accessibility compliance pattern
+globs: *.vue, *.jsx, *.tsx, *.html, *.php, *.js, *.ts, *.liquid
+alwaysApply: false
+---
+
+# Cart Drawer Component Accessibility Standards
+
+Ensures cart drawer components follow WCAG compliance and ARIA Dialog Pattern specifications for ecommerce applications.
+
+<rule>
+name: cart_drawer_accessibility_standards
+description: Enforce cart drawer component accessibility standards and ARIA Dialog Pattern compliance
+filters:
+  - type: file_extension
+    pattern: "\\.(vue|jsx|tsx|html|php|js|ts|liquid)$"
+
+actions:
+
+- type: enforce
+  conditions:
+
+  # Cart activator missing aria-haspopup
+
+  - pattern: "(?i)<button[^>]_(?:cart|basket|shopping)[^>]_>"
+    pattern_negate: "aria-haspopup=\"dialog\""
+    message: "Cart activator buttons must include aria-haspopup='dialog' to inform users a dialog will open."
+
+  # Cart container missing dialog role
+
+  - pattern: "(?i)<(div|section|aside)[^>]_(?:cart|basket|drawer)[^>]_>"
+    pattern_negate: "role=\"dialog\""
+    message: "Cart drawer containers must have role='dialog' attribute."
+
+  # Cart container missing aria-modal
+
+  - pattern: "(?i)<[^>]_role=\"dialog\"[^>]_(?:cart|basket|drawer)[^>]\*>"
+    pattern_negate: "aria-modal=\"true\""
+    message: "Cart drawer dialog elements must have aria-modal='true' attribute."
+
+  # Cart container missing proper labeling
+
+  - pattern: "(?i)<[^>]_role=\"dialog\"[^>]_(?:cart|basket|drawer)[^>]\*>"
+    pattern_negate: "(aria-labelledby|aria-label)"
+    message: "Cart drawer dialog elements must have either aria-labelledby or aria-label for accessibility."
+
+  # Empty aria-label check
+
+  - pattern: "(?i)<[^>]_role=\"dialog\"[^>]_(?:cart|basket|drawer)[^>]_aria-label=\"\"[^>]_>"
+    message: "Cart drawer aria-label should not be empty; provide a meaningful description like 'Shopping Cart'."
+
+  # Close button missing proper functionality
+
+  - pattern: "(?i)<button[^>]_(?:close|dismiss|cancel)[^>]_(?:cart|basket|drawer)[^>]\*>"
+    pattern_negate: "(onClick|onclick|@click|v-on:click)"
+    message: "Cart drawer close buttons should have proper click handlers to close the dialog."
+
+  # Close button missing aria-label
+
+  - pattern: "(?i)<button[^>]_(?:close|dismiss|×|&times;)[^>]_(?:cart|basket|drawer)[^>]_>"
+    pattern_negate: "aria-label=\"[^\"]_[Cc]lose[^\"]\*\""
+    message: "Cart drawer close buttons should have aria-label='Close cart' or similar descriptive text."
+
+  # Missing focus management indicators
+
+  - pattern: "(?i)(?:openCart|showCart|toggleCart|openDrawer)\\s\*\\("
+    message: "When opening cart drawers, ensure focus management is implemented (focus should move to first focusable element inside the dialog)."
+
+  # Missing checkout button accessibility
+
+  - pattern: "(?i)<button[^>]_(?:checkout|proceed|purchase)[^>]_(?:cart|basket|drawer)[^>]\*>"
+    pattern_negate: "(aria-label|aria-describedby)"
+    message: "Cart drawer checkout buttons should have proper labeling for screen readers."
+
+- type: suggest
+  message: |
+  **Cart Drawer Component Accessibility Best Practices:**
+
+  **Required ARIA Attributes:**
+
+  - **aria-haspopup='dialog':** Set on cart activator buttons to inform users a dialog will open
+  - **role='dialog':** Set on the cart drawer container element
+  - **aria-modal='true':** Indicates the cart drawer is modal and traps focus
+  - **aria-labelledby:** Reference to visible cart title, OR
+  - **aria-label:** Descriptive label like "Shopping Cart" if no visible title exists
+
+  **Keyboard Interaction Requirements:**
+
+  - **Initial Focus:** When cart drawer opens, focus must move to the first focusable element (typically close button)
+  - **Tab Cycling:** Tab key should cycle through focusable elements within the cart drawer only
+  - **Shift+Tab:** Should cycle backwards through focusable elements within the cart drawer
+  - **Escape Key:** Must close the cart drawer and return focus to the activator
+  - **Focus Trap:** Focus should be contained within the cart drawer while open
+
+  **Focus Management:**
+
+  - Implement focus trapping to prevent tab navigation outside the cart drawer
+  - Return focus to the cart activator when drawer closes
+  - Move focus to the close button (first focusable element) when drawer opens
+  - Ensure close button is positioned first in DOM order within the dialog container
+
+  **Screen Reader Interaction:**
+
+  - Activator should announce "dialog popup" when focused
+  - On activation, announce "{Cart label}, dialog" when focus moves to cart drawer
+  - Provide clear navigation through cart content
+  - Announce return to activator when drawer closes
+
+  **Structure Requirements:**
+
+  - All interactive elements must be descendants of the cart drawer container
+  - Position close button first in DOM order within the cart drawer container
+  - Use semantic HTML within the cart drawer (headings, buttons, form labels)
+  - Provide clear visual focus indicators
+  - Close buttons should use aria-label="Close cart" with &times; entity for visual 'x' icon
+
+  **Implementation Patterns:**
+
+  **Cart Activator Button:**
+
+  ```html
+  <button
+    class="cart-activator"
+    aria-haspopup="dialog"
+    aria-label="View shopping cart"
+    onclick="openCartDrawer()"
+  >
+    <svg
+      aria-hidden="true"
+      width="24"
+      height="24"
+    >
+      <!-- Cart icon -->
+    </svg>
+    <span class="cart-count">3</span>
+  </button>
+  ```
+
+  **Cart Drawer Container:**
+
+  ```html
+  <div
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="cart-title"
+    class="cart-drawer"
+    id="cart-drawer"
+  >
+    <button
+      type="button"
+      aria-label="Close cart"
+      onclick="closeCartDrawer()"
+      class="cart-close"
+    >
+      &times;
+    </button>
+    <h2 id="cart-title">Shopping Cart</h2>
+    <div class="cart-items">
+      <!-- Cart items -->
+    </div>
+    <div class="cart-summary">
+      <p>Total: $99.99</p>
+      <button
+        aria-label="Proceed to checkout"
+        onclick="proceedToCheckout()"
+      >
+        Checkout
+      </button>
+    </div>
+  </div>
+  ```
+
+  **JavaScript Considerations:**
+
+  - Implement proper event listeners for Escape key
+  - Manage body scroll when cart drawer is open
+  - Handle focus restoration on cart drawer close
+  - Implement focus trapping within cart drawer
+  - Store reference to activator for focus return
+  - Handle dynamic cart content updates
+  - Ensure proper announcement of cart state changes
+
+  **Ecommerce-Specific Considerations:**
+
+  - Announce cart item count changes
+  - Provide clear product information in cart items
+  - Ensure checkout button is prominently accessible
+  - Handle empty cart states appropriately
+  - Provide clear pricing and total information
+  - Support quantity adjustments with proper labeling
+  - Handle cart item removal with confirmation
+
+  **Accessibility Notes:**
+
+  - Cart drawers should not contain critical page navigation
+  - Ensure cart content is fully accessible to screen readers
+  - Test with screen readers to ensure proper announcement
+  - Consider using aria-live regions for dynamic cart updates
+  - Provide clear error messages for cart operations
+  - Ensure cart drawer works with keyboard-only navigation
+  - Test focus management with multiple cart activators
+
+metadata:
+priority: high
+version: 1.0
+</rule>

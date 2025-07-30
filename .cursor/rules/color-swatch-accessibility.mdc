@@ -1,0 +1,216 @@
+---
+description: Color swatch component accessibility compliance pattern
+globs: *.vue, *.jsx, *.tsx, *.html, *.php, *.js, *.ts, *.liquid
+alwaysApply: false
+---
+
+# Color Swatch Variant Selector Component Accessibility Standards
+
+Ensures color swatch variant selectors follow WCAG compliance and provide proper accessibility for all users.
+
+<rule>
+name: color_swatch_accessibility_standards
+description: Enforce color swatch variant selector accessibility standards and WCAG compliance
+filters:
+  - type: file_extension
+    pattern: "\\.(vue|jsx|tsx|html|php|js|ts|css|scss|sass|less|liquid)$"
+
+actions:
+
+- type: enforce
+  conditions:
+
+  # Radio buttons hidden with display: none (accessibility blocker)
+
+  - pattern: "(?i)input\\[type=\"radio\"\\].*\\{[^}]*display:\\s\*none"
+    message: "Radio buttons must not use display: none as it removes keyboard and screen reader access. Use appearance: none or visually-hidden class instead."
+
+  # Color swatches missing accessible labels
+
+  - pattern: "(?i)<input[^>]_type=\"radio\"[^>]_>"
+    pattern_negate: "(id.*for|label.*for)"
+    message: "Color swatch radio buttons must have associated label elements via id/for attributes."
+
+  # Color-only information without text alternatives
+
+  - pattern: "(?i)<[^>]_(?:color|swatch|variant)[^>]_>"
+    pattern_negate: "(data-label|aria-label|title|data-tooltip|class.\*tooltip)"
+    message: "Color swatches must include text alternatives (data-label, tooltips, labels) as color alone cannot convey information to all users."
+
+  # Missing fieldset and legend for variant groups
+
+  - pattern: "(?i)<input[^>]*type=\"radio\"[^>]*name=\"[^\"]_\"[^>]_>"
+    pattern_negate: "(fieldset|role=\"group\"|aria-labelledby)"
+    message: "Radio button groups should be wrapped in fieldset with legend or have role='group' with aria-labelledby."
+
+  # Missing keyboard navigation support
+
+  - pattern: "(?i)<[^>]_(?:color|swatch|variant)[^>]_>"
+    pattern_negate: "(onKeyDown|onkeydown|@keydown|v-on:keydown|tabindex)"
+    message: "Color swatch components should handle keyboard navigation (arrow keys) for variant selection."
+
+  # Missing focus indicators
+
+  - pattern: "(?i)<[^>]_(?:color|swatch|variant)[^>]_>"
+    pattern_negate: "(focus|:focus|outline|box-shadow)"
+    message: "Color swatch components must have visible focus indicators for keyboard navigation."
+
+  # Tooltip missing proper accessibility
+
+  - pattern: "(?i)<[^>]_(?:tooltip|title)[^>]_>"
+    pattern_negate: "(role=\"tooltip\"|aria-describedby|aria-label)"
+    message: "Color swatch tooltips must have proper ARIA attributes for screen reader accessibility."
+
+- type: suggest
+  message: |
+  **Color Swatch Variant Selector Accessibility Best Practices:**
+
+  **Required Accessibility Features:**
+
+  - **Keyboard Navigation:** Arrow keys (←/→) to navigate between variants
+  - **Screen Reader Support:** Proper labeling and announcements
+  - **Focus Indicators:** Highly visible focus states
+  - **Text Alternatives:** Tooltips or labels for color information
+  - **Proper Styling:** Use appearance: none instead of display: none
+
+  **Implementation Patterns:**
+
+  **Basic Color Swatch Structure:**
+
+  ```html
+  <fieldset class="color-swatches">
+    <legend>Color</legend>
+    <div
+      class="swatch-group"
+      role="radiogroup"
+      aria-labelledby="color-legend"
+    >
+      <input
+        type="radio"
+        id="color-red"
+        name="color"
+        value="red"
+        class="visually-hidden"
+        tabindex="-1"
+      />
+      <label
+        for="color-red"
+        class="color-swatch"
+        tabindex="0"
+        data-label="Red - Classic crimson shade"
+      >
+        <span
+          class="swatch-color"
+          style="background-color: red;"
+        ></span>
+      </label>
+
+      <input
+        type="radio"
+        id="color-blue"
+        name="color"
+        value="blue"
+        class="visually-hidden"
+        tabindex="-1"
+      />
+      <label
+        for="color-blue"
+        class="color-swatch"
+        tabindex="0"
+        data-label="Blue - Navy blue shade"
+      >
+        <span
+          class="swatch-color"
+          style="background-color: blue;"
+        ></span>
+      </label>
+    </div>
+  </fieldset>
+  ```
+
+  **CSS for Accessible Styling:**
+
+  ```css
+  /* Visually hide radio buttons while keeping them accessible */
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Alternative: Use appearance: none for custom styling */
+  input[type='radio'] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    /* Custom styling here */
+  }
+
+  /* Color swatch styling */
+  .color-swatch {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    transition: border-color 0.2s ease;
+  }
+
+  .color-swatch:focus {
+    outline: 3px solid #0056b3;
+    outline-offset: 2px;
+    border-color: #0056b3;
+  }
+
+  /* Show focus styles on label when input is focused */
+  .color-swatch:has(+ input:focus) {
+    outline: 3px solid #0056b3;
+    outline-offset: 2px;
+    border-color: #0056b3;
+  }
+
+  .color-swatch:has(+ input:checked) {
+    border-color: #212529;
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px #212529;
+  }
+
+  .swatch-color {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: block;
+  }
+
+  /* Tooltip styling */
+  .color-swatch::after {
+    content: attr(data-label);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #212529;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 1000;
+  }
+
+  .color-swatch:hover::after,
+  .color-swatch:focus::after,
+  .color-swatch:has(+ input:focus)::after {
+    opacity: 1;
+  }
+  ```
