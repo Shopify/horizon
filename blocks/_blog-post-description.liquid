@@ -1,17 +1,18 @@
 {% liquid
+  assign block_settings = block.settings
   assign content = article.excerpt | default: article.content
 
-  if block.settings.type_preset == 'rte' or block.settings.type_preset == 'paragraph'
+  if block_settings.type_preset == 'rte' or block_settings.type_preset == 'paragraph'
     assign is_rte = true
   endif
 
   capture text_block_classes
-    if block.settings.type_preset == 'custom'
+    if block_settings.type_preset == 'custom'
       echo ' custom-typography '
-      if block.settings.font_size != ''
+      if block_settings.font_size != ''
         echo ' custom-font-size '
       endif
-      if block.settings.color != ''
+      if block_settings.color != ''
         echo ' custom-color '
       endif
     endif
@@ -22,15 +23,15 @@
 %}
 
 {% capture attributes %}
-  class="blog-post-card__content-text spacing-style text-block text-block--{{ block.id }} {{ block.settings.type_preset }}
+  class="blog-post-card__content-text spacing-style text-block text-block--{{ block.id }} {{ block_settings.type_preset }}
     {{ text_block_classes }}
   "
 
   style="
-    {% render 'spacing-padding', settings: block.settings %}
-    {% render 'typography-style', settings: block.settings %}
-    {% if block.settings.color != '' %}
-      --color: {{ block.settings.color }};
+    {% render 'spacing-padding', settings: block_settings %}
+    {% render 'typography-style', settings: block_settings %}
+    {% if block_settings.color != '' %}
+      --color: {{ block_settings.color }};
     {% endif %}
   "
 

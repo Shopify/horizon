@@ -35,6 +35,12 @@ class HeaderMenu extends Component {
   disconnectedCallback() {
     super.disconnectedCallback();
     this.#abortController.abort();
+
+    // Clean up outside click listener
+    if (this.#outsideClickController) {
+      this.#outsideClickController.abort();
+      this.#outsideClickController = null;
+    }
   }
 
   /**
@@ -70,9 +76,15 @@ class HeaderMenu extends Component {
 
   /**
    * Activate the selected menu item immediately
-   * @param {PointerEvent | FocusEvent} event
+   * @param {PointerEvent | FocusEvent | TouchEvent} event
    */
   activate = (event) => {
+    // On touch devices, ignore pointerenter and focus events to prevent double activation
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (isTouch && (event.type === 'pointerenter' || event.type === 'focus')) {
+      return;
+    }
+
     this.#debouncedDeactivate.cancel();
     this.#debouncedActivateHandler.cancel();
 
@@ -81,7 +93,7 @@ class HeaderMenu extends Component {
 
   /**
    * Activate the selected menu item with a delay
-   * @param {PointerEvent | FocusEvent} event
+   * @param {PointerEvent | FocusEvent | TouchEvent} event
    */
   #activateHandler = (event) => {
     this.#debouncedDeactivate.cancel();
@@ -121,13 +133,33 @@ class HeaderMenu extends Component {
 
     this.style.setProperty('--submenu-height', `${submenuHeight}px`);
     this.style.setProperty('--submenu-opacity', '1');
+
+    // Set up outside click listener for touch devices
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (isTouch) {
+      // Remove any existing listener
+      if (this.#outsideClickController) {
+        this.#outsideClickController.abort();
+      }
+
+      // Add new listener after a small delay to avoid immediate triggering
+      this.#outsideClickController = new AbortController();
+      setTimeout(() => {
+        if (this.#outsideClickController) {
+          document.addEventListener('click', this.#handleOutsideClick, {
+            signal: this.#outsideClickController.signal,
+            capture: true,
+          });
+        }
+      }, 0);
+    }
   };
 
   #debouncedActivateHandler = debounce(this.#activateHandler, ACTIVATE_DELAY);
 
   /**
    * Deactivate the active item after a delay
-   * @param {PointerEvent | FocusEvent} event
+   * @param {PointerEvent | FocusEvent | TouchEvent} event
    */
   deactivate(event) {
     this.#debouncedActivateHandler.cancel();
@@ -145,11 +177,28 @@ class HeaderMenu extends Component {
 
   /**
    * Deactivate the active item immediately
-   * @param {HTMLElement | null} [item]
+   * @param {HTMLElement | null} [item] - The item to deactivate (defaults to active item)
+   * @param {boolean} [force=false] - Whether to force deactivation, bypassing hover checks
    */
-  #deactivate = (item = this.#state.activeItem) => {
+  #deactivate = (item = this.#state.activeItem, force = false) => {
     if (!item || item != this.#state.activeItem) return;
-    if (this.overflowHovered) return;
+
+    // Skip hover check if forcing deactivation
+    if (!force && this.overflowHovered) return;
+
+    // Clear any stuck focus/hover states when forcing
+    if (force) {
+      this.refs.overflowMenu?.blur();
+      if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur();
+      }
+    }
+
+    // Clean up outside click listener
+    if (this.#outsideClickController) {
+      this.#outsideClickController.abort();
+      this.#outsideClickController = null;
+    }
 
     this.style.setProperty('--submenu-height', '0px');
     this.style.setProperty('--submenu-opacity', '0');
@@ -167,9 +216,68 @@ class HeaderMenu extends Component {
 
   /**
    * Deactivate the active item after a delay
-   * @param {PointerEvent | FocusEvent} event
    */
   #debouncedDeactivate = debounce(this.#deactivate, DEACTIVATE_DELAY);
+
+  /**
+   * Handles touchstart events on menu items.
+   * On mobile, prevents navigation on first tap for items with submenus.
+   * @param {TouchEvent} event - The touchstart event
+   */
+  handleTouchStart = (event) => {
+    if (!(event.target instanceof Element)) return;
+
+    // Find the menu item and check if it has a submenu
+    const menuItem = findMenuItem(event.target);
+    if (!menuItem) return;
+
+    const hasSubmenu = menuItem.getAttribute('aria-haspopup') === 'true';
+    const isMoreButton = event.target.slot === 'more';
+
+    if (hasSubmenu || isMoreButton) {
+      if (menuItem !== this.#state.activeItem) {
+        // First tap: open submenu, prevent navigation
+        event.preventDefault();
+        this.activate(event);
+      } else if (event.target.slot !== 'overflow') {
+        // Already open: toggle closed
+        event.preventDefault();
+        this.#deactivate(this.#state.activeItem, true);
+      }
+    }
+  };
+
+  /**
+   * Handles clicks outside the menu to close it.
+   * Particularly useful for touch devices where users expect to close by tapping outside.
+   * @param {MouseEvent | PointerEvent} event - The click event
+   */
+  #handleOutsideClick = (event) => {
+    if (!(event.target instanceof Element)) return;
+
+    const clickedInsideMenu = this.contains(event.target);
+
+    const clickedInsideOverflow =
+      this.overflowMenu?.contains(event.target) || this.refs.overflowMenu?.contains(event.target);
+
+    let clickedInsideSubmenu = false;
+    if (this.#state.activeItem) {
+      const activeSubmenu = findSubmenu(this.#state.activeItem);
+      if (activeSubmenu) {
+        clickedInsideSubmenu = activeSubmenu.contains(event.target);
+      }
+    }
+
+    if (!clickedInsideMenu && !clickedInsideOverflow && !clickedInsideSubmenu) {
+      this.#deactivate(this.#state.activeItem, true);
+    }
+  };
+
+  /**
+   * AbortController for managing outside click listeners
+   * @type {AbortController | null}
+   */
+  #outsideClickController = null;
 
   /**
    * Preload images that are set to load lazily.

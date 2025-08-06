@@ -1,11 +1,13 @@
+{%- assign block_settings = block.settings -%}
+
 <div
   id="ProductInformation-{{ section.id }}"
   class="
     product-details
-    {% if block.settings.sticky_details_desktop %} sticky-content--desktop{% endif %}
-    {% if block.settings.height == 'fill' -%} full-height--desktop{% endif -%}
+    {% if block_settings.sticky_details_desktop %} sticky-content--desktop{% endif %}
+    {% if block_settings.height == 'fill' -%} full-height--desktop{% endif -%}
   "
-  style="--details-position: {{ block.settings.details_position }};"
+  style="--details-position: {{ block_settings.details_position }};"
   data-testid="product-information-details"
   {% if settings.transition_to_main_product %}
     data-view-transition-type="product-details"
@@ -23,7 +25,7 @@
     {% content_for 'blocks' %}
   {% endcapture %}
 
-  {% render 'group', children: children, settings: block.settings, shopify_attributes: block.shopify_attributes %}
+  {% render 'group', children: children, settings: block_settings, shopify_attributes: block.shopify_attributes %}
 </div>
 
 {% stylesheet %}

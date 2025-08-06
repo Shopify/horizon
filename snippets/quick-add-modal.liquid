@@ -7,7 +7,7 @@
     <button
       ref="closeButton"
       on:click="/closeDialog"
-      class="button quick-add-modal__close"
+      class="button button-unstyled close-button quick-add-modal__close"
       aria-label="{{ 'accessibility.close_dialog' | t }}"
     >
       {{- 'icon-close.svg' | inline_asset_content -}}
@@ -62,25 +62,12 @@
     position: absolute;
     top: var(--margin-2xs);
     right: var(--margin-2xs);
-    width: var(--minimum-touch-target);
-    height: var(--minimum-touch-target);
-    color: var(--color-foreground);
-    background-color: var(--color-background);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    z-index: 2;
-    transition: transform 0.15s var(--animation-timing-bounce), opacity 0.15s var(--animation-easing);
+    transition: transform 0.15s var(--animation-timing-bounce);
+    z-index: var(--layer-raised);
   }
 
   .quick-add-modal__close:active {
     transform: scale(0.8);
-  }
-
-  .quick-add-modal__close svg {
-    width: var(--icon-size-xs);
-    height: var(--icon-size-xs);
   }
 
   .quick-add-modal__content {

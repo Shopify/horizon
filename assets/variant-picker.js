@@ -30,8 +30,13 @@ export default class VariantPicker extends Component {
   variantChanged(event) {
     if (!(event.target instanceof HTMLElement)) return;
 
+    const selectedOption =
+      event.target instanceof HTMLSelectElement ? event.target.options[event.target.selectedIndex] : event.target;
+
+    if (!selectedOption) return;
+
     this.updateSelectedOption(event.target);
-    this.dispatchEvent(new VariantSelectedEvent({ id: event.target.dataset.optionValueId ?? '' }));
+    this.dispatchEvent(new VariantSelectedEvent({ id: selectedOption.dataset.optionValueId ?? '' }));
 
     const isOnProductPage =
       this.dataset.templateProductMatch === 'true' &&
@@ -41,21 +46,14 @@ export default class VariantPicker extends Component {
     // Morph the entire main content for combined listings child products, because changing the product
     // might also change other sections depending on recommendations, metafields, etc.
     const currentUrl = this.dataset.productUrl?.split('?')[0];
-    const newUrl = event.target.dataset.connectedProductUrl;
+    const newUrl = selectedOption.dataset.connectedProductUrl;
     const loadsNewProduct = isOnProductPage && !!newUrl && newUrl !== currentUrl;
 
-    this.fetchUpdatedSection(this.buildRequestUrl(event.target), loadsNewProduct);
+    this.fetchUpdatedSection(this.buildRequestUrl(selectedOption), loadsNewProduct);
 
     const url = new URL(window.location.href);
 
-    let variantId;
-
-    if (event.target instanceof HTMLInputElement && event.target.type === 'radio') {
-      variantId = event.target.dataset.variantId || null;
-    } else if (event.target instanceof HTMLSelectElement) {
-      const selectedOption = event.target.options[event.target.selectedIndex];
-      variantId = selectedOption?.dataset.variantId || null;
-    }
+    const variantId = selectedOption.dataset.variantId || null;
 
     if (isOnProductPage) {
       if (variantId) {

@@ -1,5 +1,6 @@
 {% liquid
   assign product = closest.product
+  assign block_settings = block.settings
 
   if settings.currency_code_enabled_product_cards
     assign price_min = product.price_min | money_with_currency
@@ -23,11 +24,11 @@
 %}
 
 <product-price
-  class="text-right {{ block.settings.type_preset | default: 'h6' }} spacing-style"
+  class="text-right {{ block_settings.type_preset | default: 'h6' }} spacing-style"
   data-block-id="{{ block.id }}"
   data-product-id="{{ product.id }}"
   style="
-    {% render 'spacing-style', settings: block.settings %}
+    {% render 'spacing-style', settings: block_settings %}
     --product-price-width: 100%;
   "
   {{ block.shopify_attributes }}
@@ -37,7 +38,7 @@
   {% else %}
     {% render 'price',
       show_unit_price: true,
-      show_sale_price_first: block.settings.show_sale_price_first,
+      show_sale_price_first: block_settings.show_sale_price_first,
       product_resource: product
     %}
   {% endif %}

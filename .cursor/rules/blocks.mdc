@@ -1,5 +1,5 @@
 ---
-description:
+description: Development standards and best practices for creating/configuring/styling theme blocks, including static and nested blocks, schema configuration, CSS, and usage examples
 globs: blocks/*.liquid
 alwaysApply: false
 ---
@@ -337,8 +337,5 @@ See [css-standards.mdc](mdc:.cursor/rules/css-standards.mdc) for rules on writin
 
 ## Examples Referenced
 
-[text.liquid](mdc:.cursor/rules/blocks/examples/text.liquid) - Basic content block from existing project
-[group.liquid](mdc:.cursor/rules/blocks/examples/group.liquid) - Container with nested blocks from existing project
-[button.liquid](mdc:.cursor/rules/blocks/examples/button.liquid) - Advanced button block with multiple styles
-[card.liquid](mdc:.cursor/rules/blocks/examples/card.liquid) - Flexible card container demonstrating complex nesting
-[hero-banner.liquid](mdc:.cursor/rules/blocks/examples/hero-banner.liquid) - Hero banner with targeting and static features
+[text.liquid](mdc:.cursor/rules/examples/block-example-text.liquid) - Basic content block from existing project
+[group.liquid](mdc:.cursor/rules/examples/block-example-group.liquid) - Container with nested blocks from existing project

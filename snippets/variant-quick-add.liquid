@@ -50,7 +50,7 @@
 
         <label
           data-media-id="{{ featured_media.id }}"
-          class="variant-option__button-label{% if variant_style == 'swatch' %} variant-option__button-label--has-swatch{% endif %}"
+          class="variant-option__button-label{% if variant_style == 'swatch' %} variant-option__button-label--has-swatch swatch-rounded{% endif %}"
           {% if variant_style == 'swatch' %}
             on:pointerenter="product-card/previewVariant/{{ featured_media.id }}"
             on:pointerleave="product-card/resetVariant"

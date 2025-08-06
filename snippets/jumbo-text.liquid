@@ -2,17 +2,19 @@
   Renders text that stretches to fit the full width of its container.
 
   @param {string} [text] - The text to be rendered.
+  @param {object} [block] - The block object
 
   @example
   {% render 'jumbo-text', text: block.settings.text %}
 {%- enddoc -%}
 
 {% liquid
-  assign shown_text = text | default: block.settings.text
+  assign block_settings = block.settings
+  assign shown_text = text | default: block_settings.text
   assign descenders = 'alphabetic'
   assign trim = 'trim-both'
 
-  unless block.settings.case == 'uppercase'
+  unless block_settings.case == 'uppercase'
     if shown_text contains 'g' or shown_text contains 'j' or shown_text contains 'p' or shown_text contains 'q' or shown_text contains 'y'
       assign descenders = 'text'
     endif
@@ -26,22 +28,22 @@
 
 {% capture attributes %}
   style="
-    --font-family: var(--font-{{ block.settings.font | default: 'accent'}}--family);
-    --font-weight: var(--font-{{ block.settings.font | default: 'accent'}}--weight);
-    {% if block.settings.font == 'body' %}
+    --font-family: var(--font-{{ block_settings.font | default: 'accent'}}--family);
+    --font-weight: var(--font-{{ block_settings.font | default: 'accent'}}--weight);
+    {% if block_settings.font == 'body' %}
       --color: var(--color-foreground);
     {% else %}
       --color: var(--color-foreground-heading);
     {% endif %}
-    --text-align: {{ block.settings.alignment | default: 'left' }};
-    {% if block.settings.alignment == "left" %}
+    --text-align: {{ block_settings.alignment | default: 'left' }};
+    {% if block_settings.alignment == "left" %}
       --margin-left-nudge: {{nudge}};
-    {% elsif block.settings.alignment == "right" %}
+    {% elsif block_settings.alignment == "right" %}
       --margin-right-nudge: {{nudge}};
     {% endif %}
-    --line-height: {{ block.settings.line_height | default: '1' }};
-    --letter-spacing: {{ block.settings.letter_spacing | default: '-0.03em' }};
-    --text-transform: {{ block.settings.case | default: 'none' }};
+    --line-height: {{ block_settings.line_height | default: '1' }};
+    --letter-spacing: {{ block_settings.letter_spacing | default: '-0.03em' }};
+    --text-transform: {{ block_settings.case | default: 'none' }};
     --text-trim: {{text_trim}};
   "
   {{ block.shopify_attributes }}
@@ -58,8 +60,8 @@
     <span class="visually-hidden">{{ shown_text }}</span>
     <jumbo-text
       {{ attributes }}
-      data-text-effect="{{ block.settings.text_effect }}"
-      data-animation-repeat="{{ block.settings.animation_repeat }}"
+      data-text-effect="{{ block_settings.text_effect }}"
+      data-animation-repeat="{{ block_settings.animation_repeat }}"
     >
       {%- assign char_index = 0 -%}
       {%- for line in text_with_lines -%}

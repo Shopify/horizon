@@ -71,9 +71,12 @@ class HeaderDrawer extends Component {
     if (!summary) return;
 
     summary.setAttribute('aria-expanded', 'true');
-    requestAnimationFrame(() => details.classList.add('menu-open'));
-
-    trapFocus(details);
+    requestAnimationFrame(() => {
+      details.classList.add('menu-open');
+      setTimeout(() => {
+        trapFocus(details);
+      }, 0);
+    });
   }
 
   /**
@@ -112,7 +115,9 @@ class HeaderDrawer extends Component {
         const openDetails = this.querySelectorAll('details[open]');
         openDetails.forEach(reset);
       } else {
-        trapFocus(this.refs.details);
+        setTimeout(() => {
+          trapFocus(this.refs.details);
+        }, 0);
       }
     });
   }

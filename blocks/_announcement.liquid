@@ -1,4 +1,5 @@
-{% assign plain_text = block.settings.text | strip_newlines | strip_html | strip %}
+{%- assign block_settings = block.settings -%}
+{%- assign plain_text = block_settings.text | strip_newlines | strip_html | strip -%}
 {%- assign block_index = section.blocks | find_index: 'id', block.id -%}
 
 {%- unless plain_text == '' -%}
@@ -11,11 +12,11 @@
       text-block--align-center
       text-block--full-width
       custom-typography
-      {% if block.settings.font_size != "" %}custom-font-size{% endif %}
-      {% if block.settings.weight != "" %}custom-font-weight{% endif %}
+      {% if block_settings.font_size != "" %}custom-font-size{% endif %}
+      {% if block_settings.weight != "" %}custom-font-weight{% endif %}
     "
     style="
-      {% render 'typography-style', settings: block.settings, preset: 'custom' %}
+      {% render 'typography-style', settings: block_settings, preset: 'custom' %}
       --width: 100%;
       --text-align: center;
       --line-height: 1;
@@ -24,16 +25,19 @@
     aria-hidden="{% if block_index == 0 %}false{% else %}true{% endif %}"
   >
     <p class="announcement-bar__text">
-      {{ block.settings.text }}
+      {% comment %}
+        Not using block_settings.text here because live replacement in editor doesn't work as well.
+      {% endcomment %}
+      {{ block_settings.text }}
     </p>
 
-    {% if block.settings.link != blank %}
+    {% if block_settings.link != blank %}
       <a
         class="announcement-bar__link"
-        href="{{ block.settings.link }}"
+        href="{{ block_settings.link }}"
       >
         <span class="visually-hidden">
-          {{ block.settings.text | strip_html }}
+          {{ block_settings.text | strip_html }}
         </span>
       </a>
     {% endif %}

@@ -1,14 +1,15 @@
+{% assign block_settings = block.settings %}
 <div
-  class="page-block spacing-style{% if block.settings.inherit_color_scheme == false %} color-{{ block.settings.color_scheme }}{% endif %}"
-  style="{% render 'spacing-padding', settings: block.settings %}{% if block.settings.background %} background-color: {{ block.settings.background_color }};{% endif %}"
+  class="page-block spacing-style{% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %}"
+  style="{% render 'spacing-padding', settings: block_settings %}{% if block_settings.background %} background-color: {{ block_settings.background_color }};{% endif %}"
 >
-  {%- if block.settings.page != blank -%}
-    {%- if block.settings.page.title != blank -%}
-      <h2 class="page-title">{{ block.settings.page.title }}</h2>
+  {%- if block_settings.page != blank -%}
+    {%- if block_settings.page.title != blank -%}
+      <h2 class="page-title">{{ block_settings.page.title }}</h2>
     {%- endif -%}
-    {%- if block.settings.page.content != blank -%}
+    {%- if block_settings.page.content != blank -%}
       <div class="rte">
-        {{ block.settings.page.content }}
+        {{ block_settings.page.content }}
       </div>
     {%- endif -%}
   {%- else -%}

@@ -20,6 +20,7 @@
 
 {% liquid
   assign onboarding = false
+  assign block_settings = block.settings
 
   if collection == blank
     assign onboarding = true
@@ -30,18 +31,18 @@
   class="
     collection-card
     border-style
-    {% if block.settings.placement == 'on_image' %}collection-card--image-bg{% endif %}
+    {% if block_settings.placement == 'on_image' %}collection-card--image-bg{% endif %}
     {% if section.settings.layout_type == 'bento' %}collection-card--image-height-fixed{% endif %}
     {% if section.settings.layout_type == 'editorial' %}collection-card--flexible-aspect-ratio{% endif %}
-    {% if block.settings.inherit_color_scheme == false %} color-{{ block.settings.color_scheme }}{% endif %}
+    {% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %}
   "
   data-block-id="{{ block.id }}"
   style="
-    {% render 'border-override', settings: block.settings %}
-    --horizontal-alignment: {{ block.settings.horizontal_alignment }};
-    --vertical-alignment: {{ block.settings.vertical_alignment }};
-    --background-overlay-color: {{ block.settings.overlay_color }};
-    --collection-card-gap: {{ block.settings.collection_card_gap }}px;
+    {% render 'border-override', settings: block_settings %}
+    --horizontal-alignment: {{ block_settings.horizontal_alignment }};
+    --vertical-alignment: {{ block_settings.vertical_alignment }};
+    --background-overlay-color: {{ block_settings.overlay_color }};
+    --collection-card-gap: {{ block_settings.collection_card_gap }}px;
   "
   {{- block.shopify_attributes -}}
 >

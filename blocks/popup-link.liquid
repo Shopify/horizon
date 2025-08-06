@@ -1,3 +1,5 @@
+{% assign block_settings = block.settings %}
+
 <script
   src="{{ 'dialog.js' | asset_url }}"
   type="module"
@@ -9,16 +11,16 @@
 >
   <button
     on:click="/showDialog"
-    class="button button-unstyled popup-link__button text-left spacing-style {{ block.settings.type_preset }}"
-    style="{% render 'spacing-style', settings: block.settings %}"
+    class="button button-unstyled popup-link__button text-left spacing-style {{ block_settings.type_preset }}"
+    style="{% render 'spacing-style', settings: block_settings %}"
   >
-    {{- block.settings.heading }}
+    {{- block_settings.heading }}
     {{- 'icon-external.svg' | inline_asset_content -}}
   </button>
 
   <dialog
     ref="dialog"
-    class="popup-link__content dialog-modal color-{{ settings.popover_color_scheme }}{% if block.settings.behavior == 'drawer' %} popup-link__content--drawer dialog-drawer{% endif %}"
+    class="popup-link__content dialog-modal color-{{ settings.popover_color_scheme }}{% if block_settings.behavior == 'drawer' %} popup-link__content--drawer dialog-drawer{% endif %}"
     scroll-lock
   >
     <div class="popup-link__inner">
@@ -27,7 +29,7 @@
     <button
       ref="closeButton"
       on:click="/closeDialog"
-      class="button popup-link__close"
+      class="button button-unstyled close-button popup-link__close"
       aria-label="{{ 'accessibility.close_dialog' | t }}"
     >
       {{- 'icon-close.svg' | inline_asset_content -}}
@@ -79,27 +81,10 @@
   }
 
   .popup-link__close {
-    position: absolute;
     top: var(--margin-2xs);
     right: var(--margin-2xs);
-    width: var(--minimum-touch-target);
-    height: var(--minimum-touch-target);
-    color: var(--color-foreground);
-    background-color: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-  }
-
-  .popup-link__close {
-    background-color: transparent;
     opacity: 0.8;
-  }
-
-  .popup-link__close svg {
-    width: var(--icon-size-xs);
-    height: var(--icon-size-xs);
+    animation: none;
   }
 {% endstylesheet %}
 

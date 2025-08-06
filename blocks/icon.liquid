@@ -1,20 +1,21 @@
+{% assign block_settings = block.settings %}
 {% assign icon_block_class = 'icon-block__media icon-block-' | append: block.id %}
 
 {% capture icon %}
   {% render 'icon-or-image',
-    icon: block.settings.icon,
-    image_upload: block.settings.image_upload,
-    width: block.settings.width,
+    icon: block_settings.icon,
+    image_upload: block_settings.image_upload,
+    width: block_settings.width,
     class_name: icon_block_class,
     attributes: block.shopify_attributes
   %}
 {% endcapture %}
 
-{%- if block.settings.link != blank -%}
+{%- if block_settings.link != blank -%}
   <a
-    href="{{ block.settings.link }}"
+    href="{{ block_settings.link }}"
     class="text-inherit"
-    {% if block.settings.open_in_new_tab %}
+    {% if block_settings.open_in_new_tab %}
       target="_blank" rel="noopener"
     {% endif %}
   >

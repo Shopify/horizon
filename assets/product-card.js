@@ -23,10 +23,28 @@ export class ProductCard extends Component {
     return this.refs.productCardLink.href;
   }
 
+  /**
+   * Gets the currently selected variant ID from the product card
+   * @returns {string | null} The variant ID or null if none selected
+   */
+  getSelectedVariantId() {
+    const checkedInput = /** @type {HTMLInputElement | null} */ (
+      this.querySelector('input[type="radio"]:checked[data-variant-id]')
+    );
+
+    return checkedInput?.dataset.variantId || null;
+  }
+
+  /**
+   * Gets the product card link element
+   * @returns {HTMLAnchorElement | null} The product card link or null
+   */
+  getProductCardLink() {
+    return this.refs.productCardLink || null;
+  }
+
   #fetchProductPageHandler = () => {
-    if (!this.refs.quickAdd?.cachedProductHtml) {
-      this.refs.quickAdd?.fetchProductPage(this.productPageUrl);
-    }
+    this.refs.quickAdd?.fetchProductPage(this.productPageUrl);
   };
 
   /**

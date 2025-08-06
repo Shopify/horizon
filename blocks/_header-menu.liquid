@@ -6,13 +6,14 @@
 {%- enddoc -%}
 
 {% liquid
+  assign block_settings = block.settings
   assign animation_speed = 200
 
-  if block.settings.menu_style == 'featured_products' and block.settings.product_title_case == 'uppercase'
+  if block_settings.menu_style == 'featured_products' and block_settings.product_title_case == 'uppercase'
     assign title_case_style = ' --title-case: uppercase;'
-  elsif block.settings.menu_style == 'featured_collections' and block.settings.collection_title_case == 'uppercase'
+  elsif block_settings.menu_style == 'featured_collections' and block_settings.collection_title_case == 'uppercase'
     assign title_case_style = ' --title-case: uppercase;'
-  elsif block.settings.menu_style == 'collection_images' and block.settings.collection_title_case == 'uppercase'
+  elsif block_settings.menu_style == 'collection_images' and block_settings.collection_title_case == 'uppercase'
     assign title_case_style = ' --title-case: uppercase;'
   endif
 %}
@@ -27,15 +28,15 @@
     >
       {% render 'header-drawer',
         class: 'header__drawer--mobile',
-        linklist: block.settings.menu,
+        linklist: block_settings.menu,
         data_header_drawer_type: 'mobile-drawer'
       %}
     </div>
 
   {% when 'navigation_bar' %}
-    {% if block.settings.navigation_bar == true %}
+    {% if block_settings.navigation_bar == true %}
       <div
-        class="menu-list menu-list--mobile{% if transparent == blank %} color-{{ block.settings.color_scheme_navigation_bar }}{% endif %}"
+        class="menu-list menu-list--mobile{% if transparent == blank %} color-{{ block_settings.color_scheme_navigation_bar }}{% endif %}"
         style="--menu-horizontal-gap: 15px; --mobile-nav-margin: auto;{{ title_case_style }}"
       >
         <div class="menu-list__scroll-container">
@@ -43,7 +44,7 @@
             class="menu-list__list list-unstyled"
             role="list"
           >
-            {% for link in block.settings.menu.links %}
+            {% for link in block_settings.menu.links %}
               <li>
                 <a
                   href="{{ link.url }}"

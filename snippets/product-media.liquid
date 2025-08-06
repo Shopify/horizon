@@ -17,7 +17,7 @@
 {%- enddoc -%}
 
 {% liquid
-  assign widths = widths | default: '400, 800, 1200, 1600, 2000'
+  assign widths = widths | default: '240, 352, 832, 1200, 1600, 1920, 2560, 3840'
 %}
 
 <div
@@ -34,7 +34,7 @@
   %}
   {{
     media.preview_image
-    | image_url: width: 2000
+    | image_url: width: 3840
     | image_tag:
       widths: widths,
       alt: media.alt,
@@ -60,7 +60,7 @@
           >
             {{
               media.preview_image
-              | image_url: width: 2000
+              | image_url: width: 3840
               | image_tag:
                 widths: widths,
                 alt: media.alt,

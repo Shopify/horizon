@@ -1,12 +1,16 @@
+{% assign block_settings = block.settings %}
+
+{%- assign block_settings = block.settings -%}
+
 <div
   class="
     payment-icons
     spacing-style
   "
   style="
-    {% render 'spacing-padding', settings: block.settings %}
-    --icon-gap: {{ block.settings.gap }}px;
-    --alignment: {{ block.settings.horizontal_alignment }};
+    {% render 'spacing-padding', settings: block_settings %}
+    --icon-gap: {{ block_settings.gap }}px;
+    --alignment: {{ block_settings.horizontal_alignment }};
   "
   {{ block.shopify_attributes }}
 >

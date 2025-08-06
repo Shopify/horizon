@@ -4,22 +4,24 @@
   @param {object} image - The image object from article.image
 {%- enddoc -%}
 
+{%- assign block_settings = block.settings -%}
+
 <div
-  class="blog-post-featured-image blog-post-featured-image--{{ block.id }} blog-post-featured-image--height-{{ block.settings.height }} spacing-style size-style"
+  class="blog-post-featured-image blog-post-featured-image--{{ block.id }} blog-post-featured-image--height-{{ block_settings.height }} spacing-style size-style"
   style="
-    --ratio: {% case block.settings.image_ratio %}
+    --ratio: {% case block_settings.image_ratio %}
       {% when 'landscape' %}16 / 9
       {% when 'portrait' %}4 / 5
       {% when 'adapt' %}{{ image.aspect_ratio | default: 1 }}
       {% else %}1
     {% endcase %};
-    {% render 'size-style', settings: block.settings %}
-    {% render 'spacing-style', settings: block.settings %}
+    {% render 'size-style', settings: block_settings %}
+    {% render 'spacing-style', settings: block_settings %}
   "
   {{ block.shopify_attributes }}
 >
   {%- capture image_border_style -%}
-    {% render 'border-override', settings: block.settings %}
+    {% render 'border-override', settings: block_settings %}
   {%- endcapture -%}
 
   {{
@@ -27,7 +29,7 @@
     | image_url: width: 3840
     | image_tag:
       width: image.width,
-      widths: '300, 450, 600, 750, 900, 1050, 1200, 1350, 1500, 1650, 1800, 1950, 2000, 2500, 3000, 3500, 4000, 5000',
+      widths: '240, 352, 832, 1200, 1600, 1920, 2560, 3840',
       height: image.height,
       class: 'blog-post-featured-image__image border-style',
       style: image_border_style,

@@ -8,6 +8,8 @@
   {% render 'button', link: '/collections/all' %}
 {%- enddoc -%}
 
+{% assign block_settings = block.settings %}
+
 <a
   {% if link == blank %}
     role="link"
@@ -17,17 +19,17 @@
   {% endif %}
   class="
     size-style
-    {{ block.settings.style_class }}
-    {{ block.settings.style_class }}--{{ block.id }}
+    {{ block_settings.style_class }}
+    {{ block_settings.style_class }}--{{ block.id }}
   "
-  style="{% render 'size-style', settings: block.settings %}"
-  {%- if block.settings.open_in_new_tab -%}
+  style="{% render 'size-style', settings: block_settings %}"
+  {%- if block_settings.open_in_new_tab -%}
     target="_blank"
     rel="noopener noreferrer"
   {%- endif -%}
   {{ block.shopify_attributes }}
 >
-  {{ block.settings.label }}
+  {{ block_settings.label }}
 </a>
 
 {% stylesheet %}

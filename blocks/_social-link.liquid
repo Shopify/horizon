@@ -1,10 +1,12 @@
 {% liquid
-  if block.settings.link != blank
+  assign block_settings = block.settings
+
+  if block_settings.link != blank
     # Extract domain from URL
-    assign platform = block.settings.link | split: '//' | last | remove: 'www.' | split: '.' | first
+    assign platform = block_settings.link | split: '//' | last | remove: 'www.' | split: '.' | first
 
     # Check if URL has a profile path (more than just the domain)
-    assign url_parts = block.settings.link | split: '//' | last | split: '/'
+    assign url_parts = block_settings.link | split: '//' | last | split: '/'
     assign has_profile = false
 
     if url_parts.size > 1 and url_parts[1] != ''
@@ -24,7 +26,7 @@
     {{ block.shopify_attributes }}
   >
     <a
-      href="{{ block.settings.link }}"
+      href="{{ block_settings.link }}"
       target="_blank"
       rel="noopener noreferrer"
       aria-label="{{ platform | capitalize }}"

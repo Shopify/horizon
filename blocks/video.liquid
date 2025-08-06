@@ -1,29 +1,31 @@
+{% assign block_settings = block.settings %}
+
 {% capture video_style %}
-  {%  render 'spacing-style', settings: block.settings %}
-  {% render 'border-override', settings: block.settings %}
-   --size-style-width: {{ block.settings.custom_width }}%; --size-style-width-mobile: {{ block.settings.custom_width_mobile }}%;
-   --size-style-aspect-ratio: {% if block.settings.source == 'uploaded' %}{{ block.settings.video.aspect_ratio | default: 'auto' }}{% elsif block.settings.cover_image == blank %}{{ block.settings.aspect_ratio }}{% else %}auto{% endif %};
+  {%  render 'spacing-style', settings: block_settings %}
+  {% render 'border-override', settings: block_settings %}
+   --size-style-width: {{ block_settings.custom_width }}%; --size-style-width-mobile: {{ block_settings.custom_width_mobile }}%;
+   --size-style-aspect-ratio: {% if block_settings.source == 'uploaded' %}{{ block_settings.video.aspect_ratio | default: 'auto' }}{% elsif block_settings.cover_image == blank %}{{ block_settings.aspect_ratio }}{% else %}auto{% endif %};
 {% endcapture %}
 
-{% if block.settings.source == 'uploaded' %}
+{% if block_settings.source == 'uploaded' %}
   {% render 'video',
-    video: block.settings.video,
+    video: block_settings.video,
     video_class: 'spacing-style size-style border-style',
-    video_loop: block.settings.video_loop,
+    video_loop: block_settings.video_loop,
     video_style: video_style,
-    video_preview_image: block.settings.video.preview_image,
+    video_preview_image: block_settings.video.preview_image,
     additional_attributes: block.shopify_attributes,
     section_id: section.id
   %}
 {% else %}
   {% render 'video',
     video_from_url: true,
-    video: block.settings.video_url.id,
+    video: block_settings.video_url.id,
     video_class: 'spacing-style size-style border-style',
-    video_type: block.settings.video_url.type,
+    video_type: block_settings.video_url.type,
     video_style: video_style,
-    video_alt: block.settings.alt,
-    video_preview_image: block.settings.cover_image,
+    video_alt: block_settings.alt,
+    video_preview_image: block_settings.cover_image,
     additional_attributes: block.shopify_attributes,
     section_id: section.id
   %}

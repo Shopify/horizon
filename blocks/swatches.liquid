@@ -1,4 +1,5 @@
 {%- liquid
+  assign block_settings = block.settings
   for product_option in closest.product.options_with_values
     assign swatch_count = product_option.values | map: 'swatch' | compact | size
 
@@ -13,14 +14,14 @@
     data-product-id="{{ closest.product.id }}"
     data-product-url="{{ closest.product.url }}"
     style="
-      --overflow-list-alignment: {{ block.settings.product_swatches_alignment }};
-      --overflow-list-alignment-mobile: {{ block.settings.product_swatches_alignment_mobile }};
-      --product-swatches-alignment: {% if block.settings.product_swatches_alignment == 'flex-start' %}start{% elsif block.settings.product_swatches_alignment == 'flex-end' %}end{% else %}center{% endif %};
-      --product-swatches-alignment-mobile: {% if block.settings.product_swatches_alignment_mobile == 'flex-start' %}start{% elsif block.settings.product_swatches_alignment_mobile == 'flex-end' %}end{% else %}center{% endif %};
-      --product-swatches-padding-block-start: {{ block.settings.product_swatches_padding_top }}px;
-      --product-swatches-padding-block-end: {{ block.settings.product_swatches_padding_bottom }}px;
-      --product-swatches-padding-inline-start: {{ block.settings.product_swatches_padding_left }}px;
-      --product-swatches-padding-inline-end: {{ block.settings.product_swatches_padding_right }}px;
+      --overflow-list-alignment: {{ block_settings.product_swatches_alignment }};
+      --overflow-list-alignment-mobile: {{ block_settings.product_swatches_alignment_mobile }};
+      --product-swatches-alignment: {% if block_settings.product_swatches_alignment == 'flex-start' %}start{% elsif block_settings.product_swatches_alignment == 'flex-end' %}end{% else %}center{% endif %};
+      --product-swatches-alignment-mobile: {% if block_settings.product_swatches_alignment_mobile == 'flex-start' %}start{% elsif block_settings.product_swatches_alignment_mobile == 'flex-end' %}end{% else %}center{% endif %};
+      --product-swatches-padding-block-start: {{ block_settings.product_swatches_padding_top }}px;
+      --product-swatches-padding-block-end: {{ block_settings.product_swatches_padding_bottom }}px;
+      --product-swatches-padding-inline-start: {{ block_settings.product_swatches_padding_left }}px;
+      --product-swatches-padding-inline-end: {{ block_settings.product_swatches_padding_right }}px;
     "
     {{ block.shopify_attributes }}
   >

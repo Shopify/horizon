@@ -1,16 +1,17 @@
+{% assign block_settings = block.settings %}
 <div
   class="
     footer-utilities__group-copyright
     custom-typography
-    {% if block.settings.font_size != "" %}custom-font-size{% endif %}
+    {% if block_settings.font_size != "" %}custom-font-size{% endif %}
   "
-  style="{% render 'typography-style', preset: 'custom', settings: block.settings %}"
+  style="{% render 'typography-style', preset: 'custom', settings: block_settings %}"
   {{ block.shopify_attributes }}
 >
   <span class="footer-utilities__text">
     &copy; {{ 'now' | date: '%Y' }}
     {{ shop.name | link_to: routes.root_url -}}
-    {%- if block.settings.show_powered_by -%}
+    {%- if block_settings.show_powered_by -%}
       , {{ powered_by_link }}
     {%- endif -%}
   </span>

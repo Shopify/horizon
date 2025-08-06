@@ -3,41 +3,43 @@
 
   @param {string} [class] - custom class to define in addition to text-block classes
   @param {string} [fallback_text] - fallback text if settings.text does not exist
+  @param {object} [block] - The block object
   @param {string} [width] - width of the text block
 {%- enddoc -%}
 
 {% liquid
-  assign plain_text = block.settings.text | strip_newlines | strip_html | strip
-  assign text_width = width | default: block.settings.width
+  assign block_settings = block.settings
+  assign plain_text = block_settings.text | strip_newlines | strip_html | strip
+  assign text_width = width | default: block_settings.width
 
-  if block.settings.font_size contains 'heading-lg' or block.settings.font_size contains 'heading-xl'
+  if block_settings.font_size contains 'heading-lg' or block_settings.font_size contains 'heading-xl'
     assign type = 'display'
-  elsif block.settings.font_size contains 'heading'
+  elsif block_settings.font_size contains 'heading'
     assign type = 'heading'
   else
     assign type = 'body'
   endif
-  if block.settings.type_preset == 'rte' or block.settings.type_preset == 'paragraph'
+  if block_settings.type_preset == 'rte' or block_settings.type_preset == 'paragraph'
     assign is_rte = true
   endif
 
   capture text_block_classes
     if text_width == '100%'
-      echo 'text-block--align-' | append: block.settings.alignment
-      if block.settings.max_width == 'none'
+      echo 'text-block--align-' | append: block_settings.alignment
+      if block_settings.max_width == 'none'
         echo ' text-block--full-width '
       endif
     endif
-    if block.settings.type_preset == 'custom'
+    if block_settings.type_preset == 'custom'
       echo ' custom-typography '
-      if block.settings.font_size != ''
+      if block_settings.font_size != ''
         echo ' custom-font-size '
       endif
-      if block.settings.color != ''
+      if block_settings.color != ''
         echo ' custom-color '
       endif
     endif
-    if block.settings.background
+    if block_settings.background
       echo ' text-block--background '
     endif
     if is_rte
@@ -47,21 +49,21 @@
 %}
 
 {% capture attributes %}
-  class="{{ class }} spacing-style text-block text-block--{{ block.id }} {{ block.settings.type_preset }}
+  class="{{ class }} spacing-style text-block text-block--{{ block.id }} {{ block_settings.type_preset }}
     {{ text_block_classes }}
   "
 
   style="
-    {% render 'spacing-padding', settings: block.settings %}
-    {% render 'typography-style', settings: block.settings %}
+    {% render 'spacing-padding', settings: block_settings %}
+    {% render 'typography-style', settings: block_settings %}
     --width: {{ text_width }};
-    --max-width: var(--max-width--{{ type }}-{{ block.settings.max_width }});
+    --max-width: var(--max-width--{{ type }}-{{ block_settings.max_width }});
     {% if text_width == "100%" %}
-      --text-align: {{ block.settings.alignment }};
+      --text-align: {{ block_settings.alignment }};
     {% endif %}
-    {% if block.settings.background %}
-      --text-background-color: {{ block.settings.background_color | default: 'rgb(255 255 255 / 1.0)' }};
-      --text-corner-radius: {{ block.settings.corner_radius }}px;
+    {% if block_settings.background %}
+      --text-background-color: {{ block_settings.background_color | default: 'rgb(255 255 255 / 1.0)' }};
+      --text-corner-radius: {{ block_settings.corner_radius }}px;
       --text-padding: max(var(--padding-2xs), calc((var(--text-corner-radius) + var(--padding-xs)) * (1 - cos(45deg))));
     {% endif %}
   "
@@ -85,6 +87,9 @@
   </div>
 {% elsif plain_text != blank %}
   <{{ element }} {{ attributes }}>
+    {% comment %}
+      Not using block_settings.text here because live replacement in editor doesn't work as well.
+    {% endcomment %}
     {{ block.settings.text }}
   </{{ element }}>
 {% endif %}

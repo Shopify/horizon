@@ -1,13 +1,14 @@
 {% liquid
+  assign block_settings = block.settings
   assign ratio = 1
 
-  case block.settings.image_ratio
+  case block_settings.image_ratio
     when 'landscape'
       assign ratio = '16 / 9'
     when 'portrait'
       assign ratio = '4 / 5'
     when 'adapt'
-      assign ratio = block.settings.image.aspect_ratio
+      assign ratio = block_settings.image.aspect_ratio
   endcase
 
   if ratio == 0 or ratio == null
@@ -16,36 +17,36 @@
 %}
 
 {% capture class %}
-  image-block image-block--{{ block.id }} image-block--height-{{ block.settings.height }} spacing-style size-style
+  image-block image-block--{{ block.id }} image-block--height-{{ block_settings.height }} spacing-style size-style
 {% endcapture %}
 
 {% capture style %}
   --ratio: {{ ratio }};
-  {% render 'size-style', settings: block.settings %}
-  {% render 'spacing-style', settings: block.settings %}
+  {% render 'size-style', settings: block_settings %}
+  {% render 'spacing-style', settings: block_settings %}
 {% endcapture %}
 
 {% capture image_border_style %}
   --ratio: {{ ratio }};
-  {% render 'border-override', settings: block.settings %}
+  {% render 'border-override', settings: block_settings %}
 {% endcapture %}
 
 {% liquid
   assign media_width_desktop = '100vw'
   assign media_width_mobile = '100vw'
   assign sizes = 'auto, (min-width: 750px) ' | append: media_width_desktop | append: ', ' | append: media_width_mobile
-  assign widths = '300, 450, 600, 750, 900, 1050, 1200, 1350, 1500, 1650, 1800, 1950, 2000, 2500, 3000, 3500, 4000, 5000'
+  assign widths = '240, 352, 832, 1200, 1600, 1920, 2560, 3840'
 %}
 
 {% capture image %}
-  {%- if block.settings.image -%}
+  {%- if block_settings.image -%}
     {{
-      block.settings.image
+      block_settings.image
       | image_url: width: 3840
       | image_tag:
-        width: block.settings.image.width,
+        width: block_settings.image.width,
         widths: widths,
-        height: block.settings.image.height,
+        height: block_settings.image.height,
         class: 'image-block__image border-style',
         style: image_border_style,
         sizes: sizes
@@ -57,7 +58,7 @@
   {%- endif -%}
 {% endcapture %}
 
-{% if block.settings.link == blank %}
+{% if block_settings.link == blank %}
   <div
     class="{{ class }}"
     style="{{ style }}"
@@ -67,7 +68,7 @@
   </div>
 {% else %}
   <a
-    href="{{ block.settings.link }}"
+    href="{{ block_settings.link }}"
     class="{{ class }}"
     style="{{ style }}"
     {{ block.shopify_attributes }}

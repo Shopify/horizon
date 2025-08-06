@@ -28,13 +28,13 @@
     assign media_width_desktop = '100vw'
     assign media_width_mobile = '100vw'
     assign sizes = '(min-width: 1024px) 1024px, ' | append: media_width_desktop | append: ', ' | append: media_width_mobile
-    assign widths = '300, 375, 450, 525, 600, 675, 750, 768, 850, 900, 1024'
+    assign widths = '240, 352, 832, 1200'
   %}
 
   {% assign image_style = 'width: ' | append: width | append: 'px;' %}
   {{
     image_upload
-    | image_url: width: 1024
+    | image_url: width: 1200
     | image_tag: widths: widths, class: class_name, style: image_style, sizes: sizes
   }}
 {%- endif -%}

@@ -1,30 +1,31 @@
 {%- liquid
+  assign block_settings = block.settings
   assign product_resource = closest.product
   assign selected_variant = product_resource.selected_or_first_available_variant
 -%}
 
 {% liquid
-  if block.settings.type_preset == 'rte' or block.settings.type_preset == 'paragraph'
+  if block_settings.type_preset == 'rte' or block_settings.type_preset == 'paragraph'
     assign is_rte = true
   endif
 
   capture text_block_classes
-    if block.settings.width == '100%'
-      echo 'text-block--align-' | append: block.settings.alignment
-      if block.settings.max_width == 'none'
+    if block_settings.width == '100%'
+      echo 'text-block--align-' | append: block_settings.alignment
+      if block_settings.max_width == 'none'
         echo ' text-block--full-width'
       endif
     endif
-    if block.settings.type_preset == 'custom'
+    if block_settings.type_preset == 'custom'
       echo ' custom-typography'
-      if block.settings.font_size != ''
+      if block_settings.font_size != ''
         echo ' custom-font-size'
       endif
-      if block.settings.color != ''
+      if block_settings.color != ''
         echo ' custom-color'
       endif
     endif
-    if block.settings.background
+    if block_settings.background
       echo ' text-block--background'
     endif
     if is_rte
@@ -34,23 +35,23 @@
 %}
 
 <product-price
-  class="text-block {{ text_block_classes }} text-{{ block.settings.alignment }} {{ block.settings.type_preset | default: 'paragraph' }} spacing-style"
+  class="text-block {{ text_block_classes }} text-{{ block_settings.alignment }} {{ block_settings.type_preset | default: 'paragraph' }} spacing-style"
   data-block-id="{{ block.id }}"
   data-product-id="{{ product_resource.id }}"
   style="
-    {% render 'typography-style', settings: block.settings %}
-    {% render 'spacing-style', settings: block.settings %}
-    --width: {{ block.settings.width }};
+    {% render 'typography-style', settings: block_settings %}
+    {% render 'spacing-style', settings: block_settings %}
+    --width: {{ block_settings.width }};
   "
   {{ block.shopify_attributes }}
 >
   {% render 'price',
     show_unit_price: true,
     product_resource: product_resource,
-    show_sale_price_first: block.settings.show_sale_price_first
+    show_sale_price_first: block_settings.show_sale_price_first
   %}
 
-  {% if block.settings.show_tax_info %}
+  {% if block_settings.show_tax_info %}
     <div class="tax-note">
       {%- if cart.duties_included and cart.taxes_included -%}
         {{ 'content.duties_and_taxes_included' | t }}
@@ -66,7 +67,7 @@
     </div>
   {% endif %}
 
-  {%- if selected_variant != blank and block.settings.show_installments -%}
+  {%- if selected_variant != blank and block_settings.show_installments -%}
     <div class="installments">
       {%- assign product_form_installment_id = 'product-form-installment-' | append: block.id -%}
       {%- form 'product', product_resource, id: product_form_installment_id, class: 'payment-terms' -%}

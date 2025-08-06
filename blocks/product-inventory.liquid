@@ -1,17 +1,18 @@
 {%- liquid
+  assign block_settings = block.settings
   assign variant = closest.product.selected_or_first_available_variant
   if variant.inventory_management == 'shopify'
     assign inventory_managed = true
   endif
   assign inventory_quantity = variant.inventory_quantity
   assign inventory_policy = variant.inventory_policy
-  assign threshold = block.settings.inventory_threshold
+  assign threshold = block_settings.inventory_threshold
 
   if inventory_managed
     if inventory_quantity > 0
       if inventory_quantity <= threshold
         assign status = 'low'
-        assign show_quantity = block.settings.show_inventory_quantity
+        assign show_quantity = block_settings.show_inventory_quantity
         if show_quantity == false
           assign translation_key = 'content.inventory_low_stock'
         endif
@@ -42,9 +43,9 @@
 <product-inventory
   class="
     product-inventory spacing-style
-    {% if block.settings.type_preset != '' %}{{ block.settings.type_preset }}{% endif%}
+    {% if block_settings.type_preset != '' %}{{ block_settings.type_preset }}{% endif%}
   "
-  style="{% render 'spacing-style', settings: block.settings %}"
+  style="{% render 'spacing-style', settings: block_settings %}"
   {{ block.shopify_attributes }}
   data-product-id="{{ product.id }}"
 >

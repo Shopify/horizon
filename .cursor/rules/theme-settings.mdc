@@ -1,6 +1,6 @@
 ---
-description:
-globs: config/*.json
+description: Guidelines and examples for organizing and structuring the Shopify theme settings schema.
+globs: config/settings_schema.json
 alwaysApply: false
 ---
 # Settings Schema Standards

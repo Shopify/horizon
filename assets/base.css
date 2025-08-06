@@ -9,6 +9,7 @@ body {
   flex-direction: column;
   margin: 0;
   min-height: 100svh;
+  font-variation-settings: 'slnt' 0;
 }
 
 :root {
@@ -29,6 +30,10 @@ html {
 
 html[scroll-lock] {
   overflow: hidden;
+}
+
+[popover]:not(:popover-open, dialog[open]) {
+  display: none;
 }
 
 img,
@@ -1536,17 +1541,6 @@ media-gallery {
   }
 }
 
-@media screen and (min-width: 750px) {
-  /* The desktop layout doesn't stretch vertically as it should in Safari */
-  :not(.dialog-zoomed-gallery) > .product-media-container {
-    height: var(--constrained-height, auto);
-  }
-
-  .quick-add-modal__content .product-media-container {
-    --constrained-height: auto;
-  }
-}
-
 media-gallery:where(.media-gallery--grid) .media-gallery__grid {
   display: none;
 }
@@ -1622,6 +1616,11 @@ media-gallery.media-gallery--grid .media-gallery__grid .product-media-container 
   height: 100%;
   z-index: var(--layer-flat);
   cursor: zoom-in;
+  background-color: transparent;
+
+  &:hover {
+    background-color: transparent;
+  }
 }
 
 zoom-dialog dialog {
@@ -1662,9 +1661,32 @@ zoom-dialog dialog {
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0;
-  animation: elementSlideInBottom var(--animation-speed) var(--animation-easing) forwards;
-  animation-delay: calc(var(--animation-speed) * 2);
+
+  /* For the outline radius */
+  border-radius: 50%;
+}
+
+/* This triggers iOS < 16.4. The outline bug is not recognized as a lack of @supports */
+
+@supports not (background-color: rgb(from red 150 g b / alpha)) {
+  /**
+    There is a bug in safari < 16.4 that causes the outline to not follow the elements border radius. This is a workaround.
+    Using element selector to increase specificity.
+  **/
+
+  .close-button:focus-visible {
+    outline: none;
+    overflow: visible;
+  }
+
+  .close-button:focus-visible::after {
+    content: '';
+    position: absolute;
+    inset: calc(-1 * var(--focus-outline-offset));
+    border: var(--focus-outline-width) solid currentColor;
+    border-radius: 50%;
+    display: inherit;
+  }
 }
 
 .dialog--closed .close-button {
@@ -1742,8 +1764,8 @@ zoom-dialog dialog {
 }
 
 .close-button svg {
-  width: 20px;
-  height: 20px;
+  width: var(--icon-size-xs);
+  height: var(--icon-size-xs);
 }
 
 /* Product media */
@@ -3214,6 +3236,10 @@ slideshow-slide {
   &[hidden]:not([reveal]) {
     display: none;
   }
+}
+
+slideshow-slide.product-media-container--tallest {
+  content-visibility: visible;
 }
 
 @media screen and (max-width: 749px) {

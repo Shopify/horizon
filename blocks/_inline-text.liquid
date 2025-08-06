@@ -4,7 +4,8 @@
   @param {string} suffix
 {%- enddoc -%}
 
-{% assign plain_text = block.settings.text | strip_newlines | strip_html | strip %}
+{% assign block_settings = block.settings %}
+{% assign plain_text = block_settings.text | strip_newlines | strip_html | strip %}
 
 {% # We need to make sure the wrapper is rendered even if the text element is empty in the theme editor to allow live text editing %}
 {%- if plain_text != '' or request.design_mode -%}
@@ -12,10 +13,10 @@
     class="
       text-block
       custom-typography
-      {% if block.settings.weight != blank %}custom-font-weight{% endif %}
-      {% if block.settings.font_size != blank %}custom-font-size{% endif %}
+      {% if block_settings.weight != blank %}custom-font-weight{% endif %}
+      {% if block_settings.font_size != blank %}custom-font-size{% endif %}
     "
-    style="{% render 'typography-style', preset: 'custom', settings: block.settings, type: 'heading' %}"
+    style="{% render 'typography-style', preset: 'custom', settings: block_settings, type: 'heading' %}"
     {{ block.shopify_attributes }}
   >
     <span>{{ block.settings.text }}</span>{{ suffix }}

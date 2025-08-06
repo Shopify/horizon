@@ -1,4 +1,5 @@
 {% liquid
+  assign block_settings = block.settings
   assign use_inverse_logo = false
 
   if section.settings.enable_transparent_header_home and template.name == 'index' and section.settings.home_color_scheme == 'inverse'
@@ -23,14 +24,14 @@
   based on the .header[transparent] selector
 {% endcomment %}
 <a
-  {% if template.name == 'index' and block.settings.hide_logo_on_home_page %}
+  {% if template.name == 'index' and block_settings.hide_logo_on_home_page %}
     data-hidden-on-home-page
   {% endif %}
   href="{{ routes.root_url }}"
   class="size-style spacing-style header-logo"
   style="
-    {% render 'size-style', settings: block.settings %}
-    {% render 'spacing-style', settings: block.settings %}
+    {% render 'size-style', settings: block_settings %}
+    {% render 'spacing-style', settings: block_settings %}
     --font-family: var(--font-body--family);
     --font-style: var(--font-body--style);
     --font-weight: 600;
@@ -38,12 +39,12 @@
   {{ block.shopify_attributes }}
 >
   {% liquid
-    assign logo_width = block.settings.custom_height | times: settings.logo.aspect_ratio | ceil
-    assign logo_width_mobile = block.settings.custom_height_mobile | times: settings.logo.aspect_ratio | ceil
-    assign inverse_logo_width = block.settings.custom_height | times: inverse_logo.aspect_ratio | ceil
-    assign inverse_logo_width_mobile = block.settings.custom_height_mobile | times: inverse_logo.aspect_ratio | ceil
-    assign logo_style = '--header-logo-image-width: ' | append: logo_width | append: 'px;' | append: '--header-logo-image-width-mobile: ' | append: logo_width_mobile | append: 'px; --header-logo-image-height: ' | append: block.settings.custom_height | append: 'px; --header-logo-image-height-mobile: ' | append: block.settings.custom_height_mobile | append: 'px;'
-    assign inverse_logo_style = '--header-logo-image-width: ' | append: inverse_logo_width | append: 'px;' | append: '--header-logo-image-width-mobile: ' | append: inverse_logo_width_mobile | append: 'px; --header-logo-image-height: ' | append: block.settings.custom_height | append: 'px; --header-logo-image-height-mobile: ' | append: block.settings.custom_height_mobile | append: 'px;'
+    assign logo_width = block_settings.custom_height | times: settings.logo.aspect_ratio | ceil
+    assign logo_width_mobile = block_settings.custom_height_mobile | times: settings.logo.aspect_ratio | ceil
+    assign inverse_logo_width = block_settings.custom_height | times: inverse_logo.aspect_ratio | ceil
+    assign inverse_logo_width_mobile = block_settings.custom_height_mobile | times: inverse_logo.aspect_ratio | ceil
+    assign logo_style = '--header-logo-image-width: ' | append: logo_width | append: 'px;' | append: '--header-logo-image-width-mobile: ' | append: logo_width_mobile | append: 'px; --header-logo-image-height: ' | append: block_settings.custom_height | append: 'px; --header-logo-image-height-mobile: ' | append: block_settings.custom_height_mobile | append: 'px;'
+    assign inverse_logo_style = '--header-logo-image-width: ' | append: inverse_logo_width | append: 'px;' | append: '--header-logo-image-width-mobile: ' | append: inverse_logo_width_mobile | append: 'px; --header-logo-image-height: ' | append: block_settings.custom_height | append: 'px; --header-logo-image-height-mobile: ' | append: block_settings.custom_height_mobile | append: 'px;'
   %}
 
   <span
@@ -53,7 +54,7 @@
     {% render 'image',
       image: settings.logo,
       class: 'header-logo__image',
-      height: block.settings.custom_height,
+      height: block_settings.custom_height,
       text_fallback: shop.name,
       style: logo_style
     %}
@@ -67,7 +68,7 @@
       {% render 'image',
         image: inverse_logo,
         class: 'header-logo__image',
-        height: block.settings.custom_height,
+        height: block_settings.custom_height,
         text_fallback: shop.name,
         style: inverse_logo_style
       %}

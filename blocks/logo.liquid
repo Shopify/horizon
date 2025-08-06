@@ -1,7 +1,8 @@
 {% liquid
+  assign block_settings = block.settings
   assign image = settings.logo
 
-  if block.settings.inverse and settings.logo_inverse
+  if block_settings.inverse and settings.logo_inverse
     assign image = settings.logo_inverse
   endif
 %}
@@ -13,7 +14,7 @@
       | image_url: width: 3840
       | image_tag:
         width: image.width,
-        widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840',
+        widths: '240, 352, 832, 1200, 1600, 1920, 2560, 3840',
         height: image.height,
         class: 'logo-block__image',
         alt: shop.name,
@@ -28,31 +29,31 @@
     spacing-style
   "
   style="
-    {% if block.settings.unit == 'percent' %}
-      --logo-width: {{ block.settings.percent_width }}%;
+    {% if block_settings.unit == 'percent' %}
+      --logo-width: {{ block_settings.percent_width }}%;
     {% else %}
       {% if image %}
-        --logo-width: {{ image.width | times: 1.00 | divided_by: image.height | times: block.settings.pixel_height }}px;
+        --logo-width: {{ image.width | times: 1.00 | divided_by: image.height | times: block_settings.pixel_height }}px;
       {% else %}
         --logo-width: {{ shop.name.size }}ch;
-        --logo-height: {{ block.settings.pixel_height }}px;
+        --logo-height: {{ block_settings.pixel_height }}px;
       {% endif %}
     {% endif %}
 
-    {% if block.settings.custom_mobile_size %}
-      {% if block.settings.unit_mobile == 'percent' %}
-        --logo-width-mobile: {{ block.settings.percent_width_mobile }}%;
+    {% if block_settings.custom_mobile_size %}
+      {% if block_settings.unit_mobile == 'percent' %}
+        --logo-width-mobile: {{ block_settings.percent_width_mobile }}%;
         --logo-height-mobile: auto;
       {% else %}
         {% if image %}
-          --logo-width-mobile: {{ image.width | times: 1.00 | divided_by: image.height | times: block.settings.pixel_height_mobile }}px;
+          --logo-width-mobile: {{ image.width | times: 1.00 | divided_by: image.height | times: block_settings.pixel_height_mobile }}px;
           {% else %}
             --logo-width-mobile: {{ shop.name.size }}ch;
-            --logo-height-mobile: {{ block.settings.pixel_height_mobile }}px;
+            --logo-height-mobile: {{ block_settings.pixel_height_mobile }}px;
         {% endif %}
       {% endif %}
     {% endif %}
-    {% render 'spacing-style', settings: block.settings %}
+    {% render 'spacing-style', settings: block_settings %}
   "
   {{ block.shopify_attributes }}
 >

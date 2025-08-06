@@ -528,18 +528,21 @@
     grid-template-columns: 1fr;
   }
 
-  /* Column-specific dimming effect when any interactive element is hovered
-     Multiple selectors for performance: each simple :has() check is faster than one complex selector with multiple conditions */
-  .header__column:has(header-menu:hover),
-  .header__column:has(.header-actions__action:hover),
-  .header__column:has(.dropdown-localization__button:hover),
-  .header__column:has(.header__icon--menu:hover) {
-    header-menu:not(:hover),
-    .header-actions__action:not(:hover),
-    .dropdown-localization__button:not(:hover),
-    .header__icon--menu:not(:hover) {
-      opacity: var(--opacity-subdued-text);
-      transition: opacity var(--animation-speed) var(--animation-easing);
+  /* Check for hover support to avoid unnecessary expensive recalculations when tapping on mobile */
+  @media (hover: hover) {
+    /* Column-specific dimming effect when any interactive element is hovered
+      Multiple selectors for performance: each simple :has() check is faster than one complex selector with multiple conditions */
+    .header__column:has(header-menu:hover),
+    .header__column:has(.header-actions__action:hover),
+    .header__column:has(.dropdown-localization__button:hover),
+    .header__column:has(.header__icon--menu:hover) {
+      header-menu:not(:hover),
+      .header-actions__action:not(:hover),
+      .dropdown-localization__button:not(:hover),
+      .header__icon--menu:not(:hover) {
+        opacity: var(--opacity-subdued-text);
+        transition: opacity var(--animation-speed) var(--animation-easing);
+      }
     }
   }
 

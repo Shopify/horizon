@@ -10,11 +10,12 @@
   @param {string} sort_by - The current sort by
 {%- enddoc -%}
 
+{%- assign block_settings = block.settings -%}
 <div
-  class="facets-toggle{% if block.settings.enable_filtering == false %} facets-toggle--no-filters{% endif %}"
+  class="facets-toggle{% if block_settings.enable_filtering == false %} facets-toggle--no-filters{% endif %}"
   style="--facets-inner-padding-block: {{ padding-block-start }}px {{ padding-block-end }}px; --facets-inner-padding-inline: var(--padding-lg);"
 >
-  {% if enable_filtering %}
+  {% if block_settings.enable_filtering %}
     <div class="facets-toggle__wrapper">
       <button
         class="button facets-toggle__button button-unstyled button-unstyled--with-icon"
@@ -49,17 +50,17 @@
   {% endif %}
 
   <div class="facets-mobile-wrapper facets-controls-wrapper">
-    {% if block.settings.enable_filtering == false and block.settings.enable_sorting %}
+    {% if block_settings.enable_filtering == false and block_settings.enable_sorting %}
       {% render 'sorting',
         results: results,
         sort_by: sort_by,
-        filter_style: block.settings.filter_style,
+        filter_style: block_settings.filter_style,
         suffix: 'mobile',
         section_id: section_id,
         should_use_select_on_mobile: false
       %}
     {% endif %}
-    {% if block.settings.enable_grid_density %}
+    {% if block_settings.enable_grid_density %}
       {% render 'grid-density-controls', viewport: 'mobile' %}
     {% endif %}
   </div>

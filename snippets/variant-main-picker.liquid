@@ -2,7 +2,10 @@
   Renders a default variant picker, used to display the variant picker in the variants block.
 
   @param {object} product_resource - The product object.
+  @param {object} [block] - The block object
 {%- enddoc -%}
+
+{% assign block_settings = block.settings %}
 
 {% unless product_resource.has_only_default_variant %}
   {% liquid
@@ -14,8 +17,8 @@
     endif
   %}
   <variant-picker
-    class="variant-picker spacing-style variant-picker--{{ block.settings.alignment }}"
-    style="--color-strikethrough-mix: {{ strikethrough_color_mix }}; {% render 'spacing-style', settings: block.settings %}"
+    class="variant-picker spacing-style variant-picker--{{ block_settings.alignment }}"
+    style="--color-strikethrough-mix: {{ strikethrough_color_mix }}; {% render 'spacing-style', settings: block_settings %}"
     data-section-id="{{ section.id }}"
     data-product-id="{{ product_resource.id }}"
     data-block-id="{{ block.id }}"
@@ -33,10 +36,10 @@
       {%- for product_option in product_resource.options_with_values -%}
         {%- liquid
           assign swatch_count = product_option.values | map: 'swatch' | compact | size
-          assign variant_style = block.settings.variant_style
+          assign variant_style = block_settings.variant_style
 
-          if swatch_count > 0 and block.settings.show_swatches
-            if block.settings.variant_style == 'dropdown'
+          if swatch_count > 0 and block_settings.show_swatches
+            if block_settings.variant_style == 'dropdown'
               assign variant_style = 'swatch_dropdown'
             else
               assign variant_style = 'swatch'
@@ -50,7 +53,7 @@
           endif
         -%}
 
-        {%- if variant_style == 'swatch' or block.settings.variant_style == 'buttons' -%}
+        {%- if variant_style == 'swatch' or block_settings.variant_style == 'buttons' -%}
           <fieldset
             class="variant-option variant-option--buttons{% if variant_style == 'swatch' %} variant-option--swatches{% else %} variant-option--{{ settings.variant_button_width }}{% endif %}"
             {{ option_id_attribute }}
@@ -115,7 +118,7 @@
               {% endstyle %}
             {% endif %}
           </fieldset>
-        {%- elsif block.settings.variant_style == 'dropdowns' -%}
+        {%- elsif block_settings.variant_style == 'dropdowns' -%}
           {%
             # There is an opportunity to build a custom select component that will allow us to style the select element further (animation for dropdown, swatches shown in the dropdown options, etc)
             # It's too bad as it mean rebuilding baked in behaviours but I think we've already done that for the locale selectors
@@ -308,6 +311,7 @@
   }
 
   .variant-option__button-label--has-swatch {
+    --focus-outline-radius: var(--variant-picker-swatch-radius);
     padding: 0;
     border: none;
     display: block;
@@ -334,12 +338,14 @@
   }
 
   .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover .swatch {
-    outline: var(--focus-outline-width) solid rgb(var(--color-foreground-rgb) / var(--opacity-35-55));
+    --focus-outline: var(--focus-outline-width) solid rgb(var(--color-foreground-rgb) / var(--opacity-35-55));
+    outline: var(--focus-outline);
     outline-offset: var(--focus-outline-offset);
   }
 
   .facets__inputs-list--swatches-grid .variant-option__button-label:has(:focus-visible) .swatch {
-    outline: var(--focus-outline-width) solid currentcolor;
+    --focus-outline: var(--focus-outline-width) solid currentcolor;
+    outline: var(--focus-outline);
     outline-offset: var(--focus-outline-offset);
   }
 
@@ -357,17 +363,42 @@
   }
 
   .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:has(:checked) {
-    outline: none;
+    --focus-outline: none;
   }
 
   .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:has(:checked) .swatch {
-    outline: var(--focus-outline-width) solid var(--color-foreground);
+    outline: var(--focus-outline);
     outline-offset: var(--focus-outline-offset);
   }
 
   .variant-option__button-label--has-swatch:has(:checked) {
-    outline: var(--focus-outline-width) solid var(--color-foreground);
+    --focus-outline: var(--focus-outline-width) solid var(--color-foreground);
+    outline: var(--focus-outline);
     outline-offset: var(--focus-outline-offset);
+  }
+
+  /* This triggers iOS < 16.4. The outline bug is not recognized as a lack of @supports */
+  @supports not (background-color: rgb(from red 150 g b / alpha)) {
+    /** There is a bug in safari < 16.4 that causes the outline to not follow the elements border radius. This is a workaround. **/
+    .variant-option__button-label--has-swatch:has(:checked),
+    .variant-option__button-label:has(:focus-visible) .swatch,
+    .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover .swatch {
+      outline: none;
+      position: relative;
+      overflow: visible;
+    }
+
+    .variant-option__button-label--has-swatch:has(:checked)::after,
+    .variant-option__button-label:has(:focus-visible) .swatch::after,
+    .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover .swatch::after {
+      content: '';
+      position: absolute;
+      inset: calc(-1 * var(--focus-outline-offset));
+      border: var(--focus-outline);
+      border-radius: var(--focus-outline-radius, 50%);
+      background-color: transparent;
+      display: inherit;
+    }
   }
 
   .variant-option__button-label:has([data-option-available='false']):has(:checked) {

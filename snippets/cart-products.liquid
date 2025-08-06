@@ -1,3 +1,5 @@
+{% assign block_settings = block.settings %}
+
 <script
   src="{{ 'component-cart-items.js' | asset_url }}"
   type="module"
@@ -39,8 +41,8 @@
       method="post"
     >
       <div
-        class="cart-items spacing-style{% if block.settings.dividers %} cart-items--dividers{% endif %}"
-        style="{%  render 'spacing-style', settings: block.settings %} --cart-items-gap:{{ block.settings.gap | append: "px" }};"
+        class="cart-items spacing-style{% if block_settings.dividers %} cart-items--dividers{% endif %}"
+        style="{%  render 'spacing-style', settings: block_settings %} --cart-items-gap:{{ block_settings.gap | append: "px" }};"
       >
         <table
           class="cart-items__table"
@@ -116,9 +118,9 @@
                       if settings.cart_thumbnail_border_radius > 0
                         assign border_override = border_override | append: ' overflow: hidden;'
                       endif
-                      if block.settings.image_ratio == 'portrait'
+                      if block_settings.image_ratio == 'portrait'
                         assign ratio = 0.8
-                      elsif block.settings.image_ratio == 'adapt'
+                      elsif block_settings.image_ratio == 'adapt'
                         assign ratio = item.image.aspect_ratio
                       endif
                     %}
@@ -149,7 +151,7 @@
                       {{- item.product.title -}}
                     </a>
                   </p>
-                  {% if item.product.vendor and block.settings.vendor %}
+                  {% if item.product.vendor and block_settings.vendor %}
                     <p>
                       {{ item.product.vendor }}
                     </p>

@@ -5,27 +5,28 @@
   @param {string} [alignment] - The alignment of the text. Defaults to the block's alignment setting.
 {%- enddoc -%}
 
-{% assign alignment = alignment | default: block.settings.alignment %}
+{% assign block_settings = block.settings %}
+{% assign alignment = alignment | default: block_settings.alignment %}
 
-{%- if block.settings.show_date or block.settings.show_author -%}
+{%- if block_settings.show_date or block_settings.show_author -%}
   <div
     class="
       blog-post-details
       spacing-style
       justify-{{ alignment }}
-      {% if block.settings.type_preset != '' %}{{ block.settings.type_preset }}{% endif%}
+      {% if block_settings.type_preset != '' %}{{ block_settings.type_preset }}{% endif%}
     "
-    style="{% render 'spacing-style', settings: block.settings %}"
+    style="{% render 'spacing-style', settings: block_settings %}"
   >
-    {%- if block.settings.show_date -%}
+    {%- if block_settings.show_date -%}
       <span>{{- article.published_at | time_tag: format: 'date' -}}</span>
     {%- endif -%}
 
-    {%- if block.settings.show_date and block.settings.show_author -%}
+    {%- if block_settings.show_date and block_settings.show_author -%}
       <span>{{ 'content.blog_details_separator' | t }}</span>
     {%- endif -%}
 
-    {%- if block.settings.show_author -%}
+    {%- if block_settings.show_author -%}
       <span>{{ article.author }}</span>
     {%- endif -%}
   </div>

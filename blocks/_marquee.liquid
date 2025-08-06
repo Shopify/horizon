@@ -4,22 +4,23 @@
   fetchpriority="low"
 ></script>
 
-{% assign gap_between_elements = block.settings.gap_between_elements %}
+{% assign block_settings = block.settings %}
+{% assign gap_between_elements = block_settings.gap_between_elements %}
 
 <marquee-component
   class="
     spacing-style
     gap-style
-    {% if block.settings.inherit_color_scheme == false %}color-{{ block.settings.color_scheme }}{% endif %}
+    {% if block_settings.inherit_color_scheme == false %}color-{{ block_settings.color_scheme }}{% endif %}
   "
   style="
-    {%- render 'spacing-style', settings: block.settings %};
+    {%- render 'spacing-style', settings: block_settings %};
     {% render 'gap-style', value: gap_between_elements, name: 'marquee-gap' %}
-    --marquee-direction: {{ block.settings.movement_direction }};
-    {%- if block.settings.transparent_background == true -%}background-color: transparent;{%- endif -%}
+    --marquee-direction: {{ block_settings.movement_direction }};
+    {%- if block_settings.transparent_background == true -%}background-color: transparent;{%- endif -%}
   "
   data-speed-factor="20"
-  data-movement-direction="{{ block.settings.movement_direction }}"
+  data-movement-direction="{{ block_settings.movement_direction }}"
 >
   <div
     class="marquee__wrapper"

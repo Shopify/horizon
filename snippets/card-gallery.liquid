@@ -10,6 +10,7 @@
 {%- enddoc -%}
 
 {% liquid
+  assign block_settings = block.settings
   assign image_sizes = '(min-width: 750px) 50vw, 100vw'
   # if the card-gallery has a section.settings.product_card_size:
   # assume grid-template autofill(card-size, 1fr) and calculate the sizes attribute based on the minimum card size
@@ -40,7 +41,7 @@
 
   assign lazy_image_sizes = 'auto, ' | append: image_sizes
 
-  assign image_ratio_setting = block.settings.image_ratio
+  assign image_ratio_setting = block_settings.image_ratio
   assign temp_ratio = 1
 
   if image_ratio_setting == 'landscape'
@@ -73,10 +74,10 @@
 
   assign hover_behavior = 'carousel'
 
-  if block.settings.image_ratio == 'adapt' and block.settings.constrain_to_viewport
-    if block.settings.constrain_to_viewport != ''
+  if block_settings.image_ratio == 'adapt' and block_settings.constrain_to_viewport
+    if block_settings.constrain_to_viewport != ''
       assign constrain_to_viewport = true
-      assign media_fit = block.settings.constrain_to_viewport
+      assign media_fit = block_settings.constrain_to_viewport
     endif
   endif
 %}
@@ -85,8 +86,8 @@
   ref="cardGallery"
   class="card-gallery card-gallery-{{ block.id }} spacing-style border-style"
   style="
-    {% render 'border-override', settings: block.settings %}
-    {% render 'spacing-style', settings: block.settings %}
+    {% render 'border-override', settings: block_settings %}
+    {% render 'spacing-style', settings: block_settings %}
     --gallery-aspect-ratio: {{ ratio }};
   "
   data-product-id="{{ product.id }}"
@@ -97,7 +98,7 @@
   {% if settings.transition_to_main_product %}
     data-view-transition-to-main-product
   {% endif %}
-  data-image-ratio="{{ block.settings.image_ratio }}"
+  data-image-ratio="{{ block_settings.image_ratio }}"
   {{ block.shopify_attributes }}
 >
   {% liquid

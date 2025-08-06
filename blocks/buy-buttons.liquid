@@ -1,4 +1,5 @@
 {% liquid
+  assign block_settings = block.settings
   assign product = closest.product
   if request.visual_preview_mode and product == blank
     assign product = collections.all.products.first
@@ -63,8 +64,8 @@
           value="{{ product.selected_or_first_available_variant.id }}"
         >
         <div
-          class="product-form-buttons spacing-style{% if block.settings.stacking %} product-form-buttons--stacked{% endif %}"
-          style="{% render 'spacing-style', settings: block.settings %}"
+          class="product-form-buttons spacing-style{% if block_settings.stacking %} product-form-buttons--stacked{% endif %}"
+          style="{% render 'spacing-style', settings: block_settings %}"
         >
           {% content_for 'block', type: 'quantity', id: 'quantity' %}
 
@@ -104,7 +105,7 @@
   {%- endif -%}
 </span>
 
-{% if block.settings.show_pickup_availability %}
+{% if block_settings.show_pickup_availability %}
   <script
     src="{{ 'local-pickup.js' | asset_url }}"
     type="module"
@@ -122,7 +123,7 @@
     data-section-id="{{ section.id }}"
     data-product-url="{{ closest.product.url }}"
     data-variant-id="{{ closest.product.selected_or_first_available_variant.id }}"
-    style="{% render 'spacing-style', settings: block.settings %}"
+    style="{% render 'spacing-style', settings: block_settings %}"
     ref="localPickupButton"
   >
     {% if can_add_to_cart %}
@@ -173,7 +174,7 @@
             <button
               ref="closeButton"
               on:click="/closeDialog"
-              class="button button-unstyled pickup-location__close-button"
+              class="button button-unstyled close-button pickup-location__close-button"
               aria-label="{{ 'actions.close_dialog' | t }}"
             >
               <span class="svg-wrapper">
@@ -368,16 +369,8 @@
   }
 
   .pickup-location__close-button {
-    position: absolute;
     top: calc(var(--padding-2xl) - (var(--icon-size-xs) / 2));
     right: calc(var(--padding-2xl) - var(--icon-size-xs));
-    height: var(--minimum-touch-target);
-    width: var(--minimum-touch-target);
-  }
-
-  .pickup-location__close-button svg {
-    width: var(--icon-size-xs);
-    height: var(--icon-size-xs);
   }
 {% endstylesheet %}
 

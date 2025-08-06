@@ -13,6 +13,7 @@
 ></script>
 
 {%- liquid
+  assign block_settings = block.settings
   assign products_count = results_size
   assign sort_by = results.sort_by | default: results.default_sort_by
   assign filters = filters | default: results.filters
@@ -21,10 +22,10 @@
   # Calculate facets margin style
   capture facets_margin_style
     echo '--facets-margin: 0px '
-    if block.settings.filter_style == 'vertical'
-      echo block.settings.facets_margin_right | append: 'px' | append: ' 0px'
+    if block_settings.filter_style == 'vertical'
+      echo block_settings.facets_margin_right | append: 'px' | append: ' 0px'
     else
-      echo ' 0px ' | append: block.settings.facets_margin_bottom | append: 'px'
+      echo ' 0px ' | append: block_settings.facets_margin_bottom | append: 'px'
     endif
     echo ' 0px;'
   endcapture
@@ -54,29 +55,29 @@
 
   assign is_active = false
   assign should_show_pane = true
-  if block.settings.filter_style == 'vertical'
-    assign should_show_pane = block.settings.enable_filtering
+  if block_settings.filter_style == 'vertical'
+    assign should_show_pane = block_settings.enable_filtering
   endif
 
   assign should_use_select_on_mobile = true
-  if block.settings.enable_filtering == false and block.settings.enable_sorting
+  if block_settings.enable_filtering == false and block_settings.enable_sorting
     assign should_use_select_on_mobile = false
   endif
 
   assign should_show_vertical_clear_all = true
-  if block.settings.filter_style == 'vertical'
+  if block_settings.filter_style == 'vertical'
     assign should_show_vertical_clear_all = false
   endif
 -%}
 
-{% if block.settings.enable_filtering or block.settings.enable_sorting or block.settings.enable_grid_density %}
-  {% if block.settings.filter_style == 'vertical' %}
+{% if block_settings.enable_filtering or block_settings.enable_sorting or block_settings.enable_grid_density %}
+  {% if block_settings.filter_style == 'vertical' %}
     {% # These elements are always rendered in the horizontal bar that's why we apply the .facets--horizontal class %}
     <div
       class="facets facets--horizontal facets-controls-wrapper spacing-style"
-      style="{% render 'spacing-style', settings: block.settings %}{% if block.settings.text_label_case == 'uppercase' %} --facet-label-transform: uppercase;{% endif %}"
+      style="{% render 'spacing-style', settings: block_settings %}{% if block_settings.text_label_case == 'uppercase' %} --facet-label-transform: uppercase;{% endif %}"
     >
-      {% if block.settings.enable_filtering %}
+      {% if block_settings.enable_filtering %}
         <h4 class="facets--filters-title">{{ 'content.filters' | t }}</h4>
       {% endif %}
 
@@ -86,11 +87,11 @@
         </span>
       </div>
 
-      {% if block.settings.enable_sorting %}
+      {% if block_settings.enable_sorting %}
         {% render 'sorting',
           results: results,
           sort_by: sort_by,
-          filter_style: block.settings.filter_style,
+          filter_style: block_settings.filter_style,
           suffix: 'desktop',
           sort_position: 'desktop',
           should_use_select_on_mobile: false,
@@ -98,7 +99,7 @@
         %}
       {% endif %}
 
-      {% if block.settings.enable_grid_density %}
+      {% if block_settings.enable_grid_density %}
         {% render 'grid-density-controls', viewport: 'desktop' %}
       {% endif %}
     </div>
@@ -110,32 +111,32 @@
         hidden
       {% endif %}
       facets-block-wrapper
-      facets-block-wrapper--{{ block.settings.filter_style }}
-      {%- if block.settings.inherit_color_scheme == false %} color-{{ block.settings.color_scheme }}{% endif %}
-      {%- if block.settings.filter_width == 'full-width' %} facets-block-wrapper--full-width{% endif %}
+      facets-block-wrapper--{{ block_settings.filter_style }}
+      {%- if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %}
+      {%- if block_settings.filter_width == 'full-width' %} facets-block-wrapper--full-width{% endif %}
     "
     style="
       --grid-column--desktop:
-        {%- if block.settings.filter_style == 'horizontal' -%}
-          var(--{{ block.settings.filter_width }})
+        {%- if block_settings.filter_style == 'horizontal' -%}
+          var(--{{ block_settings.filter_width }})
         {%- else -%}
           2 / var(--facets-vertical-col-width)
         {%- endif -%};
       {{ facets_margin_style }}
-      --facets-inner-padding-block: {{ block.settings.padding-block-start }}px {{ block.settings.padding-block-end }}px;
+      --facets-inner-padding-block: {{ block_settings.padding-block-start }}px {{ block_settings.padding-block-end }}px;
       --facets-inner-padding-inline: var(--padding-lg);
     "
     {{ block.shopify_attributes }}
   >
     <div
-      class="facets facets--{{ block.settings.filter_style }} spacing-style"
-      style="{% render 'spacing-style', settings: block.settings %}{% if block.settings.text_label_case == 'uppercase' %} --facet-label-transform: uppercase;{% endif %}"
+      class="facets facets--{{ block_settings.filter_style }} spacing-style"
+      style="{% render 'spacing-style', settings: block_settings %}{% if block_settings.text_label_case == 'uppercase' %} --facet-label-transform: uppercase;{% endif %}"
       aria-label="{{ 'accessibility.filters' | t }}"
     >
       <facets-form-component
         class="facets__form-wrapper"
         section-id="{{ section.id }}"
-        form-style="{{ block.settings.filter_style }}"
+        form-style="{{ block_settings.filter_style }}"
       >
         <form
           action="{{ results_url }}"
@@ -147,11 +148,11 @@
             {% render 'filter-remove-buttons',
               filters: filters,
               results_url: results_url,
-              show_filter_label: block.settings.show_filter_label,
+              show_filter_label: block_settings.show_filter_label,
               should_show_clear_all: true
             %}
 
-            {% if block.settings.enable_filtering %}
+            {% if block_settings.enable_filtering %}
               {% assign total_active_values = 0 %}
 
               {% capture rendered_filters %}
@@ -164,13 +165,13 @@
                           assign is_active = true
                         endif
 
-                        if block.settings.filter_style != 'vertical'
+                        if block_settings.filter_style != 'vertical'
                           assign should_render_clear = true
                         else
                           assign should_render_clear = false
                         endif
 
-                        render 'price-filter', filter: filter, filter_style: block.settings.filter_style, should_render_clear: should_render_clear
+                        render 'price-filter', filter: filter, filter_style: block_settings.filter_style, should_render_clear: should_render_clear
                       -%}
                     {% else %}
                       {% liquid
@@ -180,22 +181,22 @@
 
                         assign active_value_count = filter.active_values | size
                         assign total_active_values = total_active_values | plus: active_value_count
-                        if block.settings.filter_style != 'vertical'
+                        if block_settings.filter_style != 'vertical'
                           assign should_render_clear = true
                         else
                           assign should_render_clear = false
                         endif
-                        render 'list-filter', filter: filter, filter_style: block.settings.filter_style, active_value_count: active_value_count, should_render_clear: should_render_clear, show_swatch_label: block.settings.show_swatch_label, sectionId: section.id
+                        render 'list-filter', filter: filter, filter_style: block_settings.filter_style, active_value_count: active_value_count, should_render_clear: should_render_clear, show_swatch_label: block_settings.show_swatch_label, sectionId: section.id
                       %}
                   {% endcase %}
                 {%- endfor -%}
               {% endcapture %}
 
               <div class="facets__filters-wrapper">
-                {% if block.settings.filter_style == 'horizontal' %}
+                {% if block_settings.filter_style == 'horizontal' %}
                   {% liquid
                     assign more_attributes = 'on:click="#filters-drawer/showDialog"'
-                    if block.settings.text_label_case == 'uppercase'
+                    if block_settings.text_label_case == 'uppercase'
                       assign more_attributes = more_attributes | append: ' style="--text-transform: uppercase;"'
                     endif
                   %}
@@ -217,18 +218,18 @@
                 should_show_clear_all: should_show_vertical_clear_all
               %}
             {% endif %}
-            {% if block.settings.filter_style == 'horizontal' %}
+            {% if block_settings.filter_style == 'horizontal' %}
               <div class="products-count-wrapper">
                 <span title="{{ 'content.product_count' | t }}">
                   {{- 'content.item_count' | t: count: products_count -}}
                 </span>
               </div>
 
-              {% if block.settings.enable_sorting %}
+              {% if block_settings.enable_sorting %}
                 {% render 'sorting',
                   results: results,
                   sort_by: sort_by,
-                  filter_style: block.settings.filter_style,
+                  filter_style: block_settings.filter_style,
                   suffix: 'desktop',
                   sort_position: 'desktop',
                   should_use_select_on_mobile: false,
@@ -236,7 +237,7 @@
                 %}
               {% endif %}
 
-              {% if block.settings.enable_grid_density %}
+              {% if block_settings.enable_grid_density %}
                 {% render 'grid-density-controls', viewport: 'desktop' %}
               {% endif %}
             {% endif %}
@@ -247,13 +248,13 @@
   </div>
 
   <div
-    class="facets-toggle{% if block.settings.enable_filtering == false %} facets-toggle--no-filters{% endif %}{% if block.settings.filter_style == 'horizontal' and block.settings.inherit_color_scheme == false %} color-{{ block.settings.color_scheme }}{% endif %}"
+    class="facets-toggle{% if block_settings.enable_filtering == false %} facets-toggle--no-filters{% endif %}{% if block_settings.filter_style == 'horizontal' and block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %}"
     style="
-      --facets-inner-padding-block: {{ block.settings.padding-block-start }}px {{ block.settings.padding-block-end }}px; --facets-inner-padding-inline: var(--padding-lg);
+      --facets-inner-padding-block: {{ block_settings.padding-block-start }}px {{ block_settings.padding-block-end }}px; --facets-inner-padding-inline: var(--padding-lg);
       {{ facets_margin_style }}
     "
   >
-    {% if block.settings.enable_filtering %}
+    {% if block_settings.enable_filtering %}
       <div class="facets-toggle__wrapper">
         <button
           class="button facets-toggle__button button-unstyled button-unstyled--with-icon"
@@ -288,7 +289,7 @@
     {% endif %}
 
     <div class="facets-mobile-wrapper facets-controls-wrapper">
-      {% if block.settings.enable_filtering == false and block.settings.enable_sorting %}
+      {% if block_settings.enable_filtering == false and block_settings.enable_sorting %}
         <facets-form-component
           section-id="{{ section.id }}"
           id="FacetFiltersForm--{{ section.id }}-mobile-sorting-only"
@@ -301,7 +302,7 @@
             {% render 'sorting',
               results: results,
               sort_by: sort_by,
-              filter_style: block.settings.filter_style,
+              filter_style: block_settings.filter_style,
               sort_position: 'mobile',
               should_use_select_on_mobile: should_use_select_on_mobile,
               section_id: section.id
@@ -309,7 +310,7 @@
           </form>
         </facets-form-component>
       {% endif %}
-      {% if block.settings.enable_grid_density %}
+      {% if block_settings.enable_grid_density %}
         {% render 'grid-density-controls', viewport: 'mobile' %}
       {% endif %}
     </div>
@@ -318,7 +319,7 @@
   <div></div>
 {% endif %}
 
-{% if block.settings.enable_filtering %}
+{% if block_settings.enable_filtering %}
   <dialog-component
     id="filters-drawer"
     class="facets-block-wrapper facets-block-wrapper--vertical facets-block-wrapper--drawer color-{{ settings.drawer_color_scheme }}"
@@ -326,7 +327,7 @@
     <dialog
       ref="dialog"
       class="facets facets--drawer dialog-modal drawer dialog-drawer dialog-drawer--right spacing-style"
-      style="{% render 'spacing-style', settings: block.settings %}"
+      style="{% render 'spacing-style', settings: block_settings %}"
       scroll-lock
     >
       {% assign form_component = 'FacetFiltersFormComponent--' | append: section.id | append: '-overflow' %}
@@ -362,7 +363,7 @@
               {% endif %}
             </h2>
             <button
-              class="button facets-drawer__close button-unstyled"
+              class="button facets-drawer__close button-unstyled close-button"
               on:click="dialog-component/closeDialog"
               type="button"
             >
@@ -375,11 +376,11 @@
             </button>
           </div>
 
-          {% if block.settings.enable_filtering %}
+          {% if block_settings.enable_filtering %}
             {% render 'filter-remove-buttons',
               filters: filters,
               results_url: results_url,
-              show_filter_label: block.settings.show_filter_label,
+              show_filter_label: block_settings.show_filter_label,
               should_show_clear_all: false
             %}
 
@@ -419,11 +420,11 @@
             </div>
           {% endif %}
 
-          {% if block.settings.enable_sorting %}
+          {% if block_settings.enable_sorting %}
             {% render 'sorting',
               results: results,
               sort_by: sort_by,
-              filter_style: block.settings.filter_style,
+              filter_style: block_settings.filter_style,
               suffix: 'overflow',
               should_use_select_on_mobile: should_use_select_on_mobile,
               section_id: section.id
@@ -1001,16 +1002,11 @@
   }
 
   .facets-drawer__close {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: relative;
+    top: 0;
+    right: 0;
     padding: 0;
-    background-color: transparent;
-    border: none;
     cursor: pointer;
-    width: var(--minimum-touch-target);
-    height: var(--minimum-touch-target);
-    box-shadow: none;
   }
 
   /* Status */

@@ -1,9 +1,10 @@
 {% liquid
-  assign menu = block.settings.menu
-  assign heading = block.settings.heading
-  assign color_scheme = block.settings.color_scheme
-  assign show_as_accordion = block.settings.show_as_accordion
-  if show_as_accordion == true and block.settings.accordion_dividers == true
+  assign block_settings = block.settings
+  assign menu = block_settings.menu
+  assign heading = block_settings.heading
+  assign color_scheme = block_settings.color_scheme
+  assign show_as_accordion = block_settings.show_as_accordion
+  if show_as_accordion == true and block_settings.accordion_dividers == true
     assign dividers_enabled = true
   endif
 %}
@@ -12,7 +13,7 @@
   <accordion-custom
     class="
       menu
-      {% if show_as_accordion == true %} menu--accordion menu--{{ block.settings.accordion_icon }}{% endif %}
+      {% if show_as_accordion == true %} menu--accordion menu--{{ block_settings.accordion_icon }}{% endif %}
       {% if dividers_enabled == true %} menu--dividers{% endif %}
     "
     data-disable-on-desktop="true"
@@ -26,16 +27,16 @@
       class="
         menu__details
         spacing-style
-        {% if block.settings.inherit_color_scheme == false %} color-{{ color_scheme }}{% endif %}
+        {% if block_settings.inherit_color_scheme == false %} color-{{ color_scheme }}{% endif %}
       "
       data-testid="menu-details"
       style="
-        --spacing--size: {{ block.settings.menu_spacing }}px;
-        {% render 'spacing-style', settings: block.settings %}
+        --spacing--size: {{ block_settings.menu_spacing }}px;
+        {% render 'spacing-style', settings: block_settings %}
       "
       {{ block.shopify_attributes }}
     >
-      <summary class="menu__heading{% if heading == blank %} menu__heading--empty{% endif %} {{ block.settings.heading_preset }}">
+      <summary class="menu__heading{% if heading == blank %} menu__heading--empty{% endif %} {{ block_settings.heading_preset }}">
         <span class="menu__heading__default">{{ heading }}</span>
         <span class="menu__heading__accordion">
           {{ heading | default: menu.title }}
@@ -52,7 +53,7 @@
         {% if menu %}
           <ul class="list-unstyled">
             {% for link in menu.links %}
-              <li class="menu__item {{ block.settings.link_preset }}">
+              <li class="menu__item {{ block_settings.link_preset }}">
                 <a href="{{ link.url }}">
                   {{ link.title }}
                 </a>

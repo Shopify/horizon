@@ -10,6 +10,7 @@
 
 {% liquid
   assign collection = closest.collection
+  assign block_settings = block.settings
 -%}
 
 {% liquid
@@ -20,7 +21,7 @@
 
   assign ratio = 1
 
-  case block.settings.image_ratio
+  case block_settings.image_ratio
     when 'landscape'
       assign ratio = '16 / 9'
     when 'portrait'
@@ -51,7 +52,7 @@
       assign sizes = lazy_sizes
   endcase
 
-  assign widths = '300, 450, 600, 750, 900, 1050, 1200, 1350, 1500, 1650, 1800, 1950, 2000, 2500, 3000, 3500, 4000, 5000'
+  assign widths = '240, 352, 832, 1200, 1600, 1920, 2560, 3840'
 %}
 
 {% style %}
@@ -66,21 +67,21 @@
       image-block
       collection-card__image
       border-style
-      {% if block.settings.inherit_color_scheme == false %} color-{{ block.settings.color_scheme }}{% endif %}
+      {% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %}
     "
-    style="{% render 'border-override', settings: block.settings %}"
+    style="{% render 'border-override', settings: block_settings %}"
   >
-    {%- if block.settings.toggle_overlay -%}
-      {% render 'overlay', settings: block.settings %}
+    {%- if block_settings.toggle_overlay -%}
+      {% render 'overlay', settings: block_settings %}
     {%- endif -%}
 
     {{
       image_source
       | image_url: width: 3840
       | image_tag:
-        width: block.settings.image.width,
+        width: block_settings.image.width,
         widths: widths,
-        height: block.settings.image.height,
+        height: block_settings.image.height,
         class: 'image-block__image',
         sizes: sizes,
         loading: loading
@@ -93,9 +94,9 @@
       collection-card__image
       collection-card__image--placeholder
       border-style
-      {% if block.settings.inherit_color_scheme == false %} color-{{ block.settings.color_scheme }}{% endif %}
+      {% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %}
     "
-    style="{% render 'border-override', settings: block.settings %}"
+    style="{% render 'border-override', settings: block_settings %}"
   >
     {% liquid
       # Simple rotation through collection apparel placeholders (1-4)

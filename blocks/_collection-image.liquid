@@ -1,42 +1,44 @@
-{% if block.settings.image_ratio == 'custom' %}
-  {% assign image_width = block.settings.collection_image_width | at_most: 100 %}
-  {% assign image_height = block.settings.collection_image_height %}
+{% assign block_settings = block.settings %}
+
+{% if block_settings.image_ratio == 'custom' %}
+  {% assign image_width = block_settings.collection_image_width | at_most: 100 %}
+  {% assign image_height = block_settings.collection_image_height %}
 {% endif %}
 
 {% liquid
   assign ratio = 1
-  assign block_ratio = block.settings.image_ratio
+  assign block_ratio = block_settings.image_ratio
 
-  if block.settings.collection.image and block_ratio == 'portrait'
+  if block_settings.collection.image and block_ratio == 'portrait'
     assign ratio = 0.8
-  elsif block.settings.collection.image and block_ratio == 'adapt'
-    assign ratio = block.settings.collection.image.aspect_ratio
+  elsif block_settings.collection.image and block_ratio == 'adapt'
+    assign ratio = block_settings.collection.image.aspect_ratio
   endif
 
   if ratio == 0 or ratio == null
     assign ratio = 1
   endif
 
-  if block.settings.image_ratio == 'custom'
+  if block_settings.image_ratio == 'custom'
     assign ratio = image_width | append: ' / ' | append: image_height
   endif
 %}
 
-{% if block.settings.collection.featured_image %}
+{% if block_settings.collection.featured_image %}
   <div
     class="collection-image spacing-style collection-image-{{ block.id }}"
-    style="--ratio: {{ ratio }}; --image-width: {{ image_width }}%; {% render 'spacing-style', settings: block.settings %}"
+    style="--ratio: {{ ratio }}; --image-width: {{ image_width }}%; {% render 'spacing-style', settings: block_settings %}"
   >
     {% liquid
       assign media_width_desktop = 100 | divided_by: 2 | append: 'vw'
       assign media_width_mobile = '100vw'
       assign sizes = '(min-width: 750px) ' | append: media_width_desktop | append: ', ' | append: media_width_mobile
-      assign widths = '300, 450, 600, 750, 900, 1050, 1200, 1350, 1500, 1650, 1800, 1950, 2000, 2500, 3000, 3500, 4000, 5000'
+      assign widths = '240, 352, 832, 1200, 1600, 1920, 2560, 3840'
     %}
 
     {{
-      block.settings.collection.featured_image
-      | image_url: width: 1000
+      block_settings.collection.featured_image
+      | image_url: width: 3840
       | image_tag: preload: true, class: 'collection-image__featured-image', widths: widths, sizes: sizes
     }}
   </div>

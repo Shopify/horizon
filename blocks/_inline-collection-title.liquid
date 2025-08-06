@@ -2,6 +2,7 @@
   @param {string} [suffix] - The suffix to add to the collection title
 {%- enddoc -%}
 
+{%- assign block_settings = block.settings -%}
 {% if closest.collection == blank %}
   {% assign collection_title = 'placeholders.collection_title' | t %}
 {% elsif closest.collection != blank %}
@@ -16,10 +17,10 @@
     class="
       text-block
       custom-typography
-      {% if block.settings.weight != blank %}custom-font-weight{% endif %}
-      {% if block.settings.font_size != blank %}custom-font-size{% endif %}
+      {% if block_settings.weight != blank %}custom-font-weight{% endif %}
+      {% if block_settings.font_size != blank %}custom-font-size{% endif %}
     "
-    style="{% render 'typography-style', preset: 'custom', settings: block.settings, type: 'heading' %}"
+    style="{% render 'typography-style', preset: 'custom', settings: block_settings, type: 'heading' %}"
     {{ block.shopify_attributes }}
   >
     <span>{{ collection_title }}</span>{{ suffix }}

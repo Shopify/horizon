@@ -1,11 +1,12 @@
+{% assign block_settings = block.settings %}
 {%- assign block_index = section.blocks | find_index: 'id', block.id -%}
 {%- assign section_index = section.index -%}
 
 {% capture children %}
   {% liquid
-    assign preview_image = block.settings.image_1
-    if block.settings.media_type_1 == 'video'
-      assign preview_image = block.settings.video_1.preview_image
+    assign preview_image = block_settings.image_1
+    if block_settings.media_type_1 == 'video'
+      assign preview_image = block_settings.video_1.preview_image
     endif
   %}
   {% if section.settings.slide_height == 'adapt_image' and block_index == 0 and preview_image != blank %}
@@ -22,8 +23,8 @@
   {% endif %}
 
   <div class="slide__image-container">
-    {%- if block.settings.toggle_overlay -%}
-      {% render 'overlay', settings: block.settings %}
+    {%- if block_settings.toggle_overlay -%}
+      {% render 'overlay', settings: block_settings %}
     {%- endif -%}
     {%- if preview_image -%}
       {%- liquid
@@ -35,44 +36,43 @@
         assign widths = '832, 1200, 1600, 1920, 2560, 3840'
       %}
 
-      {%- if block.settings.media_type_1 == 'image' -%}
-        {%- if block_index == 0 and section_index == 1 -%}
-          {{
-            block.settings.image_1
-            | image_url: width: 3840
-            | image_tag: height: height, sizes: sizes, widths: widths, loading: 'eager', class: 'slide__image', fetchpriority: 'high'
-          }}
-        {%- else -%}
-          {{
-            block.settings.image_1
-            | image_url: width: 3840
-            | image_tag: height: height, widths: widths, loading: 'lazy', class: 'slide__image', sizes: lazy_sizes
-          }}
-        {%- endif -%}
+      {%- liquid
+        assign loading = 'lazy'
+
+        if block_index == 0 and section_index <= 3
+          assign loading = 'eager'
+          assign sizes = lazy_sizes
+        endif
+
+        assign fetchpriority = 'low'
+        if block_index == 0 and section_index == 1
+          assign fetchpriority = 'high'
+        endif
+      -%}
+
+      {%- if block_settings.media_type_1 == 'image' -%}
+        {{
+          block_settings.image_1
+          | image_url: width: 3840
+          | image_tag: height: height, sizes: sizes, widths: widths, class: 'slide__image', loading: loading, fetchpriority: fetchpriority
+        }}
       {%- else -%}
-        {%- if block.settings.video_1.preview_image -%}
-          {% liquid
-            assign loading_poster = 'lazy'
-            assign fetch_priority_poster = false
-            if block_index == 0 and section.index == 1
-              assign loading_poster = 'eager'
-              assign fetch_priority_poster = 'high'
-            endif
-          %}
+        {%- if block_settings.video_1.preview_image -%}
+
           {{
-            block.settings.video_1.preview_image
+            block_settings.video_1.preview_image
             | image_url: width: 3840
             | image_tag:
               height: height,
               sizes: sizes,
               widths: widths,
-              loading: loading_poster,
+              loading: loading,
               class: 'slide__video-poster',
-              fetchpriority: fetch_priority_poster
+              fetchpriority: fetchpriority
           }}
         {%- endif -%}
         {{
-          block.settings.video_1
+          block_settings.video_1
           | video_tag: poster: nil, autoplay: true, loop: true, controls: false, muted: true, class: 'slide__video'
         }}
       {%- endif -%}
@@ -86,16 +86,16 @@
     {%- endif -%}
   </div>
   <div
-    class="spacing-style slide__content{% if block.settings.inherit_color_scheme == false %} color-{{ block.settings.color_scheme }}{% endif %}{% if preview_image or block.settings.toggle_overlay %} background-transparent{% endif %}"
-    style="{% render 'spacing-style', settings: block.settings %}"
+    class="spacing-style slide__content{% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %}{% if preview_image or block_settings.toggle_overlay %} background-transparent{% endif %}"
+    style="{% render 'spacing-style', settings: block_settings %}"
     {{ block.shopify_attributes }}
   >
     <div
       class="group-block-content
       layout-panel-flex
-      layout-panel-flex--{{ block.settings.content_direction }}
-      {% if block.settings.vertical_on_mobile %}mobile-column{% endif %}"
-      style="{% render 'layout-panel-style', settings: block.settings %}"
+      layout-panel-flex--{{ block_settings.content_direction }}
+      {% if block_settings.vertical_on_mobile %}mobile-column{% endif %}"
+      style="{% render 'layout-panel-style', settings: block_settings %}"
     >
       {% content_for 'blocks' %}
     </div>
@@ -103,8 +103,8 @@
 {% endcapture %}
 
 {%- capture class -%}
-  {%- if block.settings.inherit_color_scheme == false -%}
-    color-{{ block.settings.color_scheme }}
+  {%- if block_settings.inherit_color_scheme == false -%}
+    color-{{ block_settings.color_scheme }}
   {%- endif -%}
 {%- endcapture -%}
 

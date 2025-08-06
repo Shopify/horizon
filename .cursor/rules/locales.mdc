@@ -1,5 +1,5 @@
 ---
-description:
+description: Locales coding standards and best practices guide
 globs: locales/*.json
 alwaysApply: false
 ---
@@ -24,8 +24,8 @@ locales/
 {
   "general": {
     "meta": {
-      "title": "{{ shop.name }}",
-      "description": "{{ shop.description }}"
+      "title": "{{ shop_name }}",
+      "description": "{{ shop_description }}"
     },
     "accessibility": {
       "skip_to_content": "Skip to content",
@@ -42,6 +42,11 @@ locales/
     }
   }
 }
+```
+**Usage**
+```liquid
+{{ 'general.meta.title' | t: shop_name: shop.name }}
+{{ 'general.meta.description' | t: shop_description: shop.description }}
 ```
 
 ## Translation Guidelines

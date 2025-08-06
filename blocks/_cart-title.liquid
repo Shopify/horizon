@@ -1,14 +1,16 @@
+{% assign block_settings = block.settings %}
+
 <div
-  class="cart-title spacing-style text-{{ block.settings.alignment }}"
-  style="{% render 'spacing-style', settings: block.settings %}"
+  class="cart-title spacing-style text-{{ block_settings.alignment }}"
+  style="{% render 'spacing-style', settings: block_settings %}"
   {{ block.shopify_attributes }}
 >
-  <h1 class="{{ block.settings.type_preset | default: 'h2' }}">
+  <h1 class="{{ block_settings.type_preset | default: 'h2' }}">
     {%- if cart.empty? -%}
       {{ 'content.your_cart_is_empty' | t }}
     {%- else -%}
-      {{ block.settings.title }}
-      {%- if block.settings.show_count -%}{% render 'cart-bubble' %}{%- endif -%}
+      {{ block_settings.title }}
+      {%- if block_settings.show_count -%}{% render 'cart-bubble' %}{%- endif -%}
     {%- endif -%}
   </h1>
 </div>
