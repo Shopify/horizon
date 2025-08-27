@@ -60,6 +60,13 @@
       --account-popover-opacity: 1;
       --account-popover-y: 0px;
     }
+
+    @supports not selector(:popover-open) {
+      &.\:popover-open {
+        --account-popover-opacity: 1;
+        --account-popover-y: 0px;
+      }
+    }
   }
 
   @starting-style {

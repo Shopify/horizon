@@ -32,14 +32,6 @@ html[scroll-lock] {
   overflow: hidden;
 }
 
-[popover] {
-  display: none;
-}
-
-[popover]:is(:popover-open, dialog[open]) {
-  display: block;
-}
-
 img,
 picture,
 video,

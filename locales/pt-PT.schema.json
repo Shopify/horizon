@@ -8,7 +8,7 @@
     "icon": "Ícone",
     "logo_and_favicon": "Logótipo e favicon",
     "overlapping_blocks": "Blocos sobrepostos",
-    "rich_text_section": "Texto rico",
+    "rich_text_section": "Texto formatado",
     "product_buy_buttons": "Botões de compra",
     "product_description": "Descrição",
     "product_price": "Preço",
@@ -165,7 +165,8 @@
     "product_inventory": "Inventário de produtos",
     "description": "Descrição",
     "featured_image": "Imagem em destaque",
-    "multicolumn": "Multicolunas"
+    "multicolumn": "Multicolunas",
+    "product_custom_property": "Instruções especiais"
   },
   "settings": {
     "alignment": "Alinhamento",
@@ -498,7 +499,30 @@
     "show_powered_by_shopify": "Exibir \"Com tecnologia Shopify\"",
     "gift_card_form": "Formulário de cartão de oferta",
     "seller_note_open_by_default": "Abrir nota ao vendedor por predefinição",
-    "add_to_cart_animation": "Adicionar ao carrinho"
+    "add_to_cart_animation": "Adicionar ao carrinho",
+    "product_custom_property": {
+      "heading": "Título",
+      "description": "Descrição",
+      "key": "Nome da propriedade",
+      "key_info": "Deve ser único para cada bloco. Mostrado no carrinho, finalização da compra e detalhes do pedido.",
+      "placeholder_text": "Texto do marcador de posição",
+      "default_heading": "Personalizar o seu produto",
+      "default_placeholder": "Introduza as suas instruções especiais",
+      "default_property_key": "Instruções especiais",
+      "max_length": "Máximo de caracteres",
+      "required": "Entrada necessária para adicionar item ao carrinho",
+      "input_type": "Tipo de entrada",
+      "input_type_text": "Texto",
+      "input_type_checkbox": "Caixa de verificação",
+      "content_settings": "Definições de conteúdo",
+      "buyers_input": "Entrada do comprador",
+      "checkbox_label": "Etiqueta da caixa de verificação",
+      "default_checkbox_label": "Incluir papel de embrulho",
+      "heading_preset": "Título",
+      "description_preset": "Descrição",
+      "input_preset": "Entrada",
+      "checkbox_preset": "Etiqueta da caixa de verificação"
+    }
   },
   "options": {
     "adapt_to_image": "Adaptar à imagem",
@@ -874,7 +898,8 @@
     "manage_store_name": "[Gerir o nome da loja](/admin/settings/general?edit=storeName)",
     "section_link": "Ligação para a secção",
     "gift_card_form_description": "Os clientes podem enviar cartões de oferta para o e-mail de um destinatário com uma mensagem pessoal. [Saber mais](https://help.shopify.com/manual/products/gift-card-products)",
-    "heading": "Título"
+    "heading": "Título",
+    "resource_reference_product_custom_property": "Adicione campos de entrada personalizáveis para recolher informação personalizada que será adicionada a este item de linha de encomenda, que mais tarde será visível nos detalhes da encomenda."
   },
   "html_defaults": {
     "share_information_about_your": "<p>Partilhe informações sobre a sua marca com os clientes. Descreva um produto, faça comunicados ou dê as boas-vindas aos clientes da loja.</p>"
@@ -913,7 +938,8 @@
     "custom_liquid": "Adicione fragmentos de aplicação ou outro código para criar personalizações avançadas. [Saber mais](https://shopify.dev/docs/api/liquid)",
     "pills_usage": "Utilizado para filtros aplicados, códigos de desconto e sugestões de pesquisa",
     "applies_on_image_only": "Apenas aplicável às imagens",
-    "hover_effects": "Aplicável a cartões de produto e coleção"
+    "hover_effects": "Aplicável a cartões de produto e coleção",
+    "hide_logo_on_home_page_help": "O logótipo permanecerá visível quando o cabeçalho fixo está ativo"
   },
   "categories": {
     "basic": "Basic",

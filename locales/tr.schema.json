@@ -36,7 +36,7 @@
     "inputs": "Girdiler",
     "primary_button": "Birincil düğme",
     "secondary_button": "İkincil düğme",
-    "popovers_and_modals": "Popover ve modallar",
+    "popovers_and_modals": "Açılır pencereler ve modlar",
     "pull_quote": "Alıntı",
     "contact_form": "İletişim formu",
     "featured_product": "Ürün vurgusu",
@@ -131,7 +131,7 @@
     "read_only": "Salt okunur",
     "collection_links": "Koleksiyon bağlantıları",
     "count": "Sayı",
-    "custom_liquid": "Özel liquid",
+    "custom_liquid": "Özel Liquid",
     "blog": "Blog",
     "blog_post": "Blog gönderisi",
     "blog_posts": "Blog gönderileri",
@@ -165,7 +165,8 @@
     "pills": "Seçenekler",
     "description": "Açıklama",
     "featured_image": "Öne çıkan görsel",
-    "multicolumn": "Çok sütunlu"
+    "multicolumn": "Çoklu sütun",
+    "product_custom_property": "Özel talimatlar"
   },
   "settings": {
     "autoplay": "Otomatik oynatma",
@@ -498,7 +499,30 @@
     "show_powered_by_shopify": "\"Shopify tarafından desteklenmektedir\" ibaresini göster",
     "seller_note_open_by_default": "Varsayılan olarak satıcıya notu aç",
     "gift_card_form": "Hediye kartı formu",
-    "add_to_cart_animation": "Sepete ekle"
+    "add_to_cart_animation": "Sepete ekle",
+    "product_custom_property": {
+      "heading": "Başlık",
+      "description": "Açıklama",
+      "key": "Özellik adı",
+      "key_info": "Her blok için benzersiz olmalı. Sepet, ödeme ve sipariş detaylarında gösterilir.",
+      "placeholder_text": "Yer tutucu metni",
+      "default_heading": "Ürününüzü özelleştirin",
+      "default_placeholder": "Özel talimatlarınızı girin",
+      "default_property_key": "Özel talimatlar",
+      "max_length": "Maksimum karakterler",
+      "required": "Ürünü sepete eklemek için girdi gereklidir",
+      "input_type": "Giriş türü",
+      "input_type_text": "Metin",
+      "input_type_checkbox": "Onay kutusu",
+      "content_settings": "İçerik ayarları",
+      "buyers_input": "Alıcı girdisi",
+      "checkbox_label": "Onay kutusu etiketi",
+      "default_checkbox_label": "Hediye paketini ekle",
+      "heading_preset": "Başlık",
+      "description_preset": "Açıklama",
+      "input_preset": "Girdi",
+      "checkbox_preset": "Onay kutusu etiketi"
+    }
   },
   "options": {
     "adapt_to_image": "Görsele uyarla",
@@ -874,7 +898,8 @@
     "product_media": "Ürün medyası",
     "section_link": "Bölüm bağlantısı",
     "gift_card_form_description": "Müşteriler kişisel mesaj ekleyerek alıcının e-posta adresine hediye kartı gönderebilir. [Daha fazla bilgi edinin](https://help.shopify.com/manual/products/gift-card-products)",
-    "heading": "Başlık"
+    "heading": "Başlık",
+    "resource_reference_product_custom_property": "Bu sipariş satır öğesine eklenecek ve daha sonra sipariş detaylarında görülebilecek gümrük bilgilerini toplamak için özelleştirilebilir giriş alanları ekleyin."
   },
   "html_defaults": {
     "share_information_about_your": "<p>Müşterilerinizle markanız hakkında bilgi paylaşın. Ürün açıklaması girin, duyuru paylaşın veya mağazanıza gelen müşterileri karşılayın.</p>"
@@ -913,7 +938,8 @@
     "custom_liquid": "Gelişmiş kişiselleştirmeler oluşturmak için uygulama parçacıkları veya başka bir kod ekleyin. [Daha fazla bilgi edinin](https://shopify.dev/docs/api/liquid)",
     "applies_on_image_only": "Yalnızca görseller için geçerlidir",
     "hover_effects": "Ürün ve koleksiyon kartları için geçerlidir",
-    "pills_usage": "Uygulanan filtreler, indirim kodları ve arama önerileri için kullanılır"
+    "pills_usage": "Uygulanan filtreler, indirim kodları ve arama önerileri için kullanılır",
+    "hide_logo_on_home_page_help": "Sabit üstbilgi etkin olduğunda logo görünür kalır"
   },
   "categories": {
     "product_list": "Öne çıkan koleksiyon",

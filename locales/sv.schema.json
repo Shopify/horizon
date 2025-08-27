@@ -35,7 +35,7 @@
     "secondary_button": "Sekundär knapp",
     "buttons": "Knappar",
     "inputs": "Inmatningar",
-    "popovers_and_modals": "Popovers och modaler",
+    "popovers_and_modals": "Popovers och spärrande fönster",
     "marquee": "Marquee",
     "pull_quote": "Citat",
     "contact_form": "Kontaktformulär",
@@ -165,7 +165,8 @@
     "description": "Beskrivning",
     "featured_image": "Utvald bild",
     "multicolumn": "Flerkolumn",
-    "rich_text_section": "RTF"
+    "rich_text_section": "RTF",
+    "product_custom_property": "Särskilda instruktioner"
   },
   "settings": {
     "alignment": "Justering",
@@ -498,7 +499,30 @@
     "show_powered_by_shopify": "Visa ”Drivs av Shopify”",
     "seller_note_open_by_default": "Öppna anteckning till säljare som standard",
     "gift_card_form": "Presentkortsformulär",
-    "add_to_cart_animation": "Lägg i varukorgen"
+    "add_to_cart_animation": "Lägg till i varukorgen",
+    "product_custom_property": {
+      "heading": "Rubrik",
+      "description": "Beskrivning",
+      "key": "Egenskapsnamn",
+      "key_info": "Måste vara unik för varje block. Visas i kundvagn, kassa och orderdetaljer.",
+      "placeholder_text": "Platshållartext",
+      "default_heading": "Anpassa din produkt",
+      "default_placeholder": "Ange dina särskilda instruktioner",
+      "default_property_key": "Särskilda instruktioner",
+      "max_length": "Max tecken",
+      "required": "Indata krävs för att lägga till artikel i varukorg",
+      "input_type": "Indatatyp",
+      "input_type_text": "Text",
+      "input_type_checkbox": "Kryssruta",
+      "content_settings": "Innehållsinställningar",
+      "buyers_input": "Köpares indata",
+      "checkbox_label": "Etikett för kryssruta",
+      "default_checkbox_label": "Inkludera presentinslagning",
+      "heading_preset": "Rubrik",
+      "description_preset": "Beskrivning",
+      "input_preset": "Indata",
+      "checkbox_preset": "Etikett för kryssruta"
+    }
   },
   "options": {
     "adapt_to_image": "Anpassa till bild",
@@ -874,7 +898,8 @@
     "product_media": "Produktmedia",
     "section_link": "Länk till avsnitt",
     "gift_card_form_description": "Kunder kan skicka presentkort till en mottagares e-postadress med ett personligt meddelande. [Mer information](https://help.shopify.com/manual/products/gift-card-products)",
-    "heading": "Rubrik"
+    "heading": "Rubrik",
+    "resource_reference_product_custom_property": "Lägg till anpassningsbara inmatningsfält för att samla in kundinformation som kommer att läggas till för orderposten, och senare visas i orderuppgifterna."
   },
   "html_defaults": {
     "share_information_about_your": "<p>Dela information om ditt varumärke med dina kunder. Beskriv en produkt, gör tillkännagivanden eller välkomna kunder till din butik.</p>"
@@ -913,7 +938,8 @@
     "custom_liquid": "Lägg till appfragment eller annan kod för att skapa avancerade anpassningar. [Mer information](https://shopify.dev/docs/api/liquid)",
     "pills_usage": "Används för använda filter, rabattkoder och sökförslag",
     "applies_on_image_only": "Gäller endast för bilder",
-    "hover_effects": "Gäller produkt- och produktseriekort"
+    "hover_effects": "Gäller produkt- och produktseriekort",
+    "hide_logo_on_home_page_help": "Logotypen förblir synlig när fast sidhuvud är aktivt"
   },
   "categories": {
     "basic": "Basic",

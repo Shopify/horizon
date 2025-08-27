@@ -1,7 +1,7 @@
 {% assign button_collection = closest.collection %}
 {% assign button_url = button_collection.url %}
 
-{% if button_collection.products.size > section.settings.max_products %}
+{% if button_collection.products_count > section.settings.max_products %}
   {% render 'button', link: button_url %}
 {% endif %}
 

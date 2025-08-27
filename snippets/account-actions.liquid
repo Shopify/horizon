@@ -194,4 +194,33 @@
     height: var(--icon-size-sm);
     margin-block: -4px;
   }
+
+  /* This triggers iOS < 16.4. The outline bug is not recognized as a lack of @supports */
+
+  @supports not (background-color: rgb(from red 150 g b / alpha)) {
+    /**
+    There is a bug in safari < 16.4 that causes the outline to not follow the elements border radius. This is a workaround.
+    Using element selector to increase specificity.
+  **/
+
+    .account-actions :is(a.button, a.button-secondary):focus-visible {
+      outline: none;
+      overflow: visible;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        inset: calc(-1 * var(--focus-outline-offset));
+        border: var(--focus-outline-width) solid currentColor;
+        border-radius: var(--style-border-radius-buttons-secondary);
+        display: inherit;
+      }
+    }
+
+    .account-actions a.button:focus-visible::after {
+      border-color: var(--button-background-color);
+      border-radius: var(--style-border-radius-buttons-primary);
+    }
+  }
 {% endstylesheet %}

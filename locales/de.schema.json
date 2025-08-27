@@ -35,7 +35,7 @@
     "inputs": "Eingaben",
     "primary_button": "Primäre Schaltfläche",
     "secondary_button": "Sekundäre Schaltfläche",
-    "popovers_and_modals": "Pop-overs und Modals",
+    "popovers_and_modals": "Popovers und Modale",
     "marquee": "Marquee",
     "products_carousel": "Vorgestellte Kollektion: Karussell",
     "products_grid": "Vorgestellte Kollektion: Raster",
@@ -164,8 +164,9 @@
     "pills": "Kapseln",
     "description": "Beschreibung",
     "featured_image": "Feature-Bild",
-    "multicolumn": "Mehrspaltig",
-    "rich_text_section": "Rich Text"
+    "multicolumn": "Mit mehreren Spalten",
+    "rich_text_section": "Rich Text",
+    "product_custom_property": "Besondere Anweisungen"
   },
   "settings": {
     "autoplay": "Automatische Wiedergabe",
@@ -495,10 +496,33 @@
     "product_card_carousel": "Karussell anzeigen",
     "media_fit": "Medienanpassung",
     "scroll_speed": "Zeit bis zur nächsten Ankündigung",
-    "show_powered_by_shopify": "\"Powered by Shopify\" anzeigen",
+    "show_powered_by_shopify": "„Powered by Shopify“ anzeigen",
     "seller_note_open_by_default": "Hinweis an Verkäufer standardmäßig öffnen",
     "gift_card_form": "Gutscheinformular",
-    "add_to_cart_animation": "In den Warenkorb"
+    "add_to_cart_animation": "In den Warenkorb legen",
+    "product_custom_property": {
+      "heading": "Titel",
+      "description": "Beschreibung",
+      "key": "Name der Eigenschaft",
+      "key_info": "Muss für jeden Block eindeutig sein. Wird im Warenkorb, beim Checkout und in den Bestelldetails angezeigt.",
+      "placeholder_text": "Platzhaltertext",
+      "default_heading": "Dein Produkt anpassen",
+      "default_placeholder": "Gib deine besonderen Anweisungen ein",
+      "default_property_key": "Besondere Anweisungen",
+      "max_length": "Max. Zeichen",
+      "required": "Eingabe erforderlich, um den Artikel in den Warenkorb zu legen",
+      "input_type": "Eingabetyp",
+      "input_type_text": "Text",
+      "input_type_checkbox": "Kontrollkästchen",
+      "content_settings": "Inhaltseinstellungen",
+      "buyers_input": "Eingabe des Käufers",
+      "checkbox_label": "Kontrollkästchen-Etikett",
+      "default_checkbox_label": "Geschenkverpackung hinzufügen",
+      "heading_preset": "Titel",
+      "description_preset": "Beschreibung",
+      "input_preset": "Eingabe",
+      "checkbox_preset": "Kontrollkästchen-Etikett"
+    }
   },
   "options": {
     "adapt_to_image": "An Bild anpassen",
@@ -874,7 +898,8 @@
     "product_media": "Produktmedien",
     "section_link": "Abschnitts-Link",
     "gift_card_form_description": "Kunden können Gutscheine per E-Mail mit einer persönlichen Nachricht an den Empfänger senden. [Mehr Informationen](https://help.shopify.com/manual/products/gift-card-products)",
-    "heading": "Überschrift"
+    "heading": "Titel",
+    "resource_reference_product_custom_property": "Füg eigene Eingabefelder hinzu, um individuelle Infos zu sammeln, die später bei diesem Bestellposten hinterlegt und in den Bestelldetails sichtbar werden."
   },
   "html_defaults": {
     "share_information_about_your": "<p>Teile Infos über deine Marke mit deinen Kunden. Beschreibe ein Produkt, kündige etwas an oder heiße Kunden willkommen.</p>"
@@ -913,7 +938,8 @@
     "custom_liquid": "Füge App-Snippets oder anderen Code hinzu, um fortgeschrittene Anpassungen zu erstellen. [Mehr Informationen](https://shopify.dev/docs/api/liquid)",
     "applies_on_image_only": "Gilt nur für Bilder",
     "hover_effects": "Bezieht sich auf Produkt- und Kollektionskarten",
-    "pills_usage": "Für angewandte Filter, Rabattcodes und Suchvorschläge"
+    "pills_usage": "Für angewandte Filter, Rabattcodes und Suchvorschläge",
+    "hide_logo_on_home_page_help": "Das Logo bleibt sichtbar, wenn die Sticky-Header-Funktion aktiv ist"
   },
   "categories": {
     "product_list": "Vorgestellte Kollektion",

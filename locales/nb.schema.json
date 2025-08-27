@@ -36,7 +36,7 @@
     "secondary_button": "Sekundær knapp",
     "buttons": "Knapper",
     "inputs": "Inndata",
-    "popovers_and_modals": "Forgrunnsvinduer og modaler",
+    "popovers_and_modals": "Midlertidige informasjonsvinduer og modaler",
     "marquee": "Marquee",
     "alternating_content_rows": "Vekslende rader",
     "pull_quote": "Nøkkelsitat",
@@ -128,7 +128,7 @@
     "video_section": "Video",
     "blog": "Blogg",
     "blog_posts": "Blogginnlegg",
-    "custom_liquid": "Egendefinert Liquid",
+    "custom_liquid": "Skreddersydd Liquid",
     "blog_post": "Blogginnlegg",
     "caption": "Bildetekst",
     "collection_card_image": "Bilde",
@@ -165,7 +165,8 @@
     "product_inventory": "Produktlager",
     "description": "Beskrivelse",
     "featured_image": "Fremhevet bilde",
-    "multicolumn": "Flerkolonner"
+    "multicolumn": "Flerkolonne",
+    "product_custom_property": "Spesialinstruksjoner"
   },
   "settings": {
     "alignment": "Justering",
@@ -493,12 +494,35 @@
     "show_second_image_on_hover": "Vis sekundærbilde når musepekeren beveges over",
     "media": "Medier",
     "product_card_carousel": "Vis karusell",
-    "media_fit": "Medietilpasning",
+    "media_fit": "Mediepassform",
     "scroll_speed": "Tid til neste kunngjøring",
     "show_powered_by_shopify": "Vis «Drevet av Shopify»",
     "gift_card_form": "Gavekortskjema",
     "seller_note_open_by_default": "Merknaden til selgeren skal åpnes som standard",
-    "add_to_cart_animation": "Legg i handlekurven"
+    "add_to_cart_animation": "Legg i handlekurv",
+    "product_custom_property": {
+      "heading": "Overskrift",
+      "description": "Beskrivelse",
+      "key": "Egenskapsnavn",
+      "key_info": "Må være unik for hver blokk. Vises i handlekurv, kasse og ordredetaljer.",
+      "placeholder_text": "Plassholdertekst",
+      "default_heading": "Tilpass produktet ditt",
+      "default_placeholder": "Angi spesialinstruksjonene dine",
+      "default_property_key": "Spesialinstruksjoner",
+      "max_length": "Maks. antall tegn",
+      "required": "Inndata kreves for å legge varen til i handlekurven",
+      "input_type": "Inndatatype",
+      "input_type_text": "Tekst",
+      "input_type_checkbox": "Avmerkingsboks",
+      "content_settings": "Innholdsinnstillinger",
+      "buyers_input": "Kjøpers ønsker",
+      "checkbox_label": "Etikett for avmerkingsboks",
+      "default_checkbox_label": "Inkluder innpakningspapir",
+      "heading_preset": "Overskrift",
+      "description_preset": "Beskrivelse",
+      "input_preset": "Inndata",
+      "checkbox_preset": "Etikett for avmerkingsboks"
+    }
   },
   "options": {
     "adapt_to_image": "Tilpass til bilde",
@@ -874,7 +898,8 @@
     "product_media": "Produktmedier",
     "section_link": "Seksjonslenke",
     "gift_card_form_description": "Kunder kan sende gavekort til mottakerens e-post med en personlig melding. [Finn ut mer](https://help.shopify.com/manual/products/gift-card-products)",
-    "heading": "Overskrift"
+    "heading": "Overskrift",
+    "resource_reference_product_custom_property": "Legg til tilpassbare inndatafelt for å samle inn tilpasset informasjon som legges til denne ordreposten, og som senere vises i ordredetaljene."
   },
   "html_defaults": {
     "share_information_about_your": "<p>Del informasjon om merkevaren din med kundene. Beskriv et produkt, gjør kunngjøringer eller ønsk kundene velkommen til butikken.</p>"
@@ -913,7 +938,8 @@
     "custom_liquid": "Legg til app-kodeutdrag eller en annen kode for å opprette avanserte tilpasninger. [Finn ut mer](https://shopify.dev/docs/api/liquid)",
     "pills_usage": "Brukes for anvendte filtre, rabattkoder og søkeforslag",
     "applies_on_image_only": "Gjelder bare bilder",
-    "hover_effects": "Gjelder produkt- og samlingskort"
+    "hover_effects": "Gjelder produkt- og samlingskort",
+    "hide_logo_on_home_page_help": "Logoen forblir synlig når festet overskrift er aktiv"
   },
   "categories": {
     "product_list": "Utvalgt samling",

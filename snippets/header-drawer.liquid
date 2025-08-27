@@ -21,6 +21,11 @@
   elsif block_settings.menu_style == 'featured_products'
     assign ratio = block_settings.featured_products_aspect_ratio
   endif
+
+  assign eager_loading = false
+  if section.index == blank
+    assign eager_loading = true
+  endif
 %}
 
 <script
@@ -470,11 +475,6 @@
                           {%- endfor -%}
                         </ul>
                         {% liquid
-                          assign eager_loading = false
-                          if section.index == blank
-                            assign eager_loading = true
-                          endif
-
                           if eager_loading
                             if block_settings.menu_style == 'featured_collections'
                               assign featured_collections = link.links | where: 'type', 'collection_link'
@@ -482,15 +482,15 @@
 
                             if block_settings.menu_style == 'featured_products'
                               assign collection_linklist = link.links | where: 'type', 'collection_link' | first
-                              assign featured_products = collection_linklist.object.products
+                              assign featured_products_collection = collection_linklist.object
                             endif
                           else
                             assign featured_collections = null | sort
-                            assign featured_products = null | sort
+                            assign featured_products_collection = null | sort
                           endif
                         -%}
 
-                        {% if featured_collections.size > 0 or featured_products.size > 0 %}
+                        {% if featured_collections.size > 0 or featured_products_collection.products_count > 0 %}
                           <div
                             class="menu-drawer__featured-content menu-drawer__featured-content--childlist"
                             style="--menu-drawer-animation-index: {{ linklist.links.size | plus: 1 }};"
@@ -509,16 +509,18 @@
                                   </li>
                                 {%- endfor -%}
                               {% else %}
-                                {%- for product in featured_products limit: max_featured_items -%}
-                                  <li class="menu-drawer__featured-content-list-item menu-drawer__featured-content-list-item--product">
-                                    {% render 'resource-card',
-                                      resource: product,
-                                      resource_type: 'product',
-                                      image_aspect_ratio: ratio,
-                                      image_sizes: 'auto, 400px'
-                                    %}
-                                  </li>
-                                {%- endfor -%}
+                                {% paginate featured_products_collection.products by max_featured_items %}
+                                  {%- for product in featured_products_collection.products limit: max_featured_items -%}
+                                    <li class="menu-drawer__featured-content-list-item menu-drawer__featured-content-list-item--product">
+                                      {% render 'resource-card',
+                                        resource: product,
+                                        resource_type: 'product',
+                                        image_aspect_ratio: ratio,
+                                        image_sizes: 'auto, 400px'
+                                      %}
+                                    </li>
+                                  {%- endfor -%}
+                                {% endpaginate %}
                               {% endif %}
                             </ul>
                           </div>
@@ -575,20 +577,20 @@
           assign top_level_featured_collections = linklist.links | where: 'type', 'collection_link'
         endif
 
-        if block_settings.menu_style == 'featured_products'
+        if eager_loading and block_settings.menu_style == 'featured_products'
           for link in linklist.links
             if link.type == 'collection_link'
               assign collection_linklist = link
-              assign top_level_featured_products = collection_linklist.object.products
+              assign top_level_featured_products_collection = collection_linklist.object
               break
             elsif link.type == 'catalog_link' or link.type == 'collections_link'
-              assign top_level_featured_products = collections.all.products
+              assign top_level_featured_products_collection = collections.all
               break
             endif
           endfor
         endif
       -%}
-      {% if top_level_featured_collections.size > 0 or top_level_featured_products.size > 0 %}
+      {% if top_level_featured_collections.size > 0 or top_level_featured_products_collection.products_count > 0 %}
         <div
           class="menu-drawer__featured-content"
           style="--menu-drawer-animation-index: {{ linklist.links.size | plus: 1 }};"
@@ -606,17 +608,19 @@
                   %}
                 </li>
               {%- endfor -%}
-            {% elsif top_level_featured_products.size > 0 %}
-              {%- for product in top_level_featured_products limit: max_featured_items -%}
-                <li class="menu-drawer__featured-content-list-item menu-drawer__featured-content-list-item--product">
-                  {% render 'resource-card',
-                    resource: product,
-                    resource_type: 'product',
-                    image_aspect_ratio: ratio,
-                    image_sizes: 'auto, 400px'
-                  %}
-                </li>
-              {%- endfor -%}
+            {% elsif top_level_featured_products_collection.products_count > 0 %}
+              {% paginate top_level_featured_products_collection.products by max_featured_items %}
+                {%- for product in top_level_featured_products_collection.products limit: max_featured_items -%}
+                  <li class="menu-drawer__featured-content-list-item menu-drawer__featured-content-list-item--product">
+                    {% render 'resource-card',
+                      resource: product,
+                      resource_type: 'product',
+                      image_aspect_ratio: ratio,
+                      image_sizes: 'auto, 400px'
+                    %}
+                  </li>
+                {%- endfor -%}
+              {% endpaginate %}
             {% endif %}
           </ul>
         </div>

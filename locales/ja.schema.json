@@ -165,7 +165,8 @@
     "pills": "ピル型ボタン",
     "description": "説明",
     "featured_image": "記事のサムネイル",
-    "multicolumn": "マルチカラム"
+    "multicolumn": "マルチカラム",
+    "product_custom_property": "特別な指示"
   },
   "settings": {
     "alignment": "配置",
@@ -498,7 +499,30 @@
     "show_powered_by_shopify": "「Powered by Shopify」を表示",
     "seller_note_open_by_default": "デフォルトで販売者へのメモを開く",
     "gift_card_form": "ギフトカード形式",
-    "add_to_cart_animation": "カートに追加"
+    "add_to_cart_animation": "カートに追加する",
+    "product_custom_property": {
+      "heading": "見出し",
+      "description": "説明",
+      "key": "プロパティ名",
+      "key_info": "各ブロックで一意である必要があります。カート、チェックアウト、注文詳細に表示されます。",
+      "placeholder_text": "プレースホルダーテキスト",
+      "default_heading": "商品をカスタマイズする",
+      "default_placeholder": "特別な指示を入力",
+      "default_property_key": "特別な指示",
+      "max_length": "最大文字数",
+      "required": "アイテムをカートに追加するには入力が必要です",
+      "input_type": "入力タイプ",
+      "input_type_text": "テキスト",
+      "input_type_checkbox": "チェックボックス",
+      "content_settings": "コンテンツ設定",
+      "buyers_input": "購入者の入力",
+      "checkbox_label": "チェックボックスラベル",
+      "default_checkbox_label": "ギフトラッピングを含む",
+      "heading_preset": "見出し",
+      "description_preset": "説明",
+      "input_preset": "入力",
+      "checkbox_preset": "チェックボックスラベル"
+    }
   },
   "options": {
     "adapt_to_image": "画像に合わせる",
@@ -874,7 +898,8 @@
     "product_media": "商品メディア",
     "section_link": "セクションリンク",
     "gift_card_form_description": "お客様は受取人に、個人的なメッセージとともにギフトカードを添えて送ることができます。[詳しくはこちら](https://help.shopify.com/manual/products/gift-card-products)",
-    "heading": "見出し"
+    "heading": "見出し",
+    "resource_reference_product_custom_property": "カスタマイズ入力フィールドを追加することで、この注文の項目に追加される税関情報を徴収し、後で注文詳細で表示されます。"
   },
   "html_defaults": {
     "share_information_about_your": "<p>ブランドに関する情報をお客様と共有します。商品を説明したり、告知をしたり、ストアへのお客様を歓迎したりします。</p>"
@@ -913,7 +938,8 @@
     "custom_liquid": "アプリのスニペットやその他のコードを追加して、高度なカスタマイズを作成します。[詳しくはこちら](https://shopify.dev/docs/api/liquid)",
     "applies_on_image_only": "画像にのみ適用する",
     "hover_effects": "商品およびコレクションカードに適用する",
-    "pills_usage": "適用されたフィルター、割引コード、検索候補に使用されます"
+    "pills_usage": "適用されたフィルター、割引コード、検索候補に使用されます",
+    "hide_logo_on_home_page_help": "スティッキーヘッダーがアクティブな場合、ロゴは表示されたままになります"
   },
   "categories": {
     "product_list": "特集コレクション",

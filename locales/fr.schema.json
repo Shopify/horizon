@@ -34,7 +34,7 @@
     "product_cards": "Cartes de produit",
     "primary_button": "Bouton primaire",
     "secondary_button": "Bouton secondaire",
-    "popovers_and_modals": "Popovers et modales",
+    "popovers_and_modals": "Fenêtres contextuelles et fenêtres modales",
     "buttons": "Boutons",
     "inputs": "Entrées",
     "marquee": "Marquee",
@@ -122,7 +122,7 @@
     "product_list": "Collection en vedette",
     "spacer": "Espacement",
     "video_section": "Vidéo",
-    "custom_liquid": "Code Liquid personnalisé",
+    "custom_liquid": "Liquid personnalisé",
     "blog": "Blog",
     "blog_post": "Article de blog",
     "blog_posts": "Articles de blog",
@@ -165,7 +165,8 @@
     "product_inventory": "Stock de produits",
     "description": "Description",
     "featured_image": "Image vedette",
-    "multicolumn": "Multi-colonnes"
+    "multicolumn": "Multicolonne",
+    "product_custom_property": "Instructions spéciales"
   },
   "settings": {
     "autoplay": "Jeu automatique",
@@ -494,11 +495,34 @@
     "product_card_carousel": "Afficher le carrousel",
     "show_second_image_on_hover": "Afficher la deuxième image au passage de la souris",
     "media_fit": "Taille des supports multimédia",
-    "scroll_speed": "Temps jusqu'à la prochaine annonce",
-    "show_powered_by_shopify": "Afficher « Propulsé par Shopify »",
+    "scroll_speed": "Délai avant l’annonce suivante",
+    "show_powered_by_shopify": "Afficher « Propulsé par Shopify »",
     "gift_card_form": "Formulaire de carte-cadeau",
     "seller_note_open_by_default": "Ouvrir le commentaire au vendeur par défaut",
-    "add_to_cart_animation": "Ajouter au panier"
+    "add_to_cart_animation": "Ajouter au panier",
+    "product_custom_property": {
+      "heading": "En-tête",
+      "description": "Description",
+      "key": "Nom de la propriété",
+      "key_info": "Doit être unique pour chaque bloc. S'affiche dans le panier, à la caisse et dans les détails de la commande.",
+      "placeholder_text": "Texte du paramètre fictif",
+      "default_heading": "Personnaliser votre produit",
+      "default_placeholder": "Saisissez vos instructions spéciales",
+      "default_property_key": "Instructions spéciales",
+      "max_length": "Nombre maximum de caractères",
+      "required": "Entrée requise pour ajouter un article au panier",
+      "input_type": "Type d’entrée",
+      "input_type_text": "Texte",
+      "input_type_checkbox": "Case à cocher",
+      "content_settings": "Paramètres de contenu",
+      "buyers_input": "Saisie de l’acheteur",
+      "checkbox_label": "Étiquette de la case à cocher",
+      "default_checkbox_label": "Inclure l’emballage cadeau",
+      "heading_preset": "En-tête",
+      "description_preset": "Description",
+      "input_preset": "Entrée",
+      "checkbox_preset": "Étiquette de la case à cocher"
+    }
   },
   "options": {
     "adapt_to_image": "Adapter à l’image",
@@ -873,8 +897,9 @@
     "resource_reference_product_media": "Affiche les supports multimédias du produit parent",
     "product_media": "Support multimédia du produit",
     "section_link": "Lien vers la section",
-    "gift_card_form_description": "Les clients peuvent envoyer des cartes-cadeaux à l'adresse e-mail d'un destinataire avec un message personnel. [En savoir plus](https://help.shopify.com/manual/products/gift-card-products)",
-    "heading": "Titre"
+    "gift_card_form_description": "Les clients peuvent envoyer des cartes-cadeaux à l’adresse e-mail d’un destinataire avec un message personnel. [En savoir plus](https://help.shopify.com/manual/products/gift-card-products)",
+    "heading": "En-tête",
+    "resource_reference_product_custom_property": "Ajoutez des champs d’entrée personnalisables pour recueillir des informations douanières qui seront ajoutées à cet article du panier de la commande, visibles ultérieurement dans les détails de la commande."
   },
   "html_defaults": {
     "share_information_about_your": "<p>Partagez des informations sur votre marque. Décrivez un produit, partagez des annonces ou souhaitez la bienvenue à vos clients dans votre boutique.</p>"
@@ -913,7 +938,8 @@
     "custom_liquid": "Ajoutez des extraits d’application ou d’autres éléments de code pour créer des personnalisations avancées.[En savoir plus](https://shopify.dev/docs/api/liquid)",
     "pills_usage": "Utilisée pour les filtres appliqués, les codes de réduction et les suggestions de recherche",
     "applies_on_image_only": "S’applique uniquement aux images",
-    "hover_effects": "S’applique à des cartes de produits et de collections"
+    "hover_effects": "S’applique à des cartes de produits et de collections",
+    "hide_logo_on_home_page_help": "Le logo reste visible lorsque l’en-tête fixe est activé"
   },
   "categories": {
     "basic": "Basic",

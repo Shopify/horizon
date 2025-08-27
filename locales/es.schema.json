@@ -165,7 +165,8 @@
     "pills": "Cápsulas",
     "description": "Descripción",
     "featured_image": "Imagen destacada",
-    "multicolumn": "Multicolumna"
+    "multicolumn": "Multicolumna",
+    "product_custom_property": "Instrucciones especiales"
   },
   "settings": {
     "alignment": "Alineación",
@@ -498,7 +499,30 @@
     "show_powered_by_shopify": "Mostrar \" con Tecnología de Shopify\".",
     "gift_card_form": "Formulario de tarjeta de regalo",
     "seller_note_open_by_default": "Abrir nota para el vendedor de forma predeterminada",
-    "add_to_cart_animation": "Agregar al carrito"
+    "add_to_cart_animation": "Agregar al carrito",
+    "product_custom_property": {
+      "heading": "Encabezado",
+      "description": "Descripción",
+      "key": "Nombre de la propiedad",
+      "key_info": "Debe ser único para cada bloque. Se muestra en el carrito, el checkout y los detalles del pedido.",
+      "placeholder_text": "Texto del marcador de posición",
+      "default_heading": "Personaliza tu producto",
+      "default_placeholder": "Ingresa tus instrucciones especiales",
+      "default_property_key": "Instrucciones especiales",
+      "max_length": "Caracteres máximos",
+      "required": "Se requiere una entrada para agregar un artículo al carrito",
+      "input_type": "Tipo de entrada",
+      "input_type_text": "Texto",
+      "input_type_checkbox": "Casilla de verificación",
+      "content_settings": "Configuración del contenido",
+      "buyers_input": "Entrada del comprador",
+      "checkbox_label": "Etiqueta de casilla de verificación",
+      "default_checkbox_label": "Incluir envoltorio de regalo",
+      "heading_preset": "Encabezado",
+      "description_preset": "Descripción",
+      "input_preset": "Entrada",
+      "checkbox_preset": "Etiqueta de casilla de verificación"
+    }
   },
   "options": {
     "adapt_to_image": "Adaptar a la imagen",
@@ -874,7 +898,8 @@
     "product_media": "Elementos multimedia del producto",
     "section_link": "Enlace de la sección",
     "gift_card_form_description": "Los clientes pueden enviar tarjetas de regalo al correo electrónico del destinatario junto con un mensaje personal. [Más información](https://help.shopify.com/manual/products/gift-card-products)",
-    "heading": "Encabezado"
+    "heading": "Encabezado",
+    "resource_reference_product_custom_property": "Añade campos de entrada personalizables para recopilar información personalizada que se agregará a esta línea de artículo y será visible más tarde en la información del pedido."
   },
   "html_defaults": {
     "share_information_about_your": "<p>Comparte información sobre tu marca con los clientes. Describe un producto, comparte anuncios o da la bienvenida a los clientes a tu tienda.</p>"
@@ -913,7 +938,8 @@
     "custom_liquid": "Agrega fragmentos de la aplicación u otros códigos para crear personalizaciones avanzadas. [Obtén más información](https://shopify.dev/docs/api/liquid)",
     "applies_on_image_only": "Solo se aplica a las imágenes",
     "hover_effects": "Aplica a los productos y tarjetas de colección",
-    "pills_usage": "Se utiliza para filtros aplicados, códigos de descuento y sugerencias de búsqueda"
+    "pills_usage": "Se utiliza para filtros aplicados, códigos de descuento y sugerencias de búsqueda",
+    "hide_logo_on_home_page_help": "El logo será visible si el encabezado fijo está activado"
   },
   "categories": {
     "basic": "Básico",

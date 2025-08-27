@@ -36,7 +36,7 @@
     "inputs": "Dane wejściowe",
     "primary_button": "Przycisk główny",
     "secondary_button": "Przycisk dodatkowy",
-    "popovers_and_modals": "Wyskakujące okienka i modały",
+    "popovers_and_modals": "Wyskakujące okienka i okna modalne",
     "marquee": "Baner",
     "alternating_content_rows": "Naprzemienne wiersze",
     "pull_quote": "Cytat typu pull",
@@ -126,7 +126,7 @@
     "jumbo_text": "Tekst jumbo",
     "view_all_button": "Wyświetl wszystko",
     "video_section": "Film",
-    "custom_liquid": "Niestandardowy kod Liquid",
+    "custom_liquid": "Niestandardowy Liquid",
     "blog": "Blog",
     "blog_post": "Post na blogu",
     "blog_posts": "Posty na blogu",
@@ -165,7 +165,8 @@
     "pills": "Przyciski",
     "description": "Opis",
     "featured_image": "Wyróżniony obraz",
-    "multicolumn": "Wielokolumnowy"
+    "multicolumn": "Wielokolumnowy",
+    "product_custom_property": "Instrukcje specjalne"
   },
   "settings": {
     "autoplay": "Autoodtwarzanie",
@@ -498,7 +499,30 @@
     "show_powered_by_shopify": "Wyświetl „Technologia Shopify”",
     "gift_card_form": "Formularz karty prezentowej",
     "seller_note_open_by_default": "Domyślnie otwórz uwagę dla sprzedawcy",
-    "add_to_cart_animation": "Dodaj do koszyka"
+    "add_to_cart_animation": "Dodaj do koszyka",
+    "product_custom_property": {
+      "heading": "Nagłówek",
+      "description": "Opis",
+      "key": "Nazwa właściwości",
+      "key_info": "Musi być unikatowy dla każdego bloku. Wyświetlany w koszyku, przy kasie i w szczegółach zamówienia.",
+      "placeholder_text": "Tekst zastępczy",
+      "default_heading": "Spersonalizuj produkt",
+      "default_placeholder": "Wprowadź instrukcje specjalne",
+      "default_property_key": "Instrukcje specjalne",
+      "max_length": "Maks. liczba znaków",
+      "required": "Dane wymagane do dodania produktu do koszyka",
+      "input_type": "Typ danych wejściowych",
+      "input_type_text": "Tekst",
+      "input_type_checkbox": "Pole wyboru",
+      "content_settings": "Ustawienia treści",
+      "buyers_input": "Informacje od kupującego",
+      "checkbox_label": "Etykieta pola wyboru",
+      "default_checkbox_label": "Dodaj pakowanie na prezent",
+      "heading_preset": "Nagłówek",
+      "description_preset": "Opis",
+      "input_preset": "Dane wejściowe",
+      "checkbox_preset": "Etykieta pola wyboru"
+    }
   },
   "options": {
     "adapt_to_image": "Dostosuj do obrazu",
@@ -874,7 +898,8 @@
     "product_media": "Multimedia produktu",
     "section_link": "Link sekcji",
     "gift_card_form_description": "Klienci mogą wysyłać karty prezentowe na adres e-mail odbiorcy wraz z osobistą wiadomością. [Dowiedz się więcej](https://help.shopify.com/manual/products/gift-card-products)",
-    "heading": "Nagłówek"
+    "heading": "Nagłówek",
+    "resource_reference_product_custom_property": "Dodaj konfigurowalne pola wprowadzania danych, aby zbierać niestandardowe informacje, które zostaną dodane do danej pozycji zamówienia i będą później widoczne w szczegółach zamówienia."
   },
   "html_defaults": {
     "share_information_about_your": "<p>Udostępnij klientom informacje o swojej marce. Opisz produkt, udostępnij ogłoszenia lub przywitaj klientów w swoim sklepie.</p>"
@@ -913,7 +938,8 @@
     "custom_liquid": "Dodaj fragmenty kodu aplikacji lub inny kod, aby utworzyć zaawansowane dostosowania. [Dowiedz się więcej](https://shopify.dev/docs/api/liquid)",
     "applies_on_image_only": "Dotyczy tylko obrazów",
     "hover_effects": "Dotyczy kart produktów i kolekcji",
-    "pills_usage": "Używane przez zastosowane filtry, kody rabatowe i sugestie wyszukiwania"
+    "pills_usage": "Używane przez zastosowane filtry, kody rabatowe i sugestie wyszukiwania",
+    "hide_logo_on_home_page_help": "Logo pozostanie widoczne, gdy przypięty nagłówek będzie aktywny"
   },
   "categories": {
     "product_list": "Polecana kolekcja",

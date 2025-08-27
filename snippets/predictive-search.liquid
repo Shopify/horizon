@@ -101,7 +101,11 @@
         ref="predictiveSearchResults"
         on:click="/handleModalClick"
       >
-        {% render 'predictive-search-empty-state', products_test_id: products_test_id %}
+        {% render 'predictive-search-empty-state',
+          load_empty_state: false,
+          shadow_opacity: 0.1,
+          products_test_id: products_test_id
+        %}
       </div>
 
       <div class="predictive-search-form__footer">

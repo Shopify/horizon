@@ -165,7 +165,8 @@
     "description": "說明",
     "featured_image": "主要圖片",
     "multicolumn": "多欄",
-    "rich_text_section": "RTF 文字"
+    "rich_text_section": "RTF 文字",
+    "product_custom_property": "特別指示"
   },
   "settings": {
     "alignment": "對齊方式",
@@ -498,7 +499,30 @@
     "show_powered_by_shopify": "顯示「Shopify 技術支援」",
     "gift_card_form": "禮品卡表單",
     "seller_note_open_by_default": "預設向賣家開啟備註",
-    "add_to_cart_animation": "加入購物車"
+    "add_to_cart_animation": "加入購物車",
+    "product_custom_property": {
+      "heading": "標題",
+      "description": "說明",
+      "key": "屬性名稱",
+      "key_info": "每個區塊都必須是唯一的。顯示在購物車、結帳和訂單詳情中。",
+      "placeholder_text": "佔位符文字",
+      "default_heading": "自訂商品",
+      "default_placeholder": "輸入特別指示",
+      "default_property_key": "特別指示",
+      "max_length": "字元數上限",
+      "required": "需要輸入才能將品項新增至購物車",
+      "input_type": "輸入類型",
+      "input_type_text": "文字",
+      "input_type_checkbox": "核取方塊",
+      "content_settings": "內容設定",
+      "buyers_input": "買家意見",
+      "checkbox_label": "核取方塊標籤",
+      "default_checkbox_label": "包括禮品包裝",
+      "heading_preset": "標題",
+      "description_preset": "說明",
+      "input_preset": "輸入",
+      "checkbox_preset": "核取方塊標籤"
+    }
   },
   "options": {
     "adapt_to_image": "配合圖片",
@@ -874,7 +898,8 @@
     "product_media": "商品多媒體檔案",
     "section_link": "區段連結",
     "gift_card_form_description": "顧客將禮品卡傳送至收件人電子郵件時可附上個人化訊息。[瞭解詳情](https://help.shopify.com/manual/products/gift-card-products)",
-    "heading": "標題"
+    "heading": "標題",
+    "resource_reference_product_custom_property": "新增可自訂的輸入欄位以收集自訂資訊，這些資訊會新增至此訂單的商品項目，稍後可在訂單詳細資訊查看。"
   },
   "html_defaults": {
     "share_information_about_your": "<p>和顧客分享品牌資訊、描述商品、進行公告，或歡迎顧客光臨您的商店。</p>"
@@ -913,7 +938,8 @@
     "custom_liquid": "新增應用程式程式碼片段或其他程式碼，以建立進階自訂內容。[瞭解詳情](https://shopify.dev/docs/api/liquid)",
     "pills_usage": "用於顯示已套用的篩選條件、折扣代碼與搜尋建議",
     "applies_on_image_only": "僅適用於圖片",
-    "hover_effects": "適用於商品及商品系列卡片"
+    "hover_effects": "適用於商品及商品系列卡片",
+    "hide_logo_on_home_page_help": "啟用固定式頁首時仍顯示標誌"
   },
   "categories": {
     "basic": "基礎",

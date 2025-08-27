@@ -8,6 +8,8 @@
   @param {boolean} checked - whether the input is checked
   @param {string} events - event attributes for the input, e.g. 'on:click="/action"'
   @param {boolean} disabled - whether the input is disabled
+  @param {boolean} [required] - whether the input is required
+  @param {string} [formId] - form id attribute for the input
   @param {string} [inputRef] - input ref attribute for use with component framework
   @param {string} [labelRef] - label ref attribute for use with component framework
   @param {boolean} [autofocus] - whether the input should be autofocused
@@ -28,6 +30,12 @@
     {% endif %}
     {% if disabled %}
       disabled
+    {% endif %}
+    {% if required %}
+      required aria-required="true"
+    {% endif %}
+    {% if formId != blank %}
+      form="{{ formId }}"
     {% endif %}
     {% if inputRef != blank %}
       ref="{{ inputRef }}"

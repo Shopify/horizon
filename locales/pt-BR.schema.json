@@ -35,7 +35,7 @@
     "inputs": "Entradas",
     "primary_button": "Botão principal",
     "secondary_button": "Botão secundário",
-    "popovers_and_modals": "Pop-overs e modais",
+    "popovers_and_modals": "Pop-overs e janelas modais",
     "marquee": "Faixa",
     "alternating_content_rows": "Linhas alternadas",
     "pull_quote": "Citação em destaque",
@@ -164,8 +164,9 @@
     "product_inventory": "Estoque de produtos",
     "description": "Descrição",
     "featured_image": "Imagem em destaque",
-    "multicolumn": "Multicolunas",
-    "rich_text_section": "Rich text"
+    "multicolumn": "Multicoluna",
+    "rich_text_section": "Rich text",
+    "product_custom_property": "Instruções especiais"
   },
   "settings": {
     "alignment": "Alinhamento",
@@ -494,11 +495,34 @@
     "media": "Mídia",
     "product_card_carousel": "Mostrar carrossel",
     "media_fit": "Ajuste da mídia",
-    "scroll_speed": "Tempo até o próximo anúncio",
+    "scroll_speed": "Tempo para o próximo comunicado",
     "show_powered_by_shopify": "Mostrar \"Com tecnologia da Shopify\"",
     "gift_card_form": "Formulário de cartão-presente",
     "seller_note_open_by_default": "Abrir a observação para o vendedor como padrão",
-    "add_to_cart_animation": "Adicionar ao carrinho"
+    "add_to_cart_animation": "Adicionar ao carrinho",
+    "product_custom_property": {
+      "heading": "Título",
+      "description": "Descrição",
+      "key": "Nome da propriedade",
+      "key_info": "Deve ser único para cada bloco. Mostrado no carrinho, checkout e detalhes do pedido.",
+      "placeholder_text": "Texto do marcador de posição",
+      "default_heading": "Personalize seu produto",
+      "default_placeholder": "Insira as instruções especiais",
+      "default_property_key": "Instruções especiais",
+      "max_length": "Máximo de caracteres",
+      "required": "Informação necessária para adicionar o item ao carrinho",
+      "input_type": "Tipo de entrada",
+      "input_type_text": "Texto",
+      "input_type_checkbox": "Caixa de seleção",
+      "content_settings": "Configurações de conteúdo",
+      "buyers_input": "Informação fornecida pelo comprador",
+      "checkbox_label": "Etiqueta de caixa de seleção",
+      "default_checkbox_label": "Incluir embalagem de presente",
+      "heading_preset": "Título",
+      "description_preset": "Descrição",
+      "input_preset": "Entrada",
+      "checkbox_preset": "Etiqueta de caixa de seleção"
+    }
   },
   "options": {
     "adapt_to_image": "Adaptar à imagem",
@@ -874,7 +898,8 @@
     "product_media": "Mídias do produto",
     "section_link": "Link da seção",
     "gift_card_form_description": "Os clientes podem enviar cartões-presente para o e-mail do destinatário com uma mensagem pessoal. [Saiba mais](https://help.shopify.com/manual/products/gift-card-products)",
-    "heading": "Título"
+    "heading": "Título",
+    "resource_reference_product_custom_property": "Adicione campos personalizáveis para coletar informações personalizadas que serão adicionadas a este item de linha do pedido, posteriormente visíveis nos detalhes do pedido."
   },
   "html_defaults": {
     "share_information_about_your": "<p>Compartilhe informações sobre a marca com clientes. Descreva um produto, faça comunicados ou dê as boas-vindas aos clientes na loja.</p>"
@@ -913,7 +938,8 @@
     "custom_liquid": "Adicione snippets de app ou outros códigos do Liquid para criar personalizações avançadas. [Saiba mais](https://shopify.dev/docs/api/liquid)",
     "pills_usage": "Usado para filtros aplicados, códigos de desconto e sugestões de pesquisa",
     "applies_on_image_only": "Aplica-se apenas a imagens",
-    "hover_effects": "Aplica-se a cartões de produto e coleção"
+    "hover_effects": "Aplica-se a cartões de produto e coleção",
+    "hide_logo_on_home_page_help": "O logo permanecerá visível quando o cabeçalho fixo estiver ativo"
   },
   "categories": {
     "basic": "Basic",

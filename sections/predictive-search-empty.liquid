@@ -1,4 +1,8 @@
-{% render 'predictive-search-empty-state', products_test_id: 'products-list-default--reset' %}
+{% render 'predictive-search-empty-state',
+  load_empty_state: true,
+  shadow_opacity: 0.1,
+  products_test_id: 'products-list-default--reset'
+%}
 
 {% schema %}
 {

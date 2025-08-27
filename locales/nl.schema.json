@@ -35,7 +35,7 @@
     "inputs": "Invoer",
     "primary_button": "Primaire knop",
     "secondary_button": "Secundaire knop",
-    "popovers_and_modals": "Pop-overs en modals",
+    "popovers_and_modals": "Pop-overs en modale vensters",
     "marquee": "Marquee",
     "alternating_content_rows": "Afwisselende rijen",
     "product_list": "Uitgelichte collectie",
@@ -164,8 +164,9 @@
     "product_inventory": "Productvoorraad",
     "description": "Beschrijving",
     "featured_image": "Uitgelichte afbeelding",
-    "multicolumn": "Meerkolommig",
-    "rich_text_section": "Tekst met opmaak"
+    "rich_text_section": "Tekst met opmaak",
+    "product_custom_property": "Speciale instructies",
+    "multicolumn": "Meerdere kolommen"
   },
   "settings": {
     "autoplay": "Automatisch afspelen",
@@ -494,11 +495,34 @@
     "media": "Media",
     "product_card_carousel": "Carrousel weergeven",
     "media_fit": "Mediafit",
-    "scroll_speed": "Tijd tot volgende aankondiging",
+    "scroll_speed": "Tijd tot de volgende aankondiging",
     "show_powered_by_shopify": "'Powered by Shopify' weergeven",
     "seller_note_open_by_default": "Notitie aan verkoper standaard openen",
-    "gift_card_form": "Cadeaukaartformulier",
-    "add_to_cart_animation": "In winkelwagen"
+    "gift_card_form": "Cadeaubonformulier",
+    "add_to_cart_animation": "Toevoegen aan winkelwagen",
+    "product_custom_property": {
+      "heading": "Koptekst",
+      "description": "Beschrijving",
+      "key": "Naam eigenschap",
+      "key_info": "Moet uniek zijn voor elk blok. Wordt weergegeven in winkelwagen, checkout en bestelgegevens.",
+      "placeholder_text": "Tijdelijke tekst",
+      "default_heading": "Je product aanpassen",
+      "default_placeholder": "Voer je speciale instructies in",
+      "default_property_key": "Speciale instructies",
+      "max_length": "Max. aantal tekens",
+      "required": "Invoer vereist om artikel aan winkelwagen toe te voegen",
+      "input_type": "Invoertype",
+      "input_type_text": "Tekst",
+      "input_type_checkbox": "Selectievakje",
+      "content_settings": "Contentinstellingen",
+      "buyers_input": "Invoer van koper",
+      "checkbox_label": "Label selectievakje",
+      "default_checkbox_label": "Inclusief cadeauverpakking",
+      "heading_preset": "Koptekst",
+      "description_preset": "Beschrijving",
+      "input_preset": "Invoer",
+      "checkbox_preset": "Label selectievakje"
+    }
   },
   "options": {
     "adapt_to_image": "Aanpassen aan afbeelding",
@@ -874,7 +898,8 @@
     "product_media": "Productmedia",
     "section_link": "Sectielink",
     "gift_card_form_description": "Klanten kunnen cadeaubonnen met een persoonlijk bericht naar het e-mailadres van een ontvanger sturen. [Meer informatie](https://help.shopify.com/manual/products/gift-card-products)",
-    "heading": "Koptekst"
+    "heading": "Koptekst",
+    "resource_reference_product_custom_property": "Aanpasbare invoervelden toevoegen om aangepaste informatie te verzamelen die wordt toegevoegd aan dit orderregelitem en later zichtbaar is in de bestelgegevens."
   },
   "html_defaults": {
     "share_information_about_your": "<p>Deel informatie over je merk met klanten. Beschrijf een product, doe aankondigingen of verwelkom klanten in je winkel.</p>"
@@ -913,7 +938,8 @@
     "custom_liquid": "Voeg app-fragmenten of andere code toe om geavanceerde aanpassingen aan te maken. [Meer informatie](https://shopify.dev/docs/api/liquid)",
     "pills_usage": "Gebruikt voor toegepaste filters, kortingscodes en zoeksuggesties",
     "applies_on_image_only": "Uitsluitend van toepassing op afbeeldingen",
-    "hover_effects": "Van toepassing op product- en collectiekaarten"
+    "hover_effects": "Van toepassing op product- en collectiekaarten",
+    "hide_logo_on_home_page_help": "Logo blijft zichtbaar wanneer sticky header actief is"
   },
   "categories": {
     "product_list": "Uitgelichte collectie",

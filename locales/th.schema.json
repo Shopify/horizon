@@ -164,8 +164,9 @@
     "large_logo": "โลโก้ขนาดใหญ่",
     "description": "คำอธิบาย",
     "featured_image": "รูปภาพที่แสดง",
-    "multicolumn": "หลายคอลัมน์",
-    "rich_text_section": "Rich Text"
+    "rich_text_section": "Rich Text",
+    "product_custom_property": "คำแนะนำพิเศษ",
+    "multicolumn": "หลายคอลัมน์"
   },
   "settings": {
     "alignment": "การจัดแนว",
@@ -498,7 +499,30 @@
     "show_powered_by_shopify": "แสดงข้อความ \"ขับเคลื่อนโดย Shopify\"",
     "seller_note_open_by_default": "เปิดหมายเหตุถึงผู้ขายตามค่าเริ่มต้น",
     "gift_card_form": "แบบฟอร์มบัตรของขวัญ",
-    "add_to_cart_animation": "เพิ่มในตะกร้า"
+    "add_to_cart_animation": "เพิ่มลงในตะกร้าสินค้า",
+    "product_custom_property": {
+      "heading": "หัวเรื่อง",
+      "description": "คำอธิบาย",
+      "key": "ชื่อคุณสมบัติ",
+      "key_info": "ต้องเป็นเอกลักษณ์สำหรับแต่ละบล็อก แสดงในตะกร้าสินค้า การชำระเงิน และรายละเอียดการสั่งซื้อ",
+      "placeholder_text": "ข้อความตัวยึดตำแหน่ง",
+      "default_heading": "ปรับแต่งสินค้าของคุณ",
+      "required": "ต้องป้อนข้อมูลเพื่อเพิ่มสินค้าลงในตะกร้า",
+      "input_type": "ประเภทการป้อนข้อมูล",
+      "input_type_text": "ข้อความ",
+      "input_type_checkbox": "ช่องทำเครื่องหมาย",
+      "content_settings": "การตั้งค่าเนื้อหา",
+      "checkbox_label": "ป้ายช่องทำเครื่องหมาย",
+      "heading_preset": "หัวเรื่อง",
+      "description_preset": "คำอธิบาย",
+      "input_preset": "ป้อนข้อมูล",
+      "checkbox_preset": "ป้ายช่องทำเครื่องหมาย",
+      "default_placeholder": "ป้อนคำแนะนำพิเศษของคุณ",
+      "default_property_key": "คำแนะนำพิเศษ",
+      "max_length": "จำนวนอักขระสูงสุด",
+      "buyers_input": "ผู้ซื้อป้อนข้อมูล",
+      "default_checkbox_label": "รวมบริการห่อของขวัญ"
+    }
   },
   "options": {
     "adapt_to_image": "ปรับตามรูปภาพ",
@@ -874,7 +898,8 @@
     "resource_reference_product_media": "แสดงสื่อจากสินค้าหลัก",
     "section_link": "ลิงก์ไปยังส่วน",
     "gift_card_form_description": "ลูกค้าสามารถส่งบัตรของขวัญไปยังอีเมลของผู้รับพร้อมข้อความส่วนตัวได้ [ดูข้อมูลเพิ่มเติม](https://help.shopify.com/manual/products/gift-card-products)",
-    "heading": "หัวเรื่อง"
+    "heading": "หัวเรื่อง",
+    "resource_reference_product_custom_property": "เพิ่มช่องป้อนข้อมูลที่กำหนดเองเพื่อรวบรวมข้อมูลแบบกำหนดเองที่จะนำไปเพิ่มในสินค้าเฉพาะรายการในคำสั่งซื้อนี้ ซึ่งจะมองเห็นได้ในรายละเอียดคำสั่งซื้อในภายหลัง"
   },
   "html_defaults": {
     "share_information_about_your": "<p>แชร์ข้อมูลเกี่ยวกับแบรนด์ของคุณให้ลูกค้าทราบ โดยอธิบายคุณสมบัติของสินค้า แชร์ประกาศ หรือกล่าวต้อนรับลูกค้าสู่ร้านค้าของคุณ</p>"
@@ -913,7 +938,8 @@
     "custom_liquid": "เพิ่มส่วนย่อยของแอปหรือโค้ดอื่นๆ เพื่อสร้างการปรับแต่งขั้นสูง [ดูข้อมูลเพิ่มเติม](https://shopify.dev/docs/api/liquid)",
     "pills_usage": "ใช้สำหรับตัวกรองที่นำไปใช้ รหัสส่วนลด และคำแนะนำการค้นหา",
     "applies_on_image_only": "ใช้กับรูปภาพเท่านั้น",
-    "hover_effects": "ใช้กับบัตรสินค้าและบัตรคอลเลกชัน"
+    "hover_effects": "ใช้กับบัตรสินค้าและบัตรคอลเลกชัน",
+    "hide_logo_on_home_page_help": "โลโก้จะยังปรากฏอยู่เมื่อเปิดใช้งานส่วนหัวแบบยึดตำแหน่ง"
   },
   "categories": {
     "basic": "Basic",

@@ -35,7 +35,7 @@
     "inputs": "Inputs",
     "primary_button": "Primær knap",
     "secondary_button": "Sekundær knap",
-    "popovers_and_modals": "Popovers og modaler",
+    "popovers_and_modals": "Popovers og modusser",
     "marquee": "Lysavis",
     "pull_quote": "Citat",
     "contact_form": "Kontaktformular",
@@ -165,7 +165,8 @@
     "description": "Beskrivelse",
     "featured_image": "Udvalgt billede",
     "multicolumn": "Flere kolonner",
-    "rich_text_section": "Rich text"
+    "rich_text_section": "RTF",
+    "product_custom_property": "Særlige instruktioner"
   },
   "settings": {
     "alignment": "Justering",
@@ -498,7 +499,30 @@
     "show_powered_by_shopify": "Vis “Drevet af Shopify”",
     "gift_card_form": "Gavekortformular",
     "seller_note_open_by_default": "Aktivér som standard besked til sælger",
-    "add_to_cart_animation": "Læg i indkøbskurv"
+    "add_to_cart_animation": "Læg i indkøbskurven",
+    "product_custom_property": {
+      "heading": "Overskrift",
+      "description": "Beskrivelse",
+      "key": "Egenskabsnavn",
+      "key_info": "Skal være unik for hvert blok. Vises i kurv, kasse og ordredetaljer.",
+      "placeholder_text": "Pladsholdertekst",
+      "default_heading": "Tilpas dit produkt",
+      "default_placeholder": "Angiv dine særlige instruktioner",
+      "default_property_key": "Særlige instruktioner",
+      "max_length": "Maks. antal tegn",
+      "required": "Input påkrævet for at tilføje vare til indkøbskurven",
+      "input_type": "Inputtype",
+      "input_type_text": "Tekst",
+      "input_type_checkbox": "Afkrydsningsfelt",
+      "content_settings": "Indholdsindstillinger",
+      "buyers_input": "Køberinput",
+      "checkbox_label": "Label for afkrydsningsfelt",
+      "default_checkbox_label": "Inkluder gaveindpakning",
+      "heading_preset": "Overskrift",
+      "description_preset": "Beskrivelse",
+      "input_preset": "Input",
+      "checkbox_preset": "Label for afkrydsningsfelt"
+    }
   },
   "options": {
     "adapt_to_image": "Tilpas til billede",
@@ -872,7 +896,10 @@
     "resource_reference_product_variant_picker": "Viser varianter fra overordnet produkt",
     "resource_reference_product_media": "Viser medie fra overordnet produkt",
     "product_media": "Produktmedier",
-    "section_link": "Afsnitslink"
+    "section_link": "Afsnitslink",
+    "gift_card_form_description": "Kunder kan sende gavekort til en modtagers mailadresse med en personlig besked. [Få mere at vide](https://help.shopify.com/manual/products/gift-card-products)",
+    "heading": "Overskrift",
+    "resource_reference_product_custom_property": "Tilføj tilpassede inputfelter for at indsamle tilpassede oplysninger, der vil blive føjet til denne varelinje og senere være synlige i ordreoplysningerne."
   },
   "html_defaults": {
     "share_information_about_your": "<p>Del oplysninger om dit brand med dine kunder. Beskriv et produkt, del meddelelser, eller byd velkommen til din butik.</p>"
@@ -911,7 +938,8 @@
     "custom_liquid": "Tilføj appkodestykker eller anden kode for at oprette avancerede tilpasninger. [Få mere at vide](https://shopify.dev/docs/api/liquid)",
     "pills_usage": "Bruges til anvendte filtre, rabatkoder og søgeforslag",
     "applies_on_image_only": "Gælder kun for billeder",
-    "hover_effects": "Gælder for produkter og kollektionskort"
+    "hover_effects": "Gælder for produkter og kollektionskort",
+    "hide_logo_on_home_page_help": "Logoet forbliver synligt, når et fastgjort sidehoved er aktiveret"
   },
   "categories": {
     "basic": "Basic",

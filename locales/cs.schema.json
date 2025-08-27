@@ -165,7 +165,8 @@
     "description": "Popis",
     "featured_image": "Propagovaný obrázek",
     "multicolumn": "Vícesloupec",
-    "rich_text_section": "Formát RTF"
+    "rich_text_section": "Formát RTF",
+    "product_custom_property": "Zvláštní pokyny"
   },
   "settings": {
     "alignment": "Zarovnání",
@@ -498,7 +499,30 @@
     "show_powered_by_shopify": "Zobrazit „Powered by Shopify“",
     "gift_card_form": "Formulář dárkové karty",
     "seller_note_open_by_default": "Otevřít poznámku pro prodejce ve výchozím nastavení",
-    "add_to_cart_animation": "Přidat do košíku"
+    "add_to_cart_animation": "Přidat do košíku",
+    "product_custom_property": {
+      "heading": "Nadpis",
+      "description": "Popis",
+      "key": "Název vlastnosti",
+      "key_info": "Musí být jedinečný pro každý blok. Zobrazuje se v košíku, při pokladně a v detailech objednávky.",
+      "placeholder_text": "Zástupný text",
+      "default_heading": "Přizpůsobte svůj produkt",
+      "default_placeholder": "Zadejte zvláštní pokyny",
+      "default_property_key": "Zvláštní pokyny",
+      "max_length": "Maximální počet znaků",
+      "required": "Vstup je nutný pro přidání položky do košíku",
+      "input_type": "Typ vstupu",
+      "input_type_text": "Text",
+      "input_type_checkbox": "Zaškrtávací pole",
+      "content_settings": "Nastavení obsahu",
+      "buyers_input": "Vstup kupujícího",
+      "checkbox_label": "Popisek zaškrtávacího pole",
+      "default_checkbox_label": "Zahrnout dárkové balení",
+      "heading_preset": "Nadpis",
+      "description_preset": "Popis",
+      "input_preset": "Vstup",
+      "checkbox_preset": "Popisek zaškrtávacího pole"
+    }
   },
   "options": {
     "adapt_to_image": "Přizpůsobení obrázku",
@@ -874,7 +898,8 @@
     "manage_store_name": "[Spravovat název obchodu](/admin/settings/general?edit=storeName)",
     "section_link": "Odkaz na sekci",
     "gift_card_form_description": "Zákazníci můžou zaslat dárkové karty s osobním vzkazem na e-mail příjemce. [Zjistit více](https://help.shopify.com/manual/products/gift-card-products)",
-    "heading": "Nadpis"
+    "heading": "Nadpis",
+    "resource_reference_product_custom_property": "Přidejte přizpůsobitelná vstupní pole pro shromažďování vlastních informací, které budou přidány k této položce objednávky a později viditelné v jejích podrobnostech."
   },
   "html_defaults": {
     "share_information_about_your": "<p>Informujte zákazníky o své značce. Zároveň můžete popsat některý z produktů, oznámit důležité informace nebo přivítat zákazníky ve svém obchodě.</p>"
@@ -913,7 +938,8 @@
     "custom_liquid": "Přidejte fragmenty aplikací nebo jiný kód a vytvořte pokročilá přizpůsobení. [Zjistit více](https://shopify.dev/docs/api/liquid)",
     "applies_on_image_only": "Platí pouze pro obrázky",
     "hover_effects": "Platí pro karty produktů a kolekcí",
-    "pills_usage": "Používá se pro použité filtry, slevové kódy a návrhy vyhledávání"
+    "pills_usage": "Používá se pro použité filtry, slevové kódy a návrhy vyhledávání",
+    "hide_logo_on_home_page_help": "Pokud je aktivní plovoucí záhlaví, logo zůstane viditelné."
   },
   "categories": {
     "product_list": "Propagovaná kolekce",

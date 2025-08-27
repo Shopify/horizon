@@ -36,7 +36,7 @@
     "inputs": "输入",
     "primary_button": "主要按钮",
     "secondary_button": "辅助按钮",
-    "popovers_and_modals": "弹出窗口和模态框",
+    "popovers_and_modals": "弹出窗口和模态窗口",
     "marquee": "选取框",
     "pull_quote": "引用摘要",
     "contact_form": "联系表",
@@ -126,7 +126,7 @@
     "video_section": "视频",
     "page_layout": "页面布局",
     "product_title": "产品标题",
-    "custom_liquid": "自定义 liquid",
+    "custom_liquid": "自定义 Liquid",
     "blog": "博客",
     "blog_post": "博客文章",
     "blog_posts": "博客文章",
@@ -165,7 +165,8 @@
     "large_logo": "大 logo",
     "description": "描述",
     "featured_image": "配图",
-    "multicolumn": "多列"
+    "multicolumn": "多列",
+    "product_custom_property": "特殊说明"
   },
   "settings": {
     "alignment": "对齐方式",
@@ -493,12 +494,35 @@
     "show_second_image_on_hover": "在悬停时显示第二张图片",
     "media": "媒体文件",
     "product_card_carousel": "显示轮播",
-    "media_fit": "媒体适配",
-    "scroll_speed": "到下一个公告的时间",
-    "show_powered_by_shopify": "显示\"Powered by Shopify\"",
+    "media_fit": "媒体文件适应",
+    "scroll_speed": "下次公告时间",
+    "show_powered_by_shopify": "显示“Powered by Shopify”",
     "seller_note_open_by_default": "默认向卖家打开备注",
-    "gift_card_form": "礼品卡表单",
-    "add_to_cart_animation": "添加到购物车"
+    "gift_card_form": "礼品卡",
+    "add_to_cart_animation": "添加到购物车",
+    "product_custom_property": {
+      "heading": "标题",
+      "description": "描述",
+      "key": "属性名称",
+      "key_info": "必须对每个区块唯一。显示在购物车、结账和订单详情中。",
+      "placeholder_text": "占位符文本",
+      "default_heading": "自定义您的产品",
+      "default_placeholder": "请输入您的特殊说明",
+      "default_property_key": "特殊说明",
+      "max_length": "最大字符数",
+      "required": "需要输入信息才能将商品添加至购物车",
+      "input_type": "输入类型",
+      "input_type_text": "文本",
+      "input_type_checkbox": "复选框",
+      "content_settings": "内容设置",
+      "buyers_input": "客户输入的信息",
+      "checkbox_label": "复选框标签",
+      "default_checkbox_label": "包含礼品包装",
+      "heading_preset": "标题",
+      "description_preset": "描述",
+      "input_preset": "输入",
+      "checkbox_preset": "复选框标签"
+    }
   },
   "options": {
     "adapt_to_image": "适应图片",
@@ -874,7 +898,8 @@
     "product_media": "产品媒体文件",
     "section_link": "分区链接",
     "gift_card_form_description": "客户可通过私人消息将礼品卡发送至收件人电子邮件。[详细了解](https://help.shopify.com/manual/products/gift-card-products)",
-    "heading": "标题"
+    "heading": "标题",
+    "resource_reference_product_custom_property": "添加可自定义输入字段，用于收集海关信息，这些信息会被添加到该订单项目中，稍后可在订单详情中查看。"
   },
   "html_defaults": {
     "share_information_about_your": "<p>与客户分享有关您品牌的信息。描述产品、发布公告或欢迎客户访问您的商店。</p>"
@@ -913,7 +938,8 @@
     "custom_liquid": "添加应用代码片段或其他代码以创建高级自定义。[详细了解](https://shopify.dev/docs/api/liquid)",
     "hover_effects": "应用于产品和产品系列卡",
     "pills_usage": "用于应用的筛选条件、折扣码和搜索建议",
-    "applies_on_image_only": "仅适用于图像"
+    "applies_on_image_only": "仅适用于图像",
+    "hide_logo_on_home_page_help": "Logo 将在粘性标头处于激活状态时保持可见"
   },
   "categories": {
     "basic": "Basic",

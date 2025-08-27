@@ -35,7 +35,7 @@
     "inputs": "Syötteet",
     "primary_button": "Ensisijainen painike",
     "secondary_button": "Toissijainen painike",
-    "popovers_and_modals": "Ponnahdusilmoitukset ja modaalit",
+    "popovers_and_modals": "Ponnahdusilmoitukset ja modaali-ikkunat",
     "marquee": "Markiisi",
     "alternating_content_rows": "Vaihtelevat rivit",
     "pull_quote": "Nosto",
@@ -125,7 +125,7 @@
     "video_section": "Video",
     "blog": "Blogi",
     "blog_posts": "Blogipostaukset",
-    "custom_liquid": "Mukautettu liquid",
+    "custom_liquid": "Mukautettu Liquid",
     "blog_post": "Blogipostaus",
     "caption": "Kuvateksti",
     "collection_card_image": "Kuva",
@@ -164,8 +164,9 @@
     "large_logo": "Suuri logo",
     "description": "Kuvaus",
     "featured_image": "Esittelykuva",
-    "multicolumn": "Monisarake",
-    "rich_text_section": "Rich text"
+    "multicolumn": "Monisarakkeinen",
+    "rich_text_section": "Rich text",
+    "product_custom_property": "Erityisohjeet"
   },
   "settings": {
     "alignment": "Tasaus",
@@ -498,7 +499,30 @@
     "show_powered_by_shopify": "Näytä Powered by Shopify",
     "seller_note_open_by_default": "Avaa huomautus myyjälle oletusarvoisesti",
     "gift_card_form": "Lahjakorttilomake",
-    "add_to_cart_animation": "Lisää ostoskoriin"
+    "add_to_cart_animation": "Lisää ostoskoriin",
+    "product_custom_property": {
+      "heading": "Otsikko",
+      "description": "Kuvaus",
+      "key": "Ominaisuuden nimi",
+      "key_info": "Tulee olla ainutlaatuinen kullekin lohkolle. Näkyy ostoskorissa, kassalla ja tilauksen tiedoissa.",
+      "placeholder_text": "Paikkamerkin teksti",
+      "default_heading": "Mukauta tuotettasi",
+      "default_placeholder": "Kirjoita erityisohjeet",
+      "default_property_key": "Erityisohjeet",
+      "max_length": "Merkkien enimmäismäärä",
+      "required": "Tuotteen lisääminen ostoskoriin edellyttää syötettä",
+      "input_type": "Syötetyyppi",
+      "input_type_text": "Teksti",
+      "input_type_checkbox": "Valintaruutu",
+      "content_settings": "Sisältöasetus",
+      "buyers_input": "Ostajan syöte",
+      "checkbox_label": "Valintaruudun merkintä",
+      "default_checkbox_label": "Lisää lahjan paketointi",
+      "heading_preset": "Otsikko",
+      "description_preset": "Kuvaus",
+      "input_preset": "Syöte",
+      "checkbox_preset": "Valintaruudun merkintä"
+    }
   },
   "options": {
     "adapt_to_image": "Sovita kuvaan",
@@ -874,7 +898,8 @@
     "product_media": "Tuotemediat",
     "section_link": "Osiolinkki",
     "gift_card_form_description": "Asiakkaat voivat lähettää lahjakortteja vastaanottajille sähköpostitse henkilökohtaisen viestin kera. [Lue lisää](https://help.shopify.com/manual/products/gift-card-products)",
-    "heading": "Otsikko"
+    "heading": "Otsikko",
+    "resource_reference_product_custom_property": "Lisää mukautettavat syötekentät, joilla kerätään mukautettuja tietoja. Tiedot lisätään tämän tilauksen rivikohtaan ja ne näkyvät myöhemmin tilaustiedoissa."
   },
   "html_defaults": {
     "share_information_about_your": "<p>Kerro brändiäsi koskevia tietoja asiakkaillesi. Kuvaile tuotetta, jaa ilmoituksia tai toivota asiakkaat tervetulleiksi kauppaasi.</p>"
@@ -913,7 +938,8 @@
     "custom_liquid": "Luo vaativampia mukautuksia lisäämällä sovelluksen koodinpätkiä tai muuta koodia. [Lue lisää](https://shopify.dev/docs/api/liquid)",
     "pills_usage": "Käyttökohteita käytetyt suodattimet, alennuskoodit ja hakuehdotukset",
     "applies_on_image_only": "Koskee vain kuvia",
-    "hover_effects": "Käytetään tuote- ja kokoelmakorteissa"
+    "hover_effects": "Käytetään tuote- ja kokoelmakorteissa",
+    "hide_logo_on_home_page_help": "Logo pysyy näkyvissä, kun paikallaan pysyvä ylätunniste on aktiivinen"
   },
   "categories": {
     "basic": "Basic",
