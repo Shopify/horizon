@@ -144,6 +144,7 @@
   product-custom-property-component input,
   product-custom-property-component textarea {
     width: 100%;
+    /* stylelint-disable-next-line declaration-no-important */
     color: var(--color-input-text) !important;
   }
 
@@ -178,6 +179,7 @@
 
   product-custom-property-component .__character-count {
     font-style: italic;
+    /* stylelint-disable-next-line declaration-no-important */
     color: var(--color-input-text) !important;
   }
 
@@ -185,6 +187,7 @@
   .custom-property__input {
     border: var(--style-border-width-inputs) solid var(--color-input-border);
     border-radius: var(--style-border-radius-inputs);
+
     /* this is needed to override the styles from field__input */
     box-shadow: none;
 

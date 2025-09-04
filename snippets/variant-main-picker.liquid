@@ -312,6 +312,7 @@
 
   .variant-option__button-label--has-swatch {
     --focus-outline-radius: var(--variant-picker-swatch-radius);
+
     padding: 0;
     border: none;
     display: block;
@@ -339,12 +340,14 @@
 
   .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover .swatch {
     --focus-outline: var(--focus-outline-width) solid rgb(var(--color-foreground-rgb) / var(--opacity-35-55));
+
     outline: var(--focus-outline);
     outline-offset: var(--focus-outline-offset);
   }
 
   .facets__inputs-list--swatches-grid .variant-option__button-label:has(:focus-visible) .swatch {
     --focus-outline: var(--focus-outline-width) solid currentcolor;
+
     outline: var(--focus-outline);
     outline-offset: var(--focus-outline-offset);
   }
@@ -373,6 +376,7 @@
 
   .variant-option__button-label--has-swatch:has(:checked) {
     --focus-outline: var(--focus-outline-width) solid var(--color-foreground);
+
     outline: var(--focus-outline);
     outline-offset: var(--focus-outline-offset);
   }

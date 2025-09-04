@@ -1,11 +1,10 @@
 .gift-card {
-  padding-block: var(--padding-4xl);
-  padding-inline: var(--padding-lg);
-
   --buttons-max-width: min(16rem, 100%);
-  --gift-card-image-max-width: var(--max-width--heading-normal);
   --gift-card-image-max-height: 35rem;
   --gift-card-image-max-width: 21rem;
+
+  padding-block: var(--padding-4xl);
+  padding-inline: var(--padding-lg);
 
   @media only screen and (min-width: 750px) {
     padding-block: var(--padding-6xl) var(--padding-5xl);

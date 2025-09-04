@@ -55,7 +55,7 @@ class LocalizationFormComponent extends Component {
         event.stopPropagation();
         this.#changeCountryFocus('DOWN');
         break;
-      case 'Enter':
+      case 'Enter': {
         event.preventDefault();
         event.stopPropagation();
         const focusedItem = countryListItems.find((item) => item.getAttribute('aria-selected') === 'true');
@@ -65,6 +65,7 @@ class LocalizationFormComponent extends Component {
           form.submit();
         }
         break;
+      }
     }
 
     if (!this.refs.search) return;
@@ -275,6 +276,7 @@ class LocalizationFormComponent extends Component {
         countryEl.removeAttribute('hidden');
         const countrySpan = countryEl.querySelector('.country');
         if (countrySpan) {
+          // eslint-disable-next-line no-self-assign
           countrySpan.textContent = countrySpan.textContent;
         }
         countVisibleCountries++;

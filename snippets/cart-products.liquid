@@ -372,6 +372,7 @@
   }
 
   html:active-view-transition-type(page-navigation) .cart-items__table-row {
+    /* stylelint-disable-next-line declaration-no-important */
     view-transition-name: none !important;
   }
 
@@ -663,6 +664,14 @@
 
   .cart-note {
     width: 100%;
+  }
+
+  @starting-style {
+    .cart-note[open-by-default-on-desktop][open-by-default-on-mobile] .details-content {
+      block-size: auto;
+      opacity: 1;
+      overflow-y: visible;
+    }
   }
 
   .cart-note__inner {

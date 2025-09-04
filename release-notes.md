@@ -1,12 +1,20 @@
+# Release Notes - Version 2.1.5
+
+This release includes improvements to the Hero section with a new bottom-aligned preset and fixes for full height display and video positioning. There are also improvements for performance and animations.
+
 ## What's Changed
 
 ### Added
 
-- Added custom property block (Special Instructions)
+- [Hero] Added bottom aligned to presets
+
+### Changed
+
+- [Cart] Prevented animation from running when cart note is default to open
 
 ### Fixes and improvements
 
-- [Performance] Paginated collection.product access
-- [Performance] Improved initial search state loading
-- [Browser support] Fixed rounded corners in user pop-up buttons in iOS 16
-- [Browser support] Fixed account popover not opening on <iOS 17
+- [Hero] Made sure the full height works as expected
+- [Hero] Fixed video's image positioning
+- [Performance] Improved lookup and parameter performance
+- [Product] Fixed an issue where we were not selecting the right image when variants are selected

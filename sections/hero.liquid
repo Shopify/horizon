@@ -77,36 +77,38 @@
 
   {%- if has_video_1 -%}
     {% assign media_count = media_count | plus: 1 %}
-    {%- if section.settings.video_1.preview_image -%}
-      {% liquid
-        assign fetch_priority_poster = false
-        if section.index == 1
-          assign fetch_priority_poster = 'high'
-        endif
-      %}
+    <div class="hero__video-wrapper">
+      {%- if section.settings.video_1.preview_image -%}
+        {% liquid
+          assign fetch_priority_poster = false
+          if section.index == 1
+            assign fetch_priority_poster = 'high'
+          endif
+        %}
+        {{
+          section.settings.video_1.preview_image
+          | image_url: width: 3840
+          | image_tag:
+            width: section.settings.video_1.preview_image.width,
+            widths: widths,
+            height: section.settings.video_1.preview_image.height,
+            alt: section.settings.video_1.alt,
+            class: 'hero__video-poster',
+            sizes: sizes,
+            fetchpriority: fetch_priority_poster
+        }}
+      {%- endif -%}
       {{
-        section.settings.video_1.preview_image
-        | image_url: width: 3840
-        | image_tag:
-          width: section.settings.video_1.preview_image.width,
-          widths: widths,
-          height: section.settings.video_1.preview_image.height,
-          alt: section.settings.video_1.alt,
-          class: 'hero__video-poster',
-          sizes: sizes,
-          fetchpriority: fetch_priority_poster
+        section.settings.video_1
+        | video_tag:
+          poster: nil,
+          autoplay: true,
+          loop: true,
+          controls: false,
+          muted: true,
+          class: 'hero__video'
       }}
-    {%- endif -%}
-    {{
-      section.settings.video_1
-      | video_tag:
-        poster: nil,
-        autoplay: true,
-        loop: true,
-        controls: false,
-        muted: true,
-        class: 'hero__video'
-    }}
+    </div>
   {%- endif -%}
 
   {%- if has_image_2 -%}
@@ -127,29 +129,31 @@
 
   {%- if has_video_2 -%}
     {% assign media_count = media_count | plus: 1 %}
-    {%- if section.settings.video_2.preview_image -%}
+    <div class="hero__video-wrapper">
+      {%- if section.settings.video_2.preview_image -%}
+        {{
+          section.settings.video_2.preview_image
+          | image_url: width: 3840
+          | image_tag:
+            width: section.settings.video_2.preview_image.width,
+            widths: widths,
+            height: section.settings.video_2.preview_image.height,
+            alt: section.settings.video_2.alt,
+            class: 'hero__video-poster',
+            sizes: sizes
+        }}
+      {%- endif -%}
       {{
-        section.settings.video_2.preview_image
-        | image_url: width: 3840
-        | image_tag:
-          width: section.settings.video_2.preview_image.width,
-          widths: widths,
-          height: section.settings.video_2.preview_image.height,
-          alt: section.settings.video_2.alt,
-          class: 'hero__video-poster',
-          sizes: sizes
+        section.settings.video_2
+        | video_tag:
+          poster: nil,
+          autoplay: true,
+          loop: true,
+          controls: false,
+          muted: true,
+          class: 'hero__video'
       }}
-    {%- endif -%}
-    {{
-      section.settings.video_2
-      | video_tag:
-        poster: nil,
-        autoplay: true,
-        loop: true,
-        controls: false,
-        muted: true,
-        class: 'hero__video'
-    }}
+    </div>
   {%- endif -%}
 
   {% if has_media == false and is_transparent %}
@@ -240,9 +244,7 @@
     {%- endif -%}
     <div
       class="hero__media-wrapper"
-      {%- if section.settings.image_1 != blank -%}
-        style="--hero-media-aspect-ratio: {{ section.settings.image_1.aspect_ratio }}; --hero-media-count: {{ media_count }};"
-      {%- endif -%}
+      style="--hero-media-count: {{ media_count }};{%- if section.settings.image_1 != blank -%} --hero-media-aspect-ratio: {{ section.settings.image_1.aspect_ratio }};{% endif %}"
     >
       {% liquid
         if section.settings.toggle_overlay
@@ -273,10 +275,8 @@
     --hero-height-offset: 0px;
   }
 
-  body:has(> #header-group > .header-section > #header-component[transparent]):not(
-      :has(> #header-group > .header-section + .shopify-section)
-    )
-    .hero-wrapper:first-child {
+  /* Being extra specific in the selector for performance reasons */
+  body:has(> #header-group > .header-section > #header-component) .hero-wrapper:first-child {
     --hero-height-offset: var(--header-group-height, 0);
   }
 
@@ -356,6 +356,10 @@
     z-index: var(--layer-base);
   }
 
+  .hero__video-wrapper {
+    position: relative;
+  }
+
   .hero__video-poster {
     position: absolute;
   }
@@ -381,7 +385,7 @@
 
   .hero[data-blur-shadow='true'] {
     --blurred-reflection-filter-saturate: saturate(1.5);
-    --blurred-reflection-mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 100%);
+    --blurred-reflection-mask-image: linear-gradient(to bottom, #000 0%, #000 60%, transparent 100%);
     --blurred-reflection-box-shadow: rgb(0 0 0 / 5%) 0 0 1rem;
     --blurred-reflection-filter-blur: blur(20px);
     --blurred-reflection-scale: scale(2, 1.25);
@@ -931,6 +935,173 @@
         "padding-block-end": 40,
         "toggle_overlay": true,
         "overlay_style": "gradient"
+      }
+    },
+    {
+      "name": "t:names.hero_bottom_aligned",
+      "category": "t:categories.banners",
+      "blocks": {
+        "group_main": {
+          "type": "group",
+          "name": "t:names.group",
+          "settings": {
+            "content_direction": "row",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "flex-end",
+            "align_baseline": true,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 18,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "content_group": {
+              "type": "group",
+              "name": "t:names.group",
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 6,
+                "width": "custom",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "custom_height": 100,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "background_media": "none",
+                "video_position": "cover",
+                "background_image_position": "cover",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "text_intro": {
+                  "type": "text",
+                  "name": "t:names.heading",
+                  "settings": {
+                    "text": "<h2><em>Introducing</em></h2>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "h6",
+                    "font": "var(--font-accent--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  }
+                },
+                "text_main": {
+                  "type": "text",
+                  "name": "t:names.heading",
+                  "settings": {
+                    "text": "<h1>Our Newest Arrivals</h1>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "h2",
+                    "font": "var(--font-primary--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  }
+                }
+              },
+              "block_order": ["text_intro", "text_main"]
+            },
+            "text_description": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<p>We make things that work better and last longer. Our products solve real problems with clean design and honest materials.</p>",
+                "width": "fit-content",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-primary--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              }
+            }
+          },
+          "block_order": ["content_group", "text_description"]
+        }
+      },
+      "block_order": ["group_main"],
+      "settings": {
+        "media_type_1": "image",
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "flex-end",
+        "gap": 16,
+        "section_height": "large",
+        "color_scheme": "scheme-5",
+        "padding-block-start": 40,
+        "padding-block-end": 40,
+        "toggle_overlay": true,
+        "overlay_style": "gradient",
+        "gradient_direction": "to top"
       }
     }
   ]

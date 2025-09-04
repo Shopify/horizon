@@ -64,12 +64,34 @@
         {% capture children %}
           {%- for product_option_value in product_option.values -%}
             {% liquid
+              # We look for the right featured media to show when hovering/clicking on the swatch.
+              # Most of the time there should be an image associated to the option-value.
               assign featured_media = product_option_value.variant.featured_media
 
-              # If the variant has no featured media, and we have a combined listing product, then fall back to using the
-              # featured media of the child product that is linked to this option value.
-              if featured_media == blank and product_option_value.product_url
-                assign featured_media = product_option_value.variant.product.featured_media
+              # If the option is available, the swatch should be shown as available.
+              assign available_count = 0
+              if product_option.available
+                assign available_count = 1
+              endif
+
+              if featured_media == blank
+                if product_option_value.variant == blank
+                  # It could happen that the particular product_option_value.variant is nil
+                  # (see https://shopify.dev/docs/api/liquid/objects/product_option_value#product_option_value-variant).
+                  # We look for the first available variant in that option (e.g. Color) that has a featured media.
+                  for variant in product_resource.variants
+                    if variant.available and variant[swatch_option_key] == product_option_value.name and variant.featured_media
+                      assign featured_media = variant.featured_media
+                      assign first_available_variant = variant
+                      break
+                    endif
+                  endfor
+                elsif product_option_value.product_url
+                  # If the variant has no featured media, and we have a combined listing product,
+                  # then fall back to using the featured media of the child product that is linked
+                  # to this option value.
+                  assign featured_media = product_option_value.variant.product.featured_media
+                endif
               endif
 
               if has_option_selected != true and product_has_combined_listing == 0
@@ -80,12 +102,6 @@
                   assign none_checked = false
                 endif
               endif
-
-              # Use Liquid filters to check if any variant with this swatch option value is available
-              # swatch_option_key was set in the parent loop (e.g., 'option1', 'option2', etc.)
-              assign available_variants = product_resource.variants | where: swatch_option_key, product_option_value | where: 'available', true
-              assign first_available_variant = available_variants | first
-              assign available_count = available_variants | size
             %}
 
             <li class="variant-option__swatch">
@@ -105,15 +121,13 @@
                   data-option-value-id="{{ product_option_value.id }}"
                   data-option-available="{{ product_option_value.available }}"
                   data-connected-product-url="{{ product_option_value.product_url }}"
-                  {% if product_option_value.variant.id %}
-                    data-variant-id="{{ product_option_value.variant.id }}"
-                  {% endif %}
                   {% if none_checked != true %}
                     {% if product_option_value.selected or is_checked == true %}
                       checked
                     {% endif %}
                   {% endif %}
                   data-available-count="{{ available_count }}"
+                  data-variant-id="{{ first_available_variant.id | default: product_option_value.variant.id }}"
                   data-first-available-or-first-variant-id="{{ first_available_variant.id | default: product_option_value.variant.id }}"
                 >
                 {% render 'swatch',

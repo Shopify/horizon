@@ -22,6 +22,15 @@
     assign ratio = block_settings.featured_products_aspect_ratio
   endif
 
+  ##
+  # We only eager load heavy elements of the page when rendering this template
+  # through the Section Rendering API.
+  #
+  # This keeps the initial render lightweight, minimizing the impact on TTFB.
+  # The second render then refreshes the page with additional content.
+  #
+  # At the moment, we check if the Section Rendering API is being used by
+  # checking if section.index is blank.
   assign eager_loading = false
   if section.index == blank
     assign eager_loading = true
@@ -980,6 +989,7 @@
   }
 
   /* Fix alignment for collection image mode links without images in drawer */
+
   /* Target menu items in grids that have images */
   .menu-drawer__menu--grid:has(.menu-drawer__link-image) .menu-drawer__menu-item:not(:has(> .menu-drawer__link-image)) {
     display: flex;

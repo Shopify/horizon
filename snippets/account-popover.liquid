@@ -37,12 +37,12 @@
   .account-popover__panel {
     --account-popover-opacity: 0;
     --account-popover-y: 20px;
+
     border-radius: var(--style-border-radius-popover);
     margin: 0;
     top: calc(var(--anchor-top) * 1px + var(--minimum-touch-target) + var(--header-padding));
     left: unset;
     right: calc(var(--anchor-right) * 1px);
-
     width: max-content;
     min-width: var(--account-popover-min-width);
     box-shadow: var(--shadow-popover);
@@ -74,6 +74,7 @@
       --account-popover-opacity: 0;
       --account-popover-y: 20px;
     }
+
     .account-popover__panel:popover-open {
       --account-popover-opacity: 0;
       --account-popover-y: 20px;

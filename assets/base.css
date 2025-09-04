@@ -575,6 +575,7 @@ p:empty {
   overflow: hidden;
   height: 1px;
   left: -99999px;
+  /* stylelint-disable-next-line declaration-no-important */
   word-wrap: normal !important;
 }
 
@@ -1635,7 +1636,7 @@ zoom-dialog dialog {
   padding: 0;
   max-width: 100%;
   max-height: 100%;
-  background: white;
+  background: #fff;
   opacity: 0;
   transition: opacity var(--animation-speed) var(--animation-easing);
   scrollbar-width: none;
@@ -3009,7 +3010,7 @@ fly-to-cart {
   }
 
   50% {
-    box-shadow: 0 0 0 2px black;
+    box-shadow: 0 0 0 2px #000;
     scale: 1;
   }
 }

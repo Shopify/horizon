@@ -437,6 +437,12 @@ export function calculateHeaderGroupHeight(
     if (element === header || !(element instanceof HTMLElement)) continue;
     totalHeight += element.offsetHeight;
   }
+
+  // If the header is transparent and has a sibling section, add the height of the header to the total height
+  if (header instanceof HTMLElement && header.hasAttribute('transparent') && header.parentElement?.nextElementSibling) {
+    return totalHeight + header.offsetHeight;
+  }
+
   return totalHeight;
 }
 
@@ -446,7 +452,7 @@ export function calculateHeaderGroupHeight(
  * There is a `ResizeObserver` and `MutationObserver` that kicks in post hydration in header.js
  * Note: header-group uses display: contents, so we must observe all children.
  */
-(() => {
+function updateHeaderHeights() {
   const header = document.querySelector('header-component');
 
   // Early exit if no header - nothing to do
@@ -458,13 +464,13 @@ export function calculateHeaderGroupHeight(
 
   document.body.style.setProperty('--header-height', `${headerHeight}px`);
   document.body.style.setProperty('--header-group-height', `${headerGroupHeight}px`);
-})();
+}
 
 /**
  * Updates CSS custom properties for transparent header offset calculation
  * Avoids expensive :has() selectors
  */
-(() => {
+function updateTransparentHeaderOffset() {
   const header = document.querySelector('#header-component');
   const headerGroup = document.querySelector('#header-group');
   const hasHeaderSection = headerGroup?.querySelector('.header-section');
@@ -477,4 +483,12 @@ export function calculateHeaderGroupHeight(
 
   const shouldApplyOffset = !hasImmediateSection ? '1' : '0';
   document.body.style.setProperty('--transparent-header-offset-boolean', shouldApplyOffset);
-})();
+}
+
+export function updateAllHeaderCustomProperties() {
+  updateHeaderHeights();
+  updateTransparentHeaderOffset();
+}
+
+// Run both functions on page load
+updateAllHeaderCustomProperties();

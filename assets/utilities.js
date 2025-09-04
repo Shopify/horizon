@@ -77,6 +77,7 @@ const viewTransitionTypes = {
  * @returns {Promise<void>} A promise that resolves when the view transition finishes
  */
 export function startViewTransition(callback, types) {
+  // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve) => {
     // Check if View Transitions API is supported
     if (supportsViewTransitions() && !prefersReducedMotion()) {

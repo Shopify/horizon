@@ -115,7 +115,7 @@
   .menu-list__scroll-container {
     position: relative;
     overflow-x: auto;
-    mask-image: linear-gradient(to right, transparent, black 20px, black calc(100% - 20px), transparent);
+    mask-image: linear-gradient(to right, transparent, #000 20px, #000 calc(100% - 20px), transparent);
     padding-block: var(--padding-2xs);
   }
 
@@ -451,6 +451,7 @@
   }
 
   /* Fix alignment for collection image mode links without images */
+
   /* Target only top-level links (direct children of column > div) in collection image mode */
   .mega-menu__grid:has(.mega-menu__link-image)
     .mega-menu__column

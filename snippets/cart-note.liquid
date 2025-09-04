@@ -13,6 +13,9 @@
   >
     <details
       class="details"
+      {% if settings.cart_note_open_by_default %}
+        open
+      {% endif %}
     >
       <summary class="cart-note__summary">
         <span class="cart-note__label h6">

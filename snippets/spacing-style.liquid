@@ -3,43 +3,25 @@
   Intended for blocks and sections that provide values for all the referenced settings.
 
   @param {object} settings - The block or section settings object containing spacing values
-  @param {string} [suffix] - Optional suffix to append to setting keys (e.g., '-mobile')
-  @param {number} [scale_min] - Value above which spacing scaling will be applied. Default: 20
-  @param {boolean} [disable_scaling] - If true, disables scaling and outputs original values. Default: false
 
   @example
   <div class="spacing-style" style="{% render 'spacing-style', settings: section.settings %}">
 {%- enddoc -%}
 {%- liquid
-  assign min = scale_min | default: 20
-  assign scaling_enabled = true
-  if disable_scaling == true
-    assign scaling_enabled = false
-  endif
-
-  if suffix != blank
-    assign suffix_with_dash = suffix | prepend: '-'
-  endif
-
-  assign keys = 'padding-block,padding-block-start,padding-block-end,padding-inline,padding-inline-start,padding-inline-end,margin-block,margin-block-start,margin-block-end,margin-inline,margin-inline-start,margin-inline-end' | split: ','
+  assign scale_min = 20
+  assign keys = 'padding-block-start,padding-block-end,padding-inline-start,padding-inline-end' | split: ','
 
   for key in keys
-    if suffix != blank
-      assign lookup_key = key | append: suffix_with_dash
-    else
-      assign lookup_key = key
-    endif
-
-    assign value = settings[lookup_key]
+    assign value = settings[key]
 
     if value != blank
       echo '--'
       echo key
       echo ': '
 
-      if scaling_enabled and value > min
+      if value > scale_min
         echo 'max('
-        echo min
+        echo scale_min
         echo 'px, calc(var(--spacing-scale) * '
         echo value
         echo 'px))'

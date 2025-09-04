@@ -1,4 +1,5 @@
 // Theme editor specific logic
+import { updateAllHeaderCustomProperties } from '@theme/critical';
 
 /**
  * @param {Event} event
@@ -62,6 +63,20 @@ document.addEventListener('shopify:block:deselect', function (event) {
       // Resume playback
       slideshow.resume();
     }
+  }
+});
+
+document.addEventListener('shopify:section:load', function (event) {
+  if (event.target instanceof HTMLElement && event.target.classList.contains('shopify-section-group-header-group')) {
+    updateAllHeaderCustomProperties();
+  }
+});
+
+document.addEventListener('shopify:section:unload', function (event) {
+  if (event.target instanceof HTMLElement && event.target.classList.contains('shopify-section-group-header-group')) {
+    setTimeout(() => {
+      updateAllHeaderCustomProperties();
+    }, 500);
   }
 });
 
