@@ -16,16 +16,16 @@
           "type": "_product-media-gallery",
           "static": true,
           "settings": {
-            "media_presentation": "grid",
-            "media_columns": "two",
+            "media_presentation": "carousel",
+            "media_columns": "one",
             "image_gap": 4,
             "large_first_image": false,
-            "icons_style": "none",
-            "slideshow_controls_style": "counter",
+            "icons_style": "arrows_large",
+            "slideshow_controls_style": "thumbnails",
             "slideshow_mobile_controls_style": "dots",
-            "thumbnail_position": "right",
-            "thumbnail_width": 44,
-            "aspect_ratio": "adapt",
+            "thumbnail_position": "bottom",
+            "thumbnail_width": 60,
+            "aspect_ratio": "1",
             "constrain_to_viewport": true,
             "media_fit": "contain",
             "media_radius": 0,
@@ -168,7 +168,6 @@
                 },
                 "price_tVjtKg": {
                   "type": "price",
-                  "disabled": true,
                   "settings": {
                     "show_sale_price_first": true,
                     "show_installments": false,
@@ -224,11 +223,17 @@
               },
               "blocks": {}
             },
-            "custom_liquid_Tzc7y6": {
-              "type": "custom-liquid",
-              "name": "Variant Picker",
+            "variant_picker_xK9aXY": {
+              "type": "variant-picker",
+              "name": "t:names.product_variant_picker",
               "settings": {
-                "custom_liquid": "{% render 'sku-picker' %}"
+                "variant_style": "buttons",
+                "show_swatches": true,
+                "alignment": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 8,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
               },
               "blocks": {}
             },
@@ -337,32 +342,6 @@
                 "padding-inline-end": 10
               },
               "blocks": {
-                "text_xNTqbx": {
-                  "type": "text",
-                  "name": "t:names.text",
-                  "settings": {
-                    "text": "<p>Made-to-order in UK – no extra customs fees</p>",
-                    "width": "fit-content",
-                    "max_width": "normal",
-                    "alignment": "left",
-                    "type_preset": "rte",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "color": "var(--color-foreground)",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                },
                 "text_7PrGFK": {
                   "type": "text",
                   "name": "t:names.text",
@@ -417,7 +396,6 @@
                 }
               },
               "block_order": [
-                "text_xNTqbx",
                 "text_7PrGFK",
                 "text_dCJJVg"
               ]
@@ -572,7 +550,7 @@
             "group_icgrde",
             "loox_reviews_loox_rating_wziEH7",
             "divider_VJhene",
-            "custom_liquid_Tzc7y6",
+            "variant_picker_xK9aXY",
             "wishlist_plus_wishlist_pdp_button_fenK78",
             "buy_buttons_eYQEYi",
             "ns_estimated_delivery_date_nestscale_edd_product_7i7TpE",
@@ -592,14 +570,14 @@
         "padding-block-end": 0
       }
     },
-    "custom_liquid_YgLcQJ": {
+    "custom_liquid_ArdKCc": {
       "type": "custom-liquid",
       "name": "t:names.custom_liquid",
       "settings": {
         "custom_liquid": "{% render 'product-info-modal',\n  product: product,\n  button_label: 'Size guide',\n  title: 'Artwork size guide',\n  content: '<img src=\"https://fydn.imgix.net/s%2Fimg%2Fpod-frames%2FWA-sizes-portrait-en-gb-v2.jpg?auto=format%2Ccompress&q=75\" alt=\"Artwork size guide\" style=\"max-width:100%; height:auto;\" />'\n%}",
         "color_scheme": "",
         "section_width": "page-width",
-        "padding-block-start": 0,
+        "padding-block-start": 7,
         "padding-block-end": 0
       }
     },
@@ -1142,7 +1120,7 @@
   },
   "order": [
     "main",
-    "custom_liquid_YgLcQJ",
+    "custom_liquid_ArdKCc",
     "product_recommendations_qggXJq",
     "17575090397bc3d681",
     "1757510294d4eb4b3c",

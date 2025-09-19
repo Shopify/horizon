@@ -9,8 +9,66 @@
  */
 {
   "type": "header",
-  "name": "t:names.header",
+  "name": "Header",
   "sections": {
+    "header_announcements_9jGBFp": {
+      "type": "header-announcements",
+      "blocks": {
+        "announcement_BxgCk9": {
+          "type": "_announcement",
+          "settings": {
+            "text": "Rated 5/5 on TrustPilot",
+            "link": "",
+            "font": "var(--font-subheading--family)",
+            "font_size": "0.75rem",
+            "weight": "",
+            "letter_spacing": "normal",
+            "case": "none"
+          },
+          "blocks": {}
+        },
+        "announcement_VTB4Ye": {
+          "type": "_announcement",
+          "settings": {
+            "text": "All Fy! Art is made to order",
+            "link": "",
+            "font": "var(--font-subheading--family)",
+            "font_size": "0.75rem",
+            "weight": "",
+            "letter_spacing": "normal",
+            "case": "none"
+          },
+          "blocks": {}
+        },
+        "announcement_MmdFjV": {
+          "type": "_announcement",
+          "settings": {
+            "text": "Shop new in",
+            "link": "shopify://collections/all-art",
+            "font": "var(--font-subheading--family)",
+            "font_size": "0.75rem",
+            "weight": "",
+            "letter_spacing": "normal",
+            "case": "none"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "announcement_BxgCk9",
+        "announcement_VTB4Ye",
+        "announcement_MmdFjV"
+      ],
+      "name": "t:names.announcement_bar",
+      "settings": {
+        "speed": 5,
+        "section_width": "page-width",
+        "color_scheme": "scheme-5",
+        "divider_width": 1,
+        "padding-block-start": 15,
+        "padding-block-end": 15
+      }
+    },
     "header_section": {
       "type": "header",
       "blocks": {
@@ -19,8 +77,8 @@
           "static": true,
           "settings": {
             "hide_logo_on_home_page": false,
-            "custom_height": 12,
-            "custom_height_mobile": 12,
+            "custom_height": 84,
+            "custom_height_mobile": 28,
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
@@ -33,23 +91,25 @@
           "static": true,
           "settings": {
             "menu": "main-menu",
-            "menu_style": "featured_products",
-            "featured_products_aspect_ratio": "4 / 5",
-            "featured_collections_aspect_ratio": "16 / 9",
+            "menu_style": "text",
+            "featured_products_aspect_ratio": "adapt",
+            "featured_collections_aspect_ratio": "1 / 1",
             "image_border_radius": 0,
+            "product_title_case": "default",
+            "collection_title_case": "default",
             "color_scheme": "",
             "menu_font_style": "inverse",
-            "type_font_primary_link": "primary",
+            "type_font_primary_link": "body",
             "type_font_primary_size": "0.875rem",
             "type_case_primary_link": "none",
-            "type_font_secondary_link": "secondary",
+            "type_font_secondary_link": "body",
             "type_case_secondary_link": "none",
-            "type_font_tertiary_link": "secondary",
+            "type_font_tertiary_link": "body",
             "type_case_tertiary_link": "none",
             "navigation_bar": false,
             "color_scheme_navigation_bar": "",
-            "drawer_accordion": false,
-            "drawer_accordion_expand_first": false,
+            "drawer_accordion": true,
+            "drawer_accordion_expand_first": true,
             "drawer_dividers": false
           },
           "blocks": {}
@@ -63,31 +123,125 @@
         "search_position": "right",
         "search_row": "top",
         "show_country": true,
-        "country_selector_style": false,
+        "country_selector_style": true,
         "show_language": true,
         "localization_font": "heading",
-        "localization_font_size": "0.875rem",
+        "localization_font_size": "1rem",
         "localization_position": "right",
         "localization_row": "top",
         "section_width": "page-width",
-        "section_height": "standard",
+        "section_height": "compact",
         "enable_sticky_header": "always",
         "divider_width": 0,
         "divider_size": "page-width",
         "border_width": 0,
-        "color_scheme_top": "",
+        "color_scheme_top": "scheme-1",
         "color_scheme_bottom": "",
         "color_scheme_transparent": "scheme-6",
-        "enable_transparent_header_home": true,
+        "enable_transparent_header_home": false,
         "home_color_scheme": "inverse",
         "enable_transparent_header_product": false,
         "product_color_scheme": "default",
         "enable_transparent_header_collection": false,
         "collection_color_scheme": "default"
       }
+    },
+    "1758212363c793fce1": {
+      "type": "_blocks",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "1758230885d6b907da": {
+      "type": "_blocks",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "1758231104549bd700": {
+      "type": "_blocks",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
     }
   },
   "order": [
-    "header_section"
+    "header_announcements_9jGBFp",
+    "header_section",
+    "1758212363c793fce1",
+    "1758230885d6b907da",
+    "1758231104549bd700"
   ]
 }

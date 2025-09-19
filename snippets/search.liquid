@@ -1,52 +1,76 @@
 {%- doc -%}
-  Renders the search action button.
+  Renders the search action bar (inline search form).
 
   @param {string} [style] - The style of the search action.
   @param {string} [class] - Additional classes for the search action.
 
   @example
-  {% render 'search', style: 'default', class: 'custom-class' %}
+  {% render 'search', style: 'inline', class: 'custom-class' %}
 {%- enddoc -%}
 
 {% unless style == 'none' %}
-  <search-button class="search-action{% if class != blank %} {{ class | strip }}{% endif %}">
-    <button
-      on:click="#search-modal/showDialog"
-      class="button button-unstyled search-modal__button header-actions__action"
-      aria-label="{{ 'accessibility.open_search_modal' | t }}"
-    >
-      <span
-        aria-hidden="true"
-        class="svg-wrapper"
+  <div class="search-action{% if class != blank %} {{ class | strip }}{% endif %}">
+    <form action="{{ routes.search_url }}" method="get" role="search" class="hz-header-search" style="margin:0">
+      <input
+        id="Search-In-Header"
+        type="search"
+        name="q"
+        value="{{ search.terms | escape }}"
+       placeholder="Search…"
+aria-label="Search"
+        class="hz-header-search__input"
       >
+      <input type="hidden" name="type" value="product,article,page">
+      <button type="submit" class="hz-header-search__button">
         {{ 'icon-search.svg' | inline_asset_content }}
-      </span>
-    </button>
-  </search-button>
+        <span class="visually-hidden">{{ 'general.search.search' | t }}</span>
+      </button>
+    </form>
+  </div>
 {% endunless %}
 
 {% stylesheet %}
   .search-action {
     --search-border-radius: var(--style-border-radius-inputs);
     --search-border-width: var(--style-border-width-inputs);
-
     display: flex;
-  }
-
-  .header__column--center .search-action {
-    width: auto;
     flex-grow: 1;
   }
 
-  :is(.header__column--left, .header__column--center) .search-action {
-    @media screen and (min-width: 750px) {
-      margin-inline: calc(var(--padding-lg) * -1);
-    }
+  .hz-header-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
   }
 
-  .header__column--right .search-action {
-    @media screen and (min-width: 750px) {
-      margin-inline: calc(var(--gap-md) * -1) calc(var(--gap-xs) * -1);
+  .hz-header-search__input {
+    flex: 1 1 auto;
+    min-width: 140px;
+    padding: 10px 12px;
+    border: 1px solid var(--color-border, #ddd);
+    border-radius: 999px;
+    font: inherit;
+  }
+
+  .hz-header-search__button {
+display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;        /* give it some width */
+  height: 40px;           /* match input height */
+  border: none;           /* remove the circle border */
+  background: none;       /* make it transparent */
+  cursor: pointer;
+}
+
+  @media (max-width: 640px) {
+    .hz-header-search__button {
+      display: none;
+    }
+    .hz-header-search__input {
+      border-radius: 10px;
     }
   }
 {% endstylesheet %}
+

@@ -6,17 +6,15 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */
-{
+ */{
   "sections": {
-    "collection_list_Y66Rtq": {
+    "collection_list_Wfgh3m": {
       "type": "main-collection-list",
       "blocks": {
-        "group_iWXpre": {
+        "group_4FtiAg": {
           "type": "group",
           "name": "t:names.header",
           "settings": {
-            "link": "",
             "open_in_new_tab": false,
             "content_direction": "column",
             "vertical_on_mobile": true,
@@ -25,7 +23,7 @@
             "align_baseline": false,
             "horizontal_alignment_flex_direction_column": "flex-start",
             "vertical_alignment_flex_direction_column": "center",
-            "gap": 16,
+            "gap": 12,
             "width": "fit-content",
             "custom_width": 100,
             "width_mobile": "fit-content",
@@ -46,27 +44,27 @@
             "overlay_style": "solid",
             "gradient_direction": "to top",
             "padding-block-start": 0,
-            "padding-block-end": 0,
+            "padding-block-end": 48,
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
           "blocks": {
-            "text_xpXCCq": {
+            "text_fRMQMR": {
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<h3>Shop by collection</h3>",
+                "text": "<h3>Collections</h3>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
+                "type_preset": "h2",
+                "font": "var(--font-primary--family)",
                 "font_size": "",
-                "color": "",
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
                 "wrap": "pretty",
+                "color": "",
                 "background": false,
                 "background_color": "#00000026",
                 "corner_radius": 0,
@@ -78,16 +76,19 @@
               "blocks": {}
             }
           },
-          "block_order": ["text_xpXCCq"]
+          "block_order": [
+            "text_fRMQMR"
+          ]
         },
         "static-collection-card": {
           "type": "_collection-card",
           "name": "t:names.collection_card",
           "static": true,
           "settings": {
-            "placement": "on_image",
+            "placement": "below_image",
             "horizontal_alignment": "flex-start",
-            "vertical_alignment": "flex-end",
+            "vertical_alignment": "flex-start",
+            "collection_card_gap": 8,
             "inherit_color_scheme": true,
             "color_scheme": "",
             "border": "none",
@@ -96,29 +97,28 @@
             "border_radius": 0
           },
           "blocks": {
-            "text_PLWiUf": {
-              "type": "text",
-              "name": "t:names.text",
+            "collection_title_7YgBPU": {
+              "type": "collection-title",
+              "name": "t:names.collection_title",
               "settings": {
-                "text": "<p>{{ closest.collection.title }}</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
                 "type_preset": "rte",
                 "font": "var(--font-body--family)",
-                "font_size": "",
-                "color": "",
+                "font_size": "1rem",
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
                 "wrap": "pretty",
-                "background": true,
-                "background_color": "#ffffff",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
                 "corner_radius": 0,
-                "padding-block-start": 4,
-                "padding-block-end": 4,
-                "padding-inline-start": 8,
-                "padding-inline-end": 8
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
               },
               "blocks": {}
             },
@@ -127,7 +127,7 @@
               "name": "t:names.collection_card_image",
               "static": true,
               "settings": {
-                "image_ratio": "portrait",
+                "image_ratio": "adapt",
                 "toggle_overlay": false,
                 "overlay_color": "#00000026",
                 "overlay_style": "solid",
@@ -140,30 +140,35 @@
               "blocks": {}
             }
           },
-          "block_order": ["text_PLWiUf"]
+          "block_order": [
+            "collection_title_7YgBPU"
+          ]
         }
       },
-      "block_order": ["group_iWXpre"],
-      "name": "t:names.collections_grid",
+      "block_order": [
+        "group_4FtiAg"
+      ],
+      "name": "Collection list",
       "settings": {
         "layout_type": "grid",
-        "carousel_on_mobile": true,
+        "carousel_on_mobile": false,
         "columns": 3,
         "mobile_columns": "2",
-        "columns_gap": 8,
+        "columns_gap": 12,
         "bento_gap": 8,
-        "rows_gap": 8,
+        "rows_gap": 24,
+        "max_collections": 4,
         "icons_style": "arrow",
         "icons_shape": "none",
         "section_width": "page-width",
         "gap": 12,
         "color_scheme": "",
-        "padding-block-start": 24,
-        "padding-block-end": 24
+        "padding-block-start": 48,
+        "padding-block-end": 48
       }
     }
   },
   "order": [
-    "collection_list_Y66Rtq"
+    "collection_list_Wfgh3m"
   ]
 }

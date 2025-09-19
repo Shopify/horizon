@@ -12,11 +12,46 @@
     "section": {
       "type": "section",
       "blocks": {
+        "image_tFgTXB": {
+          "type": "image",
+          "name": "t:names.image",
+          "settings": {
+            "image": "shopify://shop_images/m_ai_artists_posterami_93fd6cce-d4cb-47ff-a69f-b8dd255a3fdf.avif",
+            "link": "",
+            "image_ratio": "adapt",
+            "width": "custom",
+            "custom_width": 5,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 100,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "icon_kQ6eqq": {
+          "type": "icon",
+          "name": "t:names.icon",
+          "settings": {
+            "icon": "price_tag",
+            "image_upload": "shopify://shop_images/Screenshot_2025-09-19_at_09.02.04.png",
+            "width": 98,
+            "link": "",
+            "open_in_new_tab": false
+          },
+          "blocks": {}
+        },
         "text_tqQTNE": {
           "type": "text",
           "name": "Title",
           "settings": {
-            "text": "<p>{{ closest.collection.title }}</p>",
+            "text": "<p>&lcub;artist name&rcub;</p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -42,9 +77,35 @@
           "type": "text",
           "name": "Description",
           "settings": {
-            "text": "{{ closest.collection.description }}",
+            "text": "<p><strong>&lcub;tagline&rcub;</strong></p>",
             "width": "fit-content",
             "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-primary--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "text_qDyQzG": {
+          "type": "text",
+          "name": "Description",
+          "settings": {
+            "text": "<p>Posterami is a home to trendy, high quality and affordable wall art. Turn your cozy corner, stylish apartment, or modern office into a work of art with our curated collections. Our style is inspired b.</p><p></p>",
+            "width": "fit-content",
+            "max_width": "none",
             "alignment": "left",
             "type_preset": "rte",
             "font": "var(--font-primary--family)",
@@ -66,8 +127,11 @@
         }
       },
       "block_order": [
+        "image_tFgTXB",
+        "icon_kQ6eqq",
         "text_tqQTNE",
-        "text_twGGkJ"
+        "text_twGGkJ",
+        "text_qDyQzG"
       ],
       "name": "Collection heading",
       "settings": {
