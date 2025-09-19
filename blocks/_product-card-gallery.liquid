@@ -18,7 +18,7 @@
   {% endunless %}
 {% endcapture %}
 
-{% render 'card-gallery', children: children, has_applied_colour_filter: has_applied_colour_filter %}
+{% render 'collection-mock-card-image', product: closest.product, collection: collection %}
 
 {% # Title and price for the zoomed out grid view %}
 <div class="product-grid-view-zoom-out--details">

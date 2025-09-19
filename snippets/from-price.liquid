@@ -1,0 +1,5 @@
+{% assign abstract_product = product.metafields.custom.abstract_product.value %}
+
+<div class="product-details-summary">
+    <span><span id="sku-price">From {{ abstract_product.price_min | money }}</span></span>
+</div>

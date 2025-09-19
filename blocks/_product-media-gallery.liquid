@@ -232,12 +232,6 @@
     }
   {% endunless %}
 
-  /* Add background color so carousel arrows' mix-blend-mode works correctly even on transparent areas. */
-  {% if block_settings.media_fit == 'contain' %}
-    .media-fit-contain :is(img, .deferred-media__poster-image) {
-      background-color: var(--color-background);
-    }
-  {% endif %}
 {% endstyle %}
 
 {% liquid

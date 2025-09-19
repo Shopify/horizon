@@ -1,0 +1,158 @@
+{%- comment -%}
+  Shopify collection card with format-mock & filtered "From price" using array metafields.
+  - Abstract product: product.metafields.custom.abstract_product (Product reference)
+  - Collection metafields (arrays): filter_sizes, filter_frames, filter_borders
+  - Mock config: cheapest filtered variant.metafields.custom.mock_config (JSON)
+{%- endcomment -%}
+
+{%- assign abstract_product = product.metafields.custom.abstract_product.value -%}
+
+{% assign filter_sizes = product.metafields.namespace.key.value %}
+{% if filter_sizes == blank %}
+  {% assign filter_sizes = '18x24|24x18|20x20' | split: '|' %}
+{% endif %}
+
+{%- assign filter_frames = collection.metafields.custom.filter_frames.value -%}
+{% if filter_frames == blank %}
+  {% assign filter_frames = 'framed-black' | split: '|' %}
+{% endif %}
+
+{%- assign filter_borders = collection.metafields.custom.filter_borders.value -%}
+{% if filter_borders == blank %}
+  {% assign filter_borders = 'no-border' | split: '|' %}
+{% endif %}
+
+{%- assign filtered_variants = "" | split: "" -%}
+
+{%- assign cheapest_variant = null -%}
+{%- assign min_price = 99999999999 -%}
+
+{%- for variant in abstract_product.variants -%}
+  {% assign sku_parts = variant.sku | split: '--' %}
+  {% assign size = sku_parts[1] | downcase %}
+  {% assign frame = sku_parts[2] | downcase %}
+  {% assign border = sku_parts[3] | downcase %}
+  {%- assign size_ok = false -%}
+  {%- if filter_sizes == blank -%}
+    {%- assign size_ok = true -%}
+  {%- elsif size and filter_sizes contains size -%}
+    {%- assign size_ok = true -%}
+  {%- endif -%}
+
+  {%- assign frame_ok = false -%}
+  {%- if filter_frames == blank -%}
+    {%- assign frame_ok = true -%}
+  {%- elsif frame and filter_frames contains frame -%}
+    {%- assign frame_ok = true -%}
+  {%- endif -%}
+
+  {%- assign border_ok = false -%}
+  {%- if filter_borders == blank -%}
+    {%- assign border_ok = true -%}
+  {%- elsif border and filter_borders contains border -%}
+    {%- assign border_ok = true -%}
+  {%- endif -%}
+
+  {%- if size_ok and frame_ok and border_ok and variant.available -%}
+    {%- if variant.price < min_price -%}
+      {%- assign cheapest_variant = variant -%}
+      {%- assign min_price = variant.price -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- assign artwork_image_url = product.featured_image | image_url -%}
+
+{%- if cheapest_variant -%}
+  {%- assign mock_config_json_raw = cheapest_variant.metafields.custom.mock_config.value | default: '' -%}
+  {%- if mock_config_json_raw != blank -%}
+    {%- assign mock_config_json = mock_config_json_raw | parse_json -%}
+    {%- assign mock_image_url = mock_config_json.mock_image_url | default: '' -%}
+    {%- assign artwork_placement = mock_config_json.artwork_placement | default: '{}' | parse_json -%}
+  {%- else -%}
+    {%- assign mock_image_url = '' -%}
+  {%- endif -%}
+{%- endif -%}
+
+<div class="mockup-container">
+  {%- if cheapest_variant and mock_image_url != blank -%}
+    <img class="mockup-overlay"
+          src="{{ mock_image_url }}"
+          alt="Mock Frame" />
+    <img
+      class="mockup-artwork"
+      src="{{ artwork_image_url }}"
+      alt="{{ product.title | escape }}"
+      style="
+        position: absolute;
+        left: {{ artwork_placement.left }};
+        top: {{ artwork_placement.top }};
+        width: {{ artwork_placement.width }};
+        {% if artwork_placement.transform != blank %}transform: {{ artwork_placement.transform }};{% endif %}
+        object-fit: contain;
+        border-radius: 2px;
+        z-index: 1;
+      "
+    />
+  {%- else -%}
+    <img class="mockup-artwork"
+          src="{{ product.featured_image | image_url }}"
+          alt="{{ product.title | escape }}" />
+  {%- endif -%}
+</div>
+
+<style>
+.mockup-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  background: #faf7f3;
+  min-width: 140px;
+  min-height: 140px;
+}
+.mockup-overlay {
+  width: 100%;
+  display: block;
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+}
+.mockup-artwork {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  max-width: 400px;
+}
+.mockup-label {
+  display: inline-block;
+  position: absolute;
+  left: 10px;
+  bottom: 20px;
+  background: #fff8;
+  color: #4d2900;
+  font-size: 0.95em;
+  border-radius: 7px;
+  padding: 2px 12px;
+  z-index: 6;
+  font-weight: bold;
+  box-shadow: 0 2px 8px rgba(80,40,15,0.06);
+  pointer-events: none;
+}
+.mockup-title-price {
+  margin-top: 13px;
+  text-align: center;
+}
+.mockup-title {
+  font-weight: 600;
+  color: #30313e;
+  font-size: 1em;
+  display: block;
+}
+.mockup-price {
+  font-size: 1.14em;
+  color: #705209;
+  margin-top: 6px;
+  display: block;
+}
+</style>

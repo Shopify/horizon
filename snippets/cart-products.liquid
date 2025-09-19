@@ -188,19 +188,40 @@
                       {%- endif -%}
 
                       {%- for property in item.properties -%}
+                        {% unless property.first == 'abstract_variant_id' %}
                         {%- assign property_first_char = property.first | slice: 0 -%}
-                        {%- if property.last != blank and property_first_char != '_' -%}
-                          <div class="cart-items__properties">
-                            <dt>{{ property.first }}:</dt>
-                            <dd>
-                              {%- if property.last contains '/uploads/' -%}
-                                <a href="{{ property.last }}">{{ property.last | split: '/' | last }}</a>
-                              {%- else -%}
-                                {{ property.last }}
-                              {%- endif -%}
-                            </dd>
-                          </div>
-                        {%- endif -%}
+                          {%- if property.last != blank and property_first_char != '_' -%}
+                            <div class="cart-items__properties">
+                              <dt>{%- if property.first == 'frame_option' -%}Frame{%- elsif property.first == 'size_option' -%}Size{%- else -%}{{ property.first | replace: '_', ' ' | capitalize }}{%- endif -%}:</dt>
+                              <dd>
+                                {%- if property.last contains '/uploads/' -%}
+                                  <a href="{{ property.last }}">
+  {% assign file_type = property.last | split: '.' | last | downcase %}
+  {% assign file_types = 'jpg,jpeg,webp,gif,png,apng,avif,svg,bmp,ico,tiff' | split: ',' %}
+  {% if file_types contains file_type %}
+    <div class="bcpo-cart-file"><img src="{{ property.last }}" style="max-width: 50px; height: auto;"></div>
+  {% else %}
+    <span class="bcpo-cart-file">Uploaded file</span>
+  {% endif %}
+  </a>
+                                {%- else -%}
+                                  
+  {% if property.last contains '/uploads/' %}
+    {% assign file_type = property.last | split: '.' | last | downcase %}
+    {% assign file_types = 'jpg,jpeg,webp,gif,png,apng,avif,svg,bmp,ico,tiff' | split: ',' %}
+    {% if file_types contains file_type %}
+      <div class="bcpo-cart-file"><img src="{{ property.last }}" style="max-width: 50px; height: auto;"></div>
+    {% else %}
+      <span class="bcpo-cart-file">Uploaded file</span>
+    {% endif %}
+  {% else %}
+    {{ property.last }}
+  {% endif %}
+                                {%- endif -%}
+                              </dd>
+                            </div>
+                          {%- endif -%}
+                        {% endunless %}
                       {%- endfor -%}
                     </dl>
 

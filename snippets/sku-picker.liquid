@@ -1,0 +1,206 @@
+{% comment %}
+  This file renders a custom SKU picker with a button-based interface
+  and updates the product variant, price, and add-to-cart button.
+{% endcomment %}
+
+{% comment %} Get product data from metafields {% endcomment %}
+{% assign abstract_product = product.metafields.custom.abstract_product.value %}
+
+{%- if abstract_product != blank -%}
+  {%- assign size_options = abstract_product.options_by_name['Size'].values %}
+  {%- assign frame_options = abstract_product.options_by_name['Frame'].values %}
+
+  <div class="product-options">
+    <div class="option-group">
+      <label>Size:</label>
+      <div id="sku-size-picker" class="button-group">
+        {% for size in size_options %}
+          <button
+            class="option-button"
+            data-option-value="{{ size | replace: '"', '' }}"
+          >
+            {{ size }}
+          </button>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="option-group">
+      <label>Frame:</label>
+      <div id="sku-frame-picker" class="image-button-group">
+        {% for frame in frame_options %}
+          {%- assign variant = abstract_product.variants | where: 'option2', frame | first -%}
+          <button
+            class="option-button image-option"
+            data-option-value="{{ frame }}"
+          >
+            {% if variant.metafields.custom.frame_thumbnail.value %}
+              <img src="{{ variant.metafields.custom.frame_thumbnail.value | img_url }}" alt="{{ frame }}">
+            {% endif %}
+            <span>{{ frame }}</span>
+          </button>
+        {% endfor %}
+      </div>
+    </div>
+    <input type="hidden" name="id" id="sku-variant-id" value="">
+    <input type="hidden" name="id" id="line-item-size-prop" value="">
+    <input type="hidden" name="id" id="line-item-frame-prop" value="">
+  </div>
+
+  {% capture abstract_variants_json %}
+  [
+    {% for variant in abstract_product.variants %}
+      {
+        "id": "{{ variant.id }}",
+        "option1": {{ variant.option1 | json }},
+        "option2": {{ variant.option2 | json }},
+        "size": {{ variant.option1 | replace: '"', ''  | json }},
+        "frame": {{ variant.option2 | json }},
+        "border": {{ variant.option3 | json }},
+        "price": {{ variant.price | default: 0 }},
+        "price_formatted": {{ variant.price | money | json }},
+        "available": {{ variant.available | json }},
+        "image": {% if variant.featured_image %}{{ variant.featured_image | image_url: '400x400' | json }}{% else %}""{% endif %},
+        "mock_config": {% if variant.metafields.custom.mock_config.value != blank %}{{ variant.metafields.custom.mock_config.value | json }}{% else %}{}{% endif %}
+      }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ]
+  {% endcapture %}
+  <script>
+    window.ABSTRACT_VARIANTS = {{ abstract_variants_json | strip_newlines }};
+  </script>
+
+  <style>
+    .option-group {
+      margin-bottom: 20px;
+    }
+
+    .option-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .button-group, .image-button-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }/* General option button styling (for size buttons) */
+    .option-button {
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-size: 14px;
+      border-radius: 8px;
+      transition: all 0.2s ease-in-out;
+      color: #333;
+      text-align: center;
+      min-width: 80px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08); /* The subtle card shadow is on the button */
+    }
+
+    /* Hover state for size buttons */
+    .option-button:hover {
+      border-color: #999;
+    }
+
+    /* Active state for size buttons */
+    .option-button.active {
+      background-color: #333;
+      color: #fff;
+      border-color: #333;
+    }
+
+    /* --- KEY CHANGES START HERE --- */
+
+    /* Specific styles for image options (frames) */
+    .image-option {
+      background-color: #fff;
+      border: none;
+      padding: 10px;
+      min-width: 120px;
+      max-width: 150px;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: none;
+    }
+
+    /* Hover state for the entire frame card (the button) */
+    .image-option:hover {
+      box-shadow: 0 2px 5px rgba(0,0,0,0.12); /* Hover shadow on the button */
+    }
+
+    /* Active state for the entire frame card (the button) */
+    .image-option.active {
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2); /* Active shadow on the button */
+    }
+
+    /* Active state for the entire frame card (the button) */
+    .image-option.active span {
+      color: #fff;
+    }
+
+    /* Styling for the image itself */
+    .image-option img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin-bottom: 8px;
+      border: 1px solid #eee; /* Default light border around the image */
+      object-fit: contain;
+      background-color: #fff;
+      transition: border-color 0.2s ease-in-out;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08); /* The subtle card shadow is on the button */
+      border-radius: 8px;
+    }
+
+    /* Hover state for the image border only */
+    .image-option:hover img {
+      border-color: #999;
+    }
+
+    /* Active state for the image border only */
+    .image-option.active img {
+      border-color: #333;
+    }
+
+    /* No change to the span */
+    .image-option span {
+      font-weight: bold;
+      font-size: 1em;
+      color: #333;
+    }
+
+    /* Update unavailable state */
+    .option-button.unavailable {
+      color: #999;
+      cursor: not-allowed;
+      opacity: 0.6;
+      pointer-events: none;
+      text-decoration: none;
+      background-color: #f0f0f0;
+      border: none;
+    }
+
+    .image-option.unavailable {
+      background-color: #f0f0f0;
+      box-shadow: none;
+    }
+
+    .image-option.unavailable img {
+      opacity: 0.4;
+      border-color: #ddd;
+    }
+
+    .image-option.unavailable span {
+      color: #999;
+    }
+  </style>
+
+{%- else -%}
+  <div class="alert alert-error">Abstract matrix not set. Please check product metafields.</div>
+{%- endif -%}

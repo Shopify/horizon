@@ -26,109 +26,141 @@
   data-media-id="{{ media.id }}"
 >
   {% liquid
-    assign high_res_url = media.preview_image | image_url: width: 3840
     assign fetch_priority = 'auto'
     if is_main_product_media
       assign fetch_priority = 'high'
     endif
   %}
-  {{
-    media.preview_image
-    | image_url: width: 3840
-    | image_tag:
-      widths: widths,
-      alt: media.alt,
-      sizes: sizes,
-      loading: loading,
-      class: 'product-media__image',
-      transitionToProduct: settings.transition_to_main_product,
-      data_max_resolution: high_res_url,
-      fetchpriority: fetch_priority
-  }}
+  {% if media.media_type == 'image' %}
 
-  {% unless preview_image_only %}
-    {%- case media.media_type -%}
-      {% when 'model' %}
-        <product-model
-          class="product-model-wrapper"
-          data-media-id="{{ media.id }}"
-        >
-          <button
-            class="button deferred-media__poster-button button-unstyled"
-            ref="deferredMediaPlayButton"
-            on:click="/showDeferredMedia"
+    {%- assign abstract_product = product.metafields.custom.abstract_product.value -%}
+    {%- assign initial_variant = null -%}
+    {%- assign min_price = 99999999999 -%}
+    {%- for variant in abstract_product.variants -%}
+      {%- if variant.available and variant.price < min_price -%}
+        {%- assign initial_variant = variant -%}
+        {%- assign min_price = variant.price -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- assign mock_config_json_raw = initial_variant.metafields.custom.mock_config.value | default: '' -%}
+    {%- assign mock_config_json = mock_config_json_raw | parse_json -%}
+    {%- assign mock_image_url = mock_config_json.mock_image_url | default: '' -%}
+    {%- assign artwork_placement = mock_config_json.artwork_placement | default: '{}' | parse_json -%}
+    {%- assign artwork_url = product.featured_image | image_url -%}
+
+    <!-- Gallery: SSR initial render is cheapest variant's config -->
+    <div class="mockup-container">
+      {%- if mock_image_url != blank -%}
+        <img class="mockup-overlay"
+              src="{{ mock_image_url }}"
+              alt="Mock Frame" />
+        <img
+          class="mockup-artwork"
+          src="{{ artwork_url }}"
+          alt="{{ product.title | escape }}"
+          style="
+            position: absolute;
+            left: {{ artwork_placement.left }};
+            top: 0;
+            width: {{ artwork_placement.width }};
+            {% if artwork_placement.transform != blank %}transform: {{ artwork_placement.transform }};{% endif %}
+            object-fit: contain;
+            border-radius: 2px;
+            z-index: 1;
+          "
+        />
+      {%- else -%}
+        <img class="mockup-artwork"
+              src="{{ product.featured_image | image_url }}"
+              alt="{{ product.title | escape }}" />
+      {%- endif -%}
+    </div>
+
+  {% else %}
+    {% unless preview_image_only %}
+      {%- case media.media_type -%}
+        {% when 'model' %}
+          <product-model
+            class="product-model-wrapper"
+            data-media-id="{{ media.id }}"
           >
-            {{
-              media.preview_image
-              | image_url: width: 3840
-              | image_tag:
-                widths: widths,
-                alt: media.alt,
-                sizes: sizes,
-                loading: loading,
-                class: 'deferred-media__poster-image'
-            }}
-            <span class="deferred-media__poster-icon">
-              <span class="visually-hidden">{{ 'accessibility.play_model' | t }}</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-                focusable="false"
-                class="icon icon-3d-model"
-                fill="none"
-                viewBox="0 0 18 21"
-              >
-                {% render 'icon', icon: '3d-model' %}
-              </svg>
-            </span>
+            <button
+              class="button deferred-media__poster-button button-unstyled"
+              ref="deferredMediaPlayButton"
+              on:click="/showDeferredMedia"
+            >
+              {{
+                media.preview_image
+                | image_url: width: 3840
+                | image_tag:
+                  widths: widths,
+                  alt: media.alt,
+                  sizes: sizes,
+                  loading: loading,
+                  class: 'deferred-media__poster-image'
+              }}
+              <span class="deferred-media__poster-icon">
+                <span class="visually-hidden">{{ 'accessibility.play_model' | t }}</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                  focusable="false"
+                  class="icon icon-3d-model"
+                  fill="none"
+                  viewBox="0 0 18 21"
+                >
+                  {% render 'icon', icon: '3d-model' %}
+                </svg>
+              </span>
+            </button>
+
+            <template>
+              {{ media | model_viewer_tag }}
+            </template>
+          </product-model>
+          <button
+            class="button button-secondary button-shopify-xr"
+            type="button"
+            data-shopify-xr
+            data-shopify-model3d-id="{{ media.id }}"
+            data-shopify-title="{{ selected_product.title | escape }}"
+            data-shopify-xr-hidden
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              focusable="false"
+              class="icon icon-3d-model"
+              fill="none"
+              viewBox="0 0 18 21"
+            >
+              {% render 'icon', icon: '3d-model' %}
+            </svg>
+            {{ 'actions.view_in_your_space' | t }}
           </button>
 
-          <template>
-            {% # Should I be using media_tag here instead like on Dawn? 🤔 %}
-            {{ media | model_viewer_tag }}
-          </template>
-        </product-model>
-        <button
-          class="button button-secondary button-shopify-xr"
-          type="button"
-          data-shopify-xr
-          data-shopify-model3d-id="{{ media.id }}"
-          data-shopify-title="{{ selected_product.title | escape }}"
-          data-shopify-xr-hidden
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            focusable="false"
-            class="icon icon-3d-model"
-            fill="none"
-            viewBox="0 0 18 21"
-          >
-            {% render 'icon', icon: '3d-model' %}
-          </svg>
-          {{ 'actions.view_in_your_space' | t }}
-        </button>
-
-        {%- if first_3d_model -%}
-          <script
-            type="application/json"
-            id="ProductModelJSON-{{ selected_product.id }}"
-          >
-            {{ selected_product.media | where: 'media_type', 'model' | json }}
-          </script>
-        {%- endif -%}
-      {% when 'video', 'external_video' %}
-        {%- render 'video',
-          video: media,
-          video_loop: block.settings.video_loop,
-          widths: widths,
-          sizes: sizes,
-          loading: loading,
-          disable_controls: true,
-          section_id: section.id
-        -%}
-    {% endcase %}
-  {% endunless %}
+          {%- if first_3d_model -%}
+            <script
+              type="application/json"
+              id="ProductModelJSON-{{ selected_product.id }}"
+            >
+              {{ selected_product.media | where: 'media_type', 'model' | json }}
+            </script>
+          {%- endif -%}
+        {% when 'video', 'external_video' %}
+          {%- render 'video',
+            video: media,
+            video_loop: block.settings.video_loop,
+            widths: widths,
+            sizes: sizes,
+            loading: loading,
+            disable_controls: true,
+            section_id: section.id
+          -%}
+      {% endcase %}
+    {% endunless %}
+  {% endif %}
 </div>
 
 {% stylesheet %}
@@ -136,6 +168,24 @@
     aspect-ratio: var(--gallery-aspect-ratio, var(--ratio));
     min-height: 0;
     min-width: 0;
+  }
+
+  .product-media-container--image,
+  .product-media-container .mockup-container {
+    height: auto !important;
+    min-height: 0 !important;
+    aspect-ratio: 1 / 1 !important;
+  }
+
+  .mockup-container {
+    position: relative;
+    width: 100%;
+    height: auto !important;
+    aspect-ratio: 1 / 1 !important;
+    overflow: hidden;
+    background: #faf7f3;
+    min-width: 140px;
+    min-height: 140px;
   }
 
   /*** Media border-radius feature ****/
