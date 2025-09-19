@@ -1,0 +1,124 @@
+{%- comment -%}
+  Snippet: product-info-modal
+  Usage:
+    {% render 'product-info-modal',
+      product: product,
+      button_label: 'More information',
+      title: product.title | append: ' — Details',
+      content: product.metafields.custom.more_info
+    %}
+{%- endcomment -%}
+
+{%- assign content_html = content | default: product.metafields.custom.more_info -%}
+{%- assign modal_id = 'product-info-' | append: product.id -%}
+
+<button
+  type="button"
+  class="button button--secondary"
+  data-modal-open="{{ modal_id }}"
+  aria-haspopup="dialog"
+  aria-controls="{{ modal_id }}"
+  aria-expanded="false">
+  {{ button_label | default: 'More info' }}
+</button>
+
+<dialog id="{{ modal_id }}" class="pim-dialog" aria-labelledby="{{ modal_id }}-title">
+  <form method="dialog" class="pim-backdrop" data-modal-close></form>
+
+  <article class="pim-panel" role="document">
+    <header class="pim-header">
+      <h2 id="{{ modal_id }}-title" class="pim-title">
+        {{ title | default: 'More information' }}
+      </h2>
+      <button type="button" class="pim-close" data-modal-close aria-label="{{ 'general.close' | t | default: 'Close' }}">×</button>
+    </header>
+
+    <div class="pim-content">
+      {%- if content_html != blank -%}
+        {{ content_html }}
+      {%- else -%}
+        <p>No additional information available.</p>
+      {%- endif -%}
+    </div>
+  </article>
+</dialog>
+
+<style>
+  /* Minimal, theme-friendly styles (scoped to .pim-* classes) */
+  .pim-dialog { border: 0; padding: 0; max-width: none; width: 100%; }
+  .pim-dialog::backdrop { background: rgba(0,0,0,.45); }
+  .pim-backdrop { position: fixed; inset: 0; background: transparent; }
+  .pim-panel {
+    position: fixed; inset: auto 0 0 0; /* bottom sheet on mobile */
+    margin: 0; background: #fff; max-height: 85vh; overflow: auto; border-radius: 1rem 1rem 0 0;
+    box-shadow: 0 -10px 30px rgba(0,0,0,.2);
+  }
+  @media (min-width: 768px) {
+    .pim-panel { inset: 10% auto auto auto; margin: 0 auto; max-width: 720px; border-radius: 1rem; }
+  }
+  .pim-header { display:flex; align-items:center; justify-content:space-between; padding: 1rem 1rem .5rem; border-bottom: 1px solid rgba(0,0,0,.08); }
+  .pim-title { margin: 0; font-size: 1.125rem; }
+  .pim-close { appearance:none; border:0; background:transparent; font-size: 1.5rem; line-height:1; cursor:pointer; padding:.25rem .5rem; }
+  .pim-content { padding: 1rem; }
+</style>
+
+<script>
+  (function() {
+    if (window.__pimInit) return; // only once per page
+    window.__pimInit = true;
+
+    const openDialog = (dialog, opener) => {
+      if (!dialog.open) dialog.showModal();
+      dialog.dataset.openerId = opener ? opener.id || '' : '';
+      const btn = opener || document.querySelector('[data-modal-open="' + dialog.id + '"]');
+      btn && btn.setAttribute('aria-expanded', 'true');
+
+      // Focus the title for screen readers
+      const title = dialog.querySelector('.pim-title');
+      title && title.focus && title.setAttribute('tabindex','-1'), title && title.focus();
+    };
+
+    const closeDialog = (dialog) => {
+      dialog.close();
+      const openerId = dialog.dataset.openerId;
+      const opener = openerId ? document.getElementById(openerId) : document.querySelector('[data-modal-open="' + dialog.id + '"]');
+      opener && opener.setAttribute('aria-expanded', 'false');
+      opener && opener.focus && opener.focus();
+    };
+
+    document.addEventListener('click', (e) => {
+      const openBtn = e.target.closest('[data-modal-open]');
+      if (openBtn) {
+        const id = openBtn.getAttribute('data-modal-open');
+        const dialog = document.getElementById(id);
+        if (dialog) {
+          // ensure stacking above theme headers
+          dialog.style.zIndex = 9999;
+          if (!openBtn.id) openBtn.id = 'opener-' + Math.random().toString(36).slice(2);
+          openDialog(dialog, openBtn);
+        }
+      }
+      if (e.target.closest('[data-modal-close]')) {
+        const dialog = e.target.closest('dialog');
+        if (dialog) closeDialog(dialog);
+      }
+    });
+
+    // Close on Escape (native <dialog> handles this, but keep aria tidy)
+    document.addEventListener('cancel', (e) => {
+      const dialog = e.target.closest('dialog');
+      if (dialog) {
+        e.preventDefault(); // let us manage focus/aria
+        closeDialog(dialog);
+      }
+    });
+
+    // Optional: open via URL hash like #open=product-info-123
+    const params = new URLSearchParams(location.hash.replace(/^#/, ''));
+    const openId = params.get('open');
+    if (openId) {
+      const dlg = document.getElementById(openId);
+      if (dlg) openDialog(dlg);
+    }
+  })();
+</script>
