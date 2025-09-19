@@ -61,7 +61,8 @@
     "increase_quantity": "Αύξηση ποσότητας",
     "quantity": "Ποσότητα",
     "rating": "Η βαθμολογία αυτού του προϊόντος είναι {{ rating }} στα 5",
-    "nested_product": "{{ product_title }} για {{ parent_title }}"
+    "nested_product": "{{ product_title }} για {{ parent_title }}",
+    "discount_menu": "Κωδικοί έκπτωσης"
   },
   "actions": {
     "add_to_cart": "Προσθήκη στο καλάθι",
@@ -100,7 +101,8 @@
     "sign_up": "Εγγραφή",
     "open_image_in_full_screen": "Άνοιγμα εικόνας σε πλήρη οθόνη",
     "sort": "Ταξινόμηση",
-    "show_all_options": "Εμφάνιση όλων των επιλογών"
+    "show_all_options": "Εμφάνιση όλων των επιλογών",
+    "open": "Άνοιγμα"
   },
   "content": {
     "reviews": "κριτικές",
@@ -226,7 +228,8 @@
     "recipient_form_fields_visible": "Τα πεδία της φόρμας παραλήπτη είναι πλέον ορατά",
     "recipient_form_fields_hidden": "Τα πεδία της φόρμας παραλήπτη δεν είναι πλέον ορατά",
     "recipient_form_error": "Προέκυψε σφάλμα κατά την υποβολή της φόρμας",
-    "product_custom_property_character_count": "Χρησιμοποιήθηκαν {{ used_chars }}/{{ max_chars }} χαρακτήρες"
+    "product_custom_property_character_count": "Χρησιμοποιήθηκαν {{ used_chars }}/{{ max_chars }} χαρακτήρες",
+    "terms_and_policies": "Όροι και Πολιτικές"
   },
   "gift_cards": {
     "issued": {
@@ -246,7 +249,12 @@
     "password": "Κωδικός πρόσβασης",
     "search": "Αναζήτηση",
     "product_title": "Τίτλος προϊόντος",
-    "collection_title": "Τίτλος συλλογής"
+    "collection_title": "Τίτλος συλλογής",
+    "blog_posts": "Αναρτήσεις ιστολογίου",
+    "blog_post_title": "Τίτλος",
+    "blog_post_author": "Συντάκτης",
+    "blog_post_date": "Ημερομηνία",
+    "blog_post_description": "Απόσπασμα από το περιεχόμενο της ανάρτησης στο ιστολόγιό σας"
   },
   "products": {
     "product": {

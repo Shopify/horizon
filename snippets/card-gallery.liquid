@@ -10,69 +10,52 @@
 {%- enddoc -%}
 
 {% liquid
+  assign product = closest.product
   assign block_settings = block.settings
   assign image_sizes = '(min-width: 750px) 50vw, 100vw'
+
   # if the card-gallery has a section.settings.product_card_size:
   # assume grid-template autofill(card-size, 1fr) and calculate the sizes attribute based on the minimum card size
-
+  #
   # if section has section.settings.columns:
   # assume grid-template repeat(column-count, 1fr) and calculate the sizes attribute based on the number of columns
-%}
-
-{% if section.settings.product_card_size %}
-  {% capture card_size %}
-    {% render 'util-product-grid-card-size' section: section %}
-  {% endcapture %}
-  {% assign card_size = card_size | strip | replace: 'px', '' | plus: 0 %}
-  {% capture sizes_attribute %}
-    {% render 'util-autofill-img-size-attr' card_size: card_size, card_gap: section.settings.columns_gap_horizontal %}
-  {% endcapture %}
-  {% assign image_sizes = sizes_attribute | strip %}
-{% elsif section.settings.columns and section.settings.layout_type != 'editorial' %}
-  {% assign viewport_width = 100.0 | divided_by: section.settings.columns %}
-  {% assign sizes_attribute = '(min-width: 750px) [viewport_width]vw, 100vw'
-    | replace: '[viewport_width]', viewport_width
-  %}
-  {% assign image_sizes = sizes_attribute | strip %}
-{% endif %}
-
-{% liquid
-  assign product = closest.product
-
-  assign lazy_image_sizes = 'auto, ' | append: image_sizes
-
-  assign image_ratio_setting = block_settings.image_ratio
-  assign temp_ratio = 1
-
-  if image_ratio_setting == 'landscape'
-    assign temp_ratio = '16 / 9'
-  elsif image_ratio_setting == 'portrait'
-    assign temp_ratio = '4 / 5'
-  elsif image_ratio_setting == 'square'
-    assign temp_ratio = '1'
-  elsif image_ratio_setting == 'adapt'
-    if product != blank
-      assign current_featured_image_for_ratio = product.featured_image
-      if current_featured_image_for_ratio == blank and product.featured_media.preview_image != blank
-        assign current_featured_image_for_ratio = product.featured_media.preview_image
-      endif
-
-      if current_featured_image_for_ratio != blank and current_featured_image_for_ratio.aspect_ratio != null and current_featured_image_for_ratio.aspect_ratio > 0
-        assign temp_ratio = current_featured_image_for_ratio.aspect_ratio
-      endif
-    endif
+  if section.settings.product_card_size
+    capture card_size
+      render 'util-product-grid-card-size', section: section
+    endcapture
+    assign card_size = card_size | strip | replace: 'px', '' | plus: 0
+    capture sizes_attribute
+      render 'util-autofill-img-size-attr', card_size: card_size, card_gap: section.settings.columns_gap_horizontal
+    endcapture
+    assign image_sizes = sizes_attribute | strip
+  elsif section.settings.columns and section.settings.layout_type != 'editorial'
+    assign viewport_width = 100.0 | divided_by: section.settings.columns
+    assign sizes_attribute = '(min-width: 750px) [viewport_width]vw, 100vw' | replace: '[viewport_width]', viewport_width
+    assign image_sizes = sizes_attribute | strip
   endif
 
-  if temp_ratio != blank and temp_ratio != 0 and temp_ratio != ''
-    assign ratio = temp_ratio
-  else
-    assign ratio = 1
-  endif
+  assign ratio = '1'
+  case block_settings.image_ratio
+    when 'landscape'
+      assign ratio = '16 / 9'
+    when 'portrait'
+      assign ratio = '4 / 5'
+    when 'square'
+      assign ratio = '1'
+    when 'adapt'
+      if product != blank
+        assign current_featured_image_for_ratio = product.featured_image
+        if current_featured_image_for_ratio == blank and product.featured_media.preview_image != blank
+          assign current_featured_image_for_ratio = product.featured_media.preview_image
+        endif
 
-  assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src'
+        if current_featured_image_for_ratio != blank and current_featured_image_for_ratio.aspect_ratio != null and current_featured_image_for_ratio.aspect_ratio > 0
+          assign ratio = current_featured_image_for_ratio.aspect_ratio
+        endif
+      endif
+  endcase
+
   assign selected_variant_image = product.selected_or_first_available_variant.image.src
-
-  assign hover_behavior = 'carousel'
 
   if block_settings.image_ratio == 'adapt' and block_settings.constrain_to_viewport
     if block_settings.constrain_to_viewport != ''
@@ -80,6 +63,31 @@
       assign media_fit = block_settings.constrain_to_viewport
     endif
   endif
+
+  assign all_media = product.media
+
+  # For combined listings: make sure to include the featured media of the color variants so that the swatch picker
+  # works as expected.
+  for product_option in product.options_with_values
+    for product_option_value in product_option.values
+      if product_option_value.swatch
+        assign featured_media = product_option_value.variant.featured_media
+
+        # If the variant has no featured media, and we have a combined listing product, then fall back to using the
+        # featured media of the child product that is linked to this option value.
+
+        if featured_media == blank and product_option_value.product_url
+          assign featured_media = product_option_value.variant.product.featured_media
+        endif
+
+        assign existing_media = all_media | has: 'id', featured_media.id
+        unless existing_media
+          assign variant_featured_media = product_option_value.variant.product.media | where: 'id', featured_media.id
+          assign all_media = all_media | concat: variant_featured_media
+        endunless
+      endif
+    endfor
+  endfor
 %}
 
 <div
@@ -101,100 +109,95 @@
   data-image-ratio="{{ block_settings.image_ratio }}"
   {{ block.shopify_attributes }}
 >
-  {% liquid
-    assign all_media = product.media
+  {%- if all_media.size > 0 -%}
+    {% liquid
+      # Check if there are generic media that are not variant images
+      assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src'
+      assign generic_media_size = all_media.size | minus: variant_images.size
+      assign combined_listing_count = product.options_with_values | map: 'values' | map: 'product_url' | compact | size
 
-    # For combined listings: make sure to include the featured media of the color variants so that the swatch picker
-    # works as expected.
-    for product_option in product.options_with_values
-      for product_option_value in product_option.values
-        if product_option_value.swatch
-          assign featured_media = product_option_value.variant.featured_media
+      if combined_listing_count > 0
+        # Sort media so selected variant image comes first
+        assign selected_media = all_media | where: 'src', selected_variant_image
+        assign other_media = all_media | reject: 'src', selected_variant_image
+        assign all_media_sorted = selected_media | concat: other_media
+        assign media_list_to_show = all_media_sorted
+      else
+        assign media_list_to_show = all_media
+      endif
 
-          # If the variant has no featured media, and we have a combined listing product, then fall back to using the
-          # featured media of the child product that is linked to this option value.
+      if all_media.size > 2 and generic_media_size > 0
+        assign show_arrows = true
+      endif
 
-          if featured_media == blank and product_option_value.product_url
-            assign featured_media = product_option_value.variant.product.featured_media
+      # Don't overfetch media if we don't need to
+      assign max_visible_slide_count = 1
+      if settings.product_card_carousel
+        assign max_visible_slide_count = 5
+      elsif settings.show_second_image_on_hover
+        assign max_visible_slide_count = 2
+      endif
+
+      capture slides
+        for media in media_list_to_show
+          assign loading = 'lazy'
+          assign sizes = 'auto, ' | append: image_sizes
+
+          assign hidden = false
+          assign attributes = ''
+          if variant_images contains media.src
+            assign attributes = 'variant-image'
+            if combined_listing_count > 0
+              # hide all variant images of combined listings unless it's the first image or there are no generic media
+              unless forloop.first and media.src == selected_variant_image or generic_media_size == 0
+                assign hidden = true
+              endunless
+            elsif has_applied_colour_filter
+              # with colour filters, hide all variant images unless the image is the selected_variant
+              unless media.src == selected_variant_image
+                assign hidden = true
+              endunless
+            elsif forloop.first == false
+              # hide all variant images that aren't the first one (when there are no combined listings or colour filters applied)
+              assign hidden = true
+            endif
           endif
 
-          assign existing_media = all_media | has: 'id', featured_media.id
-          unless existing_media
-            assign variant_featured_media = product_option_value.variant.product.media | where: 'id', featured_media.id
-            assign all_media = all_media | concat: variant_featured_media
+          # Performance improvement: don't render more than 5 visible images into the slideshow
+          # We'll keep the images that we need for the variant images and hover next.
+          if forloop.first
+            assign visible_slide_count = 0
+          endif
+          unless hidden
+            assign visible_slide_count = visible_slide_count | plus: 1
           endunless
-        endif
-      endfor
-    endfor
+          if hidden == false and visible_slide_count > max_visible_slide_count
+            continue
+          endif
 
-    # Sort media so selected variant image comes first
-    assign selected_media = all_media | where: 'src', selected_variant_image
-    assign other_media = all_media | reject: 'src', selected_variant_image
-    assign all_media_sorted = selected_media | concat: other_media
-    # Check if there are generic media that are not variant images
-    assign has_generic_media = false
-    if all_media_sorted.size > variant_images.size
-      assign has_generic_media = true
-    endif
-    assign generic_media_size = all_media.size | minus: variant_images.size
+          if forloop.first and section.index == null or section.index < 5
+            assign loading = 'eager'
+            assign sizes = image_sizes
+          endif
 
-    assign combined_listing_count = product.options_with_values | map: 'values' | map: 'product_url' | compact | size
-    if combined_listing_count == 0
-      assign media_list_to_show = all_media
-    else
-      assign media_list_to_show = all_media_sorted
-    endif
-  %}
+          assign class = 'product-media-container media-fit product-media-container--[media_type]' | replace: '[media_type]', media.media_type
+          if constrain_to_viewport
+            assign class = class | append: ' constrain-height'
+          endif
 
-  {%- if all_media.size > 0 -%}
-    {% if all_media.size > 2 and hover_behavior == 'carousel' and has_generic_media %}
-      {% assign show_arrows = true %}
-    {% endif %}
+          capture slideshow_children
+            render 'product-media', media: media, sizes: sizes, loading: loading, preview_image_only: true
+          endcapture
 
-    {% capture slides %}
-      {% for media in media_list_to_show %}
-        {% assign loading = 'lazy' %}
-        {% assign sizes = lazy_image_sizes %}
+          render 'slideshow-slide', slide_id: media.id, index: forloop.index, hidden: hidden, class: class, attributes: attributes, children: slideshow_children, media_fit: media_fit
+        endfor
+      endcapture
 
-        {% if forloop.first and section.index == nil or section.index < 5 %}
-          {% assign loading = 'eager' %}
-          {% assign sizes = image_sizes %}
-        {% endif %}
-
-        {% assign attributes = '' %}
-        {% capture slideshow_children %}
-          {%- render 'product-media', media: media, sizes: sizes, loading: loading, preview_image_only: true -%}
-        {% endcapture %}
-        {% capture class %}
-          product-media-container media-fit product-media-container--{{ media.media_type }}{% if constrain_to_viewport %} constrain-height{% endif %}
-        {% endcapture %}
-
-        {% assign hidden = false %}
-
-        {% if variant_images contains media.src %}
-          {% assign attributes = 'variant-image' %}
-          {% if combined_listing_count > 0 %}
-            {% unless forloop.first and media.src == selected_variant_image or has_generic_media == false %}
-              {% assign hidden = true %}
-            {% endunless %}
-          {% elsif has_applied_colour_filter %}
-            {% unless media.src == selected_variant_image %}
-              {% assign hidden = true %}
-            {% endunless %}
-          {% elsif forloop.first == false %}
-            {% assign hidden = true %}
-          {% endif %}
-        {% endif %}
-        {% render 'slideshow-slide', slide_id: media.id, index: forloop.index, children: slideshow_children, class: class, attributes: attributes, hidden: hidden, media_fit: media_fit %}
-      {% endfor %}
-    {% endcapture %}
-
-    {% assign slideshow_attributes = 'data-generic-media-size="[generic_media_size]"'
-      | replace: '[generic_media_size]', generic_media_size
+      assign slideshow_attributes = 'data-generic-media-size="[generic_media_size]"' | replace: '[generic_media_size]', generic_media_size
+      if settings.product_card_carousel == false
+        assign slideshow_attributes = slideshow_attributes | append: ' disabled="true"'
+      endif
     %}
-    {% if hover_behavior == 'none' or settings.product_card_carousel == false %}
-      {% assign slideshow_attributes = slideshow_attributes | append: ' disabled="true"' %}
-    {% endif %}
     <a
       class="contents"
       ref="cardGalleryLink"
@@ -222,23 +225,20 @@
       </a>
     </product-title>
   {% elsif product == blank %}
-    {% capture placeholder_image %}
-      {% liquid
+    {% liquid
+      capture placeholder_image
         # Extract index from block ID (e.g., "product-card-3" -> "3")
         assign block_parts = block.id | split: '-'
         assign placeholder_index = block_parts.last | default: 0
         assign variant = placeholder_index | modulo: 3 | plus: 1
         assign placeholder_name = 'product-apparel-' | append: variant
-      %}
-      {{ placeholder_name | placeholder_svg_tag: 'placeholder-image' }}
-    {% endcapture %}
-    {% capture placeholder_slide %}
-      {% render 'slideshow-slide', index: 1, children: placeholder_image, class: 'product-media-container card-gallery__placeholder' %}
-    {% endcapture %}
-    {% capture slideshow_placeholder %}
-      {% render 'slideshow', ref: 'slideshow', slides: placeholder_slide, slide_count: 1, attributes: 'disabled="true"' %}
-    {% endcapture %}
-    {{ slideshow_placeholder }}
+        echo placeholder_name | placeholder_svg_tag: 'placeholder-image'
+      endcapture
+      capture placeholder_slide
+        render 'slideshow-slide', index: 1, children: placeholder_image, class: 'product-media-container card-gallery__placeholder'
+      endcapture
+      render 'slideshow', ref: 'slideshow', slides: placeholder_slide, slide_count: 1, attributes: 'disabled="true"'
+    %}
   {%- endif -%}
   {{ children }}
 </div>

@@ -342,6 +342,17 @@
     grid-gap: 0;
   }
 
+  /* Make overflow menu scrollable when content exceeds viewport */
+  .menu-list__submenu-inner,
+  .overflow-menu::part(overflow-list) {
+    max-height: calc(80vh - var(--header-height));
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--color-foreground-rgb) / var(--opacity-40)) transparent;
+  }
+
   .menu-list__list-item:is([slot='overflow']) {
     --menu-top-level-font-color: var(--color-foreground);
     --menu-top-level-font-color-rgb: var(--color-foreground-rgb);
@@ -504,7 +515,7 @@
     grid-column: span 4;
   }
 
-  .mega-menu__column--collection-image {
+  .mega-menu__column--wide-collection-image {
     grid-column: span 1;
 
     @media screen and (min-width: 990px) {
@@ -512,11 +523,7 @@
     }
   }
 
-  .mega-menu__column--collection-image .mega-menu__link {
-    text-transform: var(--title-case);
-  }
-
-  .mega-menu__submenu .mega-menu__column--collection-image {
+  .mega-menu__submenu .mega-menu__column--wide-collection-image {
     grid-column: span 1;
   }
 

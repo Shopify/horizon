@@ -1,31 +1,6 @@
 {% liquid
   assign section_collections = collections
   assign max_items = 20
-
-  case section.settings.layout_type
-    when 'grid'
-      assign classes = 'resource-list--grid'
-      capture styles
-        echo '--resource-list-column-gap-desktop: ' | append: section.settings.columns_gap | append: 'px;'
-        echo '--resource-list-row-gap-desktop: ' | append: section.settings.rows_gap | append: 'px;'
-        echo '--resource-list-columns: repeat(' | append: section.settings.columns | append: ', 1fr);'
-        echo '--resource-list-columns-mobile: repeat(' | append: section.settings.mobile_columns | append: ', 1fr);'
-        echo '--column-count-mobile: ' | append: section.settings.mobile_columns | append: ';'
-      endcapture
-    when 'bento'
-      assign classes = 'resource-list--bento'
-      capture styles
-        echo '--resource-list-column-gap-desktop: ' | append: section.settings.bento_gap | append: 'px;'
-        echo '--bento-gap: var(--resource-list-column-gap);'
-      endcapture
-    when 'carousel'
-      assign classes = 'resource-list__carousel'
-      capture styles
-        echo '--resource-list-column-gap-desktop: ' | append: section.settings.columns_gap | append: 'px;'
-        echo '--column-count: ' | append: section.settings.columns | append: ';'
-        echo '--column-count-mobile: 1;'
-      endcapture
-  endcase
 %}
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
@@ -42,7 +17,6 @@
   style="
     {% render 'spacing-style', settings: section.settings %}
     {% render 'gap-style', value: section.settings.gap %}
-    {{ styles }}
   "
 >
   <div class="section-resource-list__content">
@@ -73,69 +47,15 @@
     assign list_items_array = list_items | strip | split: '<!--@list/split-->'
   %}
 
-  <div
-    class="
-      resource-list
-      {% if section.settings.layout_type == 'carousel' %}
-        force-full-width
-      {% endif %}
-      {% if section.settings.carousel_on_mobile and section.settings.layout_type != 'carousel' %}
-        hidden--mobile
-      {% endif %}
-      {{ classes }}
-    "
-    style="{{ styles }}"
-    {% if section.settings.layout_type == 'grid' %}
-      data-testid="collections-list-grid"
-    {% endif %}
-  >
-    {% case section.settings.layout_type %}
-      {% when 'grid' %}
-        {{ list_items }}
-      {% when 'bento' %}
-        {% render 'bento-grid', items: list_items_array %}
-      {% when 'carousel' %}
-        {% render 'resource-list-carousel',
-          ref: 'collectionListCarousel',
-          slides: list_items_array,
-          slide_count: max_items,
-          settings: section.settings,
-          slide_width_max: '450px'
-        %}
-      {% when 'editorial' %}
-        {% render 'editorial-collection-grid', items: list_items_array %}
-    {% endcase %}
-  </div>
-
-  {% if section.settings.layout_type != 'carousel' and section.settings.carousel_on_mobile %}
-    {% liquid
-      assign mobile_carousel_gap = section.settings.columns_gap
-      if section.settings.layout_type == 'bento'
-        assign mobile_carousel_gap = section.settings.bento_gap
-      endif
-    %}
-    <div
-      class="
-        resource-list
-        hidden--desktop
-        resource-list__carousel
-        force-full-width
-      "
-      style="
-        --resource-list-column-gap-desktop: {{ mobile_carousel_gap }}px;
-        --column-count: {{ section.settings.columns }};
-        --column-count-mobile: 1;
-      "
-    >
-      {% render 'resource-list-carousel',
-        ref: 'collectionListCarouselMobile',
-        slides: list_items_array,
-        slide_count: max_items,
-        settings: section.settings,
-        slide_width_max: '450px'
-      %}
-    </div>
-  {% endif %}
+  {% render 'resource-list',
+    list_items: list_items,
+    list_items_array: list_items_array,
+    settings: section.settings,
+    carousel_ref: 'mainCollectionList',
+    slide_count: max_items,
+    content_type: 'collections',
+    test_id: 'collections-list-grid'
+  %}
 </div>
 
 {% schema %}

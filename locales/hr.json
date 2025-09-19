@@ -62,7 +62,8 @@
     "increase_quantity": "Povećaj količinu",
     "quantity": "Količina",
     "rating": "Ocjena ovog proizvoda je {{ rating }} od 5",
-    "nested_product": "{{ product_title }} za {{ parent_title }}"
+    "nested_product": "{{ product_title }} za {{ parent_title }}",
+    "discount_menu": "Kodovi za popust"
   },
   "actions": {
     "add_to_cart": "Dodaj u košaricu",
@@ -102,7 +103,8 @@
     "sign_up": "Registrirajte se",
     "open_image_in_full_screen": "Otvori sliku preko cijelog zaslona",
     "sort": "Razvrstaj",
-    "show_all_options": "Prikaži sve opcije"
+    "show_all_options": "Prikaži sve opcije",
+    "open": "Otvori"
   },
   "content": {
     "reviews": "recenzije",
@@ -231,7 +233,8 @@
     "recipient_form_fields_visible": "Polja obrasca primatelja sada su vidljiva",
     "recipient_form_fields_hidden": "Polja obrasca primatelja sada su skrivena",
     "recipient_form_error": "Došlo je do pogreške u slanju obrasca",
-    "product_custom_property_character_count": "Upotrijebljeno znakova: {{ used_chars }}/{{ max_chars }}"
+    "product_custom_property_character_count": "Upotrijebljeno znakova: {{ used_chars }}/{{ max_chars }}",
+    "terms_and_policies": "Uvjeti i pravila"
   },
   "gift_cards": {
     "issued": {
@@ -251,7 +254,12 @@
     "password": "Lozinka",
     "search": "Pretraživanje",
     "product_title": "Naziv proizvoda",
-    "collection_title": "Naziv kolekcije"
+    "collection_title": "Naziv kolekcije",
+    "blog_posts": "Blogovi",
+    "blog_post_title": "Naslov",
+    "blog_post_author": "Autor",
+    "blog_post_date": "Datum",
+    "blog_post_description": "Izvadak sadržaja vašeg bloga"
   },
   "products": {
     "product": {

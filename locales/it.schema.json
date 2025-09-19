@@ -167,7 +167,12 @@
     "multicolumn": "Multicolonna",
     "rich_text_section": "Rich text",
     "product_custom_property": "Istruzioni speciali",
-    "hero_bottom_aligned": "Hero: Allineato in basso"
+    "hero_bottom_aligned": "Hero: Allineato in basso",
+    "blog_card": "Scheda del blog",
+    "blog_posts_grid": "Articoli del blog: griglia",
+    "blog_posts_carousel": "Articoli del blog: carosello",
+    "blog_posts_editorial": "Articoli del blog: editoriale",
+    "excerpt": "Estratto"
   },
   "settings": {
     "alignment": "Allineamento",
@@ -523,7 +528,9 @@
       "description_preset": "Descrizione",
       "input_preset": "Input",
       "checkbox_preset": "Etichetta casella di spunta"
-    }
+    },
+    "blog": "Blog",
+    "post_count": "Conteggio post"
   },
   "options": {
     "adapt_to_image": "Adatta a immagine",

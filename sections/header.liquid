@@ -65,11 +65,28 @@
     assign search_class = 'mobile:hidden'
   endif
 
-  if section.settings.search_position == 'left'
-    if shop.customer_accounts_enabled
-      assign order = 'mobile_search,logo,search,menu,localization,actions'
+  # Handle localization positioning
+  if section.settings.localization_position == 'left'
+    if section.settings.search_position == 'left'
+      if shop.customer_accounts_enabled
+        assign order = 'mobile_search,logo,search,localization,menu,actions'
+      else
+        assign order = 'logo,search,localization,menu,mobile_search,actions'
+      endif
     else
-      assign order = 'logo,search,menu,localization,mobile_search,actions'
+      if shop.customer_accounts_enabled
+        assign order = 'mobile_search,logo,localization,menu,search,actions'
+      else
+        assign order = 'logo,localization,menu,search,mobile_search,actions'
+      endif
+    endif
+  else
+    if section.settings.search_position == 'left'
+      if shop.customer_accounts_enabled
+        assign order = 'mobile_search,logo,search,menu,localization,actions'
+      else
+        assign order = 'logo,search,menu,localization,mobile_search,actions'
+      endif
     endif
   endif
   capture search
@@ -623,7 +640,9 @@
 {% unless request.design_mode %}
   <script type="module">
     import { hydrate } from '@theme/section-hydration';
-    hydrate('{{ section.id }}');
+    const url = new URL(window.location.href);
+    url.searchParams.delete('page');
+    hydrate('{{ section.id }}', url);
   </script>
 {% endunless %}
 

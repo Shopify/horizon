@@ -1,6 +1,16 @@
+{%- doc -%}
+  Renders the blog post description block.
+
+  @param {object} article - The article object
+  @param {boolean} show_read_more - Whether to display the read more link
+  @param {boolean} [should_truncate] - Whether to truncate the content
+  @param {string} [onboarding_text] - Optional placeholder text for onboarding mode
+{%- enddoc -%}
+
 {% liquid
   assign block_settings = block.settings
-  assign content = article.excerpt | default: article.content
+
+  assign content = onboarding_text | default: article.excerpt | default: article.content
 
   if block_settings.type_preset == 'rte' or block_settings.type_preset == 'paragraph'
     assign is_rte = true
@@ -40,7 +50,7 @@
 
 {% if content %}
   {% assign truncatewords = 30 %}
-  {% unless article.image %}
+  {% unless should_truncate or article.image %}
     {% assign truncatewords = 90 %}
   {% endunless %}
 
@@ -53,7 +63,9 @@
 
   <{{ element }} {{ attributes }}>
     {{ content | strip_html | truncatewords: truncatewords }}
-    <a href="{{ article.url }}">{{ 'content.read_more' | t }}</a>
+    {% if show_read_more %}
+      <a href="{{ article.url }}">{{- 'content.read_more' | t -}}</a>
+    {% endif %}
   </{{ element }}>
 {% endif %}
 

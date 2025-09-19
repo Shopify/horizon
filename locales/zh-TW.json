@@ -50,6 +50,7 @@
     "scroll_to": "捲動至 {{ title }}",
     "loading_product_recommendations": "正在載入商品推薦",
     "discount": "套用折扣代碼",
+    "discount_menu": "折扣選單",
     "discount_applied": "套用的折扣代碼：{{ code }}",
     "open_cart_drawer": "開啟購物車",
     "inventory_status": "庫存狀態",
@@ -100,7 +101,8 @@
     "open_image_in_full_screen": "全螢幕開啟圖片",
     "sign_up": "註冊",
     "sort": "排序",
-    "show_all_options": "顯示所有選項"
+    "show_all_options": "顯示所有選項",
+    "open": "打開"
   },
   "content": {
     "reviews": "評論",
@@ -226,7 +228,8 @@
     "recipient_form_fields_visible": "收件人表單欄位現已可見",
     "recipient_form_fields_hidden": "收件人表單欄位現已隱藏",
     "recipient_form_error": "提交表單時發生錯誤",
-    "product_custom_property_character_count": "已使用 {{ used_chars }} 個字元/上限 {{ max_chars }} 個字元"
+    "product_custom_property_character_count": "已使用 {{ used_chars }} 個字元/上限 {{ max_chars }} 個字元",
+    "terms_and_policies": "條款與政策"
   },
   "gift_cards": {
     "issued": {
@@ -246,7 +249,12 @@
     "password": "密碼",
     "search": "搜尋",
     "product_title": "產品名稱",
-    "collection_title": "商品系列標題"
+    "collection_title": "商品系列標題",
+    "blog_posts": "部落格貼文",
+    "blog_post_title": "標題",
+    "blog_post_author": "作者",
+    "blog_post_date": "日期",
+    "blog_post_description": "您部落格貼文的內容摘錄"
   },
   "products": {
     "product": {

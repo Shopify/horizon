@@ -19,6 +19,7 @@
         echo '--mobile-card-size: ' | append: section.settings.mobile_card_size | append: ';'
       endcapture
   endcase
+
 %}
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
@@ -32,10 +33,8 @@
     gap-style
   "
   style="
-    --column-count-mobile: {{ section.settings.mobile_columns }};
     {% render 'spacing-style', settings: section.settings %}
     {% render 'gap-style', value: section.settings.gap %}
-    {{ styles }}
   "
 >
   <div class="section-resource-list__header">
@@ -81,61 +80,14 @@
     assign list_items_array = list_items | strip | split: '<!--@list/split-->'
   %}
 
-  <div
-    class="
-      resource-list
-      {% if section.settings.layout_type == 'carousel' %}
-        force-full-width
-      {% endif %}
-      {% if section.settings.carousel_on_mobile and section.settings.layout_type != 'carousel' %}
-        hidden--mobile
-      {% endif %}
-      {{ classes }}
-    "
-    style="{{ styles }}"
-    {% if section.settings.layout_type == 'grid' %}
-      data-testid="resource-list-grid"
-    {% endif %}
-  >
-    {% case section.settings.layout_type %}
-      {% when 'grid' %}
-        {{ list_items }}
-      {% when 'carousel' %}
-        {% render 'resource-list-carousel',
-          ref: 'resourceListCarousel',
-          slides: list_items_array,
-          slide_count: max_items,
-          settings: section.settings
-        %}
-      {% when 'editorial' %}
-        {% render 'editorial-product-grid', items: list_items_array %}
-    {% endcase %}
-  </div>
-
-  {% if section.settings.carousel_on_mobile and section.settings.layout_type != 'carousel' %}
-    {% liquid
-      assign mobile_carousel_gap = section.settings.columns_gap
-    %}
-    <div
-      class="
-        resource-list
-        hidden--desktop
-        force-full-width
-      "
-      style="
-        --resource-list-column-gap-desktop: {{ mobile_carousel_gap }}px;
-        --column-count: {{ section.settings.columns }};
-        --mobile-card-size: {{ section.settings.mobile_card_size }};
-      "
-    >
-      {% render 'resource-list-carousel',
-        ref: 'resourceListCarouselMobile',
-        slides: list_items_array,
-        slide_count: max_items,
-        settings: section.settings
-      %}
-    </div>
-  {% endif %}
+  {% render 'resource-list',
+    list_items: list_items,
+    list_items_array: list_items_array,
+    settings: section.settings,
+    slide_count: max_items,
+    content_type: 'products',
+    test_id: 'resource-list-grid'
+  %}
 
   <div
     class="section-resource-list__content"

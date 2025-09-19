@@ -50,6 +50,7 @@
     "scroll_to": "{{ title }}(으)로 스크롤",
     "loading_product_recommendations": "제품 추천 로드 중",
     "discount": "할인 코드 적용",
+    "discount_menu": "할인 메뉴",
     "discount_applied": "적용된 할인 코드: {{ code }}",
     "open_cart_drawer": "카트 열기",
     "pause_video": "동영상 일시 중지",
@@ -100,7 +101,8 @@
     "sign_in_options": "기타 로그인 옵션",
     "sign_up": "가입하기",
     "sort": "정렬",
-    "show_all_options": "모든 옵션 보기"
+    "show_all_options": "모든 옵션 보기",
+    "open": "열기"
   },
   "content": {
     "reviews": "리뷰",
@@ -226,7 +228,8 @@
     "recipient_form_fields_visible": "이제 수취인 양식 필드가 표시됩니다.",
     "recipient_form_fields_hidden": "이제 수취인 양식 필드가 숨겨집니다.",
     "recipient_form_error": "양식 제출과 관련하여 오류가 발생했습니다.",
-    "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }}자 입력함"
+    "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }}자 입력함",
+    "terms_and_policies": "약관 및 정책"
   },
   "gift_cards": {
     "issued": {
@@ -246,7 +249,12 @@
     "password": "비밀번호",
     "search": "검색",
     "product_title": "제품명",
-    "collection_title": "컬렉션 제목"
+    "collection_title": "컬렉션 제목",
+    "blog_posts": "블로그 게시물",
+    "blog_post_title": "제목",
+    "blog_post_author": "작성자",
+    "blog_post_date": "날짜",
+    "blog_post_description": "블로그 게시물 콘텐츠의 요약"
   },
   "products": {
     "product": {

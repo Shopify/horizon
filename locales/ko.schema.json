@@ -167,7 +167,12 @@
     "featured_image": "추천 이미지",
     "multicolumn": "여러 열",
     "product_custom_property": "특별 지침",
-    "hero_bottom_aligned": "히어로: 하단 정렬"
+    "hero_bottom_aligned": "히어로: 하단 정렬",
+    "blog_card": "블로그 카드",
+    "blog_posts_grid": "블로그 게시물: 그리드",
+    "blog_posts_carousel": "블로그 게시물: 캐러셀",
+    "blog_posts_editorial": "블로그 게시물: 에디토리얼",
+    "excerpt": "요약"
   },
   "settings": {
     "autoplay": "자동 재생",
@@ -523,7 +528,9 @@
       "description_preset": "설명",
       "input_preset": "입력",
       "checkbox_preset": "확인란 레이블"
-    }
+    },
+    "blog": "블로그",
+    "post_count": "게시물 수"
   },
   "options": {
     "adapt_to_image": "이미지에 맞춤",

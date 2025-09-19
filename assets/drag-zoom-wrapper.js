@@ -1,8 +1,12 @@
 import { clamp, preventDefault, isMobileBreakpoint } from './utilities.js';
+import { ZoomDialog } from './zoom-dialog.js';
 
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 5;
 const DEFAULT_ZOOM = 1.5;
+const DOUBLE_TAP_DELAY = 300;
+const DOUBLE_TAP_DISTANCE = 50;
+const DRAG_THRESHOLD = 10;
 
 export class DragZoomWrapper extends HTMLElement {
   #controller = new AbortController();
@@ -24,6 +28,16 @@ export class DragZoomWrapper extends HTMLElement {
   #initialized = false;
   /** @type {number | null} */
   #animationFrame = null;
+  /** @type {number} */
+  #lastTapTime = 0;
+  /** @type {Point | null} */
+  #lastTapPosition = null;
+
+  /** @type {boolean} */
+  #hasDraggedBeyondThreshold = false;
+
+  /** @type {boolean} */
+  #hasManualZoom = false;
 
   get #image() {
     return this.querySelector('img');
@@ -33,6 +47,8 @@ export class DragZoomWrapper extends HTMLElement {
     if (!this.#image) return;
 
     this.#initResizeListener();
+    this.#setupDialogCloseListener();
+
     if (!isMobileBreakpoint()) return;
 
     this.#initEventListeners();
@@ -41,6 +57,27 @@ export class DragZoomWrapper extends HTMLElement {
 
   #initResizeListener() {
     this.#resizeObserver.observe(this);
+  }
+
+  /**
+   * Override parent zoom dialog's close method to include reset functionality
+   */
+  #setupDialogCloseListener() {
+    // Find the parent zoom dialog component
+    const zoomDialog = /** @type {ZoomDialog} */ (this.closest('zoom-dialog'));
+    if (!zoomDialog || typeof zoomDialog.close !== 'function') return;
+
+    // Store reference to original close method
+    const originalClose = zoomDialog.close.bind(zoomDialog);
+
+    // Override the close method to include zoom reset
+    zoomDialog.close = async (...args) => {
+      // Reset zoom state before closing
+      this.#resetZoom();
+
+      // Call original close method
+      return await originalClose(...args);
+    };
   }
 
   #initEventListeners() {
@@ -52,7 +89,9 @@ export class DragZoomWrapper extends HTMLElement {
     this.addEventListener('touchstart', this.#handleTouchStart, options);
     this.addEventListener('touchmove', this.#handleTouchMove, options);
     this.addEventListener('touchend', this.#handleTouchEnd, options);
-    this.#image?.addEventListener('load', this.#updateTransform, { signal });
+
+    // Initialize transform immediately
+    this.#updateTransform();
   }
 
   disconnectedCallback() {
@@ -65,6 +104,7 @@ export class DragZoomWrapper extends HTMLElement {
     if (!this.#initialized && isMobileBreakpoint()) {
       this.#initEventListeners();
     }
+
     if (this.#initialized) {
       this.#requestUpdateTransform();
     }
@@ -78,37 +118,136 @@ export class DragZoomWrapper extends HTMLElement {
   #handleTouchStart = (event) => {
     preventDefault(event);
 
-    if (event.touches.length === 2) {
-      const [point1, point2] = Array.from(event.touches).map(touchToPoint);
-      if (!point1 || !point2) return;
-      this.#startZoomGesture(point1, point2);
-    } else if (event.touches.length === 1) {
-      const point = touchToPoint(event.touches[0]);
-      if (!point) return;
+    const touchCount = event.touches.length;
 
-      this.#startDragGesture(point);
+    if (touchCount === 2) {
+      // Early exit if touches are invalid
+      const touch1 = event.touches[0];
+      const touch2 = event.touches[1];
+      if (!touch1 || !touch2) return;
+
+      // Avoid object allocation by passing touches directly
+      this.#startZoomGestureFromTouches(touch1, touch2);
+    } else if (touchCount === 1) {
+      const touch = event.touches[0];
+      if (!touch) return;
+
+      // Use performance.now() for better precision and performance
+      const currentTime = performance.now();
+      const timeSinceLastTap = currentTime - this.#lastTapTime;
+
+      // Early exit if too much time has passed
+      if (timeSinceLastTap >= DOUBLE_TAP_DELAY) {
+        this.#storeTapInfo(currentTime, touch);
+        this.#startDragGestureFromTouch(touch);
+        return;
+      }
+
+      // Only check distance if we have a previous tap within time window
+      if (this.#lastTapPosition) {
+        // Distance calculation with early exit
+        const distance = getDistance(touch, this.#lastTapPosition);
+
+        if (distance < DOUBLE_TAP_DISTANCE) {
+          // This is a double-tap, handle zoom toggle
+          this.#handleDoubleTapFromTouch(touch);
+          this.#lastTapTime = 0; // Reset to prevent triple-tap
+          this.#lastTapPosition = null;
+          return;
+        }
+      }
+
+      // Store tap info for potential double-tap detection
+      this.#storeTapInfo(currentTime, touch);
+      this.#startDragGestureFromTouch(touch);
     }
   };
 
   /**
-   * Start a zoom gesture with two points
-   * @param {Point} point1
-   * @param {Point} point2
+   * Start a zoom gesture with two touches
+   * @param {Touch} touch1
+   * @param {Touch} touch2
    */
-  #startZoomGesture(point1, point2) {
-    this.#initialDistance = getDistance(point1, point2);
+  #startZoomGestureFromTouches(touch1, touch2) {
+    // Calculate initial distance between touches
+    this.#initialDistance = getDistance(touch1, touch2);
     this.#startScale = this.#scale;
     this.#isDragging = false;
   }
 
   /**
-   * Start a drag gesture with a single point
-   * @param {Point} point
+   * Start a drag gesture with a single touch
+   * @param {Touch} touch
    */
-  #startDragGesture(point) {
-    this.#startPosition = { x: point.x, y: point.y };
+  #startDragGestureFromTouch(touch) {
+    this.#startPosition = { x: touch.clientX, y: touch.clientY };
     this.#startTranslate = { x: this.#translate.x, y: this.#translate.y };
     this.#isDragging = true;
+    this.#hasDraggedBeyondThreshold = false;
+  }
+
+  /**
+   * Store tap information for double-tap detection
+   * @param {number} currentTime
+   * @param {Touch} touch
+   */
+  #storeTapInfo(currentTime, touch) {
+    this.#lastTapTime = currentTime;
+    this.#lastTapPosition = { x: touch.clientX, y: touch.clientY };
+  }
+
+  /**
+   * Handle double-tap zoom toggle from touch
+   * @param {Touch} touch - The touch where the double-tap occurred
+   */
+  #handleDoubleTapFromTouch(touch) {
+    const containerCenter = {
+      x: this.clientWidth / 2,
+      y: this.clientHeight / 2,
+    };
+
+    let targetZoom;
+
+    // If manual zoom has been used, reset to 1x
+    if (this.#hasManualZoom) {
+      targetZoom = MIN_ZOOM; // 1x
+      this.#hasManualZoom = false; // Reset the flag
+      this.#translate = { x: 0, y: 0 }; // Center the image
+    } else {
+      // Toggle between zoom levels: 1x ↔ 1.5x
+      const tolerance = 0.05; // Small tolerance for floating point comparison
+
+      if (Math.abs(this.#scale - MIN_ZOOM) < tolerance) {
+        // Currently at 1x, go to 1.5x
+        targetZoom = DEFAULT_ZOOM;
+      } else {
+        // Currently at 1.5x or any other level, go to 1x
+        targetZoom = MIN_ZOOM;
+      }
+    }
+
+    // If we're not going to 1x, adjust translation to center zoom on the tap point
+    if (targetZoom !== MIN_ZOOM) {
+      const oldScale = this.#scale;
+      this.#scale = Math.min(MAX_ZOOM, targetZoom);
+
+      // Calculate the distance from tap point to container center
+      const distanceFromCenter = {
+        x: touch.clientX - containerCenter.x,
+        y: touch.clientY - containerCenter.y,
+      };
+
+      // Adjust translation to center zoom on the tap point
+      const scaleDelta = this.#scale / oldScale - 1.0;
+      this.#translate.x -= (distanceFromCenter.x * scaleDelta) / this.#scale;
+      this.#translate.y -= (distanceFromCenter.y * scaleDelta) / this.#scale;
+    } else {
+      // Going to 1x, set the scale and center the image
+      this.#scale = targetZoom;
+      this.#translate = { x: 0, y: 0 }; // Center the image when going to 1x
+    }
+
+    this.#requestUpdateTransform();
   }
 
   /**
@@ -117,68 +256,84 @@ export class DragZoomWrapper extends HTMLElement {
   #handleTouchMove = (event) => {
     preventDefault(event);
 
-    const isZooming = event.touches.length === 2;
-    const isDragging = event.touches.length === 1 && this.#isDragging;
+    const touchCount = event.touches.length;
 
-    if (isZooming) {
-      this.#processZoomGesture(event);
-    } else if (isDragging) {
-      this.#processDragGesture(event);
+    if (touchCount === 2) {
+      const touch1 = event.touches[0];
+      const touch2 = event.touches[1];
+      if (touch1 && touch2) {
+        this.#processZoomGesture(touch1, touch2);
+      }
+    } else if (touchCount === 1 && this.#isDragging) {
+      const touch = event.touches[0];
+      if (touch) {
+        this.#processDragGesture(touch);
+      }
     }
   };
 
   /**
-   * Process zoom gesture from touch event
-   * @param {TouchEvent} event
+   * Process zoom gesture from touches
+   * @param {Touch} touch1
+   * @param {Touch} touch2
    */
-  #processZoomGesture(event) {
-    const [point1, point2] = Array.from(event.touches).map(touchToPoint);
-    if (!point1 || !point2) return;
+  #processZoomGesture(touch1, touch2) {
+    // Calculate midpoint directly without object allocation
+    const midX = (touch1.clientX + touch2.clientX) / 2;
+    const midY = (touch1.clientY + touch2.clientY) / 2;
 
-    const currentMidpoint = getMidpoint(point1, point2);
-    const currentDistance = getDistance(point1, point2);
+    // Calculate current distance between touches
+    const currentDistance = getDistance(touch1, touch2);
+
     const oldScale = this.#scale;
 
     // Calculate and apply new scale
     const newScale = (currentDistance / this.#initialDistance) * this.#startScale;
     this.#scale = clamp(newScale, MIN_ZOOM, MAX_ZOOM);
 
-    // Adjust translation to keep the pinch midpoint stationary
-    const containerCenter = {
-      x: this.clientWidth / 2,
-      y: this.clientHeight / 2,
-    };
+    // Mark that manual zoom has been used
+    this.#hasManualZoom = true;
 
-    const distanceFromCenter = {
-      x: currentMidpoint.x - containerCenter.x,
-      y: currentMidpoint.y - containerCenter.y,
-    };
+    // Adjust translation to keep the pinch midpoint stationary
+    const containerCenterX = this.clientWidth / 2;
+    const containerCenterY = this.clientHeight / 2;
+
+    const distanceFromCenterX = midX - containerCenterX;
+    const distanceFromCenterY = midY - containerCenterY;
 
     // Calculate how the image position needs to change to keep the midpoint stationary
-    // The correction factor accounts for the change in scale
     const scaleDelta = this.#scale / oldScale - 1.0;
 
     // Apply correction to prevent zooming on the opposite side of the midpoint
-    this.#translate.x -= (distanceFromCenter.x * scaleDelta) / this.#scale;
-    this.#translate.y -= (distanceFromCenter.y * scaleDelta) / this.#scale;
+    this.#translate.x -= (distanceFromCenterX * scaleDelta) / this.#scale;
+    this.#translate.y -= (distanceFromCenterY * scaleDelta) / this.#scale;
 
     this.#requestUpdateTransform();
     this.#isDragging = false;
   }
 
   /**
-   * Process drag gesture from touch event
-   * @param {TouchEvent} event
+   * Process drag gesture from touch
+   * @param {Touch} touch
    */
-  #processDragGesture(event) {
-    const point = touchToPoint(event.touches[0]);
-    if (!point) return;
+  #processDragGesture(touch) {
+    // Check if we've moved beyond the drag threshold
+    const distance = getDistance(touch, this.#startPosition);
 
-    // Calculate new translation
-    this.#translate = {
-      x: this.#startTranslate.x + (point.x - this.#startPosition.x) / this.#scale,
-      y: this.#startTranslate.y + (point.y - this.#startPosition.y) / this.#scale,
-    };
+    if (!this.#hasDraggedBeyondThreshold && distance < DRAG_THRESHOLD) {
+      // Movement is too small, don't process as drag yet
+      return;
+    }
+
+    this.#hasDraggedBeyondThreshold = true;
+
+    // Calculate movement deltas for translation
+    const dx = touch.clientX - this.#startPosition.x;
+    const dy = touch.clientY - this.#startPosition.y;
+
+    // Calculate new translation directly
+    this.#translate.x = this.#startTranslate.x + dx / this.#scale;
+    this.#translate.y = this.#startTranslate.y + dy / this.#scale;
 
     this.#requestUpdateTransform();
   }
@@ -190,55 +345,9 @@ export class DragZoomWrapper extends HTMLElement {
     if (event.touches.length === 0) {
       this.#isDragging = false;
       this.#requestUpdateTransform();
+
+      this.#hasDraggedBeyondThreshold = false;
     }
-  };
-
-  /**
-   * Get the minimum zoom for the image
-   * @returns {number | null}
-   */
-  #getMinZoom = () => {
-    const containerWidth = this.clientWidth;
-    const containerHeight = this.clientHeight;
-    const imageDimensions = this.#getImageDimensions();
-    if (!imageDimensions || !containerWidth || !containerHeight) return null;
-    const { width: imageWidth, height: imageHeight } = imageDimensions;
-
-    // Calculate minimum zoom to make image fit container
-    // Add small buffer to avoid showing whitespace at edges
-    return Math.max(containerWidth / imageWidth, containerHeight / imageHeight) + 0.001;
-  };
-
-  /**
-   * Get the dimensions of the image
-   * @returns {{ width: number, height: number } | null}
-   */
-  #getImageDimensions = () => {
-    const containerRect = this.getBoundingClientRect();
-    if (!this.#image) return null;
-    const { naturalWidth, naturalHeight } = this.#image;
-    const containerWidth = this.clientWidth;
-    const containerHeight = this.clientHeight;
-
-    if (!naturalWidth || !naturalHeight || !containerWidth || !containerHeight) return null;
-
-    const containerAspect = containerRect.width / containerRect.height;
-    const naturalAspect = naturalWidth / naturalHeight;
-
-    let imageWidth, imageHeight;
-    if (naturalAspect > containerAspect) {
-      // Image is wider than container (relative to height)
-      imageWidth = containerRect.width;
-      imageHeight = imageWidth / naturalAspect;
-    } else {
-      // Image is taller than container (relative to width)
-      imageHeight = containerRect.height;
-      imageWidth = imageHeight * naturalAspect;
-    }
-
-    if (imageWidth === 0 || imageHeight === 0) return null;
-
-    return { width: imageWidth, height: imageHeight };
   };
 
   /**
@@ -247,30 +356,75 @@ export class DragZoomWrapper extends HTMLElement {
   #constrainTranslation() {
     const containerWidth = this.clientWidth;
     const containerHeight = this.clientHeight;
-    if (!containerWidth || !containerHeight) return;
+    if (!containerWidth || !containerHeight || !this.#image) return;
 
-    const minZoom = this.#getMinZoom();
-    if (!minZoom) return;
+    // Keep scale between MIN_ZOOM (1) and MAX_ZOOM (5)
+    this.#scale = clamp(this.#scale, MIN_ZOOM, MAX_ZOOM);
 
-    this.#scale = clamp(this.#scale, minZoom, MAX_ZOOM);
+    // At minimum zoom (1x), the full image should be visible with no dragging allowed
+    if (this.#scale <= MIN_ZOOM) {
+      this.#translate.x = 0;
+      this.#translate.y = 0;
+      return;
+    }
 
-    const imageDimensions = this.#getImageDimensions();
-    if (!imageDimensions) return;
+    // Get wrapper dimensions
+    const wrapperRect = this.getBoundingClientRect();
 
-    const { width: imageWidth, height: imageHeight } = imageDimensions;
+    // Calculate ACTUAL image content dimensions at current zoom
+    // The image element may fill the wrapper, but the content has its own aspect ratio
+    const imageElement = this.#image;
+    let naturalWidth, naturalHeight;
 
-    const scaledWidth = imageWidth * this.#scale;
-    const scaledHeight = imageHeight * this.#scale;
+    // Try to get natural dimensions
+    if (imageElement.naturalWidth > 0 && imageElement.naturalHeight > 0) {
+      naturalWidth = imageElement.naturalWidth;
+      naturalHeight = imageElement.naturalHeight;
+    } else {
+      // Fallback: assume square image if we can't get natural dimensions
+      naturalWidth = wrapperRect.width;
+      naturalHeight = wrapperRect.width;
+    }
 
-    // Calculate how much the image extends beyond container
-    const excessWidth = Math.max(0, scaledWidth - containerWidth);
-    const excessHeight = Math.max(0, scaledHeight - containerHeight);
+    // Calculate how the image fits within the wrapper (object-fit: contain behavior)
+    const imageAspectRatio = naturalWidth / naturalHeight;
+    const wrapperAspectRatio = wrapperRect.width / wrapperRect.height;
 
-    const maxTranslateX = excessWidth / (2 * this.#scale);
-    const maxTranslateY = excessHeight / (2 * this.#scale);
+    let actualImageWidth, actualImageHeight;
 
+    if (imageAspectRatio > wrapperAspectRatio) {
+      // Image is wider - width fits exactly, height is smaller (letterboxed top/bottom)
+      actualImageWidth = wrapperRect.width;
+      actualImageHeight = actualImageWidth / imageAspectRatio;
+    } else {
+      // Image is taller - height fits exactly, width is smaller (letterboxed left/right)
+      actualImageHeight = wrapperRect.height;
+      actualImageWidth = actualImageHeight * imageAspectRatio;
+    }
+
+    // Apply current zoom scale
+    const scaledImageWidth = actualImageWidth * this.#scale;
+    const scaledImageHeight = actualImageHeight * this.#scale;
+
+    // SIMPLE APPROACH: Calculate constraints directly from image content dimensions
+    // If image content is larger than wrapper, calculate max translation directly
+
+    const horizontalOverflow = Math.max(0, scaledImageWidth - wrapperRect.width);
+    const verticalOverflow = Math.max(0, scaledImageHeight - wrapperRect.height);
+
+    // Max translation is half the overflow (since image starts centered)
+    const maxTranslateX = horizontalOverflow / 2 / this.#scale;
+    const maxTranslateY = verticalOverflow / 2 / this.#scale;
+
+    // Apply symmetric constraints (object-fit: contain behavior)
+    // Image starts centered, can move maxTranslate in each direction
     this.#translate.x = clamp(this.#translate.x, -maxTranslateX, maxTranslateX);
     this.#translate.y = clamp(this.#translate.y, -maxTranslateY, maxTranslateY);
+
+    // Apply final transforms to CSS
+    this.style.setProperty('--drag-zoom-scale', this.#scale.toString());
+    this.style.setProperty('--drag-zoom-translate-x', `${this.#translate.x}px`);
+    this.style.setProperty('--drag-zoom-translate-y', `${this.#translate.y}px`);
   }
 
   /**
@@ -294,16 +448,60 @@ export class DragZoomWrapper extends HTMLElement {
 
   #updateTransform = () => {
     this.#animationFrame = null;
+
     this.#constrainTranslation();
     this.style.setProperty('--drag-zoom-scale', this.#scale.toString());
     this.style.setProperty('--drag-zoom-translate-x', `${this.#translate.x}px`);
     this.style.setProperty('--drag-zoom-translate-y', `${this.#translate.y}px`);
   };
 
+  /**
+   * Reset zoom to default state (1.5x scale, centered position)
+   * Called when zoom is exited/closed
+   */
+  #resetZoom() {
+    // Reset scale and translation to defaults
+    this.#scale = DEFAULT_ZOOM;
+    this.#startScale = DEFAULT_ZOOM;
+    this.#translate.x = 0;
+    this.#translate.y = 0;
+
+    // Reset gesture state to prevent interference on next zoom open
+    this.#startPosition = { x: 0, y: 0 };
+    this.#startTranslate = { x: 0, y: 0 };
+    this.#isDragging = false;
+    this.#lastTapTime = 0;
+    this.#lastTapPosition = null;
+    this.#hasDraggedBeyondThreshold = false;
+
+    // Update CSS properties to reflect reset state
+    this.style.setProperty('--drag-zoom-scale', DEFAULT_ZOOM.toString());
+    this.style.setProperty('--drag-zoom-translate-x', '0px');
+    this.style.setProperty('--drag-zoom-translate-y', '0px');
+  }
+
   destroy() {
     this.#controller.abort();
     this.#cancelAnimationFrame();
   }
+}
+
+/**
+ * Calculate distance between two points or touches
+ * @param {Point | Touch} point1 - First point or touch
+ * @param {Point | Touch} point2 - Second point or touch
+ * @returns {number} Distance between the points
+ */
+function getDistance(point1, point2) {
+  // Handle both Point objects (x, y) and Touch objects (clientX, clientY)
+  const x1 = /** @type {Point} */ (point1).x ?? /** @type {Touch} */ (point1).clientX;
+  const y1 = /** @type {Point} */ (point1).y ?? /** @type {Touch} */ (point1).clientY;
+  const x2 = /** @type {Point} */ (point2).x ?? /** @type {Touch} */ (point2).clientX;
+  const y2 = /** @type {Point} */ (point2).y ?? /** @type {Touch} */ (point2).clientY;
+
+  const dx = x1 - x2;
+  const dy = y1 - y2;
+  return Math.sqrt(dx * dx + dy * dy);
 }
 
 if (!customElements.get('drag-zoom-wrapper')) {
@@ -317,36 +515,6 @@ if (!customElements.get('drag-zoom-wrapper')) {
  */
 
 /**
- * Convert a Touch object to a Point object
- * @param {Touch | undefined} touch
- * @returns {Point | undefined}
+ * @typedef {HTMLElement} ZoomDialogElement
+ * @property {Function} close - Method to close the zoom dialog
  */
-function touchToPoint(touch) {
-  if (!touch) return undefined;
-  return { x: touch.clientX, y: touch.clientY };
-}
-
-/**
- * Calculate the distance between two points
- * @param {Point} point1 - First point
- * @param {Point} point2 - Second point
- * @returns {number} The distance between the points
- */
-function getDistance(point1, point2) {
-  const dx = point1.x - point2.x;
-  const dy = point1.y - point2.y;
-  return Math.sqrt(dx * dx + dy * dy);
-}
-
-/**
- * Calculate the midpoint between two points
- * @param {Point} point1 - First point
- * @param {Point} point2 - Second point
- * @returns {Point} The midpoint
- */
-function getMidpoint(point1, point2) {
-  return {
-    x: (point1.x + point2.x) / 2,
-    y: (point1.y + point2.y) / 2,
-  };
-}

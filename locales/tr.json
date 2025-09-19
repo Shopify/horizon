@@ -50,6 +50,7 @@
     "scroll_to": "{{ title }} bölümüne git",
     "loading_product_recommendations": "Ürün önerileri yükleniyor",
     "discount": "İndirim kodu uygula",
+    "discount_menu": "İndirim Menüsü",
     "discount_applied": "Uygulanan indirim kodu: {{ code }}",
     "open_cart_drawer": "Sepeti aç",
     "pause_video": "Videoyu duraklat",
@@ -100,7 +101,8 @@
     "sign_in_options": "Diğer giriş yapma seçenekleri",
     "sign_up": "Kaydol",
     "sort": "Sırala",
-    "show_all_options": "Tüm seçenekleri göster"
+    "show_all_options": "Tüm seçenekleri göster",
+    "open": "Aç"
   },
   "content": {
     "reviews": "değerlendirme",
@@ -226,7 +228,8 @@
     "recipient_form_fields_visible": "Alıcı form alanları artık görünür",
     "recipient_form_fields_hidden": "Alıcı form alanları artık gizli",
     "recipient_form_error": "Form gönderimi ile ilgili bir hata oluştu",
-    "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }} karakter kullanıldı"
+    "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }} karakter kullanıldı",
+    "terms_and_policies": "Şartlar ve Politikalar"
   },
   "gift_cards": {
     "issued": {
@@ -246,7 +249,12 @@
     "password": "Parola",
     "search": "Ara",
     "product_title": "Ürün başlığı",
-    "collection_title": "Koleksiyon başlığı"
+    "collection_title": "Koleksiyon başlığı",
+    "blog_posts": "Blog Gönderileri",
+    "blog_post_title": "Başlık",
+    "blog_post_author": "Yazar",
+    "blog_post_date": "Tarih",
+    "blog_post_description": "Blog gönderinizin içeriğinden bir alıntı"
   },
   "products": {
     "product": {

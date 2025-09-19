@@ -167,7 +167,12 @@
     "rich_text_section": "Rich Text",
     "product_custom_property": "คำแนะนำพิเศษ",
     "multicolumn": "หลายคอลัมน์",
-    "hero_bottom_aligned": "Hero: จัดชิดด้านล่าง"
+    "hero_bottom_aligned": "Hero: จัดชิดด้านล่าง",
+    "blog_card": "บัตรบล็อก",
+    "blog_posts_grid": "บล็อกโพสต์: กริด",
+    "blog_posts_carousel": "บล็อกโพสต์: ภาพสไลด์",
+    "blog_posts_editorial": "บล็อกโพสต์: รูปแบบบทความ",
+    "excerpt": "เนื้อหาบางส่วน"
   },
   "settings": {
     "alignment": "การจัดแนว",
@@ -523,7 +528,9 @@
       "max_length": "จำนวนอักขระสูงสุด",
       "buyers_input": "ผู้ซื้อป้อนข้อมูล",
       "default_checkbox_label": "รวมบริการห่อของขวัญ"
-    }
+    },
+    "blog": "บล็อก",
+    "post_count": "จำนวนโพสต์"
   },
   "options": {
     "adapt_to_image": "ปรับตามรูปภาพ",

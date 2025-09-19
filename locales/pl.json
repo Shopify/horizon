@@ -52,6 +52,7 @@
     "scroll_to": "Przewiń do {{ title }}",
     "loading_product_recommendations": "Wczytywanie polecanych produktów",
     "discount": "Zastosuj kod rabatowy",
+    "discount_menu": "Menu rabatów",
     "discount_applied": "Zastosowany kod rabatowy: {{ code }}",
     "open_cart_drawer": "Otwórz koszyk",
     "pause_video": "Zatrzymaj film",
@@ -104,7 +105,8 @@
     "sign_in_options": "Inne opcje logowania",
     "sign_up": "Zarejestruj się",
     "sort": "Sortuj",
-    "show_all_options": "Pokaż wszystkie opcje"
+    "show_all_options": "Pokaż wszystkie opcje",
+    "open": "Otwórz"
   },
   "content": {
     "reviews": "recenzje",
@@ -236,7 +238,8 @@
     "recipient_form_fields_visible": "Pola formularza odbiorcy są teraz widoczne",
     "recipient_form_fields_hidden": "Pola formularza odbiorcy są teraz ukryte",
     "recipient_form_error": "Wystąpił błąd podczas przesyłania formularza",
-    "product_custom_property_character_count": "Użyte znaki: {{ used_chars }}/{{ max_chars }}"
+    "product_custom_property_character_count": "Użyte znaki: {{ used_chars }}/{{ max_chars }}",
+    "terms_and_policies": "Warunki i zasady"
   },
   "gift_cards": {
     "issued": {
@@ -266,7 +269,12 @@
     "password": "Hasło",
     "search": "Szukaj",
     "product_title": "Tytuł produktu",
-    "collection_title": "Tytuł kolekcji"
+    "collection_title": "Tytuł kolekcji",
+    "blog_posts": "Posty na blogu",
+    "blog_post_title": "Tytuł",
+    "blog_post_author": "Autor",
+    "blog_post_date": "Data",
+    "blog_post_description": "Fragment Twojego posta na blogu"
   },
   "fields": {
     "separator": "do"

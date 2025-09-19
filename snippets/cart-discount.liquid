@@ -15,101 +15,104 @@
   endfor
 
   assign discount_codes = discount_codes | uniq
+
+  # Evaluate the boolean expression for the disclosure state
+  if discount_codes.size == 0
+    assign disclosure_expanded = false
+  else
+    assign disclosure_expanded = true
+  endif
 %}
-
-<cart-discount-component
-  data-section-id="{{ section_id }}"
->
-  <accordion-custom class="cart-discount">
-    <details
-      class="details discount-details"
-      {% if discount_codes.size > 0 %}
-        open
-      {% endif %}
-      declarative-open
+<disclosure-custom class="cart-discount">
+  {% render 'disclosure-trigger',
+    controls_id: 'cart-discount-disclosure',
+    is_expanded: disclosure_expanded,
+    disclosure_name: 'accessibility.discount_menu',
+    label_text: 'content.discount'
+  %}
+  {% capture discount_content %}
+    <cart-discount-component
+      data-section-id="{{ section_id }}"
     >
-      <summary class="cart-discount__summary">
-        <span class="cart-discount__label h6">{{ 'content.discount' | t }}</span>
-
-        <span class="svg-wrapper icon-plus">
-          {{- 'icon-plus.svg' | inline_asset_content -}}
-        </span>
-      </summary>
-
-      <div class="details-content">
-        <div class="cart-discount__content">
-          <form
-            on:submit="/applyDiscount"
-            onsubmit="return false;"
-            class="cart-discount__form"
-          >
-            <label
-              for="cart-discount"
-              class="visually-hidden"
-            >
-              {{- 'accessibility.discount' | t -}}
-            </label>
-            <input
-              id="cart-discount"
-              class="cart-discount__input"
-              type="text"
-              name="discount"
-              placeholder="{{ 'content.discount_code' | t }}"
-            >
-            <button
-              type="submit"
-              class="button cart-discount__button"
-            >
-              {{ 'actions.apply' | t }}
-            </button>
-          </form>
-        </div>
-        <div
-          class="cart-discount__error hidden"
-          role="alert"
-          ref="cartDiscountError"
+      <div class="cart-discount__content">
+        <form
+          on:submit="/applyDiscount"
+          onsubmit="return false;"
+          class="cart-discount__form"
         >
-          <span class="svg-wrapper">
-            {{- 'icon-error.svg' | inline_asset_content -}}
-          </span>
-          <small
-            class="cart-discount__error-text cart-primary-typography hidden"
-            ref="cartDiscountErrorDiscountCode"
+          <label
+            for="cart-discount"
+            class="visually-hidden"
           >
-            {{ 'content.discount_code_error' | t: code: 'test' }}
-          </small>
-          <small
-            class="cart-discount__error-text cart-primary-typography hidden"
-            ref="cartDiscountErrorShipping"
+            {{- 'accessibility.discount' | t -}}
+          </label>
+          <input
+            id="cart-discount"
+            class="cart-discount__input"
+            type="text"
+            name="discount"
+            placeholder="{{ 'content.discount_code' | t }}"
+            required
           >
-            {{ 'content.shipping_discount_error' | t }}
-          </small>
-        </div>
-        <ul class="cart-discount__codes">
-          {% for discount_code in discount_codes %}
-            <li
-              class="cart-discount__pill"
-              data-discount-code="{{ discount_code }}"
-              aria-label="{{ 'accessibility.discount_applied' | t: code: discount_code }}"
-            >
-              <p class="cart-discount__pill-code">
-                {{ discount_code }}
-              </p>
-              <button
-                type="button"
-                on:click="/removeDiscount"
-                class="cart-discount__pill-remove svg-wrapper svg-wrapper--smaller button-unstyled"
-                aria-label="{{ 'actions.remove_discount' | t: code: discount_code }}"
-              >
-                {{- 'icon-filters-close.svg' | inline_asset_content -}}
-              </button>
-            </li>
-          {% endfor %}
-        </ul>
+          <button
+            type="submit"
+            class="button button--primary cart-discount__button"
+          >
+            {{ 'actions.apply' | t }}
+          </button>
+        </form>
       </div>
-    </details>
-  </accordion-custom>
-</cart-discount-component>
+      <div
+        class="cart-discount__error hidden"
+        role="alert"
+        ref="cartDiscountError"
+      >
+        <span class="svg-wrapper">
+          {{- 'icon-error.svg' | inline_asset_content -}}
+        </span>
+        <small
+          class="cart-discount__error-text cart-primary-typography hidden"
+          ref="cartDiscountErrorDiscountCode"
+        >
+          {{ 'content.discount_code_error' | t: code: 'test' }}
+        </small>
+        <small
+          class="cart-discount__error-text cart-primary-typography hidden"
+          ref="cartDiscountErrorShipping"
+        >
+          {{ 'content.shipping_discount_error' | t }}
+        </small>
+      </div>
+      <ul class="cart-discount__codes">
+        {% for discount_code in discount_codes %}
+          <li
+            class="cart-discount__pill"
+            data-discount-code="{{ discount_code }}"
+            aria-label="{{ 'accessibility.discount_applied' | t: code: discount_code }}"
+          >
+            <p class="cart-discount__pill-code">
+              {{ discount_code }}
+            </p>
+            <button
+              type="button"
+              on:click="/removeDiscount"
+              class="cart-discount__pill-remove svg-wrapper svg-wrapper--smaller button-unstyled"
+              aria-label="{{ 'actions.remove_discount' | t: code: discount_code }}"
+            >
+              {{- 'icon-filters-close.svg' | inline_asset_content -}}
+            </button>
+          </li>
+        {% endfor %}
+      </ul>
+    </cart-discount-component>
+  {% endcapture %}
+
+  {% render 'disclosure-content',
+    content: discount_content,
+    is_expanded: disclosure_expanded,
+    content_id: 'cart-discount-disclosure'
+  %}
+</disclosure-custom>
 
 {% stylesheet %}
   .cart-discount__input {
@@ -129,13 +132,6 @@
     color: rgb(var(--color-input-text-rgb) / var(--opacity-subdued-text));
   }
 
-  .cart-discount__label {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--gap-2xs);
-    font-size: var(--cart-font-size--sm);
-  }
-
   .cart-discount__pill-code {
     overflow: hidden;
     max-width: 100px;
@@ -146,16 +142,6 @@
 
   .cart-discount {
     width: 100%;
-  }
-
-  .cart-discount__summary {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .cart-discount__summary:hover {
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
   }
 
   .cart-discount__codes {
@@ -224,9 +210,5 @@
 
   .cart-discount__error-text {
     margin-block-start: var(--margin-3xs);
-  }
-
-  cart-discount-component {
-    display: flex;
   }
 {% endstylesheet %}

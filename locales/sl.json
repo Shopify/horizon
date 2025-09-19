@@ -63,7 +63,8 @@
     "increase_quantity": "Povečaj količino",
     "quantity": "Količina",
     "rating": "Ocena tega izdelka je {{ rating }} od 5",
-    "nested_product": "{{ product_title }} za {{ parent_title }}"
+    "nested_product": "{{ product_title }} za {{ parent_title }}",
+    "discount_menu": "Kode za popust"
   },
   "actions": {
     "add_to_cart": "Dodaj v košarico",
@@ -104,7 +105,8 @@
     "sign_up": "Prijava",
     "open_image_in_full_screen": "Odpri sliko v celozaslonskem načinu",
     "sort": "Razvrsti",
-    "show_all_options": "Prikaži vse možnosti"
+    "show_all_options": "Prikaži vse možnosti",
+    "open": "Odpri"
   },
   "content": {
     "reviews": "ocen.",
@@ -236,7 +238,8 @@
     "recipient_form_fields_visible": "Polja obrazca prejemnika so zdaj vidna",
     "recipient_form_fields_hidden": "Polja obrazca prejemnika so zdaj skrita",
     "recipient_form_error": "Pri pošiljanju obrazca je prišlo do napake",
-    "product_custom_property_character_count": "Uporabljeno št. znakov: {{ used_chars }}/{{ max_chars }}"
+    "product_custom_property_character_count": "Uporabljeno št. znakov: {{ used_chars }}/{{ max_chars }}",
+    "terms_and_policies": "Pogoji in pravilniki"
   },
   "gift_cards": {
     "issued": {
@@ -256,7 +259,12 @@
     "password": "Geslo",
     "search": "Išči",
     "product_title": "Naslov izdelka",
-    "collection_title": "Naslov zbirke"
+    "collection_title": "Naslov zbirke",
+    "blog_posts": "Objave v spletnem dnevniku",
+    "blog_post_title": "Naslov",
+    "blog_post_author": "Avtor",
+    "blog_post_date": "Datum",
+    "blog_post_description": "Odlomek vsebine vaše objave v spletnem dnevniku"
   },
   "products": {
     "product": {

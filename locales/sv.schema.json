@@ -167,7 +167,12 @@
     "multicolumn": "Flerkolumn",
     "rich_text_section": "RTF",
     "product_custom_property": "Särskilda instruktioner",
-    "hero_bottom_aligned": "Hero: Bottenjusterad"
+    "hero_bottom_aligned": "Hero: Bottenjusterad",
+    "blog_card": "Bloggkort",
+    "blog_posts_grid": "Bloggposter: rutnät",
+    "blog_posts_carousel": "Bloggposter: karusell",
+    "blog_posts_editorial": "Bloggposter: redaktionellt",
+    "excerpt": "Utdrag"
   },
   "settings": {
     "alignment": "Justering",
@@ -523,7 +528,9 @@
       "description_preset": "Beskrivning",
       "input_preset": "Indata",
       "checkbox_preset": "Etikett för kryssruta"
-    }
+    },
+    "blog": "Blogg",
+    "post_count": "Postantal"
   },
   "options": {
     "adapt_to_image": "Anpassa till bild",

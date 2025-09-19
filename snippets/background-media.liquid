@@ -1,7 +1,21 @@
+{%- doc -%}
+  Renders a background media
+
+  @param {string} [background_media] - The background media
+  @param {object} [background_video] - The background video
+  @param {string} [background_video_position] - The background video position
+  @param {object} [background_image] - The background image
+  @param {string} [background_image_position] - The background image position
+  @param {string} [placeholder] - The placeholder
+
+  @example
+  {% render 'background-media', background_media: background_media, background_video: background_video, background_video_position: background_video_position, background_image: background_image, background_image_position: background_image_position, placeholder: placeholder %}
+{%- enddoc -%}
+
 {% liquid
   if background_media == 'video'
-    render 'background-video', background_video: background_video, background_video_position: background_video_position, section_id: section_id, block_id: block_id, placeholder: placeholder
+    render 'background-video', background_video: background_video, background_video_position: background_video_position, placeholder: placeholder
   elsif background_media == 'image'
-    render 'background-image', background_image: background_image, background_image_position: background_image_position, section_id: section_id, block_id: block_id, placeholder: placeholder
+    render 'background-image', background_image: background_image, background_image_position: background_image_position, placeholder: placeholder
   endif
 %}

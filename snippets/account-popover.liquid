@@ -37,12 +37,10 @@
   .account-popover__panel {
     --account-popover-opacity: 0;
     --account-popover-y: 20px;
-
+    position-anchor: --account-button-trigger;
     border-radius: var(--style-border-radius-popover);
     margin: 0;
-    top: calc(var(--anchor-top) * 1px + var(--minimum-touch-target) + var(--header-padding));
     left: unset;
-    right: calc(var(--anchor-right) * 1px);
     width: max-content;
     min-width: var(--account-popover-min-width);
     box-shadow: var(--shadow-popover);
@@ -55,10 +53,17 @@
     transition-duration: 0.3s;
     transition-timing-function: var(--ease-out-quad);
     transition-behavior: allow-discrete;
+    top: calc(anchor(bottom) + var(--header-padding));
+    right: anchor(right);
 
     &:popover-open {
       --account-popover-opacity: 1;
       --account-popover-y: 0px;
+    }
+
+    @supports not (position-anchor: --account-button-trigger) {
+      top: calc(var(--anchor-top) * 1px + var(--minimum-touch-target) + var(--header-padding));
+      right: calc(var(--anchor-right) * 1px);
     }
 
     @supports not selector(:popover-open) {
@@ -71,12 +76,12 @@
 
   @starting-style {
     .account-popover__panel {
-      --account-popover-opacity: 0;
+      --account-popover-opacity: 0.7;
       --account-popover-y: 20px;
     }
 
     .account-popover__panel:popover-open {
-      --account-popover-opacity: 0;
+      --account-popover-opacity: 0.7;
       --account-popover-y: 20px;
     }
   }

@@ -62,7 +62,12 @@
   >
     {%- if resource_type == 'product' or single_thumbnail_collection -%}
       {% assign featured_image = resource.featured_image | default: resource.featured_media.preview_image %}
-
+      {% liquid
+        assign primary_focal_point_style = ''
+        if resource.media[0].presentation.focal_point != blank
+          assign primary_focal_point_style = 'object-position: ' | append: resource.media[0].presentation.focal_point | append: ';'
+        endif
+      %}
       {%- if featured_image != blank -%}
         {{
           featured_image
@@ -73,9 +78,16 @@
             widths: widths,
             sizes: image_sizes,
             transitionToProduct: settings.transition_to_main_product,
-            data-media-id: featured_image.id
+            data-media-id: featured_image.id,
+            style: primary_focal_point_style
         }}
         {%- if image_hover and resource.media.size > 1 -%}
+          {% liquid
+            assign secondary_focal_point_style = ''
+            if resource.media[1].presentation.focal_point != blank
+              assign secondary_focal_point_style = 'object-position: ' | append: resource.media[1].presentation.focal_point | append: ';'
+            endif
+          %}
           {{
             resource.media[1]
             | image_url: width: image_width
@@ -85,7 +97,8 @@
               widths: widths,
               sizes: image_sizes,
               transitionToProduct: settings.transition_to_main_product,
-              data-media-id: resource.media[1].id
+              data-media-id: resource.media[1].id,
+              style: secondary_focal_point_style
           }}
         {%- endif -%}
       {%- else -%}

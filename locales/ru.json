@@ -63,7 +63,8 @@
     "increase_quantity": "Добавить позиции",
     "quantity": "Количество",
     "rating": "Рейтинг этого продукта {{ rating }} из 5",
-    "nested_product": "{{ product_title }} для товара \"{{ parent_title }}\""
+    "nested_product": "{{ product_title }} для товара \"{{ parent_title }}\"",
+    "discount_menu": "Коды скидок"
   },
   "actions": {
     "add_to_cart": "Добавить в корзину",
@@ -104,7 +105,8 @@
     "sign_up": "Регистрация",
     "open_image_in_full_screen": "Открыть изображение во весь экран",
     "sort": "Сортировать",
-    "show_all_options": "Показать все варианты"
+    "show_all_options": "Показать все варианты",
+    "open": "Открыть"
   },
   "content": {
     "reviews": "отз.",
@@ -236,7 +238,8 @@
     "recipient_form_fields_visible": "Поля формы получателя теперь отображаются",
     "recipient_form_fields_hidden": "Поля формы получателя теперь скрыты",
     "recipient_form_error": "При отправке формы возникла ошибка",
-    "product_custom_property_character_count": "Использовано символов: {{ used_chars }}/{{ max_chars }}"
+    "product_custom_property_character_count": "Использовано символов: {{ used_chars }}/{{ max_chars }}",
+    "terms_and_policies": "Условия и политики"
   },
   "gift_cards": {
     "issued": {
@@ -256,7 +259,12 @@
     "password": "Пароль",
     "search": "Поиск",
     "product_title": "Название продукта",
-    "collection_title": "Название коллекции"
+    "collection_title": "Название коллекции",
+    "blog_posts": "Записи в блоге",
+    "blog_post_title": "Название",
+    "blog_post_author": "Автор",
+    "blog_post_date": "Дата",
+    "blog_post_description": "Фрагмент текста вашей записи в блоге"
   },
   "products": {
     "product": {

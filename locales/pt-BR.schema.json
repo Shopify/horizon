@@ -167,7 +167,12 @@
     "multicolumn": "Multicoluna",
     "rich_text_section": "Rich text",
     "product_custom_property": "Instruções especiais",
-    "hero_bottom_aligned": "Hero: Alinhado abaixo"
+    "hero_bottom_aligned": "Hero: Alinhado abaixo",
+    "blog_card": "Cartão de blog",
+    "blog_posts_grid": "Posts do blog: grade",
+    "blog_posts_carousel": "Posts do blog: carrossel",
+    "blog_posts_editorial": "Posts do blog: editorial",
+    "excerpt": "Resumo"
   },
   "settings": {
     "alignment": "Alinhamento",
@@ -523,7 +528,9 @@
       "description_preset": "Descrição",
       "input_preset": "Entrada",
       "checkbox_preset": "Etiqueta de caixa de seleção"
-    }
+    },
+    "blog": "Blog",
+    "post_count": "Contagem de publicações"
   },
   "options": {
     "adapt_to_image": "Adaptar à imagem",

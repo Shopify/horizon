@@ -50,6 +50,7 @@
     "scroll_to": "Vieritä kohtaan {{ title }}",
     "loading_product_recommendations": "Tuotesuositusten lataaminen",
     "discount": "Käytä alennuskoodia",
+    "discount_menu": "Alennusvalikko",
     "discount_applied": "Käytetty alennuskoodi: {{ code }}",
     "open_cart_drawer": "Avaa ostoskori",
     "inventory_status": "Varaston tila",
@@ -100,7 +101,8 @@
     "sign_up": "Rekisteröidy",
     "open_image_in_full_screen": "Avaa kuva koko näytön tilassa",
     "sort": "Lajittele",
-    "show_all_options": "Näytä kaikki vaihtoehdot"
+    "show_all_options": "Näytä kaikki vaihtoehdot",
+    "open": "Avaa"
   },
   "content": {
     "reviews": "arvostelua",
@@ -226,7 +228,8 @@
     "recipient_form_fields_visible": "Vastaanottajalomakekentät ovat nyt näkyvissä",
     "recipient_form_fields_hidden": "Vastaanottajalomakekentät ovat nyt piilotettuja",
     "recipient_form_error": "Lomakkeen lähettämisessä tapahtui virhe",
-    "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }} merkkiä käytetty"
+    "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }} merkkiä käytetty",
+    "terms_and_policies": "Ehdot ja käytännöt"
   },
   "gift_cards": {
     "issued": {
@@ -246,7 +249,12 @@
     "password": "Salasana",
     "search": "Hae",
     "product_title": "Tuotteen nimi",
-    "collection_title": "Kokoelman nimi"
+    "collection_title": "Kokoelman nimi",
+    "blog_posts": "Blogipostaukset",
+    "blog_post_title": "Otsikko",
+    "blog_post_author": "Tekijä",
+    "blog_post_date": "Päivämäärä",
+    "blog_post_description": "Ote blogipostauksesi sisällöstä"
   },
   "products": {
     "product": {

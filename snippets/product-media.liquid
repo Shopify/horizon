@@ -30,6 +30,7 @@
     if is_main_product_media
       assign fetch_priority = 'high'
     endif
+    assign focal_point_style = '--focal-point: ' | append: media.presentation.focal_point | append: ';'
   %}
   {% if media.media_type == 'image' %}
 

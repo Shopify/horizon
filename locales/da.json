@@ -50,6 +50,7 @@
     "scroll_to": "Scroll til {{ title }}",
     "loading_product_recommendations": "Indlæser produktanbefalinger",
     "discount": "Anvend en rabatkode",
+    "discount_menu": "Rabatmenu",
     "discount_applied": "Anvendt rabatkode: {{ code }}",
     "open_cart_drawer": "Åbn indkøbskurv",
     "pause_video": "Sæt video på pause",
@@ -100,7 +101,8 @@
     "open_image_in_full_screen": "Åbn billede i fuld skærm",
     "sign_in_options": "Andre muligheder for at logge ind",
     "sort": "Sortér",
-    "show_all_options": "Vis alle muligheder"
+    "show_all_options": "Vis alle muligheder",
+    "open": "Åbn"
   },
   "content": {
     "reviews": "anmeldelser",
@@ -226,7 +228,8 @@
     "recipient_form_fields_visible": "Modtagerformularfelterne er nu synlige",
     "recipient_form_fields_hidden": "Modtagerformularfelterne er nu skjulte",
     "recipient_form_error": "Der opstod en fejl ved indsendelsen af formularen",
-    "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }} tegn brugt"
+    "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }} tegn brugt",
+    "terms_and_policies": "Vilkår og politikker"
   },
   "gift_cards": {
     "issued": {
@@ -246,7 +249,12 @@
     "password": "Adgangskode",
     "search": "Søg",
     "product_title": "Produkttitel",
-    "collection_title": "Kollektionstitel"
+    "collection_title": "Kollektionstitel",
+    "blog_posts": "Blogopslag",
+    "blog_post_title": "Titel",
+    "blog_post_author": "Forfatter",
+    "blog_post_date": "Dato",
+    "blog_post_description": "Et uddrag fra dit blogopslag"
   },
   "products": {
     "product": {

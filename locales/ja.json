@@ -50,6 +50,7 @@
     "scroll_to": "{{ title }}までスクロール",
     "loading_product_recommendations": "商品のおすすめを読み込んでいます",
     "discount": "クーポンコードを適用する",
+    "discount_menu": "割引メニュー",
     "discount_applied": "適用クーポンコード:{{ code }}",
     "open_cart_drawer": "カートを開く",
     "pause_video": "動画を一時停止",
@@ -100,7 +101,8 @@
     "sign_in_options": "その他のログインオプション",
     "sign_up": "サインアップする",
     "sort": "並び替え",
-    "show_all_options": "すべてのオプションを表示する"
+    "show_all_options": "すべてのオプションを表示する",
+    "open": "開く"
   },
   "content": {
     "reviews": "レビュー",
@@ -226,7 +228,8 @@
     "recipient_form_fields_visible": "受信者フォームフィールドが表示されました",
     "recipient_form_fields_hidden": "受信者フォームフィールドが非表示になりました",
     "recipient_form_error": "フォームの送信の際にエラーが発生しました",
-    "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }}文字使用"
+    "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }}文字使用",
+    "terms_and_policies": "利用規約とポリシー"
   },
   "gift_cards": {
     "issued": {
@@ -246,7 +249,12 @@
     "password": "パスワード",
     "search": "検索",
     "product_title": "商品名",
-    "collection_title": "コレクションのタイトル"
+    "collection_title": "コレクションのタイトル",
+    "blog_posts": "ブログ記事",
+    "blog_post_title": "タイトル",
+    "blog_post_author": "作成者",
+    "blog_post_date": "日付",
+    "blog_post_description": "ブログ記事の内容の抜粋"
   },
   "products": {
     "product": {

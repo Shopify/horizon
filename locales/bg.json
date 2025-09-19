@@ -61,7 +61,8 @@
     "increase_quantity": "Увеличаване на количеството",
     "quantity": "Количество",
     "rating": "Оценката за този продукт е {{ rating }} от 5",
-    "nested_product": "{{ product_title }} за {{ parent_title }}"
+    "nested_product": "{{ product_title }} за {{ parent_title }}",
+    "discount_menu": "Кодове за отстъпка"
   },
   "actions": {
     "add_to_cart": "Добавяне към количката",
@@ -100,7 +101,8 @@
     "sign_in_options": "Други опции за влизане",
     "open_image_in_full_screen": "Отваряне на изображението на цял екран",
     "sort": "Сортиране",
-    "show_all_options": "Показване на всички опции"
+    "show_all_options": "Показване на всички опции",
+    "open": "Отваряне"
   },
   "content": {
     "reviews": "мнения",
@@ -226,7 +228,8 @@
     "recipient_form_fields_visible": "Полетата във формуляра за получателя вече са видими",
     "recipient_form_fields_hidden": "Полетата във формуляра за получателя вече са скрити",
     "recipient_form_error": "Възникна грешка при подаването на формуляра",
-    "product_custom_property_character_count": "Използвани знаци: {{ used_chars }}/{{ max_chars }}"
+    "product_custom_property_character_count": "Използвани знаци: {{ used_chars }}/{{ max_chars }}",
+    "terms_and_policies": "Условия и политики"
   },
   "gift_cards": {
     "issued": {
@@ -246,7 +249,12 @@
     "password": "Парола",
     "search": "Търсене",
     "product_title": "Название на продукта",
-    "collection_title": "Название на колекцията"
+    "collection_title": "Название на колекцията",
+    "blog_posts": "Публикации в блогове",
+    "blog_post_title": "Заглавие",
+    "blog_post_author": "Автор",
+    "blog_post_date": "Дата",
+    "blog_post_description": "Откъс от съдържанието на Вашата публикация в блога"
   },
   "products": {
     "product": {

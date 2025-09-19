@@ -30,9 +30,11 @@
   {% endfor %}
 {% endcapture %}
 
-{% capture slideshow_arrows %}
-  {% render 'slideshow-arrows', icon_style: settings.icons_style, icon_shape: settings.icons_shape %}
-{% endcapture %}
+{% if settings.icons_style != 'none' %}
+  {% capture slideshow_arrows %}
+    {% render 'slideshow-arrows', icon_style: settings.icons_style, icon_shape: settings.icons_shape %}
+  {% endcapture %}
+{% endif %}
 
 <div
   class="resource-list__carousel"

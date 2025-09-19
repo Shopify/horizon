@@ -167,7 +167,12 @@
     "description": "描述",
     "featured_image": "配图",
     "multicolumn": "多列",
-    "product_custom_property": "特殊说明"
+    "product_custom_property": "特殊说明",
+    "blog_card": "博客卡",
+    "blog_posts_grid": "博客文章：网格",
+    "blog_posts_carousel": "博客文章：轮播",
+    "blog_posts_editorial": "博客文章：编辑精选",
+    "excerpt": "摘录"
   },
   "settings": {
     "alignment": "对齐方式",
@@ -523,7 +528,9 @@
       "description_preset": "描述",
       "input_preset": "输入",
       "checkbox_preset": "复选框标签"
-    }
+    },
+    "blog": "博客",
+    "post_count": "帖子数量"
   },
   "options": {
     "adapt_to_image": "适应图片",

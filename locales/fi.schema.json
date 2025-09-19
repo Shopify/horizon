@@ -167,7 +167,12 @@
     "multicolumn": "Monisarakkeinen",
     "rich_text_section": "Rich text",
     "product_custom_property": "Erityisohjeet",
-    "hero_bottom_aligned": "Hero: Alareunaan tasattu"
+    "hero_bottom_aligned": "Hero: Alareunaan tasattu",
+    "blog_card": "Blogikortti",
+    "blog_posts_grid": "Blogipostaukset: Ruudukko",
+    "blog_posts_carousel": "Blogipostaukset: Karuselli",
+    "blog_posts_editorial": "Blogipostaukset: Editoriaali",
+    "excerpt": "Ote"
   },
   "settings": {
     "alignment": "Tasaus",
@@ -523,7 +528,9 @@
       "description_preset": "Kuvaus",
       "input_preset": "Syöte",
       "checkbox_preset": "Valintaruudun merkintä"
-    }
+    },
+    "blog": "Blogi",
+    "post_count": "Postausten määrä"
   },
   "options": {
     "adapt_to_image": "Sovita kuvaan",

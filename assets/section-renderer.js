@@ -31,17 +31,18 @@ class SectionRenderer {
    * @param {string} sectionId - The section ID
    * @param {Object} [options] - The options
    * @param {boolean} [options.cache] - Whether to use the cache
+   * @param {URL} [options.url] - The URL to render the section from
    * @returns {Promise<string>} The rendered section HTML
    */
   async renderSection(sectionId, options) {
     const { cache = !Shopify.designMode } = options ?? {};
-
+    const { url } = options ?? {};
     this.#abortPendingMorph(sectionId);
 
     const abortController = new AbortController();
     this.#abortControllersBySectionId.set(sectionId, abortController);
 
-    const sectionHTML = await this.getSectionHTML(sectionId, cache);
+    const sectionHTML = await this.getSectionHTML(sectionId, cache, url);
 
     if (!abortController.signal.aborted) {
       this.#abortControllersBySectionId.delete(sectionId);

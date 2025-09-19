@@ -167,7 +167,12 @@
     "description": "Descripción",
     "featured_image": "Imagen destacada",
     "multicolumn": "Multicolumna",
-    "product_custom_property": "Instrucciones especiales"
+    "product_custom_property": "Instrucciones especiales",
+    "blog_card": "Tarjeta de blog",
+    "blog_posts_grid": "Artículos del blog: cuadrícula",
+    "blog_posts_carousel": "Artículos del blog: carrusel",
+    "blog_posts_editorial": "Artículos del blog: editorial",
+    "excerpt": "Extracto"
   },
   "settings": {
     "alignment": "Alineación",
@@ -523,7 +528,9 @@
       "description_preset": "Descripción",
       "input_preset": "Entrada",
       "checkbox_preset": "Etiqueta de casilla de verificación"
-    }
+    },
+    "blog": "Blog",
+    "post_count": "Publicar recuento"
   },
   "options": {
     "adapt_to_image": "Adaptar a la imagen",

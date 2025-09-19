@@ -167,7 +167,12 @@
     "featured_image": "Fremhevet bilde",
     "multicolumn": "Flerkolonne",
     "product_custom_property": "Spesialinstruksjoner",
-    "hero_bottom_aligned": "Hero: Bunnjustert"
+    "hero_bottom_aligned": "Hero: Bunnjustert",
+    "blog_card": "Bloggkort",
+    "blog_posts_grid": "Blogginnlegg: Rutenett",
+    "blog_posts_carousel": "Blogginnlegg: Karusell",
+    "blog_posts_editorial": "Blogginnlegg: Redaksjonelt",
+    "excerpt": "Utdrag"
   },
   "settings": {
     "alignment": "Justering",
@@ -523,7 +528,9 @@
       "description_preset": "Beskrivelse",
       "input_preset": "Inndata",
       "checkbox_preset": "Etikett for avmerkingsboks"
-    }
+    },
+    "blog": "Blogg",
+    "post_count": "Antall innlegg"
   },
   "options": {
     "adapt_to_image": "Tilpass til bilde",

@@ -1,33 +1,37 @@
 {%- doc -%}
-  Display an image of a collection inside a collection card.
-  Intended for collection-card.liquid block.
+  Renders the blog article image block for use within featured blog posts cards.
 
-  @param {string} parent_block_id - The block.id of the collection-card block
-
-  @example
-  {% content_for 'block', type: '_collection-card-image', id: 'collection-card-image', parent_block_id: block.id %}
+  @param {object} image - The image object
+  @param {string} parent_block_id - The block.id of the parent blog post card
 {%- enddoc -%}
 
 {% comment %} Render using unified resource image component {% endcomment %}
-{% comment %} Note: image_source auto-determined from closest.collection for collections {% endcomment %}
 {% render 'resource-image',
-  content_type: 'collections',
-  image_source: blank,
+  content_type: 'articles',
+  image_source: image,
   parent_block_id: parent_block_id,
   block_settings: block.settings,
   section_settings: section.settings,
   block_attributes: block.shopify_attributes
 %}
 
+{% stylesheet %}
+  .featured-blog-posts-card__image {
+    width: 100%;
+  }
+
+  .featured-blog-posts-card__image .blog-placeholder-svg {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+{% endstylesheet %}
+
 {% schema %}
 {
-  "name": "t:names.collection_card_image",
+  "name": "t:names.image",
   "tag": null,
   "settings": [
-    {
-      "type": "paragraph",
-      "content": "t:content.resource_reference_collection_card_image"
-    },
     {
       "type": "select",
       "id": "image_ratio",
@@ -51,54 +55,7 @@
           "label": "t:options.landscape"
         }
       ],
-      "default": "portrait"
-    },
-    {
-      "type": "checkbox",
-      "id": "toggle_overlay",
-      "label": "t:settings.media_overlay"
-    },
-    {
-      "type": "color",
-      "id": "overlay_color",
-      "label": "t:settings.overlay_color",
-      "alpha": true,
-      "default": "#00000026",
-      "visible_if": "{{ block.settings.toggle_overlay }}"
-    },
-    {
-      "type": "select",
-      "id": "overlay_style",
-      "label": "t:settings.overlay_style",
-      "options": [
-        {
-          "value": "solid",
-          "label": "t:options.solid"
-        },
-        {
-          "value": "gradient",
-          "label": "t:options.gradient"
-        }
-      ],
-      "default": "solid",
-      "visible_if": "{{ block.settings.toggle_overlay }}"
-    },
-    {
-      "type": "select",
-      "id": "gradient_direction",
-      "label": "t:settings.gradient_direction",
-      "options": [
-        {
-          "value": "to top",
-          "label": "t:options.up"
-        },
-        {
-          "value": "to bottom",
-          "label": "t:options.down"
-        }
-      ],
-      "default": "to top",
-      "visible_if": "{{ block.settings.toggle_overlay and block.settings.overlay_style == 'gradient' }}"
+      "default": "square"
     },
     {
       "type": "header",

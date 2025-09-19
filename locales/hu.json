@@ -61,7 +61,8 @@
     "increase_quantity": "Mennyiség növelése",
     "quantity": "Mennyiség",
     "rating": "A termék értékelése: {{ rating }} / 5",
-    "nested_product": "{{ product_title }} – {{ parent_title }}"
+    "nested_product": "{{ product_title }} – {{ parent_title }}",
+    "discount_menu": "Kedvezmény kódok"
   },
   "actions": {
     "add_to_cart": "Hozzáadás a kosárhoz",
@@ -100,7 +101,8 @@
     "sign_up": "Regisztráció",
     "open_image_in_full_screen": "Kép megnyitása teljes képernyőn",
     "sort": "Rendezés",
-    "show_all_options": "Összes lehetőség megjelenítése"
+    "show_all_options": "Összes lehetőség megjelenítése",
+    "open": "Megnyitás"
   },
   "content": {
     "reviews": "összegzés",
@@ -226,7 +228,8 @@
     "recipient_form_fields_visible": "A kedvezményezettre vonatkozó űrlapmezők most láthatók",
     "recipient_form_fields_hidden": "A kedvezményezettre vonatkozó űrlapmezők most el vannak rejtve",
     "recipient_form_error": "Hiba történt az űrlap beküldése során",
-    "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }} karakter felhasználva"
+    "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }} karakter felhasználva",
+    "terms_and_policies": "Feltételek és irányelvek"
   },
   "gift_cards": {
     "issued": {
@@ -246,7 +249,12 @@
     "password": "Jelszó",
     "search": "Keresés",
     "product_title": "Termék megnevezése",
-    "collection_title": "Kollekció megnevezése"
+    "collection_title": "Kollekció megnevezése",
+    "blog_posts": "Blogbejegyzések",
+    "blog_post_title": "Cím",
+    "blog_post_author": "Szerző",
+    "blog_post_date": "Dátum",
+    "blog_post_description": "Összefoglaló a blogbejegyzésed tartalmáról"
   },
   "products": {
     "product": {

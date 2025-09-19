@@ -50,6 +50,7 @@
     "scroll_to": "Scrol naar {{ title }}",
     "loading_product_recommendations": "Productaanbevelingen laden",
     "discount": "Kortingscode toepassen",
+    "discount_menu": "Kortingsmenu",
     "discount_applied": "Toegepaste kortingscode: {{ code }}",
     "open_cart_drawer": "Winkelwagen openen",
     "inventory_status": "Voorraadstatus",
@@ -100,7 +101,8 @@
     "sign_up": "Aanmelden",
     "open_image_in_full_screen": "Afbeelding openen in volledig scherm",
     "sort": "Sorteren",
-    "show_all_options": "Alle opties tonen"
+    "show_all_options": "Alle opties tonen",
+    "open": "Openen"
   },
   "content": {
     "reviews": "recensies",
@@ -226,7 +228,8 @@
     "recipient_form_fields_visible": "De formuliervelden voor de ontvanger zijn nu zichtbaar",
     "recipient_form_fields_hidden": "De formuliervelden voor de ontvanger zijn nu verborgen",
     "recipient_form_error": "Er is een fout opgetreden bij de indiening van het formulier",
-    "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }} tekens gebruikt"
+    "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }} tekens gebruikt",
+    "terms_and_policies": "Voorwaarden en beleid"
   },
   "gift_cards": {
     "issued": {
@@ -246,7 +249,12 @@
     "password": "Wachtwoord",
     "search": "Zoeken",
     "product_title": "Producttitel",
-    "collection_title": "Collectietitel"
+    "collection_title": "Collectietitel",
+    "blog_posts": "Blogposts",
+    "blog_post_title": "Titel",
+    "blog_post_author": "Auteur",
+    "blog_post_date": "Datum",
+    "blog_post_description": "Een uittreksel van de content van je blogpost"
   },
   "products": {
     "product": {

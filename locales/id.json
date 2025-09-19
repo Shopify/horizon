@@ -61,7 +61,8 @@
     "increase_quantity": "Tambah jumlah",
     "quantity": "Jumlah",
     "rating": "Peringkat produk ini adalah {{ rating }} dari 5",
-    "nested_product": "{{ product_title }} untuk {{ parent_title }}"
+    "nested_product": "{{ product_title }} untuk {{ parent_title }}",
+    "discount_menu": "Kode Diskon"
   },
   "actions": {
     "add_to_cart": "Tambahkan ke keranjang",
@@ -100,7 +101,8 @@
     "open_image_in_full_screen": "Buka gambar dalam layar penuh",
     "sign_up": "Daftar",
     "sort": "Urutkan",
-    "show_all_options": "Tampilkan semua opsi"
+    "show_all_options": "Tampilkan semua opsi",
+    "open": "Buka"
   },
   "content": {
     "reviews": "ulasan",
@@ -226,7 +228,8 @@
     "recipient_form_fields_visible": "Kolom formulir penerima sekarang ditampilkan",
     "recipient_form_fields_hidden": "Kolom formulir penerima sekarang disembunyikan",
     "recipient_form_error": "Terjadi kesalahan saat pengiriman formulir",
-    "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }} karakter digunakan"
+    "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }} karakter digunakan",
+    "terms_and_policies": "Syarat dan Kebijakan"
   },
   "gift_cards": {
     "issued": {
@@ -246,7 +249,12 @@
     "password": "Sandi",
     "search": "Cari",
     "product_title": "Judul produk",
-    "collection_title": "Judul koleksi"
+    "collection_title": "Judul koleksi",
+    "blog_posts": "Postingan Blog",
+    "blog_post_title": "Judul",
+    "blog_post_author": "Penulis",
+    "blog_post_date": "Tanggal",
+    "blog_post_description": "Cuplikan dari konten postingan blog Anda"
   },
   "products": {
     "product": {

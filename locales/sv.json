@@ -50,6 +50,7 @@
     "scroll_to": "Rulla till {{ title }}",
     "loading_product_recommendations": "Läser in produktrekommendationer",
     "discount": "Använd rabattkod",
+    "discount_menu": "Rabattmeny",
     "discount_applied": "Tillämpad rabattkod: {{ code }}",
     "open_cart_drawer": "Öppna varukorg",
     "pause_video": "Pausa video",
@@ -100,7 +101,8 @@
     "sign_in_options": "Andra inloggningsalternativ",
     "sign_up": "Registrera dig",
     "sort": "Sortera",
-    "show_all_options": "Visa alla alternativ"
+    "show_all_options": "Visa alla alternativ",
+    "open": "Öppna"
   },
   "content": {
     "reviews": "recensioner",
@@ -226,7 +228,8 @@
     "recipient_form_fields_visible": "Formulärfälten för mottagare är nu synliga",
     "recipient_form_fields_hidden": "Formulärfälten för mottagare är nu dolda",
     "recipient_form_error": "Ett fel uppstod när formuläret skulle skickas in",
-    "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }} tecken har använts"
+    "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }} tecken har använts",
+    "terms_and_policies": "Villkor och policyer"
   },
   "gift_cards": {
     "issued": {
@@ -246,7 +249,12 @@
     "password": "Lösenord",
     "search": "Sök",
     "product_title": "Produktnamn",
-    "collection_title": "Produktseriens namn"
+    "collection_title": "Produktseriens namn",
+    "blog_posts": "Bloggposter",
+    "blog_post_title": "Titel",
+    "blog_post_author": "Författare",
+    "blog_post_date": "Datum",
+    "blog_post_description": "Ett utdrag ur bloggpostens innehåll"
   },
   "products": {
     "product": {

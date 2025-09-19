@@ -52,6 +52,7 @@
     "scroll_to": "Přejděte na {{ title }}",
     "loading_product_recommendations": "Načítají se doporučené produkty",
     "discount": "Použít slevový kód",
+    "discount_menu": "Nabídka slev",
     "discount_applied": "Uplatněný slevový kód: {{ code }}",
     "open_cart_drawer": "Otevřít košík",
     "inventory_status": "Stav skladových zásob",
@@ -104,7 +105,8 @@
     "sign_up": "Zaregistrovat se",
     "open_image_in_full_screen": "Otevřít obrázek na celou obrazovku",
     "sort": "Třídit",
-    "show_all_options": "Zobrazit všechny možnosti"
+    "show_all_options": "Zobrazit všechny možnosti",
+    "open": "Otevřít"
   },
   "content": {
     "reviews": "recen.",
@@ -236,7 +238,8 @@
     "recipient_form_fields_visible": "Pole formuláře příjemce jsou nyní viditelná",
     "recipient_form_fields_hidden": "Pole formuláře příjemce jsou nyní skrytá",
     "recipient_form_error": "Vyskytla se chyba při odesílání formuláře",
-    "product_custom_property_character_count": "Použito {{ used_chars }}/{{ max_chars }} znaků"
+    "product_custom_property_character_count": "Použito {{ used_chars }}/{{ max_chars }} znaků",
+    "terms_and_policies": "Podmínky a zásady"
   },
   "gift_cards": {
     "issued": {
@@ -256,7 +259,12 @@
     "password": "Heslo",
     "search": "Vyhledat",
     "product_title": "Název produktu",
-    "collection_title": "Název kolekce"
+    "collection_title": "Název kolekce",
+    "blog_posts": "Blogové příspěvky",
+    "blog_post_title": "Název",
+    "blog_post_author": "Autor",
+    "blog_post_date": "Datum",
+    "blog_post_description": "Úryvek z obsahu vašeho blogového příspěvku"
   },
   "products": {
     "product": {

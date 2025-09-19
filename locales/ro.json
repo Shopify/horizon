@@ -62,7 +62,8 @@
     "increase_quantity": "Crește cantitatea",
     "quantity": "Cantitate",
     "rating": "Evaluarea acestui produs este de {{ rating }} din 5",
-    "nested_product": "{{ product_title }} pentru {{ parent_title }}"
+    "nested_product": "{{ product_title }} pentru {{ parent_title }}",
+    "discount_menu": "Coduri de reducere"
   },
   "actions": {
     "add_to_cart": "Adaugă în coș",
@@ -102,7 +103,8 @@
     "sign_in_options": "Alte opțiuni de conectare",
     "sign_up": "Înscrie-te",
     "sort": "Sortează",
-    "show_all_options": "Afișează toate opțiunile"
+    "show_all_options": "Afișează toate opțiunile",
+    "open": "Deschide"
   },
   "content": {
     "reviews": "recenzii",
@@ -231,7 +233,8 @@
     "recipient_form_fields_visible": "Câmpurile formularului pentru destinatar sunt acum vizibile",
     "recipient_form_fields_hidden": "Câmpurile formularului pentru destinatar sunt acum ascunse",
     "recipient_form_error": "A apărut o eroare la trimiterea formularului",
-    "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }} caractere folosite"
+    "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }} caractere folosite",
+    "terms_and_policies": "Termeni și politici"
   },
   "gift_cards": {
     "issued": {
@@ -251,7 +254,12 @@
     "password": "Parolă",
     "search": "Caută",
     "product_title": "Titlul produsului",
-    "collection_title": "Titlul colecției"
+    "collection_title": "Titlul colecției",
+    "blog_posts": "Postări pe blog",
+    "blog_post_title": "Titlu",
+    "blog_post_author": "Autor",
+    "blog_post_date": "Data",
+    "blog_post_description": "Un fragment din postarea pe blog"
   },
   "products": {
     "product": {

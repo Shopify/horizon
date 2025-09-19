@@ -61,7 +61,8 @@
     "increase_quantity": "Tăng số lượng",
     "rating": "Sản phẩm này được đánh giá {{ rating }}/5",
     "quantity": "Số lượng",
-    "nested_product": "{{ product_title }} cho {{ parent_title }}"
+    "nested_product": "{{ product_title }} cho {{ parent_title }}",
+    "discount_menu": "Mã giảm giá"
   },
   "actions": {
     "add_to_cart": "Thêm vào giỏ hàng",
@@ -100,7 +101,8 @@
     "sign_up": "Đăng ký",
     "open_image_in_full_screen": "Mở hình ảnh ở chế độ toàn màn hình",
     "sort": "Sắp xếp",
-    "show_all_options": "Hiển thị tất cả tùy chọn"
+    "show_all_options": "Hiển thị tất cả tùy chọn",
+    "open": "Mở"
   },
   "content": {
     "reviews": "đánh giá",
@@ -226,7 +228,8 @@
     "recipient_form_fields_visible": "Các trường biểu mẫu cho người nhận hiện đã được hiển thị",
     "recipient_form_fields_hidden": "Các trường biểu mẫu cho người nhận hiện đã được ẩn",
     "recipient_form_error": "Đã xảy ra lỗi khi gửi biểu mẫu",
-    "product_custom_property_character_count": "Đã sử dụng {{ used_chars }}/{{ max_chars }} ký tự"
+    "product_custom_property_character_count": "Đã sử dụng {{ used_chars }}/{{ max_chars }} ký tự",
+    "terms_and_policies": "Điều khoản và Chính sách"
   },
   "gift_cards": {
     "issued": {
@@ -246,7 +249,12 @@
     "password": "Mật khẩu",
     "search": "Tìm kiếm",
     "product_title": "Tiêu đề sản phẩm",
-    "collection_title": "Tiêu đề bộ sưu tập"
+    "collection_title": "Tiêu đề bộ sưu tập",
+    "blog_posts": "Bài viết blog",
+    "blog_post_title": "Tiêu đề",
+    "blog_post_author": "Tác giả",
+    "blog_post_date": "Ngày",
+    "blog_post_description": "Một đoạn trích nội dung bài viết blog của bạn"
   },
   "products": {
     "product": {

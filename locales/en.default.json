@@ -17,6 +17,7 @@
     "country_results_count": "{{ count }} results",
     "decrease_quantity": "Decrease quantity",
     "discount": "Apply a discount code",
+    "discount_menu": "Discount Codes",
     "discount_applied": "Applied discount code: {{ code }}",
     "filters": "Filters",
     "filter_count": {
@@ -68,6 +69,7 @@
     // Button to remove all applied product filters
     "clear_all": "Clear all",
     "close": "Close",
+    "open": "Open",
     // Continue shopping link on the cart page which takes the user back to a collection page
     "continue_shopping": "Continue shopping",
     "enter_password": "Enter password",
@@ -146,6 +148,7 @@
   "content": {
     "discount": "Discount",
     "account_title": "Account",
+    "terms_and_policies": "Terms and Policies",
     "account_title_personalized": "Hi {{ first_name }}",
     "account_orders": "Orders",
     "account_profile": "Profile",
@@ -296,7 +299,12 @@
     "password": "Password",
     "search": "Search",
     "product_title": "Product title",
-    "collection_title": "Collection title"
+    "collection_title": "Collection title",
+    "blog_posts": "Blog Posts",
+    "blog_post_title": "Title",
+    "blog_post_author": "Author",
+    "blog_post_date": "Date",
+    "blog_post_description": "An excerpt of your blog post's content"
   },
   "products": {
     "product": {

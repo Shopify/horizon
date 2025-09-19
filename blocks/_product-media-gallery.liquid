@@ -455,6 +455,12 @@
                     aria-selected="true"
                   {% endif %}
                 >
+                  {% liquid
+                    assign focal_point_style = ''
+                    if media.presentation.focal_point != blank
+                      assign focal_point_style = 'object-position: ' | append: media.presentation.focal_point | append: ';'
+                    endif
+                  %}
                   {{
                     media.preview_image
                     | image_url: width: 1024
@@ -462,7 +468,8 @@
                       loading: 'lazy',
                       sizes: 'auto, 110, (min-width: 750px) 160',
                       widths: '240, 352, 832, 1200',
-                      alt: media.alt
+                      alt: media.alt,
+                      style: focal_point_style
                     | escape
                   }}
                 </button>
@@ -476,7 +483,7 @@
           {%- for media in sorted_media -%}
             <li
               id="product-{{ media.id}}-{{ forloop.index }}"
-              class="{{ product_media_container_class }} product-media-container--{{ media.media_type }}{% if media.media_type == 'image' %} product-media-container--zoomable{% endif %}"
+              class="{{ product_media_container_class | remove: 'media-fit-cover' }} product-media-container--{{ media.media_type }}{% if media.media_type == 'image' %} product-media-container--zoomable{% endif %}"
               style="{% if block_settings.aspect_ratio == 'adapt' %} --media-preview-ratio: {{ media.preview_image.aspect_ratio | default: 1.0 }};{% endif %}"
               ref="media[]"
               {% if media.media_type == 'image' %}

@@ -1,0 +1,59 @@
+{% doc %}
+  Disclosure Content Component
+
+  Renders a collapsible content area with proper accessibility attributes.
+
+  @param is_expanded - {Boolean} Whether the disclosure is currently expanded
+  @param content - {String} The HTML content to display
+  @param content_id - {String} ID for the content area
+
+  @example
+  {% capture discount_content %}
+    <!-- Your content here -->
+  {% endcapture %}
+
+  {% render 'disclosure-content',
+    content: discount_content,
+    is_expanded: disclosure_expanded,
+    content_id: 'cart-discount-disclosure'
+  %}
+{% enddoc %}
+
+<div
+  class="disclosure-content"
+  {% unless is_expanded %}
+    inert
+  {% endunless %}
+  ref="disclosureContent"
+>
+  <div id="{{ content_id }}">
+    {{ content }}
+  </div>
+</div>
+
+{% stylesheet %}
+  .disclosure-content {
+    display: grid;
+    grid-template-rows: 1fr;
+    /* stylelint-disable-next-line plugin/no-unsupported-browser-features */
+    clip-path: inset(-5% -5% 0 -5%);
+    opacity: 1;
+
+    &[inert] {
+      grid-template-rows: 0fr;
+      opacity: 0;
+    }
+
+    & > * {
+      min-height: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .disclosure-content {
+      transition-property: grid-template-rows, opacity;
+      transition-duration: var(--surface-transition-duration);
+      transition-timing-function: var(--surface-transition-timing);
+    }
+  }
+{% endstylesheet %}

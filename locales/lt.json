@@ -63,7 +63,8 @@
     "increase_quantity": "Padidinti kiekį",
     "rating": "Šio produkto vertinimas: {{ rating }} iš 5",
     "quantity": "Kiekis",
-    "nested_product": "{{ product_title }} ({{ parent_title }})"
+    "nested_product": "{{ product_title }} ({{ parent_title }})",
+    "discount_menu": "Nuolaidų kodai"
   },
   "actions": {
     "add_to_cart": "Įdėti į krepšelį",
@@ -104,7 +105,8 @@
     "sign_up": "Prisiregistruoti",
     "open_image_in_full_screen": "Atidaryti vaizdą per visą ekraną",
     "sort": "Rūšiuoti",
-    "show_all_options": "Rodyti visus variantus"
+    "show_all_options": "Rodyti visus variantus",
+    "open": "Atidaryti"
   },
   "content": {
     "reviews": "apžvalgos (-ų; -a)",
@@ -236,7 +238,8 @@
     "recipient_form_fields_visible": "Dabar gavėjo formos laukai yra matomi",
     "recipient_form_fields_hidden": "Dabar gavėjo formos laukai yra paslėpti",
     "recipient_form_error": "Įvyko su formos pateikimu susijusi klaida",
-    "product_custom_property_character_count": "Panaudota {{ used_chars }}/{{ max_chars }} simbolių"
+    "product_custom_property_character_count": "Panaudota {{ used_chars }}/{{ max_chars }} simbolių",
+    "terms_and_policies": "Sąlygos ir politika"
   },
   "gift_cards": {
     "issued": {
@@ -256,7 +259,12 @@
     "password": "Slaptažodis",
     "search": "Ieškoti",
     "product_title": "Gaminio pavadinimas",
-    "collection_title": "Kolekcijos pavadinimas"
+    "collection_title": "Kolekcijos pavadinimas",
+    "blog_posts": "Tinklaraščio įrašai",
+    "blog_post_title": "Pavadinimas",
+    "blog_post_author": "Autorius",
+    "blog_post_date": "Data",
+    "blog_post_description": "Jūsų tinklaraščio įrašo turinio ištrauka"
   },
   "products": {
     "product": {

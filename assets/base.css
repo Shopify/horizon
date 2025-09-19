@@ -19,6 +19,8 @@ body {
   --hover-shadow-color: var(--color-shadow);
   --hover-transition-duration: 0.25s;
   --hover-transition-timing: ease-out;
+  --surface-transition-duration: 0.3s;
+  --surface-transition-timing: var(--ease-out-quad);
 }
 
 html {
@@ -1603,6 +1605,9 @@ media-gallery.media-gallery--grid .media-gallery__grid .product-media-container 
 .product-media-container img {
   aspect-ratio: inherit;
   object-fit: contain;
+}
+
+.product-media-container.media-fit-contain img {
   object-position: center center;
 }
 

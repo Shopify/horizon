@@ -112,7 +112,18 @@
                 aria-selected="true"
               {% endif %}
             >
-              {{ media.preview_image | image_url: width: 144 | image_tag: loading: 'lazy', alt: media.alt | escape }}
+              {% liquid
+                assign focal_point_style = ''
+                if media.presentation.focal_point != blank
+                  assign focal_point_style = 'object-position: ' | append: media.presentation.focal_point | append: ';'
+                endif
+              %}
+              {{
+                media.preview_image
+                | image_url: width: 144
+                | image_tag: loading: 'lazy', alt: media.alt, style: focal_point_style
+                | escape
+              }}
 
               {% if media.media_type == 'video' or media.media_type == 'external_video' %}
                 <span class="slideshow-controls__thumbnail-badge">

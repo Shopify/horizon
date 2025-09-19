@@ -51,6 +51,7 @@
     "scroll_to": "Scorri fino a {{ title }}",
     "loading_product_recommendations": "Caricamento delle raccomandazioni sui prodotti",
     "discount": "Applica un codice sconto",
+    "discount_menu": "Menu sconti",
     "discount_applied": "Codice sconto applicato: {{ code }}",
     "open_cart_drawer": "Apri carrello",
     "inventory_status": "Stato delle scorte",
@@ -102,7 +103,8 @@
     "sign_up": "Iscriviti",
     "open_image_in_full_screen": "Apri immagine a schermo intero",
     "sort": "Ordina",
-    "show_all_options": "Mostra tutte le opzioni"
+    "show_all_options": "Mostra tutte le opzioni",
+    "open": "Apri"
   },
   "content": {
     "reviews": "recensioni",
@@ -231,7 +233,8 @@
     "recipient_form_fields_visible": "I campi del modulo destinatario sono ora visibili",
     "recipient_form_fields_hidden": "I campi del modulo destinatario sono ora nascosti",
     "recipient_form_error": "Si è verificato un errore durante l'invio del modulo",
-    "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }} caratteri utilizzati"
+    "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }} caratteri utilizzati",
+    "terms_and_policies": "Termini e politiche"
   },
   "gift_cards": {
     "issued": {
@@ -251,7 +254,12 @@
     "password": "Password",
     "search": "Ricerca",
     "product_title": "Titolo del prodotto",
-    "collection_title": "Titolo della collezione"
+    "collection_title": "Titolo della collezione",
+    "blog_posts": "Articoli del blog",
+    "blog_post_title": "Titolo",
+    "blog_post_author": "Autore",
+    "blog_post_date": "Data",
+    "blog_post_description": "Un estratto dal contenuto del tuo articolo del blog"
   },
   "products": {
     "product": {

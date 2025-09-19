@@ -50,6 +50,7 @@
     "scroll_to": "滚动到 {{ title }}",
     "loading_product_recommendations": "加载产品推荐",
     "discount": "应用折扣码",
+    "discount_menu": "折扣菜单",
     "discount_applied": "已应用折扣码：{{ code }}",
     "open_cart_drawer": "打开购物车",
     "inventory_status": "库存状态",
@@ -100,7 +101,8 @@
     "sign_up": "注册",
     "open_image_in_full_screen": "全屏打开图片",
     "sort": "排序",
-    "show_all_options": "显示所有选项"
+    "show_all_options": "显示所有选项",
+    "open": "打开"
   },
   "content": {
     "reviews": "评价",
@@ -226,7 +228,8 @@
     "recipient_form_fields_visible": "收件人表单字段现在可见",
     "recipient_form_fields_hidden": "收件人表单字段现已隐藏",
     "recipient_form_error": "提交表单时出现错误",
-    "product_custom_property_character_count": "已输入 {{ used_chars }} 个字符，最多 {{ max_chars }} 个"
+    "product_custom_property_character_count": "已输入 {{ used_chars }} 个字符，最多 {{ max_chars }} 个",
+    "terms_and_policies": "条款和政策"
   },
   "gift_cards": {
     "issued": {
@@ -246,7 +249,12 @@
     "password": "密码",
     "search": "搜索",
     "product_title": "产品标题",
-    "collection_title": "产品系列标题"
+    "collection_title": "产品系列标题",
+    "blog_posts": "博客文章",
+    "blog_post_title": "标题",
+    "blog_post_author": "作者",
+    "blog_post_date": "日期",
+    "blog_post_description": "博客文章内容摘录"
   },
   "products": {
     "product": {

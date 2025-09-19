@@ -167,7 +167,12 @@
     "featured_image": "Feature-Bild",
     "multicolumn": "Mit mehreren Spalten",
     "rich_text_section": "Rich Text",
-    "product_custom_property": "Besondere Anweisungen"
+    "product_custom_property": "Besondere Anweisungen",
+    "blog_card": "Blog-Karte",
+    "blog_posts_grid": "Blog-Beiträge: Raster",
+    "blog_posts_carousel": "Blog-Beiträge: Karussell",
+    "blog_posts_editorial": "Blog-Beiträge: Editorial",
+    "excerpt": "Auszug"
   },
   "settings": {
     "autoplay": "Automatische Wiedergabe",
@@ -523,7 +528,9 @@
       "description_preset": "Beschreibung",
       "input_preset": "Eingabe",
       "checkbox_preset": "Kontrollkästchen-Etikett"
-    }
+    },
+    "blog": "Blog",
+    "post_count": "Beitragsanzahl"
   },
   "options": {
     "adapt_to_image": "An Bild anpassen",

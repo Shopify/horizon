@@ -167,7 +167,12 @@
     "multicolumn": "多欄",
     "rich_text_section": "RTF 文字",
     "product_custom_property": "特別指示",
-    "hero_bottom_aligned": "主圖：底部對齊"
+    "hero_bottom_aligned": "主圖：底部對齊",
+    "blog_card": "網誌卡片",
+    "blog_posts_grid": "部落格貼文：網格",
+    "blog_posts_carousel": "部落格貼文：輪播",
+    "blog_posts_editorial": "部落格貼文：編輯",
+    "excerpt": "摘錄"
   },
   "settings": {
     "alignment": "對齊方式",
@@ -523,7 +528,9 @@
       "description_preset": "說明",
       "input_preset": "輸入",
       "checkbox_preset": "核取方塊標籤"
-    }
+    },
+    "blog": "網誌",
+    "post_count": "文章數量"
   },
   "options": {
     "adapt_to_image": "配合圖片",

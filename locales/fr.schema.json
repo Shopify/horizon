@@ -167,7 +167,12 @@
     "description": "Description",
     "featured_image": "Image vedette",
     "multicolumn": "Multicolonne",
-    "product_custom_property": "Instructions spéciales"
+    "product_custom_property": "Instructions spéciales",
+    "blog_card": "Carte de blog",
+    "blog_posts_grid": "Articles de blog : grille",
+    "blog_posts_carousel": "Articles de blog : carrousel",
+    "blog_posts_editorial": "Articles de blog : éditorial",
+    "excerpt": "Extrait"
   },
   "settings": {
     "autoplay": "Jeu automatique",
@@ -523,7 +528,9 @@
       "description_preset": "Description",
       "input_preset": "Entrée",
       "checkbox_preset": "Étiquette de la case à cocher"
-    }
+    },
+    "blog": "Blog",
+    "post_count": "Nombre d’articles"
   },
   "options": {
     "adapt_to_image": "Adapter à l’image",

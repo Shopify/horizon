@@ -167,7 +167,12 @@
     "description": "説明",
     "featured_image": "記事のサムネイル",
     "multicolumn": "マルチカラム",
-    "product_custom_property": "特別な指示"
+    "product_custom_property": "特別な指示",
+    "blog_card": "ブログカード",
+    "blog_posts_grid": "ブログ記事：グリッド",
+    "blog_posts_carousel": "ブログ記事：カルーセル",
+    "blog_posts_editorial": "ブログ記事：編集",
+    "excerpt": "抜粋"
   },
   "settings": {
     "alignment": "配置",
@@ -523,7 +528,9 @@
       "description_preset": "説明",
       "input_preset": "入力",
       "checkbox_preset": "チェックボックスラベル"
-    }
+    },
+    "blog": "ブログ",
+    "post_count": "投稿数"
   },
   "options": {
     "adapt_to_image": "画像に合わせる",

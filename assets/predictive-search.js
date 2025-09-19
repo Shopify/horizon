@@ -372,7 +372,10 @@ class PredictiveSearchComponent extends Component {
     this.#hideResetButton();
 
     const abortController = this.#createAbortController();
-    const emptySectionMarkup = await sectionRenderer.getSectionHTML(emptySectionId, false);
+    const url = new URL(window.location.href);
+    url.searchParams.delete('page');
+
+    const emptySectionMarkup = await sectionRenderer.getSectionHTML(emptySectionId, false, url);
     const parsedEmptySectionMarkup = new DOMParser()
       .parseFromString(emptySectionMarkup, 'text/html')
       .querySelector('.predictive-search-empty-section');

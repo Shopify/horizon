@@ -3,10 +3,14 @@
 
   @param {object} [article] - The article object
   @param {string} [alignment] - The alignment of the text. Defaults to the block's alignment setting.
+  @param {string} [author] - The author name. Defaults to article.author, placeholder text for onboarding
+  @param {string} [date] - The published date. Defaults to article.published_at, placeholder text for onboarding
 {%- enddoc -%}
 
 {% assign block_settings = block.settings %}
 {% assign alignment = alignment | default: block_settings.alignment %}
+{% assign display_author = author | default: article.author %}
+{% assign display_date = date | default: article.published_at %}
 
 {%- if block_settings.show_date or block_settings.show_author -%}
   <div
@@ -19,7 +23,7 @@
     style="{% render 'spacing-style', settings: block_settings %}"
   >
     {%- if block_settings.show_date -%}
-      <span>{{- article.published_at | time_tag: format: 'date' -}}</span>
+      <span>{{- display_date | time_tag: format: 'date' -}}</span>
     {%- endif -%}
 
     {%- if block_settings.show_date and block_settings.show_author -%}
@@ -27,7 +31,7 @@
     {%- endif -%}
 
     {%- if block_settings.show_author -%}
-      <span>{{ article.author }}</span>
+      <span>{{ display_author }}</span>
     {%- endif -%}
   </div>
 {% endif %}
@@ -36,9 +40,10 @@
   .blog-post-details {
     display: flex;
     gap: var(--gap-sm);
-    font-size: var(--font-size--paragraph);
+    font-size: var(--font-paragraph-size);
     color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
     white-space: nowrap;
+    flex-wrap: wrap;
   }
 
   .blog-post-details > span {

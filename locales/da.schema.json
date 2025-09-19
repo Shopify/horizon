@@ -167,7 +167,12 @@
     "multicolumn": "Flere kolonner",
     "rich_text_section": "RTF",
     "product_custom_property": "Særlige instruktioner",
-    "hero_bottom_aligned": "Hero: Bundtjusteret"
+    "hero_bottom_aligned": "Hero: Bundtjusteret",
+    "blog_card": "Blogkort",
+    "blog_posts_grid": "Blogopslag: Gitter",
+    "blog_posts_carousel": "Blogopslag: Karrusel",
+    "blog_posts_editorial": "Blogopslag: Redaktionelt",
+    "excerpt": "Uddrag"
   },
   "settings": {
     "alignment": "Justering",
@@ -523,7 +528,9 @@
       "description_preset": "Beskrivelse",
       "input_preset": "Input",
       "checkbox_preset": "Label for afkrydsningsfelt"
-    }
+    },
+    "blog": "Blog",
+    "post_count": "Antal opslag"
   },
   "options": {
     "adapt_to_image": "Tilpas til billede",

@@ -223,7 +223,10 @@
   }
 
   .quick-add-modal__content .view-product-title {
-    padding: 0;
+    display: flex;
+    padding-block: 0;
+    /* Prevent overlap between title and close button */
+    padding-inline: 0 calc(var(--minimum-touch-target) / 2);
   }
 
   .quick-add-modal__content .view-product-title a {

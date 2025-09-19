@@ -63,7 +63,8 @@
     "increase_quantity": "Zvýšiť množstvo",
     "rating": "Hodnotenie tohto produktu je {{ rating }} z 5",
     "quantity": "Množstvo",
-    "nested_product": "{{ product_title }} pre {{ parent_title }}"
+    "nested_product": "{{ product_title }} pre {{ parent_title }}",
+    "discount_menu": "Zľavové kódy"
   },
   "actions": {
     "add_to_cart": "Pridať do košíka",
@@ -104,7 +105,8 @@
     "sign_up": "Zaregistrovať sa",
     "open_image_in_full_screen": "Otvoriť obrázok na celú obrazovku",
     "sort": "Zoradiť",
-    "show_all_options": "Zobraziť všetky možnosti"
+    "show_all_options": "Zobraziť všetky možnosti",
+    "open": "Otvoriť"
   },
   "content": {
     "reviews": "recenz.",
@@ -236,7 +238,8 @@
     "recipient_form_fields_visible": "Polia formulára príjemcu sú teraz viditeľné",
     "recipient_form_fields_hidden": "Polia formulára príjemcu sú teraz skryté",
     "recipient_form_error": "There was an error with the form submission",
-    "product_custom_property_character_count": "Počet použitých znakov: {{ used_chars }} z {{ max_chars }}"
+    "product_custom_property_character_count": "Počet použitých znakov: {{ used_chars }} z {{ max_chars }}",
+    "terms_and_policies": "Podmienky a zásady"
   },
   "gift_cards": {
     "issued": {
@@ -256,7 +259,12 @@
     "password": "Heslo",
     "search": "Vyhľadať",
     "product_title": "Názov produktu",
-    "collection_title": "Názov kolekcie"
+    "collection_title": "Názov kolekcie",
+    "blog_posts": "Blogové príspevky",
+    "blog_post_title": "Názov",
+    "blog_post_author": "Autor",
+    "blog_post_date": "Dátum",
+    "blog_post_description": "Úryvok obsahu vášho blogového príspevku"
   },
   "products": {
     "product": {

@@ -1,9 +1,37 @@
-{% render 'text', block: block %}
+{%- doc -%}
+  Featured Blog Posts Title Block
+
+  Renders a blog title with text styling options.
+  Uses the blog title from section settings or placeholder text.
+
+  Block receives:
+  - block.settings: All configured settings from the schema
+  - section.settings.blog: The parent section's blog setting
+
+  @example
+  {% content_for 'block', type: '_featured-blog-posts-title', id: 'blog-title' %}
+{%- enddoc -%}
+
+
+{% liquid
+  if closest.blog != blank
+    assign blog_title = closest.blog.title
+  elsif section.settings.blog != blank
+    assign blog_title = section.settings.blog.title
+  else
+    assign blog_title = 'placeholders.blog_posts' | t
+  endif
+%}
+
+{% capture blog_title_text %}
+  <h3>{{ blog_title }}</h3>
+{% endcapture %}
+
+{% render 'text', fallback_text: blog_title_text, block: block %}
 
 {% schema %}
 {
-  "name": "t:names.text",
-  "tag": null,
+  "name": "t:names.title",
   "settings": [
     {
       "type": "richtext",
@@ -103,7 +131,6 @@
           "label": "t:options.custom"
         }
       ],
-      "default": "rte",
       "info": "t:info.edit_presets_in_theme_settings"
     },
     {
@@ -379,22 +406,6 @@
       "step": 1,
       "unit": "px",
       "default": 0
-    }
-  ],
-  "presets": [
-    {
-      "name": "t:names.text",
-      "category": "t:categories.basic",
-      "settings": {
-        "text": "<p>We make things that work better and last longer. Our products solve real problems with clean design and honest materials.</p>"
-      }
-    },
-    {
-      "name": "t:names.heading",
-      "category": "t:categories.basic",
-      "settings": {
-        "text": "<h2>New arrivals</h2>"
-      }
     }
   ]
 }
