@@ -21,6 +21,11 @@
       },
       {
         "type": "image_picker",
+        "id": "logo1",
+        "label": "custom image upload option"
+      },
+      {
+        "type": "image_picker",
         "id": "logo_inverse",
         "label": "t:settings.inverse_logo",
         "info": "t:content.inverse_logo_info"
