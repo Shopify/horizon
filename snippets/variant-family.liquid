@@ -1,7 +1,7 @@
 {% comment %}
 Variant Family snippet for Horizon 3.0.1
-Works with product.metafields.custom.variant_family (product list)
-Fully Theme Check compatible: img has width & height, accessible, responsive
+Shows a row of sibling products if metafield exists
+Displays fallback message if metafield is empty
 {% endcomment %}
 
 {% assign family_products = product.metafields.custom.variant_family %}
@@ -31,7 +31,6 @@ Fully Theme Check compatible: img has width & height, accessible, responsive
   </div>
 
   <style>
-    /* Variant family container */
     .variant-family {
       display: flex;
       gap: 10px;
@@ -39,7 +38,6 @@ Fully Theme Check compatible: img has width & height, accessible, responsive
       flex-wrap: wrap;
     }
 
-    /* Individual items */
     .variant-family__item {
       display: block;
       border: 2px solid transparent;
@@ -48,12 +46,10 @@ Fully Theme Check compatible: img has width & height, accessible, responsive
       transition: border-color 0.2s;
     }
 
-    /* Active product */
     .variant-family__item.active {
-      border-color: #000; /* korostus aktiiviselle tuotteelle */
+      border-color: #000;
     }
 
-    /* Images and swatches */
     .variant-family__item img,
     .variant-swatch {
       width: 50px;
@@ -63,21 +59,23 @@ Fully Theme Check compatible: img has width & height, accessible, responsive
       display: block;
     }
 
-    /* Fallback swatch */
     .variant-swatch {
       background-color: #ccc;
       display: inline-block;
     }
 
-    /* Focus state for accessibility */
     .variant-family__item:focus {
       outline: 2px solid #000;
       outline-offset: 2px;
     }
 
-    /* Optional hover effect */
     .variant-family__item:hover {
       border-color: #555;
     }
   </style>
+
+{% else %}
+  <div class="variant-family-empty" style="margin-top:1rem; color:#555; font-style:italic;">
+    Tuotteita ei määritetty
+  </div>
 {% endif %}
