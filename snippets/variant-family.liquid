@@ -1,18 +1,20 @@
 {% comment %}
 Variant Family snippet for Horizon 3.0.1
-Shows a row of sibling products if metafield exists
-Displays fallback message if metafield is empty
+Uses closest.product to safely access product metafields
+Displays a row of sibling products if metafield exists
+Shows fallback text if no products are assigned
 {% endcomment %}
 
-{% assign family_products = product.metafields.custom.variant_family %}
+{% assign current_product = closest.product | default: product %}
+{% assign family_products = current_product.metafields.custom.variant_family %}
 
 {% if family_products != blank and family_products.size > 0 %}
-  <div class="variant-family" role="group" aria-label="Valitse malli">
+  <div class="variant-family" role="group" aria-label="Choose model">
     {% for family_product in family_products %}
       {% if family_product %}
         <a href="{{ family_product.url }}" 
-           class="variant-family__item {% if family_product.id == product.id %}active{% endif %}" 
-           aria-current="{% if family_product.id == product.id %}true{% else %}false{% endif %}" 
+           class="variant-family__item {% if family_product.id == current_product.id %}active{% endif %}" 
+           aria-current="{% if family_product.id == current_product.id %}true{% else %}false{% endif %}" 
            title="{{ family_product.title }}">
           
           {% if family_product.featured_image %}
@@ -76,6 +78,6 @@ Displays fallback message if metafield is empty
 
 {% else %}
   <div class="variant-family-empty" style="margin-top:1rem; color:#555; font-style:italic;">
-    Tuotteita ei määritetty
+    No products assigned
   </div>
 {% endif %}
