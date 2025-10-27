@@ -246,6 +246,14 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
+            },
+            "custom_liquid_ekxmqx": {
+              "type": "custom-liquid",
+              "name": "t:names.custom_liquid",
+              "settings": {
+                "custom_liquid": "{% render 'variant-family' %}"
+              },
+              "blocks": {}
             }
           },
           "block_order": [
@@ -253,7 +261,8 @@
             "divider_VJhene",
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
-            "text_aEtTtq"
+            "text_aEtTtq",
+            "custom_liquid_ekxmqx"
           ]
         }
       },
