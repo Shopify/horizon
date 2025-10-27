@@ -22,7 +22,7 @@
 
     {%- render 'meta-tags' -%}
     {%- render 'stylesheets' -%}
-    {%- render 'variant-family.css' | asset_url | stylesheet_tag -%}
+    {{ 'variant-family.css' | asset_url | stylesheet_tag }}
     {%- render 'fonts' -%}
     {%- render 'scripts' -%}
     {%- render 'theme-styles-variables' -%}
