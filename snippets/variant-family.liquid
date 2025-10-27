@@ -6,7 +6,7 @@ Displays fallback message if metafield is empty
 
 {% assign family_products = product.metafields.custom.variant_family %}
 
-{% if family_products != blank %}
+{% if family_products != blank and family_products.size > 0 %}
   <div class="variant-family" role="group" aria-label="Valitse malli">
     {% for family_product in family_products %}
       {% if family_product %}
