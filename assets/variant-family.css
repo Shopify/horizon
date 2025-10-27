@@ -1,0 +1,8 @@
+.variant-family { padding: 8px 0; }
+.vf-list { display:flex; gap:10px; list-style:none; margin:0; padding:0; align-items:center; }
+.vf-item { display:flex; align-items:center; border-radius:6px; padding:4px; text-decoration:none; outline: none; }
+.vf-item img { display:block; width:80px; height:80px; object-fit:cover; border-radius:6px; }
+.vf-swatch { display:inline-block; width:24px; height:24px; border-radius:50%; background:#ddd; }
+.vf-active { box-shadow:0 0 0 3px rgba(100,150,255,0.25); border:2px solid rgba(100,150,255,0.6); }
+.vf-item:focus-visible { outline: 3px solid #ffb; outline-offset:2px; }
+.vf-visually-hidden { position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden; }
