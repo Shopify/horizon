@@ -1,83 +1,87 @@
 {% comment %}
 Variant Family snippet for Horizon 3.0.1
-Works with product.metafields.custom.variant_family (product list)
-Fully Theme Check compatible: img has width & height, accessible, responsive
+Displays a horizontal row of sibling products based on product.metafields.custom.variant_family
 {% endcomment %}
 
-{% assign family_products = product.metafields.custom.variant_family %}
+{% assign variant_family = product.metafields.custom.variant_family.value %}
 
-{% if family_products != blank and family_products.size > 0 %}
-  <div class="variant-family" role="group" aria-label="Valitse malli">
-    {% for family_product in family_products %}
-      {% if family_product %}
-        <a href="{{ family_product.url }}" 
-           class="variant-family__item {% if family_product.id == product.id %}active{% endif %}" 
-           aria-current="{% if family_product.id == product.id %}true{% else %}false{% endif %}" 
-           title="{{ family_product.title }}">
-          
-          {% if family_product.featured_image %}
-            <img 
-              src="{{ family_product.featured_image | img_url: '100x100' }}" 
-              alt="{{ family_product.title }}" 
-              width="50" 
-              height="50">
-          {% else %}
-            <span class="variant-swatch" aria-label="{{ family_product.title }}"></span>
-          {% endif %}
-          
-        </a>
-      {% endif %}
-    {% endfor %}
-  </div>
+{% if variant_family != blank %}
+  {% assign family_products = variant_family | split: ',' %}
 
-  <style>
-    /* Variant family container */
-    .variant-family {
-      display: flex;
-      gap: 10px;
-      margin-top: 1rem;
-      flex-wrap: wrap;
-    }
+  {% if family_products.size > 0 %}
+    <div class="variant-family" role="group" aria-label="Valitse malli">
+      {% for family_product_id in family_products %}
+        {% assign family_product = all_products[family_product_id] %}
+        {% if family_product %}
+          <a href="{{ family_product.url }}" 
+             class="variant-family__item {% if family_product.id == product.id %}active{% endif %}" 
+             aria-current="{% if family_product.id == product.id %}true{% else %}false{% endif %}" 
+             title="{{ family_product.title }}">
+            
+            {% if family_product.featured_image %}
+              <img 
+                src="{{ family_product.featured_image | img_url: '100x100' }}" 
+                alt="{{ family_product.title }}" 
+                width="50" 
+                height="50">
+            {% else %}
+              <span class="variant-swatch" aria-label="{{ family_product.title }}"></span>
+            {% endif %}
+            
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div>
 
-    /* Individual items */
-    .variant-family__item {
-      display: block;
-      border: 2px solid transparent;
-      border-radius: 8px;
-      padding: 2px;
-      transition: border-color 0.2s;
-    }
+    <style>
+      /* Variant family container */
+      .variant-family {
+        display: flex;
+        gap: 10px;
+        margin-top: 1rem;
+        flex-wrap: wrap;
+      }
 
-    /* Active product */
-    .variant-family__item.active {
-      border-color: #000; /* korostus aktiiviselle tuotteelle */
-    }
+      /* Individual items */
+      .variant-family__item {
+        display: block;
+        border: 2px solid transparent;
+        border-radius: 8px;
+        padding: 2px;
+        transition: border-color 0.2s;
+      }
 
-    /* Images and swatches */
-    .variant-family__item img,
-    .variant-swatch {
-      width: 50px;
-      height: 50px;
-      object-fit: cover;
-      border-radius: 4px;
-      display: block;
-    }
+      /* Active product */
+      .variant-family__item.active {
+        border-color: #000; /* aktiivisen tuotteen korostus */
+      }
 
-    /* Fallback swatch */
-    .variant-swatch {
-      background-color: #ccc;
-      display: inline-block;
-    }
+      /* Images and swatches */
+      .variant-family__item img,
+      .variant-swatch {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 4px;
+        display: block;
+      }
 
-    /* Focus state for accessibility */
-    .variant-family__item:focus {
-      outline: 2px solid #000;
-      outline-offset: 2px;
-    }
+      /* Fallback swatch */
+      .variant-swatch {
+        background-color: #ccc;
+        display: inline-block;
+      }
 
-    /* Optional hover effect */
-    .variant-family__item:hover {
-      border-color: #555;
-    }
-  </style>
+      /* Focus state for accessibility */
+      .variant-family__item:focus {
+        outline: 2px solid #000;
+        outline-offset: 2px;
+      }
+
+      /* Optional: hover effect */
+      .variant-family__item:hover {
+        border-color: #555;
+      }
+    </style>
+  {% endif %}
 {% endif %}
