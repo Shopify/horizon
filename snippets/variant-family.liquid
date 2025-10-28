@@ -11,15 +11,9 @@ Shows fallback text if no products are assigned
 {{ family_products.featured_image | json }}
 
 
-{% assign current_product = closest.product | default: product %}
-{% assign family_products_refs = current_product.metafields.custom.variant_family.value %}
-
-{% if family_products_refs != blank %}
+{% if family_products != blank %}
   <div class="variant-family" role="group" aria-label="Choose model">
-    {% for ref in family_products_refs %}
-      {% assign handle = ref | split: '/' | last %}
-      {% assign family_product = all_products[handle] %}
-
+    {% for family_product in family_products %}
       {% if family_product %}
         <a href="{{ family_product.url }}" 
            class="variant-family__item {% if family_product.id == current_product.id %}active{% endif %}" 
@@ -35,11 +29,11 @@ Shows fallback text if no products are assigned
           {% else %}
             <span class="variant-swatch" aria-label="{{ family_product.title }}"></span>
           {% endif %}
+          
         </a>
       {% endif %}
     {% endfor %}
   </div>
-
 
   <style>
     .variant-family {
