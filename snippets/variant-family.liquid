@@ -10,7 +10,7 @@ Shows fallback text if no products are assigned
 
 {{ family_products | json }}
 
-{% if family_products != blank and family_products.size > 0 %}
+{% if family_products != blank  %}
   <div class="variant-family" role="group" aria-label="Choose model">
     {% for family_product in family_products %}
       {% if family_product %}
