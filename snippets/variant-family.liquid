@@ -5,35 +5,36 @@ Displays a row of sibling products if metafield exists
 Shows fallback text if no products are assigned
 {% endcomment %}
 
-{% assign family_products = current_product.metafields.custom.variant_family %}
+{% assign current_product = closest.product | default: product %}
+{% assign family_products = current_product.metafields.custom.variant_family.value %}
+
+<pre>
+Metafield object: {{ current_product.metafields.custom.variant_family }}
+</pre>
 
 {% if family_products != blank %}
   <div class="variant-family" role="group" aria-label="Choose model">
-    {% for gid in family_products %}
-      {% assign product_id = gid | split: '/' | last %}
-      {% assign family_product = all_products[product_id] %}
-      
+    {% for family_product in family_products %}
       {% if family_product %}
         <a href="{{ family_product.url }}" 
            class="variant-family__item {% if family_product.id == current_product.id %}active{% endif %}" 
            aria-current="{% if family_product.id == current_product.id %}true{% else %}false{% endif %}" 
            title="{{ family_product.title }}">
           
-          {% if family_product.featured_image %}
+          {% if family_product.featured_media %}
             <img 
-              src="{{ family_product.featured_image | img_url: '100x100' }}" 
+              src="{{ family_product.featured_media.preview_image.src | image_url: '100x100' }}" 
               alt="{{ family_product.title }}" 
               width="50" 
               height="50">
           {% else %}
             <span class="variant-swatch" aria-label="{{ family_product.title }}"></span>
           {% endif %}
+          
         </a>
       {% endif %}
     {% endfor %}
   </div>
-
-
 
   <style>
     .variant-family {
