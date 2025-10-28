@@ -6,45 +6,39 @@
 {% endcomment %}
 
 {% assign current_product = closest.product | default: product %}
-{% assign family_products = current_product.metafields.custom.variant_family.value %}
+{% assign family_products_handles = current_product.metafields.custom.variant_family.value %}
 
-{% if family_products != blank %}
+{% if family_products_handles != blank %}
   <div class="variant-family" role="group" aria-label="Choose model">
-    {% comment %}
-      Render current product first, then others, in a single loop
-    {% endcomment %}
-    {% for family_product in family_products %}
-      {% if family_product.id == current_product.id %}
-        {% assign current_first = family_product %}
-      {% endif %}
-    {% endfor %}
 
     {% comment %}
-      Output current product first
+      First, output the current product itself
     {% endcomment %}
     <a
-      href="{{ current_first.url }}"
+      href="{{ current_product.url }}"
       class="variant-family__item active"
       aria-current="true"
-      title="{{ current_first.title }}"
+      title="{{ current_product.title }}"
     >
-      {% if current_first.featured_image %}
+      {% if current_product.featured_image %}
         <img
-          src="{{ current_first.featured_image | image_url: '100x100' }}"
-          alt="{{ current_first.title }}"
+          src="{{ current_product.featured_image | image_url: '100x100' }}"
+          alt="{{ current_product.title }}"
           width="50"
           height="50"
         >
       {% else %}
-        <span class="variant-swatch" aria-label="{{ current_first.title }}"></span>
+        <span class="variant-swatch" aria-label="{{ current_product.title }}"></span>
       {% endif %}
     </a>
 
     {% comment %}
-      Then output the other products in a single loop without duplicating HTML
+      Then output the other products from handles
     {% endcomment %}
-    {% for family_product in family_products %}
-      {% unless family_product.id == current_product.id %}
+    {% for handle in family_products_handles %}
+      {% assign handle = handle | strip %}
+      {% assign family_product = all_products[handle] %}
+      {% if family_product and family_product.id != current_product.id %}
         <a
           href="{{ family_product.url }}"
           class="variant-family__item"
@@ -62,8 +56,9 @@
             <span class="variant-swatch" aria-label="{{ family_product.title }}"></span>
           {% endif %}
         </a>
-      {% endunless %}
+      {% endif %}
     {% endfor %}
+
   </div>
 
   <style>
