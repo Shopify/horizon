@@ -8,15 +8,16 @@ Shows fallback text if no products are assigned
 {% assign current_product = closest.product | default: product %}
 {% assign family_products = current_product.metafields.custom.variant_family.value %}
 
-
-
 {% if family_products != blank %}
+
   <div class="variant-family" role="group" aria-label="Choose model">
+
+    {%- comment -%} First, output the current product {%- endcomment -%}
     {% for family_product in family_products %}
-      {% if family_product %}
+      {% if family_product.id == current_product.id %}
         <a href="{{ family_product.url }}" 
-           class="variant-family__item {% if family_product.id == current_product.id %}active{% endif %}" 
-           aria-current="{% if family_product.id == current_product.id %}true{% else %}false{% endif %}" 
+           class="variant-family__item active" 
+           aria-current="true" 
            title="{{ family_product.title }}">
           
           {% if family_product.featured_image %}
@@ -32,6 +33,29 @@ Shows fallback text if no products are assigned
         </a>
       {% endif %}
     {% endfor %}
+
+    {%- comment -%} Then output the other products {%- endcomment -%}
+    {% for family_product in family_products %}
+      {% if family_product.id != current_product.id %}
+        <a href="{{ family_product.url }}" 
+           class="variant-family__item" 
+           aria-current="false" 
+           title="{{ family_product.title }}">
+          
+          {% if family_product.featured_image %}
+            <img 
+              src="{{ family_product.featured_image | image_url: '100x100' }}" 
+              alt="{{ family_product.title }}" 
+              width="50" 
+              height="50">
+          {% else %}
+            <span class="variant-swatch" aria-label="{{ family_product.title }}"></span>
+          {% endif %}
+          
+        </a>
+      {% endif %}
+    {% endfor %}
+
   </div>
 
   <style>
