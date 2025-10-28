@@ -1,20 +1,36 @@
+{% comment %}
+Variant Family snippet for Horizon 3.0.1
+Uses closest.product to safely access product metafields
+Displays a row of sibling products if metafield exists
+Shows fallback text if no products are assigned
+{% endcomment %}
+
 {% assign current_product = closest.product | default: product %}
-{% assign family_products = current_product.metafields.custom.variant_family %}
+{% assign family_products = current_product.metafields.custom.variant_family.value %}
+
+
+{{ family_products | json }}
+
 
 {% if family_products != blank %}
   <div class="variant-family" role="group" aria-label="Choose model">
-    {% for product_ref in family_products %}
-      {% if product_ref %}
-        <a href="{{ product_ref.url }}" 
-           class="variant-family__item {% if product_ref.id == current_product.id %}active{% endif %}" 
-           aria-current="{% if product_ref.id == current_product.id %}true{% else %}false{% endif %}" 
-           title="{{ product_ref.title | default: 'Sibling product' }}">
+    {% for family_product in family_products %}
+      {% if family_product %}
+        <a href="{{ family_product.url }}" 
+           class="variant-family__item {% if family_product.id == current_product.id %}active{% endif %}" 
+           aria-current="{% if family_product.id == current_product.id %}true{% else %}false{% endif %}" 
+           title="{{ family_product.title }}">
           
-          {% comment %}
-          Shopify does not expose featured_image on GID references.
-          Use placeholder or swatch.
-          {% endcomment %}
-          <span class="variant-swatch" aria-label="{{ product_ref.title | default: 'Sibling product' }}"></span>
+          {% if family_product.featured_media %}
+            <img 
+              src="{{ family_product.featured_media.preview_image.src | image_url: '100x100' }}" 
+              alt="{{ family_product.title }}" 
+              width="50" 
+              height="50">
+          {% else %}
+            <span class="variant-swatch" aria-label="{{ family_product.title }}"></span>
+          {% endif %}
+          
         </a>
       {% endif %}
     {% endfor %}
@@ -34,20 +50,24 @@
       border-radius: 8px;
       padding: 2px;
       transition: border-color 0.2s;
-      width: 50px;
-      height: 50px;
     }
 
     .variant-family__item.active {
       border-color: #000;
     }
 
+    .variant-family__item image,
     .variant-swatch {
-      display: block;
-      width: 100%;
-      height: 100%;
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
       border-radius: 4px;
+      display: block;
+    }
+
+    .variant-swatch {
       background-color: #ccc;
+      display: inline-block;
     }
 
     .variant-family__item:focus {
@@ -59,4 +79,9 @@
       border-color: #555;
     }
   </style>
+
+{% else %}
+  <div class="variant-family-empty" style="margin-top:1rem; color:#555; font-style:italic;">
+    Tuotteita ei määritelty
+  </div>
 {% endif %}
