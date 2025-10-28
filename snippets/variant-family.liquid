@@ -11,7 +11,7 @@
 
 {% if family_products != blank %}
   <div class="variant-family-wrapper">
-    <h3 class="variant-family-heading">Valitse malli</h3>
+    <h3 class="variant-family-heading">Valitse malli:</h3>
 
     <div class="variant-family" role="group" aria-label="Choose model">
       {% assign current_first = family_products | where: "id", current_product.id | first %}
