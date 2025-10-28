@@ -13,33 +13,50 @@ Shows fallback text if no products are assigned
   <div class="variant-family" role="group" aria-label="Choose model">
 
     {% comment %}
-    Single loop: output current product first, then others
+    Render current product first, then others, in a single loop
     {% endcomment %}
     {% for family_product in family_products %}
       {% if family_product.id == current_product.id %}
-        {% assign first_product = family_product %}
+        {% assign current_first = family_product %}
       {% endif %}
     {% endfor %}
 
-    {% for product_to_show in family_products %}
-      {% assign show_product = product_to_show %}
-      {% if product_to_show.id == current_product.id %}
-        {% assign show_product = first_product %}
+    {% comment %}
+    Output current product first
+    {% endcomment %}
+    <a href="{{ current_first.url }}" 
+       class="variant-family__item active" 
+       aria-current="true" 
+       title="{{ current_first.title }}">
+      
+      {% if current_first.featured_image %}
+        <img src="{{ current_first.featured_image | image_url: '100x100' }}" 
+             alt="{{ current_first.title }}" 
+             width="50" height="50">
+      {% else %}
+        <span class="variant-swatch" aria-label="{{ current_first.title }}"></span>
       {% endif %}
+    </a>
 
-      <a href="{{ show_product.url }}" 
-         class="variant-family__item {% if show_product.id == current_product.id %}active{% endif %}" 
-         aria-current="{% if show_product.id == current_product.id %}true{% else %}false{% endif %}" 
-         title="{{ show_product.title }}">
-        
-        {% if show_product.featured_image %}
-          <img src="{{ show_product.featured_image | image_url: '100x100' }}" 
-               alt="{{ show_product.title }}" 
-               width="50" height="50">
-        {% else %}
-          <span class="variant-swatch" aria-label="{{ show_product.title }}"></span>
-        {% endif %}
-      </a>
+    {% comment %}
+    Then output the other products in a single loop without duplicating HTML
+    {% endcomment %}
+    {% for family_product in family_products %}
+      {% unless family_product.id == current_product.id %}
+        <a href="{{ family_product.url }}" 
+           class="variant-family__item" 
+           aria-current="false" 
+           title="{{ family_product.title }}">
+          
+          {% if family_product.featured_image %}
+            <img src="{{ family_product.featured_image | image_url: '100x100' }}" 
+                 alt="{{ family_product.title }}" 
+                 width="50" height="50">
+          {% else %}
+            <span class="variant-swatch" aria-label="{{ family_product.title }}"></span>
+          {% endif %}
+        </a>
+      {% endunless %}
     {% endfor %}
 
   </div>
