@@ -28,9 +28,16 @@
       aria-current="true"
       title="{{ current_first.title }}"
     >
-      {% if current_first.featured_image %}
+      {% assign image_src = '' %}
+      {% if current_first.featured_media and current_first.featured_media.preview_image %}
+        {% assign image_src = current_first.featured_media.preview_image.src %}
+      {% elsif current_first.featured_image %}
+        {% assign image_src = current_first.featured_image | image_url: '100x100' %}
+      {% endif %}
+
+      {% if image_src != blank %}
         <img
-          src="{{ current_first.featured_image | image_url: '100x100' }}"
+          src="{{ image_src }}"
           alt="{{ current_first.title }}"
           width="50"
           height="50"
@@ -51,9 +58,16 @@
           aria-current="false"
           title="{{ family_product.title }}"
         >
-          {% if family_product.featured_image %}
+          {% assign image_src = '' %}
+          {% if family_product.featured_media and family_product.featured_media.preview_image %}
+            {% assign image_src = family_product.featured_media.preview_image.src %}
+          {% elsif family_product.featured_image %}
+            {% assign image_src = family_product.featured_image | image_url: '100x100' %}
+          {% endif %}
+
+          {% if image_src != blank %}
             <img
-              src="{{ family_product.featured_image | image_url: '100x100' }}"
+              src="{{ image_src }}"
               alt="{{ family_product.title }}"
               width="50"
               height="50"
