@@ -18,9 +18,9 @@ Shows fallback text if no products are assigned
            aria-current="{% if family_product.id == current_product.id %}true{% else %}false{% endif %}" 
            title="{{ family_product.title }}">
           
-          {% if family_product.featured_image %}
+          {% if family_product.featured_media %}
             <img 
-              src="{{ family_product.featured_image | image_url: '100x100' }}" 
+              src="{{ family_product.featured_media.preview_image.src | image_url: '100x100' }}" 
               alt="{{ family_product.title }}" 
               width="50" 
               height="50">
