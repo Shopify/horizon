@@ -1,8 +1,9 @@
 {% comment %}
   Variant Family snippet for Horizon 3.0.1
-  Uses closest.product to safely access product metafields
-  Displays a row of sibling products if metafield exists
-  Shows fallback text if no products are assigned
+  Displays a horizontal row of sibling products
+  Highlights the current product
+  Uses fallback swatches if image is missing
+  Fully accessible and responsive
 {% endcomment %}
 
 {% assign current_product = closest.product | default: product %}
@@ -10,108 +11,116 @@
 
 {% if family_products != blank %}
   <div class="variant-family" role="group" aria-label="Choose model">
-    {% comment %}
-      Render current product first, then others, in a single loop
-    {% endcomment %}
-    {% for family_product in family_products %}
-      {% if family_product.id == current_product.id %}
-        {% assign current_first = family_product %}
-      {% endif %}
-    {% endfor %}
 
     {% comment %}
-      Output current product first
+      Render current product first
     {% endcomment %}
-    <a
-      href="{{ current_first.url }}"
-      class="variant-family__item active"
-      aria-current="true"
-      title="{{ current_first.title }}"
-    >
+    {% assign current_first = family_products | where: "id", current_product.id | first %}
+    <a href="{{ current_first.url }}" 
+       class="variant-family__item active" 
+       aria-current="true" 
+       title="{{ current_first.title }}">
       {% if current_first.featured_image %}
-        <img
-          src="{{ current_first.featured_image | img_url: '100x100' }}"
-          alt="{{ current_first.title }}"
-          width="50"
-          height="50"
-        >
+        <img src="{{ current_first.featured_image | img_url: '100x100' }}" 
+             alt="{{ current_first.title }}" width="50" height="50">
       {% else %}
         <span class="variant-swatch" aria-label="{{ current_first.title }}"></span>
       {% endif %}
     </a>
 
     {% comment %}
-      Then output the other products in a single loop without duplicating HTML
+      Render other family products
     {% endcomment %}
     {% for family_product in family_products %}
       {% unless family_product.id == current_product.id %}
-        <a
-          href="{{ family_product.url }}"
-          class="variant-family__item"
-          aria-current="false"
-          title="{{ family_product.title }}"
-        >
+        <a href="{{ family_product.url }}" 
+           class="variant-family__item" 
+           aria-current="false" 
+           title="{{ family_product.title }}">
           {% if family_product.featured_image %}
-            <img
-              src="{{ family_product.featured_image | img_url: '100x100' }}"
-              alt="{{ family_product.title }}"
-              width="50"
-              height="50"
-            >
+            <img src="{{ family_product.featured_image | img_url: '100x100' }}" 
+                 alt="{{ family_product.title }}" width="50" height="50">
           {% else %}
             <span class="variant-swatch" aria-label="{{ family_product.title }}"></span>
           {% endif %}
         </a>
       {% endunless %}
     {% endfor %}
+
   </div>
 
   <style>
+    /* Container */
     .variant-family {
       display: flex;
-      gap: 1px;
+      gap: 8px;
       margin-top: 1rem;
       flex-wrap: wrap;
+      justify-content: flex-start;
+      align-items: center;
     }
 
+    /* Each swatch/link */
     .variant-family__item {
       display: block;
+      width: 50px;
+      height: 50px;
       border: 2px solid transparent;
       border-radius: 8px;
-      padding: 2px;
-      transition: border-color 0.2s;
+      overflow: hidden;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+      background-color: #f7f7f7;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
 
+    /* Active product */
     .variant-family__item.active {
-      border-color: #000;
+      border-color: #111;
+      box-shadow: 0 0 0 2px #111 inset, 0 4px 8px rgba(0,0,0,0.2);
     }
 
-    .variant-family__item image,
-    .variant-swatch {
-      width: 25px;
-      height: 25px;
+    /* Image inside swatch */
+    .variant-family__item img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      border-radius: 4px;
       display: block;
     }
 
+    /* Fallback swatch for missing images */
     .variant-swatch {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border-radius: 4px;
       background-color: #ccc;
-      display: inline-block;
     }
 
+    /* Hover & focus states */
+    .variant-family__item:hover,
     .variant-family__item:focus {
+      border-color: #555;
+      outline: none;
+      box-shadow: 0 0 0 2px #555 inset, 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    /* Make sure focus is visible for keyboard navigation */
+    .variant-family__item:focus-visible {
       outline: 2px solid #000;
       outline-offset: 2px;
     }
 
-    .variant-family__item:hover {
-      border-color: #555;
+    /* Responsive tweaks for smaller screens */
+    @media screen and (max-width: 400px) {
+      .variant-family {
+        gap: 4px;
+      }
+      .variant-family__item {
+        width: 40px;
+        height: 40px;
+      }
     }
   </style>
 
-{% else %}
-  <div class="variant-family-empty" style="margin-top:1rem; color:#555; font-style:italic;">
-    Tuotteita ei määritelty
-  </div>
 {% endif %}
