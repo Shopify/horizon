@@ -2,8 +2,8 @@
   Variant Family snippet for Horizon 3.0.1
   Displays a horizontal row of sibling products
   Highlights the current product
-  Includes heading "Valitse malli" inside the snippet
-  No extra margin or padding between heading and swatches
+  Includes heading "Valitse malli"
+  Styled similarly to AARNI product page
 {% endcomment %}
 
 {% assign current_product = closest.product | default: product %}
@@ -14,15 +14,15 @@
     <h3 class="variant-family-heading">Valitse malli</h3>
 
     <div class="variant-family" role="group" aria-label="Choose model">
-
       {% assign current_first = family_products | where: "id", current_product.id | first %}
-      <a href="{{ current_first.url }}" 
-         class="variant-family__item active" 
-         aria-current="true" 
+      <a href="{{ current_first.url }}"
+         class="variant-family__item active"
+         aria-current="true"
          title="{{ current_first.title }}">
         {% if current_first.featured_image %}
-          <img src="{{ current_first.featured_image | img_url: '100x100' }}" 
-               alt="{{ current_first.title }}" width="50" height="50">
+          <img src="{{ current_first.featured_image | img_url: '100x100' }}"
+               alt="{{ current_first.title }}"
+               width="50" height="50">
         {% else %}
           <span class="variant-swatch" aria-label="{{ current_first.title }}"></span>
         {% endif %}
@@ -30,19 +30,21 @@
 
       {% for family_product in family_products %}
         {% unless family_product.id == current_product.id %}
-          <a href="{{ family_product.url }}" 
-             class="variant-family__item" 
-             aria-current="false" 
+          <a href="{{ family_product.url }}"
+             class="variant-family__item"
+             aria-current="false"
              title="{{ family_product.title }}">
             {% if family_product.featured_image %}
-              <img src="{{ family_product.featured_image | img_url: '100x100' }}" 
-                   alt="{{ family_product.title }}" width="50" height="50">
+              <img src="{{ family_product.featured_image | img_url: '100x100' }}"
+                   alt="{{ family_product.title }}"
+                   width="50" height="50">
             {% else %}
               <span class="variant-swatch" aria-label="{{ family_product.title }}"></span>
             {% endif %}
           </a>
         {% endunless %}
       {% endfor %}
+
     </div>
   </div>
 
@@ -56,10 +58,14 @@
     }
 
     .variant-family-heading {
-      font-size: 1rem;
-      font-weight: 600;
-      margin: 0 0 4px 0; /* only a small controlled gap below text */
+      font-size: 0.875rem; /* approx 14px */
+      font-weight: 500;
+      line-height: 1.4;
+      color: #6b6b6b; /* a medium-grey tone */
+      margin: 0 0 6px 0; /* small gap below heading */
       padding: 0;
+      text-transform: uppercase; /* like subtle uppercase styling */
+      letter-spacing: 0.05em;
     }
 
     .variant-family {
