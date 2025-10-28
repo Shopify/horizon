@@ -8,34 +8,22 @@ Shows fallback text if no products are assigned
 {% assign current_product = closest.product | default: product %}
 {% assign family_products = current_product.metafields.custom.variant_family.value %}
 
+
 {% if family_products != blank %}
   <div class="variant-family" role="group" aria-label="Choose model">
     {% for family_product in family_products %}
       {% if family_product %}
-        {% assign is_active = false %}
-        {% if family_product.id == current_product.id %}
-          {% assign is_active = true %}
-        {% endif %}
-
-        <a href="{{ family_product.handle | prepend: '/products/' }}" 
-           class="variant-family__item {% if is_active %}active{% endif %}" 
-           aria-current="{% if is_active %}true{% else %}false{% endif %}" 
+        <a href="{{ family_product.url }}" 
+           class="variant-family__item {% if family_product.id == current_product.id %}active{% endif %}" 
+           aria-current="{% if family_product.id == current_product.id %}true{% else %}false{% endif %}" 
            title="{{ family_product.title }}">
           
           {% if family_product.featured_image %}
             <img 
-              src="{{ family_product.featured_image }}" 
+              src="{{ family_product.featured_image | image_url: '100x100' }}" 
               alt="{{ family_product.title }}" 
               width="50" 
-              height="50"
-              loading="lazy">
-          {% elsif family_product.images and family_product.images.size > 0 %}
-            <img 
-              src="{{ family_product.images.first }}" 
-              alt="{{ family_product.title }}" 
-              width="50" 
-              height="50"
-              loading="lazy">
+              height="50">
           {% else %}
             <span class="variant-swatch" aria-label="{{ family_product.title }}"></span>
           {% endif %}
@@ -58,15 +46,14 @@ Shows fallback text if no products are assigned
       border: 2px solid transparent;
       border-radius: 8px;
       padding: 2px;
-      transition: border-color 0.2s, transform 0.2s;
+      transition: border-color 0.2s;
     }
 
     .variant-family__item.active {
       border-color: #000;
-      transform: scale(1.05);
     }
 
-    .variant-family__item img,
+    .variant-family__item image,
     .variant-swatch {
       width: 50px;
       height: 50px;
