@@ -251,7 +251,7 @@
               "type": "custom-liquid",
               "name": "t:names.custom_liquid",
               "settings": {
-                "custom_liquid": "{% render 'variant-family' %}"
+                "custom_liquid": "{% render 'variant-family', product: product %}"
               },
               "blocks": {}
             }
@@ -417,16 +417,10 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
-    },
-    "product_variant_family_mTWtDd": {
-      "type": "product-variant-family",
-      "name": "Variant family",
-      "settings": {}
     }
   },
   "order": [
     "main",
-    "product_recommendations_qggXJq",
-    "product_variant_family_mTWtDd"
+    "product_recommendations_qggXJq"
   ]
 }
