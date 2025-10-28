@@ -251,7 +251,7 @@
               "type": "custom-liquid",
               "name": "t:names.custom_liquid",
               "settings": {
-                "custom_liquid": "{% render 'variant-family', product: product %}"
+                "custom_liquid": "{% render 'variant-family' %}"
               },
               "blocks": {}
             }
