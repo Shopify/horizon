@@ -1,19 +1,17 @@
 {% comment %}
-Variant Family snippet for Horizon 3.0.1
-Uses closest.product to safely access product metafields
-Displays a row of sibling products if metafield exists
-Shows fallback text if no products are assigned
+  Variant Family snippet for Horizon 3.0.1
+  Uses closest.product to safely access product metafields
+  Displays a row of sibling products if metafield exists
+  Shows fallback text if no products are assigned
 {% endcomment %}
 
 {% assign current_product = closest.product | default: product %}
 {% assign family_products = current_product.metafields.custom.variant_family.value %}
 
 {% if family_products != blank %}
-
   <div class="variant-family" role="group" aria-label="Choose model">
-
     {% comment %}
-    Render current product first, then others, in a single loop
+      Render current product first, then others, in a single loop
     {% endcomment %}
     {% for family_product in family_products %}
       {% if family_product.id == current_product.id %}
@@ -22,43 +20,50 @@ Shows fallback text if no products are assigned
     {% endfor %}
 
     {% comment %}
-    Output current product first
+      Output current product first
     {% endcomment %}
-    <a href="{{ current_first.url }}" 
-       class="variant-family__item active" 
-       aria-current="true" 
-       title="{{ current_first.title }}">
-      
+    <a
+      href="{{ current_first.url }}"
+      class="variant-family__item active"
+      aria-current="true"
+      title="{{ current_first.title }}"
+    >
       {% if current_first.featured_image %}
-        <img src="{{ current_first.featured_image | image_url: '100x100' }}" 
-             alt="{{ current_first.title }}" 
-             width="50" height="50">
+        <img
+          src="{{ current_first.featured_image | image_url: '100x100' }}"
+          alt="{{ current_first.title }}"
+          width="50"
+          height="50"
+        >
       {% else %}
         <span class="variant-swatch" aria-label="{{ current_first.title }}"></span>
       {% endif %}
     </a>
 
     {% comment %}
-    Then output the other products in a single loop without duplicating HTML
+      Then output the other products in a single loop without duplicating HTML
     {% endcomment %}
     {% for family_product in family_products %}
       {% unless family_product.id == current_product.id %}
-        <a href="{{ family_product.url }}" 
-           class="variant-family__item" 
-           aria-current="false" 
-           title="{{ family_product.title }}">
-          
+        <a
+          href="{{ family_product.url }}"
+          class="variant-family__item"
+          aria-current="false"
+          title="{{ family_product.title }}"
+        >
           {% if family_product.featured_image %}
-            <img src="{{ family_product.featured_image | image_url: '100x100' }}" 
-                 alt="{{ family_product.title }}" 
-                 width="50" height="50">
+            <img
+              src="{{ family_product.featured_image | image_url: '100x100' }}"
+              alt="{{ family_product.title }}"
+              width="50"
+              height="50"
+            >
           {% else %}
             <span class="variant-swatch" aria-label="{{ family_product.title }}"></span>
           {% endif %}
         </a>
       {% endunless %}
     {% endfor %}
-
   </div>
 
   <style>
