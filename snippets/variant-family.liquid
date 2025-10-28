@@ -8,7 +8,6 @@ Shows fallback text if no products are assigned
 {% assign current_product = closest.product | default: product %}
 {% assign family_products = current_product.metafields.custom.variant_family.value %}
 
-{{ family_products | json }}
 
 {% if family_products != blank %}
   <div class="variant-family" role="group" aria-label="Choose model">
