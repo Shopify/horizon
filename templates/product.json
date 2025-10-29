@@ -7,7 +7,7 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
+{
   "sections": {
     "main": {
       "type": "product-information",
@@ -16,9 +16,9 @@
           "type": "_product-media-gallery",
           "static": true,
           "settings": {
-            "media_presentation": "grid",
-            "media_columns": "two",
-            "image_gap": 4,
+            "media_presentation": "carousel",
+            "media_columns": "one",
+            "image_gap": 24,
             "large_first_image": false,
             "icons_style": "none",
             "slideshow_controls_style": "counter",
@@ -71,8 +71,6 @@
               "type": "group",
               "name": "Header",
               "settings": {
-                "link": "",
-                "open_in_new_tab": false,
                 "content_direction": "column",
                 "vertical_on_mobile": true,
                 "horizontal_alignment": "flex-start",
@@ -96,11 +94,13 @@
                 "border_width": 1,
                 "border_opacity": 100,
                 "border_radius": 0,
-                "placeholder": "",
                 "toggle_overlay": false,
                 "overlay_color": "#00000026",
                 "overlay_style": "solid",
                 "gradient_direction": "to top",
+                "link": "",
+                "open_in_new_tab": false,
+                "placeholder": "",
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
@@ -161,6 +161,32 @@
                 "price_tVjtKg"
               ]
             },
+            "text_aEtTtq": {
+              "type": "text",
+              "name": "Product description",
+              "settings": {
+                "text": "{{ closest.product.description }}",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-primary--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
             "divider_VJhene": {
               "type": "_divider",
               "name": "t:names.divider",
@@ -220,40 +246,14 @@
                 }
               },
               "block_order": []
-            },
-            "text_aEtTtq": {
-              "type": "text",
-              "name": "Product description",
-              "settings": {
-                "text": "{{ closest.product.description }}",
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-primary--family)",
-                "font_size": "",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
             }
           },
           "block_order": [
             "group_icgrde",
+            "text_aEtTtq",
             "divider_VJhene",
             "variant_picker_R3rGDr",
-            "buy_buttons_eYQEYi",
-            "text_aEtTtq"
+            "buy_buttons_eYQEYi"
           ]
         }
       },
@@ -395,15 +395,15 @@
         "recommendation_type": "related",
         "layout_type": "grid",
         "carousel_on_mobile": false,
-        "max_products": 4,
-        "columns": 4,
+        "max_products": 3,
+        "columns": 3,
         "mobile_columns": "2",
         "columns_gap": 12,
-        "rows_gap": 24,
+        "rows_gap": 12,
         "icons_style": "arrow",
         "icons_shape": "none",
         "section_width": "page-width",
-        "gap": 28,
+        "gap": 32,
         "color_scheme": "scheme-1",
         "padding-block-start": 48,
         "padding-block-end": 48

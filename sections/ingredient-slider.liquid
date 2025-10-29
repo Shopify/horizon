@@ -1,0 +1,359 @@
+{% comment %}
+  Ingredient Slider – storytelling carousel inspired by Kōkako's location carousel.
+{% endcomment %}
+
+{% liquid
+  assign section_id = 'IngredientSlider-' | append: section.id
+  assign animation_style = section.settings.animation_style
+  assign slider_classes = 'golden-ingredient-slider__track'
+  if animation_style == 'fade'
+    assign slider_classes = slider_classes | append: ' golden-ingredient-slider__track--fade'
+  else
+    assign slider_classes = slider_classes | append: ' golden-ingredient-slider__track--slide'
+  endif
+%}
+
+<section id="{{ section_id }}" class="section golden-ingredient-slider" aria-label="{{ section.settings.heading | default: 'Ingredient slider' | escape }}">
+  <div class="page-width golden-ingredient-slider__inner">
+    {% if section.settings.heading != blank %}
+      <div class="golden-ingredient-slider__heading">
+        <h2 class="golden-ingredient-slider__title">{{ section.settings.heading }}</h2>
+      </div>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      <div class="golden-ingredient-slider__viewport" data-slider>
+        <div class="{{ slider_classes }}" role="list">
+          {% for block in section.blocks %}
+            {% liquid
+              assign image = block.settings.image
+              assign has_image = false
+              if image != blank
+                assign has_image = true
+              endif
+              assign region = block.settings.region
+              assign link = block.settings.link
+            %}
+            <article id="{{ section_id }}-block-{{ forloop.index }}" class="golden-ingredient-slider__slide" role="listitem" {{ block.shopify_attributes }} data-observe>
+              {% if section.settings.enable_vertical_labels and region != blank %}
+                <span class="golden-ingredient-slider__region" aria-hidden="true">{{ region }}</span>
+              {% endif %}
+              <div class="golden-ingredient-slider__media">
+                {% if has_image %}
+                  {{
+                    image
+                    | image_url: width: 1200
+                    | image_tag:
+                      loading: 'lazy',
+                      class: 'golden-ingredient-slider__image',
+                      sizes: '(min-width: 1200px) 480px, (min-width: 750px) 60vw, 80vw',
+                      widths: '360, 540, 720, 960, 1200',
+                      alt: image.alt | default: block.settings.title
+                  }}
+                {% else %}
+                  {{ 'image' | placeholder_svg_tag: 'placeholder golden-ingredient-slider__image' }}
+                {% endif %}
+              </div>
+              <div class="golden-ingredient-slider__content">
+                {% if block.settings.region != blank %}
+                  <p class="golden-ingredient-slider__region-mobile">{{ block.settings.region }}</p>
+                {% endif %}
+                {% if block.settings.title != blank %}
+                  <h3 class="golden-ingredient-slider__slide-title">{{ block.settings.title }}</h3>
+                {% endif %}
+                {% if block.settings.description != blank %}
+                  <p class="golden-ingredient-slider__description">{{ block.settings.description }}</p>
+                {% endif %}
+                {% if link != blank %}
+                  <a class="golden-ingredient-slider__link" href="{{ link }}">{{ 'general.accessibility.learn_more' | t | default: 'Learn more' }}</a>
+                {% endif %}
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+      </div>
+    {% else %}
+      <div class="golden-ingredient-slider__empty">
+        <p>{{ 'sections.featured_collection.no_products' | t }}</p>
+      </div>
+    {% endif %}
+  </div>
+
+  <style>
+    #{{ section_id }} {
+      --slider-bg: color-mix(in srgb, var(--color-base-background-1) 85%, #f7e3c3);
+      --slider-highlight: color-mix(in srgb, #d9b66f 60%, var(--color-base-background-1) 40%);
+      --slider-text: color-mix(in srgb, var(--color-base-text), #7a5b2d 20%);
+      padding-block: clamp(3rem, 6vw, 5rem);
+      background: radial-gradient(circle at top left, rgba(255, 246, 225, 0.9), rgba(245, 228, 196, 0.7)), var(--slider-bg);
+    }
+
+    #{{ section_id }} .page-width {
+      max-width: 1280px;
+      padding-inline: 2rem;
+    }
+
+    #{{ section_id }} .golden-ingredient-slider__heading {
+      margin-bottom: clamp(1.5rem, 4vw, 2.75rem);
+      text-align: center;
+    }
+
+    #{{ section_id }} .golden-ingredient-slider__title {
+      margin: 0;
+      font-size: clamp(1.85rem, 2vw + 1rem, 2.9rem);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: color-mix(in srgb, var(--slider-text), #9c7a3a 35%);
+    }
+
+    #{{ section_id }} .golden-ingredient-slider__viewport {
+      position: relative;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+
+    #{{ section_id }} .golden-ingredient-slider__viewport::-webkit-scrollbar {
+      display: none;
+    }
+
+    #{{ section_id }} .golden-ingredient-slider__track {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(80%, 1fr);
+      gap: clamp(1.5rem, 4vw, 3rem);
+      align-items: stretch;
+      transition: transform 400ms ease;
+    }
+
+    #{{ section_id }} .golden-ingredient-slider__track--fade .golden-ingredient-slider__slide {
+      transition: opacity 500ms ease, transform 500ms ease;
+    }
+
+    #{{ section_id }} .golden-ingredient-slider__slide {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1.5rem;
+      padding: clamp(1.75rem, 5vw, 2.5rem);
+      background: rgba(255, 255, 255, 0.78);
+      border-radius: 28px;
+      box-shadow: 0 25px 60px rgba(123, 92, 34, 0.14);
+      scroll-snap-align: start;
+      color: var(--slider-text);
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    #{{ section_id }} .golden-ingredient-slider__slide.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    #{{ section_id }} .golden-ingredient-slider__media {
+      border-radius: 24px;
+      overflow: hidden;
+      background: rgba(255, 248, 230, 0.9);
+      position: relative;
+      min-height: 260px;
+      aspect-ratio: 4 / 5;
+    }
+
+    #{{ section_id }} .golden-ingredient-slider__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 400ms ease;
+    }
+
+    #{{ section_id }} .golden-ingredient-slider__slide:hover .golden-ingredient-slider__image,
+    #{{ section_id }} .golden-ingredient-slider__slide:focus-within .golden-ingredient-slider__image {
+      transform: scale(1.04);
+    }
+
+    #{{ section_id }} .golden-ingredient-slider__content {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    #{{ section_id }} .golden-ingredient-slider__slide-title {
+      margin: 0;
+      font-size: clamp(1.5rem, 1.6vw + 1rem, 2.25rem);
+      color: color-mix(in srgb, var(--slider-text), #805d2b 25%);
+    }
+
+    #{{ section_id }} .golden-ingredient-slider__description {
+      margin: 0;
+      line-height: 1.7;
+      color: color-mix(in srgb, var(--slider-text), #6b5126 25%);
+    }
+
+    #{{ section_id }} .golden-ingredient-slider__link {
+      margin-top: 0.5rem;
+      font-weight: 600;
+      color: color-mix(in srgb, var(--slider-text), #b98c3c 35%);
+      text-decoration: none;
+      border-bottom: 1px solid currentColor;
+      width: fit-content;
+    }
+
+    #{{ section_id }} .golden-ingredient-slider__link:hover,
+    #{{ section_id }} .golden-ingredient-slider__link:focus-visible {
+      color: color-mix(in srgb, var(--slider-text), #d9a850 40%);
+    }
+
+    #{{ section_id }} .golden-ingredient-slider__region {
+      position: absolute;
+      inset: clamp(1.2rem, 2vw, 1.6rem) auto auto clamp(1.2rem, 2vw, 1.6rem);
+      writing-mode: vertical-rl;
+      text-transform: uppercase;
+      letter-spacing: 0.4em;
+      font-size: 0.75rem;
+      color: color-mix(in srgb, var(--slider-text), #c09a55 20%);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    #{{ section_id }} .golden-ingredient-slider__region-mobile {
+      display: none;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      font-size: 0.75rem;
+      color: color-mix(in srgb, var(--slider-text), #b08945 30%);
+    }
+
+    @media (max-width: 749px) {
+      #{{ section_id }} .golden-ingredient-slider__track {
+        grid-auto-columns: minmax(85%, 1fr);
+      }
+
+      #{{ section_id }} .golden-ingredient-slider__slide {
+        padding: 1.5rem;
+      }
+
+      #{{ section_id }} .golden-ingredient-slider__region {
+        display: none;
+      }
+
+      #{{ section_id }} .golden-ingredient-slider__region-mobile {
+        display: block;
+      }
+    }
+
+    @media (min-width: 990px) {
+      #{{ section_id }} .golden-ingredient-slider__slide {
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+        align-items: center;
+      }
+    }
+
+    @supports not (color: color-mix(in srgb, #ffffff 50%, #000000)) {
+      #{{ section_id }} {
+        background: #f6e6ce;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #{{ section_id }} .golden-ingredient-slider__track,
+      #{{ section_id }} .golden-ingredient-slider__slide,
+      #{{ section_id }} .golden-ingredient-slider__image {
+        transition-duration: 0ms !important;
+        transform: none !important;
+      }
+    }
+  </style>
+</section>
+
+<script>
+  (function () {
+    var sectionId = '{{ section_id }}';
+
+    function setInView(container) {
+      if (!container) return;
+      var slides = container.querySelectorAll('[data-observe]');
+      if (!slides.length) return;
+
+      if (!('IntersectionObserver' in window)) {
+        slides.forEach(function (slide) {
+          slide.classList.add('is-visible');
+        });
+        return;
+      }
+
+      var observer = new IntersectionObserver(
+        function (entries, observerInstance) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observerInstance.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.3 }
+      );
+
+      slides.forEach(function (slide) {
+        observer.observe(slide);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      setInView(document.getElementById(sectionId));
+    });
+
+    document.addEventListener('shopify:section:load', function (event) {
+      if (event.detail.sectionId === '{{ section.id }}') {
+        setInView(event.target.querySelector('#' + sectionId));
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Ingredient Slider",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section heading",
+      "default": "We proudly source from across Aotearoa"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_vertical_labels",
+      "label": "Enable vertical text on desktop",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "animation_style",
+      "label": "Animation style",
+      "options": [
+        { "value": "fade", "label": "Fade" },
+        { "value": "slide", "label": "Slide" }
+      ],
+      "default": "slide"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": "Ingredient",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Ingredient image" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Mānuka Honey" },
+        { "type": "text", "id": "region", "label": "Region", "default": "Golden Bay" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Collected from wild hives near Farewell Spit — sun-drunk and mineral-rich." },
+        { "type": "url", "id": "link", "label": "Optional link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ingredient Slider",
+      "category": "Golden"
+    }
+  ]
+}
+{% endschema %}

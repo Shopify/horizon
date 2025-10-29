@@ -35,6 +35,20 @@
 
      {{ 'font-override.css' | asset_url | stylesheet_tag }}
      
+    {% if settings.show_global_section_borders %}
+      <style>
+        /* Global section borders controlled from theme settings */
+        .shopify-section {
+          border-top: {{ settings.global_section_border_thickness }}px solid {{ settings.global_section_border_colour }};
+          border-bottom: {{ settings.global_section_border_thickness }}px solid {{ settings.global_section_border_colour }};
+        }
+
+        .shopify-section + .shopify-section {
+          border-top: none;
+        }
+      </style>
+    {% endif %}
+
   </head>
 
   <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">

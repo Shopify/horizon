@@ -339,8 +339,38 @@
           "primary_button_border": "primary_button_border",
           "secondary_button": "secondary_button_background",
           "on_secondary_button": "secondary_button_text",
-          "secondary_button_border": "secondary_button_border"
+        "secondary_button_border": "secondary_button_border"
         }
+      }
+    ]
+  },
+  {
+    "name": "Global section borders",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_global_section_borders",
+        "label": "Show section borders",
+        "default": false
+      },
+      {
+        "type": "color",
+        "id": "global_section_border_colour",
+        "label": "Border colour",
+        "default": "#000000",
+        "alpha": true,
+        "visible_if": "{{ settings.show_global_section_borders }}"
+      },
+      {
+        "type": "range",
+        "id": "global_section_border_thickness",
+        "label": "Border thickness",
+        "min": 0,
+        "max": 3,
+        "default": 1,
+        "step": 1,
+        "unit": "px",
+        "visible_if": "{{ settings.show_global_section_borders }}"
       }
     ]
   },

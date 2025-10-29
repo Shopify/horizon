@@ -1,0 +1,377 @@
+{% comment %}
+  Featured Goods – honey-toned grid inspired by Kōkako's Featured Goods Grid.
+  Desktop: responsive grid, Mobile: horizontal scroll with snap.
+{% endcomment %}
+
+{% liquid
+  assign collection = section.settings.collection
+  assign section_id = 'FeaturedGoods-' | append: section.id
+  assign products_to_show = section.settings.max_products | default: 4 | plus: 0
+  assign has_products = false
+  if collection != blank
+    if collection.products_count > 0
+      assign has_products = true
+    endif
+  endif
+%}
+
+<section id="{{ section_id }}" class="section golden-featured-goods" aria-label="{{ section.settings.title | default: 'Featured goods' | escape }}">
+  <div class="golden-featured-goods__inner page-width">
+    {% if section.settings.title != blank %}
+      <div class="golden-featured-goods__heading">
+        <h2 class="golden-featured-goods__title">{{ section.settings.title }}</h2>
+      </div>
+    {% endif %}
+
+    <div class="golden-featured-goods__grid{% if section.settings.enable_scroll_mobile %} golden-featured-goods__grid--scroll{% endif %}">
+      {% if has_products %}
+        {% for product in collection.products limit: products_to_show %}
+          {% liquid
+            assign variant = product.selected_or_first_available_variant
+            assign flavour_notes = ''
+            if product.metafields.custom.flavour_notes != blank
+              assign flavour_notes = product.metafields.custom.flavour_notes
+            elsif product.metafields.descriptors.flavour_notes != blank
+              assign flavour_notes = product.metafields.descriptors.flavour_notes
+            else
+              assign flavour_notes = product.description | strip_html | truncatewords: 14
+            endif
+            assign alt_text = product.featured_image.alt | default: product.title
+          %}
+
+          <article class="golden-featured-goods__card" data-product-card data-observe>
+            <a class="golden-featured-goods__media" href="{{ product.url }}">
+              {% if product.featured_image %}
+                {{
+                  product.featured_image
+                  | image_url: width: 800
+                  | image_tag:
+                    loading: 'lazy',
+                    alt: alt_text,
+                    sizes: '(min-width: 990px) 25vw, (min-width: 750px) 33vw, 80vw',
+                    widths: '200, 360, 480, 720, 800',
+                    class: 'golden-featured-goods__image'
+                }}
+              {% else %}
+                {{ 'image' | placeholder_svg_tag: 'placeholder golden-featured-goods__image' }}
+              {% endif %}
+            </a>
+
+            <div class="golden-featured-goods__content">
+              <h3 class="golden-featured-goods__product-title">
+                <a href="{{ product.url }}">{{ product.title }}</a>
+              </h3>
+              {% if flavour_notes != blank %}
+                <p class="golden-featured-goods__descriptor">{{ flavour_notes }}</p>
+              {% endif %}
+              <p class="golden-featured-goods__price">{{ variant.price | money }}</p>
+
+              <div class="golden-featured-goods__actions">
+                {% if product.available and variant %}
+                  {%- form 'product', product, class: 'golden-featured-goods__form' -%}
+                    <input type="hidden" name="id" value="{{ variant.id }}">
+                    <button type="submit" class="button button--primary" name="add">
+                      {{ 'products.product.add_to_cart' | t }}
+                    </button>
+                  {%- endform -%}
+                {% else %}
+                  <span class="golden-featured-goods__sold-out">{{ 'products.product.sold_out' | t }}</span>
+                {% endif %}
+                <a class="button button--secondary" href="{{ product.url }}">{{ 'general.accessibility.learn_more' | t | default: 'Learn more' }}</a>
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+      {% else %}
+        <div class="golden-featured-goods__placeholder">
+          {% for i in (1..products_to_show) %}
+            <article class="golden-featured-goods__card is-placeholder">
+              <div class="golden-featured-goods__media">
+                {{ 'image' | placeholder_svg_tag: 'placeholder golden-featured-goods__image' }}
+              </div>
+              <div class="golden-featured-goods__content">
+                <h3 class="golden-featured-goods__product-title">{{ 'sections.featured_collection.product' | t }}</h3>
+                <p class="golden-featured-goods__descriptor">{{ 'sections.featured_collection.no_product_description' | t }}</p>
+                <p class="golden-featured-goods__price">—</p>
+                <div class="golden-featured-goods__actions">
+                  <span class="button button--disabled">{{ 'products.product.add_to_cart' | t }}</span>
+                  <span class="button button--disabled">{{ 'sections.featured_product.learn_more' | t }}</span>
+                </div>
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <style>
+    #{{ section_id }} {
+      --golden-background: color-mix(in srgb, var(--color-base-background-1) 88%, #f2d6a2);
+      --golden-card-shadow: 0 18px 40px rgba(81, 63, 24, 0.08);
+      --golden-card-radius: 18px;
+      --golden-transition: transform 240ms ease, box-shadow 240ms ease;
+      padding-block: clamp(2.5rem, 6vw, 4.25rem);
+      background: var(--golden-background);
+    }
+
+    #{{ section_id }} .page-width {
+      max-width: 1280px;
+      padding-inline: 2rem;
+    }
+
+    #{{ section_id }} .golden-featured-goods__heading {
+      margin-bottom: clamp(1.5rem, 4vw, 2.75rem);
+      text-align: center;
+    }
+
+    #{{ section_id }} .golden-featured-goods__title {
+      font-size: clamp(1.75rem, 2vw + 1rem, 2.75rem);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: color-mix(in srgb, var(--color-base-text), #ad7d2e 25%);
+      margin: 0;
+    }
+
+    #{{ section_id }} .golden-featured-goods__grid {
+      display: grid;
+      gap: clamp(1.5rem, 4vw, 2.25rem);
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    #{{ section_id }} .golden-featured-goods__grid--scroll {
+      overflow-x: auto;
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(80%, 1fr);
+      gap: 1.5rem;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 0.75rem;
+    }
+
+    #{{ section_id }} .golden-featured-goods__grid--scroll .golden-featured-goods__card {
+      scroll-snap-align: start;
+    }
+
+    @media (min-width: 750px) {
+      #{{ section_id }} .golden-featured-goods__grid--scroll {
+        overflow: visible;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        grid-auto-flow: row;
+        grid-auto-columns: unset;
+        scroll-snap-type: none;
+        padding-bottom: 0;
+      }
+    }
+
+    #{{ section_id }} .golden-featured-goods__card {
+      background: linear-gradient(180deg, rgba(255, 249, 235, 0.92), rgba(255, 242, 214, 0.98));
+      border-radius: var(--golden-card-radius);
+      box-shadow: var(--golden-card-shadow);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: var(--golden-transition);
+      min-height: 100%;
+      opacity: 0;
+      transform: translateY(24px);
+    }
+
+    #{{ section_id }} .golden-featured-goods__card.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    #{{ section_id }} .golden-featured-goods__card:hover,
+    #{{ section_id }} .golden-featured-goods__card:focus-within {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 20px 50px rgba(117, 85, 33, 0.22);
+    }
+
+    #{{ section_id }} .golden-featured-goods__media {
+      aspect-ratio: 1 / 1;
+      display: block;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.65);
+    }
+
+    #{{ section_id }} .golden-featured-goods__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 400ms ease;
+    }
+
+    #{{ section_id }} .golden-featured-goods__card:hover .golden-featured-goods__image,
+    #{{ section_id }} .golden-featured-goods__card:focus-within .golden-featured-goods__image {
+      transform: scale(1.04);
+    }
+
+    #{{ section_id }} .golden-featured-goods__content {
+      padding: clamp(1.5rem, 4vw, 2rem);
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    #{{ section_id }} .golden-featured-goods__product-title {
+      margin: 0;
+      font-size: 1.25rem;
+      color: color-mix(in srgb, var(--color-base-text), #8c6f35 30%);
+    }
+
+    #{{ section_id }} .golden-featured-goods__product-title a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    #{{ section_id }} .golden-featured-goods__descriptor {
+      margin: 0;
+      color: color-mix(in srgb, var(--color-base-text), #a17d41 45%);
+      line-height: 1.6;
+    }
+
+    #{{ section_id }} .golden-featured-goods__price {
+      margin: 0;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: color-mix(in srgb, var(--color-base-text), #8a6431 40%);
+    }
+
+    #{{ section_id }} .golden-featured-goods__actions {
+      margin-top: auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    #{{ section_id }} .golden-featured-goods__sold-out {
+      font-style: italic;
+      color: color-mix(in srgb, var(--color-base-text), #ad7d2e 55%);
+    }
+
+    #{{ section_id }} .golden-featured-goods__actions .button {
+      min-width: 9rem;
+    }
+
+    #{{ section_id }} .golden-featured-goods__placeholder {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    #{{ section_id }} .golden-featured-goods__card.is-placeholder {
+      opacity: 0.55;
+      filter: grayscale(0.2);
+      transform: none;
+    }
+
+    @supports not (color: color-mix(in srgb, #ffffff 50%, #000000)) {
+      #{{ section_id }} {
+        background: #f5ead5;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #{{ section_id }} .golden-featured-goods__card,
+      #{{ section_id }} .golden-featured-goods__image,
+      #{{ section_id }} .golden-featured-goods__card:hover,
+      #{{ section_id }} .golden-featured-goods__card:focus-within {
+        transition-duration: 0ms !important;
+        transform: none !important;
+      }
+    }
+  </style>
+</section>
+
+<script>
+  (function () {
+    var sectionId = '{{ section_id }}';
+
+    function revealCards(container) {
+      if (!container) return;
+
+      var cards = container.querySelectorAll('[data-observe]');
+      if (!cards.length) return;
+
+      if (!('IntersectionObserver' in window)) {
+        cards.forEach(function (card) {
+          card.classList.add('is-visible');
+        });
+        return;
+      }
+
+      var observer = new IntersectionObserver(
+        function (entries, observerInstance) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observerInstance.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.2 }
+      );
+
+      cards.forEach(function (card) {
+        observer.observe(card);
+      });
+    }
+
+    function getSectionElement() {
+      return document.getElementById(sectionId);
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      revealCards(getSectionElement());
+    });
+
+    document.addEventListener('shopify:section:load', function (event) {
+      if (!event.detail || event.detail.sectionId !== '{{ section.id }}') {
+        return;
+      }
+
+      revealCards(getSectionElement());
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Featured Goods",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "Featured Goods"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Choose collection"
+    },
+    {
+      "type": "range",
+      "id": "max_products",
+      "label": "Max products to show",
+      "min": 2,
+      "max": 6,
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_scroll_mobile",
+      "label": "Enable horizontal scroll on mobile",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Goods",
+      "category": "Golden"
+    }
+  ]
+}
+{% endschema %}
