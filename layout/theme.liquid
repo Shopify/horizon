@@ -1,8 +1,17 @@
 <!doctype html>
-<html
-  class="no-js{% if request.design_mode %} shopify-design-mode{% endif %}"
-  lang="{{ request.locale.iso_code }}"
->
+{% liquid
+  assign html_classes = 'no-js'
+  if request.design_mode
+    assign html_classes = html_classes | append: ' shopify-design-mode'
+  endif
+  if settings.enable_guided_scroll
+    assign html_classes = html_classes | append: ' guided-scroll-root'
+    if settings.guided_scroll_enable_mobile
+      assign html_classes = html_classes | append: ' guided-scroll-root--mobile'
+    endif
+  endif
+%}
+<html class="{{ html_classes }}" lang="{{ request.locale.iso_code }}">
   <head>
     {%- if settings.favicon != blank -%}
       <link
@@ -32,9 +41,64 @@
     {% endif %}
 
     {{ content_for_header }}
+
+    {{ 'font-override.css' | asset_url | stylesheet_tag }}
   </head>
 
-  <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
+  {% liquid
+    assign body_classes = 'page-width-' | append: settings.page_width | append: ' card-hover-effect-' | append: settings.card_hover_effect
+    if settings.side_columns_enable
+      assign body_classes = body_classes | append: ' has-side-columns'
+      if settings.side_columns_enable_mobile
+        assign body_classes = body_classes | append: ' has-side-columns--mobile'
+      endif
+    endif
+    if settings.enable_guided_scroll
+      assign body_classes = body_classes | append: ' has-guided-scroll'
+      if settings.guided_scroll_enable_mobile
+        assign body_classes = body_classes | append: ' has-guided-scroll--mobile'
+      endif
+    endif
+    if settings.enable_bottom_motif_button
+      assign body_classes = body_classes | append: ' has-floating-motif-button'
+    endif
+    if settings.section_gridlines_enable
+      assign body_classes = body_classes | append: ' has-section-gridlines'
+    endif
+    assign section_gridline_color = settings.section_gridline_color | default: '#e5e5e5'
+    assign section_gridline_color_dark = settings.section_gridline_color_dark | default: 'rgba(255,255,255,0.12)'
+  %}
+  {% capture body_style %}
+    {% if settings.side_columns_enable %}
+      --side-columns-width-desktop: {{ settings.side_columns_width_desktop | default: 2 | append: 'vw' }};
+      --side-columns-width-mobile: {{ settings.side_columns_width_mobile | default: 3.5 | append: 'vw' }};
+      --side-column-background-color: {{ settings.side_columns_background_color | default: 'transparent' }};
+      --side-column-border-color: {{ settings.side_columns_border_color | default: 'transparent' }};
+      --side-columns-overhang: 12px;
+    {% endif %}
+    {% if settings.enable_guided_scroll %}
+      --guided-scroll-gap: {{ settings.guided_scroll_section_gap | default: 48 }}px;
+      --guided-scroll-align: {{ settings.guided_scroll_alignment | default: 'start' }};
+    {% endif %}
+    {% if settings.enable_bottom_motif_button %}
+      --motif-button-max-width-desktop: {{ settings.bottom_motif_button_max_width_desktop | default: 360 }}px;
+      --motif-button-max-width-mobile: {{ settings.bottom_motif_button_max_width_mobile | default: 220 }}px;
+      --motif-button-vertical-offset: {{ settings.bottom_motif_button_vertical_offset | default: 16 }}px;
+      --motif-button-background: {{ settings.bottom_motif_button_background | default: 'transparent' }};
+      --motif-button-text-color: {{ settings.bottom_motif_button_text_color | default: '#ffffff' }};
+    {% endif %}
+    {% if section_gridline_color != blank or section_gridline_color_dark != blank %}
+      --section-gridline-color-default: {{ section_gridline_color }};
+      --section-gridline-color-dark: {{ section_gridline_color_dark }};
+      --section-gridline-width: 1px;
+    {% endif %}
+  {% endcapture %}
+  <body
+    class="{{ body_classes | strip }}"
+    {% if body_style != blank %}
+      style="{{ body_style | strip }}"
+    {% endif %}
+  >
     {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
     <div id="header-group">
       {% sections 'header-group' %}
@@ -58,12 +122,43 @@
       {{ content_for_layout }}
     </main>
 
-    {% sections 'footer-group' %}
+    <div id="footer-group">
+      {% sections 'footer-group' %}
+    </div>
 
     {% render 'search-modal' %}
 
     {% if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add-modal' %}
+    {% endif %}
+
+    {% if settings.enable_bottom_motif_button %}
+      <div class="floating-motif-button" data-floating-motif-button>
+        {% if settings.bottom_motif_button_link != blank %}
+          <a class="floating-motif-button__link" href="{{ settings.bottom_motif_button_link }}" aria-label="{{ settings.bottom_motif_button_label | escape }}">
+        {% else %}
+          <div class="floating-motif-button__link" role="presentation">
+        {% endif %}
+            <span class="floating-motif-button__surface">
+              {% if settings.bottom_motif_button_svg != blank %}
+                {{
+                  settings.bottom_motif_button_svg
+                  | image_url: width: 800
+                  | image_tag:
+                    loading: 'lazy',
+                    class: 'floating-motif-button__motif',
+                    alt: '',
+                    role: 'presentation'
+                }}
+              {% endif %}
+              <span class="floating-motif-button__label">{{ settings.bottom_motif_button_label }}</span>
+            </span>
+        {% if settings.bottom_motif_button_link != blank %}
+          </a>
+        {% else %}
+          </div>
+        {% endif %}
+      </div>
     {% endif %}
   </body>
 </html>

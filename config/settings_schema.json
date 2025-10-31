@@ -339,7 +339,7 @@
           "primary_button_border": "primary_button_border",
           "secondary_button": "secondary_button_background",
           "on_secondary_button": "secondary_button_text",
-          "secondary_button_border": "secondary_button_border"
+        "secondary_button_border": "secondary_button_border"
         }
       }
     ]
@@ -1383,6 +1383,218 @@
     ]
   },
   {
+    "name": "Borders",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Side columns"
+      },
+      {
+        "type": "checkbox",
+        "id": "side_columns_enable",
+        "label": "Enable side columns",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "side_columns_enable_mobile",
+        "label": "Enable side columns on mobile",
+        "default": true,
+        "visible_if": "{{ settings.side_columns_enable }}"
+      },
+      {
+        "type": "range",
+        "id": "side_columns_width_desktop",
+        "label": "Desktop column width",
+        "min": 0,
+        "max": 8,
+        "step": 0.1,
+        "unit": "%",
+        "default": 2,
+        "visible_if": "{{ settings.side_columns_enable }}"
+      },
+      {
+        "type": "range",
+        "id": "side_columns_width_mobile",
+        "label": "Mobile column width",
+        "min": 0,
+        "max": 12,
+        "step": 0.5,
+        "unit": "%",
+        "default": 3.5,
+        "visible_if": "{{ settings.side_columns_enable }}"
+      },
+      {
+        "type": "color",
+        "id": "side_columns_background_color",
+        "label": "Column background",
+        "default": "#00000000",
+        "alpha": true,
+        "visible_if": "{{ settings.side_columns_enable }}"
+      },
+      {
+        "type": "color",
+        "id": "side_columns_border_color",
+        "label": "Column border",
+        "default": "#000000",
+        "alpha": true,
+        "visible_if": "{{ settings.side_columns_enable }}"
+      },
+      {
+        "type": "header",
+        "content": "Guided scrolling"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_guided_scroll",
+        "label": "Enable guided scroll",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "guided_scroll_enable_mobile",
+        "label": "Enable guided scroll on mobile",
+        "default": false,
+        "visible_if": "{{ settings.enable_guided_scroll }}"
+      },
+      {
+        "type": "select",
+        "id": "guided_scroll_alignment",
+        "label": "Scroll snap alignment",
+        "options": [
+          {
+            "value": "start",
+            "label": "Start"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          }
+        ],
+        "default": "start",
+        "visible_if": "{{ settings.enable_guided_scroll }}"
+      },
+      {
+        "type": "range",
+        "id": "guided_scroll_section_gap",
+        "label": "Snap buffer",
+        "min": 0,
+        "max": 200,
+        "step": 4,
+        "unit": "px",
+        "default": 48,
+        "visible_if": "{{ settings.enable_guided_scroll }}"
+      },
+      {
+        "type": "header",
+        "content": "Floating motif button"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_bottom_motif_button",
+        "label": "Enable floating motif button",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "bottom_motif_button_label",
+        "label": "Button label",
+        "default": "Explore",
+        "visible_if": "{{ settings.enable_bottom_motif_button }}"
+      },
+      {
+        "type": "url",
+        "id": "bottom_motif_button_link",
+        "label": "Button link",
+        "visible_if": "{{ settings.enable_bottom_motif_button }}"
+      },
+      {
+        "type": "image_picker",
+        "id": "bottom_motif_button_svg",
+        "label": "Button motif image",
+        "visible_if": "{{ settings.enable_bottom_motif_button }}"
+      },
+      {
+        "type": "color",
+        "id": "bottom_motif_button_background",
+        "label": "Fallback background colour",
+        "default": "#000000",
+        "alpha": true,
+        "visible_if": "{{ settings.enable_bottom_motif_button }}"
+      },
+      {
+        "type": "color",
+        "id": "bottom_motif_button_text_color",
+        "label": "Text colour",
+        "default": "#FFFFFF",
+        "alpha": true,
+        "visible_if": "{{ settings.enable_bottom_motif_button }}"
+      },
+      {
+        "type": "range",
+        "id": "bottom_motif_button_max_width_desktop",
+        "label": "Max width on desktop",
+        "min": 160,
+        "max": 640,
+        "step": 10,
+        "unit": "px",
+        "default": 360,
+        "visible_if": "{{ settings.enable_bottom_motif_button }}"
+      },
+      {
+        "type": "range",
+        "id": "bottom_motif_button_max_width_mobile",
+        "label": "Max width on mobile",
+        "min": 140,
+        "max": 360,
+        "step": 10,
+        "unit": "px",
+        "default": 220,
+        "visible_if": "{{ settings.enable_bottom_motif_button }}"
+      },
+      {
+        "type": "range",
+        "id": "bottom_motif_button_vertical_offset",
+        "label": "Vertical offset from bottom",
+        "min": 0,
+        "max": 120,
+        "step": 2,
+        "unit": "px",
+        "default": 16,
+        "visible_if": "{{ settings.enable_bottom_motif_button }}"
+      }
+    ]
+  },
+  {
+    "name": "Section gridlines",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "section_gridlines_enable",
+        "label": "Enable section gridlines",
+        "default": true
+      },
+      {
+        "type": "paragraph",
+        "content": "Adds fine 1px dividers above and below each content section."
+      },
+      {
+        "type": "color",
+        "id": "section_gridline_color",
+        "label": "Gridline color",
+        "default": "#e5e5e5",
+        "alpha": true
+      },
+      {
+        "type": "color",
+        "id": "section_gridline_color_dark",
+        "label": "Gridline color on dark backgrounds",
+        "default": "rgba(255,255,255,0.12)",
+        "alpha": true
+      }
+    ]
+  },
+  {
     "name": "t:names.animations",
     "settings": [
       {
@@ -1568,7 +1780,6 @@
         ],
         "default": "body"
       },
-
       {
         "type": "select",
         "id": "button_text_case_primary",
@@ -1625,7 +1836,6 @@
         ],
         "default": "body"
       },
-
       {
         "type": "select",
         "id": "button_text_case_secondary",
@@ -1764,7 +1974,6 @@
         "info": "t:info.checkout_buttons",
         "default": true
       },
-
       {
         "type": "url",
         "id": "empty_cart_button_link",

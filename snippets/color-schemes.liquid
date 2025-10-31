@@ -70,6 +70,12 @@
         --color-selected-variant-hover-text: rgb({{ scheme.settings.selected_variant_hover_text_color.rgba }});
         --color-selected-variant-hover-border: rgb({{ scheme.settings.selected_variant_hover_border_color.rgba }});
 
+        {% if background_brightness < 64 %}
+          --section-gridline-color: var(--section-gridline-color-dark);
+        {% else %}
+          --section-gridline-color: var(--section-gridline-color-default);
+        {% endif %}
+
         --input-disabled-background-color: rgb(var(--color-foreground-rgb) / var(--opacity-10));
         --input-disabled-border-color: rgb(var(--color-foreground-rgb) / var(--opacity-5-15));
         --input-disabled-text-color: rgb(var(--color-foreground-rgb) / var(--opacity-50));
@@ -90,6 +96,18 @@
           --shadow-popover: 0px 4px 20px rgb(var(--color-shadow-rgb) / var(--opacity-15));
         {% endif %}
       }
+
+    {% if settings.section_gridlines_enable %}
+      body.has-section-gridlines
+        #MainContent
+        .shopify-section:has(> .color-{{ scheme.id }}) {
+        {% if background_brightness < 64 %}
+          --section-gridline-color: var(--section-gridline-color-dark);
+        {% else %}
+          --section-gridline-color: var(--section-gridline-color-default);
+        {% endif %}
+      }
+    {% endif %}
   {% endfor %}
 
   {{ scheme_classes | prepend: 'body' }} {

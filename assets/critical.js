@@ -490,5 +490,286 @@ export function updateAllHeaderCustomProperties() {
   updateTransparentHeaderOffset();
 }
 
-// Run both functions on page load
+// Run header custom-property updates on page load
 updateAllHeaderCustomProperties();
+
+/**
+ * Initialize a bespoke guided scroll experience with eased snapping between sections.
+ */
+function initGuidedScroll() {
+  const body = document.body;
+  if (!body?.classList.contains('has-guided-scroll')) return;
+
+  const scrollingElement = document.scrollingElement || document.documentElement;
+  const getScrollTop = () => scrollingElement.scrollTop || window.scrollY || 0;
+  const getScrollHeight = () => scrollingElement.scrollHeight || document.body.scrollHeight || 0;
+  const setScrollTop = (value) => {
+    window.scrollTo(0, value);
+  };
+  const prefersReducedMotionQuery =
+    typeof window.matchMedia === 'function'
+      ? window.matchMedia('(prefers-reduced-motion: reduce)')
+      : { matches: false };
+  const mobileQuery =
+    typeof window.matchMedia === 'function'
+      ? window.matchMedia('(max-width: 749px)')
+      : { matches: false };
+  const allowMobile = body.classList.contains('has-guided-scroll--mobile');
+
+  /** @type {HTMLElement[]} */
+  let sections = [];
+  let isAnimating = false;
+  let animationFrameId = 0;
+  let animationStart = 0;
+  let animationStartScroll = 0;
+  let animationTargetScroll = 0;
+  let pendingDelta = 0;
+  let deltaTimer = 0;
+
+  const EASING_DURATION = 650;
+
+  const easeOutQuint = (t) => 1 - Math.pow(1 - t, 5);
+
+  const getNumberFromCSS = (property) => {
+    const value = getComputedStyle(body).getPropertyValue(property);
+    const parsed = parseFloat(value);
+    return Number.isFinite(parsed) ? parsed : 0;
+  };
+
+  const updateSections = () => {
+    sections = Array.from(document.querySelectorAll('#MainContent > .shopify-section'));
+  };
+
+  const getHeaderOffset = () => {
+    const gap = getNumberFromCSS('--guided-scroll-gap');
+    const header = getNumberFromCSS('--header-group-height');
+    return gap + header;
+  };
+
+  const getAlignmentMode = () => {
+    const align = getComputedStyle(body).getPropertyValue('--guided-scroll-align').trim();
+    if (align === 'center' || align === 'end') return align;
+    return 'start';
+  };
+
+  const getCurrentSectionIndex = () => {
+    if (!sections.length) return 0;
+    const scrollTop = getScrollTop();
+    const offset = scrollTop + getHeaderOffset();
+    let closestIndex = 0;
+    let smallestDistance = Number.POSITIVE_INFINITY;
+
+    sections.forEach((section, index) => {
+      const distance = Math.abs(section.offsetTop - offset);
+      if (distance < smallestDistance) {
+        smallestDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    return closestIndex;
+  };
+
+  const clampScroll = (value) => {
+    const max = Math.max(0, getScrollHeight() - window.innerHeight);
+    return Math.min(Math.max(0, value), max);
+  };
+
+  const stopAnimation = () => {
+    if (!isAnimating) return;
+    cancelAnimationFrame(animationFrameId);
+    animationFrameId = 0;
+    animationStart = 0;
+    isAnimating = false;
+  };
+
+  const animate = (timestamp) => {
+    if (!isAnimating) return;
+
+    if (animationStart === 0) {
+      animationStart = timestamp;
+    }
+
+    const progress = Math.min((timestamp - animationStart) / EASING_DURATION, 1);
+    const easedProgress = easeOutQuint(progress);
+    const position = animationStartScroll + (animationTargetScroll - animationStartScroll) * easedProgress;
+
+    setScrollTop(position);
+
+    if (progress < 1) {
+      animationFrameId = requestAnimationFrame(animate);
+      return;
+    }
+
+    stopAnimation();
+  };
+
+  const scrollToSectionIndex = (index) => {
+    if (!sections.length) return;
+
+    const clampedIndex = Math.max(0, Math.min(sections.length - 1, index));
+    const targetSection = sections[clampedIndex];
+    if (!(targetSection instanceof HTMLElement)) return;
+
+    const rect = targetSection.getBoundingClientRect();
+    const currentScroll = getScrollTop();
+    const absoluteTop = rect.top + currentScroll;
+    const headerOffset = getHeaderOffset();
+    const gap = getNumberFromCSS('--guided-scroll-gap');
+    const viewportHeight = window.innerHeight;
+    const alignment = getAlignmentMode();
+
+    let destination = absoluteTop - headerOffset;
+
+    if (alignment === 'center') {
+      destination = absoluteTop - (viewportHeight - rect.height) / 2;
+    } else if (alignment === 'end') {
+      destination = absoluteTop + rect.height - viewportHeight + gap;
+    }
+
+    const targetScroll = clampScroll(destination);
+    if (Math.abs(targetScroll - currentScroll) < 1) return;
+
+    stopAnimation();
+
+    animationStartScroll = currentScroll;
+    animationTargetScroll = targetScroll;
+    isAnimating = true;
+    animationFrameId = requestAnimationFrame(animate);
+  };
+
+  const processDelta = (delta) => {
+    if (!delta || !sections.length) return;
+    const direction = delta > 0 ? 1 : -1;
+    const currentIndex = getCurrentSectionIndex();
+    const nextIndex = currentIndex + direction;
+    if (nextIndex < 0 || nextIndex > sections.length - 1) {
+      stopAnimation();
+      return;
+    }
+    scrollToSectionIndex(nextIndex);
+  };
+
+  const wheelHandler = (event) => {
+    if (!shouldEnable()) return;
+    if (event.defaultPrevented) return;
+
+    const target = event.target;
+    if (target instanceof Element) {
+      if (target.closest('input, textarea, select, [contenteditable="true"]')) return;
+      if (target.closest('[data-guided-scroll-ignore]')) return;
+
+      let node = target;
+      while (node && node !== document.body) {
+        const style = window.getComputedStyle(node);
+        const overflowY = style.overflowY;
+        if ((overflowY === 'auto' || overflowY === 'scroll') && node.scrollHeight > node.clientHeight + 1) {
+          return;
+        }
+        node = node.parentElement;
+      }
+    }
+
+    // Ignore small trackpad jitters
+    if (Math.abs(event.deltaY) < 8 && event.deltaMode === 0) return;
+
+    event.preventDefault();
+
+    pendingDelta += event.deltaY;
+
+    window.clearTimeout(deltaTimer);
+    deltaTimer = window.setTimeout(() => {
+      processDelta(pendingDelta);
+      pendingDelta = 0;
+    }, 60);
+  };
+
+  const keyHandler = (event) => {
+    if (!shouldEnable()) return;
+    if (event.defaultPrevented) return;
+
+    const key = event.key;
+    const forwardKeys = ['ArrowDown', 'PageDown'];
+    const backwardKeys = ['ArrowUp', 'PageUp'];
+
+    if (key === ' ' || key === 'Spacebar') {
+      event.preventDefault();
+      processDelta(event.shiftKey ? -1 : 1);
+      return;
+    }
+
+    if (forwardKeys.includes(key)) {
+      event.preventDefault();
+      processDelta(1);
+      return;
+    }
+
+    if (backwardKeys.includes(key)) {
+      event.preventDefault();
+      processDelta(-1);
+    }
+  };
+
+  const shouldEnable = () => {
+    if (!sections.length) return false;
+    if (prefersReducedMotionQuery.matches) return false;
+    if (!allowMobile && mobileQuery.matches) return false;
+    return true;
+  };
+
+  const refreshSections = () => {
+    updateSections();
+    if (!sections.length) {
+      stopAnimation();
+    }
+  };
+
+  const wheelListenerOptions = { passive: false };
+
+  const detach = () => {
+    window.removeEventListener('wheel', wheelHandler, wheelListenerOptions);
+    document.removeEventListener('keydown', keyHandler);
+    window.clearTimeout(deltaTimer);
+    pendingDelta = 0;
+  };
+
+  const attach = () => {
+    window.addEventListener('wheel', wheelHandler, wheelListenerOptions);
+    document.addEventListener('keydown', keyHandler);
+  };
+
+  const updateActiveState = () => {
+    refreshSections();
+    stopAnimation();
+
+    detach();
+
+    if (shouldEnable()) {
+      attach();
+    }
+  };
+
+  window.addEventListener('resize', refreshSections, { passive: true });
+  document.addEventListener('shopify:section:load', refreshSections);
+  document.addEventListener('shopify:section:unload', refreshSections);
+  document.addEventListener('shopify:section:reorder', refreshSections);
+
+  const bindMediaQuery = (query, listener) => {
+    if (!query) return;
+    if (typeof query.addEventListener === 'function') {
+      query.addEventListener('change', listener);
+      return;
+    }
+
+    if (typeof query.addListener === 'function') {
+      query.addListener(listener);
+    }
+  };
+
+  bindMediaQuery(prefersReducedMotionQuery, updateActiveState);
+  bindMediaQuery(mobileQuery, updateActiveState);
+
+  updateActiveState();
+}
+
+initGuidedScroll();

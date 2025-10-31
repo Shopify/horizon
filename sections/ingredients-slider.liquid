@@ -1,0 +1,699 @@
+{% comment %}
+  DYNAMIC CAROUSEL — Vertically stacked spines that expand into a rich media panel.
+{% endcomment %}
+
+{{ 'dynamic-carousel.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign aria_label = section.settings.heading | default: 'Dynamic carousel'
+  assign height_setting = section.settings.section_height
+  assign height_style = ''
+
+  if height_setting == 'custom'
+    assign height_style = section.settings.section_height_custom | append: 'svh'
+  elsif height_setting != blank
+    assign height_style = 'var(--section-height-' | append: height_setting | append: ')'
+  endif
+
+  assign has_footer = false
+  if section.settings.footer_text != blank or section.settings.footer_link_label != blank
+    assign has_footer = true
+  endif
+%}
+
+<section
+  class="dynamic-carousel"
+  aria-label="{{ aria_label | escape }}"
+  style="{% if height_style != blank %}--dynamic-carousel-min-height: {{ height_style }};{% endif %}"
+>
+  <div class="page-width dynamic-carousel__inner">
+    {% if section.settings.heading != blank %}
+      <h2 class="dynamic-carousel__heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    {% if section.settings.intro != blank %}
+      <div class="dynamic-carousel__intro">{{ section.settings.intro }}</div>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      <div class="dynamic-carousel__stage" data-dynamic-carousel-stage>
+        <div
+          class="dynamic-carousel__slides"
+          role="tablist"
+          aria-orientation="horizontal"
+          aria-label="{{ aria_label | escape }}"
+          data-dynamic-carousel
+        >
+          {% for block in section.blocks %}
+            {% liquid
+              assign tab_id = 'DynamicCarouselTab-' | append: block.id
+              assign panel_id = 'DynamicCarouselPanel-' | append: block.id
+              assign is_active = forloop.first
+
+              capture slide_style
+                if block.settings.spine_text_color != blank
+                  echo '--spine-color:' | append: block.settings.spine_text_color | append: ';'
+                endif
+
+                if block.settings.spine_background_color != blank
+                  echo '--spine-background:' | append: block.settings.spine_background_color | append: ';'
+                endif
+
+                if block.settings.slide_background_color != blank
+                  echo '--slide-background:' | append: block.settings.slide_background_color | append: ';'
+                endif
+              endcapture
+            %}
+
+            <article
+              class="dynamic-carousel__slide"
+              data-slide
+              data-active="{% if is_active %}true{% else %}false{% endif %}"
+              style="{{ slide_style | strip }}"
+              {{ block.shopify_attributes }}
+            >
+              <button
+                type="button"
+                id="{{ tab_id }}"
+                class="dynamic-carousel__handle"
+                role="tab"
+                aria-controls="{{ panel_id }}"
+                aria-selected="{% if is_active %}true{% else %}false{% endif %}"
+                aria-expanded="{% if is_active %}true{% else %}false{% endif %}"
+                tabindex="{% if is_active %}0{% else %}-1{% endif %}"
+                data-handle
+              >
+                <span class="dynamic-carousel__handle-text">
+                  {{- block.settings.spine_heading | default: block.settings.heading | default: 'Slide heading' -}}
+                </span>
+              </button>
+
+              {% capture media_markup %}
+                {% case block.settings.media_type %}
+                  {% when 'uploaded_video' %}
+                    {% if block.settings.video %}
+                      {% render 'video',
+                        video: block.settings.video,
+                        video_autoplay: block.settings.video_autoplay,
+                        video_loop: block.settings.video_loop,
+                        video_class: 'dynamic-carousel__media-embed',
+                        section_id: section.id,
+                        block: block
+                      %}
+                    {% endif %}
+                  {% when 'external_video' %}
+                    {% if block.settings.video_url %}
+                      {% liquid
+                        assign external_video = block.settings.video_url | video_url
+                        assign preview_image = block.settings.video_poster
+                      %}
+                      {% render 'video',
+                        video_from_url: true,
+                        video: external_video.id,
+                        video_type: external_video.type,
+                        video_autoplay: block.settings.video_autoplay,
+                        video_loop: block.settings.video_loop,
+                        video_preview_image: preview_image,
+                        video_alt: block.settings.heading | default: block.settings.spine_heading,
+                        video_class: 'dynamic-carousel__media-embed',
+                        section_id: section.id,
+                        block: block
+                      %}
+                    {% endif %}
+                  {% when 'image' %}
+                    {% if block.settings.image %}
+                      {{
+                        block.settings.image
+                        | image_url: width: 1600
+                        | image_tag:
+                          widths: '480, 720, 960, 1200, 1600',
+                          sizes: '(min-width: 1200px) 40vw, (min-width: 750px) 60vw, 92vw',
+                          loading: 'lazy',
+                          class: 'dynamic-carousel__media-image',
+                          alt: block.settings.heading | default: block.settings.spine_heading
+                      }}
+                    {% endif %}
+                {% endcase %}
+              {% endcapture %}
+
+              {% assign media_markup = media_markup | strip %}
+
+              <div
+                id="{{ panel_id }}"
+                class="dynamic-carousel__panel"
+                role="tabpanel"
+                aria-labelledby="{{ tab_id }}"
+                aria-hidden="{% unless is_active %}true{% else %}false{% endunless %}"
+                data-panel
+                {% unless is_active %}hidden{% endunless %}
+              >
+                <div class="dynamic-carousel__panel-inner{% if media_markup != blank %} dynamic-carousel__panel-inner--with-media{% endif %}">
+                  {% if media_markup != blank %}
+                    <div class="dynamic-carousel__media" data-dynamic-carousel-media>
+                      {{ media_markup }}
+                    </div>
+                  {% endif %}
+
+                  <div class="dynamic-carousel__content">
+                    <div class="dynamic-carousel__content-header">
+                      <div class="dynamic-carousel__heading-group">
+                        {% if block.settings.eyebrow != blank %}
+                          <p class="dynamic-carousel__eyebrow">{{ block.settings.eyebrow }}</p>
+                        {% endif %}
+
+                        {% if block.settings.heading != blank %}
+                          <h3 class="dynamic-carousel__title">{{ block.settings.heading }}</h3>
+                        {% endif %}
+
+                        {% if block.settings.summary != blank %}
+                          <p class="dynamic-carousel__summary">
+                            {{- block.settings.summary | escape | newline_to_br -}}
+                          </p>
+                        {% endif %}
+                      </div>
+
+                      {% if block.settings.icon %}
+                        <div class="dynamic-carousel__icon">
+                          {{
+                            block.settings.icon
+                            | image_url: width: 120
+                            | image_tag:
+                              loading: 'lazy',
+                              widths: '80, 120, 160',
+                              alt: block.settings.icon_alt | default: ''
+                          }}
+                        </div>
+                      {% endif %}
+                    </div>
+
+                    {% if block.settings.body != blank %}
+                      <div class="dynamic-carousel__body-text">{{ block.settings.body }}</div>
+                    {% endif %}
+
+                    {% if block.settings.details != blank %}
+                      <div class="dynamic-carousel__details">{{ block.settings.details }}</div>
+                    {% endif %}
+
+                    {% if block.settings.cta_label != blank and block.settings.cta_url != blank %}
+                      <div class="dynamic-carousel__actions">
+                        <a
+                          href="{{ block.settings.cta_url }}"
+                          class="button button--primary dynamic-carousel__button"
+                        >
+                          {{ block.settings.cta_label }}
+                        </a>
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+      </div>
+    {% else %}
+      <div class="dynamic-carousel__empty">
+        {{ 'sections.general.no_content' | t: section_name: section.name }}
+      </div>
+    {% endif %}
+
+    {% if has_footer %}
+      <div class="dynamic-carousel__footer">
+        {% if section.settings.footer_text != blank %}
+          <div class="dynamic-carousel__footer-text">{{ section.settings.footer_text }}</div>
+        {% endif %}
+
+        {% if section.settings.footer_link_label != blank and section.settings.footer_link_url != blank %}
+          <a class="dynamic-carousel__footer-link" href="{{ section.settings.footer_link_url }}">
+            {{ section.settings.footer_link_label }}
+            <span class="dynamic-carousel__footer-icon" aria-hidden="true">&rarr;</span>
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Dynamic Carousel",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section heading",
+      "default": "Our spaces across Aotearoa"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Introductory text"
+    },
+    {
+      "type": "select",
+      "id": "section_height",
+      "label": "Carousel height",
+      "info": "Controls the minimum height of the expanded panel.",
+      "options": [
+        {
+          "value": "",
+          "label": "Natural"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        },
+        {
+          "value": "extra-large",
+          "label": "Extra large"
+        },
+        {
+          "value": "custom",
+          "label": "Custom"
+        }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "range",
+      "id": "section_height_custom",
+      "label": "Custom height",
+      "min": 30,
+      "max": 100,
+      "step": 1,
+      "unit": "svh",
+      "default": 60,
+      "visible_if": "{{ section.settings.section_height == 'custom' }}"
+    },
+    {
+      "type": "header",
+      "content": "Footer"
+    },
+    {
+      "type": "richtext",
+      "id": "footer_text",
+      "label": "Footer text",
+      "default": "<p>We proudly supply some of the best cafés, restaurants and retailers around.</p>"
+    },
+    {
+      "type": "text",
+      "id": "footer_link_label",
+      "label": "Footer link label",
+      "default": "Find your nearest outpost"
+    },
+    {
+      "type": "url",
+      "id": "footer_link_url",
+      "label": "Footer link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "text",
+          "id": "spine_heading",
+          "label": "Spine heading",
+          "default": "Commercial Bay"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow label",
+          "info": "Optional label shown above the main heading when expanded."
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Expanded heading",
+          "default": "9 Charles Street, Mount Eden, Auckland"
+        },
+        {
+          "type": "textarea",
+          "id": "summary",
+          "label": "Summary",
+          "info": "Short supporting copy shown beneath the heading."
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Body content",
+          "default": "<p>Share what makes this location special, who it serves, or what visitors can expect.</p>"
+        },
+        {
+          "type": "richtext",
+          "id": "details",
+          "label": "Details",
+          "info": "Use paragraphs or lists for opening hours, contact info, and additional calls to action."
+        },
+        {
+          "type": "select",
+          "id": "media_type",
+          "label": "Media type",
+          "options": [
+            {
+              "value": "image",
+              "label": "Image"
+            },
+            {
+              "value": "uploaded_video",
+              "label": "Uploaded video"
+            },
+            {
+              "value": "external_video",
+              "label": "External video"
+            },
+            {
+              "value": "none",
+              "label": "None"
+            }
+          ],
+          "default": "image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "visible_if": "{{ block.settings.media_type == 'image' }}"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video",
+          "visible_if": "{{ block.settings.media_type == 'uploaded_video' }}"
+        },
+        {
+          "type": "video_url",
+          "id": "video_url",
+          "label": "Video URL",
+          "accept": [
+            "youtube",
+            "vimeo"
+          ],
+          "visible_if": "{{ block.settings.media_type == 'external_video' }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "video_poster",
+          "label": "Poster image",
+          "info": "Shown before the video loads.",
+          "visible_if": "{{ block.settings.media_type == 'external_video' }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "video_autoplay",
+          "label": "Autoplay video",
+          "default": true,
+          "visible_if": "{{ block.settings.media_type != 'image' and block.settings.media_type != 'none' }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "video_loop",
+          "label": "Loop video",
+          "default": true,
+          "visible_if": "{{ block.settings.media_type != 'image' and block.settings.media_type != 'none' }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "icon_alt",
+          "label": "Icon alt text"
+        },
+        {
+          "type": "color",
+          "id": "spine_text_color",
+          "label": "Spine text colour"
+        },
+        {
+          "type": "color",
+          "id": "spine_background_color",
+          "label": "Spine background colour"
+        },
+        {
+          "type": "color",
+          "id": "slide_background_color",
+          "label": "Slide background colour"
+        },
+        {
+          "type": "text",
+          "id": "cta_label",
+          "label": "Primary button label",
+          "default": "Plan your visit"
+        },
+        {
+          "type": "url",
+          "id": "cta_url",
+          "label": "Primary button link"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 9,
+  "presets": [
+    {
+      "name": "Dynamic Carousel",
+      "category": "Content",
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "spine_heading": "Commercial Bay"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "spine_heading": "Roastery Roller Door"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "spine_heading": "Wholesale HQ"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% javascript %}
+  (() => {
+    const sectionId = 'shopify-section-{{ section.id }}';
+
+    class DynamicCarousel {
+      constructor(root) {
+        this.root = root;
+        this.slides = Array.from(root.querySelectorAll('[data-slide]'));
+        this.slideData = [];
+        this.activeSlide = null;
+
+        if (this.slides.length === 0) {
+          return;
+        }
+
+        this.slides.forEach((slide) => this.setupSlide(slide));
+
+        const initialSlide =
+          this.slides.find((slide) => slide.dataset.active === 'true') || this.slides[0];
+
+        if (initialSlide) {
+          this.setActive(initialSlide, false);
+        }
+
+        this.root.dataset.initialized = 'true';
+      }
+
+      setupSlide(slide) {
+        const handle = slide.querySelector('[data-handle]');
+        const panel = slide.querySelector('[data-panel]');
+
+        if (!handle || !panel) {
+          return;
+        }
+
+        const data = {
+          slide,
+          handle,
+          panel,
+          onClick: (event) => {
+            event.preventDefault();
+            this.setActive(slide, false);
+          },
+          onKeydown: (event) => {
+            this.handleKeydown(event, slide);
+          },
+        };
+
+        handle.addEventListener('click', data.onClick);
+        handle.addEventListener('keydown', data.onKeydown);
+
+        this.slideData.push(data);
+      }
+
+      handleKeydown(event, slide) {
+        const keys = ['ArrowRight', 'ArrowLeft', 'Home', 'End'];
+
+        if (!keys.includes(event.key)) {
+          return;
+        }
+
+        event.preventDefault();
+
+        const index = this.slides.indexOf(slide);
+
+        if (index === -1) {
+          return;
+        }
+
+        let targetIndex = index;
+
+        switch (event.key) {
+          case 'ArrowRight':
+            targetIndex = (index + 1) % this.slides.length;
+            break;
+          case 'ArrowLeft':
+            targetIndex = (index - 1 + this.slides.length) % this.slides.length;
+            break;
+          case 'Home':
+            targetIndex = 0;
+            break;
+          case 'End':
+            targetIndex = this.slides.length - 1;
+            break;
+        }
+
+        const targetSlide = this.slides[targetIndex];
+
+        if (targetSlide) {
+          this.setActive(targetSlide, true);
+        }
+      }
+
+      setActive(targetSlide, focusHandle) {
+        if (!targetSlide || targetSlide === this.activeSlide) {
+          if (focusHandle && targetSlide) {
+            const handle = targetSlide.querySelector('[data-handle]');
+
+            if (handle) {
+              handle.focus();
+            }
+          }
+
+          return;
+        }
+
+        this.slideData.forEach((entry, index) => {
+          const isActive = entry.slide === targetSlide;
+
+          entry.slide.dataset.active = isActive ? 'true' : 'false';
+          entry.slide.classList.toggle('is-active', isActive);
+
+          entry.handle.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          entry.handle.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+          entry.handle.setAttribute('tabindex', isActive ? '0' : '-1');
+
+          if (isActive) {
+            entry.panel.removeAttribute('hidden');
+            entry.panel.setAttribute('aria-hidden', 'false');
+            entry.panel.dataset.entered = 'true';
+
+            if (focusHandle) {
+              entry.handle.focus();
+            }
+          } else {
+            entry.panel.setAttribute('aria-hidden', 'true');
+            entry.panel.setAttribute('hidden', '');
+            entry.panel.removeAttribute('data-entered');
+          }
+        });
+
+        this.activeSlide = targetSlide;
+      }
+
+      destroy() {
+        this.slideData.forEach((entry, index) => {
+          entry.handle.removeEventListener('click', entry.onClick);
+          entry.handle.removeEventListener('keydown', entry.onKeydown);
+
+          const isFirst = index === 0;
+
+          entry.slide.dataset.active = isFirst ? 'true' : 'false';
+          entry.slide.classList.toggle('is-active', isFirst);
+
+          entry.handle.setAttribute('aria-selected', isFirst ? 'true' : 'false');
+          entry.handle.setAttribute('aria-expanded', isFirst ? 'true' : 'false');
+          entry.handle.setAttribute('tabindex', isFirst ? '0' : '-1');
+
+          if (isFirst) {
+            entry.panel.removeAttribute('hidden');
+            entry.panel.setAttribute('aria-hidden', 'false');
+            entry.panel.dataset.entered = 'true';
+          } else {
+            entry.panel.setAttribute('hidden', '');
+            entry.panel.setAttribute('aria-hidden', 'true');
+            entry.panel.removeAttribute('data-entered');
+          }
+        });
+
+        this.slideData = [];
+        this.activeSlide = null;
+        delete this.root.dataset.initialized;
+      }
+    }
+
+    const hydrate = (sectionEl) => {
+      if (!(sectionEl instanceof HTMLElement)) {
+        return null;
+      }
+
+      const stage = sectionEl.querySelector('[data-dynamic-carousel-stage]');
+
+      if (!stage) {
+        return null;
+      }
+
+      return new DynamicCarousel(stage);
+    };
+
+    let instance = hydrate(document.getElementById(sectionId));
+
+    document.addEventListener('shopify:section:load', (event) => {
+      if (event.target?.id !== sectionId) {
+        return;
+      }
+
+      if (instance) {
+        instance.destroy();
+      }
+
+      instance = hydrate(event.target);
+    });
+
+    document.addEventListener('shopify:section:unload', (event) => {
+      if (event.target?.id !== sectionId) {
+        return;
+      }
+
+      if (instance) {
+        instance.destroy();
+        instance = null;
+      }
+    });
+  })();
+{% endjavascript %}

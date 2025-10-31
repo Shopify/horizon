@@ -1,4 +1,5 @@
 {% style %}
+
   {%- liquid
     assign primary_font_bold = settings.type_body_font | font_modify: 'weight', 'bold'
     assign primary_font_italic = settings.type_body_font | font_modify: 'style', 'italic'
@@ -563,4 +564,28 @@
     --cart-secondary-font-style: var(--font-{{ settings.cart_price_font }}--style);
     --cart-secondary-font-weight: var(--font-{{ settings.cart_price_font }}--weight);
   }
+
+/* 1) Load your custom font file */
+@font-face {
+  font-family: 'Gangster Grotesk';
+  src: url('{{ "GangsterGrotesk-Regular.woff" | asset_url }}') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 2) Override the theme CSS variables to use your family */
+:root {
+  --font-body--family: 'Gangster Grotesk', sans-serif;
+  --font-subheading--family: 'Gangster Grotesk', sans-serif;
+  --font-heading--family: 'Gangster Grotesk', sans-serif;
+  --font-accent--family: 'Gangster Grotesk', sans-serif;
+
+  /* optional if the theme reads these */
+  --font-body--weight: 400;
+  --font-subheading--weight: 400;
+  --font-heading--weight: 400;
+  --font-accent--weight: 400;
+}
+
 {% endstyle %}

@@ -1,6 +1,13 @@
+
+
 {% assign block_settings = block.settings %}
+{% assign header_padding_block = block_settings.header_padding_block | default: 0 %}
+{% assign header_padding_inline = block_settings.header_padding_inline | default: 0 %}
+{% assign content_padding_block = block_settings.content_padding_block | default: 0 %}
+{% assign content_padding_inline = block_settings.content_padding_inline | default: 0 %}
+{% assign divider_padding_block = block_settings.divider_padding_block | default: 0 %}
 <div
-  class="accordion accordion--{{ block.id }} accordion--{{ block_settings.icon }} border-style spacing-style{% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %}{% if block_settings.dividers %} accordion--dividers{% endif %}"
+  class="accordion accordion--{{ block.id }} accordion--{{ block_settings.icon }} border-style spacing-style force-full-width{% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %}{% if block_settings.dividers %} accordion--dividers{% endif %}"
   style="
     --summary-font-family: var(--font-{{ block_settings.type_preset }}--family);
      --summary-font-style: var(--font-{{ block_settings.type_preset }}--style);
@@ -8,6 +15,11 @@
      --summary-font-size: var(--font-{{ block_settings.type_preset }}--size);
      --summary-font-line-height: var(--font-{{ block_settings.type_preset }}--line-height);
      --summary-font-case: var(--font-{{ block_settings.type_preset }}--case);
+     --accordion-header-padding-block-extra: {{ header_padding_block }}px;
+     --accordion-header-padding-inline-extra: {{ header_padding_inline }}px;
+     --accordion-content-padding-block-extra: {{ content_padding_block }}px;
+     --accordion-content-padding-inline-extra: {{ content_padding_inline }}px;
+     --accordion-divider-padding-block: {{ divider_padding_block }}px;
     {% render 'spacing-style', settings: block_settings %}
     {% render 'border-override', settings: block_settings %}
   "
@@ -20,6 +32,40 @@
   .accordion {
     flex: 1;
     width: 100%;
+    --accordion-header-padding-block-extra: 0px;
+    --accordion-header-padding-inline-extra: 0px;
+    --accordion-content-padding-block-extra: 0px;
+    --accordion-content-padding-inline-extra: 0px;
+    --accordion-divider-padding-block: 0px;
+  }
+
+  .accordion accordion-custom {
+    display: block;
+  }
+
+  .accordion accordion-custom .details {
+    box-sizing: border-box;
+    width: calc(100% + var(--padding-inline-start, 0px) + var(--padding-inline-end, 0px));
+    margin-inline-start: calc(var(--padding-inline-start, 0px) * -1);
+    margin-inline-end: calc(var(--padding-inline-end, 0px) * -1);
+    padding-block-end: var(--accordion-divider-padding-block);
+  }
+
+  .accordion accordion-custom:not(:first-child) .details {
+    padding-block-start: var(--accordion-divider-padding-block);
+  }
+
+  .accordion summary {
+    padding-inline-start: calc(var(--padding-inline-start, 0px) + var(--accordion-header-padding-inline-extra));
+    padding-inline-end: calc(var(--padding-inline-end, 0px) + var(--accordion-header-padding-inline-extra));
+    padding-block: calc(var(--padding-sm) + var(--accordion-header-padding-block-extra));
+  }
+
+  .accordion accordion-custom .details-content {
+    padding-inline-start: calc(var(--padding-inline-start, 0px) + var(--accordion-content-padding-inline-extra));
+    padding-inline-end: calc(var(--padding-inline-end, 0px) + var(--accordion-content-padding-inline-extra));
+    padding-block-start: var(--accordion-content-padding-block-extra);
+    padding-block-end: var(--accordion-content-padding-block-extra);
   }
 
   .accordion--dividers accordion-custom:not(:first-child) .details {
@@ -46,7 +92,7 @@
   }
 
   .accordion--dividers .details-content {
-    padding-block-end: var(--padding-sm);
+    padding-block-end: calc(var(--accordion-content-padding-block-extra) + var(--padding-sm));
   }
 
   .accordion--caret .icon-plus,
@@ -244,6 +290,68 @@
       "label": "t:settings.right",
       "min": 0,
       "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "t:content.header"
+    },
+    {
+      "type": "range",
+      "id": "header_padding_block",
+      "label": "t:settings.vertical_padding",
+      "min": 0,
+      "max": 72,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "header_padding_inline",
+      "label": "t:settings.horizontal_padding",
+      "min": 0,
+      "max": 72,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "t:content.content"
+    },
+    {
+      "type": "range",
+      "id": "content_padding_block",
+      "label": "t:settings.vertical_padding",
+      "min": 0,
+      "max": 72,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "content_padding_inline",
+      "label": "t:settings.horizontal_padding",
+      "min": 0,
+      "max": 72,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "t:content.divider"
+    },
+    {
+      "type": "range",
+      "id": "divider_padding_block",
+      "label": "t:settings.vertical_padding",
+      "min": 0,
+      "max": 72,
       "step": 1,
       "unit": "px",
       "default": 0

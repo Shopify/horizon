@@ -1,0 +1,479 @@
+{% comment %}
+  HERO CAROUSEL — Split hero with image triggers
+  Image swaps are driven by hovering or focusing the CTA buttons.
+{% endcomment %}
+
+{% liquid
+  assign color_scheme = section.settings.color_scheme | default: 'scheme-1'
+  assign has_blocks = false
+  if section.blocks.size > 0
+    assign has_blocks = true
+  endif
+%}
+
+<div class="section-background color-{{ color_scheme }}"></div>
+<section
+  class="hero-carousel section section--full-width color-{{ color_scheme }} spacing-style hero-carousel--image-{{ section.settings.image_position }} hero-carousel--align-{{ section.settings.content_alignment }}"
+  style="{% render 'spacing-style', settings: section.settings %}"
+  aria-label="{{ section.settings.heading | strip_html | default: 'Hero carousel' }}"
+  data-section-id="{{ section.id }}"
+  data-hero-carousel
+>
+  <div class="hero-carousel__frame">
+    <div class="hero-carousel__media" data-hero-media>
+      {% if has_blocks %}
+        {% for block in section.blocks %}
+          {% liquid
+            assign alt_text = block.settings.image_alt | default: block.settings.label | default: section.settings.heading | default: 'Hero slide'
+            assign loading_attr = 'lazy'
+            assign fetchpriority_attr = 'auto'
+            if forloop.first
+              assign loading_attr = 'eager'
+              assign fetchpriority_attr = 'high'
+            endif
+          %}
+          <div
+            class="hero-carousel__media-item{% if forloop.first %} is-active{% endif %}"
+            data-media-index="{{ forloop.index0 }}"
+            {{ block.shopify_attributes }}
+          >
+            {% if block.settings.image %}
+              {{ block.settings.image | image_url: width: 2800 | image_tag:
+                alt: alt_text,
+                class: 'hero-carousel__image',
+                loading: loading_attr,
+                fetchpriority: fetchpriority_attr
+              }}
+            {% else %}
+              {{ 'hero-apparel-1' | placeholder_svg_tag: 'hero-carousel__placeholder' }}
+            {% endif %}
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="hero-carousel__media-item is-active">
+          {{ 'hero-apparel-1' | placeholder_svg_tag: 'hero-carousel__placeholder' }}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="hero-carousel__content">
+      <div class="hero-carousel__content-inner">
+        {% if section.settings.heading %}
+          <h1 class="hero-carousel__heading">{{ section.settings.heading }}</h1>
+        {% endif %}
+
+        {% if has_blocks %}
+          <div class="hero-carousel__triggers">
+            {% for block in section.blocks %}
+              {% assign label = block.settings.label | default: 'Slide ' | append: forloop.index %}
+              {% assign url = block.settings.url %}
+              {% assign open_new = block.settings.open_in_new_tab %}
+              <a
+                class="hero-carousel__trigger{% if forloop.first %} is-active{% endif %}"
+                href="{{ url | default: '#' }}"
+                data-trigger-index="{{ forloop.index0 }}"
+                data-block="{{ block.id }}"
+                {% if open_new %}
+                  target="_blank"
+                  rel="noopener"
+                {% endif %}
+              >
+                <span class="hero-carousel__trigger-label">{{ label }}</span>
+              </a>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="hero-carousel__triggers">
+            <a class="hero-carousel__trigger is-active" href="#">
+              <span class="hero-carousel__trigger-label">{{ 'Shop now' | t }}</span>
+            </a>
+            <a class="hero-carousel__trigger" href="#">
+              <span class="hero-carousel__trigger-label">{{ 'Learn more' | t }}</span>
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  {% if section.settings.meta_text != blank %}
+    <div class="hero-carousel__meta">
+      <span>{{ section.settings.meta_text }}</span>
+    </div>
+  {% endif %}
+</section>
+
+{% stylesheet %}
+  .hero-carousel {
+    --hero-carousel-divider-color: var(--section-gridline-color, rgba(0, 0, 0, 0.08));
+    position: relative;
+    padding-block: 0;
+  }
+
+  .hero-carousel__frame {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: stretch;
+    min-height: clamp(420px, 60vw, 720px);
+  }
+
+  .hero-carousel__frame::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: var(--section-gridline-width, 1px);
+    transform: translateX(-50%);
+    background-color: var(--hero-carousel-divider-color);
+    pointer-events: none;
+  }
+
+  .hero-carousel__media {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-carousel__media-item {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity var(--duration-lg, 600ms) var(--ease-smooth, cubic-bezier(0.25, 0.46, 0.45, 0.94));
+    pointer-events: none;
+  }
+
+  .hero-carousel__media-item.is-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .hero-carousel__image,
+  .hero-carousel__media-item svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hero-carousel__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .hero-carousel__content-inner {
+    width: min(32rem, 100%);
+    display: grid;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .hero-carousel__heading {
+    margin: 0;
+    font-size: clamp(2.25rem, 4vw, 3.5rem);
+    line-height: 1.1;
+  }
+
+  .hero-carousel__triggers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: var(--grid-gutter, 0);
+    border: var(--section-gridline-width, 1px) solid var(--hero-carousel-divider-color);
+  }
+
+  .hero-carousel__trigger {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3.25rem;
+    padding-inline: clamp(1.5rem, 4vw, 2.5rem);
+    background: transparent;
+    color: currentColor;
+    text-decoration: none;
+    text-transform: none;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    transition: color var(--duration-md, 360ms) var(--ease-smooth, cubic-bezier(0.25, 0.46, 0.45, 0.94)), background-color var(--duration-md, 360ms) var(--ease-smooth, cubic-bezier(0.25, 0.46, 0.45, 0.94));
+  }
+
+  .hero-carousel__trigger:not(:last-child) {
+    border-inline-end: var(--section-gridline-width, 1px) solid var(--hero-carousel-divider-color);
+  }
+
+  .hero-carousel__trigger:hover,
+  .hero-carousel__trigger:focus-visible,
+  .hero-carousel__trigger.is-active {
+    background-color: rgb(var(--color-foreground-rgb, 17 24 39) / 0.08);
+  }
+
+  .hero-carousel__trigger:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  .hero-carousel__meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding-block: var(--space-sm, 0.75rem);
+    padding-inline: clamp(1.5rem, 5vw, 3rem);
+    border-top: var(--section-gridline-width, 1px) solid var(--hero-carousel-divider-color);
+    font-size: 0.875rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .hero-carousel--image-right .hero-carousel__media {
+    grid-column: 2;
+  }
+
+  .hero-carousel--image-right .hero-carousel__content {
+    grid-column: 1;
+  }
+
+  .hero-carousel--align-left .hero-carousel__content-inner {
+    text-align: left;
+    justify-items: flex-start;
+  }
+
+  .hero-carousel--align-right .hero-carousel__content-inner {
+    text-align: right;
+    justify-items: flex-end;
+  }
+
+  @media (max-width: 989px) {
+    .hero-carousel__frame {
+      grid-template-columns: minmax(0, 1fr);
+      min-height: auto;
+    }
+
+    .hero-carousel__frame::after {
+      display: none;
+    }
+
+    .hero-carousel__media {
+      aspect-ratio: 4 / 5;
+    }
+
+    .hero-carousel__content {
+      padding-block: clamp(2rem, 6vw, 3rem);
+    }
+
+    .hero-carousel__triggers {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .hero-carousel__trigger:not(:last-child) {
+      border-inline-end: none;
+      border-bottom: var(--section-gridline-width, 1px) solid var(--hero-carousel-divider-color);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-carousel__media-item {
+      transition-duration: 0.01ms;
+    }
+
+    .hero-carousel__trigger {
+      transition: none;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+class HeroCarouselTriggers {
+  constructor(section) {
+    this.section = section;
+    this.triggers = Array.from(section.querySelectorAll('[data-trigger-index]'));
+    this.mediaItems = Array.from(section.querySelectorAll('[data-media-index]'));
+    this.activeIndex = this.triggers.findIndex((trigger) => trigger.classList.contains('is-active'));
+    if (this.activeIndex < 0) {
+      this.activeIndex = 0;
+    }
+
+    if (!this.triggers.length || !this.mediaItems.length) {
+      return;
+    }
+
+    this.setActive(this.activeIndex);
+    this.bindEvents();
+  }
+
+  bindEvents() {
+    this.triggers.forEach((trigger) => {
+      const index = Number(trigger.dataset.triggerIndex);
+      trigger.addEventListener('mouseenter', () => this.setActive(index));
+      trigger.addEventListener('focus', () => this.setActive(index));
+      trigger.addEventListener('touchstart', () => this.setActive(index), { passive: true });
+    });
+  }
+
+  setActive(index) {
+    if (index === this.activeIndex || Number.isNaN(index)) return;
+
+    const currentTrigger = this.triggers[this.activeIndex];
+    const currentMedia = this.mediaItems[this.activeIndex];
+    if (currentTrigger) currentTrigger.classList.remove('is-active');
+    if (currentMedia) currentMedia.classList.remove('is-active');
+
+    const nextTrigger = this.triggers[index];
+    const nextMedia = this.mediaItems[index];
+    if (nextTrigger) nextTrigger.classList.add('is-active');
+    if (nextMedia) nextMedia.classList.add('is-active');
+
+    this.activeIndex = index;
+  }
+}
+
+document.querySelectorAll('[data-hero-carousel]').forEach((section) => {
+  if (!section.dataset.controller) {
+    section.dataset.controller = 'hero-carousel';
+    new HeroCarouselTriggers(section);
+  }
+});
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Hero carousel",
+  "class": "hero-carousel-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Just landed, Kōkako Half-Caf Mugs."
+    },
+    {
+      "type": "textarea",
+      "id": "meta_text",
+      "label": "Meta row text",
+      "default": "Fairtrade · Organic"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image position",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Image on left" },
+        { "value": "right", "label": "Image on right" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Content alignment",
+      "default": "right",
+      "options": [
+        { "value": "left", "label": "Left align" },
+        { "value": "right", "label": "Right align" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "Padding left",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "Padding right",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide option",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Button label",
+          "default": "Shop now"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Button link"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_in_new_tab",
+          "label": "Open in new tab"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Slide image"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image alt text"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Hero carousel",
+      "category": "Hero",
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "label": "Shop now"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "label": "I'm just browsing"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

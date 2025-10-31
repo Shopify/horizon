@@ -1,0 +1,463 @@
+<script
+  src="{{ 'instagram-carousel.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+
+{% liquid
+  assign section_id = 'InstagramCarousel-' | append: section.id
+  assign normalized_username = section.settings.instagram_username | strip | remove: '@'
+  assign follow_link = section.settings.follow_button_link
+  if follow_link == blank and normalized_username != blank
+    assign follow_link = 'https://www.instagram.com/' | append: normalized_username
+  endif
+  assign aspect_value = '1 / 1'
+  case section.settings.slide_aspect_ratio
+    when 'portrait'
+      assign aspect_value = '4 / 5'
+    when 'landscape'
+      assign aspect_value = '16 / 9'
+  endcase
+  assign show_header = false
+  if section.settings.heading != blank or section.settings.subheading != blank
+    assign show_header = true
+  elsif section.settings.show_follow_button
+    if follow_link != blank or normalized_username != blank
+      assign show_header = true
+    endif
+  endif
+%}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<section
+  id="{{ section_id }}"
+  class="instagram-carousel-section section section--{{ section.settings.section_width }} spacing-style color-{{ section.settings.color_scheme }}"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="instagram-carousel">
+    {% if show_header %}
+      <div class="instagram-carousel__header">
+        {% if section.settings.heading != blank %}
+          <h2 class="instagram-carousel__title">{{ section.settings.heading }}</h2>
+        {% endif %}
+
+        {% if section.settings.subheading != blank %}
+          <p class="instagram-carousel__subtitle">{{ section.settings.subheading }}</p>
+        {% endif %}
+
+        {% if section.settings.show_follow_button %}
+          {% assign follow_label = section.settings.follow_button_label | default: 'Follow on Instagram' %}
+          {% if follow_link == blank and normalized_username != blank %}
+            {% assign follow_link = 'https://www.instagram.com/' | append: normalized_username %}
+          {% endif %}
+          {% if follow_link != blank %}
+            <a
+              class="instagram-carousel__follow"
+              href="{{ follow_link }}"
+              target="_blank"
+              rel="noopener"
+              aria-label="{{ follow_label | escape }}"
+            >
+              {{ follow_label }}
+            </a>
+          {% endif %}
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div
+      class="instagram-carousel__shell"
+      data-instagram-carousel
+      data-access-token="{{ section.settings.facebook_access_token | escape }}"
+      data-account-id="{{ section.settings.instagram_business_id | escape }}"
+      data-initial-load="{{ section.settings.initial_load_count }}"
+      data-batch-size="{{ section.settings.lazy_batch_count }}"
+      data-loading-text="{{ section.settings.loading_text | escape }}"
+      data-error-text="{{ section.settings.error_text | escape }}"
+      data-empty-text="{{ section.settings.empty_text | escape }}"
+      data-username="{{ normalized_username }}"
+      data-aspect="{{ section.settings.slide_aspect_ratio }}"
+      style="--instagram-aspect: {{ aspect_value }}; --instagram-slide-min: {{ section.settings.slide_min_width }}px;"
+    >
+      <div class="instagram-carousel__viewport" data-carousel-viewport>
+        <div class="instagram-carousel__track" data-carousel-track>
+          {% assign placeholder_count = section.settings.initial_load_count | default: 6 %}
+          {% for i in (1..placeholder_count) %}
+            <article class="instagram-carousel__slide instagram-carousel__slide--placeholder" aria-hidden="true">
+              <div class="instagram-carousel__media">
+                <span class="instagram-carousel__placeholder"></span>
+              </div>
+            </article>
+          {% endfor %}
+          <div class="instagram-carousel__sentinel" data-carousel-sentinel aria-hidden="true"></div>
+        </div>
+      </div>
+      <p class="instagram-carousel__status" data-status>{{ section.settings.loading_text }}</p>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  #{{ section_id }} {
+    --instagram-slide-gap: clamp(1rem, 3vw, 1.75rem);
+  }
+
+  #{{ section_id }} .instagram-carousel {
+    display: grid;
+    gap: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  #{{ section_id }} .instagram-carousel__header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  #{{ section_id }} .instagram-carousel__title {
+    margin: 0;
+    font-size: clamp(1.75rem, 2.6vw, 2.75rem);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  #{{ section_id }} .instagram-carousel__subtitle {
+    max-width: 48ch;
+    margin: 0;
+    color: rgb(var(--color-foreground-rgb) / 0.72);
+  }
+
+  #{{ section_id }} .instagram-carousel__follow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.65rem 1.6rem;
+    border-radius: 999px;
+    border: 1px solid currentColor;
+    transition: background-color 150ms ease, color 150ms ease;
+  }
+
+  #{{ section_id }} .instagram-carousel__follow:hover,
+  #{{ section_id }} .instagram-carousel__follow:focus-visible {
+    background-color: rgb(var(--color-foreground-rgb) / 0.08);
+  }
+
+  #{{ section_id }} .instagram-carousel__shell {
+    position: relative;
+  }
+
+  #{{ section_id }} .instagram-carousel__viewport {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    display: grid;
+    scrollbar-width: none;
+    padding-bottom: 0.5rem;
+  }
+
+  #{{ section_id }} .instagram-carousel__viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  #{{ section_id }} .instagram-carousel__track {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: stretch;
+    grid-auto-columns: minmax(var(--instagram-slide-min, 240px), min(28vw, 360px));
+    gap: var(--instagram-slide-gap);
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 1px;
+  }
+
+  #{{ section_id }} .instagram-carousel__slide {
+    position: relative;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    display: grid;
+    grid-auto-rows: max-content;
+    gap: 0.75rem;
+  }
+
+  #{{ section_id }} .instagram-carousel__media {
+    position: relative;
+    aspect-ratio: var(--instagram-aspect, 1 / 1);
+    border-radius: clamp(16px, 2vw, 24px);
+    overflow: hidden;
+    background: rgb(var(--color-foreground-rgb) / 0.08);
+  }
+
+  #{{ section_id }} .instagram-carousel__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 220ms ease, filter 220ms ease;
+    display: block;
+  }
+
+  #{{ section_id }} .instagram-carousel__link {
+    display: grid;
+    gap: 0.75rem;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #{{ section_id }} .instagram-carousel__link:hover .instagram-carousel__image,
+  #{{ section_id }} .instagram-carousel__link:focus-visible .instagram-carousel__image {
+    transform: scale(1.025);
+    filter: saturate(1.1);
+  }
+
+  #{{ section_id }} .instagram-carousel__caption {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: rgb(var(--color-foreground-rgb) / 0.72);
+  }
+
+  #{{ section_id }} .instagram-carousel__meta {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgb(var(--color-foreground-rgb) / 0.55);
+  }
+
+  #{{ section_id }} .instagram-carousel__badge {
+    position: absolute;
+    inset: 0.75rem auto auto 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    background: rgb(0 0 0 / 0.55);
+    color: #fff;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  #{{ section_id }} .instagram-carousel__placeholder {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgb(var(--color-foreground-rgb) / 0.08), rgb(var(--color-foreground-rgb) / 0.18));
+    animation: instagram-carousel-pulse 1.6s ease-in-out infinite;
+  }
+
+  #{{ section_id }} .instagram-carousel__slide--placeholder {
+    opacity: 0.55;
+  }
+
+  #{{ section_id }} .instagram-carousel__slide--placeholder .instagram-carousel__caption,
+  #{{ section_id }} .instagram-carousel__slide--placeholder .instagram-carousel__meta {
+    display: none;
+  }
+
+  #{{ section_id }} .instagram-carousel__status {
+    margin: 1rem 0 0;
+    font-size: 0.9rem;
+    color: rgb(var(--color-foreground-rgb) / 0.6);
+  }
+
+  #{{ section_id }} .instagram-carousel__status[hidden] {
+    display: none;
+  }
+
+  #{{ section_id }} .instagram-carousel__sentinel {
+    width: 1px;
+    height: 1px;
+  }
+
+  @keyframes instagram-carousel-pulse {
+    0% {
+      opacity: 0.6;
+    }
+    50% {
+      opacity: 0.9;
+    }
+    100% {
+      opacity: 0.6;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #{{ section_id }} .instagram-carousel__header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    #{{ section_id }} .instagram-carousel__track {
+      grid-auto-columns: minmax(var(--instagram-slide-min, 220px), 75vw);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Instagram carousel",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "From our Instagram"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Follow along for fresh drops, behind-the-scenes stories, and daily inspiration."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_follow_button",
+      "label": "Show follow button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "follow_button_label",
+      "label": "Follow button label",
+      "default": "Follow on Instagram",
+      "visible_if": "{{ section.settings.show_follow_button }}"
+    },
+    {
+      "type": "url",
+      "id": "follow_button_link",
+      "label": "Follow button link",
+      "info": "Leave blank to auto-generate from the Instagram handle.",
+      "visible_if": "{{ section.settings.show_follow_button }}"
+    },
+    {
+      "type": "text",
+      "id": "instagram_username",
+      "label": "Instagram handle",
+      "info": "Without the @ symbol. Used for captions and the follow link."
+    },
+    {
+      "type": "text",
+      "id": "facebook_access_token",
+      "label": "Facebook API access token",
+      "info": "Required to load Instagram media via the Graph API."
+    },
+    {
+      "type": "text",
+      "id": "instagram_business_id",
+      "label": "Instagram business account ID",
+      "info": "Required to load Instagram media via the Graph API."
+    },
+    {
+      "type": "range",
+      "id": "initial_load_count",
+      "label": "Initial posts to load",
+      "min": 3,
+      "max": 15,
+      "step": 3,
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "lazy_batch_count",
+      "label": "Lazy-load batch size",
+      "min": 3,
+      "max": 12,
+      "step": 3,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "slide_min_width",
+      "label": "Minimum slide width",
+      "min": 180,
+      "max": 360,
+      "step": 10,
+      "unit": "px",
+      "default": 240
+    },
+    {
+      "type": "select",
+      "id": "slide_aspect_ratio",
+      "label": "Media aspect ratio",
+      "options": [
+        { "value": "square", "label": "1:1 square" },
+        { "value": "portrait", "label": "4:5 portrait" },
+        { "value": "landscape", "label": "16:9 landscape" }
+      ],
+      "default": "square"
+    },
+    {
+      "type": "text",
+      "id": "loading_text",
+      "label": "Loading message",
+      "default": "Loading latest posts…"
+    },
+    {
+      "type": "text",
+      "id": "error_text",
+      "label": "Error message",
+      "default": "Instagram content is currently unavailable."
+    },
+    {
+      "type": "text",
+      "id": "empty_text",
+      "label": "Empty state message",
+      "default": "No Instagram posts to show right now."
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        { "value": "page-width", "label": "Page width" },
+        { "value": "full-width", "label": "Full width" }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "Instagram carousel",
+      "category": "Social"
+    }
+  ]
+}
+{% endschema %}

@@ -48,7 +48,8 @@
     break
   endunless
 
-  assign layout_type = settings.layout_type | default: 'grid'
+  assign layout_type_override = layout_type_override | default: ''
+  assign layout_type = layout_type_override | default: settings.layout_type | default: 'grid'
   assign columns = settings.columns | default: 3
   assign mobile_columns = settings.mobile_columns | default: 2
   assign columns_gap = settings.columns_gap | default: 16
@@ -66,6 +67,17 @@
         echo '--resource-list-columns: repeat(' | append: columns | append: ', 1fr);'
         echo '--resource-list-columns-mobile: repeat(' | append: mobile_columns | append: ', 1fr);'
         echo '--column-count-mobile: ' | append: mobile_columns | append: ';'
+      endcapture
+
+    when 'featured_goods'
+      assign resource_list_classes = 'resource-list--featured-goods'
+      capture resource_list_styles
+        echo '--resource-list-column-gap-desktop: ' | append: columns_gap | append: 'px;'
+        echo '--resource-list-row-gap-desktop: ' | append: rows_gap | append: 'px;'
+        echo '--featured-goods-column-gap: ' | append: columns_gap | append: 'px;'
+        echo '--featured-goods-row-gap: ' | append: rows_gap | append: 'px;'
+        echo '--featured-goods-columns: ' | append: columns | append: ';'
+        echo '--featured-goods-mobile-columns: ' | append: mobile_columns | append: ';'
       endcapture
 
     when 'bento'
@@ -98,10 +110,10 @@
 <div
   class="
     resource-list
-    {% if settings.layout_type == 'carousel' %}
+    {% if layout_type == 'carousel' %}
       force-full-width
     {% endif %}
-    {% if settings.carousel_on_mobile and settings.layout_type != 'carousel' %}
+    {% if settings.carousel_on_mobile and layout_type != 'carousel' %}
       hidden--mobile
     {% endif %}
     {{ resource_list_classes }}
@@ -111,9 +123,14 @@
     data-testid="{{ test_id }}"
   {% endif %}
 >
-  {% case settings.layout_type %}
+  {% case layout_type %}
     {% when 'grid' %}
       {{ list_items }}
+
+    {% when 'featured_goods' %}
+      <div class="featured-goods__grid">
+        {{ list_items }}
+      </div>
 
     {% when 'bento' %}
       {% render 'bento-grid', items: list_items_array %}
@@ -140,10 +157,10 @@
 </div>
 
 {% comment %} Mobile carousel for non-carousel layouts {% endcomment %}
-{% if settings.layout_type != 'carousel' and settings.carousel_on_mobile %}
+{% if layout_type != 'carousel' and layout_type != 'featured_goods' and settings.carousel_on_mobile %}
   {% liquid
     assign mobile_carousel_gap = settings.columns_gap | default: 16
-    if settings.layout_type == 'bento'
+    if layout_type == 'bento'
       assign mobile_carousel_gap = settings.bento_gap | default: 16
     endif
   %}

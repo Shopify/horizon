@@ -1,0 +1,181 @@
+// Hero Carousel section styles (mirrors inline CSS inside sections/hero-carousel.liquid)
+
+.hero-carousel {
+  --hero-carousel-divider-color: var(--section-gridline-color, rgba(0, 0, 0, 0.08));
+  position: relative;
+  padding-block: 0;
+
+  &__frame {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: stretch;
+    min-height: clamp(420px, 60vw, 720px);
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset-block: 0;
+      left: 50%;
+      width: var(--section-gridline-width, 1px);
+      transform: translateX(-50%);
+      background-color: var(--hero-carousel-divider-color);
+      pointer-events: none;
+    }
+  }
+
+  &__media {
+    position: relative;
+    overflow: hidden;
+  }
+
+  &__media-item {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity var(--duration-lg, 600ms) var(--ease-smooth, cubic-bezier(0.25, 0.46, 0.45, 0.94));
+    pointer-events: none;
+
+    &.is-active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    img,
+    svg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  &__content-inner {
+    width: min(32rem, 100%);
+    display: grid;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  &__heading {
+    margin: 0;
+    font-size: clamp(2.25rem, 4vw, 3.5rem);
+    line-height: 1.1;
+  }
+
+  &__triggers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: var(--grid-gutter, 0);
+    border: var(--section-gridline-width, 1px) solid var(--hero-carousel-divider-color);
+  }
+
+  &__trigger {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3.25rem;
+    padding-inline: clamp(1.5rem, 4vw, 2.5rem);
+    background: transparent;
+    color: currentColor;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    transition:
+      color var(--duration-md, 360ms) var(--ease-smooth, cubic-bezier(0.25, 0.46, 0.45, 0.94)),
+      background-color var(--duration-md, 360ms) var(--ease-smooth, cubic-bezier(0.25, 0.46, 0.45, 0.94));
+
+    &:not(:last-child) {
+      border-inline-end: var(--section-gridline-width, 1px) solid var(--hero-carousel-divider-color);
+    }
+
+    &:hover,
+    &:focus-visible,
+    &.is-active {
+      background-color: rgb(var(--color-foreground-rgb, 17 24 39) / 0.08);
+    }
+
+    &:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 3px;
+    }
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding-block: var(--space-sm, 0.75rem);
+    padding-inline: clamp(1.5rem, 5vw, 3rem);
+    border-top: var(--section-gridline-width, 1px) solid var(--hero-carousel-divider-color);
+    font-size: 0.875rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  &--image-right {
+    .hero-carousel__media {
+      grid-column: 2;
+    }
+
+    .hero-carousel__content {
+      grid-column: 1;
+    }
+  }
+
+  &--align-left .hero-carousel__content-inner {
+    text-align: left;
+    justify-items: flex-start;
+  }
+
+  &--align-right .hero-carousel__content-inner {
+    text-align: right;
+    justify-items: flex-end;
+  }
+
+  @media (max-width: 989px) {
+    &__frame {
+      grid-template-columns: minmax(0, 1fr);
+      min-height: auto;
+
+      &::after {
+        display: none;
+      }
+    }
+
+    &__media {
+      aspect-ratio: 4 / 5;
+    }
+
+    &__content {
+      padding-block: clamp(2rem, 6vw, 3rem);
+    }
+
+    &__triggers {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    &__trigger:not(:last-child) {
+      border-inline-end: none;
+      border-bottom: var(--section-gridline-width, 1px) solid var(--hero-carousel-divider-color);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &__media-item {
+      transition-duration: 0.01ms;
+    }
+
+    &__trigger {
+      transition: none;
+    }
+  }
+}

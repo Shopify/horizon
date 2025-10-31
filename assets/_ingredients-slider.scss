@@ -1,0 +1,186 @@
+.ingredients-slider {
+  padding-block: var(--space-2xl);
+  background: var(--color-background, #ffffff);
+
+  &__heading {
+    margin: 0 0 var(--space-xl);
+    text-align: center;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: var(--color-foreground, #111);
+    animation: fadeInUp var(--duration-md) var(--ease-smooth) both;
+  }
+
+  &__grid {
+    display: grid;
+    gap: var(--space-lg);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    @media (max-width: 1024px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (max-width: 749px) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  &__card {
+    position: relative;
+    background: var(--bg-color, var(--color-surface, #ffffff));
+    color: var(--text-color, var(--color-foreground));
+    border-radius: var(--radius-2xl);
+    box-shadow: 0 20px 40px rgb(17 24 39 / 0.05);
+    transition: transform var(--duration-md) var(--ease-smooth),
+      box-shadow var(--duration-md) var(--ease-smooth);
+    will-change: transform;
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        transform: translateY(calc(var(--hover-lift-amount, 4px) * -1));
+        box-shadow: 0 28px 48px rgb(17 24 39 / 0.08);
+      }
+    }
+
+    &[data-open='true'] {
+      box-shadow: 0 32px 60px rgb(17 24 39 / 0.12);
+    }
+  }
+
+  &__trigger {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: var(--space-xl) var(--space-lg) var(--space-lg);
+    display: grid;
+    gap: var(--space-md);
+    justify-items: center;
+    cursor: pointer;
+    text-align: center;
+    color: currentColor;
+    transition: color var(--duration-md) var(--ease-smooth);
+
+    &:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 6px;
+      border-radius: var(--radius-xl, 1.25rem);
+    }
+  }
+
+  &__header {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  &__title {
+    margin: 0;
+    font-size: clamp(1.35rem, 3vw, 1.75rem);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  &__icon {
+    display: grid;
+    place-items: center;
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: rgba(17, 24, 39, 0.05);
+    background: color-mix(in srgb, currentColor 12%, transparent);
+
+    img {
+      width: 64px;
+      height: 64px;
+      object-fit: contain;
+    }
+  }
+
+  &__arrow {
+    width: 1.25rem;
+    height: 1.25rem;
+    transition: transform var(--duration-md) var(--ease-smooth);
+  }
+
+  &__card[data-open='true'] &__arrow {
+    transform: rotate(180deg);
+  }
+
+  &__panel {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height var(--duration-lg) var(--ease-smooth);
+
+    &[hidden] {
+      display: block;
+      max-height: 0 !important;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
+  }
+
+  &__panel-inner {
+    padding: 0 var(--space-xl) var(--space-xl);
+    display: grid;
+    gap: var(--space-md);
+    justify-items: center;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity var(--duration-md) var(--ease-smooth),
+      transform var(--duration-md) var(--ease-smooth);
+  }
+
+  &__card[data-open='true'] &__panel-inner {
+    opacity: 1;
+    transform: none;
+  }
+
+  &__desc {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: currentColor;
+  }
+
+  &__image {
+    width: min(100%, 420px);
+    border-radius: var(--radius-xl, 1.25rem);
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: inherit;
+    }
+  }
+
+  &__link {
+    margin-top: var(--space-sm);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ingredients-slider {
+    &__card {
+      transition: none;
+
+      @media (hover: hover) and (pointer: fine) {
+        &:hover {
+          transform: none;
+          box-shadow: 0 20px 40px rgb(17 24 39 / 0.05);
+        }
+      }
+    }
+
+    &__panel {
+      transition: none;
+    }
+
+    &__panel-inner {
+      transition: none;
+    }
+  }
+}

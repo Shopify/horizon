@@ -1,3 +1,5 @@
+
+
 {% liquid
   assign order = 'logo,menu,localization,search,mobile_search,actions'
 
@@ -280,7 +282,7 @@
     --transparent-header-offset-boolean: 0; /* stylelint-disable-line declaration-property-value-disallowed-list */
   }
 
-  body:has(> #header-group > header) {
+  body:has(#header-component) {
     --header-height: 60px;
   }
 
@@ -387,6 +389,25 @@
     /* Use -1 instead of 0 so intersection observer can track sticky state */
     top: -1px;
     z-index: var(--layer-sticky);
+  }
+
+  :root[data-hero-over-header='true'][data-hero-in-view='true'] #header-group {
+    display: block !important;
+    position: fixed;
+    inset: auto 0 0;
+    width: 100%;
+    z-index: var(--layer-overlay);
+  }
+
+  :root[data-hero-over-header='true'][data-hero-in-view='true'] .header-section:has(> #header-component[sticky]) {
+    position: static;
+    top: auto;
+    z-index: auto;
+  }
+
+  :root[data-hero-over-header='true'][data-hero-in-view='true'] #header-component[sticky] {
+    position: static;
+    top: auto;
   }
 
   .header[data-sticky-state] {
@@ -538,7 +559,12 @@
       }
 
       header-actions {
+        grid-area: rightA;
+      }
+
+      .header__drawer {
         grid-area: rightB;
+        justify-self: end;
       }
     }
   }
