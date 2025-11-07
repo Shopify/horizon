@@ -146,12 +146,12 @@
     (() => {
       const grid = document.querySelector('.product-grid');
 
-      if (grid) {
-        const currentDevice = window.innerWidth >= 750 ? 'desktop' : 'mobile';
-        const storedLayout = sessionStorage.getItem(`product-grid-view-${currentDevice}`);
+      ['desktop', 'mobile'].forEach((viewport) => {
+        const storedLayout = sessionStorage.getItem(`product-grid-view-${viewport}`);
 
         if (storedLayout) {
-          const options = document.querySelectorAll(`input[type="radio"][name="grid"]`);
+          const options = document
+            .querySelectorAll(`input[type="radio"][name="grid${viewport === 'mobile' ? '-mobile' : ''}"]`);
 
           grid.setAttribute('product-grid-view', storedLayout);
 
@@ -159,7 +159,7 @@
             option.checked = option.value === storedLayout;
           }
         }
-      }
+      });
     })();
   </script>
 {% endunless %}
