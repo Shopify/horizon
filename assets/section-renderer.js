@@ -83,7 +83,7 @@ class SectionRenderer {
       if (cachedHTML) return cachedHTML;
     }
 
-    pendingPromise = fetch(sectionUrl).then((response) => {
+    pendingPromise = fetch(sectionUrl, { credentials: 'include' }).then((response) => {
       return response.text();
     });
 
