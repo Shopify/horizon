@@ -43,9 +43,15 @@ Blocks render in the editor and storefront when they are referenced in [template
 {
   "name": "Block Name",
   "settings": [],
-  "presets": []
+  "presets": [
+    {
+      "name": "Block Name"
+    }
+  ]
 }
 {% endschema %}
+
+**Important:** Blocks must include a `presets` array with at least one preset entry for the block to appear in the Shopify theme editor's "Add block" menu. Without presets, blocks may not be discoverable even if they're registered in a parent block's or section's schema.
 ```
 
 ### Static Block Usage
