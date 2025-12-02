@@ -36,9 +36,11 @@ export default class VariantPicker extends Component {
       this.#radios.push(radios);
 
       const initialCheckedIndex = radios.findIndex((radio) => radio.dataset.currentChecked === 'true');
-      if (initialCheckedIndex !== -1) {
-        this.#checkedIndices.push([initialCheckedIndex]);
-      }
+      
+      // TARGETED FIX: Always push an array to match the index of fieldsets.
+      // This ensures 'checkedIndices' is not undefined in updateSelectedOption 
+      // when a user selects an option in a previously unchecked fieldset.
+      this.#checkedIndices.push(initialCheckedIndex !== -1 ? [initialCheckedIndex] : []);
     });
 
     this.addEventListener('change', this.variantChanged.bind(this));
