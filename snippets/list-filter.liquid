@@ -76,16 +76,17 @@
             data-filter-style="{{ filter_style }}"
           >
             <span
+              class="
               {% if filter_style == 'horizontal' %}
                 {% if active_value_count > 1 %}
-                  class="bubble facets__bubble"
+                  bubble facets__bubble
                 {% endif %}
               {% else %}
                 {% if active_value_count > 0 %}
-                  class="bubble facets__bubble"
+                  bubble facets__bubble
                 {% endif %}
               {% endif %}
-              hide-when-empty
+              hide-when-empty"
               ref="facetStatus"
             >
               {%- liquid
