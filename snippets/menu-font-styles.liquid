@@ -5,19 +5,24 @@
      menu_type {string}: 'drawer' or 'mega_menu'
 {%- endcomment -%}
 
+{%- liquid
+  assign custom_mobile_size = settings.type_font_primary_size_mobile | default: 0 | times: 1
+  assign custom_desktop_size = settings.type_font_primary_size_desktop | default: 0 | times: 1
+-%}
+
 --menu-top-level-font-family: var(--font-{{ settings.type_font_primary_link }}--family);
---menu-top-level-font-size-desktop: {{ settings.type_font_primary_size }}; --menu-top-level-font-style: var(--font-
-{{- settings.type_font_primary_link -}}
---style); --menu-top-level-font-weight: var(--font-
-{{- settings.type_font_primary_link -}}
---weight); --menu-top-level-font-case:
-{%- if settings.type_case_primary_link == 'uppercase' %}uppercase{% else %}none{% endif -%}
-;
-{% if menu_type == 'drawer' %}
-  --menu-top-level-font-size: var(--menu-font-2xl--size); --menu-top-level-font-line-height:
-  var(--menu-font-2xl--line-height);
-{% else %}
-  --menu-top-level-font-size: var(--menu-font-sm--size); --menu-top-level-font-line-height:
-  var(--menu-font-sm--line-height);
-{% endif %}
---menu-top-level-font-color: var(--color-foreground); --menu-top-level-font-color-rgb: var(--color-foreground-rgb);
+--menu-top-level-font-style: var(--font-{{ settings.type_font_primary_link }}--style);
+--menu-top-level-font-weight: var(--font-{{ settings.type_font_primary_link }}--weight);
+--menu-top-level-font-case: {%- if settings.type_case_primary_link == 'uppercase' %}uppercase{% else %}none{% endif -%};
+--menu-top-level-font-size-desktop: {%- if custom_desktop_size > 0 -%}{{ custom_desktop_size }}rem{%- else -%}{{ settings.type_font_primary_size }}{%- endif -%};
+{%- if menu_type == 'drawer' -%}
+  --menu-top-level-font-size: {%- if custom_mobile_size > 0 -%}{{ custom_mobile_size }}rem{%- else -%}var(--menu-font-2xl--size){%- endif -%};
+  --menu-top-level-font-line-height: var(--menu-font-2xl--line-height);
+{%- else -%}
+  --menu-top-level-font-size: {%- if custom_mobile_size > 0 -%}{{ custom_mobile_size }}rem{%- else -%}var(--menu-font-sm--size){%- endif -%};
+  --menu-top-level-font-line-height: var(--menu-font-sm--line-height);
+{%- endif -%}
+--menu-top-level-font-scale-min-width: 32rem;
+--menu-top-level-font-scale-max-width: 75rem;
+--menu-top-level-font-color: var(--color-foreground);
+--menu-top-level-font-color-rgb: var(--color-foreground-rgb);

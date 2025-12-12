@@ -423,27 +423,30 @@ if (!customElements.get('overflow-list')) {
   customElements.define('overflow-list', OverflowList);
 }
 
-// Function to calculate total height of header group children
+// Function to calculate header group metrics
 export function calculateHeaderGroupHeight(
   header = document.querySelector('#header-component'),
   headerGroup = document.querySelector('#header-group')
 ) {
-  if (!headerGroup) return 0;
+  if (!headerGroup) return { above: 0, total: 0 };
 
-  let totalHeight = 0;
+  let aboveHeight = 0;
   const children = headerGroup.children;
   for (let i = 0; i < children.length; i++) {
     const element = children[i];
     if (element === header || !(element instanceof HTMLElement)) continue;
-    totalHeight += element.offsetHeight;
+    aboveHeight += element.offsetHeight;
   }
+
+  let totalHeight = aboveHeight;
 
   // If the header is transparent and has a sibling section, add the height of the header to the total height
-  if (header instanceof HTMLElement && header.hasAttribute('transparent') && header.parentElement?.nextElementSibling) {
-    return totalHeight + header.offsetHeight;
+  const transparentMode = header instanceof HTMLElement ? header.getAttribute('transparent') : null;
+  if (header instanceof HTMLElement && transparentMode === 'always' && header.parentElement?.nextElementSibling) {
+    totalHeight += header.offsetHeight;
   }
 
-  return totalHeight;
+  return { above: aboveHeight, total: totalHeight };
 }
 
 /**
@@ -460,10 +463,11 @@ function updateHeaderHeights() {
 
   // Calculate initial height(s
   const headerHeight = header.offsetHeight;
-  const headerGroupHeight = calculateHeaderGroupHeight(header);
+  const { above: headerStackOffset, total: headerGroupHeight } = calculateHeaderGroupHeight(header);
 
   document.body.style.setProperty('--header-height', `${headerHeight}px`);
   document.body.style.setProperty('--header-group-height', `${headerGroupHeight}px`);
+  document.body.style.setProperty('--header-stack-offset', `${headerStackOffset}px`);
 }
 
 /**
@@ -490,5 +494,5 @@ export function updateAllHeaderCustomProperties() {
   updateTransparentHeaderOffset();
 }
 
-// Run both functions on page load
+// Run header custom-property updates on page load
 updateAllHeaderCustomProperties();

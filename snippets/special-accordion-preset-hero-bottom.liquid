@@ -1,0 +1,41 @@
+{% assign background_image = settings.hero_background_image %}
+{% assign kicker = settings.hero_kicker %}
+{% assign heading = settings.hero_heading %}
+{% assign text = settings.hero_text %}
+{% assign button_label = settings.hero_button_label %}
+{% assign button_link = settings.hero_button_link %}
+
+{% if background_image != blank or heading != blank or text != blank %}
+
+<div class="special-row__section special-row__section--hero" data-slot="{{ slot }}">
+  <div class="special-row__hero-media">
+    {% if background_image != blank %}
+      {{
+        background_image
+        | image_url: width: 1800
+        | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 80vw, 100vw', class: 'special-row__hero-image'
+      }}
+    {% else %}
+      {{ 'hero-apparel-1' | placeholder_svg_tag: 'special-row__hero-image' }}
+    {% endif %}
+  </div>
+  <div class="special-row__hero-overlay">
+    <div class="special-row__body special-row__body--hero">
+      {% if kicker != blank %}
+        <p class="special-row__caption">{{ kicker }}</p>
+      {% endif %}
+      {% if heading != blank %}
+        <h3 class="special-row__heading">{{ heading }}</h3>
+      {% endif %}
+      {% if text != blank %}
+        <div class="special-row__text rte">{{ text }}</div>
+      {% endif %}
+      {% if button_label != blank and button_link != blank %}
+        <a class="button button--primary special-row__button" href="{{ button_link }}">
+          {{- button_label -}}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endif %}

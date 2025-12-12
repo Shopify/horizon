@@ -1,3 +1,5 @@
+
+
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div
   class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
@@ -17,6 +19,11 @@
     assign has_isolated_grid_item_desktop = false
     assign has_isolated_grid_item_tablet = false
 
+    capture footer_gap_rem
+      render 'css-rem-value', value: section.settings.gap
+    endcapture
+    assign footer_gap_rem = footer_gap_rem | strip
+
     if total_blocks > 4 and last_row_count == 1
       assign has_isolated_grid_item_desktop = true
     endif
@@ -29,12 +36,13 @@
     class="
       footer-content
       spacing-style
+      footer-content--mobile-columns
       {% if has_isolated_grid_item_desktop %}footer-content--isolated-grid-item-desktop{% endif %}
       {% if has_isolated_grid_item_tablet %}footer-content--isolated-grid-item-tablet{% endif %}
     "
     style="
       {%  render 'spacing-style', settings: section.settings %}
-      --footer-gap: {{ section.settings.gap }}px;
+      --footer-gap: {{ footer_gap_rem }};
       --grid-columns: {{ grid_columns }};
       --last-row-count: {{ last_row_count }};
       --tablet-last-row-count: {{ tablet_last_row_count }};
@@ -76,6 +84,11 @@
       grid-column: 1 / -1;
     }
   }
+  /* Two-column layout on mobile for footer menus */
+  .footer-content.footer-content--mobile-columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
 {% endstylesheet %}
 
 {% schema %}

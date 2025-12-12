@@ -1,0 +1,43 @@
+{%- liquid
+  assign split_divider_color = split_divider_color | default: '#d9d9d9'
+  assign split_gap = section.settings.gap | default: 16
+  assign slideshow_ref = 'split-showcase-' | append: section.id
+  assign slideshow_gutters = ''
+  if section.settings.section_width == 'page-width'
+    assign slideshow_gutters = 'start end'
+  endif
+-%}
+
+{%- capture split_showcase_slides -%}
+  {%- for block in section.blocks -%}
+    {%- capture block_content -%}
+      {% render block %}
+    {%- endcapture -%}
+    {%- assign slide_classes = 'split-showcase__slide' -%}
+    {%- if forloop.first -%}
+      {%- assign slide_classes = slide_classes | append: ' split-showcase__slide--first' -%}
+    {%- endif -%}
+    {%- if forloop.last -%}
+      {%- assign slide_classes = slide_classes | append: ' split-showcase__slide--last' -%}
+    {%- endif -%}
+    {% render 'slideshow-slide',
+      index: forloop.index0,
+      children: block_content,
+      class: slide_classes,
+      attributes: 'data-block-id="' | append: block.id | append: '"'
+    %}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{% render 'slideshow',
+  ref: slideshow_ref,
+  class: 'split-showcase__carousel',
+  slides: split_showcase_slides,
+  slide_count: section.blocks.size,
+  slideshow_gutters: slideshow_gutters,
+  auto_hide_controls: true,
+  infinite: false,
+  show_arrows: false,
+  attributes: 'data-split-showcase-carousel',
+  style: '--split-showcase-gap: ' | append: split_gap | append: 'px; --split-divider-color: ' | append: split_divider_color | append: ';'
+%}

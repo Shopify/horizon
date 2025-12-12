@@ -1,0 +1,85 @@
+{% assign slide_count = 0 %}
+{% assign slide_keys = 'one,two,three' | split: ',' %}
+
+{% capture slides_markup %}
+  {% for key in slide_keys %}
+    {% assign image_key = 'slideshow_slide_' | append: key | append: '_image' %}
+    {% assign heading_key = 'slideshow_slide_' | append: key | append: '_heading' %}
+    {% assign text_key = 'slideshow_slide_' | append: key | append: '_text' %}
+    {% assign button_label_key = 'slideshow_slide_' | append: key | append: '_button_label' %}
+    {% assign button_link_key = 'slideshow_slide_' | append: key | append: '_button_link' %}
+
+    {% assign image = settings[image_key] %}
+    {% assign heading = settings[heading_key] %}
+    {% assign text = settings[text_key] %}
+    {% assign button_label = settings[button_label_key] %}
+    {% assign button_link = settings[button_link_key] %}
+
+    {% if image == blank and heading == blank and text == blank and button_label == blank %}
+      {% continue %}
+    {% endif %}
+
+    {% assign slide_count = slide_count | plus: 1 %}
+
+    <slideshow-slide class="special-row__slide">
+      <div class="special-row__slide-media">
+        {% if image != blank %}
+          {{
+            image
+            | image_url: width: 1600
+            | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 70vw, 100vw', class: 'special-row__slide-image'
+          }}
+        {% else %}
+          {{ 'hero-apparel-2' | placeholder_svg_tag: 'special-row__slide-image' }}
+        {% endif %}
+      </div>
+      <div class="special-row__slide-content">
+        {% if heading != blank %}
+          <h3 class="special-row__heading">{{ heading }}</h3>
+        {% endif %}
+        {% if text != blank %}
+          <div class="special-row__text rte">{{ text }}</div>
+        {% endif %}
+        {% if button_label != blank and button_link != blank %}
+          <a class="button button--link special-row__button" href="{{ button_link }}">
+            {{- button_label -}}
+          </a>
+        {% endif %}
+      </div>
+    </slideshow-slide>
+  {% endfor %}
+{% endcapture %}
+
+{% if slides_markup == blank %}
+  {% assign slide_count = 0 %}
+{% endif %}
+
+{% if slides_markup != blank %}
+  {% capture controls %}
+    {% if slide_count > 1 %}
+      {%- render 'slideshow-controls',
+        autoplay: settings.slideshow_autoplay,
+        item_count: slide_count,
+        show_arrows: false,
+        arrows_on_media: false,
+        controls_on_media: true,
+        pagination_position: 'bottom',
+        icon_style: 'chevron'
+      -%}
+    {% endif %}
+  {% endcapture %}
+
+  <div class="special-row__section special-row__section--slideshow" data-slot="{{ slot }}" data-lazy-preset="slideshow">
+    {% render 'slideshow',
+      class: 'special-row__slideshow',
+      slides: slides_markup,
+      controls: controls,
+      slide_count: slide_count,
+      slide_size: settings.slideshow_height | default: 'medium',
+      autoplay: settings.slideshow_autoplay,
+      autoplay_speed: settings.slideshow_autoplay_speed,
+      icon_style: 'chevron',
+      show_arrows: false
+    %}
+  </div>
+{% endif %}

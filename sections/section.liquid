@@ -1,3 +1,5 @@
+
+
 {% capture children %}
   {% content_for 'blocks' %}
 {% endcapture %}
@@ -19,9 +21,6 @@
       "type": "_divider"
     }
   ],
-  "disabled_on": {
-    "groups": ["header"]
-  },
   "settings": [
     {
       "type": "header",
@@ -337,6 +336,13 @@
       "visible_if": "{{ section.settings.border != 'none' }}"
     },
     {
+      "type": "color",
+      "id": "split_divider_color",
+      "label": "Split showcase divider color",
+      "info": "Only affects Split Showcase sections.",
+      "default": "#d9d9d9"
+    },
+    {
       "type": "range",
       "id": "border_radius",
       "label": "t:settings.border_radius",
@@ -520,7 +526,7 @@
           "type": "text",
           "name": "t:names.heading",
           "settings": {
-            "text": "t:html_defaults.faq",
+            "text": "<h3>Example header</h3>",
             "type_preset": "rte",
             "font": "var(--font-body--family)",
             "font_size": "",
@@ -557,8 +563,9 @@
           },
           "blocks": {
             "accordion_row_1": {
-              "type": "_accordion-row",
+              "type": "accordion_row",
               "settings": {
+                "heading": "Example header"
                 "heading": "t:text_defaults.what_is_return_policy"
               },
               "blocks": {
@@ -586,7 +593,7 @@
               "block_order": ["text"]
             },
             "accordion_row_2": {
-              "type": "_accordion-row",
+              "type": "accordion_row",
               "settings": {
                 "heading": "t:text_defaults.are_purchases_final_sale"
               },
@@ -615,6 +622,8 @@
               "block_order": ["text"]
             },
             "accordion_row_3": {
+              "type": "accordion_row",
+              "name": "t:names.accordion_dash_row",
               "type": "_accordion-row",
               "name": "t:names.accordion_row",
               "settings": {
@@ -646,6 +655,8 @@
               "block_order": ["text"]
             },
             "accordion_row_4": {
+              "type": "accordion_row",
+              "name": "t:names.accordion_dash_row",
               "type": "_accordion-row",
               "name": "t:names.accordion_row",
               "settings": {
@@ -677,6 +688,8 @@
               "block_order": ["text"]
             },
             "accordion_row_5": {
+              "type": "accordion_row",
+              "name": "t:names.accordion_dash_row",
               "type": "_accordion-row",
               "name": "t:names.accordion_row",
               "settings": {

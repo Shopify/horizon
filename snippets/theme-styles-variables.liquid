@@ -1,8 +1,12 @@
 {% style %}
+
   {%- liquid
     assign primary_font_bold = settings.type_body_font | font_modify: 'weight', 'bold'
     assign primary_font_italic = settings.type_body_font | font_modify: 'style', 'italic'
     assign primary_font_bold_italic = primary_font_bold | font_modify: 'style', 'italic'
+    assign root_font_size = settings.type_root_font_size | default: 16
+    assign root_font_size = root_font_size | times: 1
+    assign px_scale = 16.0
   %}
 
   {{ settings.type_body_font | font_face: font_display: 'swap' }}
@@ -50,6 +54,7 @@
   {% endif %}
 
   :root {
+    --root-font-size: {{ root_font_size }}px;
     /* Page Layout */
     --sidebar-width: 25rem;
     --narrow-content-width: 36rem;
@@ -63,17 +68,20 @@
     --section-height-small: 15rem;
     --section-height-medium: 25rem;
     --section-height-large: 35rem;
+    --section-height-extra-large: 45rem;
 
     @media screen and (min-width: 40em) {
       --section-height-small: 40svh;
       --section-height-medium: 55svh;
       --section-height-large: 70svh;
+      --section-height-extra-large: 85svh;
     }
 
     @media screen and (min-width: 60em) {
       --section-height-small: 50svh;
       --section-height-medium: 65svh;
       --section-height-large: 80svh;
+      --section-height-extra-large: 90svh;
     }
 
     /* Letter spacing */
@@ -171,22 +179,29 @@
       assign absolute_font_size_min = 10
 
       comment
-        Build an array of font sizes and sort it
+        Build an array of font sizes (scaled px) and sort it
       endcomment
       assign font_size_values = ''
       for font_size in font_sizes
         assign size_setting = 'type_size_[font_size]' | replace: '[font_size]', font_size
-        assign size_setting_value = settings[size_setting] | times: 1
+        assign size_setting_value_raw = settings[size_setting]
+        if size_setting_value_raw == blank
+          assign size_setting_value_raw = 16
+        endif
+        assign size_setting_value = size_setting_value_raw | times: 1
 
-        comment
-          If the font size is less than 100, pad it with a 0
-          This is because we end up with an array of strings, which | sort filter can't order "correctly")
-        endcomment
-        if size_setting_value < 100
-          assign size_setting_value = '0[size_setting_value]' | replace: '[size_setting_value]', size_setting_value
+        if size_setting_value >= 10
+          assign font_size_value_px = size_setting_value
+        else
+          assign font_size_value_px = size_setting_value | times: px_scale
         endif
 
-        assign font_size_values = font_size_values | append: '[size_setting_value],' | replace: '[size_setting_value]', size_setting_value
+        assign scaled_px = font_size_value_px | times: 1000 | round: 0 | append: ''
+        if font_size_values == ''
+          assign font_size_values = scaled_px
+        else
+          assign font_size_values = font_size_values | append: ',' | append: scaled_px
+        endif
       endfor
 
       assign font_size_values = font_size_values | split: ',' | uniq | sort_natural
@@ -197,47 +212,57 @@
       endcomment
       for font_size in font_sizes
         assign size_setting = 'type_size_[font_size]' | replace: '[font_size]', font_size
-        assign font_size_value = settings[size_setting] | times: 1
-        assign font_size_string = '[font_size_value]' | replace: '[font_size_value]', font_size_value
+        assign size_setting_value_raw = settings[size_setting]
+        if size_setting_value_raw == blank
+          assign size_setting_value_raw = 16
+        endif
+        assign font_size_setting_value = size_setting_value_raw | times: 1
+
+        if font_size_setting_value >= 10
+          assign font_size_value_px = font_size_setting_value
+        else
+          assign font_size_value_px = font_size_setting_value | times: px_scale
+        endif
+        assign font_size_string = font_size_value_px | times: 1000 | round: 0 | append: ''
         assign index = font_size_values | find_index: font_size_string
 
-        if font_size_value >= fluid_size_cutoff
+        if font_size_value_px >= fluid_size_cutoff
 
           comment
             Calculate the minimum size for each font size
           endcomment
-          assign fluid_font_size_min = font_size_value
+          assign fluid_font_size_min = font_size_value_px
 
           if index == 0
             assign fluid_font_size_min = absolute_font_size_min
           else
             assign next_font_size_index = index | minus: 1
             assign next_font_size_value = font_size_values[next_font_size_index]
-            assign next_font_size_value_number = next_font_size_value | times: 1
+            assign next_font_size_value_number = next_font_size_value | times: 0.001
 
             comment
-              If the next bigger font size under the fluid cutoff, we use keep a 4px buffer
+              If the next bigger font size under the fluid cutoff, we keep a 4px buffer
             endcomment
             if next_font_size_value_number < fluid_size_cutoff
               assign fluid_font_size_min = next_font_size_value_number | plus: 4
-              if font_size_value < fluid_font_size_min
-                assign fluid_font_size_min = font_size_value
+              if font_size_value_px < fluid_font_size_min
+                assign fluid_font_size_min = font_size_value_px
               endif
             else
-              assign fluid_font_size_min = next_font_size_value | times: 1
+              assign fluid_font_size_min = next_font_size_value_number
             endif
           endif
 
           comment
             Calculate the fluid and maximum size for each font size
           endcomment
-          assign fluid_size_min_rem = fluid_font_size_min | divided_by: 16.0
-          assign fluid_size = font_size_value | times: 0.1
-          assign fluid_size_max_rem = font_size_value | divided_by: 16.0
+          assign fluid_size_min_rem = fluid_font_size_min | divided_by: px_scale
+          assign fluid_size = font_size_value_px | times: 0.1
+          assign fluid_size_max_rem = font_size_value_px | divided_by: px_scale
 
           echo '--font-size--[font_size]: clamp([fluid_size_min_rem]rem, [fluid_size]vw, [fluid_size_max_rem]rem);' | replace: '[font_size]', font_size | replace: '[fluid_size_min_rem]', fluid_size_min_rem | replace: '[fluid_size]', fluid_size | replace: '[fluid_size_max_rem]', fluid_size_max_rem
         else
-          assign fluid_size_rem = font_size_value | divided_by: 16.0
+          assign fluid_size_rem = font_size_value_px | divided_by: px_scale
           echo '--font-size--[font_size]: [fluid_size_rem]rem;' | replace: '[font_size]', font_size | replace: '[fluid_size_rem]', fluid_size_rem
         endif
       endfor
@@ -346,7 +371,7 @@
     --margin-5xl: 3rem;
     --margin-6xl: 5rem;
 
-    --scroll-margin: 50px;
+    --scroll-margin: 3.125rem;
 
     --padding-3xs: 0.125rem;
     --padding-2xs: 0.25rem;
@@ -376,7 +401,7 @@
     --spacing-scale-default: 1.0;
 
     /* Checkout buttons gap */
-    --checkout-button-gap: 10px;
+    --checkout-button-gap: 0.625rem;
 
     /* Borders */
     --style-border-width: 1px;
@@ -563,4 +588,28 @@
     --cart-secondary-font-style: var(--font-{{ settings.cart_price_font }}--style);
     --cart-secondary-font-weight: var(--font-{{ settings.cart_price_font }}--weight);
   }
+
+/* 1) Load your custom font file */
+@font-face {
+  font-family: 'Gangster Grotesk';
+  src: url('{{ "GangsterGrotesk-Regular.woff" | asset_url }}') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 2) Override the theme CSS variables to use your family */
+:root {
+  --font-body--family: 'Gangster Grotesk', sans-serif;
+  --font-subheading--family: 'Gangster Grotesk', sans-serif;
+  --font-heading--family: 'Gangster Grotesk', sans-serif;
+  --font-accent--family: 'Gangster Grotesk', sans-serif;
+
+  /* optional if the theme reads these */
+  --font-body--weight: 400;
+  --font-subheading--weight: 400;
+  --font-heading--weight: 400;
+  --font-accent--weight: 400;
+}
+
 {% endstyle %}

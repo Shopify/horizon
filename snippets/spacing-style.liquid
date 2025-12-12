@@ -8,26 +8,41 @@
   <div class="spacing-style" style="{% render 'spacing-style', settings: section.settings %}">
 {%- enddoc -%}
 {%- liquid
-  assign scale_min = 20
+  assign px_scale = 16.0
+  assign scale_min = 20 | divided_by: px_scale
   assign keys = 'padding-block-start,padding-block-end,padding-inline-start,padding-inline-end' | split: ','
 
   for key in keys
     assign value = settings[key]
 
     if value != blank
+      assign numeric_value = value | times: 1
+      assign value_string = value | append: ''
+      assign rem_value = 0
+
+      if numeric_value == 0
+        assign rem_value = 0
+      elsif numeric_value >= 10
+        assign rem_value = numeric_value | divided_by: px_scale
+      elsif value_string contains '.'
+        assign rem_value = numeric_value
+      else
+        assign rem_value = numeric_value | divided_by: px_scale
+      endif
+
       echo '--'
       echo key
       echo ': '
 
-      if value > scale_min
+      if rem_value > scale_min
         echo 'max('
         echo scale_min
-        echo 'px, calc(var(--spacing-scale) * '
-        echo value
-        echo 'px))'
+        echo 'rem, calc(var(--spacing-scale) * '
+        echo rem_value
+        echo 'rem))'
       else
-        echo value
-        echo 'px'
+        echo rem_value
+        echo 'rem'
       endif
 
       echo ';'

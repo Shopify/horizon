@@ -1,3 +1,5 @@
+
+
 {% if section.blocks.size > 1 %}
   <script
     src="{{ 'announcement-bar.js' | asset_url }}"
@@ -8,7 +10,7 @@
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <aside
-  class="announcement-bar spacing-style section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
+  class="announcement-bar spacing-style section section--{{ section.settings.section_width }} section--no-gridlines color-{{ section.settings.color_scheme }}"
   style="{% render 'spacing-padding', settings: section.settings %}; --border-bottom-width: {{ section.settings.divider_width }}px;"
 >
   {% liquid
@@ -39,6 +41,10 @@
 {% stylesheet %}
   .announcement-bar {
     border-block-end: var(--border-bottom-width) solid var(--color-border);
+  }
+
+  .announcement-bar.section--no-gridlines {
+    border-block: 0;
   }
 
   .announcement-bar__slider {

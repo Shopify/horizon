@@ -1,3 +1,5 @@
+
+
 <script
   src="{{ 'results-list.js' | asset_url }}"
   type="module"
@@ -8,7 +10,7 @@
 
 <results-list
   class="section product-grid-container spacing-style color-{{ section.settings.color_scheme }}"
-  style="--padding-block-start: {{ section.settings.padding-block-start }}px; --padding-block-end: {{ section.settings.padding-block-end }}px;"
+  style="{% render 'spacing-padding', settings: section.settings %}"
   section-id="{{ section.id }}"
   infinite-scroll="{{ section.settings.enable_infinite_scroll }}"
 >

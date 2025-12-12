@@ -1,0 +1,21 @@
+{% assign quote = settings.pull_quote_text %}
+{% assign attribution = settings.pull_quote_attribution %}
+{% assign button_label = settings.pull_quote_button_label %}
+{% assign button_link = settings.pull_quote_button_link %}
+
+{% unless quote == blank and attribution == blank and button_label == blank %}
+
+<div class="special-row__section special-row__section--pull-quote" data-slot="{{ slot }}">
+  {% if quote != blank %}
+    <blockquote class="special-row__quote rte">{{ quote }}</blockquote>
+  {% endif %}
+  {% if attribution != blank %}
+    <p class="special-row__quote-meta">{{ attribution }}</p>
+  {% endif %}
+  {% if button_label != blank and button_link != blank %}
+    <a class="button button--link special-row__button" href="{{ button_link }}">
+      {{- button_label -}}
+    </a>
+  {% endif %}
+</div>
+{% endunless %}

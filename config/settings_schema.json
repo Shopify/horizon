@@ -376,6 +376,17 @@
         "label": "t:options.accent"
       },
       {
+        "type": "range",
+        "id": "type_root_font_size",
+        "label": "Root font size",
+        "unit": "px",
+        "min": 13,
+        "max": 20,
+        "step": 0.5,
+        "default": 16,
+        "info": "Controls the base html font size used for rem calculations."
+      },
+      {
         "type": "header",
         "content": "t:content.text_presets"
       },
@@ -388,32 +399,11 @@
         "content": "t:content.paragraph"
       },
       {
-        "type": "select",
+        "type": "text",
         "id": "type_size_paragraph",
         "label": "t:settings.size",
-        "options": [
-          {
-            "value": "10",
-            "label": "10px"
-          },
-          {
-            "value": "12",
-            "label": "12px"
-          },
-          {
-            "value": "14",
-            "label": "14px"
-          },
-          {
-            "value": "16",
-            "label": "16px"
-          },
-          {
-            "value": "18",
-            "label": "18px"
-          }
-        ],
-        "default": "14"
+        "default": "0.875",
+        "info": "Enter rem values such as 1.25. Legacy px values still work."
       },
       {
         "type": "select",
@@ -456,76 +446,11 @@
         "default": "heading"
       },
       {
-        "type": "select",
+        "type": "text",
         "id": "type_size_h1",
         "label": "t:settings.size",
-        "options": [
-          {
-            "value": "10",
-            "label": "10px"
-          },
-          {
-            "value": "12",
-            "label": "12px"
-          },
-          {
-            "value": "14",
-            "label": "14px"
-          },
-          {
-            "value": "16",
-            "label": "16px"
-          },
-          {
-            "value": "18",
-            "label": "18px"
-          },
-          {
-            "value": "20",
-            "label": "20px"
-          },
-          {
-            "value": "24",
-            "label": "24px"
-          },
-          {
-            "value": "32",
-            "label": "32px"
-          },
-          {
-            "value": "40",
-            "label": "40px"
-          },
-          {
-            "value": "48",
-            "label": "48px"
-          },
-          {
-            "value": "56",
-            "label": "56px"
-          },
-          {
-            "value": "72",
-            "label": "72px"
-          },
-          {
-            "value": "88",
-            "label": "88px"
-          },
-          {
-            "value": "120",
-            "label": "120px"
-          },
-          {
-            "value": "152",
-            "label": "152px"
-          },
-          {
-            "value": "184",
-            "label": "184px"
-          }
-        ],
-        "default": "72"
+        "default": "4.5",
+        "info": "Enter rem values such as 3.5. Legacy px values still work."
       },
       {
         "type": "select",
@@ -604,76 +529,11 @@
         "default": "heading"
       },
       {
-        "type": "select",
+        "type": "text",
         "id": "type_size_h2",
         "label": "t:settings.size",
-        "options": [
-          {
-            "value": "10",
-            "label": "10px"
-          },
-          {
-            "value": "12",
-            "label": "12px"
-          },
-          {
-            "value": "14",
-            "label": "14px"
-          },
-          {
-            "value": "16",
-            "label": "16px"
-          },
-          {
-            "value": "18",
-            "label": "18px"
-          },
-          {
-            "value": "20",
-            "label": "20px"
-          },
-          {
-            "value": "24",
-            "label": "24px"
-          },
-          {
-            "value": "32",
-            "label": "32px"
-          },
-          {
-            "value": "40",
-            "label": "40px"
-          },
-          {
-            "value": "48",
-            "label": "48px"
-          },
-          {
-            "value": "56",
-            "label": "56px"
-          },
-          {
-            "value": "72",
-            "label": "72px"
-          },
-          {
-            "value": "88",
-            "label": "88px"
-          },
-          {
-            "value": "120",
-            "label": "120px"
-          },
-          {
-            "value": "152",
-            "label": "152px"
-          },
-          {
-            "value": "184",
-            "label": "184px"
-          }
-        ],
-        "default": "48"
+        "default": "3",
+        "info": "Enter rem values such as 3.5. Legacy px values still work."
       },
       {
         "type": "select",
@@ -760,76 +620,11 @@
         "default": "heading"
       },
       {
-        "type": "select",
+        "type": "text",
         "id": "type_size_h3",
         "label": "t:settings.size",
-        "options": [
-          {
-            "value": "10",
-            "label": "10px"
-          },
-          {
-            "value": "12",
-            "label": "12px"
-          },
-          {
-            "value": "14",
-            "label": "14px"
-          },
-          {
-            "value": "16",
-            "label": "16px"
-          },
-          {
-            "value": "18",
-            "label": "18px"
-          },
-          {
-            "value": "20",
-            "label": "20px"
-          },
-          {
-            "value": "24",
-            "label": "24px"
-          },
-          {
-            "value": "32",
-            "label": "32px"
-          },
-          {
-            "value": "40",
-            "label": "40px"
-          },
-          {
-            "value": "48",
-            "label": "48px"
-          },
-          {
-            "value": "56",
-            "label": "56px"
-          },
-          {
-            "value": "72",
-            "label": "72px"
-          },
-          {
-            "value": "88",
-            "label": "88px"
-          },
-          {
-            "value": "120",
-            "label": "120px"
-          },
-          {
-            "value": "152",
-            "label": "152px"
-          },
-          {
-            "value": "184",
-            "label": "184px"
-          }
-        ],
-        "default": "32"
+        "default": "2",
+        "info": "Enter rem values such as 2.5. Legacy px values still work."
       },
       {
         "type": "select",
@@ -916,76 +711,11 @@
         "default": "subheading"
       },
       {
-        "type": "select",
+        "type": "text",
         "id": "type_size_h4",
         "label": "t:settings.size",
-        "options": [
-          {
-            "value": "10",
-            "label": "10px"
-          },
-          {
-            "value": "12",
-            "label": "12px"
-          },
-          {
-            "value": "14",
-            "label": "14px"
-          },
-          {
-            "value": "16",
-            "label": "16px"
-          },
-          {
-            "value": "18",
-            "label": "18px"
-          },
-          {
-            "value": "20",
-            "label": "20px"
-          },
-          {
-            "value": "24",
-            "label": "24px"
-          },
-          {
-            "value": "32",
-            "label": "32px"
-          },
-          {
-            "value": "40",
-            "label": "40px"
-          },
-          {
-            "value": "48",
-            "label": "48px"
-          },
-          {
-            "value": "56",
-            "label": "56px"
-          },
-          {
-            "value": "72",
-            "label": "72px"
-          },
-          {
-            "value": "88",
-            "label": "88px"
-          },
-          {
-            "value": "120",
-            "label": "120px"
-          },
-          {
-            "value": "152",
-            "label": "152px"
-          },
-          {
-            "value": "184",
-            "label": "184px"
-          }
-        ],
-        "default": "24"
+        "default": "1.5",
+        "info": "Enter rem values such as 1.75. Legacy px values still work."
       },
       {
         "type": "select",
@@ -1072,76 +802,11 @@
         "default": "subheading"
       },
       {
-        "type": "select",
+        "type": "text",
         "id": "type_size_h5",
         "label": "t:settings.size",
-        "options": [
-          {
-            "value": "10",
-            "label": "10px"
-          },
-          {
-            "value": "12",
-            "label": "12px"
-          },
-          {
-            "value": "14",
-            "label": "14px"
-          },
-          {
-            "value": "16",
-            "label": "16px"
-          },
-          {
-            "value": "18",
-            "label": "18px"
-          },
-          {
-            "value": "20",
-            "label": "20px"
-          },
-          {
-            "value": "24",
-            "label": "24px"
-          },
-          {
-            "value": "32",
-            "label": "32px"
-          },
-          {
-            "value": "40",
-            "label": "40px"
-          },
-          {
-            "value": "48",
-            "label": "48px"
-          },
-          {
-            "value": "56",
-            "label": "56px"
-          },
-          {
-            "value": "72",
-            "label": "72px"
-          },
-          {
-            "value": "88",
-            "label": "88px"
-          },
-          {
-            "value": "120",
-            "label": "120px"
-          },
-          {
-            "value": "152",
-            "label": "152px"
-          },
-          {
-            "value": "184",
-            "label": "184px"
-          }
-        ],
-        "default": "18"
+        "default": "1.125",
+        "info": "Enter rem values such as 1.25. Legacy px values still work."
       },
       {
         "type": "select",
@@ -1228,76 +893,11 @@
         "default": "subheading"
       },
       {
-        "type": "select",
+        "type": "text",
         "id": "type_size_h6",
         "label": "t:settings.size",
-        "options": [
-          {
-            "value": "10",
-            "label": "10px"
-          },
-          {
-            "value": "12",
-            "label": "12px"
-          },
-          {
-            "value": "14",
-            "label": "14px"
-          },
-          {
-            "value": "16",
-            "label": "16px"
-          },
-          {
-            "value": "18",
-            "label": "18px"
-          },
-          {
-            "value": "20",
-            "label": "20px"
-          },
-          {
-            "value": "24",
-            "label": "24px"
-          },
-          {
-            "value": "32",
-            "label": "32px"
-          },
-          {
-            "value": "40",
-            "label": "40px"
-          },
-          {
-            "value": "48",
-            "label": "48px"
-          },
-          {
-            "value": "56",
-            "label": "56px"
-          },
-          {
-            "value": "72",
-            "label": "72px"
-          },
-          {
-            "value": "88",
-            "label": "88px"
-          },
-          {
-            "value": "120",
-            "label": "120px"
-          },
-          {
-            "value": "152",
-            "label": "152px"
-          },
-          {
-            "value": "184",
-            "label": "184px"
-          }
-        ],
-        "default": "16"
+        "default": "1",
+        "info": "Enter rem values such as 1.1. Legacy px values still work."
       },
       {
         "type": "select",
@@ -1379,6 +979,187 @@
           }
         ],
         "default": "narrow"
+      }
+    ]
+  },
+  {
+    "name": "Golden Grid",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Borders"
+      },
+      {
+        "type": "checkbox",
+        "id": "side_columns_enable",
+        "label": "Enable borders",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "side_columns_enable_mobile",
+        "label": "Show on mobile",
+        "default": true,
+        "visible_if": "{{ settings.side_columns_enable }}"
+      },
+      {
+        "type": "range",
+        "id": "side_columns_width_desktop",
+        "label": "Desktop width",
+        "min": 0,
+        "max": 5,
+        "step": 0.1,
+        "unit": "rem",
+        "default": 1.5,
+        "visible_if": "{{ settings.side_columns_enable }}"
+      },
+      {
+        "type": "range",
+        "id": "side_columns_width_mobile",
+        "label": "Mobile width",
+        "min": 0,
+        "max": 5,
+        "step": 0.1,
+        "unit": "rem",
+        "default": 1,
+        "visible_if": "{{ settings.side_columns_enable }}"
+      },
+      {
+        "type": "color_scheme",
+        "id": "side_columns_color_scheme",
+        "label": "Color scheme",
+        "default": "scheme-1",
+        "visible_if": "{{ settings.side_columns_enable }}"
+      },
+      {
+        "type": "header",
+        "content": "Grid"
+      },
+      {
+        "type": "checkbox",
+        "id": "section_gridlines_enable",
+        "label": "Enable grid",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "section_gridlines_vertical",
+        "label": "Show vertical gridlines",
+        "default": true,
+        "visible_if": "{{ settings.section_gridlines_enable }}"
+      },
+      {
+        "type": "checkbox",
+        "id": "section_gridlines_horizontal",
+        "label": "Show horizontal gridlines",
+        "default": true,
+        "visible_if": "{{ settings.section_gridlines_enable }}"
+      },
+      {
+        "type": "paragraph",
+        "content": "Adds fine 1px dividers above and below each content section, and optional vertical rails inside the global borders.",
+        "visible_if": "{{ settings.section_gridlines_enable }}"
+      },
+      {
+        "type": "color",
+        "id": "section_gridline_color",
+        "label": "Gridline color",
+        "default": "#e5e5e5",
+        "alpha": true,
+        "visible_if": "{{ settings.section_gridlines_enable }}"
+      },
+      {
+        "type": "color",
+        "id": "section_gridline_color_dark",
+        "label": "Gridline color on dark backgrounds",
+        "default": "rgba(255,255,255,0.12)",
+        "alpha": true,
+        "visible_if": "{{ settings.section_gridlines_enable }}"
+      },
+      {
+        "type": "color",
+        "id": "vertical_divider_color",
+        "label": "Vertical gridline color",
+        "default": "#d9d9d9",
+        "visible_if": "{{ settings.section_gridlines_enable }}"
+      },
+      {
+        "type": "header",
+        "content": "Floating button"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_bottom_motif_button",
+        "label": "Enable floating motif button",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "bottom_motif_button_label",
+        "label": "Button label",
+        "default": "Explore",
+        "visible_if": "{{ settings.enable_bottom_motif_button }}"
+      },
+      {
+        "type": "url",
+        "id": "bottom_motif_button_link",
+        "label": "Button link",
+        "visible_if": "{{ settings.enable_bottom_motif_button }}"
+      },
+      {
+        "type": "image_picker",
+        "id": "bottom_motif_button_svg",
+        "label": "Button motif image",
+        "visible_if": "{{ settings.enable_bottom_motif_button }}"
+      },
+      {
+        "type": "color",
+        "id": "bottom_motif_button_background",
+        "label": "Fallback background colour",
+        "default": "#000000",
+        "alpha": true,
+        "visible_if": "{{ settings.enable_bottom_motif_button }}"
+      },
+      {
+        "type": "color",
+        "id": "bottom_motif_button_text_color",
+        "label": "Text colour",
+        "default": "#FFFFFF",
+        "alpha": true,
+        "visible_if": "{{ settings.enable_bottom_motif_button }}"
+      },
+      {
+        "type": "range",
+        "id": "bottom_motif_button_max_width_desktop",
+        "label": "Max width on desktop",
+        "min": 160,
+        "max": 640,
+        "step": 10,
+        "unit": "px",
+        "default": 360,
+        "visible_if": "{{ settings.enable_bottom_motif_button }}"
+      },
+      {
+        "type": "range",
+        "id": "bottom_motif_button_max_width_mobile",
+        "label": "Max width on mobile",
+        "min": 140,
+        "max": 360,
+        "step": 10,
+        "unit": "px",
+        "default": 220,
+        "visible_if": "{{ settings.enable_bottom_motif_button }}"
+      },
+      {
+        "type": "range",
+        "id": "bottom_motif_button_vertical_offset",
+        "label": "Vertical offset from bottom",
+        "min": 0,
+        "max": 120,
+        "step": 2,
+        "unit": "px",
+        "default": 16,
+        "visible_if": "{{ settings.enable_bottom_motif_button }}"
       }
     ]
   },
@@ -1568,7 +1349,6 @@
         ],
         "default": "body"
       },
-
       {
         "type": "select",
         "id": "button_text_case_primary",
@@ -1625,7 +1405,6 @@
         ],
         "default": "body"
       },
-
       {
         "type": "select",
         "id": "button_text_case_secondary",
@@ -1764,7 +1543,6 @@
         "info": "t:info.checkout_buttons",
         "default": true
       },
-
       {
         "type": "url",
         "id": "empty_cart_button_link",

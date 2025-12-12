@@ -28,6 +28,10 @@ class AccordionCustom extends HTMLElement {
     return this.dataset.disableOnDesktop === 'true';
   }
 
+  get #hoverOpen() {
+    return this.dataset.hoverOpen === 'true';
+  }
+
   get #closeWithEscape() {
     return this.dataset.closeWithEscape === 'true';
   }
@@ -42,6 +46,11 @@ class AccordionCustom extends HTMLElement {
     this.addEventListener('keydown', this.#handleKeyDown, { signal });
     this.summary.addEventListener('click', this.handleClick, { signal });
     mediaQueryLarge.addEventListener('change', this.#handleMediaQueryChange, { signal });
+
+    if (this.#hoverOpen) {
+      this.addEventListener('mouseenter', this.#handleMouseEnter, { signal });
+      this.addEventListener('mouseleave', this.#handleMouseLeave, { signal });
+    }
   }
 
   /**
@@ -72,6 +81,18 @@ class AccordionCustom extends HTMLElement {
    */
   #handleMediaQueryChange = () => {
     this.#setDefaultOpenState();
+  };
+
+  #handleMouseEnter = () => {
+    if (isMobileBreakpoint()) return;
+
+    this.details.open = true;
+  };
+
+  #handleMouseLeave = () => {
+    if (isMobileBreakpoint()) return;
+
+    this.details.open = false;
   };
 
   /**

@@ -45,7 +45,7 @@
     height: 100%;
     margin: 0 0 0 auto;
     padding: 0;
-    border-left: var(--style-border-drawer);
+    border-left: 1px solid #e5e5e5;
     box-shadow: var(--shadow-drawer);
     background-color: var(--color-background);
   }
@@ -77,6 +77,19 @@
 
   .cart-drawer__close-button {
     margin-right: calc(var(--padding-sm) * -1);
+    border: none;
+    background-color: transparent;
+    box-shadow: none;
+
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
+  @supports not (background-color: rgb(from red 150 g b / alpha)) {
+    .cart-drawer__close-button:focus-visible::after {
+      display: none;
+    }
   }
 
   .cart-drawer--empty .cart-drawer__content {

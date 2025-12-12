@@ -15,6 +15,32 @@
   assign block_settings = block.settings
   assign max_featured_items = 4
   assign image_border_radius = block_settings.image_border_radius
+  assign drawer_color_scheme = block_settings.drawer_color_scheme | default: block_settings.color_scheme
+  assign drawer_brand_column_color_scheme = drawer_color_scheme
+  if block_settings.drawer_brand_column_custom_color and block_settings.drawer_brand_column_color_scheme != blank
+    assign drawer_brand_column_color_scheme = block_settings.drawer_brand_column_color_scheme
+  endif
+  assign drawer_brand_text = block_settings.drawer_brand_text | default: shop.name
+  assign drawer_brand_logo_image = block_settings.drawer_brand_logo_image | default: section.settings.drawer_brand_logo_image
+  assign drawer_logo_image = block_settings.drawer_logo_image | default: section.settings.drawer_logo_image | default: drawer_brand_logo_image
+  assign drawer_logo_alt = block_settings.drawer_logo_alt | default: block_settings.drawer_logo_alt_text | default: drawer_logo_image.alt | default: drawer_brand_text
+  assign drawer_logo_top_image = block_settings.drawer_logo_top_image | default: section.settings.drawer_logo_top_image | default: drawer_logo_image
+  assign drawer_logo_bottom_image = block_settings.drawer_logo_bottom_image | default: section.settings.drawer_logo_bottom_image | default: drawer_logo_image
+  assign drawer_brand_column_width_value = block_settings.drawer_brand_column_width
+  if drawer_brand_column_width_value == blank
+    assign drawer_brand_column_width_value = 15
+  endif
+  assign drawer_brand_column_padding_value = block_settings.drawer_brand_column_padding
+  if drawer_brand_column_padding_value == blank
+    assign drawer_brand_column_padding_value = 16
+  endif
+  assign drawer_menu_row_padding_value = block_settings.drawer_menu_row_padding
+  if drawer_menu_row_padding_value == blank
+    assign drawer_menu_row_padding_value = 0
+  endif
+
+  assign brand_column_style = '--drawer-brand-column-width: ' | append: drawer_brand_column_width_value | append: 'vw;' | append: ' --drawer-brand-column-padding: ' | append: drawer_brand_column_padding_value | append: 'px;'
+  assign brand_column_style = brand_column_style | append: ' --drawer-menu-row-padding: ' | append: drawer_menu_row_padding_value | append: 'px;'
 
   if block_settings.menu_style == 'featured_collections'
     assign ratio = block_settings.featured_collections_aspect_ratio
@@ -70,31 +96,67 @@
       data-header-drawer
       class="
         menu-drawer
+        menu-drawer--full
         motion-reduce
-        color-{{ block_settings.color_scheme }}
+        color-{{ drawer_color_scheme }}
       "
     >
-      <button
-        class="button button-unstyled close-button menu-drawer__close-button"
-        type="button"
-        aria-label="{{ 'actions.close' | t }}"
-        on:click="/close"
+      <div
+        class="menu-drawer__layout"
+        style="{{ brand_column_style }}"
       >
-        <span class="svg-wrapper header-drawer-icon header-drawer-icon--close">
-          {{- 'icon-close.svg' | inline_asset_content -}}
-        </span>
-      </button>
-      <nav
-        class="menu-drawer__navigation"
-        style="
-          {%- render 'menu-font-styles', settings: block_settings, menu_type: 'drawer' %}
-          {%- render 'submenu-font-styles', settings: block_settings %}
-        "
-      >
-        <ul
-          class="menu-drawer__menu has-submenu"
-          role="list"
-        >
+        <div class="menu-drawer__brand-column color-{{ drawer_brand_column_color_scheme }}">
+          {% assign brand_slots = 'top,bottom' | split: ',' %}
+          {% for slot in brand_slots %}
+            {% liquid
+              assign slot_image = drawer_logo_top_image
+              if slot == 'bottom'
+                assign slot_image = drawer_logo_bottom_image
+              endif
+            %}
+            <div class="menu-drawer__brand-slot menu-drawer__brand-slot--{{ slot }}">
+              <a
+                href="{{ routes.root_url }}"
+                class="menu-drawer__brand-link focus-inset"
+                aria-label="{{ shop.name | escape }}"
+              >
+                {% if slot_image %}
+                  {{
+                    slot_image
+                    | image_url: width: 800
+                    | image_tag: class: 'menu-drawer__brand-logo-image', alt: drawer_logo_alt
+                  }}
+                {% else %}
+                  <span class="menu-drawer__brand-text">{{ drawer_brand_text | escape }}</span>
+                {% endif %}
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+        <div class="menu-drawer__body">
+          <div class="menu-drawer__top-bar">
+            <button
+              class="button button-unstyled close-button menu-drawer__close-button"
+              type="button"
+              aria-label="{{ 'actions.close' | t }}"
+              on:click="/close"
+            >
+              <span class="svg-wrapper header-drawer-icon header-drawer-icon--close">
+                {{- 'icon-close.svg' | inline_asset_content -}}
+              </span>
+            </button>
+          </div>
+          <nav
+            class="menu-drawer__navigation"
+            style="
+              {%- render 'menu-font-styles', settings: block_settings, menu_type: 'drawer' %}
+              {%- render 'submenu-font-styles', settings: block_settings %}
+            "
+          >
+            <ul
+              class="menu-drawer__menu has-submenu"
+              role="list"
+            >
           {%- comment -%}
             Handle menus with fewer than 3 levels of links
           {%- endcomment -%}
@@ -127,8 +189,8 @@
                         class="menu-drawer__menu-item menu-drawer__menu-item--mainlist menu-drawer__animated-element focus-inset"
                       >
                         <span class="menu-drawer__menu-item-text wrap-text">{{ link.title | escape }}</span>
-                        <span class="svg-wrapper icon-plus">
-                          {{- 'icon-plus.svg' | inline_asset_content -}}
+                        <span class="svg-wrapper icon-caret menu-drawer__accordion-icon">
+                          {{- 'icon-caret.svg' | inline_asset_content -}}
                         </span>
                       </summary>
                       {% liquid
@@ -375,9 +437,9 @@
                                         <span class="menu-drawer__menu-item-text wrap-text">
                                           {{- childlink.title | escape -}}
                                         </span>
-                                        <span class="svg-wrapper icon-plus">
-                                          {{- 'icon-plus.svg' | inline_asset_content -}}
-                                        </span>
+                      <span class="svg-wrapper icon-caret menu-drawer__accordion-icon">
+                        {{- 'icon-caret.svg' | inline_asset_content -}}
+                      </span>
                                       </summary>
                                       {% liquid
                                         assign render_link_image = false
@@ -557,85 +619,87 @@
               </li>
             {%- endfor -%}
           {% endif %}
-        </ul>
-      </nav>
-      <div
-        class="menu-drawer__utility-links menu-drawer__animated-element"
-        style="--menu-drawer-animation-index: {{ linklist.links.size }};"
-      >
-        {% liquid
-          assign show_language = section.settings.show_language
-          if localization.available_languages.size <= 1
-            assign show_language = false
-          endif
+            </ul>
+          </nav>
+          <div
+            class="menu-drawer__utility-links menu-drawer__animated-element"
+            style="--menu-drawer-animation-index: {{ linklist.links.size }};"
+          >
+            {% liquid
+              assign show_language = section.settings.show_language
+              if localization.available_languages.size <= 1
+                assign show_language = false
+              endif
 
-          assign show_country = section.settings.show_country
-          if localization.available_countries.size <= 1
-            assign show_country = false
-          endif
-        %}
-        {% if data_header_drawer_type == 'mobile-drawer' and show_country or show_language %}
-          {% render 'drawer-localization',
-            show_country: show_country,
-            show_language: show_language,
-            country_style: section.settings.country_selector_style
-          %}
-        {%- endif -%}
-      </div>
+              assign show_country = section.settings.show_country
+              if localization.available_countries.size <= 1
+                assign show_country = false
+              endif
+            %}
+            {% if data_header_drawer_type == 'mobile-drawer' and show_country or show_language %}
+              {% render 'drawer-localization',
+                show_country: show_country,
+                show_language: show_language,
+                country_style: section.settings.country_selector_style
+              %}
+            {%- endif -%}
+          </div>
 
-      {% liquid
-        if block_settings.menu_style == 'featured_collections'
-          assign top_level_featured_collections = linklist.links | where: 'type', 'collection_link'
-        endif
-
-        if eager_loading and block_settings.menu_style == 'featured_products'
-          for link in linklist.links
-            if link.type == 'collection_link'
-              assign collection_linklist = link
-              assign top_level_featured_products_collection = collection_linklist.object
-              break
-            elsif link.type == 'catalog_link' or link.type == 'collections_link'
-              assign top_level_featured_products_collection = collections.all
-              break
+          {% liquid
+            if block_settings.menu_style == 'featured_collections'
+              assign top_level_featured_collections = linklist.links | where: 'type', 'collection_link'
             endif
-          endfor
-        endif
-      -%}
-      {% if top_level_featured_collections.size > 0 or top_level_featured_products_collection.products_count > 0 %}
-        <div
-          class="menu-drawer__featured-content"
-          style="--menu-drawer-animation-index: {{ linklist.links.size | plus: 1 }};"
-        >
-          <ul class="menu-drawer__featured-content-list menu-drawer__animated-element list-unstyled">
-            {% if top_level_featured_collections.size > 0 %}
-              {%- for collection in top_level_featured_collections limit: max_featured_items -%}
-                <li class="menu-drawer__featured-content-list-item menu-drawer__featured-content-list-item--collection">
-                  {% render 'resource-card',
-                    resource: collection.object,
-                    resource_type: 'collection',
-                    style: 'overlay',
-                    image_aspect_ratio: ratio,
-                    image_sizes: 'auto, 400px'
-                  %}
-                </li>
-              {%- endfor -%}
-            {% elsif top_level_featured_products_collection.products_count > 0 %}
-              {% paginate top_level_featured_products_collection.products by max_featured_items %}
-                {%- for product in top_level_featured_products_collection.products limit: max_featured_items -%}
-                  <li class="menu-drawer__featured-content-list-item menu-drawer__featured-content-list-item--product">
-                    {% render 'resource-card',
-                      resource: product,
-                      resource_type: 'product',
-                      image_aspect_ratio: ratio,
-                      image_sizes: 'auto, 400px'
-                    %}
-                  </li>
-                {%- endfor -%}
-              {% endpaginate %}
-            {% endif %}
-          </ul>
+
+            if eager_loading and block_settings.menu_style == 'featured_products'
+              for link in linklist.links
+                if link.type == 'collection_link'
+                  assign collection_linklist = link
+                  assign top_level_featured_products_collection = collection_linklist.object
+                  break
+                elsif link.type == 'catalog_link' or link.type == 'collections_link'
+                  assign top_level_featured_products_collection = collections.all
+                  break
+                endif
+              endfor
+            endif
+          -%}
+          {% if top_level_featured_collections.size > 0 or top_level_featured_products_collection.products_count > 0 %}
+            <div
+              class="menu-drawer__featured-content"
+              style="--menu-drawer-animation-index: {{ linklist.links.size | plus: 1 }};"
+            >
+              <ul class="menu-drawer__featured-content-list menu-drawer__animated-element list-unstyled">
+                {% if top_level_featured_collections.size > 0 %}
+                  {%- for collection in top_level_featured_collections limit: max_featured_items -%}
+                    <li class="menu-drawer__featured-content-list-item menu-drawer__featured-content-list-item--collection">
+                      {% render 'resource-card',
+                        resource: collection.object,
+                        resource_type: 'collection',
+                        style: 'overlay',
+                        image_aspect_ratio: ratio,
+                        image_sizes: 'auto, 400px'
+                      %}
+                    </li>
+                  {%- endfor -%}
+                {% elsif top_level_featured_products_collection.products_count > 0 %}
+                  {% paginate top_level_featured_products_collection.products by max_featured_items %}
+                    {%- for product in top_level_featured_products_collection.products limit: max_featured_items -%}
+                      <li class="menu-drawer__featured-content-list-item menu-drawer__featured-content-list-item--product">
+                        {% render 'resource-card',
+                          resource: product,
+                          resource_type: 'product',
+                          image_aspect_ratio: ratio,
+                          image_sizes: 'auto, 400px'
+                        %}
+                      </li>
+                    {%- endfor -%}
+                  {% endpaginate %}
+                {% endif %}
+              </ul>
+            </div>
+          {% endif %}
         </div>
-      {% endif %}
+      </div>
     </div>
     <div
       class="menu-drawer__backdrop"
@@ -720,7 +784,7 @@
     left: 0;
     top: 0;
     padding: 0;
-    background-color: var(--color-background);
+    background-color: var(--color-background-solid, var(--color-background));
     overflow: auto;
     display: flex;
     border-right: var(--style-border-drawer);
@@ -734,6 +798,82 @@
     .header__drawer--desktop & {
       height: 100vh;
     }
+  }
+
+  .menu-drawer__layout {
+    display: flex;
+    height: 100%;
+    min-height: 100%;
+    width: 100%;
+    align-items: stretch;
+    column-gap: 0;
+    row-gap: 0;
+  }
+
+  .menu-drawer__brand-column {
+    display: none;
+  }
+
+  .menu-drawer__brand-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+    font-weight: 600;
+  }
+
+  .menu-drawer__brand-logo-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .menu-drawer__brand-text {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-family: var(--font-heading--family, var(--font-body--family));
+    font-size: 0.95rem;
+  }
+
+  .menu-drawer__brand-slot {
+    width: 100%;
+  }
+
+  .menu-drawer__accordion-icon svg {
+    transform: rotate(-90deg);
+    transition: transform var(--animation-speed) var(--animation-easing);
+  }
+
+  .menu-drawer details[open] > summary .menu-drawer__accordion-icon svg {
+    transform: rotate(0deg);
+  }
+
+  .menu-drawer__body {
+    --drawer-border-scale: 0;
+
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: var(--padding-lg);
+    position: relative;
+  }
+
+  .menu-drawer__body::before {
+    content: none;
+  }
+
+  .menu-drawer__top-bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
   }
 
   .menu-drawer:has(details[open]) {
@@ -832,8 +972,10 @@
     }
   }
 
-  .menu-drawer__list-item--divider {
-    border-block-end: 1px solid var(--color-border);
+  @media screen and (min-width: 750px) {
+    .menu-drawer__list-item--divider {
+      border-block-end: 1px solid var(--menu-drawer-line-color);
+    }
   }
 
   .menu-drawer__list-item--deep:not(.menu-drawer__list-item--divider) .menu-drawer__menu {
@@ -845,7 +987,7 @@
   }
 
   .menu-drawer__menu-container--divider {
-    border-block-end: 1px solid var(--color-border);
+    border-block-end: 1px solid var(--menu-drawer-line-color);
   }
 
   .menu-drawer__menu > .menu-drawer__list-item {
@@ -926,7 +1068,24 @@
     font-family: var(--menu-parent-font-family);
     font-style: var(--menu-parent-font-style);
     font-weight: var(--menu-parent-font-weight);
-    font-size: var(--menu-parent-font-size);
+    font-size: clamp(
+      var(--menu-parent-font-size),
+      calc(
+        var(--menu-parent-font-size) +
+          (var(--menu-parent-font-size-desktop) - var(--menu-parent-font-size)) *
+          clamp(
+            0,
+            (100vw - var(--menu-parent-font-scale-min-width, 32rem)) /
+              max(
+                1rem,
+                var(--menu-parent-font-scale-max-width, 75rem) -
+                  var(--menu-parent-font-scale-min-width, 32rem)
+              ),
+            1
+          )
+      ),
+      var(--menu-parent-font-size-desktop)
+    );
     line-height: var(--menu-parent-font-line-height);
     text-transform: var(--menu-parent-font-case);
     color: var(--menu-parent-font-color);
@@ -940,7 +1099,24 @@
     font-family: var(--menu-child-font-family);
     font-style: var(--menu-child-font-style);
     font-weight: var(--menu-child-font-weight);
-    font-size: var(--menu-child-font-size);
+    font-size: clamp(
+      var(--menu-child-font-size),
+      calc(
+        var(--menu-child-font-size) +
+          (var(--menu-child-font-size-desktop) - var(--menu-child-font-size)) *
+          clamp(
+            0,
+            (100vw - var(--menu-child-font-scale-min-width, 32rem)) /
+              max(
+                1rem,
+                var(--menu-child-font-scale-max-width, 75rem) -
+                  var(--menu-child-font-scale-min-width, 32rem)
+              ),
+            1
+          )
+      ),
+      var(--menu-child-font-size-desktop)
+    );
     line-height: var(--menu-child-font-line-height);
     text-transform: var(--menu-child-font-case);
     color: var(--menu-child-font-color);
@@ -989,6 +1165,235 @@
     justify-content: flex-start;
     row-gap: var(--padding-3xs);
     padding: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .header__drawer--mobile .menu-drawer {
+      width: 100vw;
+      max-width: none;
+      min-height: 100vh;
+      min-height: 100dvh;
+      border-radius: 0;
+      margin: 0;
+      border-right: none;
+      box-shadow: none;
+      --menu-drawer-line-color: var(
+        --section-gridline-color,
+        var(--golden-gridline-color, rgb(var(--color-foreground-rgb, 17 17 17) / 0.35))
+      );
+      --drawer-mobile-horizontal-pad: clamp(var(--padding-md), 4vw, var(--padding-2xl));
+    }
+
+    .header__drawer--mobile .menu-drawer__layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(52px, var(--drawer-brand-column-width, 18vw));
+      grid-template-rows: minmax(0, 1fr);
+      min-height: 100vh;
+      min-height: 100dvh;
+      align-items: stretch;
+    }
+
+    .header__drawer--mobile .menu-drawer__brand-column {
+      grid-column: 2;
+      grid-row: 1 / -1;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: stretch;
+      padding: max(var(--drawer-brand-column-padding, var(--padding-lg)), 2.5rem)
+        var(--drawer-brand-column-padding, var(--padding-lg));
+      gap: var(--drawer-brand-column-padding, var(--padding-lg));
+      height: 100%;
+      min-height: 100%;
+      align-self: stretch;
+    }
+
+    .header__drawer--mobile .menu-drawer__brand-column::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      border-left: 1px solid var(--menu-drawer-line-color);
+    }
+
+    .header__drawer--mobile .menu-drawer__brand-slot {
+      flex: 0 0 auto;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-block: clamp(var(--padding-sm), 2vh, var(--padding-lg));
+    }
+
+    .header__drawer--mobile .menu-drawer__brand-slot--top,
+    .header__drawer--mobile .menu-drawer__brand-slot--bottom {
+      justify-content: center;
+      align-items: center;
+    }
+
+    .header__drawer--mobile .menu-drawer__brand-slot--top {
+      margin-bottom: auto;
+    }
+
+    .header__drawer--mobile .menu-drawer__brand-slot--bottom {
+      margin-top: auto;
+    }
+
+    .header__drawer--mobile .menu-drawer__brand-link {
+      padding: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .header__drawer--mobile .menu-drawer__brand-logo-image,
+    .header__drawer--mobile .menu-drawer__brand-text {
+      transform: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      max-width: none;
+    }
+
+    .header__drawer--mobile .menu-drawer__brand-logo-image {
+      width: min(100%, clamp(96px, 70%, 150px));
+      max-width: 100%;
+      height: auto;
+      max-height: clamp(72px, 18vh, 160px);
+    }
+
+    .header__drawer--mobile .menu-drawer__body {
+      grid-column: 1;
+      grid-row: 1 / -1;
+      padding-inline: 0;
+      padding-block: 0 var(--padding-2xl);
+      min-height: 100vh;
+      min-height: 100dvh;
+      gap: 0;
+      align-self: stretch;
+      height: 100%;
+    }
+
+    .header__drawer--mobile .menu-drawer__top-bar {
+      border-bottom: 1px solid var(--menu-drawer-line-color);
+      padding-block: var(--padding-sm);
+      padding-inline: var(--padding-lg);
+      justify-content: flex-start;
+      margin-block-end: 0;
+    }
+
+    .header__drawer--mobile .menu-drawer__close-button {
+      padding: 0;
+      margin: 0;
+      width: var(--minimum-touch-target);
+      height: var(--minimum-touch-target);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header__drawer--mobile .menu-drawer__navigation {
+      position: relative;
+      flex: 1;
+      overflow-y: auto;
+      padding: 0;
+    }
+
+    .header__drawer--mobile .menu-drawer__navigation > .menu-drawer__menu {
+      border-top: 0;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+    }
+
+    .header__drawer--mobile .menu-drawer__menu-container--divider {
+      border-bottom: 0;
+    }
+
+    .header__drawer--mobile .menu-drawer__navigation .menu-drawer__list-item {
+      border-bottom: 1px solid var(--menu-drawer-line-color);
+      margin: 0;
+      padding: 0;
+      width: 100%;
+    }
+
+    .header__drawer--mobile .menu-drawer__navigation .menu-drawer__list-item.menu-drawer__list-item--open {
+      border-bottom: 0;
+    }
+
+    .header__drawer--mobile .menu-drawer__navigation .menu-drawer__list-item:first-child {
+      border-top: 0;
+    }
+
+    .header__drawer--mobile .menu-drawer__navigation .menu-drawer__menu-container,
+    .header__drawer--mobile .menu-drawer__navigation .menu-drawer__menu-container summary {
+      width: 100%;
+    }
+
+    .header__drawer--mobile .menu-drawer__menu-item,
+    .header__drawer--mobile .menu-drawer__menu summary.menu-drawer__menu-item {
+      width: 100%;
+      padding-block: var(--padding-md);
+      padding-inline: var(--drawer-menu-row-padding, 0) var(--drawer-menu-row-padding, 0);
+    }
+
+    .header__drawer--mobile .menu-drawer__menu-item > .svg-wrapper {
+      padding-block: 0;
+      padding-inline-start: var(--padding-md);
+    }
+
+    .header__drawer--mobile .menu-drawer__menu--childlist,
+    .header__drawer--mobile .menu-drawer__menu--grandchildlist {
+      margin: 0;
+      padding: 0;
+      border-top: 0;
+      width: 100%;
+    }
+
+    .header__drawer--mobile .menu-drawer__utility-links,
+    .header__drawer--mobile .menu-drawer__featured-content {
+      padding-inline: var(--drawer-mobile-horizontal-pad);
+    }
+
+    .header__drawer--mobile .menu-drawer__utility-links {
+      margin: 0;
+      border-bottom: 0;
+      border-top: 0;
+      padding-block: var(--padding-lg);
+      background: transparent;
+    }
+
+    .header__drawer--mobile .menu-drawer__featured-content {
+      border-top: 1px solid var(--menu-drawer-line-color);
+      padding-block: var(--padding-lg);
+    }
+
+    .header__drawer--mobile
+      .menu-drawer__navigation
+      > .menu-drawer__menu
+      > .menu-drawer__list-item:last-child {
+      border-bottom: 0;
+    }
+
+    .header__drawer--mobile .menu-drawer__submenu {
+      left: 0;
+      width: 100%;
+      padding: 0;
+      border-top: 0;
+      background-color: var(--color-background-solid, var(--color-background));
+    }
+
+    .header__drawer--mobile .menu-drawer__submenu .menu-drawer__menu {
+      border-top: 0;
+    }
+
+    .header__drawer--mobile .menu-drawer__submenu .menu-drawer__list-item,
+    .header__drawer--mobile .menu-drawer__submenu .menu-drawer__menu-container {
+      border-bottom: 1px solid var(--menu-drawer-line-color);
+    }
   }
 
   .menu-drawer__link-image {
@@ -1086,7 +1491,7 @@
     top: 0;
     height: 100dvh;
     left: 0;
-    background-color: var(--color-background);
+    background-color: var(--color-background-solid, var(--color-background));
     z-index: var(--layer-flat);
     transform: translateX(-5%);
     visibility: hidden;
@@ -1104,9 +1509,8 @@
     display: flex;
     flex-direction: column;
     padding: 0;
-    margin-block: auto var(--padding-sm);
-    margin-inline-start: var(--padding-xl);
-    background-color: rgb(var(--color-foreground) 0.03);
+    margin: 0;
+    background-color: transparent;
   }
 
   .menu-drawer__account {

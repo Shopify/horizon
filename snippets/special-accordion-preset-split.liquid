@@ -1,0 +1,60 @@
+{% assign left_has = settings.split_left_image != blank or settings.split_left_heading != blank or settings.split_left_text != blank or settings.split_left_button_label != blank %}
+{% assign right_has = settings.split_right_image != blank or settings.split_right_heading != blank or settings.split_right_text != blank or settings.split_right_button_label != blank %}
+
+{% if left_has or right_has %}
+
+<div class="special-row__section special-row__section--split" data-slot="{{ slot }}">
+  {% if left_has %}
+    <div class="special-row__split-pane special-row__split-pane--left">
+      {% if settings.split_left_image != blank %}
+        <div class="special-row__media">
+          {{
+            settings.split_left_image
+            | image_url: width: 1200
+            | image_tag: loading: 'lazy', class: 'special-row__split-image'
+          }}
+        </div>
+      {% endif %}
+      <div class="special-row__body">
+        {% if settings.split_left_heading != blank %}
+          <h3 class="special-row__heading">{{ settings.split_left_heading }}</h3>
+        {% endif %}
+        {% if settings.split_left_text != blank %}
+          <div class="special-row__text rte">{{ settings.split_left_text }}</div>
+        {% endif %}
+        {% if settings.split_left_button_label != blank and settings.split_left_button_link != blank %}
+          <a class="button button--link special-row__button" href="{{ settings.split_left_button_link }}">
+            {{- settings.split_left_button_label -}}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+  {% if right_has %}
+    <div class="special-row__split-pane special-row__split-pane--right">
+      {% if settings.split_right_image != blank %}
+        <div class="special-row__media">
+          {{
+            settings.split_right_image
+            | image_url: width: 1200
+            | image_tag: loading: 'lazy', class: 'special-row__split-image'
+          }}
+        </div>
+      {% endif %}
+      <div class="special-row__body">
+        {% if settings.split_right_heading != blank %}
+          <h3 class="special-row__heading">{{ settings.split_right_heading }}</h3>
+        {% endif %}
+        {% if settings.split_right_text != blank %}
+          <div class="special-row__text rte">{{ settings.split_right_text }}</div>
+        {% endif %}
+        {% if settings.split_right_button_label != blank and settings.split_right_button_link != blank %}
+          <a class="button button--link special-row__button" href="{{ settings.split_right_button_link }}">
+            {{- settings.split_right_button_label -}}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% endif %}

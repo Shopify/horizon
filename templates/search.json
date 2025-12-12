@@ -7,7 +7,7 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
+{
   "sections": {
     "search": {
       "type": "search-header",
@@ -39,7 +39,7 @@
           "type": "_search-input",
           "static": true,
           "settings": {
-            "width": "custom",
+            "width": "fill",
             "custom_width": 50,
             "inherit_color_scheme": true,
             "color_scheme": ""
@@ -172,13 +172,15 @@
       "settings": {
         "layout_type": "grid",
         "product_card_size": "medium",
-        "mobile_product_card_size": "small",
-        "product_grid_width": "centered",
+        "mobile_product_card_size": "large",
+        "enable_infinite_scroll": true,
+        "products_per_page": 24,
+        "product_grid_width": "full-width",
         "full_width_on_mobile": true,
-        "columns_gap_horizontal": 16,
+        "columns_gap_horizontal": 12,
         "columns_gap_vertical": 24,
-        "padding-inline-start": 0,
-        "padding-inline-end": 0,
+        "padding-inline-start": 57,
+        "padding-inline-end": 12,
         "color_scheme": "scheme-1",
         "padding-block-start": 40,
         "padding-block-end": 40

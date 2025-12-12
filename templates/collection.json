@@ -7,7 +7,7 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
+{
   "sections": {
     "section": {
       "type": "section",
@@ -16,11 +16,11 @@
           "type": "text",
           "name": "Title",
           "settings": {
-            "text": "<h1>{{ closest.collection.title }}</h1>",
-            "width": "fit-content",
+            "text": "<h1>Golden Honey Soda</h1>",
+            "width": "100%",
             "max_width": "normal",
             "alignment": "left",
-            "type_preset": "h2",
+            "type_preset": "h4",
             "font": "var(--font-primary--family)",
             "font_size": "",
             "line_height": "normal",
@@ -33,8 +33,8 @@
             "corner_radius": 0,
             "padding-block-start": 0,
             "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "padding-inline-start": 24,
+            "padding-inline-end": 24
           },
           "blocks": {}
         },
@@ -79,7 +79,7 @@
         "horizontal_alignment_flex_direction_column": "flex-start",
         "vertical_alignment_flex_direction_column": "center",
         "gap": 12,
-        "section_width": "page-width",
+        "section_width": "full-width",
         "section_height": "",
         "section_height_custom": 50,
         "color_scheme": "scheme-1",
@@ -89,13 +89,14 @@
         "border": "none",
         "border_width": 1,
         "border_opacity": 100,
+        "split_divider_color": "#d9d9d9",
         "border_radius": 0,
         "toggle_overlay": false,
         "overlay_color": "#00000026",
         "overlay_style": "solid",
         "gradient_direction": "to top",
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "padding-block-start": 24,
+        "padding-block-end": 24
       }
     },
     "main": {
@@ -107,18 +108,18 @@
           "settings": {
             "enable_filtering": true,
             "filter_style": "horizontal",
-            "filter_width": "centered",
-            "text_label_case": "default",
-            "show_swatch_label": false,
-            "show_filter_label": false,
+            "filter_width": "full-width",
+            "text_label_case": "uppercase",
+            "show_swatch_label": true,
+            "show_filter_label": true,
             "enable_sorting": true,
             "enable_grid_density": true,
             "inherit_color_scheme": true,
             "color_scheme": "",
-            "padding-block-start": 8,
-            "padding-block-end": 8,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0,
+            "padding-block-start": 12,
+            "padding-block-end": 12,
+            "padding-inline-start": 12,
+            "padding-inline-end": 12,
             "facets_margin_bottom": 8,
             "facets_margin_right": 20
           },
@@ -128,7 +129,7 @@
           "type": "_product-card",
           "static": true,
           "settings": {
-            "product_card_gap": 4,
+            "product_card_gap": 0,
             "inherit_color_scheme": true,
             "color_scheme": "",
             "border": "none",
@@ -161,23 +162,23 @@
               "name": "t:names.product_title",
               "settings": {
                 "width": "100%",
-                "max_width": "normal",
+                "max_width": "narrow",
                 "alignment": "left",
-                "type_preset": "rte",
+                "type_preset": "h6",
                 "font": "var(--font-body--family)",
                 "font_size": "1rem",
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
                 "wrap": "pretty",
-                "color": "var(--color-foreground)",
+                "color": "var(--color-foreground-heading)",
                 "background": false,
                 "background_color": "#00000026",
                 "corner_radius": 0,
                 "padding-block-start": 4,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "padding-block-end": 4,
+                "padding-inline-start": 12,
+                "padding-inline-end": 12
               },
               "blocks": {}
             },
@@ -196,10 +197,10 @@
                 "letter_spacing": "normal",
                 "case": "none",
                 "color": "var(--color-foreground)",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "padding-block-start": 4,
+                "padding-block-end": 4,
+                "padding-inline-start": 12,
+                "padding-inline-end": 12
               },
               "blocks": {}
             },
@@ -208,11 +209,14 @@
               "name": "t:names.swatches",
               "settings": {
                 "product_swatches_alignment": "flex-start",
+                "product_swatches_alignment_mobile": "flex-start",
+                "hide_padding": false,
                 "product_swatches_padding_top": 4,
                 "product_swatches_padding_bottom": 0,
                 "product_swatches_padding_left": 0,
                 "product_swatches_padding_right": 0
-              }
+              },
+              "blocks": {}
             }
           },
           "block_order": [
@@ -226,16 +230,18 @@
       "settings": {
         "layout_type": "grid",
         "product_card_size": "medium",
-        "mobile_product_card_size": "small",
-        "product_grid_width": "centered",
+        "mobile_product_card_size": "large",
+        "enable_infinite_scroll": true,
+        "products_per_page": 24,
+        "product_grid_width": "full-width",
         "full_width_on_mobile": true,
-        "columns_gap_horizontal": 16,
+        "columns_gap_horizontal": 24,
         "columns_gap_vertical": 24,
         "padding-inline-start": 0,
         "padding-inline-end": 0,
         "color_scheme": "scheme-1",
-        "padding-block-start": 0,
-        "padding-block-end": 32
+        "padding-block-start": 24,
+        "padding-block-end": 24
       }
     }
   },

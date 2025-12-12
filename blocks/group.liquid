@@ -1,6 +1,6 @@
-{%- capture children %}
+{%- capture children -%}
   {% content_for 'blocks' %}
-{% endcapture %}
+{%- endcapture -%}
 
 {% render 'group', children: children, settings: block.settings, shopify_attributes: block.shopify_attributes %}
 

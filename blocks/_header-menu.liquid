@@ -1,3 +1,4 @@
+
 {%- doc -%}
   Renders a header menu block.
 
@@ -176,7 +177,24 @@
     font-family: var(--menu-top-level-font-family);
     font-style: var(--menu-top-level-font-style);
     font-weight: var(--menu-top-level-font-weight);
-    font-size: var(--menu-top-level-font-size);
+    font-size: clamp(
+      var(--menu-top-level-font-size),
+      calc(
+        var(--menu-top-level-font-size) +
+          (var(--menu-top-level-font-size-desktop) - var(--menu-top-level-font-size)) *
+          clamp(
+            0,
+            (100vw - var(--menu-top-level-font-scale-min-width, 32rem)) /
+              max(
+                1rem,
+                var(--menu-top-level-font-scale-max-width, 75rem) -
+                  var(--menu-top-level-font-scale-min-width, 32rem)
+              ),
+            1
+          )
+      ),
+      var(--menu-top-level-font-size-desktop)
+    );
     line-height: var(--menu-top-level-font-line-height);
     text-transform: var(--menu-top-level-font-case);
     color: var(--menu-top-level-font-color);
@@ -191,9 +209,31 @@
       color: var(--menu-top-level-font-color);
     }
 
-    @media screen and (min-width: 750px) {
-      font-size: var(--menu-top-level-font-size-desktop);
+  }
+
+  .menu-list__link-title {
+    position: relative;
+    display: inline-block;
+    padding-bottom: var(--header-link-underline-offset, 0.24em);
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: var(--header-link-underline-thickness, 0.08em);
+      background-color: currentcolor;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--animation-speed) var(--animation-easing);
     }
+  }
+
+  .menu-list__link:where(:hover, :focus-visible) .menu-list__link-title::after,
+  .menu-list__link--active .menu-list__link-title::after,
+  .menu-list__link[aria-expanded='true'] .menu-list__link-title::after {
+    transform: scaleX(1);
   }
 
   /*
@@ -236,13 +276,13 @@
     left: 0;
     width: 100%;
     height: var(--submenu-height);
-    background-color: var(--color-background);
+    background-color: var(--color-background-solid, var(--color-background, rgb(var(--color-background-rgb, 255 255 255))));
     box-shadow: var(--shadow-popover);
     clip-path: inset(0.5px 0 -100px 0); /* stylelint-disable-line */
     opacity: var(--submenu-opacity, 1);
     transition: height var(--submenu-animation-speed) var(--ease-out-cubic),
       opacity var(--animation-speed-slow) var(--ease-out-cubic) var(--animation-speed-fast);
-    z-index: calc(var(--layer-header-menu) - 1);
+    z-index: var(--layer-header-menu);
   }
 
   /** mega menu **/
@@ -251,7 +291,7 @@
     --submenu-padding-block-start: var(--padding-3xl);
     --submenu-padding-block-end: var(--padding-3xl);
 
-    background-color: transparent;
+    background-color: var(--color-background-solid, var(--color-background, rgb(var(--color-background-rgb, 255 255 255))));
   }
 
   .header__row[style*='--border-bottom-width: 0px'] {
@@ -265,18 +305,35 @@
   .overflow-menu::part(overflow) {
     --submenu-content-opacity: 0;
     --submenu-content-animation: opacity calc(var(--submenu-animation-speed) * 0.75) var(--animation-easing);
+    --submenu-border-scale: 0;
 
     box-shadow: var(--shadow-drawer);
     visibility: hidden;
-    background-color: var(--color-background);
+    background-color: var(--color-background-solid, var(--color-background, rgb(var(--color-background-rgb, 255 255 255))));
     position: absolute;
     width: 100%;
     left: 0;
     top: calc(100% - 1px + var(--border-bottom-width));
-    z-index: var(--layer-header-menu);
-    padding-inline: var(--padding-inline);
+    z-index: calc(var(--layer-header-menu) + 1);
+    padding-inline: 0;
     clip-path: rect(0 100% var(--submenu-height) 0); /* stylelint-disable-line */
     transition: clip-path var(--submenu-animation-speed) var(--ease-out-cubic);
+  }
+
+  .menu-list__list-item:where(:not([slot='overflow'])) > .menu-list__submenu::before,
+  .overflow-menu::part(overflow)::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background-color: var(--color-border, #e5e5e5);
+    transform: scaleX(var(--submenu-border-scale));
+    transform-origin: center;
+    transition: transform var(--submenu-animation-speed) var(--ease-out-cubic);
+    pointer-events: none;
+    z-index: 1;
   }
 
   /* Show the submenus on hover */
@@ -287,12 +344,14 @@
   .menu-list__submenu:is(:hover),
   .overflow-menu::part(overflow):hover {
     --submenu-content-opacity: 1;
+    --submenu-border-scale: 1;
 
     visibility: visible;
   }
 
   .menu-list__list-item:has([data-animating]) > .menu-list__submenu {
     --submenu-content-opacity: 0;
+    --submenu-border-scale: 0;
 
     visibility: visible;
 
@@ -395,7 +454,24 @@
     font-family: var(--menu-child-font-family);
     font-style: var(--menu-child-font-style);
     font-weight: var(--menu-child-font-weight);
-    font-size: var(--menu-child-font-size);
+    font-size: clamp(
+      var(--menu-child-font-size),
+      calc(
+        var(--menu-child-font-size) +
+          (var(--menu-child-font-size-desktop) - var(--menu-child-font-size)) *
+          clamp(
+            0,
+            (100vw - var(--menu-child-font-scale-min-width, 32rem)) /
+              max(
+                1rem,
+                var(--menu-child-font-scale-max-width, 75rem) -
+                  var(--menu-child-font-scale-min-width, 32rem)
+              ),
+            1
+          )
+      ),
+      var(--menu-child-font-size-desktop)
+    );
     line-height: var(--menu-child-font-line-height);
     text-transform: var(--menu-child-font-case);
     color: var(--menu-child-font-color);
@@ -414,7 +490,24 @@
     font-family: var(--menu-parent-font-family);
     font-style: var(--menu-parent-font-style);
     font-weight: var(--menu-parent-font-weight);
-    font-size: var(--menu-parent-font-size);
+    font-size: clamp(
+      var(--menu-parent-font-size),
+      calc(
+        var(--menu-parent-font-size) +
+          (var(--menu-parent-font-size-desktop) - var(--menu-parent-font-size)) *
+          clamp(
+            0,
+            (100vw - var(--menu-parent-font-scale-min-width, 32rem)) /
+              max(
+                1rem,
+                var(--menu-parent-font-scale-max-width, 75rem) -
+                  var(--menu-parent-font-scale-min-width, 32rem)
+              ),
+            1
+          )
+      ),
+      var(--menu-parent-font-size-desktop)
+    );
     line-height: var(--menu-parent-font-line-height);
     text-transform: var(--menu-parent-font-case);
     color: var(--menu-parent-font-color);
@@ -608,6 +701,79 @@
       "default": "primary"
     },
     {
+      "type": "color_scheme",
+      "id": "drawer_color_scheme",
+      "label": "Mobile drawer color scheme",
+      "default": "primary"
+    },
+    {
+      "type": "checkbox",
+      "id": "drawer_brand_column_custom_color",
+      "label": "Use different brand column color",
+      "default": false
+    },
+    {
+      "type": "color_scheme",
+      "id": "drawer_brand_column_color_scheme",
+      "label": "Brand column color scheme",
+      "default": "primary",
+      "visible_if": "{{ block.settings.drawer_brand_column_custom_color }}"
+    },
+    {
+      "type": "text",
+      "id": "drawer_brand_text",
+      "label": "Mobile drawer brand text",
+      "info": "Used when no mobile drawer logo is provided. Defaults to your store name."
+    },
+    {
+      "type": "range",
+      "id": "drawer_brand_column_width",
+      "label": "Mobile drawer logo column width",
+      "min": 5,
+      "max": 35,
+      "step": 1,
+      "default": 15,
+      "unit": "%"
+    },
+    {
+      "type": "range",
+      "id": "drawer_brand_column_padding",
+      "label": "Mobile drawer logo column padding (px)",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "drawer_menu_row_padding",
+      "label": "Mobile drawer menu padding (px)",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "default": 0
+    },
+    {
+      "type": "image_picker",
+      "id": "drawer_logo_image",
+      "label": "Mobile drawer logo"
+    },
+    {
+      "type": "text",
+      "id": "drawer_logo_alt",
+      "label": "Mobile drawer logo alt text"
+    },
+    {
+      "type": "image_picker",
+      "id": "drawer_logo_top_image",
+      "label": "Mobile drawer top logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "drawer_logo_bottom_image",
+      "label": "Mobile drawer bottom logo"
+    },
+    {
       "type": "header",
       "content": "t:content.typography"
     },
@@ -640,6 +806,28 @@
       "default": "1rem"
     },
     {
+      "type": "range",
+      "id": "type_font_primary_size_mobile",
+      "label": "Top level mobile size (rem)",
+      "unit": "rem",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "default": 0,
+      "info": "Set to 0 to inherit the default mobile size."
+    },
+    {
+      "type": "range",
+      "id": "type_font_primary_size_desktop",
+      "label": "Top level desktop size (rem)",
+      "unit": "rem",
+      "min": 0,
+      "max": 4,
+      "step": 0.1,
+      "default": 0,
+      "info": "Set to 0 to use the Top level size dropdown value."
+    },
+    {
       "type": "select",
       "id": "menu_font_style",
       "label": "t:settings.submenu_text_style",
@@ -658,6 +846,50 @@
         }
       ],
       "default": "inverse"
+    },
+    {
+      "type": "range",
+      "id": "submenu_parent_font_size_mobile",
+      "label": "Submenu parent mobile size (rem)",
+      "unit": "rem",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "default": 0,
+      "info": "Set to 0 to use the preset for the selected submenu style."
+    },
+    {
+      "type": "range",
+      "id": "submenu_parent_font_size_desktop",
+      "label": "Submenu parent desktop size (rem)",
+      "unit": "rem",
+      "min": 0,
+      "max": 4,
+      "step": 0.1,
+      "default": 0,
+      "info": "Set to 0 to use the preset for the selected submenu style."
+    },
+    {
+      "type": "range",
+      "id": "submenu_child_font_size_mobile",
+      "label": "Submenu child mobile size (rem)",
+      "unit": "rem",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "default": 0,
+      "info": "Set to 0 to use the preset for the selected submenu style."
+    },
+    {
+      "type": "range",
+      "id": "submenu_child_font_size_desktop",
+      "label": "Submenu child desktop size (rem)",
+      "unit": "rem",
+      "min": 0,
+      "max": 4,
+      "step": 0.1,
+      "default": 0,
+      "info": "Set to 0 to use the preset for the selected submenu style."
     },
     {
       "type": "select",
@@ -780,6 +1012,91 @@
       "unit": "px",
       "default": 0,
       "visible_if": "{{ block.settings.menu_style != 'text' }}"
+    },
+    {
+      "type": "header",
+      "content": "Drawer branding"
+    },
+    {
+      "type": "image_picker",
+      "id": "drawer_brand_logo_image",
+      "label": "Drawer branding logo"
+    },
+    {
+      "type": "text",
+      "id": "drawer_logo_alt_text",
+      "label": "Mobile drawer logo alt text",
+      "info": "Overrides the image alt text announced to screen readers."
+    },
+    {
+      "type": "range",
+      "id": "drawer_logo_size",
+      "label": "Logo height",
+      "min": 40,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "drawer_logo_padding_block_start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "drawer_logo_padding_block_end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "drawer_logo_padding_inline_start",
+      "label": "Left padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "drawer_logo_padding_inline_end",
+      "label": "Right padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "drawer_logo_column_width",
+      "label": "Logo column width",
+      "min": 32,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "drawer_logo_gap",
+      "label": "Logo column gap",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 16
     },
     {
       "type": "header",

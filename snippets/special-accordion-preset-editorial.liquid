@@ -1,0 +1,42 @@
+{% assign image = settings.editorial_image %}
+{% assign caption = settings.editorial_caption %}
+{% assign heading = settings.editorial_heading %}
+{% assign text = settings.editorial_content %}
+{% assign button_label = settings.editorial_button_label %}
+{% assign button_link = settings.editorial_button_link %}
+
+{% assign has_content = false %}
+{% unless image == blank and caption == blank and heading == blank and text == blank and button_label == blank %}
+  {% assign has_content = true %}
+{% endunless %}
+
+{% if has_content %}
+
+<div class="special-row__section special-row__section--editorial" data-slot="{{ slot }}">
+  {% if image != blank %}
+    <div class="special-row__media">
+      {{
+        image
+        | image_url: width: 1200
+        | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 50vw, 100vw'
+      }}
+    </div>
+  {% endif %}
+  <div class="special-row__body">
+    {% if caption != blank %}
+      <p class="special-row__caption">{{ caption }}</p>
+    {% endif %}
+    {% if heading != blank %}
+      <h3 class="special-row__heading">{{ heading }}</h3>
+    {% endif %}
+    {% if text != blank %}
+      <div class="special-row__text rte">{{ text }}</div>
+    {% endif %}
+    {% if button_label != blank and button_link != blank %}
+      <a class="button button--link special-row__button" href="{{ button_link }}">
+        {{- button_label -}}
+      </a>
+    {% endif %}
+  </div>
+</div>
+{% endif %}

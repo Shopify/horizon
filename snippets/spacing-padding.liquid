@@ -7,5 +7,26 @@
       settings: {block.settings || section.settings}
 {%- endcomment -%}
 
---padding-block-start: {{ settings.padding-block-start | default: 0 }}px; --padding-block-end:{{- settings.padding-block-end | default: 0 -}}px; 
---padding-inline-start:{{ settings.padding-inline-start | default: 0 }}px; --padding-inline-end:{{- settings.padding-inline-end | default: 0 -}}px; 
+{%- liquid
+  assign px_scale = 16.0
+  assign padding_keys = 'padding-block-start,padding-block-end,padding-inline-start,padding-inline-end' | split: ','
+  for key in padding_keys
+    assign padding_value = settings[key] | default: 0
+    assign numeric_value = padding_value | times: 1
+    assign value_string = padding_value | append: ''
+    if numeric_value == 0
+      assign rem_value = 0
+    elsif numeric_value >= 10
+      assign rem_value = numeric_value | divided_by: px_scale
+    elsif value_string contains '.'
+      assign rem_value = numeric_value
+    else
+      assign rem_value = numeric_value | divided_by: px_scale
+    endif
+    echo '--'
+    echo key
+    echo ': '
+    echo rem_value
+    echo 'rem; '
+  endfor
+-%}

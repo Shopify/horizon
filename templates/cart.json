@@ -7,7 +7,7 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
+{
   "sections": {
     "cart-section": {
       "type": "main-cart",
@@ -237,13 +237,13 @@
           ]
         }
       },
-      "name": "t:names.featured_collection",
+      "name": "Featured collection",
       "settings": {
-        "collection": "all",
+        "collection": "honey-soda",
         "layout_type": "grid",
         "carousel_on_mobile": false,
-        "max_products": 4,
-        "columns": 4,
+        "max_products": 3,
+        "columns": 3,
         "mobile_columns": "2",
         "mobile_card_size": "60cqw",
         "columns_gap": 8,

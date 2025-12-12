@@ -1,4 +1,9 @@
 {% style %}
+  :root {
+    --color-background-solid: var(--color-background);
+    --color-background-solid-rgb: var(--color-background-rgb);
+  }
+
   {% for scheme in settings.color_schemes -%}
     {% assign scheme_classes = scheme_classes | append: ', .color-' | append: scheme.id %}
     {% if forloop.index == 1 %}
@@ -20,8 +25,10 @@
     {% endif %}
     .color-{{ scheme.id }} {
         --color-background: rgb({{ scheme.settings.background.rgba }});
+        --color-background-solid: rgb({{ scheme.settings.background.rgba }});
         /* RGB values only to apply different opacities - Relative color values are not supported in iOS < 16.4 */
         --color-background-rgb: {{ scheme.settings.background.rgb }};
+        --color-background-solid-rgb: {{ scheme.settings.background.rgb }};
         --opacity-5-15: {{ opacity_5_15 }};
         --opacity-10-25: {{ opacity_10_25 }};
         --opacity-35-55: {{ opacity_35_55 }};
@@ -70,6 +77,13 @@
         --color-selected-variant-hover-text: rgb({{ scheme.settings.selected_variant_hover_text_color.rgba }});
         --color-selected-variant-hover-border: rgb({{ scheme.settings.selected_variant_hover_border_color.rgba }});
 
+        {% if background_brightness < 64 %}
+          --golden-gridline-color: var(--golden-gridline-horizontal-color-dark, var(--golden-gridline-horizontal-color-default));
+        {% else %}
+          --golden-gridline-color: var(--golden-gridline-horizontal-color-default);
+        {% endif %}
+        --section-gridline-color: var(--golden-gridline-color);
+
         --input-disabled-background-color: rgb(var(--color-foreground-rgb) / var(--opacity-10));
         --input-disabled-border-color: rgb(var(--color-foreground-rgb) / var(--opacity-5-15));
         --input-disabled-text-color: rgb(var(--color-foreground-rgb) / var(--opacity-50));
@@ -90,10 +104,61 @@
           --shadow-popover: 0px 4px 20px rgb(var(--color-shadow-rgb) / var(--opacity-15));
         {% endif %}
       }
+
+    {% if settings.section_gridlines_enable %}
+      body.has-section-gridlines
+        #MainContent
+        .shopify-section:has(> .color-{{ scheme.id }}) {
+        {% if background_brightness < 64 %}
+          --golden-gridline-color: var(--golden-gridline-horizontal-color-dark, var(--golden-gridline-horizontal-color-default));
+        {% else %}
+          --golden-gridline-color: var(--golden-gridline-horizontal-color-default);
+        {% endif %}
+        --section-gridline-color: var(--golden-gridline-color);
+      }
+    {% endif %}
   {% endfor %}
 
   {{ scheme_classes | prepend: 'body' }} {
     color: var(--color-foreground);
     background-color: var(--color-background);
   }
+
+  {% for scheme in settings.color_schemes %}
+    {% assign hover_background = scheme.settings.background %}
+    {% assign hover_foreground = scheme.settings.foreground_heading | default: scheme.settings.foreground %}
+    {% assign hover_border = scheme.settings.border %}
+
+    .accordion-row[data-hover-scheme="{{ scheme.id }}"]:hover,
+    .accordion-row[data-hover-scheme="{{ scheme.id }}"].accordion-row--open {
+      background-color: rgb({{ hover_background.rgba }});
+      color: rgb({{ hover_foreground.rgba }});
+    }
+
+    .accordion-row[data-hover-scheme="{{ scheme.id }}"]:hover::before,
+    .accordion-row[data-hover-scheme="{{ scheme.id }}"].accordion-row--open::before {
+      background-color: rgb({{ hover_background.rgba }});
+    }
+
+    .accordion-row[data-hover-scheme="{{ scheme.id }}"]:hover .details,
+    .accordion-row[data-hover-scheme="{{ scheme.id }}"]:hover .details__header,
+    .accordion-row[data-hover-scheme="{{ scheme.id }}"]:hover .details-content,
+    .accordion-row[data-hover-scheme="{{ scheme.id }}"].accordion-row--open .details,
+    .accordion-row[data-hover-scheme="{{ scheme.id }}"].accordion-row--open .details__header,
+    .accordion-row[data-hover-scheme="{{ scheme.id }}"].accordion-row--open .details-content {
+      background-color: rgb({{ hover_background.rgba }});
+      color: rgb({{ hover_foreground.rgba }});
+      border-color: rgb({{ hover_border.rgba }});
+    }
+
+    .accordion-row[data-hover-scheme="{{ scheme.id }}"]:hover .details__heading,
+    .accordion-row[data-hover-scheme="{{ scheme.id }}"]:hover .details__label,
+    .accordion-row[data-hover-scheme="{{ scheme.id }}"]:hover .details__caret .svg-wrapper,
+    .accordion-row[data-hover-scheme="{{ scheme.id }}"].accordion-row--open .details__heading,
+    .accordion-row[data-hover-scheme="{{ scheme.id }}"].accordion-row--open .details__label,
+    .accordion-row[data-hover-scheme="{{ scheme.id }}"].accordion-row--open .details__caret .svg-wrapper {
+      color: rgb({{ hover_foreground.rgba }});
+    }
+
+  {% endfor %}
 {% endstyle %}

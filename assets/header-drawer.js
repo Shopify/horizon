@@ -70,6 +70,8 @@ class HeaderDrawer extends Component {
 
     if (!summary) return;
 
+    this.#closeSiblingDetails(details);
+    this.#toggleParentListItem(details, true);
     summary.setAttribute('aria-expanded', 'true');
 
     this.preventInitialAccordionAnimations(details);
@@ -79,6 +81,36 @@ class HeaderDrawer extends Component {
         trapFocus(details);
       }, 0);
     });
+  }
+
+  /**
+   * Ensure only one accordion at a given level is open.
+   * @param {HTMLDetailsElement} details
+   */
+  #closeSiblingDetails(details) {
+    if (!details.classList.contains('menu-drawer__menu-container')) return;
+
+    const parent = details.parentElement;
+    if (!parent) return;
+
+    const openSiblings = parent.querySelectorAll(':scope > .menu-drawer__menu-container[open]');
+    openSiblings.forEach((sibling) => {
+      if (sibling !== details) {
+        this.#close(sibling);
+      }
+    });
+  }
+
+  /**
+   * Toggle the open-state class on the parent list item to manage borders.
+   * @param {HTMLDetailsElement} details
+   * @param {boolean} isOpen
+   */
+  #toggleParentListItem(details, isOpen) {
+    const listItem = details.closest('.menu-drawer__list-item');
+    if (!listItem) return;
+
+    listItem.classList.toggle('menu-drawer__list-item--open', isOpen);
   }
 
   /**
@@ -108,6 +140,7 @@ class HeaderDrawer extends Component {
 
     summary.setAttribute('aria-expanded', 'false');
     details.classList.remove('menu-open');
+    this.#toggleParentListItem(details, false);
 
     onAnimationEnd(details, () => {
       reset(details);

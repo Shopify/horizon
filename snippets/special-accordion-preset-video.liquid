@@ -1,0 +1,39 @@
+{% assign source = settings.video_source | default: 'uploaded' %}
+{% assign autoplay = settings.video_autoplay %}
+{% assign loop_video = settings.video_loop %}
+{% assign video_file = settings.video_file %}
+{% assign video_url = settings.video_url %}
+{% assign cover_image = settings.video_cover_image %}
+{% assign video_alt = settings.video_alt %}
+
+{% assign has_video = false %}
+{% if source == 'uploaded' and video_file != blank %}
+  {% assign has_video = true %}
+{% elsif source == 'url' and video_url != blank %}
+  {% assign has_video = true %}
+{% endif %}
+
+{% assign render_video = video_file %}
+{% assign video_type = blank %}
+{% if source == 'url' and video_url != blank %}
+  {% assign render_video = video_url.id %}
+  {% assign video_type = video_url.type %}
+{% endif %}
+
+{% if has_video %}
+
+<div class="special-row__section special-row__section--video" data-slot="{{ slot }}" data-lazy-preset="video">
+  {% render 'video',
+    video: render_video,
+    video_from_url: source == 'url',
+    video_type: video_type,
+    video_preview_image: cover_image,
+    video_alt: video_alt,
+    video_autoplay: autoplay,
+    video_loop: loop_video,
+    video_class: 'special-row__deferred-video spacing-style',
+    block: block,
+    section_id: section.id
+  %}
+</div>
+{% endif %}

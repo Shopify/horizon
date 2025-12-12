@@ -1,3 +1,4 @@
+
 <script
   src="{{ 'product-recommendations.js' | asset_url }}"
   type="module"
@@ -12,13 +13,22 @@
       assign classes = 'resource-list__carousel'
   endcase
 
+  capture columns_gap_rem
+    render 'css-rem-value', value: section.settings.columns_gap
+  endcapture
+  assign columns_gap_rem = columns_gap_rem | strip
+
+  capture rows_gap_rem
+    render 'css-rem-value', value: section.settings.rows_gap
+  endcapture
+  assign rows_gap_rem = rows_gap_rem | strip
+
   capture styles
     echo '--column-count-mobile: ' | append: section.settings.mobile_columns | append: ';'
-    echo '--resource-list-column-gap-desktop: ' | append: section.settings.columns_gap | append: 'px;'
-    echo '--resource-list-row-gap-desktop: ' | append: section.settings.rows_gap | append: 'px;'
+    echo '--resource-list-column-gap-desktop: ' | append: columns_gap_rem | append: ';'
+    echo '--resource-list-row-gap-desktop: ' | append: rows_gap_rem | append: ';'
     echo '--resource-list-columns: repeat(' | append: section.settings.columns | append: ', 1fr);'
     echo '--resource-list-columns-mobile: repeat(' | append: section.settings.mobile_columns | append: ', 1fr);'
-    echo '--resource-list-column-gap-desktop: ' | append: section.settings.columns_gap | append: 'px;'
     echo '--column-count: ' | append: section.settings.columns | append: ';'
     echo '--column-count-mobile: ' | append: section.settings.mobile_columns | append: ';'
   endcapture
@@ -130,9 +140,6 @@
       </div>
 
       {% if section.settings.carousel_on_mobile and section.settings.layout_type != 'carousel' %}
-        {% liquid
-          assign mobile_carousel_gap = section.settings.columns_gap
-        %}
         <div
           class="
             resource-list
@@ -140,7 +147,7 @@
             force-full-width
           "
           style="
-            --resource-list-gap: {{ mobile_carousel_gap }}px;
+            --resource-list-gap: {{ columns_gap_rem }};
             --column-count: {{ section.settings.columns }};
           "
         >

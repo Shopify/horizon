@@ -1,4 +1,4 @@
-import { calculateHeaderGroupHeight } from '@theme/critical';
+import { updateAllHeaderCustomProperties } from '@theme/critical';
 import { Component } from '@theme/component';
 import { onDocumentLoaded, changeMetaThemeColor } from '@theme/utilities';
 
@@ -216,7 +216,7 @@ onDocumentLoaded(() => {
 
   // Update header group height on resize of any child
   if (headerGroup) {
-    const resizeObserver = new ResizeObserver(() => calculateHeaderGroupHeight(header, headerGroup));
+    const resizeObserver = new ResizeObserver(() => updateAllHeaderCustomProperties());
 
     // Observe all children of the header group
     const children = headerGroup.children;
@@ -237,6 +237,7 @@ onDocumentLoaded(() => {
             if (element === header || !(element instanceof HTMLElement)) continue;
             resizeObserver.observe(element);
           }
+          updateAllHeaderCustomProperties();
         }
       }
     });

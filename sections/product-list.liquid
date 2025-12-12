@@ -1,6 +1,12 @@
+
+
 {% liquid
   assign max_items = section.settings.max_products
 %}
+
+{% capture header_content %}
+  {%- content_for 'block', type: '_product-list-content', id: 'static-header' -%}
+{% endcapture %}
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div
@@ -19,7 +25,7 @@
   "
 >
   <div class="section-resource-list__header">
-    {%- content_for 'block', type: '_product-list-content', id: 'static-header' -%}
+    {{ header_content }}
   </div>
 
   {% capture list_items %}
@@ -202,7 +208,7 @@
       "step": 1,
       "unit": "px",
       "default": 8,
-      "visible_if": "{{ section.settings.layout_type == 'grid'}}"
+      "visible_if": "{{ section.settings.layout_type == 'grid' }}"
     },
     {
       "type": "header",

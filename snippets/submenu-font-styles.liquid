@@ -4,45 +4,96 @@
      settings: {block.settings}
 {%- endcomment -%}
 
---menu-parent-font-family: var(--font-{{ settings.type_font_primary_link }}--family); --menu-parent-font-style:
-var(--font-
-{{- settings.type_font_primary_link -}}
---style); --menu-parent-font-weight: var(--font-
-{{- settings.type_font_primary_link -}}
---weight); --menu-parent-font-case:
-{% if settings.type_case_primary_link == 'uppercase' %}uppercase{% else %}none{% endif %};
-{% case settings.menu_font_style %}
-  {% when 'regular' %}
-    --menu-parent-font-size: var(--menu-font-md--size); --menu-parent-font-line-height:
-    var(--menu-font-md--line-height); --menu-parent-font-color: var(--color-foreground);
-    --menu-parent-active-font-color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
-  {% when 'inverse' %}
-    --menu-parent-font-size: var(--menu-font-sm--size); --menu-parent-font-line-height:
-    var(--menu-font-sm--line-height); --menu-parent-font-color: rgb(var(--color-foreground-rgb) /
-    var(--opacity-subdued-text)); --menu-parent-active-font-color: var(--color-foreground);
-  {% when 'inverse_large' %}
-    --menu-parent-font-size: var(--menu-font-sm--size); --menu-parent-font-line-height:
-    var(--menu-font-sm--line-height); --menu-parent-font-color: rgb(var(--color-foreground-rgb) /
-    var(--opacity-subdued-text)); --menu-parent-active-font-color: var(--color-foreground);
-{% endcase %}
---menu-child-font-family: var(--font-{{ settings.type_font_primary_link }}--family); --menu-child-font-style:
-var(--font-
-{{- settings.type_font_primary_link -}}
---style); --menu-child-font-weight: var(--font-
-{{- settings.type_font_primary_link -}}
---weight); --menu-child-font-case:
-{% if settings.type_case_primary_link == 'uppercase' %}uppercase{% else %}none{% endif %};
-{% case settings.menu_font_style %}
-  {% when 'regular' %}
-    --menu-child-font-size: var(--menu-font-sm--size); --menu-child-font-line-height: var(--menu-font-sm--line-height);
-    --menu-child-font-color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
-    --menu-child-active-font-color: var(--color-foreground);
-  {% when 'inverse' %}
-    --menu-child-font-size: var(--menu-font-md--size); --menu-child-font-line-height: var(--menu-font-md--line-height);
-    --menu-child-font-color: var(--color-foreground); --menu-child-active-font-color: rgb(var(--color-foreground-rgb) /
-    var(--opacity-subdued-text));
-  {% when 'inverse_large' %}
-    --menu-child-font-size: var(--menu-font-xl--size); --menu-child-font-line-height: var(--menu-font-xl--line-height);
-    --menu-child-font-color: var(--color-foreground); --menu-child-active-font-color: rgb(var(--color-foreground-rgb) /
-    var(--opacity-subdued-text));
-{% endcase %}
+{%- liquid
+  assign parent_mobile_custom = settings.submenu_parent_font_size_mobile | default: 0 | times: 1
+  assign parent_desktop_custom = settings.submenu_parent_font_size_desktop | default: 0 | times: 1
+  assign child_mobile_custom = settings.submenu_child_font_size_mobile | default: 0 | times: 1
+  assign child_desktop_custom = settings.submenu_child_font_size_desktop | default: 0 | times: 1
+
+  assign parent_base_size = 'var(--menu-font-sm--size)'
+  assign child_base_size = 'var(--menu-font-sm--size)'
+  assign parent_line_height = 'var(--menu-font-sm--line-height)'
+  assign child_line_height = 'var(--menu-font-sm--line-height)'
+  assign parent_color = 'rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text))'
+  assign parent_active_color = 'var(--color-foreground)'
+  assign child_color = 'rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text))'
+  assign child_active_color = 'var(--color-foreground)'
+
+  case settings.menu_font_style
+    when 'regular'
+      assign parent_base_size = 'var(--menu-font-md--size)'
+      assign child_base_size = 'var(--menu-font-sm--size)'
+      assign parent_color = 'var(--color-foreground)'
+      assign parent_active_color = 'rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text))'
+      assign child_color = 'rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text))'
+      assign child_active_color = 'var(--color-foreground)'
+      assign parent_line_height = 'var(--menu-font-md--line-height)'
+      assign child_line_height = 'var(--menu-font-sm--line-height)'
+    when 'inverse'
+      assign parent_base_size = 'var(--menu-font-sm--size)'
+      assign child_base_size = 'var(--menu-font-md--size)'
+      assign parent_color = 'rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text))'
+      assign parent_active_color = 'var(--color-foreground)'
+      assign child_color = 'var(--color-foreground)'
+      assign child_active_color = 'rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text))'
+      assign parent_line_height = 'var(--menu-font-sm--line-height)'
+      assign child_line_height = 'var(--menu-font-md--line-height)'
+    when 'inverse_large'
+      assign parent_base_size = 'var(--menu-font-sm--size)'
+      assign child_base_size = 'var(--menu-font-xl--size)'
+      assign parent_color = 'rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text))'
+      assign parent_active_color = 'var(--color-foreground)'
+      assign child_color = 'var(--color-foreground)'
+      assign child_active_color = 'rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text))'
+      assign parent_line_height = 'var(--menu-font-sm--line-height)'
+      assign child_line_height = 'var(--menu-font-xl--line-height)'
+  endcase
+
+  if parent_mobile_custom > 0
+    assign parent_mobile_size = parent_mobile_custom | append: 'rem'
+  else
+    assign parent_mobile_size = parent_base_size
+  endif
+
+  if parent_desktop_custom > 0
+    assign parent_desktop_size = parent_desktop_custom | append: 'rem'
+  else
+    assign parent_desktop_size = parent_base_size
+  endif
+
+  if child_mobile_custom > 0
+    assign child_mobile_size = child_mobile_custom | append: 'rem'
+  else
+    assign child_mobile_size = child_base_size
+  endif
+
+  if child_desktop_custom > 0
+    assign child_desktop_size = child_desktop_custom | append: 'rem'
+  else
+    assign child_desktop_size = child_base_size
+  endif
+-%}
+
+--menu-parent-font-family: var(--font-{{ settings.type_font_primary_link }}--family);
+--menu-parent-font-style: var(--font-{{ settings.type_font_primary_link }}--style);
+--menu-parent-font-weight: var(--font-{{ settings.type_font_primary_link }}--weight);
+--menu-parent-font-case: {% if settings.type_case_primary_link == 'uppercase' %}uppercase{% else %}none{% endif %};
+--menu-parent-font-size: {{ parent_mobile_size }};
+--menu-parent-font-size-desktop: {{ parent_desktop_size }};
+--menu-parent-font-line-height: {{ parent_line_height }};
+--menu-parent-font-color: {{ parent_color }};
+--menu-parent-active-font-color: {{ parent_active_color }};
+--menu-parent-font-scale-min-width: 32rem;
+--menu-parent-font-scale-max-width: 75rem;
+
+--menu-child-font-family: var(--font-{{ settings.type_font_primary_link }}--family);
+--menu-child-font-style: var(--font-{{ settings.type_font_primary_link }}--style);
+--menu-child-font-weight: var(--font-{{ settings.type_font_primary_link }}--weight);
+--menu-child-font-case: {% if settings.type_case_primary_link == 'uppercase' %}uppercase{% else %}none{% endif %};
+--menu-child-font-size: {{ child_mobile_size }};
+--menu-child-font-size-desktop: {{ child_desktop_size }};
+--menu-child-font-line-height: {{ child_line_height }};
+--menu-child-font-color: {{ child_color }};
+--menu-child-active-font-color: {{ child_active_color }};
+--menu-child-font-scale-min-width: 32rem;
+--menu-child-font-scale-max-width: 75rem;

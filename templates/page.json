@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -35,7 +44,11 @@
           "blocks": {}
         }
       },
-      "block_order": ["heading", "page-content"],
+      "block_order": [
+        "heading",
+        "page-content"
+      ],
+      "disabled": true,
       "settings": {
         "content_direction": "column",
         "gap": 32,
@@ -43,7 +56,351 @@
         "padding-block-start": 40,
         "padding-block-end": 80
       }
+    },
+    "hero_awffPH": {
+      "type": "hero",
+      "blocks": {
+        "group_PCHa8M": {
+          "type": "group",
+          "name": "t:names.group",
+          "settings": {
+            "content_direction": "row",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "flex-end",
+            "align_baseline": true,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 18,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "group_zGGymc": {
+              "type": "group",
+              "name": "t:names.group",
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 6,
+                "width": "custom",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "custom_height": 100,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "background_media": "none",
+                "video_position": "cover",
+                "background_image_position": "cover",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "link": "",
+                "open_in_new_tab": false,
+                "placeholder": "",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "text_wc9Ym3": {
+                  "type": "text",
+                  "name": "t:names.heading",
+                  "settings": {
+                    "text": "<h2><em>Introducing</em></h2>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "h6",
+                    "font": "var(--font-accent--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                },
+                "text_TV9hBj": {
+                  "type": "text",
+                  "name": "t:names.heading",
+                  "settings": {
+                    "text": "<h1>Our Story</h1>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "h2",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_wc9Ym3",
+                "text_TV9hBj"
+              ]
+            },
+            "text_dNBLYt": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<p><em>Founder (Morg) on the left; my mate James in green.</em></p>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "right",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "group_zGGymc",
+            "text_dNBLYt"
+          ]
+        }
+      },
+      "block_order": [
+        "group_PCHa8M"
+      ],
+      "name": "t:names.hero_bottom_aligned",
+      "settings": {
+        "media_type_1": "image",
+        "image_1": "shopify://shop_images/DSCN0444.jpg",
+        "media_type_2": "image",
+        "link": "",
+        "open_in_new_tab": false,
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "flex-end",
+        "gap": 16,
+        "section_width": "page-width",
+        "section_height": "large",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-6",
+        "toggle_overlay": true,
+        "overlay_color": "#00000026",
+        "overlay_style": "gradient",
+        "gradient_direction": "to top",
+        "blurred_reflection": false,
+        "reflection_opacity": 75,
+        "padding-block-start": 40,
+        "padding-block-end": 40
+      }
+    },
+    "section_jq6wGK": {
+      "type": "section",
+      "blocks": {
+        "text_7En9gM": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<h2>Starting Golden</h2>",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "left",
+            "type_preset": "h2",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground-heading)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "text_azwx93": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<p>Golden began in the galley of a small yacht bound for Kawau Island. A spoon of m\u0101nuka honey. A pot of stovetop berry syrup. A SodaStream bottle on its last burp of CO\u2082. As the wind dropped, I returned to a question I had been mulling for some time: could a soda be light, clean and full-flavoured using only New Zealand honey and fruit?</p><p>New Zealand is world-renowned for its m\u0101nuka honey and its world-class orchards, yet no local drinks brand had meaningfully brought those two strengths together. No one has created flavours that genuinely express New Zealand provenance with m\u0101nuka honey at the centre, or clearly told the story of where those flavours come from and who grows them.</p><p>Was it just taste? Could honey, fruit and sparkling water make a good soda? I wondered if the honey would drown out the fruit or if the acidity would cut too sharply. It did neither. The soda was bright and refreshing, with a honey note you do not get from refined sugar or other sweeteners. I was hooked. From there the idea was clear: a New Zealand drinks brand built on local honey and fruit, anchored in the supply chains I knew.</p><p>I spent my teenage summers working long days on the coastal orchards around Bay View, Napier. Strawberries before sunrise. Apples and peaches through the heat. Sometimes potatoes pulled from the soil for the orchard store. I packed fruit, thinned trees and learnt how produce moves from tree to shelf through packhouses, cold stores and export dispatch. Work like that gives you a bias for hard-working ingredients and straight processes. No shortcuts. No mystery syrups or sweeteners.</p><p>Following a degree in cultural anthropology and work on commercial film productions between Wellington and Auckland, my appetite to build something of my own grew. The more I worked on other brands\u2019 stories, the more I found myself imagineering the products I would rather champion and the stories I would rather tell. One idea kept surfacing: pair New Zealand honey with fruit, made here with the supply chains I knew first-hand. We grow world-class fruit and m\u0101nuka; provenance is rarely front and centre. San Pellegrino announces Italy. Our fruit-growing regions and m\u0101nuka forests deserve an equivalent. Golden is my answer.</p><p>That quick galley batch set everything in motion. Over the next three years I kept testing: bench-scale trials, pilot runs, and several rounds of recipe refinement with support from Callaghan Innovation and food scientists at Massey University. It turns out that working with real ingredients is harder to get spot-on than using hyper-processed alternatives, but the result was worth it. I completed an MBA to sharpen the plan, spent a brief spell in tech, then backed myself to launch Golden in 2024: a soda built on New Zealand honey and fruit to answer the gap I had noticed years earlier.</p><p>We sweeten with m\u0101nuka and k\u0101nuka honey, flavour with real New Zealand fruit, and use no refined sugar. Familiar flavours, reimagined with hard-working ingredients. The result is light, crisp and balanced.</p><p><br/>Made in New Zealand.</p>",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "left",
+            "type_preset": "paragraph",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "button_ekeYYJ": {
+          "type": "button",
+          "name": "t:names.button",
+          "settings": {
+            "label": "Shop Golden",
+            "link": "shopify://collections/all",
+            "open_in_new_tab": true,
+            "style_class": "button",
+            "width": "fit-content",
+            "custom_width": 100,
+            "width_mobile": "fit-content",
+            "custom_width_mobile": 100
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_7En9gM",
+        "text_azwx93",
+        "button_ekeYYJ"
+      ],
+      "name": "t:names.rich_text_section",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 25,
+        "section_width": "page-width",
+        "section_height": "small",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "split_divider_color": "#d9d9d9",
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    },
+    "accordion_section_page": {
+      "type": "accordion-stack",
+      "blocks": {
+        "simple_accordion_section_page": {
+          "type": "accordion_stack_row",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "simple_accordion_section_page"
+      ],
+      "settings": {
+        "icon": "caret",
+        "dividers": true,
+        "type_preset": "h4",
+        "color_scheme": "",
+        "section_width": "full-width",
+        "padding-block-start": 0,
+        "padding-block-end": 0,
+        "padding-inline-start": 0,
+        "padding-inline-end": 0,
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main",
+    "hero_awffPH",
+    "section_jq6wGK",
+    "accordion_section_page"
+  ]
 }

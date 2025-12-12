@@ -5,6 +5,36 @@
   @param {string} children - The children of the section
 {%- enddoc -%}
 
+{%- assign split_divider_color = section.settings.split_divider_color | default: settings.section_gridline_color | default: '#d9d9d9' -%}
+{%- assign group_block_count = 0 -%}
+{%- assign has_only_group_blocks = true -%}
+{%- for block in section.blocks -%}
+  {%- if block.type == 'group' -%}
+    {%- assign group_block_count = group_block_count | plus: 1 -%}
+  {%- else -%}
+    {%- assign has_only_group_blocks = false -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- assign show_split_divider = false -%}
+{%- if group_block_count > 1 and section.settings.content_direction == 'row' -%}
+  {%- assign show_split_divider = true -%}
+{%- endif -%}
+
+{%- assign is_split_showcase = false -%}
+{%- if section.blocks.size > 0
+  and section.settings.content_direction == 'row'
+  and section.settings.section_height == 'large'
+  and section.settings.section_width == 'full-width'
+  and has_only_group_blocks -%}
+  {%- assign is_split_showcase = true -%}
+{%- endif -%}
+{%- assign split_mode = '' -%}
+{%- if is_split_showcase -%}
+  {%- assign split_mode = 'carousel' -%}
+  {%- assign show_split_divider = false -%}
+{%- endif -%}
+
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div
   class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
@@ -40,7 +70,13 @@
 
   <div
     class="border-style custom-section-content"
-    style="{% render 'border-override', settings: section.settings %}"
+    style="
+      {% render 'border-override', settings: section.settings %}
+      overflow: hidden;
+      {% if is_split_showcase %}
+        --split-divider-color: {{ split_divider_color }};
+      {% endif %}
+    "
   >
     {% if section.settings.toggle_overlay %}
       {% render 'overlay', settings: section.settings, layer: '0' %}
@@ -57,10 +93,21 @@
       style="
         {% render 'layout-panel-style', settings: section.settings %}
         {% render 'spacing-style', settings: section.settings %}
+        {% if is_split_showcase %}
+          --split-divider-color: {{ split_divider_color }};
+        {% elsif show_split_divider %}
+          --split-divider-color: {{ split_divider_color }};
+        {% endif %}
       "
       data-testid="section-content"
+      {% if is_split_showcase %}data-split-showcase="{{ split_mode }}"{% endif %}
+      {% if show_split_divider %}data-split-divider="true"{% endif %}
     >
-      {{ children }}
+      {% if is_split_showcase and split_mode == 'carousel' %}
+        {% render 'split-showcase-carousel', section: section, split_divider_color: split_divider_color %}
+      {% else %}
+        {{ children }}
+      {% endif %}
     </div>
   </div>
 </div>
@@ -84,7 +131,7 @@
     )
     > main
     > .section-wrapper:first-child {
-    --section-height-offset: var(--header-group-height, 0);
+    --section-height-offset: var(--header-height, 0px);
   }
 
   .custom-section-background {
@@ -92,6 +139,7 @@
   }
 
   .custom-section-content {
+    position: relative;
     z-index: var(--layer-flat);
   }
 {% endstylesheet %}

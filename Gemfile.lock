@@ -1,0 +1,31 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    ast (2.4.3)
+    bigdecimal (3.3.1)
+    liquid (5.10.0)
+      bigdecimal
+      strscan (>= 3.1.1)
+    nokogiri (1.18.10-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.18.10-x86_64-linux-gnu)
+      racc (~> 1.4)
+    parser (3.3.10.0)
+      ast (~> 2.4.1)
+      racc
+    racc (1.8.1)
+    strscan (3.1.5)
+    theme-check (1.15.0)
+      liquid (>= 5.4.0)
+      nokogiri (>= 1.12)
+      parser (~> 3)
+
+PLATFORMS
+  arm64-darwin-25
+  x86_64-linux
+
+DEPENDENCIES
+  theme-check (~> 1.15)
+
+BUNDLED WITH
+   2.4.19

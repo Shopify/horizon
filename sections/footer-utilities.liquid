@@ -1,3 +1,5 @@
+
+
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div
   class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
@@ -5,7 +7,7 @@
 >
   <div
     class="utilities spacing-style"
-    style="{% render 'spacing-style', settings: section.settings %} --border-width: {{ section.settings.divider_thickness }}px; --gap: {{ section.settings.gap }}px;"
+    style="{% render 'spacing-style', settings: section.settings %} --border-width: {{ section.settings.divider_thickness }}px; --gap: {% render 'css-rem-value', value: section.settings.gap %};"
     data-testid="footer-utilities"
   >
     {% content_for 'blocks' %}
@@ -233,6 +235,26 @@
       "type": "range",
       "id": "padding-block-end",
       "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right_padding",
       "min": 0,
       "max": 100,
       "step": 1,

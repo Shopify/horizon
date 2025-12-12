@@ -55,6 +55,12 @@ export class Scroller {
   #onScrollEnd;
 
   /**
+   * Optional axis override.
+   * @type {'x' | 'y' | undefined}
+   */
+  #axis;
+
+  /**
    * Whether the scroll was triggered by a user event.
    * @type {boolean}
    */
@@ -80,13 +86,20 @@ export class Scroller {
    * @param {() => void} options.onScroll - Function to call while scrolling and after scrolling ends.
    * @param {() => void} [options.onScrollStart] - Function to call when scrolling starts.
    * @param {() => void} [options.onScrollEnd] - Function to call after scrolling ends.
+   * @param {'x' | 'y'} [options.axis] - Force the scroll axis.
    */
   constructor(element, options) {
-    this.#throttledCallback = throttle(options.onScroll, SCROLL_END_TIMEOUT);
-    this.#endCallback = options.onScroll;
+    const { onScroll, onScrollStart, onScrollEnd, axis } = options;
 
-    this.#onScrollInit = options.onScrollStart;
-    this.#onScrollEnd = options.onScrollEnd;
+    this.#throttledCallback = throttle(onScroll, SCROLL_END_TIMEOUT);
+    this.#endCallback = onScroll;
+
+    this.#onScrollInit = onScrollStart;
+    this.#onScrollEnd = onScrollEnd;
+
+    if (axis === 'x' || axis === 'y') {
+      this.#axis = axis;
+    }
 
     this.element = element;
     this.element.addEventListener('scroll', this.#handleScroll);
@@ -168,7 +181,7 @@ export class Scroller {
    * @readonly
    */
   get axis() {
-    return getScrollAxis(this.element);
+    return this.#axis ?? getScrollAxis(this.element);
   }
 
   /**

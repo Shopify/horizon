@@ -1,6 +1,8 @@
+
+
 {% assign block_settings = block.settings %}
 <div
-  class="accordion accordion--{{ block.id }} accordion--{{ block_settings.icon }} border-style spacing-style{% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %}{% if block_settings.dividers %} accordion--dividers{% endif %}"
+  class="accordion accordion--{{ block.id }} accordion--{{ block_settings.icon }} border-style spacing-style force-full-width{% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %}{% if block_settings.dividers %} accordion--dividers{% endif %}"
   style="
     --summary-font-family: var(--font-{{ block_settings.type_preset }}--family);
      --summary-font-style: var(--font-{{ block_settings.type_preset }}--style);
@@ -9,7 +11,11 @@
      --summary-font-line-height: var(--font-{{ block_settings.type_preset }}--line-height);
      --summary-font-case: var(--font-{{ block_settings.type_preset }}--case);
     {% render 'spacing-style', settings: block_settings %}
-    {% render 'border-override', settings: block_settings %}
+    {% render 'border-override', settings: block_settings, allow_overflow: true %}
+    --accordion-divider-color: var(
+      --section-gridline-color,
+      var(--golden-gridline-color, var(--color-border))
+    );
   "
   {{ block.shopify_attributes }}
 >
@@ -22,8 +28,28 @@
     width: 100%;
   }
 
-  .accordion--dividers accordion-custom:not(:first-child) .details {
-    border-block-start: var(--style-border-width) solid var(--color-border);
+  .accordion accordion-custom {
+    display: block;
+  }
+
+  .accordion accordion-custom .details {
+    box-sizing: border-box;
+    width: calc(100% + var(--padding-inline-start, 0px) + var(--padding-inline-end, 0px));
+    margin-inline-start: calc(var(--padding-inline-start, 0px) * -1);
+    margin-inline-end: calc(var(--padding-inline-end, 0px) * -1);
+  }
+
+  .accordion summary {
+    padding-inline-start: var(--padding-inline-start, 0px);
+    padding-inline-end: var(--padding-inline-end, 0px);
+    padding-block: var(--padding-sm);
+  }
+
+  .accordion accordion-custom .details-content {
+    padding-inline-start: var(--padding-inline-start, 0px);
+    padding-inline-end: var(--padding-inline-end, 0px);
+    padding-block-start: 0;
+    padding-block-end: 0;
   }
 
   /* When accordion borders are not set, show fallback borders */
@@ -37,12 +63,18 @@
     --show-fallback-borders: 1;
   }
 
-  .accordion--dividers accordion-custom:first-child .details {
-    border-block-start: calc(var(--style-border-width) * var(--show-fallback-borders)) solid var(--color-border);
+  .accordion--dividers .accordion-row + .accordion-row .details {
+    border-block-start: var(--style-border-width) solid var(--accordion-divider-color, var(--color-border));
   }
 
-  .accordion--dividers accordion-custom:last-child .details {
-    border-block-end: calc(var(--style-border-width) * var(--show-fallback-borders)) solid var(--color-border);
+  .accordion--dividers .accordion-row:first-child .details {
+    border-block-start: calc(var(--style-border-width) * var(--show-fallback-borders)) solid
+      var(--accordion-divider-color, var(--color-border));
+  }
+
+  .accordion--dividers .accordion-row:last-child .details {
+    border-block-end: calc(var(--style-border-width) * var(--show-fallback-borders)) solid
+      var(--accordion-divider-color, var(--color-border));
   }
 
   .accordion--dividers .details-content {
@@ -73,7 +105,7 @@
   "class": "accordion",
   "blocks": [
     {
-      "type": "_accordion-row"
+      "type": "accordion_row"
     }
   ],
   "settings": [
@@ -255,7 +287,7 @@
       "category": "t:categories.layout",
       "blocks": {
         "row-1": {
-          "type": "_accordion-row",
+          "type": "accordion_row",
           "settings": {
             "open_by_default": true,
             "heading": "t:text_defaults.return_policy"
@@ -272,7 +304,7 @@
           "block_order": ["text-1"]
         },
         "row-2": {
-          "type": "_accordion-row",
+          "type": "accordion_row",
           "settings": {
             "heading": "t:text_defaults.shipping"
           },
@@ -288,7 +320,7 @@
           "block_order": ["text-1"]
         },
         "row-3": {
-          "type": "_accordion-row",
+          "type": "accordion_row",
           "settings": {
             "heading": "t:text_defaults.manufacturing"
           },

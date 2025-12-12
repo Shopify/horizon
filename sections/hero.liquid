@@ -1,3 +1,5 @@
+
+
 {% liquid
   assign media_count = 0
   assign media_count_mobile = 0
@@ -467,7 +469,7 @@
 
   /* Being extra specific in the selector for performance reasons */
   body:has(> #header-group > .header-section > #header-component) .hero-wrapper:first-child {
-    --hero-height-offset: var(--header-group-height, 0);
+    --hero-height-offset: var(--header-height, 0px);
   }
 
   .hero {

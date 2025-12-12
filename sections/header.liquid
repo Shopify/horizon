@@ -5,7 +5,6 @@
     assign order = 'mobile_search,logo,menu,localization,search,actions'
   endif
 
-  assign rows = 'top,bottom' | split: ','
   assign search_style = 'none'
 
   if section.settings.show_search
@@ -23,11 +22,7 @@
     assign transparent_color_scheme = section.settings.collection_color_scheme
   endif
 
-  if section.settings.enable_sticky_header == 'always'
-    assign sticky = 'always'
-  elsif section.settings.enable_sticky_header == 'scroll-up'
-    assign sticky = 'scroll-up'
-  endif
+  assign sticky = 'always'
 
   if transparent and sticky
     assign transparent = 'not-sticky'
@@ -144,6 +139,12 @@
 
   assign bottom_row_blocks = bottom_row_blocks | split: ',' | compact
 
+  assign rows = 'top'
+  if bottom_row_blocks.size > 0
+    assign rows = rows | append: ',bottom'
+  endif
+  assign rows = rows | split: ','
+
   if section.settings.section_height == 'compact'
     assign header_height_class = ' header--compact'
   endif
@@ -189,9 +190,7 @@
   {% if transparent %}
     transparent="{{ transparent }}"
   {% endif %}
-  {% if sticky %}
-    sticky="{{ sticky }}"
-  {% endif %}
+  sticky="always"
   data-skip-node-update
   data-scroll-direction="none"
 >
@@ -201,7 +200,7 @@
   {% for row in rows %}
     {% liquid
       assign scheme = 'color_scheme_' | append: row
-      assign class = 'header__row header__row--[row] color-[row_scheme] section section--full-width-margin section--[section-width]' | replace: '[row]', row | replace: '[row_scheme]', section.settings[scheme] | replace: '[section-width]', section.settings.section_width
+      assign class = 'header__row header__row--[row] color-[row_scheme] section section--no-gridlines section--full-width-margin section--[section-width]' | replace: '[row]', row | replace: '[row_scheme]', section.settings[scheme] | replace: '[section-width]', section.settings.section_width
 
       case row
         when 'top'
@@ -224,10 +223,6 @@
       endcase
 
       assign style = '--border-bottom-width: [width]px; ' | replace: '[width]', section.settings[border_bottom_setting_id]
-
-      if row == 'top'
-        assign style = style | append: '--border-bottom-width-mobile: [width]px; ' | replace: '[width]', section.settings.border_width
-      endif
     %}
 
     {% capture content %}
@@ -277,6 +272,7 @@
   body {
     --header-height: 0px;
     --header-group-height: var(--header-height);
+    --header-stack-offset: 0px;
     --transparent-header-offset-boolean: 0; /* stylelint-disable-line declaration-property-value-disallowed-list */
   }
 
@@ -376,18 +372,41 @@
     position: relative;
   }
 
+  header-component {
+    position: relative;
+    z-index: var(--layer-overlay);
+  }
+
+  header-component[sticky] {
+    position: sticky;
+    top: max(0px, calc(var(--sticky-header-offset, 0px) - var(--header-stack-offset, 0px)));
+    z-index: var(--layer-sticky);
+  }
+
+  header-component::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: var(--border-bottom-width, 0px);
+    background-color: var(--color-border);
+    z-index: inherit;
+    pointer-events: none;
+  }
+
   #header-group:has(#header-component[sticky]) {
     display: contents;
   }
 
-  .header-section:has(> #header-component[sticky='always']),
-  .header-section:has(> #header-component[sticky='scroll-up'][data-sticky-state='active']) {
-    position: sticky;
-
-    /* Use -1 instead of 0 so intersection observer can track sticky state */
-    top: -1px;
-    z-index: var(--layer-sticky);
+  header-component:has(.menu-drawer-container[open])::after {
+    opacity: 0;
   }
+
+  body:has(.menu-drawer-container[open]) .header__row {
+    border-bottom-width: 0 !important;
+  }
+
 
   .header[data-sticky-state] {
     transition: opacity var(--animation-speed) var(--animation-easing);
@@ -419,7 +438,7 @@
   @media screen and (max-width: 749px) {
     .header__row--top:not(.divider--page-width),
     .header__row--top.divider--page-width .header__columns {
-      border-bottom-width: var(--border-bottom-width-mobile);
+      border-bottom-width: var(--border-bottom-width-mobile, var(--border-bottom-width));
     }
   }
 
@@ -578,7 +597,7 @@
   .menu-list__list-item:where(:not([slot='overflow'])) > .menu-list__link[aria-haspopup],
   .menu-list__list-item:where(:not([slot='overflow'])) > .menu-list__link,
   .menu-list__list-item:where(:not([slot='overflow'])) > button.menu-list__link {
-    margin-block: calc(-2 * var(--header-padding));
+    margin-block: 0;
     padding-block: calc(2 * var(--header-padding));
     margin-inline: calc(-1 * var(--gap-xl) / 2);
     padding-inline: calc(var(--gap-xl) / 2);
@@ -638,6 +657,25 @@
       margin-top: calc(var(--header-height) * var(--transparent-header-offset-boolean) * -1);
     }
   }
+
+  /* Force dropdown panels and drawers to keep solid backgrounds even when inheriting header colors */
+  header-menu .menu-list__submenu,
+  header-menu .overflow-menu::part(overflow),
+  header-menu .overflow-menu::after {
+    background-color: var(
+      --color-background-solid,
+      var(--color-background, rgb(var(--color-background-rgb, 255 255 255)))
+    );
+  }
+
+  header-drawer .menu-drawer,
+  header-drawer .menu-drawer__submenu {
+    background-color: var(
+      --color-background-solid,
+      var(--color-background, rgb(var(--color-background-rgb, 255 255 255)))
+    );
+  }
+
 {% endstylesheet %}
 
 {% unless request.design_mode %}
@@ -718,6 +756,20 @@
         }
       ],
       "default": "top"
+    },
+    {
+      "type": "header",
+      "content": "Mobile drawer branding"
+    },
+    {
+      "type": "image_picker",
+      "id": "drawer_logo_top_image",
+      "label": "Mobile drawer top logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "drawer_logo_bottom_image",
+      "label": "Mobile drawer bottom logo"
     },
     {
       "type": "header",
@@ -917,26 +969,6 @@
         }
       ],
       "default": "standard"
-    },
-    {
-      "type": "select",
-      "id": "enable_sticky_header",
-      "label": "t:settings.sticky_header",
-      "options": [
-        {
-          "value": "always",
-          "label": "t:options.always"
-        },
-        {
-          "value": "scroll-up",
-          "label": "t:options.on_scroll_up"
-        },
-        {
-          "value": "never",
-          "label": "t:options.never"
-        }
-      ],
-      "default": "always"
     },
     {
       "type": "range",

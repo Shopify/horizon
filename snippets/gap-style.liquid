@@ -2,9 +2,9 @@
   Renders the CSS variables for the `gap` styles needed for responsive scaling.
   Intended for use with the `gap-style` class.
 
-  @param {number} value - The base or desktop gap value to use, in pixels.
+  @param {number} value - The base or desktop gap value to use.
   @param {string} [name] - The name of the CSS variable to set. Default: 'gap'
-  @param {number} [scale_min] - Value above which gap scaling will be applied. Default: 20
+  @param {number} [scale_min] - Value above which gap scaling will be applied. Default: 24
   @param {boolean} [disable_scaling] - If true, disables scaling and outputs the original value.
 
   @example
@@ -12,14 +12,33 @@
 {%- enddoc -%}
 
 {%- liquid
+  assign px_scale = 16.0
   assign min = scale_min | default: 24
+  assign min_rem = min | divided_by: px_scale
   assign name = name | default: 'gap'
 -%}
 
 {%- if value != blank -%}
-  {%- if disable_scaling != true and value > min -%}
-    --{{ name }}: max({{ min }}px, calc(var(--gap-scale, 1.0) * {{ value }}px));
+  {%- liquid
+    assign numeric_value = value | times: 1
+    assign value_string = value | append: ''
+    if numeric_value == 0
+      assign rem_value = 0
+      assign px_value = 0
+    elsif numeric_value >= 10
+      assign rem_value = numeric_value | divided_by: px_scale
+      assign px_value = numeric_value
+    elsif value_string contains '.'
+      assign rem_value = numeric_value
+      assign px_value = numeric_value | times: px_scale
+    else
+      assign rem_value = numeric_value | divided_by: px_scale
+      assign px_value = numeric_value
+    endif
+  -%}
+  {%- if disable_scaling != true and px_value > min -%}
+    --{{ name }}: max({{ min_rem }}rem, calc(var(--gap-scale, 1.0) * {{ rem_value }}rem));
   {%- else -%}
-    --{{ name }}: {{ value }}px;
+    --{{ name }}: {{ rem_value }}rem;
   {%- endif -%}
 {%- endif -%}

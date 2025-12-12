@@ -1,0 +1,22 @@
+{%- liquid
+  assign px_scale = 16.0
+  assign raw_value = value
+  if raw_value == blank
+    assign raw_value = 0
+  endif
+  assign numeric_value = raw_value | times: 1
+  assign value_string = raw_value | append: ''
+
+  if numeric_value == 0
+    assign rem_value = 0
+  elsif numeric_value >= 10
+    assign rem_value = numeric_value | divided_by: px_scale
+  elsif value_string contains '.'
+    assign rem_value = numeric_value
+  else
+    assign rem_value = numeric_value | divided_by: px_scale
+  endif
+
+  echo rem_value
+  echo 'rem'
+-%}

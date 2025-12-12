@@ -1,0 +1,43 @@
+{% assign max_items = 4 %}
+
+{% capture items %}
+  {% for index in (1..max_items) %}
+    {% assign image_key = 'icons_item_' | append: index | append: '_image' %}
+    {% assign heading_key = 'icons_item_' | append: index | append: '_heading' %}
+    {% assign text_key = 'icons_item_' | append: index | append: '_text' %}
+    {% assign icon_image = settings[image_key] %}
+    {% assign icon_heading = settings[heading_key] %}
+    {% assign icon_text = settings[text_key] %}
+
+    {% if icon_image == blank and icon_heading == blank and icon_text == blank %}
+      {% continue %}
+    {% endif %}
+
+    <div class="special-row__icon">
+      {% if icon_image != blank %}
+        {{
+          icon_image
+          | image_url: width: 256
+          | image_tag: loading: 'lazy', class: 'special-row__icon-image'
+        }}
+      {% endif %}
+      {% if icon_heading != blank %}
+        <p class="special-row__icon-heading">{{ icon_heading }}</p>
+      {% endif %}
+      {% if icon_text != blank %}
+        <div class="special-row__icon-text rte">{{ icon_text }}</div>
+      {% endif %}
+    </div>
+  {% endfor %}
+{% endcapture %}
+
+{% if items != blank %}
+  <div class="special-row__section special-row__section--icons" data-slot="{{ slot }}">
+    <div
+      class="special-row__icons-grid"
+      style="--special-icon-columns: {{ settings.icons_per_row | default: 3 }};"
+    >
+      {{ items }}
+    </div>
+  </div>
+{% endif %}
