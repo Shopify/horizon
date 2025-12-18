@@ -551,7 +551,7 @@
     "empty_cart_button_link": "Knapplänk för tom varukorg",
     "auto_load_products": "Läs in produkter automatiskt vid rullning",
     "products_per_page": "Produkter per sida",
-    "custom_mobile_media": "Anpassade mobilmedia",
+    "custom_mobile_media": "Visa separat media på mobilen",
     "stack_media_on_mobile": "Stapla media",
     "full_frame_on_mobile": "Full bredd på mobila enheter",
     "skus": "Lagerhållningsenheter",
@@ -966,7 +966,8 @@
     "popover": "Popover",
     "popover_position": "Popover-position",
     "resource_reference_product_sku": "Visar lagerhållningsenhet från överordnad produkt",
-    "content_layout": "Innehållslayout"
+    "content_layout": "Innehållslayout",
+    "mobile_media_1": "Mobilmedia 1"
   },
   "html_defaults": {
     "share_information_about_your": "<p>Dela information om ditt varumärke med dina kunder. Beskriv en produkt, gör tillkännagivanden eller välkomna kunder till din butik.</p>",
@@ -1066,7 +1067,7 @@
     "video_alt_text": "Beskriv videon för användare av hjälpmedelsteknik",
     "video_autoplay": "Videor kommer att vara tystade som standard",
     "video_external": "Använd en URL från YouTube eller Vimeo",
-    "carousel_layout_on_mobile": "Karusellayout används på mobilen",
+    "carousel_layout_on_mobile": "Karusell används alltid på mobilen",
     "carousel_hover_behavior_not_supported": "\"Karusell\"-hovring stöds inte när \"Karusell\"-typ är vald på sektionsnivå",
     "checkout_buttons": "Gör det möjligt för köpare att betala snabbare och kan förbättra konverteringen. [Läs mer](https://help.shopify.com/manual/online-store/dynamic-checkout)",
     "custom_heading": "Anpassad rubrik",

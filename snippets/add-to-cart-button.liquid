@@ -24,7 +24,9 @@
   data-add-to-cart-animation="{{ settings.add_to_cart_animation }}"
 >
   <button
-    id="{{ id }}"
+    {% if id != blank %}
+      id="{{ id }}"
+    {% endif %}
     type="submit"
     name="add"
     ref="addToCartButton"

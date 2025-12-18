@@ -1,6 +1,6 @@
 import { Component } from '@theme/component';
 import { trapFocus, removeTrapFocus } from '@theme/focus';
-import { onAnimationEnd } from '@theme/utilities';
+import { onAnimationEnd, removeWillChangeOnAnimationEnd } from '@theme/utilities';
 
 /**
  * A custom element that manages the main menu drawer.
@@ -75,9 +75,10 @@ class HeaderDrawer extends Component {
     this.preventInitialAccordionAnimations(details);
     requestAnimationFrame(() => {
       details.classList.add('menu-open');
-      setTimeout(() => {
-        trapFocus(details);
-      }, 0);
+
+      // Wait for the drawer animation to complete before trapping focus
+      const drawer = details.querySelector('.menu-drawer, .menu-drawer__submenu');
+      onAnimationEnd(drawer || details, () => trapFocus(details), { subtree: false });
     });
   }
 
@@ -109,18 +110,24 @@ class HeaderDrawer extends Component {
     summary.setAttribute('aria-expanded', 'false');
     details.classList.remove('menu-open');
 
-    onAnimationEnd(details, () => {
-      reset(details);
-      if (details === this.refs.details) {
-        removeTrapFocus();
-        const openDetails = this.querySelectorAll('details[open]:not(accordion-custom > details)');
-        openDetails.forEach(reset);
-      } else {
-        setTimeout(() => {
+    // Wait for the .menu-drawer element's transition, not the entire details subtree
+    // This avoids waiting for child accordion/resource-card animations which can cause issues on Firefox
+    const drawer = details.querySelector('.menu-drawer, .menu-drawer__submenu');
+
+    onAnimationEnd(
+      drawer || details,
+      () => {
+        reset(details);
+        if (details === this.refs.details) {
+          removeTrapFocus();
+          const openDetails = this.querySelectorAll('details[open]:not(accordion-custom > details)');
+          openDetails.forEach(reset);
+        } else {
           trapFocus(this.refs.details);
-        }, 0);
-      }
-    });
+        }
+      },
+      { subtree: false }
+    );
   }
 
   /**
@@ -128,16 +135,6 @@ class HeaderDrawer extends Component {
    * to remove the stacking context and allow submenus to be positioned correctly
    */
   #setupAnimatedElementListeners() {
-    /**
-     * @param {AnimationEvent} event
-     */
-    function removeWillChangeOnAnimationEnd(event) {
-      const target = event.target;
-      if (target && target instanceof HTMLElement) {
-        target.style.setProperty('will-change', 'unset');
-        target.removeEventListener('animationend', removeWillChangeOnAnimationEnd);
-      }
-    }
     const allAnimated = this.querySelectorAll('.menu-drawer__animated-element');
     allAnimated.forEach((element) => {
       element.addEventListener('animationend', removeWillChangeOnAnimationEnd);

@@ -65,7 +65,7 @@
     "remove": "移除",
     "view_pricing_info": "檢視定價資訊",
     "open_hotspot": "開啟熱點",
-    "slideshow": "幻燈片"
+    "slideshow": "素材輪播"
   },
   "actions": {
     "add_to_cart": "加入購物車",
@@ -324,7 +324,9 @@
       "quantity_increments": "{{ increment }} 的倍數",
       "quantity_minimum": "最少 {{ minimum }} 個",
       "quantity_maximum": "最多 {{ maximum }} 個",
-      "in_cart": "在購物車中"
+      "in_cart": "在購物車中",
+      "default_title": "預設標題",
+      "sticky_add_to_cart": "快速加入購物車列"
     }
   }
 }

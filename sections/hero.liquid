@@ -107,6 +107,7 @@
   assign widths = '832, 1200, 1600, 1920, 2560, 3840'
   assign sizes_mobile = media_width_mobile
   assign mobile_widths = '416, 600, 800, 1200, 1600'
+  assign mobile_widths_array = mobile_widths | split: ', '
 
   assign fetch_priority = 'auto'
 
@@ -115,8 +116,39 @@
   endif
 %}
 
-{% capture media %}
-  {%- if media_1 == 'image' -%}
+{% capture media_slot_1 %}
+  {%- if media_1 == 'image' and media_1_mobile == 'image' -%}
+    {%- comment -%} Both desktop and mobile are images. Assume similar images, and this is art direction: use picture element. {%- endcomment -%}
+    <picture
+      data-testid="hero-picture-1"
+      class="hero__image"
+    >
+      <source
+        media="(max-width: 749px)"
+        srcset="
+          {%-  for mobile_width in mobile_widths_array -%}
+            {{ section.settings.image_1_mobile | image_url: width: mobile_width }} {{ mobile_width }}w{% unless forloop.last %},{% endunless %}
+          {%- endfor -%}
+        "
+        sizes="{{ sizes_mobile }}"
+        width="{{ section.settings.image_1_mobile.width }}"
+        height="{{ section.settings.image_1_mobile.height }}"
+      >
+      {{
+        section.settings.image_1
+        | image_url: width: 3840
+        | image_tag:
+          width: section.settings.image_1.width,
+          widths: widths,
+          height: section.settings.image_1.height,
+          alt: section.settings.image_1.alt,
+          class: 'hero__image',
+          sizes: sizes,
+          fetchpriority: fetch_priority,
+          data-testid: 'hero-desktop-image-1'
+      }}
+    </picture>
+  {%- elsif media_1 == 'image' -%}
     {{
       section.settings.image_1
       | image_url: width: 3840
@@ -148,7 +180,75 @@
     </div>
   {%- endif -%}
 
-  {%- if media_2 == 'image' -%}
+  {%- comment -%} Mobile-only slot 1 media (when desktop is different type) {%- endcomment -%}
+  {%- if media_count > 0 and media_count_mobile > 0 -%}
+    {%- if media_1_mobile == 'image' and media_1 != 'image' -%}
+      {{
+        section.settings.image_1_mobile
+        | image_url: width: 1600
+        | image_tag:
+          width: section.settings.image_1_mobile.width,
+          widths: mobile_widths,
+          height: section.settings.image_1_mobile.height,
+          alt: section.settings.image_1_mobile.alt,
+          class: 'hero__image hero__image--mobile',
+          sizes: sizes_mobile,
+          fetchpriority: fetch_priority,
+          data-testid: 'hero-mobile-image-1'
+      }}
+    {%- endif -%}
+
+    {%- if media_1_mobile == 'video' -%}
+      <div class="hero__video-wrapper hero__video-wrapper--mobile">
+        {{
+          section.settings.video_1_mobile
+          | video_tag:
+            poster: nil,
+            autoplay: true,
+            loop: true,
+            controls: false,
+            muted: true,
+            class: 'hero__video hero__video--mobile',
+            data-testid: 'hero-mobile-video-1'
+        }}
+      </div>
+    {%- endif -%}
+  {%- endif -%}
+{% endcapture %}
+
+{% capture media_slot_2 %}
+  {%- if media_2 == 'image' and media_2_mobile == 'image' -%}
+    {%- comment -%} Both desktop and mobile are images. Assume this is art direction: use picture element.  {%- endcomment -%}
+    <picture
+      class="hero__image"
+      data-testid="hero-picture-2"
+    >
+      <source
+        media="(max-width: 749px)"
+        srcset="
+          {%-  for mobile_width in mobile_widths_array -%}
+            {{ section.settings.image_2_mobile | image_url: width: mobile_width }} {{ mobile_width }}w{% unless forloop.last%},{% endunless %}
+          {%- endfor -%}
+        "
+        sizes="{{ sizes_mobile }}"
+        width="{{ section.settings.image_2_mobile.width }}"
+        height="{{ section.settings.image_2_mobile.height }}"
+      >
+      {{
+        section.settings.image_2
+        | image_url: width: 3840
+        | image_tag:
+          width: section.settings.image_2.width,
+          widths: widths,
+          height: section.settings.image_2.height,
+          alt: section.settings.image_2.alt,
+          class: 'hero__image',
+          sizes: sizes,
+          fetchpriority: fetch_priority,
+          data-testid: 'hero-desktop-image-2'
+      }}
+    </picture>
+  {%- elsif media_2 == 'image' -%}
     {{
       section.settings.image_2
       | image_url: width: 3840
@@ -180,45 +280,9 @@
     </div>
   {%- endif -%}
 
-  {% if media_count == 0 %}
-    {{ 'hero-apparel-1' | placeholder_svg_tag: 'hero__image' }}
-  {%- endif -%}
-
-  {%- comment -%} Mobile Media {%- endcomment -%}
-  {%- if media_count > 0 and media_count_mobile > 0 %}
-    {% if media_1_mobile == 'image' %}
-      {{
-        section.settings.image_1_mobile
-        | image_url: width: 1600
-        | image_tag:
-          width: section.settings.image_1_mobile.width,
-          widths: mobile_widths,
-          height: section.settings.image_1_mobile.height,
-          alt: section.settings.image_1_mobile.alt,
-          class: 'hero__image hero__image--mobile',
-          sizes: sizes_mobile,
-          fetchpriority: fetch_priority,
-          data-testid: 'hero-mobile-image-1'
-      }}
-    {%- endif -%}
-
-    {% if media_1_mobile == 'video' %}
-      <div class="hero__video-wrapper hero__video-wrapper--mobile">
-        {{
-          section.settings.video_1_mobile
-          | video_tag:
-            poster: nil,
-            autoplay: true,
-            loop: true,
-            controls: false,
-            muted: true,
-            class: 'hero__video hero__video--mobile',
-            data-testid: 'hero-mobile-video-1'
-        }}
-      </div>
-    {%- endif -%}
-
-    {% if media_2_mobile == 'image' %}
+  {%- comment -%} Mobile-only slot 2 media (when desktop is different type) {%- endcomment -%}
+  {%- if media_count > 0 and media_count_mobile > 0 -%}
+    {%- if media_2_mobile == 'image' and media_2 != 'image' -%}
       {{
         section.settings.image_2_mobile
         | image_url: width: 1600
@@ -234,7 +298,7 @@
       }}
     {%- endif -%}
 
-    {% if media_2_mobile == 'video' %}
+    {%- if media_2_mobile == 'video' -%}
       <div class="hero__video-wrapper hero__video-wrapper--mobile">
         {{
           section.settings.video_2_mobile
@@ -249,7 +313,16 @@
         }}
       </div>
     {%- endif -%}
-  {% endif %}
+  {%- endif -%}
+{% endcapture %}
+
+{% capture media %}
+  {{ media_slot_1 }}
+  {{ media_slot_2 }}
+
+  {% if media_count == 0 %}
+    {{ 'hero-apparel-1' | placeholder_svg_tag: 'hero__image' }}
+  {%- endif -%}
 {% endcapture %}
 
 {% capture media_blurred %}
@@ -718,7 +791,7 @@
   "settings": [
     {
       "type": "header",
-      "content": "t:content.media"
+      "content": "t:content.media_1"
     },
     {
       "type": "select",
@@ -797,9 +870,14 @@
       "default": false
     },
     {
+      "type": "header",
+      "content": "t:content.mobile_media_1",
+      "visible_if": "{{ section.settings.custom_mobile_media }}"
+    },
+    {
       "type": "select",
       "id": "media_type_1_mobile",
-      "label": "t:settings.media_type_1",
+      "label": "t:settings.type",
       "options": [
         {
           "value": "image",
@@ -826,9 +904,14 @@
       "visible_if": "{{ section.settings.custom_mobile_media and section.settings.media_type_1_mobile == 'video' }}"
     },
     {
+      "type": "header",
+      "content": "t:content.mobile_media_2",
+      "visible_if": "{{ section.settings.custom_mobile_media }}"
+    },
+    {
       "type": "select",
       "id": "media_type_2_mobile",
-      "label": "t:settings.media_type_2",
+      "label": "t:settings.type",
       "options": [
         {
           "value": "image",

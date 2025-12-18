@@ -1,5 +1,5 @@
 import { Component } from '@theme/component';
-import { fetchConfig, preloadImage, onAnimationEnd } from '@theme/utilities';
+import { fetchConfig, preloadImage, onAnimationEnd, yieldToMainThread } from '@theme/utilities';
 import { ThemeEvents, CartAddEvent, CartErrorEvent, CartUpdateEvent, VariantUpdateEvent } from '@theme/events';
 import { cartPerformance } from '@theme/performance';
 import { morph } from '@theme/morph';
@@ -12,6 +12,14 @@ const ERROR_BUTTON_REENABLE_DELAY = 1000;
 
 // Success message display duration for screen readers
 const SUCCESS_MESSAGE_DISPLAY_DURATION = 5000;
+
+/**
+ * @typedef {HTMLElement & {
+ *   source: Element,
+ *   destination: Element,
+ *   useSourceSize: string | boolean
+ * }} FlyToCart
+ */
 
 /**
  * A custom element that manages an add to cart button.
@@ -135,6 +143,8 @@ export class AddToCartComponent extends Component {
       addToCartButton.dataset.added = 'true';
     }
 
+    // The onAnimationEnd can trigger a style recalculation so we yield to the main thread first.
+    await yieldToMainThread();
     await onAnimationEnd(addToCartButton);
 
     // Create new timeout and store it in the array

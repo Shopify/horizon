@@ -301,7 +301,9 @@
       "quantity_increments": "{{ increment }}の増分",
       "quantity_minimum": "最小{{ minimum }}",
       "quantity_maximum": "最大{{ maximum }}",
-      "in_cart": "カート内"
+      "in_cart": "カート内",
+      "default_title": "デフォルトのタイトル",
+      "sticky_add_to_cart": "クイック「カートに追加」バー"
     }
   },
   "fields": {

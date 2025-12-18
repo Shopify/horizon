@@ -64,8 +64,8 @@
     "discount_menu": "Mã giảm giá",
     "remove": "Xóa",
     "view_pricing_info": "Xem thông tin về giá",
-    "open_hotspot": "Mở điểm nóng",
-    "slideshow": "Trình chiếu"
+    "open_hotspot": "Mở điểm phát sóng",
+    "slideshow": "Bản trình chiếu"
   },
   "actions": {
     "add_to_cart": "Thêm vào giỏ hàng",
@@ -324,7 +324,9 @@
       "quantity_increments": "Mức gia tăng {{ increment }}",
       "quantity_minimum": "Tối thiểu {{ minimum }}",
       "quantity_maximum": "Tối đa {{ maximum }}",
-      "in_cart": "trong giỏ hàng"
+      "in_cart": "trong giỏ hàng",
+      "default_title": "Tiêu đề mặc định",
+      "sticky_add_to_cart": "Thanh thêm nhanh vào giỏ hàng"
     }
   }
 }

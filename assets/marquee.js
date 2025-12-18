@@ -24,7 +24,8 @@ class MarqueeComponent extends Component {
     const { marqueeItems } = this.refs;
     if (marqueeItems.length === 0) return;
 
-    const numberOfCopies = await this.#queryNumberOfCopies();
+    const { numberOfCopies } = await this.#queryNumberOfCopies();
+
     const speed = this.#calculateSpeed(numberOfCopies);
 
     this.#addRepeatedItems(numberOfCopies);
@@ -48,6 +49,11 @@ class MarqueeComponent extends Component {
    * @type {{ cancel: () => void, current: number } | null}
    */
   #animation = null;
+
+  /**
+   * @type {number | null}
+   */
+  #marqueeWidth = null;
 
   #slowDown = debounce(() => {
     if (this.#animation) return;
@@ -108,21 +114,26 @@ class MarqueeComponent extends Component {
     return new Promise((resolve) => {
       if (!marqueeItems[0]) {
         // Wrapping the resolve in a setTimeout here and below splits each marquee reflow into a separate task.
-        return setTimeout(() => resolve(1), 0);
+        return setTimeout(() => resolve({ numberOfCopies: 1, isHorizontalResize: true }), 0);
       }
 
       const intersectionObserver = new IntersectionObserver(
         (entries) => {
           const firstEntry = entries[0];
           if (!firstEntry) return;
-
           intersectionObserver.disconnect();
 
           const { width: marqueeWidth } = firstEntry.rootBounds ?? { width: 0 };
           const { width: marqueeItemsWidth } = firstEntry.boundingClientRect;
 
+          const isHorizontalResize = this.#marqueeWidth !== marqueeWidth;
+          this.#marqueeWidth = marqueeWidth;
+
           setTimeout(() => {
-            resolve(marqueeItemsWidth === 0 ? 1 : Math.ceil(marqueeWidth / marqueeItemsWidth));
+            resolve({
+              numberOfCopies: marqueeItemsWidth === 0 ? 1 : Math.ceil(marqueeWidth / marqueeItemsWidth),
+              isHorizontalResize,
+            });
           }, 0);
         },
         { root: this }
@@ -143,7 +154,11 @@ class MarqueeComponent extends Component {
 
   #handleResize = debounce(async () => {
     const { marqueeItems } = this.refs;
-    const newNumberOfCopies = await this.#queryNumberOfCopies();
+    const { newNumberOfCopies, isHorizontalResize } = await this.#queryNumberOfCopies();
+
+    // opt out of marquee manipulation on vertical resizes
+    if (!isHorizontalResize) return;
+
     const currentNumberOfCopies = marqueeItems.length;
     const speed = this.#calculateSpeed(newNumberOfCopies);
 

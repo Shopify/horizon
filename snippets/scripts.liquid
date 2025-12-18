@@ -29,15 +29,13 @@
   }
 </script>
 
-{% if settings.transition_to_main_product %}
-  {% # theme-check-disable ParserBlockingScript %}
-  <script
-    src="{{ 'view-transitions.js' | asset_url }}"
-    async
+<script
+  src="{{ 'view-transitions.js' | asset_url }}"
+  async
+  {% if settings.page_transition_enabled or settings.transition_to_main_product %}
     blocking="render"
-  ></script>
-  {% # theme-check-enable %}
-{% endif %}
+  {% endif %}
+></script>
 
 <link
   rel="modulepreload"

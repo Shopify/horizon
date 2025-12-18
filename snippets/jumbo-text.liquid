@@ -13,15 +13,26 @@
   assign shown_text = text | default: block_settings.text
   assign descenders = 'alphabetic'
   assign trim = 'trim-both'
+  assign cap_text = false
 
   unless block_settings.case == 'uppercase'
-    if shown_text contains 'g' or shown_text contains 'j' or shown_text contains 'p' or shown_text contains 'q' or shown_text contains 'y'
+    assign has_descender = false
+    assign descender_chars = 'g,j,p,q,y,ç,ý,ÿ,ş,ţ,ģ,ą,ę,į,ų' | split: ','
+    for descender_char in descender_chars
+      if shown_text contains descender_char
+        assign has_descender = true
+        break
+      endif
+    endfor
+
+    if has_descender
       assign descenders = 'text'
+      assign cap_text = true
     endif
   endunless
 
   assign text_trim = trim | append: ' cap ' | append: descenders
-  assign shown_text_with_line_breaks = shown_text | newline_to_br
+  assign shown_text_with_line_breaks = shown_text | newline_to_br | strip_newlines
   assign text_with_lines = shown_text_with_line_breaks | split: '<br />'
   assign nudge = '-0.04em'
 %}
@@ -46,64 +57,42 @@
     --text-transform: {{ block_settings.case | default: 'none' }};
     --text-trim: {{text_trim}};
   "
+  data-cap-text="{{ cap_text }}"
   {{ block.shopify_attributes }}
 {% endcapture %}
 
-{% comment %}
-  If the jumbo text is not wrapped inside its own container, the overflow calculation does not always work correctly
-  (looks like some weird off-by-one error when comparing sizes).
-{% endcomment %}
-<div class="jumbo-text__container">
-  {% if text != blank %}
-    <jumbo-text {{ attributes }}>{{ text }}</jumbo-text>
-  {% else %}
-    <span class="visually-hidden">{{ shown_text }}</span>
-    <jumbo-text
-      {{ attributes }}
-      data-text-effect="{{ block_settings.text_effect }}"
-      data-animation-repeat="{{ block_settings.animation_repeat }}"
-    >
-      {%- assign char_index = 0 -%}
-      {%- for line in text_with_lines -%}
-        {%- if forloop.index > 1 -%}
-          <br>
-        {%- endif -%}
-        <span
-          class="jumbo-text-line"
-          style="--line-index: {{ forloop.index }};"
-          data-testid="jumbo-text-line"
-          aria-hidden="true"
-        >
-          {%- assign chars = line | split: ' ' | join: ' ' | split: '' -%}
-          {%- for char in chars -%}
-            {%- if char == ' ' -%}
-              <span
-                class="jumbo-text-space"
-                aria-hidden="true"
-              >
-                {{ char }}
-              </span>
-            {%- else -%}
-              <span
-                class="jumbo-text-char"
-                style="--char-index: {{ char_index }};"
-                aria-hidden="true"
-              >
-                <span class="jumbo-text-char-inner">{{ char }}</span>
-              </span>
-              {%- assign char_index = char_index | plus: 1 -%}
-            {%- endif -%}
-          {%- endfor -%}
-        </span>
-      {%- endfor -%}
-    </jumbo-text>
-  {% endif %}
+{% if text != blank %}
+  <jumbo-text {{ attributes }}
+    ><span class="jumbo-text-line">{{ text }}</span></jumbo-text
+  >
+{% else %}
+  <span class="visually-hidden">{{ shown_text }}</span>
+  <jumbo-text
+    {{ attributes }}
+    data-text-effect="{{ block_settings.text_effect }}"
+    data-animation-repeat="{{ block_settings.animation_repeat }}"
+  >
+    {%- for line in text_with_lines -%}
+      {%- if forloop.index > 1 -%}
+        <br>
+      {%- endif -%}
+      <span
+        class="jumbo-text-line"
+        style="--line-index: {{ forloop.index }};"
+        data-testid="jumbo-text-line"
+        aria-hidden="true"
+      >
+        {{- line -}}
+      </span>
+    {%- endfor -%}
+  </jumbo-text>
+{% endif %}
 
-  <script
-    src="{{ 'jumbo-text.js' | asset_url }}"
-    type="module"
-  ></script>
-</div>
+<script
+  src="{{ 'jumbo-text.js' | asset_url }}"
+  type="module"
+  async
+></script>
 
 {% stylesheet %}
   .jumbo-text__container {
@@ -123,13 +112,12 @@
     letter-spacing: var(--letter-spacing, -0.02em);
     line-height: var(--line-height, 1);
     opacity: 0;
+    visibility: hidden;
     text-align: var(--text-align);
     text-box: var(--text-trim, trim-end cap text);
     text-transform: var(--text-transform, none);
     transition: opacity 0.3s ease;
-    white-space: pre;
     width: 100%;
-    will-change: font-size;
     margin-left: var(--margin-left-nudge, 0);
     margin-right: var(--margin-right-nudge, 0);
     overflow: visible;
@@ -137,6 +125,7 @@
 
   jumbo-text.ready {
     opacity: 1;
+    visibility: visible;
   }
 
   jumbo-text[data-cap-text='true'] {
@@ -144,18 +133,14 @@
     text-box-edge: cap text;
   }
 
-  .jumbo-text-space {
+  .jumbo-text-line {
     display: inline-flex;
-    width: 0.325em;
-  }
-
-  :is(.jumbo-text-char, .jumbo-text-line) {
-    display: inline-flex;
+    white-space: pre;
   }
 
   @media (prefers-reduced-motion: no-preference) {
     /* Blur effect */
-    [data-text-effect='blur'] {
+    .ready[data-text-effect='blur'] {
       filter: blur(20px);
       opacity: 0.5;
       scale: 1.05;
@@ -170,22 +155,20 @@
     }
 
     /* Reveal effect */
-    .ready[data-text-effect='reveal'],
-    .ready[data-text-effect='reveal'] .jumbo-text-line {
+    .ready[data-text-effect='reveal'] {
       overflow: hidden;
     }
 
-    .ready[data-text-effect='reveal'] .jumbo-text-char {
+    .ready[data-text-effect='reveal'] .jumbo-text-line {
       transform: translateY(100%);
     }
 
-    .jumbo-text-visible[data-text-effect='reveal'] .jumbo-text-char {
+    .jumbo-text-visible[data-text-effect='reveal'] .jumbo-text-line {
       transition: transform 0.5s var(--animation-timing-fade-in) calc(var(--line-index) * 0.05s);
       transform: translateY(0);
     }
 
-    .jumbo-text-visible[data-text-effect='reveal'],
-    .jumbo-text-visible[data-text-effect='reveal'] .jumbo-text-line {
+    .jumbo-text-visible[data-text-effect='reveal'] {
       overflow: visible;
       transition: overflow 0s linear 0.75s;
     }

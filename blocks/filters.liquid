@@ -599,9 +599,11 @@
     justify-content: space-between;
   }
 
-  dialog-component.facets-block-wrapper:not(:has(.facets--drawer[open])) {
-    @media screen and (min-width: 750px) {
-      display: none;
+  @media screen and (min-width: 750px) {
+    dialog-component.facets-block-wrapper {
+      position: absolute;
+      width: 0;
+      height: 0;
     }
   }
 

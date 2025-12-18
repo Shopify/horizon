@@ -116,6 +116,11 @@ class HeaderMenu extends Component {
       submenu = this.overflowMenu;
     }
 
+    // Mark submenu as active for content-visibility optimization
+    if (submenu) {
+      submenu.dataset.active = '';
+    }
+
     const submenuHeight = submenu ? submenu.offsetHeight : 0;
 
     this.style.setProperty('--submenu-height', `${submenuHeight}px`);
@@ -154,6 +159,8 @@ class HeaderMenu extends Component {
     this.style.setProperty('--submenu-opacity', '0');
     this.dataset.overflowExpanded = 'false';
 
+    const submenu = findSubmenu(item);
+
     this.#state.activeItem = null;
     this.ariaExpanded = 'false';
     item.ariaExpanded = 'false';
@@ -161,6 +168,10 @@ class HeaderMenu extends Component {
 
     setTimeout(() => {
       item.removeAttribute('data-animating');
+      // Remove active state from submenu after animation completes
+      if (submenu) {
+        delete submenu.dataset.active;
+      }
     }, Math.max(0, this.animationDelay - 150)); // Start header transition 150ms before submenu finishes
   };
 

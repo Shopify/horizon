@@ -13,7 +13,7 @@ import { Component } from '@theme/component';
  * The options for the morph
  * @type {Options}
  */
-const MORPH_OPTIONS = {
+export const MORPH_OPTIONS = {
   childrenOnly: true,
   reject(oldNode, newNode) {
     if (newNode.nodeType === Node.TEXT_NODE && newNode.nodeValue?.trim() === '') {
@@ -41,7 +41,7 @@ const MORPH_OPTIONS = {
   },
   onBeforeUpdate(oldNode, newNode) {
     if (oldNode instanceof Element && newNode instanceof Element) {
-      const attributes = ['product-grid-view', 'data-current-checked', 'data-previous-checked'];
+      const attributes = ['product-grid-view', 'data-current-checked', 'data-previous-checked', 'cart-summary-sticky'];
 
       for (const attribute of attributes) {
         const oldValue = oldNode.getAttribute(attribute);

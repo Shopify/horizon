@@ -18,6 +18,14 @@
   %}
 {%- enddoc -%}
 
+{% style %}
+  {% if request.visual_preview_mode %}
+    .collection-card {
+      min-width: 250px;
+    }
+  {% endif %}
+{% endstyle %}
+
 {% liquid
   assign onboarding = false
   assign block_settings = block.settings
@@ -45,7 +53,7 @@
     --horizontal-alignment: {{ block_settings.horizontal_alignment }};
     --vertical-alignment: {{ block_settings.vertical_alignment }};
     --background-overlay-color: {{ block_settings.overlay_color }};
-    --collection-card-gap: {{ block_settings.collection_card_gap }}px;
+    --gap: {{ block_settings.collection_card_gap }}px;
   "
   {{- block.shopify_attributes -}}
 >
@@ -70,8 +78,6 @@
     --fixed-card-height: var(--height-small);
 
     flex: 1 1 var(--card-width-small);
-    width: 100%;
-    position: relative;
   }
 
   .collection-card > svg {
@@ -80,22 +86,12 @@
     aspect-ratio: var(--ratio);
   }
 
-  .collection-card__inner {
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-    gap: var(--collection-card-gap);
-    display: flex;
-    flex-direction: column;
-  }
-
   .collection-card--image-bg .collection-card__inner {
     height: 100%;
   }
 
   .collection-card__inner {
-    z-index: var(--layer-flat);
-    pointer-events: none;
+    gap: var(--gap);
 
     a,
     button {
@@ -110,23 +106,8 @@
   }
 
   .collection-card__content {
-    position: relative;
-    display: flex;
-    height: 100%;
-    width: 100%;
     max-width: 100%;
-    gap: var(--collection-card-gap);
-    flex-direction: column;
-    align-items: var(--horizontal-alignment);
-    justify-content: var(--vertical-alignment);
-  }
-
-  .collection-card__link {
-    position: absolute;
-    inset: 0;
-
-    /* allows focus outline to have radius in supported browsers */
-    border-radius: var(--border-radius);
+    --flex-wrap: wrap;
   }
 
   /* Nested image block rules */
@@ -176,25 +157,6 @@
     &.collection-card.collection-card--image-bg,
     &.collection-card .placeholder-svg {
       aspect-ratio: 99;
-    }
-
-    .collection-card__image {
-      aspect-ratio: 99;
-      height: 100%;
-    }
-
-    .collection-card__inner {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-
-    .collection-card__content {
-      flex-shrink: 0;
-    }
-
-    &:not(.collection-card--image-bg) .collection-card__content {
-      height: auto;
     }
   }
 {% endstylesheet %}

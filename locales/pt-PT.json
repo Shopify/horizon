@@ -65,7 +65,7 @@
     "nested_product": "{{ product_title }} para {{ parent_title }}",
     "remove": "Remover",
     "view_pricing_info": "Ver informações sobre preços",
-    "open_hotspot": "Abrir ponto de acesso",
+    "open_hotspot": "Hotspot aberto",
     "slideshow": "Apresentação de diapositivos"
   },
   "actions": {
@@ -307,7 +307,9 @@
       "quantity_increments": "Incrementos de {{ increment }}",
       "quantity_minimum": "Mínimo de {{ minimum }}",
       "quantity_maximum": "Máximo de {{ maximum }}",
-      "in_cart": "no carrinho"
+      "in_cart": "no carrinho",
+      "default_title": "Título predefinido",
+      "sticky_add_to_cart": "Barra de adição rápida ao carrinho"
     }
   },
   "fields": {

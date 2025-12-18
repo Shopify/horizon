@@ -65,7 +65,7 @@
     "nested_product": "{{ product_title }} pour {{ parent_title }}",
     "remove": "Retirer",
     "view_pricing_info": "Afficher les informations de tarification",
-    "open_hotspot": "Ouvrir le point d'accès",
+    "open_hotspot": "Ouvrir le point d’accès",
     "slideshow": "Diaporama"
   },
   "actions": {
@@ -167,7 +167,7 @@
       "other": "{{ count }} produits",
       "many": "{{ count }} produits"
     },
-    "recently_viewed_products": "Récemment consultés",
+    "recently_viewed_products": "Récemment consulté(s)",
     "unavailable": "Indisponible",
     "collection_placeholder": "Titre de la collection",
     "product_card_placeholder": "Titre du produit",
@@ -307,7 +307,9 @@
       "quantity_increments": "Incréments de {{ increment }}",
       "quantity_minimum": "Minimum de {{ minimum }}",
       "quantity_maximum": "Maximum de {{ maximum }}",
-      "in_cart": "dans le panier"
+      "in_cart": "dans le panier",
+      "default_title": "Titre par défaut",
+      "sticky_add_to_cart": "Barre d’ajout rapide au panier"
     }
   },
   "fields": {

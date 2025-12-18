@@ -551,7 +551,7 @@
     "empty_cart_button_link": "空のカートのボタンのリンク",
     "auto_load_products": "スクロール時に商品を自動で読み込む",
     "products_per_page": "ページあたりの商品数",
-    "custom_mobile_media": "モバイル用のカスタムメディア",
+    "custom_mobile_media": "モバイルで別のメディアを表示する",
     "stack_media_on_mobile": "メディアを重ねて表示",
     "media_type_1": "メディアタイプ",
     "media_type_2": "メディア2のタイプ",
@@ -966,7 +966,8 @@
     "popover": "ポップオーバー",
     "popover_position": "ポップオーバーの位置",
     "resource_reference_product_sku": "親商品のSKUを表示します",
-    "content_layout": "コンテンツレイアウト"
+    "content_layout": "コンテンツレイアウト",
+    "mobile_media_1": "モバイルメディア1"
   },
   "html_defaults": {
     "share_information_about_your": "<p>ブランドに関する情報をお客様に伝えましょう。商品の説明、お知らせ、ストアへのお客様への歓迎メッセージなどに使用します。</p>",
@@ -1066,7 +1067,7 @@
     "video_alt_text": "支援技術のユーザーのために動画の説明を記述します",
     "video_autoplay": "動画はデフォルトでミュートになります",
     "video_external": "YouTubeまたはVimeoのURLを使用します",
-    "carousel_layout_on_mobile": "モバイルではカルーセルが使用されます",
+    "carousel_layout_on_mobile": "モバイルでは常にカルーセルが使用されます。",
     "carousel_hover_behavior_not_supported": "セクションレベルで [カルーセル] タイプが選択されている場合、[カルーセル] のホバーはサポートされていません",
     "grid_layout_on_mobile": "モバイルではグリッドレイアウトが使用されます",
     "logo_font": "ロゴが選択されていない場合にのみ適用されます",

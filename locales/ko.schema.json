@@ -551,7 +551,7 @@
     "empty_cart_button_link": "빈 카트 버튼 링크",
     "auto_load_products": "스크롤 시 제품 자동 로드",
     "products_per_page": "페이지당 제품 수",
-    "custom_mobile_media": "사용자 지정 모바일 미디어",
+    "custom_mobile_media": "모바일에서 다른 미디어 표시",
     "stack_media_on_mobile": "미디어 쌓기",
     "media_type_1": "미디어 유형",
     "media_type_2": "미디어 2 유형",
@@ -966,7 +966,8 @@
     "popover": "팝오버",
     "popover_position": "팝오버 위치",
     "resource_reference_product_sku": "상위 제품의 SKU(재고 관리 코드)를 표시합니다",
-    "content_layout": "콘텐츠 레이아웃"
+    "content_layout": "콘텐츠 레이아웃",
+    "mobile_media_1": "모바일 미디어 1"
   },
   "html_defaults": {
     "share_information_about_your": "<p>고객과 브랜드에 대한 정보를 공유하세요. 제품을 설명하거나, 공지 사항을 알리거나, 스토어를 방문하는 고객을 환영할 수 있습니다.</p>",
@@ -1063,7 +1064,7 @@
     "new_arrivals": "신상품"
   },
   "info": {
-    "carousel_layout_on_mobile": "모바일에서는 캐러셀이 사용됩니다",
+    "carousel_layout_on_mobile": "모바일에서는 항상 캐러셀이 사용됩니다.",
     "video_alt_text": "보조 기술 사용자를 위해 비디오를 설명하세요",
     "video_autoplay": "비디오는 기본적으로 음소거됩니다",
     "video_external": "YouTube 또는 Vimeo URL을 사용하세요",

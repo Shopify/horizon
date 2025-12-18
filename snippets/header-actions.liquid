@@ -4,16 +4,192 @@
   fetchpriority="low"
 ></script>
 
+{% capture cart_icon %}
+  <cart-icon
+    class="
+      header-actions__cart-icon
+      {% unless cart == empty %} header-actions__cart-icon--has-cart{% endunless %}
+    "
+    data-testid="cart-icon"
+  >
+    <span
+      class="svg-wrapper"
+      aria-hidden="true"
+    >
+      {{ 'icon-cart.svg' | inline_asset_content }}
+    </span>
+
+    {% render 'cart-bubble', limit: 100, live_region: true, test_id: test_id %}
+  </cart-icon>
+{% endcapture %}
+
 <header-actions
   {{- block.shopify_attributes -}}
 >
   {% if shop.customer_accounts_enabled %}
-    {% render 'account-popover' %}
-    {% render 'account-drawer' %}
+    <script
+      src="{{ 'dialog.js' | asset_url }}"
+      type="module"
+    ></script>
+
+    <anchored-popover-component
+      data-close-on-resize="true"
+      class="account-popover mobile:hidden"
+    >
+      {% render 'account-button' with 'account-popover' as popover_id %}
+      <div
+        class="account-popover__panel details-content color-{{ settings.popover_color_scheme }}"
+        id="account-popover"
+        popover="auto"
+        ref="popover"
+      >
+        {% render 'account-actions' %}
+      </div>
+    </anchored-popover-component>
+
+    <dialog-component
+      class="account-drawer"
+      {{ block.shopify_attributes }}
+    >
+      {% render 'account-button', attributes: 'on:click="/showDialog"' %}
+      <dialog
+        ref="dialog"
+        class="color-{{ settings.popover_color_scheme }} dialog-modal dialog-drawer dialog-bottom-sheet account-drawer__dialog"
+        scroll-lock
+        aria-labelledby="account-drawer-heading"
+      >
+        <button
+          ref="closeButton"
+          on:click="/closeDialog"
+          class="button button-unstyled close-button account-drawer__close-button"
+          aria-label="{{ 'actions.close_dialog' | t }}"
+          autofocus
+        >
+          <span
+            class="svg-wrapper"
+            aria-hidden="true"
+          >
+            {{- 'icon-close.svg' | inline_asset_content -}}
+          </span>
+        </button>
+        {% render 'account-actions' %}
+      </dialog>
+    </dialog-component>
   {% endif %}
 
   {% if settings.cart_type == 'drawer' and template.name != 'cart' %}
-    {% render 'cart-drawer' %}
+    <script
+      src="{{ 'cart-drawer.js' | asset_url }}"
+      type="module"
+      fetchpriority="low"
+    ></script>
+
+    <cart-drawer-component
+      class="cart-drawer"
+      {{ block.shopify_attributes }}
+      {% if settings.auto_open_cart_drawer %}
+        auto-open
+      {% endif %}
+    >
+      <button
+        class="button header-actions__action button-unstyled"
+        on:click="/open"
+        aria-haspopup="dialog"
+        aria-label="{{ 'accessibility.cart' | t }}"
+        aria-describedby="cart-bubble-text"
+        data-testid="cart-drawer-trigger"
+      >
+        {{ cart_icon }}
+      </button>
+
+      <dialog
+        ref="dialog"
+        class="cart-drawer__dialog dialog-modal dialog-drawer color-{{ settings.drawer_color_scheme }}{% if cart.empty? %} cart-drawer--empty{%endif%}"
+        aria-labelledby="{% if cart.empty? %}cart-drawer-heading-empty{% else %}cart-drawer-heading{% endif %}"
+        scroll-lock
+        cart-summary-sticky="true"
+      >
+        <div class="cart-drawer__inner">
+          <cart-items-component
+            class="cart-items-component"
+            data-section-id="{{ section.id }}"
+          >
+            {%- if cart.empty? -%}
+              <div class="cart-drawer__header">
+                <button
+                  ref="closeButton"
+                  on:click="cart-drawer-component/close"
+                  class="button close-button cart-drawer__close-button button-unstyled"
+                  aria-label="{{ 'actions.close_dialog' | t }}"
+                >
+                  <span class="svg-wrapper">
+                    {{- 'icon-close.svg' | inline_asset_content -}}
+                  </span>
+                </button>
+              </div>
+
+              <div
+                class="cart-drawer__content motion-reduce"
+                aria-label="{{ 'accessibility.cart' | t }}"
+              >
+                <h2
+                  class="cart-drawer__heading h4 cart-drawer__heading--empty"
+                  id="cart-drawer-heading-empty"
+                >
+                  {{ 'content.your_cart_is_empty' | t }}
+                </h2>
+
+                <div class="cart-drawer__items">
+                  {% render 'cart-products', drawer_context: 'drawer' %}
+                </div>
+              </div>
+            {%- else -%}
+              <div
+                class="cart-drawer__header"
+                id="cart-drawer-header"
+              >
+                <h2
+                  class="cart-drawer__heading h4"
+                  id="cart-drawer-heading"
+                >
+                  {{ 'content.cart_title' | t }}
+                  {% render 'cart-bubble' %}
+                </h2>
+
+                <button
+                  ref="closeButton"
+                  on:click="cart-drawer-component/close"
+                  class="button close-button cart-drawer__close-button button-unstyled"
+                  aria-label="{{ 'actions.close_dialog' | t }}"
+                >
+                  <span class="svg-wrapper">
+                    {{- 'icon-close.svg' | inline_asset_content -}}
+                  </span>
+                </button>
+              </div>
+
+              <scroll-hint
+                class="cart-drawer__content motion-reduce"
+                aria-label="{{ 'accessibility.cart' | t }}"
+                style="--header-height: 60px;"
+              >
+                <scroll-hint
+                  class="cart-drawer__items"
+                >
+                  {% render 'cart-products', drawer_context: 'drawer' %}
+                </scroll-hint>
+
+                <div
+                  class="cart-drawer__summary"
+                >
+                  {% render 'cart-summary' %}
+                </div>
+              </scroll-hint>
+            {%- endif -%}
+          </cart-items-component>
+        </div>
+      </dialog>
+    </cart-drawer-component>
   {% else %}
     <a
       href="{{ routes.cart_url }}"
@@ -21,12 +197,147 @@
       aria-label="{{ 'accessibility.cart' | t }}"
       aria-describedby="cart-bubble-text"
     >
-      {% render 'cart-icon-component' %}
+      {{ cart_icon }}
     </a>
   {% endif %}
 </header-actions>
 
 {% stylesheet %}
+  .account-popover {
+    --account-popover-min-width: 22rem;
+    --account-actions-max-width: 22rem;
+  }
+
+  .account-popover__summary {
+    padding: 0;
+
+    &:hover {
+      color: var(--color-foreground);
+    }
+  }
+
+  .account-popover__panel {
+    --account-popover-opacity: 0;
+    --account-popover-y: 20px;
+
+    position-anchor: --account-button-trigger;
+    border-radius: var(--style-border-radius-popover);
+    margin: 0;
+    left: unset;
+    width: max-content;
+    min-width: var(--account-popover-min-width);
+    box-shadow: var(--shadow-popover);
+    border: var(--style-border-popover);
+    background-color: var(--color-background);
+    overflow-y: hidden;
+    opacity: var(--account-popover-opacity);
+    translate: 0 var(--account-popover-y);
+    transition-property: display, opacity, translate;
+    transition-duration: 0.3s;
+    transition-timing-function: var(--ease-out-quad);
+    transition-behavior: allow-discrete;
+    top: calc(anchor(bottom) + var(--header-padding));
+    right: anchor(right);
+
+    &:popover-open {
+      --account-popover-opacity: 1;
+      --account-popover-y: 0px;
+    }
+
+    @supports not (position-anchor: --account-button-trigger) {
+      top: calc(var(--anchor-top) * 1px + var(--minimum-touch-target) + var(--header-padding));
+      right: calc(var(--anchor-right) * 1px);
+    }
+
+    @supports not selector(:popover-open) {
+      &.\:popover-open {
+        --account-popover-opacity: 1;
+        --account-popover-y: 0px;
+      }
+    }
+  }
+
+  @starting-style {
+    .account-popover__panel {
+      --account-popover-opacity: 0.7;
+      --account-popover-y: 20px;
+    }
+
+    .account-popover__panel:popover-open {
+      --account-popover-opacity: 0.7;
+      --account-popover-y: 20px;
+    }
+  }
+
+  .account-drawer {
+    @media screen and (min-width: 750px) {
+      display: none;
+    }
+  }
+
+  .account-drawer__dialog {
+    --animation-speed: 0.24s;
+    --dialog-drawer-opening-animation: move-and-fade;
+    --dialog-drawer-closing-animation: move-and-fade;
+
+    height: fit-content;
+    margin: 0;
+    inset-block-end: 0;
+    inset-block-start: auto;
+    border-radius: 0;
+    padding: 0;
+  }
+
+  .dialog-drawer.account-drawer__dialog[open] {
+    --start-x: 0px;
+    --end-x: 0px;
+    --start-y: 100%;
+    --start-opacity: 1;
+  }
+
+  .dialog-drawer.account-drawer__dialog.dialog-closing {
+    --start-x: 0px;
+    --end-x: 0px;
+    --end-y: 100%;
+    --start-opacity: 1;
+  }
+
+  .account-drawer__close-button {
+    z-index: 1;
+    inset-block-start: var(--padding-xs);
+    inset-inline-end: var(--padding-xs);
+    color: var(--color-foreground);
+    background-color: transparent;
+  }
+
+  .account-drawer__close-button .svg-wrapper {
+    display: flex;
+    width: var(--button-size);
+    height: var(--button-size);
+    align-items: center;
+    justify-content: center;
+  }
+
+  @keyframes account-drawer-slide-in {
+    from {
+      transform: translateY(100%);
+    }
+
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes account-drawer-slide-out {
+    from {
+      transform: translateY(0);
+    }
+
+    to {
+      transform: translateY(100%);
+    }
+  }
+
   .cart-drawer {
     --cart-drawer-padding: var(--padding-lg) var(--padding-xl);
     --cart-drawer-padding-desktop: var(--padding-xl) var(--padding-2xl);
@@ -34,11 +345,14 @@
     --cart-font-size--xs: var(--font-size--xs);
     --cart-font-size--sm: var(--font-size--sm);
     --cart-font-size--md: var(--font-size--md);
+    --cart-font-size--lg: var(--font-size--lg);
+    --cart-font-size--xl: var(--font-size--xl);
     --cart-font-size--2xl: var(--font-size--2xl);
   }
 
   .cart-drawer__dialog {
     position: fixed;
+    overflow: hidden;
     border-radius: 0;
     width: var(--sidebar-width);
     max-width: 95vw;
@@ -50,6 +364,13 @@
     background-color: var(--color-background);
   }
 
+  .cart-items-component {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
   /* Needed to ensure the drawer is full height */
   .cart-drawer__dialog:modal {
     max-height: 100dvh;
@@ -58,13 +379,15 @@
 
   .cart-drawer__inner {
     height: 100%;
+    overflow: hidden;
   }
 
   .cart-drawer__content {
-    padding: 0;
-    background-color: var(--color-background);
+    height: calc(100% - var(--header-height));
     display: flex;
     flex-direction: column;
+    padding: 0;
+    background-color: var(--color-background);
     flex-grow: 1;
     overflow-y: auto;
   }
@@ -73,10 +396,20 @@
     display: flex;
     align-items: center;
     gap: var(--gap-xs);
+    margin-bottom: var(--margin-lg);
+
+    @media screen and (max-width: 749px) {
+      margin-bottom: 0;
+    }
   }
 
   .cart-drawer__close-button {
     margin-right: calc(var(--padding-sm) * -1);
+    top: var(--margin-sm);
+
+    @media screen and (max-width: 749px) {
+      top: var(--margin-2xs);
+    }
   }
 
   .cart-drawer--empty .cart-drawer__content {
@@ -106,10 +439,13 @@
   .cart-drawer__summary {
     --cart-drawer-summary-padding: var(--padding-lg);
 
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--gap-2xl);
+    gap: var(--gap-xl);
     padding: var(--cart-drawer-summary-padding);
     margin-top: auto;
     background-color: var(--color-background);
@@ -119,6 +455,23 @@
     @media screen and (min-width: 750px) {
       --cart-drawer-summary-padding: var(--padding-2xl);
     }
+  }
+
+  .cart-drawer__dialog[cart-summary-sticky='false'] .cart-drawer__summary {
+    position: static;
+    mask-image: none;
+  }
+
+  .cart-drawer__dialog[cart-summary-sticky='false'] .cart-drawer__items {
+    overflow: unset;
+  }
+
+  .cart-actions summary,
+  .cart-actions .disclosure-trigger {
+    padding-inline: 0;
+    padding-block: var(--padding-sm);
+    line-height: 1.2;
+    min-height: var(--minimum-touch-target);
   }
 
   .cart-drawer__summary .cart__summary-totals:not(:has(.cart__original-total-container:empty)) {
@@ -171,6 +524,23 @@
 
   .cart-drawer:not(:has(.cart-form)) .cart-drawer__content {
     justify-content: center;
+  }
+
+  .cart-drawer__header {
+    background-color: var(--color-background);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: var(--cart-drawer-padding);
+    border-bottom: var(--style-border-width) solid none;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+
+    @media screen and (min-width: 750px) {
+      padding: var(--cart-drawer-padding-desktop);
+    }
   }
 
   .cart-drawer--empty .cart-drawer__header {
@@ -236,6 +606,18 @@
     right: var(--cart-bubble-right);
   }
 
+  .cart-drawer__heading .cart-bubble {
+    width: fit-content;
+    border-radius: var(--style-border-radius-buttons-primary);
+    aspect-ratio: auto;
+    padding: var(--cart-padding);
+  }
+
+  .cart-drawer__heading .cart-bubble[data-maintain-ratio] {
+    aspect-ratio: 1;
+    min-width: 26px;
+  }
+
   .header-actions__cart-icon .cart-bubble__text,
   .cart-drawer__heading .cart-bubble__text {
     font-family: var(--font-paragraph--family);
@@ -266,6 +648,22 @@
   }
 
   .cart-bubble--animating .cart-bubble__text {
-    animation: cartBubbleSlideIn var(--animation-speed) var(--animation-easing);
+    --start-y: -1em;
+    --start-opacity: 1;
+    /* Set initial transform state before animation starts */
+    transform: translate(0, var(--start-y, -1em));
+    opacity: var(--start-opacity, 1);
+    animation: move-and-fade var(--animation-speed) var(--animation-easing);
+  }
+
+  cart-icon:has(.cart-bubble__text-count:empty) {
+    --cart-bubble-size: 10px;
+    --cart-bubble-top: 9px;
+    --cart-bubble-right: 9px;
+
+    .svg-wrapper {
+      --cart-bubble-top: 4px;
+      --cart-bubble-right: 4px;
+    }
   }
 {% endstylesheet %}

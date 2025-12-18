@@ -66,7 +66,7 @@
     "nested_product": "{{ product_title }} pro {{ parent_title }}",
     "remove": "Odebrat",
     "view_pricing_info": "Zobrazit informace o cenách",
-    "open_hotspot": "Otevřít aktivní bod",
+    "open_hotspot": "Otevřený hotspot",
     "slideshow": "Prezentace"
   },
   "actions": {
@@ -313,7 +313,9 @@
       "quantity_increments": "Přírůstky: {{ increment }}",
       "quantity_minimum": "Minimum: {{ minimum }}",
       "quantity_maximum": "Maximum: {{ maximum }}",
-      "in_cart": "v košíku"
+      "in_cart": "v košíku",
+      "default_title": "Výchozí název",
+      "sticky_add_to_cart": "Panel Rychle přidat do košíku"
     }
   },
   "fields": {

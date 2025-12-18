@@ -133,6 +133,8 @@ export class OverflowList extends DeclarativeShadowElement {
 
   disconnectedCallback() {
     this.#resizeObserver.disconnect();
+    this.#mutationObserver.disconnect();
+    this.#intersectionObserver.disconnect();
   }
 
   get schedule() {

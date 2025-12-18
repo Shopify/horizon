@@ -64,7 +64,7 @@
     "discount_menu": "Кодове за отстъпка",
     "remove": "Премахване",
     "view_pricing_info": "Преглед на информация за ценообразуването",
-    "open_hotspot": "Отвори горещ точка",
+    "open_hotspot": "Отваряне на гореща точка",
     "slideshow": "Слайдшоу"
   },
   "actions": {
@@ -301,7 +301,9 @@
       "quantity_increments": "Стъпки от {{ increment }}",
       "quantity_minimum": "Минимум: {{ minimum }}",
       "quantity_maximum": "Максимум: {{ maximum }}",
-      "in_cart": "в количката"
+      "in_cart": "в количката",
+      "default_title": "Заглавие по подразбиране",
+      "sticky_add_to_cart": "Лента за бързо добавяне в количката"
     }
   },
   "fields": {

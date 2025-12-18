@@ -58,6 +58,11 @@ class ProductRecommendations extends HTMLElement {
     this.#mutationObserver.observe(this, { attributes: true });
   }
 
+  disconnectedCallback() {
+    this.#intersectionObserver.disconnect();
+    this.#mutationObserver.disconnect();
+  }
+
   /**
    * Load the product recommendations
    */

@@ -1,3 +1,5 @@
+import { yieldToMainThread } from '@theme/utilities';
+
 /**
  * FlyToCart custom element for animating product images to cart
  * This component creates a visual effect of a product "flying" to the cart when added
@@ -13,13 +15,36 @@ class FlyToCart extends HTMLElement {
   destination;
 
   connectedCallback() {
-    this.#animate();
+    const intersectionObserver = new IntersectionObserver((entries) => {
+      /** @type {DOMRectReadOnly | null} */
+      let sourceRect = null;
+      /** @type {DOMRectReadOnly | null} */
+      let destinationRect = null;
+
+      entries.forEach((entry) => {
+        if (entry.target === this.source) {
+          sourceRect = entry.boundingClientRect;
+        } else if (entry.target === this.destination) {
+          destinationRect = entry.boundingClientRect;
+        }
+      });
+
+      if (sourceRect && destinationRect) {
+        this.#animate(sourceRect, destinationRect);
+      }
+
+      intersectionObserver.disconnect();
+    });
+    intersectionObserver.observe(this.source);
+    intersectionObserver.observe(this.destination);
   }
 
-  #animate = async () => {
-    const sourceRect = this.source.getBoundingClientRect();
-    const destinationRect = this.destination.getBoundingClientRect();
-
+  /**
+   * Animates the flying thingy along the bezier curve.
+   * @param {DOMRectReadOnly} sourceRect - The bounding client rect of the source.
+   * @param {DOMRectReadOnly} destinationRect - The bounding client rect of the destination.
+   */
+  #animate = async (sourceRect, destinationRect) => {
     //Define bezier curve points
     const startPoint = {
       x: sourceRect.left + sourceRect.width / 2,
@@ -40,6 +65,9 @@ class FlyToCart extends HTMLElement {
     this.style.setProperty('--start-y', `${startPoint.y}px`);
     this.style.setProperty('--travel-x', `${endPoint.x - startPoint.x}px`);
     this.style.setProperty('--travel-y', `${endPoint.y - startPoint.y}px`);
+
+    await yieldToMainThread();
+
     await Promise.allSettled(this.getAnimations().map((a) => a.finished));
     this.remove();
   };

@@ -3,8 +3,6 @@
 
   @param {number} card_size - The minimum pixel-width of the product card.
   @param {number} [card_gap] - The pixel-width of the gap between product cards.
-  @param {number} [max_breakpoint] - The maximum pixel-width to calculate breakpoints for.
-  @param {number} [min_breakpoint] - The minimum pixel-width before defaulting to 50vw.
 
   @example
   {% capture size_attribute %}
@@ -26,9 +24,9 @@
 
   assign card_size_with_gap = card_size | plus: card_gap
 
-  assign max_breakpoint = max_breakpoint | default: 2000
+  assign max_breakpoint = 2000
 
-  assign min_breakpoint = min_breakpoint | default: 750
+  assign min_breakpoint = 750
 
   # Calculate maximum number of columns at max width
   assign max_cols = max_breakpoint | divided_by: card_size_with_gap | floor

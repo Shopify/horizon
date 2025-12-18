@@ -367,15 +367,32 @@ export function scrollIntoView(element, { ancestor, behavior = 'smooth', block =
 }
 
 class ScrollHint extends HTMLElement {
+  /** @type {number | null} */
+  #rafId = null;
+
   connectedCallback() {
-    this.addEventListener('scroll', this.#update);
+    this.addEventListener('scroll', this.#handleScroll);
     this.#resizeObserver.observe(this);
   }
 
   disconnectedCallback() {
-    this.removeEventListener('scroll', this.#update);
+    this.removeEventListener('scroll', this.#handleScroll);
     this.#resizeObserver.disconnect();
+    if (this.#rafId !== null) {
+      cancelAnimationFrame(this.#rafId);
+      this.#rafId = null;
+    }
   }
+
+  #handleScroll = () => {
+    // Throttle scroll updates with requestAnimationFrame to avoid layout thrashing
+    if (this.#rafId !== null) return;
+
+    this.#rafId = requestAnimationFrame(() => {
+      this.#rafId = null;
+      this.#update();
+    });
+  };
 
   #update = () => {
     const { scrollTop, scrollHeight, clientHeight, scrollLeft, scrollWidth, clientWidth } = this;

@@ -551,7 +551,7 @@
     "empty_cart_button_link": "Link do botão do carrinho vazio",
     "auto_load_products": "Carregar produtos automaticamente na rolagem",
     "products_per_page": "Produtos por página",
-    "custom_mobile_media": "Mídia personalizada para celular",
+    "custom_mobile_media": "Mostrar mídia diferente no celular",
     "stack_media_on_mobile": "Empilhar mídia",
     "media_type_1": "Tipo de mídia",
     "media_type_2": "Tipo de mídia 2",
@@ -966,7 +966,8 @@
     "popover": "Popover",
     "popover_position": "Posição do popover",
     "resource_reference_product_sku": "Exibe o SKU do produto principal",
-    "content_layout": "Layout do conteúdo"
+    "content_layout": "Layout do conteúdo",
+    "mobile_media_1": "Mídia para celular 1"
   },
   "html_defaults": {
     "share_information_about_your": "<p>Compartilhe informações sobre sua marca com seus clientes. Descreva um produto, faça anúncios ou dê as boas-vindas aos clientes em sua loja.</p>",
@@ -1066,7 +1067,7 @@
     "video_alt_text": "Descreva o vídeo para usuários de tecnologia assistiva",
     "video_autoplay": "Os vídeos ficarão sem som por padrão",
     "video_external": "Use um URL do YouTube ou do Vimeo",
-    "carousel_layout_on_mobile": "O carrossel é usado no celular",
+    "carousel_layout_on_mobile": "O carrossel é sempre usado no celular",
     "carousel_hover_behavior_not_supported": "O efeito hover de \"Carrossel\" não é compatível quando o tipo \"Carrossel\" é selecionado no nível da seção",
     "checkout_buttons": "Permite que os compradores finalizem a compra mais rapidamente e pode melhorar a conversão. [Saiba mais](https://help.shopify.com/manual/online-store/dynamic-checkout)",
     "custom_heading": "Título personalizado",

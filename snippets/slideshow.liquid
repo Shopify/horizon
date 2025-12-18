@@ -23,7 +23,6 @@
   @param {string} [arrows_position] - The position of the arrows, defaults to 'bottom'
   @param {string} [attributes] - Additional attributes to add to the slideshow component
   @param {boolean} [header] - The title of the slideshow
-  @param {string} [content_position] - The position of the content, defaults to 'on-media'
 
   @example
   {% render 'slideshow', slides: slides, slide_count: collection.products.size, ref: 'mobileSlideshow' %}
@@ -65,6 +64,17 @@
   assign style = style | strip | strip_newlines | append: align_items | append: slide_min_height | append: slide_min_height_desktop
 -%}
 
+{%- liquid
+  assign timeline_scope = ''
+
+  for index in (1..slide_count)
+    assign scope = '--slide-index, ' | replace: 'index', index
+    assign timeline_scope = timeline_scope | append: scope
+  endfor
+
+  assign timeline_scope = timeline_scope | strip | split: ',' | compact | join: ','
+-%}
+
 <slideshow-component
   {% if ref != blank %}
     ref="{{ ref }}"
@@ -72,7 +82,7 @@
   {% if class != blank %}
     class="{{ class }}"
   {% endif %}
-  style="--slideshow-timeline: {% render 'timeline-scope', count: slide_count, prefix: 'slide' %};{{ style }}"
+  style="--slideshow-timeline: {{ timeline_scope }};{{ style }}"
   {% if autoplay == true %}
     autoplay="{{ autoplay_speed }}" aria-live="polite"
   {% endif %}
@@ -90,10 +100,10 @@
     {{ header }}
   {% endif %}
   <slideshow-container ref="slideshowContainer">
-    {% if show_arrows and disabled != true %}
+    {% if show_arrows %}
       {% render 'slideshow-arrows', icon_style: icon_style, icon_shape: icon_shape, arrows_position: arrows_position %}
     {% endif %}
-    {% if slideshow_arrows and disabled != true %}
+    {% if slideshow_arrows %}
       {{ slideshow_arrows }}
     {% endif %}
     <slideshow-slides

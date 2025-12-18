@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "Horizon",
-    "theme_version": "3.2.0",
+    "theme_version": "3.2.1",
     "theme_author": "Shopify",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://support.shopify.com/"
@@ -1778,7 +1778,7 @@
       {
         "type": "select",
         "id": "cart_thumbnail_border",
-        "label": "t:settings.style",
+        "label": "t:settings.border_style",
         "options": [
           {
             "value": "none",

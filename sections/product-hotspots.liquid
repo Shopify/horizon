@@ -428,7 +428,6 @@
     }
 
     .quick-add__button {
-      display: grid;
       position: relative;
       padding-block: 0;
       box-shadow: none;
@@ -468,36 +467,6 @@
           transition-duration: var(--animation-speed);
           transition-delay: var(--animation-speed-slow);
         }
-      }
-
-      @media screen and (min-width: 750px) {
-        display: none;
-      }
-    }
-
-    [data-quick-add-button='add'] {
-      & .quick-add__button--choose {
-        display: none;
-      }
-
-      & .quick-add__button--add {
-        display: grid;
-      }
-    }
-
-    [data-quick-add-button='choose'] {
-      & .quick-add__button--choose {
-        display: grid;
-      }
-
-      & .quick-add__button--add {
-        display: none;
-      }
-    }
-
-    :has(.hotspot-dialog__sold-out-badge) {
-      .quick-add {
-        display: none;
       }
     }
   }

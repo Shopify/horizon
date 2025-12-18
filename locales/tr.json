@@ -64,7 +64,7 @@
     "nested_product": "{{ parent_title }} için {{ product_title }}",
     "remove": "Kaldır",
     "view_pricing_info": "Fiyatlandırma bilgilerini görüntüle",
-    "open_hotspot": "Hotspot'u aç",
+    "open_hotspot": "Etkin noktayı aç",
     "slideshow": "Slayt gösterisi"
   },
   "actions": {
@@ -324,7 +324,9 @@
       "quantity_increments": "Artış değeri: {{ increment }}",
       "quantity_minimum": "Minimum: {{ minimum }}",
       "quantity_maximum": "Maksimum: {{ maximum }}",
-      "in_cart": "sepette"
+      "in_cart": "sepette",
+      "default_title": "Varsayılan Başlık",
+      "sticky_add_to_cart": "Sepete hızlı ekle çubuğu"
     }
   }
 }

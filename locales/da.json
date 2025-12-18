@@ -65,7 +65,7 @@
     "remove": "Fjern",
     "view_pricing_info": "Vis prisoplysninger",
     "open_hotspot": "Åbn hotspot",
-    "slideshow": "Slideshow"
+    "slideshow": "Diasshow"
   },
   "actions": {
     "add_to_cart": "Læg i indkøbskurven",
@@ -301,7 +301,9 @@
       "quantity_increments": "Intervaller på {{ increment }}",
       "quantity_minimum": "Minimum på {{ minimum }}",
       "quantity_maximum": "Maksimum på {{ maximum }}",
-      "in_cart": "i indkøbskurv"
+      "in_cart": "i indkøbskurv",
+      "default_title": "Standardtitel",
+      "sticky_add_to_cart": "Bjælken “Læg hurtigt i indkøbskurv”"
     }
   },
   "fields": {

@@ -64,7 +64,7 @@
     "nested_product": "{{ product_title }} for {{ parent_title }}",
     "remove": "Fjern",
     "view_pricing_info": "Se prisinformasjon",
-    "open_hotspot": "Åpne hotspot",
+    "open_hotspot": "Åpne tilgangspunkt",
     "slideshow": "Lysbildefremvisning"
   },
   "actions": {
@@ -324,7 +324,9 @@
       "quantity_increments": "Økninger på {{ increment }}",
       "quantity_minimum": "Minimum {{ minimum }}",
       "quantity_maximum": "Maksimum {{ maximum }}",
-      "in_cart": "i handlekurv"
+      "in_cart": "i handlekurv",
+      "default_title": "Standardtittel",
+      "sticky_add_to_cart": "Hurtiglinje for «Legg i handlekurv»"
     }
   }
 }

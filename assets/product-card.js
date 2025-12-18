@@ -1,7 +1,7 @@
 import { OverflowList } from '@theme/overflow-list';
 import VariantPicker from '@theme/variant-picker';
 import { Component } from '@theme/component';
-import { debounce, isDesktopBreakpoint, mediaQueryLarge, requestYieldCallback } from '@theme/utilities';
+import { debounce, isDesktopBreakpoint, mediaQueryLarge, yieldToMainThread } from '@theme/utilities';
 import { ThemeEvents, VariantSelectedEvent, VariantUpdateEvent, SlideshowSelectEvent } from '@theme/events';
 import { morph } from '@theme/morph';
 
@@ -417,7 +417,7 @@ export class ProductCard extends Component {
         url.searchParams.set('page', parent.dataset.page);
       }
 
-      requestYieldCallback(() => {
+      yieldToMainThread().then(() => {
         history.replaceState({}, '', url.toString());
       });
     }

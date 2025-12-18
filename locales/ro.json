@@ -65,8 +65,8 @@
     "discount_menu": "Coduri de reduceri",
     "remove": "Elimină",
     "view_pricing_info": "Vezi informațiile de tarifare",
-    "open_hotspot": "Deschide hotspot",
-    "slideshow": "Prezentare"
+    "open_hotspot": "Pornește hotspot",
+    "slideshow": "Prezentare de diapozitive"
   },
   "actions": {
     "add_to_cart": "Adaugă în coș",
@@ -331,7 +331,9 @@
       "quantity_increments": "Creșteri de {{ increment }}",
       "quantity_minimum": "Minim {{ minimum }}",
       "quantity_maximum": "Maxim {{ maximum }}",
-      "in_cart": "în coș"
+      "in_cart": "în coș",
+      "default_title": "Titlu implicit",
+      "sticky_add_to_cart": "Bara de adăugare rapidă în coș"
     }
   }
 }

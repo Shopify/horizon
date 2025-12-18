@@ -551,7 +551,7 @@
     "empty_cart_button_link": "Ligação do botão do carrinho vazio",
     "auto_load_products": "Carregar produtos automaticamente ao navegar",
     "products_per_page": "Produtos por página",
-    "custom_mobile_media": "Conteúdo multimédia personalizado para telemóvel",
+    "custom_mobile_media": "Mostrar conteúdo multimédia diferente no telemóvel",
     "stack_media_on_mobile": "Empilhar conteúdo multimédia",
     "media_type_1": "Tipo de conteúdo multimédia",
     "media_type_2": "Tipo de conteúdo multimédia 2",
@@ -966,7 +966,8 @@
     "popover": "Popover",
     "popover_position": "Posição do popover",
     "resource_reference_product_sku": "Apresenta o SKU do produto principal",
-    "content_layout": "Esquema do conteúdo"
+    "content_layout": "Esquema do conteúdo",
+    "mobile_media_1": "Conteúdo multimédia para telemóvel 1"
   },
   "html_defaults": {
     "share_information_about_your": "<p>Partilhe informações sobre a sua marca com os seus clientes. Descreva um produto, faça anúncios ou dê as boas-vindas aos clientes na sua loja.</p>",
@@ -1066,7 +1067,7 @@
     "video_alt_text": "Descreva o vídeo para utilizadores de tecnologia de apoio",
     "video_autoplay": "Os vídeos serão silenciados por predefinição",
     "video_external": "Utilize um URL do YouTube ou do Vimeo",
-    "carousel_layout_on_mobile": "O carrossel é utilizado em telemóveis",
+    "carousel_layout_on_mobile": "O carrossel é sempre utilizado no telemóvel",
     "carousel_hover_behavior_not_supported": "O efeito de pairar \"Carrossel\" não é suportado quando o tipo \"Carrossel\" está selecionado ao nível da secção",
     "grid_layout_on_mobile": "O esquema de grelha é utilizado para telemóvel",
     "logo_font": "Aplica-se apenas quando não está selecionado um logótipo",

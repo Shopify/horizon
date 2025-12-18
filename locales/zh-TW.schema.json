@@ -551,7 +551,7 @@
     "empty_cart_button_link": "購物車為空時的按鈕連結",
     "auto_load_products": "捲動時自動載入產品",
     "products_per_page": "每頁產品數",
-    "custom_mobile_media": "自訂行動版多媒體檔案",
+    "custom_mobile_media": "在行動裝置上顯示不同的多媒體檔案",
     "stack_media_on_mobile": "堆疊多媒體",
     "full_frame_on_mobile": "行動版滿版寬度",
     "skus": "存貨單位 (SKU)",
@@ -966,7 +966,8 @@
     "popover": "彈出式提示",
     "popover_position": "彈出式提示位置",
     "resource_reference_product_sku": "顯示父商品的存貨單位 (SKU)",
-    "content_layout": "內容版面配置"
+    "content_layout": "內容版面配置",
+    "mobile_media_1": "行動裝置用多媒體檔案 1"
   },
   "html_defaults": {
     "share_information_about_your": "<p>向顧客分享您的品牌故事。可用來敘述產品、發布公告，或歡迎顧客造訪您的商店。</p>",
@@ -1063,7 +1064,7 @@
     "new_arrivals": "新品上市"
   },
   "info": {
-    "carousel_layout_on_mobile": "行動裝置會使用輪播",
+    "carousel_layout_on_mobile": "在行動裝置上一律使用輪播",
     "video_alt_text": "為使用輔助技術的使用者描述影片",
     "video_autoplay": "影片預設為靜音播放",
     "video_external": "使用 YouTube 或 Vimeo 網址",

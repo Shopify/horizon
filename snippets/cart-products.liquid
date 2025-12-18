@@ -270,7 +270,11 @@
                     | default: true, allow_false: true
                   %}
                   <div class="cart-items__quantity-controls">
-                    {% render 'volume-pricing-info', variant: item.variant, unique_id: item.index, quantity: item.quantity %}
+                    {% render 'volume-pricing-info',
+                      variant: item.variant,
+                      unique_id: item.index,
+                      quantity: item.quantity
+                    %}
 
                     {% render 'quantity-selector',
                       product: item.product,
@@ -361,6 +365,7 @@
 
   .cart-items__table {
     width: 100%;
+    border-spacing: 0;
   }
 
   .cart-items__table * {
@@ -651,7 +656,11 @@
   }
 
   .cart__total-value {
-    font-size: var(--cart-font-size--2xl);
+    font-size: var(--cart-font-size--xl);
+
+    @media screen and (max-width: 749px) {
+      font-size: var(--cart-font-size--lg);
+    }
   }
 
   .cart-primary-typography {
@@ -720,7 +729,8 @@
     display: flex;
     align-items: flex-start;
     gap: var(--gap-2xs);
-    font-size: var(--cart-font-size--sm);
+    font-size: var(--cart-font-size--2xs);
+    font-weight: 500;
   }
 
   .cart-note__instructions {

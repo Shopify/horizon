@@ -551,7 +551,7 @@
     "empty_cart_button_link": "ลิงก์ปุ่มสำหรับตะกร้าสินค้าที่ว่างเปล่า",
     "auto_load_products": "โหลดสินค้าอัตโนมัติเมื่อเลื่อน",
     "products_per_page": "สินค้าต่อหน้า",
-    "custom_mobile_media": "สื่อสำหรับมือถือที่กำหนดเอง",
+    "custom_mobile_media": "แสดงสื่อที่แตกต่างกันบนมือถือ",
     "stack_media_on_mobile": "ซ้อนสื่อ",
     "media_type_1": "ประเภทสื่อ",
     "media_type_2": "ประเภทสื่อ 2",
@@ -966,7 +966,8 @@
     "popover": "ป็อปโอเวอร์",
     "popover_position": "ตำแหน่งป็อปโอเวอร์",
     "resource_reference_product_sku": "แสดง SKU จากสินค้าหลัก",
-    "content_layout": "เลย์เอาต์เนื้อหา"
+    "content_layout": "เลย์เอาต์เนื้อหา",
+    "mobile_media_1": "สื่อสำหรับมือถือ 1"
   },
   "html_defaults": {
     "share_information_about_your": "<p>แชร์ข้อมูลเกี่ยวกับแบรนด์ของคุณกับลูกค้า อธิบายสินค้า ประกาศข่าวสาร หรือต้อนรับลูกค้าสู่ร้านค้าของคุณ</p>",
@@ -1066,7 +1067,7 @@
     "video_alt_text": "โปรดอธิบายวิดีโอสำหรับผู้ใช้เทคโนโลยีความช่วยเหลือพิเศษ",
     "video_autoplay": "วิดีโอจะถูกปิดเสียงตามค่าเริ่มต้น",
     "video_external": "ใช้ URL ของ YouTube หรือ Vimeo",
-    "carousel_layout_on_mobile": "ใช้แครูเซลบนมือถือ",
+    "carousel_layout_on_mobile": "บนมือถือจะแสดงผลเป็นแคโรเซลเสมอ",
     "checkout_buttons": "ช่วยให้ผู้ซื้อชำระเงินได้เร็วขึ้นและสามารถปรับปรุงคอนเวอร์ชันได้ [ดูข้อมูลเพิ่มเติม](https://help.shopify.com/manual/online-store/dynamic-checkout)",
     "custom_heading": "ส่วนหัวเรื่องที่กำหนดเอง",
     "edit_presets_in_theme_settings": "แก้ไขค่าที่ตั้งไว้ล่วงหน้าใน[การตั้งค่าธีม](/editor?context=theme&category=typography)",

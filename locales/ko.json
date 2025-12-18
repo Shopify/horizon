@@ -65,7 +65,7 @@
     "remove": "제거",
     "view_pricing_info": "가격 정보 보기",
     "open_hotspot": "핫스팟 열기",
-    "slideshow": "슬라이드쇼"
+    "slideshow": "슬라이드 쇼"
   },
   "actions": {
     "add_to_cart": "카트에 추가",
@@ -301,7 +301,9 @@
       "quantity_increments": "{{ increment }}개씩 증가",
       "quantity_minimum": "최소 {{ minimum }}개",
       "quantity_maximum": "최대 {{ maximum }}개",
-      "in_cart": "카트에 있음"
+      "in_cart": "카트에 있음",
+      "default_title": "기본 이름",
+      "sticky_add_to_cart": "빠른 카트 추가 바"
     }
   },
   "fields": {

@@ -70,7 +70,6 @@ class CartIcon extends Component {
 
     this.refs.cartBubbleCount.classList.toggle('hidden', itemCount === 0);
     this.refs.cartBubble.classList.toggle('visually-hidden', itemCount === 0);
-    this.refs.cartBubble.classList.toggle('cart-bubble--animating', itemCount > 0 && animate);
 
     this.currentCartCount = comingFromProductForm ? this.currentCartCount + itemCount : itemCount;
 
@@ -84,7 +83,13 @@ class CartIcon extends Component {
       })
     );
 
-    if (!animate) return;
+    if (!animate || itemCount === 0) return;
+
+    // Ensure element is visible before starting animation
+    // Use requestAnimationFrame to ensure the browser sees the state change
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+
+    this.refs.cartBubble.classList.add('cart-bubble--animating');
     await onAnimationEnd(this.refs.cartBubbleText);
 
     this.refs.cartBubble.classList.remove('cart-bubble--animating');

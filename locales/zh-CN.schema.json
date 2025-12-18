@@ -551,7 +551,7 @@
     "empty_cart_button_link": "空购物车按钮链接",
     "auto_load_products": "滚动时自动加载产品",
     "products_per_page": "每页产品数",
-    "custom_mobile_media": "自定义移动媒体文件",
+    "custom_mobile_media": "在移动版上显示不同媒体文件",
     "stack_media_on_mobile": "堆叠媒体文件",
     "media_type_1": "媒体文件类型",
     "media_type_2": "媒体文件 2 类型",
@@ -966,7 +966,8 @@
     "popover": "弹出框",
     "popover_position": "弹出框位置",
     "resource_reference_product_sku": "显示主产品的 SKU",
-    "content_layout": "内容布局"
+    "content_layout": "内容布局",
+    "mobile_media_1": "移动版媒体文件 1"
   },
   "html_defaults": {
     "share_information_about_your": "<p>与您的客户分享有关您品牌的信息。描述产品、发布公告或欢迎客户光临您的商店。</p>",
@@ -1066,7 +1067,7 @@
     "video_alt_text": "为使用辅助技术的用户描述视频",
     "video_autoplay": "视频将默认静音",
     "video_external": "使用 YouTube 或 Vimeo URL",
-    "carousel_layout_on_mobile": "在移动设备上使用轮播",
+    "carousel_layout_on_mobile": "移动版始终使用轮播布局",
     "carousel_hover_behavior_not_supported": "在分区级别选择“轮播”类型时，不支持“轮播”悬停",
     "checkout_buttons": "允许客户更快地结账，并可以提高转化率。[了解更多](https://help.shopify.com/manual/online-store/dynamic-checkout)",
     "custom_heading": "自定义标题",

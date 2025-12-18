@@ -1,7 +1,7 @@
 import { Component } from '@theme/component';
 import { VariantSelectedEvent, VariantUpdateEvent } from '@theme/events';
-import { morph } from '@theme/morph';
-import { requestYieldCallback, getViewParameterValue } from '@theme/utilities';
+import { morph, MORPH_OPTIONS } from '@theme/morph';
+import { yieldToMainThread, getViewParameterValue, ResizeNotifier } from '@theme/utilities';
 
 /**
  * @typedef {object} VariantPickerRefs
@@ -27,6 +27,8 @@ export default class VariantPicker extends Component {
   /** @type {HTMLInputElement[][]} */
   #radios = [];
 
+  #resizeObserver = new ResizeNotifier(() => this.updateVariantPickerCss());
+
   connectedCallback() {
     super.connectedCallback();
     const fieldsets = /** @type {HTMLFieldSetElement[]} */ (this.refs.fieldsets || []);
@@ -42,6 +44,12 @@ export default class VariantPicker extends Component {
     });
 
     this.addEventListener('change', this.variantChanged.bind(this));
+    this.#resizeObserver.observe(this);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.#resizeObserver.disconnect();
   }
 
   /**
@@ -97,9 +105,73 @@ export default class VariantPicker extends Component {
     }
 
     if (url.href !== window.location.href) {
-      requestYieldCallback(() => {
+      yieldToMainThread().then(() => {
         history.replaceState({}, '', url.toString());
       });
+    }
+  }
+
+  /**
+   * @typedef {object} FieldsetMeasurements
+   * @property {HTMLFieldSetElement} fieldset
+   * @property {number | undefined} currentIndex
+   * @property {number | undefined} previousIndex
+   * @property {number | undefined} currentWidth
+   * @property {number | undefined} previousWidth
+   */
+
+  /**
+   * Gets measurements for a single fieldset (read phase).
+   * @param {number} fieldsetIndex
+   * @returns {FieldsetMeasurements | null}
+   */
+  #getFieldsetMeasurements(fieldsetIndex) {
+    const fieldsets = /** @type {HTMLFieldSetElement[]} */ (this.refs.fieldsets || []);
+    const fieldset = fieldsets[fieldsetIndex];
+    const checkedIndices = this.#checkedIndices[fieldsetIndex];
+    const radios = this.#radios[fieldsetIndex];
+
+    if (!radios || !checkedIndices || !fieldset) return null;
+
+    const [currentIndex, previousIndex] = checkedIndices;
+
+    return {
+      fieldset,
+      currentIndex,
+      previousIndex,
+      currentWidth: currentIndex !== undefined ? radios[currentIndex]?.parentElement?.offsetWidth : undefined,
+      previousWidth: previousIndex !== undefined ? radios[previousIndex]?.parentElement?.offsetWidth : undefined,
+    };
+  }
+
+  /**
+   * Applies measurements to a fieldset (write phase).
+   * @param {FieldsetMeasurements} measurements
+   */
+  #applyFieldsetMeasurements({ fieldset, currentWidth, previousWidth, currentIndex, previousIndex }) {
+    if (currentWidth) {
+      fieldset.style.setProperty('--pill-width-current', `${currentWidth}px`);
+    } else if (currentIndex !== undefined) {
+      fieldset.style.removeProperty('--pill-width-current');
+    }
+
+    if (previousWidth) {
+      fieldset.style.setProperty('--pill-width-previous', `${previousWidth}px`);
+    } else if (previousIndex !== undefined) {
+      fieldset.style.removeProperty('--pill-width-previous');
+    }
+  }
+
+  /**
+   * Updates the fieldset CSS.
+   * @param {number} fieldsetIndex - The fieldset index.
+   */
+  updateFieldsetCss(fieldsetIndex) {
+    if (Number.isNaN(fieldsetIndex)) return;
+
+    const measurements = this.#getFieldsetMeasurements(fieldsetIndex);
+    if (measurements) {
+      this.#applyFieldsetMeasurements(measurements);
     }
   }
 
@@ -148,20 +220,14 @@ export default class VariantPicker extends Component {
           // newCurrentIndex is guaranteed to exist since we just added it
           if (newCurrentIndex !== undefined && radios[newCurrentIndex]) {
             radios[newCurrentIndex].dataset.currentChecked = 'true';
-            fieldset.style.setProperty(
-              '--pill-width-current',
-              `${radios[newCurrentIndex].parentElement?.offsetWidth || 0}px`
-            );
           }
 
           if (newPreviousIndex !== undefined && radios[newPreviousIndex]) {
             radios[newPreviousIndex].dataset.previousChecked = 'true';
             radios[newPreviousIndex].dataset.currentChecked = 'false';
-            fieldset.style.setProperty(
-              '--pill-width-previous',
-              `${radios[newPreviousIndex].parentElement?.offsetWidth || 0}px`
-            );
           }
+
+          this.updateFieldsetCss(fieldsetIndex);
         }
       }
       target.checked = true;
@@ -287,7 +353,7 @@ export default class VariantPicker extends Component {
 
   /**
    * Re-renders the variant picker.
-   * @param {Document} newHtml - The new HTML.
+   * @param {Document | Element} newHtml - The new HTML.
    * @returns {NewProduct | undefined} Information about the new product if it has changed, otherwise undefined.
    */
   updateVariantPicker(newHtml) {
@@ -313,9 +379,29 @@ export default class VariantPicker extends Component {
       this.dataset.productUrl = newProductUrl;
     }
 
-    morph(this, newVariantPickerSource);
+    morph(this, newVariantPickerSource, {
+      ...MORPH_OPTIONS,
+      getNodeKey: (node) => {
+        if (!(node instanceof HTMLElement)) return undefined;
+        const key = node.dataset.key;
+        return key;
+      },
+    });
+    this.updateVariantPickerCss();
 
     return newProduct;
+  }
+
+  updateVariantPickerCss() {
+    const fieldsets = /** @type {HTMLFieldSetElement[]} */ (this.refs.fieldsets || []);
+
+    // Batch all reads first across all fieldsets to avoid layout thrashing
+    const measurements = fieldsets.map((_, index) => this.#getFieldsetMeasurements(index)).filter((m) => m !== null);
+
+    // Batch all writes after all reads
+    for (const measurement of measurements) {
+      this.#applyFieldsetMeasurements(measurement);
+    }
   }
 
   /**

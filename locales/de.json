@@ -65,7 +65,7 @@
     "remove": "Entfernen",
     "view_pricing_info": "Preisinformationen anzeigen",
     "open_hotspot": "Hotspot öffnen",
-    "slideshow": "Diashow"
+    "slideshow": "Slideshow"
   },
   "actions": {
     "add_to_cart": "In den Warenkorb legen",
@@ -301,7 +301,9 @@
       "quantity_increments": "In {{ increment }}er Schritten",
       "quantity_minimum": "Mindestens {{ minimum }}",
       "quantity_maximum": "Maximal {{ maximum }}",
-      "in_cart": "im Warenkorb"
+      "in_cart": "im Warenkorb",
+      "default_title": "Standardtitel",
+      "sticky_add_to_cart": "Leiste „Schnell in den Warenkorb“"
     }
   },
   "fields": {

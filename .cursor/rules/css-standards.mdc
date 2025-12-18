@@ -18,6 +18,50 @@ alwaysApply: false
 
 See [MDN](mdc:https:/developer.mozilla.org/en-US/docs/Web/CSS/Specificity) for more a comprehensive list of specificity rules.
 
+### Notes on `:has()` selector and Shopify themes
+
+The `:has()` selector is incredibly useful, but can impact performance. This is mainly a problem during dynamic DOM updates as the browser engines must re-evaluate `:has()` selectors. This is especially important in Shopify themes where dynamic content updates are common (cart updates, variant selection, filtering, etc.). See [MDN :has performance considerations](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/:has#performance_considerations) for more information.
+
+Performance mitigation strategies:
+
+#### Minimize Subtree Traversals
+
+Anchor of an element as close to the children as possible. i.e. `A:has(B)`, where `A` is the anchor.
+
+Use combinators like `>` or `+` so there is a very clear path for the browser to evaluate. Anything too broad increases the number of leaf nodes to verify.
+
+```css
+/* ❌ AVOID: May trigger full subtree traversal */
+.ancestor:has(.foo) {
+  /* Any change within .ancestor requires checking ALL descendants */
+}
+
+/* ✅ GOOD: More constrained - limits traversal */
+.ancestor:has(> .foo) {
+  /* Only checks direct children */
+}
+```
+
+#### Leverage server-rendered classes when possible
+
+If the dynamic content is being server rendered, you might be able to write a class higher in the DOM than rely on `:has()`
+
+Example: With filters, instead of checking based on the state of the inner `input` element, create a disabled class.
+
+```css
+/* ❌ AVOID: Styling .filter-label based on child */
+.filter-label:has(input[disabled]) {
+  /* Disabled styles */
+}
+
+/* ✅ GOOD: .disabled set server side */
+.filter-label.disabled {
+  /* Disabled styles */
+}
+```
+
+This strategy won't work for client-side events, like a `checked`, `selected`, `focus` event.
+
 ## CSS Variables
 
 CSS variables, a.k.a. custom properties, are a powerful tool for reducing redundancy and making it easier to update values across a component.

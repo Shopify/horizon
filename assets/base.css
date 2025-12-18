@@ -65,6 +65,70 @@ select {
   color: currentcolor;
 }
 
+.collection-card,
+.featured-blog-posts-card {
+  width: 100%;
+  position: relative;
+  height: 100%;
+}
+
+/* Editorial layout */
+.resource-list:not(.hidden--desktop) .collection-card--flexible-aspect-ratio,
+.resource-list:not(.hidden--desktop) .blog-post-card--flexible-aspect-ratio {
+  .collection-card__image,
+  .featured-blog-posts-card__image,
+  .blog-placeholder-svg {
+    aspect-ratio: 99;
+    height: 100%;
+  }
+
+  .collection-card__inner,
+  .featured-blog-posts-card__inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .collection-card__content,
+  .featured-blog-posts-card__content {
+    flex-shrink: 0;
+  }
+
+  &:not(.collection-card--image-bg) .collection-card__content,
+  .featured-blog-posts-card__content {
+    height: auto;
+  }
+}
+
+.collection-card__inner,
+.featured-blog-posts-card__inner {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  z-index: var(--layer-flat);
+  pointer-events: none;
+}
+
+.collection-card__content,
+.featured-blog-posts-card__content {
+  display: flex;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  gap: var(--gap);
+}
+
+.collection-card__link,
+.featured-blog-posts-card__link {
+  position: absolute;
+  inset: 0;
+
+  /* allows focus outline to have radius in supported browsers */
+  border-radius: var(--border-radius);
+}
+
 .product-card,
 .collection-card,
 .resource-card,
@@ -73,7 +137,6 @@ select {
   position: relative;
   transition: transform var(--hover-transition-duration) var(--hover-transition-timing),
     box-shadow var(--hover-transition-duration) var(--hover-transition-timing);
-  will-change: transform, box-shadow;
   z-index: var(--layer-flat);
 }
 
@@ -1251,21 +1314,44 @@ results-list[initialized] {
 
 /* stylelint-disable value-keyword-case */
 .dialog-drawer {
-  --dialog-drawer-opening-animation: slideInLeft;
-  --dialog-drawer-closing-animation: slideOutLeft;
+  --dialog-drawer-opening-animation: move-and-fade;
+  --dialog-drawer-closing-animation: move-and-fade;
 }
 
 .dialog-drawer--right {
-  --dialog-drawer-opening-animation: slideInRight;
-  --dialog-drawer-closing-animation: slideOutRight;
+  --dialog-drawer-opening-animation: move-and-fade;
+  --dialog-drawer-closing-animation: move-and-fade;
 }
 /* stylelint-enable value-keyword-case */
 
 .dialog-drawer[open] {
+  --start-x: var(--custom-transform-from, 100%);
+  --end-x: var(--custom-transform-to, 0px);
+  --start-opacity: 1;
+
   animation: var(--dialog-drawer-opening-animation) var(--animation-speed) var(--animation-easing) forwards;
 }
 
-.dialog-drawer.dialog-closing {
+.dialog-drawer[open].dialog-closing {
+  --start-x: 0px;
+  --end-x: 100%;
+  --start-opacity: 1;
+  --end-opacity: 1;
+
+  animation: var(--dialog-drawer-closing-animation) var(--animation-speed) var(--animation-easing);
+}
+
+.dialog-drawer--right[open] {
+  --start-x: -100%;
+  --start-opacity: 1;
+}
+
+.dialog-drawer--right[open].dialog-closing {
+  --start-x: 0px;
+  --end-x: -100%;
+  --start-opacity: 1;
+  --end-opacity: 1;
+
   animation: var(--dialog-drawer-closing-animation) var(--animation-speed) var(--animation-easing);
 }
 
@@ -2588,7 +2674,7 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
 }
 
 .cart-bubble__text {
-  font-size: var(--font-size--2xs);
+  font-size: var(--font-size--3xs);
   z-index: var(--layer-flat);
   line-height: 1;
   display: flex;
@@ -2846,105 +2932,21 @@ fly-to-cart.fly-to-cart--sticky {
   }
 }
 
-@keyframes slideInLeft {
+@keyframes move-and-fade {
   from {
-    transform: translateX(var(--custom-transform-from, 100%));
+    transform: translate(var(--start-x, 0), var(--start-y, 0));
+    opacity: var(--start-opacity, 0);
   }
 
   to {
-    transform: translateX(var(--custom-transform-to, 0));
-  }
-}
-
-@keyframes slideInLeftViewTransition {
-  from {
-    transform: translateX(100px);
-  }
-}
-
-@keyframes slideOutRight {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(var(--custom-transform-to, -100%));
-  }
-}
-
-@keyframes slideInRight {
-  from {
-    transform: translateX(-100%);
-  }
-
-  to {
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideOutLeft {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(100%);
-  }
-}
-
-@keyframes slideInTop {
-  from {
-    transform: translateY(100%);
-  }
-
-  to {
-    transform: translateY(0);
+    transform: translate(var(--end-x, 0), var(--end-y, 0));
+    opacity: var(--end-opacity, 1);
   }
 }
 
 @keyframes slideInTopViewTransition {
   from {
     transform: translateY(100px);
-  }
-}
-
-@keyframes slideOutBottom {
-  from {
-    transform: translateY(0);
-  }
-
-  to {
-    transform: translateY(100%);
-  }
-}
-
-@keyframes slideInBottom {
-  from {
-    transform: translateY(-100%);
-  }
-
-  to {
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideOutTop {
-  from {
-    transform: translateY(0);
-  }
-
-  to {
-    transform: translateY(-100%);
-  }
-}
-
-@keyframes cartBubbleSlideIn {
-  from {
-    transform: translateY(-1em);
-  }
-
-  to {
-    transform: translateY(0);
   }
 }
 

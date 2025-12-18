@@ -66,7 +66,7 @@
     "remove": "Rimuovi",
     "view_pricing_info": "Visualizza informazioni sui prezzi",
     "open_hotspot": "Apri hotspot",
-    "slideshow": "Slideshow"
+    "slideshow": "Presentazione"
   },
   "actions": {
     "add_to_cart": "Aggiungi al carrello",
@@ -331,7 +331,9 @@
       "quantity_increments": "Incrementi di {{ increment }}",
       "quantity_minimum": "Minimo di {{ minimum }}",
       "quantity_maximum": "Massimo di {{ maximum }}",
-      "in_cart": "nel carrello"
+      "in_cart": "nel carrello",
+      "default_title": "Titolo predefinito",
+      "sticky_add_to_cart": "Barra per l'aggiunta rapida al carrello"
     }
   }
 }

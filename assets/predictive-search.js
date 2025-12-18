@@ -1,9 +1,9 @@
 import { Component } from '@theme/component';
-import { debounce, onAnimationEnd, prefersReducedMotion, onDocumentLoaded } from '@theme/utilities';
+import { debounce, onAnimationEnd, prefersReducedMotion } from '@theme/utilities';
 import { sectionRenderer } from '@theme/section-renderer';
 import { morph } from '@theme/morph';
 import { RecentlyViewed } from '@theme/recently-viewed-products';
-import { DialogCloseEvent, DialogComponent } from '@theme/dialog';
+import { DialogCloseEvent, DialogOpenEvent, DialogComponent } from '@theme/dialog';
 
 /**
  * A custom element that allows the user to search for resources available on the store.
@@ -28,6 +28,8 @@ class PredictiveSearchComponent extends Component {
    */
   #activeFetch = null;
 
+  #emptyStateLoaded = false;
+
   /**
    * Get the dialog component.
    * @returns {DialogComponent | null} The dialog component.
@@ -49,13 +51,16 @@ class PredictiveSearchComponent extends Component {
     if (dialog) {
       document.addEventListener('keydown', this.#handleKeyboardShortcut, { signal });
       dialog.addEventListener(DialogCloseEvent.eventName, this.#handleDialogClose, { signal });
+      dialog.addEventListener(DialogOpenEvent.eventName, this.#handleDialogOpen, { signal, once: true });
 
       this.addEventListener('click', this.#handleModalClick, { signal });
     }
 
-    onDocumentLoaded(() => {
-      this.resetSearch(false); // Pass false to avoid focusing the input
-    });
+    if (RecentlyViewed.getProducts().length > 0) {
+      requestIdleCallback(() => {
+        this.#loadEmptyState();
+      });
+    }
   }
 
   /**
@@ -99,6 +104,18 @@ class PredictiveSearchComponent extends Component {
     this.#resetSearch();
   };
 
+  #handleDialogOpen = () => {
+    if (!this.#emptyStateLoaded && RecentlyViewed.getProducts().length > 0) {
+      this.#loadEmptyState();
+    }
+  };
+
+  #loadEmptyState() {
+    if (this.#emptyStateLoaded) return;
+    this.#emptyStateLoaded = true;
+    this.resetSearch(false);
+  }
+
   get #allResultsItems() {
     const containers = Array.from(
       this.querySelectorAll(
@@ -133,6 +150,8 @@ class PredictiveSearchComponent extends Component {
   set #currentIndex(index) {
     if (!this.#allResultsItems?.length) return;
 
+    let activeItem = null;
+
     this.#allResultsItems.forEach((item) => {
       item.classList.remove('keyboard-focus');
     });
@@ -140,15 +159,16 @@ class PredictiveSearchComponent extends Component {
     for (const [itemIndex, item] of this.#allResultsItems.entries()) {
       if (itemIndex === index) {
         item.setAttribute('aria-selected', 'true');
-
         if (this.#isKeyboardNavigation) {
           item.classList.add('keyboard-focus');
         }
-        item.scrollIntoView({ behavior: prefersReducedMotion() ? 'instant' : 'smooth', block: 'nearest' });
+        activeItem = item;
       } else {
         item.removeAttribute('aria-selected');
       }
     }
+
+    activeItem?.scrollIntoView({ behavior: prefersReducedMotion() ? 'instant' : 'smooth', block: 'nearest' });
     this.refs.searchInput.focus();
   }
 
@@ -281,15 +301,8 @@ class PredictiveSearchComponent extends Component {
    */
   #resetScrollPositions() {
     requestAnimationFrame(() => {
-      const resultsInner = this.refs.predictiveSearchResults.querySelector('.predictive-search-results__inner');
-      if (resultsInner instanceof HTMLElement) {
-        resultsInner.scrollTop = 0;
-      }
-
-      const formContent = this.querySelector('.predictive-search-form__content');
-      if (formContent instanceof HTMLElement) {
-        formContent.scrollTop = 0;
-      }
+      this.refs.predictiveSearchResults.querySelector('.predictive-search-results__inner')?.scrollTo(0, 0);
+      this.querySelector('.predictive-search-form__content')?.scrollTo(0, 0);
     });
   }
 
