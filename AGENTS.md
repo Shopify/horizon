@@ -18,7 +18,7 @@ Horizon is Shopify's flagship first-party theme (v3.2.1) built with modern web s
 # Lint and validate theme
 shopify theme check
 
-# Build schemas (after editing files in schemas/ folder)
+# Build schemas (only if schemas/ folder exists)
 npm run build:schemas
 
 # Local development with Shopify CLI
@@ -26,6 +26,8 @@ shopify theme dev
 ```
 
 Theme Check runs automatically on every commit via GitHub Actions.
+
+> **Note:** The `npm run build:schemas` command only applies if the repo has a `schemas/` folder and `package.json`. Check if these exist before using.
 
 ## Architecture
 
@@ -79,11 +81,13 @@ HTML uses `ref` attributes and `on:click` for event binding:
 
 ### Schema Editing
 
-**NEVER edit `{% schema %}` blocks directly in `.liquid` files.**
+**If a `schemas/` folder exists, NEVER edit `{% schema %}` blocks directly in `.liquid` files.**
 
-Schemas are generated from `schemas/` folder:
+When using the schema build system:
 1. Edit the `.js` file in `schemas/blocks/` or `schemas/sections/`
 2. Run `npm run build:schemas`
+
+If no `schemas/` folder exists, edit `{% schema %}` blocks directly in the `.liquid` files.
 
 ### Single `content_for 'blocks'` Per File
 
