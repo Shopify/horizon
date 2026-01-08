@@ -1,0 +1,84 @@
+:root {
+  --mercatelia-accent: #f28c00;
+  --mercatelia-accent-soft: #fff2e0;
+  --mercatelia-yellow: #f5b400;
+  --mercatelia-blue: #1f6f8b;
+}
+
+body {
+  letter-spacing: 0.02em;
+}
+
+.button,
+.button-primary,
+.button-secondary {
+  font-weight: 600;
+}
+
+#shopify-section-mercatelia_top_marquee .marquee__content,
+#shopify-section-mercatelia_shipping_marquee .marquee__content {
+  font-weight: 600;
+  letter-spacing: 0.14em;
+}
+
+#shopify-section-hero_mercatelia .hero {
+  background: #e6e6e6;
+}
+
+#shopify-section-hero_mercatelia .hero .text-block {
+  max-width: 28rem;
+}
+
+#shopify-section-hero_mercatelia .hero .text-block p {
+  margin: 0;
+}
+
+#shopify-section-icons_bar_mercatelia .section-content-wrapper > .group-block {
+  background: #f9c64a;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 10px 24px rgb(0 0 0 / 10%);
+}
+
+#shopify-section-icons_bar_mercatelia .section-content-wrapper > .group-block h4 {
+  margin: 0;
+}
+
+#shopify-section-icons_bar_mercatelia .section-content-wrapper > .group-block p {
+  margin: 0;
+}
+
+#shopify-section-icons_bar_mercatelia .icon-block__media svg {
+  stroke-width: 1.5;
+}
+
+#shopify-section-product_list_fa6P9H .product-card__content {
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 16px 32px rgb(0 0 0 / 12%);
+}
+
+#shopify-section-product_list_fa6P9H .compare-at-price {
+  color: rgb(0 0 0 / 45%);
+  text-decoration: line-through;
+}
+
+#shopify-section-product_list_fa6P9H .price {
+  color: var(--mercatelia-accent);
+  font-weight: 700;
+}
+
+#shopify-section-faq_mercatelia .section-content-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+#shopify-section-faq_mercatelia .accordion__summary {
+  font-weight: 600;
+}
+
+@media screen and (max-width: 750px) {
+  #shopify-section-icons_bar_mercatelia .section-content-wrapper > .group-block {
+    width: 100%;
+  }
+}
