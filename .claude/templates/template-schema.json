@@ -1,0 +1,152 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Shopify Section Template",
+  "description": "Schema for task templates used by /scaffold command",
+  "type": "object",
+  "required": ["name", "description", "version", "variables", "agents", "tasks"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Template identifier",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "description": {
+      "type": "string",
+      "description": "Human-readable template description"
+    },
+    "version": {
+      "type": "string",
+      "description": "Semantic version",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "variables": {
+      "type": "object",
+      "description": "Template variables with prompts and defaults",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["required"],
+        "properties": {
+          "required": { "type": "boolean" },
+          "prompt": { "type": "string" },
+          "default": {},
+          "validation": { "type": "string", "description": "Regex pattern for validation" }
+        }
+      }
+    },
+    "requirements_gathering": {
+      "type": "object",
+      "description": "Questions to ask via AskUserQuestion before task creation",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["question"],
+        "properties": {
+          "question": { "type": "string" },
+          "options": { "type": "array", "items": { "type": "string" } },
+          "multiSelect": { "type": "boolean", "default": false }
+        }
+      }
+    },
+    "agents": {
+      "type": "object",
+      "description": "Agent definitions with prompts",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["model", "purpose", "prompt"],
+        "properties": {
+          "model": {
+            "type": "string",
+            "enum": ["haiku", "sonnet", "opus"],
+            "description": "Claude model to use"
+          },
+          "purpose": {
+            "type": "string",
+            "description": "Brief description of agent's role"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Comprehensive agent prompt with standards"
+          },
+          "tools": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "MCP tools this agent can access"
+          }
+        }
+      }
+    },
+    "tasks": {
+      "type": "array",
+      "description": "Task definitions with dependencies",
+      "items": {
+        "type": "object",
+        "required": ["id", "subject", "description", "owner", "blockedBy", "metadata"],
+        "properties": {
+          "id": { "type": "string" },
+          "subject": { "type": "string" },
+          "description": { "type": "string" },
+          "activeForm": { "type": "string", "description": "Present tense form for progress display" },
+          "owner": { "type": "string", "description": "Agent name from agents object" },
+          "blockedBy": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Task IDs that must complete before this task"
+          },
+          "condition": {
+            "type": "string",
+            "description": "Expression that must be true for task to be created"
+          },
+          "metadata": {
+            "type": "object",
+            "required": ["success_criteria", "out_of_scope"],
+            "properties": {
+              "phase": {
+                "type": "string",
+                "enum": ["analysis", "build", "review", "test", "document"]
+              },
+              "success_criteria": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "Measurable conditions that define task completion"
+              },
+              "out_of_scope": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "Explicit boundaries - what this task does NOT include"
+              },
+              "regression_check": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "For modify tasks: what must NOT change"
+              },
+              "iterates_with": {
+                "type": "string",
+                "description": "Task ID this task iterates with until success"
+              },
+              "approval_milestone": {
+                "type": "boolean",
+                "description": "Whether to pause for user approval after this task"
+              },
+              "skip_condition": {
+                "type": "string",
+                "description": "Expression that, if true, skips this task"
+              }
+            }
+          }
+        }
+      }
+    },
+    "approval_milestones": {
+      "type": "array",
+      "description": "Points where user approval is required",
+      "items": {
+        "type": "object",
+        "required": ["after_task", "name", "description"],
+        "properties": {
+          "after_task": { "type": "string" },
+          "name": { "type": "string" },
+          "description": { "type": "string" }
+        }
+      }
+    }
+  }
+}
