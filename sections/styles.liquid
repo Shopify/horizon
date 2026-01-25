@@ -1,0 +1,454 @@
+{%- comment -%}
+  Styles Section - Collection showcase with heading and styled image tiles.
+
+  Displays a heading alongside collection images with titles, supporting both
+  static grid and carousel layouts. Desktop shows horizontal layout with heading
+  on left; mobile stacks vertically.
+
+  Settings:
+  - collection_list: Collections to display
+  - layout_type: Layout: grid or carousel
+  - columns: Desktop columns (2-6)
+  - gap: Gap between tiles in pixels
+{%- endcomment -%}
+
+{%- liquid
+  assign collection_list = section.settings.collection_list
+
+  # Handle placeholder collections for onboarding
+  if collection_list == blank
+    assign placeholder_count = section.settings.columns | default: 4
+    for i in (1..placeholder_count)
+      assign collection_list = collection_list | append: ', '
+    endfor
+    assign collection_list = collection_list | split: ','
+  endif
+
+  assign max_items = section.settings.columns | default: 4
+  assign layout_type = section.settings.layout_type | default: 'grid'
+  assign is_carousel = false
+  if layout_type == 'carousel'
+    assign is_carousel = true
+  endif
+-%}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+
+<div
+  class="
+    section
+    section--{{ section.settings.section_width }}
+    color-{{ section.settings.color_scheme }}
+    section-styles
+    spacing-style
+  "
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    --styles-gap: {{ section.settings.gap | default: 8 }}px;
+    --styles-columns: {{ max_items }};
+    --styles-image-ratio: {{ section.settings.image_ratio | default: '100 / 133' }};
+  "
+  data-testid="styles-{{ section.id }}"
+>
+  <styles-component
+    class="section-styles__wrapper"
+    layout="{{ layout_type }}"
+  >
+    {%- comment -%} Header area with heading and optional carousel arrows {%- endcomment -%}
+    <div class="section-styles__header">
+      {%- content_for 'blocks' -%}
+
+      {%- if is_carousel -%}
+        <div class="section-styles__nav" ref="nav">
+          <button
+            class="section-styles__arrow section-styles__arrow--prev"
+            on:click="styles-component/scrollPrev"
+            aria-label="{{ 'accessibility.slideshow_previous' | t }}"
+            ref="prevButton"
+          >
+            {% render 'icon', icon: 'chevron_left', size: '24px' %}
+          </button>
+          <button
+            class="section-styles__arrow section-styles__arrow--next"
+            on:click="styles-component/scrollNext"
+            aria-label="{{ 'accessibility.slideshow_next' | t }}"
+            ref="nextButton"
+          >
+            {% render 'icon', icon: 'chevron_right', size: '24px' %}
+          </button>
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Collection tiles {%- endcomment -%}
+    <div
+      class="section-styles__items{% if is_carousel %} section-styles__items--carousel{% endif %}"
+      ref="items"
+    >
+      {%- for collection in collection_list limit: max_items -%}
+        {%- liquid
+          assign has_collection = false
+          if collection.id != blank
+            assign has_collection = true
+          endif
+        -%}
+        <a
+          href="{{ collection.url | default: '#' }}"
+          class="section-styles__tile"
+          {% unless has_collection %}aria-hidden="true"{% endunless %}
+        >
+          <div class="section-styles__image">
+            {%- if has_collection and collection.image != blank -%}
+              {{
+                collection.image
+                | image_url: width: 600
+                | image_tag:
+                  loading: 'lazy',
+                  widths: '200, 300, 400, 500, 600',
+                  sizes: '(max-width: 749px) 124px, 224px',
+                  class: 'section-styles__img'
+              }}
+            {%- else -%}
+              <div class="section-styles__placeholder"></div>
+            {%- endif -%}
+          </div>
+          <span class="section-styles__label">
+            {%- if has_collection -%}
+              {{ collection.title }}
+            {%- else -%}
+              {{ 'placeholders.collection_title' | t }}
+            {%- endif -%}
+          </span>
+        </a>
+      {%- endfor -%}
+    </div>
+  </styles-component>
+</div>
+
+{%- if is_carousel -%}
+  <script src="{{ 'styles.js' | asset_url }}" type="module" fetchpriority="low"></script>
+{%- endif -%}
+
+{% stylesheet %}
+  .section-styles__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-lg, 24px);
+
+    @media screen and (width >= 750px) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+  }
+
+  .section-styles__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-lg, 24px);
+
+    @media screen and (width >= 750px) {
+      flex-shrink: 0;
+      max-width: 448px;
+    }
+  }
+
+  .section-styles__nav {
+    display: flex;
+    gap: var(--gap-md, 16px);
+  }
+
+  .section-styles__arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--color-foreground, #555);
+    transition: opacity 0.2s;
+
+    &:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    &:hover:not(:disabled) {
+      opacity: 0.7;
+    }
+  }
+
+  .section-styles__items {
+    display: flex;
+    gap: var(--styles-gap, 8px);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    @media screen and (width >= 750px) {
+      overflow: visible;
+    }
+  }
+
+  .section-styles__items--carousel {
+    overflow-x: auto;
+    scroll-behavior: smooth;
+
+    @media screen and (width >= 750px) {
+      max-width: calc(var(--styles-columns) * 224px + (var(--styles-columns) - 1) * var(--styles-gap));
+      overflow: hidden;
+    }
+  }
+
+  .section-styles__tile {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-sm, 12px);
+    text-decoration: none;
+    color: inherit;
+    scroll-snap-align: start;
+
+    /* Mobile sizes */
+    width: 124px;
+
+    @media screen and (width >= 750px) {
+      width: 224px;
+      gap: var(--gap-md, 16px);
+    }
+  }
+
+  .section-styles__image {
+    position: relative;
+    aspect-ratio: var(--styles-image-ratio, 100 / 133);
+    overflow: hidden;
+    background: var(--color-background-secondary, #f5f5f5);
+  }
+
+  .section-styles__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .section-styles__placeholder {
+    width: 100%;
+    height: 100%;
+    background: #aaa;
+  }
+
+  .section-styles__label {
+    font-family: var(--font-subheading--family, sans-serif);
+    font-size: 11px;
+    font-weight: var(--font-subheading--weight, 400);
+    line-height: 16px;
+    letter-spacing: 0.25px;
+    text-transform: uppercase;
+    color: var(--color-foreground, #000);
+  }
+
+  /* Hide tiles beyond visible count on mobile */
+  @media screen and (max-width: 749px) {
+    .section-styles__tile:nth-child(n+4) {
+      display: none;
+    }
+
+    .section-styles__items--carousel .section-styles__tile:nth-child(n+4) {
+      display: flex;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.styles",
+  "class": "section-styles-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "collection_list",
+      "id": "collection_list",
+      "label": "t:settings.collection_list"
+    },
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "select",
+      "id": "layout_type",
+      "label": "t:settings.layout_type",
+      "options": [
+        {
+          "value": "grid",
+          "label": "t:options.grid"
+        },
+        {
+          "value": "carousel",
+          "label": "t:options.carousel"
+        }
+      ],
+      "default": "grid"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "t:settings.columns",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "t:settings.gap",
+      "min": 0,
+      "max": 32,
+      "step": 4,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "t:settings.image_ratio",
+      "options": [
+        {
+          "value": "100 / 133",
+          "label": "t:options.portrait"
+        },
+        {
+          "value": "1 / 1",
+          "label": "t:options.square"
+        },
+        {
+          "value": "4 / 3",
+          "label": "t:options.landscape"
+        }
+      ],
+      "default": "100 / 133"
+    },
+    {
+      "type": "header",
+      "content": "t:content.section_layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:settings.width",
+      "options": [
+        {
+          "value": "page-width",
+          "label": "t:options.page"
+        },
+        {
+          "value": "full-width",
+          "label": "t:options.full"
+        }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@theme"
+    },
+    {
+      "type": "text"
+    },
+    {
+      "type": "group"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.styles",
+      "category": "t:categories.collections",
+      "settings": {
+        "layout_type": "grid",
+        "columns": 4,
+        "gap": 8,
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      },
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "settings": {
+            "text": "Discover timeless style<br>designed for modern women.",
+            "type_preset": "h4",
+            "font": "var(--font-heading--family)",
+            "alignment": "left",
+            "width": "fit-content"
+          }
+        }
+      },
+      "block_order": ["heading"]
+    },
+    {
+      "name": "t:names.styles_carousel",
+      "category": "t:categories.collections",
+      "settings": {
+        "layout_type": "carousel",
+        "columns": 4,
+        "gap": 8,
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      },
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "settings": {
+            "text": "Discover timeless style<br>designed for modern women.",
+            "type_preset": "h4",
+            "font": "var(--font-heading--family)",
+            "alignment": "left",
+            "width": "fit-content"
+          }
+        }
+      },
+      "block_order": ["heading"]
+    }
+  ]
+}
+{% endschema %}
