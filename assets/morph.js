@@ -7,7 +7,10 @@ import { Component } from '@theme/component';
  * @property {(oldNode: Node, newNode: Node) => void} [onBeforeUpdate] - Pre-update hook
  * @property {(node: Node) => void} [onAfterUpdate] - Post-update hook
  * @property {(oldNode: Node, newNode: Node) => boolean} [reject] - Reject a node from being morphed
+ * @property {boolean} [hydrationMode] - If true, only morph subtrees whose elements have `data-hydration-key="<non-empty>"`, matched by that value
  */
+
+const HYDRATION_KEY_ATTRIBUTE = 'data-hydration-key';
 
 /**
  * The options for the morph
@@ -15,6 +18,7 @@ import { Component } from '@theme/component';
  */
 export const MORPH_OPTIONS = {
   childrenOnly: true,
+  hydrationMode: false,
   reject(oldNode, newNode) {
     if (newNode.nodeType === Node.TEXT_NODE && newNode.nodeValue?.trim() === '') {
       return true;
@@ -102,6 +106,11 @@ export function morph(oldTree, newTree, options = MORPH_OPTIONS) {
     newTree = parsedNewTree;
   }
 
+  if (options.hydrationMode && oldTree instanceof Element && newTree instanceof Element) {
+    morphHydrationByKey(oldTree, newTree, options);
+    return oldTree;
+  }
+
   if (options.childrenOnly) {
     updateChildren(newTree, oldTree, options);
     return oldTree;
@@ -112,6 +121,71 @@ export function morph(oldTree, newTree, options = MORPH_OPTIONS) {
   }
 
   return walk(newTree, oldTree, options);
+}
+
+/**
+ * Collect targets under a root element that have a non-empty key for the attribute.
+ * Includes the root itself if it matches.
+ *
+ * @param {Element} root
+ * @returns {Element[]}
+ */
+function collectHydrationTargets(root) {
+  const targets = [];
+  if (root.hasAttribute(HYDRATION_KEY_ATTRIBUTE)) targets.push(root);
+  targets.push(...root.querySelectorAll(`[${HYDRATION_KEY_ATTRIBUTE}]`));
+  return targets;
+}
+
+/**
+ * Morph only keyed targets from `newRoot` into `oldRoot` (a.k.a. "keyed lazy hydration").
+ *
+ * Philosophy:
+ * - This updates the *contents* of pre-existing targets. We intentionally do NOT insert new targets (or remove missing ones).
+ * - By requiring targets to already exist in `oldRoot`, we preserve runtime state that may already
+ *   be attached to the existing DOM (custom elements, listeners, focus, transient UI state) and preserve the layout and UI behavior.
+ * - Intended use-case: avoid expensive server-side rendering operations in the initial render, and hydrate targeted sections after page load. e.g. Querying all product and collection drops in off-screen menus.
+ *
+ * Contract:
+ * - An element is eligible only if it has `data-hydration-key="<non-empty>"`.
+ * - Matching uses ONLY that key value (no fallbacks) to avoid accidental cross-updates.
+ * - Once a target is matched, we run a normal morph *within that target* (attributes + children).
+ *
+ * @param {Element} oldRoot
+ * @param {Element} newRoot
+ * @param {Options} options
+ */
+function morphHydrationByKey(oldRoot, newRoot, options) {
+  const oldTargets = collectHydrationTargets(oldRoot);
+  const newTargets = collectHydrationTargets(newRoot);
+
+  /** @type {Map<string, Element[]>} */
+  const oldTargetsByKey = new Map();
+
+  for (const oldTarget of oldTargets) {
+    const key = oldTarget.getAttribute(HYDRATION_KEY_ATTRIBUTE);
+    if (key == null || key === '') continue;
+
+    const existing = oldTargetsByKey.get(key) ?? [];
+    existing.push(oldTarget);
+    oldTargetsByKey.set(key, existing);
+  }
+
+  for (const newTarget of newTargets) {
+    const key = newTarget.getAttribute(HYDRATION_KEY_ATTRIBUTE);
+    if (key == null || key === '') continue;
+
+    const matches = oldTargetsByKey.get(key);
+    const oldTarget = matches?.shift();
+    if (!oldTarget) continue;
+
+    // For keyed targets we want attribute updates as well, regardless of the caller's childrenOnly default.
+    morph(oldTarget, newTarget, {
+      ...options,
+      hydrationMode: false,
+      childrenOnly: false,
+    });
+  }
 }
 
 /**
@@ -355,6 +429,33 @@ function updateTextarea(newNode, oldNode) {
 }
 
 /**
+ * If app scripts store references to the DOM on initialization, they will be invalidated by the morph because browsers don't re-execute them.
+ * This function removes and recreates them to force re-execution.
+ * @param {Element} container - The container element to search for app block scripts
+ */
+function recreateAppBlockScripts(container) {
+  const scripts = container.querySelectorAll('.shopify-app-block script[src]');
+
+  for (const script of scripts) {
+    if (!(script instanceof HTMLScriptElement)) continue;
+
+    const parent = script.parentElement;
+    if (!parent) continue;
+
+    const newScript = document.createElement('script');
+    for (const attr of Array.from(script.attributes)) {
+      newScript.setAttribute(attr.name, attr.value);
+    }
+    if (script.textContent) {
+      newScript.textContent = script.textContent;
+    }
+
+    script.remove();
+    parent.appendChild(newScript);
+  }
+}
+
+/**
  * Update the children of elements
  * @param {Node} newNode - The new node to update children on
  * @param {Node} oldNode - The existing node to update children on
@@ -428,17 +529,20 @@ function updateChildren(newNode, oldNode, options) {
       if (morphed !== oldMatch) offset++;
       oldNode.insertBefore(morphed, oldChild);
     } else if (!getNodeKey(newChild, options) && !getNodeKey(oldChild, options)) {
-      // Safe to morph in-place if neither has a key
       morphed = walk(newChild, oldChild, options);
       if (morphed !== oldChild) {
         oldNode.replaceChild(morphed, oldChild);
         offset++;
       }
     } else {
-      // Insert the node if we couldn't morph or find a match
       oldNode.insertBefore(newChild, oldChild);
       offset++;
     }
+  }
+
+  // Recreate app block scripts to bypass browser script deduplication
+  if (oldNode instanceof Element) {
+    recreateAppBlockScripts(oldNode);
   }
 }
 

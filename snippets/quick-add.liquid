@@ -90,16 +90,16 @@
         on:click="quick-add-component/handleClick"
       >
         <span
-          class="add-to-cart-text quick-add__button-content"
+          class="add-to-cart-text"
         >
           {% comment %} split the icon and the text with a grid transition {% endcomment %}
           <span
             aria-hidden="true"
-            class="svg-wrapper add-to-cart-icon quick-add__button-icon"
+            class="svg-wrapper add-to-cart-icon"
           >
             {{- 'icon-add-to-cart.svg' | inline_asset_content -}}
           </span>
-          <span class="add-to-cart-text__content is-visually-hidden-mobile quick-add__button-text">
+          <span class="add-to-cart-text__content is-visually-hidden-mobile">
             <span>
               {% comment %} use a double-nested span to bake the padding into the text {% endcomment %}
               <span>
@@ -160,25 +160,24 @@
     bottom: max(var(--quick-add-bottom), calc((var(--border-radius) + var(--quick-add-bottom)) * (1 - cos(45deg))));
     backdrop-filter: blur(20px) saturate(180%);
 
+    &:hover {
+      scale: 1.03;
+
+      /* Hover stabilizer: extends hit area to maintain hover state */
+      &::before {
+        content: '';
+        position: absolute;
+        inset: -10px;
+        z-index: -1;
+      }
+    }
+
     &:active {
       scale: 0.99;
-      translate: 0 1px;
     }
 
     .quick-add[stay-visible] & {
       display: grid;
-    }
-
-    &:is(:hover, :focus-visible) {
-      .add-to-cart-text__content {
-        grid-template-columns: 1fr;
-
-        span span {
-          opacity: 1;
-          translate: 0 0;
-          filter: blur(0);
-        }
-      }
     }
 
     @media screen and (min-width: 750px) {
@@ -256,6 +255,19 @@
   .quick-add-modal .media-gallery--carousel slideshow-component {
     --cursor: default;
   }
+
+  .quick-add__button:is(:hover, :focus-visible) {
+    .add-to-cart-text__content {
+      grid-template-columns: 1fr;
+
+      span span {
+        opacity: 1;
+        translate: 0 0;
+        filter: blur(0);
+      }
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .quick-add__button .add-to-cart-text__content {
       grid-template-columns: 1fr;
@@ -267,17 +279,18 @@
       }
     }
   }
+
   @media (prefers-reduced-motion: no-preference) {
     .quick-add__button {
       transition-property: scale, translate, opacity;
       transition-duration: var(--animation-speed);
       transition-timing-function: var(--ease-out-cubic);
+    }
 
-      &:is(:hover, :focus-visible) {
-        .add-to-cart-text__content,
-        .add-to-cart-text__content span span {
-          transition-delay: var(--animation-speed);
-        }
+    .quick-add__button:is(:hover, :focus-visible) {
+      .add-to-cart-text__content,
+      .add-to-cart-text__content span span {
+        transition-delay: var(--animation-speed);
       }
     }
 

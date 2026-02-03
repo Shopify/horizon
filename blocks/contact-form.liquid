@@ -15,9 +15,14 @@
   {{ block.shopify_attributes }}
 >
   {% assign form_id = block.id | default: section.id | prepend: 'ContactForm-' %}
-
   {%- form 'contact', id: form_id, class: 'contact-form__form' -%}
-    {%- if form.errors -%}
+    <input
+      name="contact[id]"
+      type="hidden"
+      value="{{ form_id }}"
+    >
+
+    {%- if form.errors and form.id == form_id -%}
       <div
         class="contact-form__error"
         tabindex="-1"
@@ -30,7 +35,7 @@
       </div>
     {%- endif -%}
 
-    {%- if form.posted_successfully? -%}
+    {%- if form.posted_successfully? and form.id == form_id -%}
       <div
         class="contact-form__success"
         tabindex="-1"
@@ -75,7 +80,7 @@
         autocapitalize="off"
         value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
         aria-required="true"
-        {% if form.errors contains 'email' %}
+        {% if form.errors contains 'email' and form.id == form_id %}
           aria-invalid="true"
           aria-describedby="ContactForm-email-error"
         {% endif %}

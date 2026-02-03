@@ -13,6 +13,7 @@
   id="Panel-{{ block.id }}-{{ section.id }}"
   aria-labelledby="Tab-{{ block.id }}-{{ section.id }}"
   tabindex="0"
+  class="layered-slideshow__panel {% if section.settings.drop_shadow %}layered-slideshow__panel--drop-shadow{% endif %}"
   style="--index: {{ block_index }}"
   {% if block_index > 0 %}
     inert

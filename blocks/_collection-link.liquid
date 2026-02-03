@@ -60,6 +60,10 @@
     ref="links[]"
     on:pointerenter="/select/{{ index }}"
     on:focus="/select/{{ index }}"
+    {% if section.settings.layout == 'text' %}
+      on:pointerleave="/clearSelections"
+      on:blur="/clearSelections"
+    {% endif %}
     aria-current="{{ current }}"
     {% if onboarding %}
       data-placeholder="true"
@@ -91,16 +95,24 @@
     text-wrap: pretty;
     font-size: clamp(var(--min-font-size), 4.5vw, var(--max-font-size));
 
+    /* When hovering over container, dim non-current links (text layout only) */
     @media (hover: hover) {
-      opacity: var(--disabled-opacity);
+      collection-links-component:not([layout='spotlight']) .collection-links__container:hover & {
+        opacity: var(--opacity-subdued-text);
+      }
+
+      collection-links-component:not([layout='spotlight']) .collection-links__container:hover &[aria-current='true'] {
+        opacity: 1;
+      }
     }
 
     [layout='spotlight'] & {
+      /* Spotlight layout: dimmed by default */
       opacity: var(--disabled-opacity);
-    }
 
-    &[aria-current='true'] {
-      opacity: 1;
+      &[aria-current='true'] {
+        opacity: 1;
+      }
     }
 
     .text-block {

@@ -118,7 +118,7 @@
 
           <div class="predictive-search-form__footer">
             <button
-              class="button button-primary predictive-search__search-button"
+              class="button predictive-search__search-button"
               ref="viewAllButton"
             >
               {{ 'content.search_results_view_all' | t }}
@@ -135,12 +135,6 @@
   .search-modal {
     --search-border-radius: var(--style-border-radius-popover);
     --search-border-width: var(--style-border-width);
-  }
-
-  .search-modal__button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 
   .search-modal__content {
@@ -354,19 +348,7 @@
     border-color: var(--color-border) !important;
   }
 
-  .predictive-search-results__inner {
-    --title-font-size: var(--font-size--md);
-    --title-margin-block: var(--margin-xs);
-    --list-item-padding-block: var(--padding-sm);
-
-    flex-grow: 1;
-    overflow-y: auto;
-    padding-block: var(--padding-lg);
-    container-type: inline-size;
-    color: var(--color-foreground);
-  }
-
-  .search-input {
+  input.search-input {
     border-radius: var(--style-border-radius-inputs);
     padding-block: var(--padding-sm);
     font-size: var(--font-size--md);

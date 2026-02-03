@@ -52,7 +52,6 @@
     {%- case media.media_type -%}
       {% when 'model' %}
         <product-model
-          class="product-model-wrapper"
           data-media-id="{{ media.id }}"
         >
           <button
@@ -76,7 +75,7 @@
                 xmlns="http://www.w3.org/2000/svg"
                 aria-hidden="true"
                 focusable="false"
-                class="icon icon-3d-model"
+                class="icon"
                 fill="none"
                 viewBox="0 0 18 21"
               >
@@ -102,7 +101,7 @@
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
             focusable="false"
-            class="icon icon-3d-model icon-default"
+            class="icon icon-default"
             fill="none"
             viewBox="0 0 18 21"
           >
@@ -205,10 +204,5 @@
         border-bottom-right-radius: 0;
       }
     }
-  }
-
-  ::view-transition-old(gallery-item),
-  ::view-transition-new(gallery-item) {
-    animation-duration: 0ms;
   }
 {% endstylesheet %}

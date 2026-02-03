@@ -1,10 +1,14 @@
+import { Component } from '@theme/component';
+
 // Create a new custom element for product links with images for transitions to PDP
-class ProductCardLink extends HTMLElement {
+class ProductCardLink extends Component {
   connectedCallback() {
+    super.connectedCallback();
     this.addEventListener('click', this.#handleClick);
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
     this.removeEventListener('click', this.#handleClick);
   }
 

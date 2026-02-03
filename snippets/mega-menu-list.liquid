@@ -91,14 +91,13 @@
         assign column_span = link.links.size | divided_by: break_after_float | ceil | at_least: 1
         assign column_count = column_count | plus: column_span
         assign should_break_columns = true
+        assign span_class = ''
 
         if menu_content_type == 'collection_images'
           assign should_break_columns = false
           # For collection image mode, we have an 8-column grid when 4 or fewer parent links are used. Set column span to 2 in that case, otherwise use 1 column
           if parent_link.links.size <= 4
             assign span_class = 'mega-menu__column--wide-collection-image'
-          else
-            assign span_class = 'mega-menu__column--span-1'
           endif
         else
           # For all other modes, column span is determined by the number of links in the parent link
@@ -132,9 +131,7 @@
 
           {% render 'link-featured-image', link: link, class: 'mega-menu__link-image', sizes: collection_image_sizes %}
         {% endif %}
-        <span
-          class="mega-menu__link-title wrap-text"
-        >
+        <span class="wrap-text">
           {{- link.title -}}
         </span>
       </a>
@@ -156,7 +153,7 @@
                 href="{{ childLink.url }}"
                 class="mega-menu__link"
               >
-                <span class="mega-menu__link-title wrap-text">{{- childLink.title -}}</span>
+                <span class="wrap-text">{{- childLink.title -}}</span>
               </a>
             </li>
           {% endfor %}

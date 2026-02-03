@@ -9,18 +9,18 @@
   {% content_for 'block', type: 'accelerated-checkout', id: 'accelerated-checkout', can_add_to_cart: can_add_to_cart, form_obj: form %}
 {%- enddoc -%}
 
-{% capture accelerated_checkout_button %}
-  {% if product != blank and form_obj != blank %}
-    {{ form_obj | payment_button }}
-  {% endif %}
-{% endcapture %}
-
 {% liquid
   assign product = closest.product
   if request.visual_preview_mode and product == blank
     assign product = collections.all.products.first
   endif
 %}
+
+{% capture accelerated_checkout_button %}
+  {% if product != blank and form_obj != blank %}
+    {{ form_obj | payment_button }}
+  {% endif %}
+{% endcapture %}
 
 {% if accelerated_checkout_button != blank %}
   <div

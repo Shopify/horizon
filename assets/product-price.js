@@ -1,5 +1,5 @@
 import { ThemeEvents, VariantUpdateEvent } from '@theme/events';
-
+import { Component } from '@theme/component';
 /**
  * A custom element that displays a product price.
  * This component listens for variant update events and updates the price display accordingly.
@@ -7,14 +7,16 @@ import { ThemeEvents, VariantUpdateEvent } from '@theme/events';
  * 1. Variant picker (in quick add modal or product page)
  * 2. Swatches variant picker (in product cards)
  */
-class ProductPrice extends HTMLElement {
+class ProductPrice extends Component {
   connectedCallback() {
+    super.connectedCallback();
     const closestSection = this.closest('.shopify-section, dialog');
     if (!closestSection) return;
     closestSection.addEventListener(ThemeEvents.variantUpdate, this.updatePrice);
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
     const closestSection = this.closest('.shopify-section, dialog');
     if (!closestSection) return;
     closestSection.removeEventListener(ThemeEvents.variantUpdate, this.updatePrice);

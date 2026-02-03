@@ -95,7 +95,7 @@
     inset: 0;
     height: 100%;
     pointer-events: none;
-    z-index: 10;
+    z-index: var(--layer-raised);
   }
 
   .layered-slideshow__tablist button {
@@ -146,7 +146,7 @@
     overflow: hidden;
   }
 
-  [role='tabpanel'] {
+  .layered-slideshow__panel {
     position: relative;
     height: 100%;
     min-width: var(--button-width);
@@ -154,12 +154,12 @@
     z-index: calc(var(--total-tabs) - var(--index));
   }
 
-  [role='tabpanel']:first-child .layered-slideshow__panel-content {
+  .layered-slideshow__panel:first-child .layered-slideshow__panel-content {
     width: var(--active-panel-width);
     border-left: var(--border-width) solid var(--border-color);
   }
 
-  [role='tabpanel']:not(:first-child) .layered-slideshow__content {
+  .layered-slideshow__panel:not(:first-child) .layered-slideshow__content {
     padding-inline-start: calc((var(--radius) * 2) + var(--padding-inline-start, 0px));
   }
 
@@ -193,7 +193,7 @@
   }
 
   /* When panel is active, hide poster so video is visible */
-  [role='tabpanel']:not([inert]) .layered-slideshow__video-poster {
+  .layered-slideshow__panel:not([inert]) .layered-slideshow__video-poster {
     opacity: 0;
   }
 
@@ -217,6 +217,10 @@
     background-color: transparent;
   }
 
+  .layered-slideshow__panel--drop-shadow:not(:last-child) .layered-slideshow__panel-content {
+    box-shadow: 4px 0 12px 0 rgba(0, 0, 0, 0.1);
+  }
+
   /* Shared transitions (desktop and mobile) */
   @media (prefers-reduced-motion: no-preference) {
     .layered-slideshow__panels,
@@ -232,7 +236,7 @@
       transition: opacity 0.48s, transform 0.48s;
     }
 
-    [role='tabpanel']:not([inert]) .layered-slideshow__content {
+    .layered-slideshow__panel:not([inert]) .layered-slideshow__content {
       opacity: 1;
       transform: translateY(0);
       transition-delay: 0.24s;
@@ -273,15 +277,15 @@
       grid-auto-flow: row;
     }
 
-    [role='tabpanel'] {
+    .layered-slideshow__panel {
       min-height: var(--button-height);
       width: 100%;
       height: 100%;
       position: relative;
-      z-index: calc(var(--total-tabs) - var(--index) + 10);
+      z-index: calc(var(--total-tabs) - var(--index));
     }
 
-    [role='tabpanel']:first-child .layered-slideshow__panel-content {
+    .layered-slideshow__panel:first-child .layered-slideshow__panel-content {
       width: 100%;
       height: var(--active-panel-height);
       border-top: var(--border-width) solid var(--border-color);
@@ -305,11 +309,11 @@
       overflow: hidden;
     }
 
-    [role='tabpanel']:not(:first-child) .layered-slideshow__panel-content {
+    .layered-slideshow__panel:not(:first-child) .layered-slideshow__panel-content {
       border-top: none;
     }
 
-    [role='tabpanel']:not(:first-child) {
+    .layered-slideshow__panel:not(:first-child) {
       margin-top: calc(var(--border-width) * -1);
     }
 
@@ -319,9 +323,13 @@
     }
 
     /* Adjust padding for non-first slides to account for radius overlap at the top (not sides on mobile) */
-    [role='tabpanel']:not(:first-child) .layered-slideshow__content {
+    .layered-slideshow__panel:not(:first-child) .layered-slideshow__content {
       padding-block-start: calc((var(--radius) * 2) + var(--padding-block-start, 0px));
       padding-inline-start: var(--padding-inline-start, 0px);
+    }
+
+    .layered-slideshow__panel--drop-shadow:not(:last-child) .layered-slideshow__panel-content {
+      box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
     }
   }
 {% endstylesheet %}
@@ -400,6 +408,12 @@
       "step": 1,
       "unit": "px",
       "default": 1
+    },
+    {
+      "type": "checkbox",
+      "id": "drop_shadow",
+      "label": "t:settings.drop_shadow",
+      "default": false
     },
     {
       "type": "color_scheme",

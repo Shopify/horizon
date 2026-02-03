@@ -67,15 +67,14 @@
       </span>
     </summary>
     <div
-      data-header-drawer
+      ref="menuDrawer"
       class="
         menu-drawer
-        motion-reduce
         color-{{ block_settings.color_scheme }}
       "
     >
       <button
-        class="button button-unstyled close-button menu-drawer__close-button"
+        class="button close-button menu-drawer__close-button"
         type="button"
         aria-label="{{ 'actions.close' | t }}"
         on:click="/close"
@@ -264,7 +263,7 @@
                     <summary
                       id="HeaderDrawer-{{ link.handle }}"
                       class="menu-drawer__menu-item menu-drawer__menu-item--mainlist menu-drawer__animated-element focus-inset{% if link.child_active %} menu-drawer__menu-item--active{% endif %}"
-                      on:click="header-drawer/open"
+                      on:click="header-drawer/open/submenu"
                     >
                       <span class="menu-drawer__menu-item-text wrap-text">{{ link.title | escape }}</span>
                       <span class="svg-wrapper icon-caret icon-caret--forward">
@@ -273,7 +272,7 @@
                     </summary>
                     <div
                       id="link-{{ link.handle | escape }}"
-                      class="menu-drawer__submenu has-submenu gradient motion-reduce"
+                      class="menu-drawer__submenu has-submenu"
                       tabindex="-1"
                       style="--menu-drawer-animation-index: {{ animation_index }};"
                     >
@@ -592,8 +591,9 @@
               {% render 'localization-form',
                 show_country: show_country,
                 show_language: show_language,
-                block_id: block.id,
-                form_style: form_style
+                localization_style: 'drawer',
+                form_style: form_style,
+                form_id: block.id
               %}
             </div>
           {% else %}
@@ -605,14 +605,14 @@
               >
                 <summary
                   id="HeaderDrawer-localization"
-                  class="drawer-localization__button h3 link link--text focus-inset"
+                  class="drawer-localization__button h3 link focus-inset"
                   aria-expanded="false"
-                  on:click="header-drawer/open"
+                  on:click="header-drawer/open/submenu"
                   style="{{ form_style }}"
                 >
                   <div class="drawer-localization__button--label h6">
                     {%- if show_country -%}
-                      <div class="mobile-localization mobile-localization--country link link--text">
+                      <div class="mobile-localization mobile-localization--country link">
                         {%- if section.settings.country_selector_style == true -%}
                           <span
                             class="icon-flag"
@@ -634,7 +634,7 @@
                     {%- endif -%}
 
                     {%- if show_language -%}
-                      <div class="mobile-localization mobile-localization--country link link--text">
+                      <div class="mobile-localization mobile-localization--country link">
                         <span>
                           {{ localization.language.iso_code | upcase }}
                         </span>
@@ -647,7 +647,7 @@
                 </summary>
 
                 <div
-                  class="menu-drawer__submenu has-submenu gradient motion-reduce color-{{ settings.drawer_color_scheme }}"
+                  class="menu-drawer__submenu has-submenu color-{{ settings.drawer_color_scheme }}"
                   style=""
                 >
                   <div
@@ -655,7 +655,7 @@
                     ref="navButtons"
                   >
                     <button
-                      class="button menu-drawer__back-button link link--text focus-inset"
+                      class="button menu-drawer__back-button link focus-inset"
                       aria-expanded="true"
                       on:click="header-drawer/back"
                     >
@@ -681,7 +681,7 @@
                     show_language: show_language,
                     localization_style: 'drawer',
                     form_style: form_style,
-                    block_id: block.id
+                    form_id: block.id
                   %}
                 </div>
               </details>
@@ -756,12 +756,6 @@
     position: initial;
   }
 
-  @media screen and (min-width: 750px) {
-    .header--desktop header-menu + .header__drawer header-drawer {
-      display: none;
-    }
-  }
-
   .menu-drawer-container .header__icon--summary {
     color: var(--color-foreground);
     display: flex;
@@ -777,11 +771,20 @@
   }
 
   .header__drawer {
+    --header-drawer-min-height: 60px;
     display: flex;
-    min-height: 60px;
+    min-height: var(--header-drawer-min-height);
     align-items: center;
+  }
 
-    @media screen and (min-width: 750px) {
+  #header-component[data-menu-style='drawer'] .header__drawer {
+    display: flex;
+    min-height: var(--header-drawer-min-height);
+  }
+
+  @media screen and (min-width: 750px) {
+    #header-component[data-menu-style='menu'] .header__drawer {
+      display: none;
       min-height: 0;
     }
   }
@@ -843,7 +846,8 @@
     }
   }
 
-  .menu-drawer:has(details[open]) {
+  /* When opening a submenu we don't want the first-level menu to be scrollable, so we reset the overflow  */
+  .menu-drawer.menu-drawer--has-submenu-opened {
     overflow: initial;
   }
 
@@ -919,6 +923,7 @@
 
   .menu-drawer__menu--grid {
     display: grid;
+    width: 100%;
     grid-template-columns: 1fr 1fr;
     gap: var(--padding-sm);
     padding-inline-end: var(--menu-drawer-inline-padding);
@@ -985,7 +990,7 @@
 
   .menu-drawer__list-item--flat .menu-drawer__menu--childlist {
     width: 100%;
-    padding-inline-start: 0;
+    padding-inline: 0;
   }
 
   .menu-drawer-container[open] .menu-drawer__animated-element {
@@ -1064,7 +1069,7 @@
 
   .menu-drawer__list-item--deep .menu-drawer__menu,
   .menu-drawer__menu--grandchildlist {
-    padding-inline-start: 0;
+    padding-inline: 0;
   }
 
   .menu-drawer__list-item--deep .menu-drawer__menu {
@@ -1133,6 +1138,7 @@
     top: auto;
     width: fit-content;
     height: fit-content;
+    color: inherit;
     padding: var(--padding-lg);
   }
 
@@ -1269,5 +1275,117 @@
       opacity: 0;
       transform: translateX(-1rem);
     }
+  }
+
+  /* Drawer Localization Styles */
+  .drawer-localization__button .icon-flag {
+    width: var(--menu-localization-font-size, var(--icon-size-sm));
+    height: var(--menu-localization-font-size, var(--icon-size-sm));
+    clip-path: circle(50%); /* stylelint-disable-line */
+    background-position: center;
+    background-size: cover;
+    margin-inline-end: 4px;
+    position: relative;
+  }
+
+  .drawer-localization__button .icon-flag::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    box-shadow: inset 0 0 var(--size-shadow) var(--color-shadow);
+    border-radius: 50%;
+  }
+
+  .drawer-localization .country-filter {
+    padding-block: 8px;
+  }
+
+  .drawer-localization .drawer-localization__button {
+    display: flex;
+    padding: 0;
+    position: relative;
+    text-decoration: none;
+    height: 44px;
+
+    &:hover {
+      color: var(--color-foreground);
+    }
+  }
+
+  .drawer-localization .drawer-localization__button .icon-caret {
+    width: fit-content;
+    height: fit-content;
+    margin: 0;
+    padding: var(--padding-xl) var(--padding-xl) var(--padding-xl) var(--padding-xs);
+  }
+
+  .menu-drawer__localization:not(drawer-localization-component) .language-selector {
+    font-family: var(--menu-localization-font);
+    font-size: var(--menu-localization-font-size);
+  }
+
+  .menu-drawer__localization .language-selector.h5 {
+    padding-inline-start: 0;
+  }
+
+  .drawer-localization {
+    display: contents;
+    color: var(--color-foreground);
+  }
+
+  .drawer-localization localization-form-component {
+    position: relative;
+    height: 100%;
+  }
+
+  .drawer-localization .mobile-localization,
+  .drawer-localization .drawer-localization__button--label {
+    display: flex;
+    gap: var(--gap-xs);
+    margin-block: 0;
+    align-items: center;
+  }
+
+  .drawer-localization__button--label.h6 {
+    font-family: var(--menu-localization-font);
+  }
+
+  .drawer-localization img {
+    width: var(--icon-size-sm);
+  }
+
+  .drawer-localization .localization-button__icon,
+  .drawer-localization .localization-button__icon svg {
+    width: var(--icon-size-xs);
+    height: var(--icon-size-xs);
+  }
+
+  .drawer-localization summary.is-disabled {
+    pointer-events: none;
+  }
+
+  .drawer-localization .localization-wrapper {
+    width: 100%;
+  }
+
+  .drawer-localization .localization-form {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .drawer-localization .localization-form > * {
+    padding-inline: var(--padding-xl);
+  }
+
+  .drawer-localization .language-selector .svg-wrapper.icon-caret {
+    transform: translateY(-50%) rotate(0deg);
+  }
+
+  .drawer-localization .language-selector .svg-wrapper.icon-caret svg {
+    transform: none;
   }
 {% endstylesheet %}

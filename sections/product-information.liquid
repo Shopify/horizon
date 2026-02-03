@@ -116,7 +116,7 @@
 
       <button
         type="button"
-        class="sticky-add-to-cart__button add-to-cart-button button button--primary"
+        class="sticky-add-to-cart__button add-to-cart-button button"
         ref="addToCartButton"
         on:click="/handleAddToCartClick"
         {% unless current_variant.available %}
@@ -142,7 +142,6 @@
               {%- endif -%}
             </span>
             <span
-              class="quantity-display"
               ref="quantityDisplay"
               {% if current_variant.available and initial_quantity > 1 %}
                 style="display: inline;"
@@ -293,10 +292,10 @@
       &::before {
         --border: 1px;
       }
+    }
 
-      .add-to-cart-text__content {
-        display: none;
-      }
+    .sticky-add-to-cart__bar .add-to-cart-text__content {
+      display: none;
     }
 
     .sticky-add-to-cart__info[data-has-image='false'] {
@@ -349,6 +348,7 @@
     .sticky-add-to-cart__info[data-single-option='true'] .sticky-add-to-cart__title {
       display: block;
     }
+
     .sticky-add-to-cart__info[data-single-option='true'] .sticky-add-to-cart__variant {
       display: block;
       overflow: hidden;

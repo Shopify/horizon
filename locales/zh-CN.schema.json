@@ -525,7 +525,7 @@
       "heading": "标题",
       "description": "描述",
       "key": "属性名称",
-      "key_info": "对于每个区块必须是唯一的。将显示在购物车、结账和订单详细信息中。",
+      "key_info": "不能为空，且每个块均需唯一。将显示在购物车、结账和订单详细信息中。",
       "placeholder_text": "占位符文本",
       "default_heading": "自定义您的产品",
       "default_placeholder": "输入您的特殊说明",

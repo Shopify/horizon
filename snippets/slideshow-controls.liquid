@@ -140,7 +140,7 @@
                       xmlns="http://www.w3.org/2000/svg"
                       aria-hidden="true"
                       focusable="false"
-                      class="icon icon-3d-model"
+                      class="icon"
                       fill="none"
                       viewBox="0 0 18 21"
                     >
@@ -162,7 +162,7 @@
             <li>
               <button
                 class="slideshow-control button button-unstyled"
-                style="animation-timeline: --slide-{{ forloop.index }}"
+                style="animation-timeline: --slide-{{ forloop.index0 }}"
                 aria-label="{{ 'accessibility.slide_status' | t: index: forloop.index, length: forloop.length }}"
                 on:click="/select/{{ forloop.index0 }}"
                 ref="dots[]"

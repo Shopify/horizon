@@ -3,12 +3,12 @@
 
   @param {boolean} show_country - Whether to show the country selector
   @param {boolean} show_language - Whether to show the language selector
-  @param {string} block_id - The block ID
+  @param {string} form_id - The block or section ID
+  @param {string} localization_style - The style of the localization form
   @param {string} [form_style] - The style tag string to be applied to the form
-  @param {string} [localization_style] - The style of the localization form
 
   @example
-  {% render 'localization-form', show_country: true, show_language: true, block_id: block.id %}
+  {% render 'localization-form', show_country: true, show_language: true, form_id: block.id, localization_style: 'dropdown' %}
 {%- enddoc -%}
 
 {%- liquid
@@ -55,7 +55,7 @@
       {% if show_country_filter %}
         <div class="country-filter">
           <div class="field">
-            <div class="country-filter__search-icon field__button motion-reduce">
+            <div class="country-filter__search-icon field__button">
               <span class="svg-wrapper">
                 {{ 'icon-search.svg' | inline_asset_content }}
               </span>
@@ -110,14 +110,14 @@
         </h2>
         {% if show_country_filter %}
           <div
-            id="sr-country-search-results-{{ block_id }}"
+            id="sr-country-search-results-{{ form_id }}"
             class="visually-hidden"
             aria-live="polite"
             ref="liveRegion"
           ></div>
         {% endif %}
         <div
-          class="localization-form__list country-selector__list{% if show_currencies %} country-selector__list--with-multiple-currencies{% endif %}"
+          class="localization-form__list"
           id="{{ localization_style }}-country-results"
           ref="countryList"
         >
@@ -159,7 +159,7 @@
                   </span>
                   <span class="country">{{- country.name }}</span>
                   <span
-                    class="localization-form__currency motion-reduce"
+                    class="localization-form__currency"
                     {% unless show_currencies %}
                       hidden
                     {% endunless %}
@@ -214,7 +214,7 @@
                 </span>
                 <span class="country">{{- country.name }}</span>
                 <span
-                  class="localization-form__currency motion-reduce"
+                  class="localization-form__currency"
                   {% unless show_currencies %}
                     hidden
                   {% endunless %}
@@ -349,58 +349,6 @@
     width: 100%;
   }
 
-  .dropdown-localization__button {
-    display: flex;
-    position: relative;
-    align-items: center;
-    gap: 4px;
-    font-family: var(--menu-localization-font);
-    font-size: var(--menu-localization-font-size);
-    font-weight: var(--menu-top-level-font-weight);
-    padding-inline: var(--padding-2xs);
-    margin-inline: calc(-1 * var(--padding-2xs));
-  }
-
-  .dropdown-localization__button .icon-caret {
-    height: var(--icon-size-xs);
-    width: var(--icon-size-xs);
-    right: var(--margin-xs);
-    top: calc(50% - var(--padding-2xs));
-    flex-shrink: 0;
-    transition: transform var(--animation-speed) var(--animation-easing);
-  }
-
-  .drawer-localization__button .icon-flag,
-  .dropdown-localization__button .icon-flag {
-    width: var(--menu-localization-font-size, var(--icon-size-sm));
-    height: var(--menu-localization-font-size, var(--icon-size-sm));
-    clip-path: circle(50%); /* stylelint-disable-line */
-    background-position: center;
-    background-size: cover;
-    margin-inline-end: 4px;
-    position: relative;
-  }
-
-  .icon-flag::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    box-shadow: inset 0 0 var(--size-shadow) var(--color-shadow);
-    border-radius: 50%;
-  }
-
-  .dropdown-localization__button[aria-expanded='true'] .icon-caret svg {
-    transform: rotate(180deg);
-  }
-
-  .dropdown-localization__button,
-  .dropdown-localization__button:hover {
-    box-shadow: none;
-    background-color: transparent;
-    border-color: transparent;
-    color: var(--color-foreground);
-  }
-
   .localization-form__list {
     position: relative;
     width: 100%;
@@ -415,34 +363,6 @@
 
     &::-webkit-scrollbar {
       display: none;
-    }
-  }
-
-  dropdown-localization-component .localization-form__list {
-    max-height: 20.5rem;
-  }
-
-  .localization-wrapper {
-    position: fixed;
-    z-index: var(--layer-raised);
-    border-radius: var(--style-border-radius-popover);
-    transition-property: display, opacity, translate;
-    transition-duration: 0.3s;
-    transition-timing-function: var(--ease-out-quad);
-    transition-behavior: allow-discrete;
-    translate: 0 20px;
-    opacity: 0;
-  }
-
-  .localization-wrapper:not([hidden]) {
-    translate: 0 0;
-    opacity: 1;
-  }
-
-  @starting-style {
-    .localization-wrapper:not([hidden]) {
-      translate: 0 20px;
-      opacity: 0;
     }
   }
 
@@ -501,15 +421,6 @@
     border-color: var(--color-border);
   }
 
-  .drawer-localization .country-filter {
-    padding-block: 8px;
-  }
-
-  dropdown-localization-component .country-filter {
-    position: relative;
-    padding: 8px;
-  }
-
   .country-selector-form__wrapper {
     overflow-y: auto;
     max-height: 100%;
@@ -560,10 +471,6 @@
   .localization-form__select option {
     background-color: var(--color-input-background);
     color: var(--color-input-text);
-  }
-
-  dropdown-localization-component .localization-form__select:hover {
-    background-color: rgb(var(--color-primary-hover-rgb) / var(--opacity-8));
   }
 
   .language-selector .svg-wrapper.icon-caret {
@@ -660,161 +567,5 @@
 
   .country-selector__close-button {
     display: none;
-  }
-
-  .drawer-localization .drawer-localization__button {
-    display: flex;
-    padding: 0;
-    position: relative;
-    text-decoration: none;
-    height: 44px;
-
-    &:hover {
-      color: var(--color-foreground);
-    }
-  }
-
-  .drawer-localization .drawer-localization__button .icon-caret {
-    width: fit-content;
-    height: fit-content;
-    margin: 0;
-    padding: var(--padding-xl) var(--padding-xl) var(--padding-xl) var(--padding-xs);
-  }
-
-  dropdown-localization-component {
-    position: relative;
-    background-color: transparent;
-  }
-
-  dropdown-localization-component .country-filter__input {
-    border: none;
-  }
-
-  dropdown-localization-component .localization-form__list-item {
-    margin-inline: 8px;
-  }
-
-  dropdown-localization-component .localization-wrapper {
-    box-shadow: var(--shadow-popover);
-    border: var(--style-border-popover);
-    background-color: var(--color-background);
-    max-height: 27.5rem;
-    position: absolute;
-    top: calc(100% + 10px);
-    z-index: calc(var(--layer-header-menu) + 1);
-  }
-
-  dropdown-localization-component .localization-wrapper.right-bound {
-    right: 0;
-    left: unset;
-  }
-
-  dropdown-localization-component .localization-wrapper.left-bound {
-    left: -8px;
-    right: unset;
-  }
-
-  /* Additional specificity due to dropdown-localization-component getting a low score */
-  dropdown-localization-component .language-selector.language-selector {
-    padding: 10px 8px 10px 16px;
-  }
-
-  dropdown-localization-component .localization-form__currency {
-    width: max-content;
-    opacity: 0;
-    visibility: hidden;
-    transition: none;
-  }
-
-  dropdown-localization-component
-    :is(
-      .localization-form__list-item:hover,
-      .localization-form__list-item[aria-selected='true'],
-      .localization-form__list-item[aria-current='true']
-    )
-    .localization-form__currency {
-    opacity: 1;
-    color: var(--color-foreground-muted);
-    transition: opacity var(--animation-speed-slow) var(--animation-easing);
-    visibility: visible;
-  }
-
-  .dropdown-localization .language-selector:where(:not(.top-shadow)) {
-    font-weight: var(--menu-top-level-font-weight);
-  }
-
-  .dropdown-localization:not(dropdown-localization-component) .language-selector,
-  .menu-drawer__localization:not(drawer-localization-component) .language-selector {
-    font-family: var(--menu-localization-font);
-    font-size: var(--menu-localization-font-size);
-  }
-
-  .menu-drawer__localization .language-selector.h5 {
-    padding-inline-start: 0;
-  }
-
-  .header__column .localization-form__select {
-    background-color: var(--header-bg-color);
-  }
-
-  .drawer-localization {
-    display: contents;
-    color: var(--color-foreground);
-  }
-
-  .drawer-localization localization-form-component {
-    position: relative;
-    height: 100%;
-  }
-
-  .drawer-localization .mobile-localization,
-  .drawer-localization .drawer-localization__button--label {
-    display: flex;
-    gap: var(--gap-xs);
-    margin-block: 0;
-    align-items: center;
-  }
-
-  .drawer-localization__button--label.h6 {
-    font-family: var(--menu-localization-font);
-  }
-
-  .drawer-localization img {
-    width: var(--icon-size-sm);
-  }
-
-  .drawer-localization .localization-button__icon,
-  .drawer-localization .localization-button__icon svg {
-    width: var(--icon-size-xs);
-    height: var(--icon-size-xs);
-  }
-
-  .drawer-localization summary.is-disabled {
-    pointer-events: none;
-  }
-
-  .drawer-localization .localization-wrapper {
-    width: 100%;
-  }
-
-  .drawer-localization .localization-form {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  .drawer-localization .localization-form > * {
-    padding-inline: var(--padding-xl);
-  }
-
-  .drawer-localization .language-selector .svg-wrapper.icon-caret {
-    transform: translateY(-50%) rotate(0deg);
-  }
-
-  .drawer-localization .language-selector .svg-wrapper.icon-caret svg {
-    transform: none;
   }
 {% endstylesheet %}

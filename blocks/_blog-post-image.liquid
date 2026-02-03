@@ -1,32 +1,37 @@
 {%- doc -%}
   Renders the blog post image block.
 
-  @param {object} image - The image object
+  @param {object} article - The article object
 {%- enddoc -%}
 
-{%- assign block_settings = block.settings -%}
+{%- assign image = article.image -%}
 
-<img
-  srcset="
-    {% if image.width >= 350 %}{{ image | image_url: width: 350 }} 350w,{% endif %}
-    {% if image.width >= 750 %}{{ image | image_url: width: 750 }} 750w,{% endif %}
-    {% if image.width >= 1100 %}{{ image | image_url: width: 1100 }} 1100w,{% endif %}
-    {% if image.width >= 1500 %}{{ image | image_url: width: 1500 }} 1500w,{% endif %}
-    {{ image | image_url }} {{ image.width }}w
-  "
-  src="{{ image | image_url: width: 1100 }}"
-  loading="eager"
-  fetchpriority="high"
-  width="{{ image.width }}"
-  height="{{ image.height }}"
-  alt="{{ image.alt | escape }}"
-  class="
-    border-style
-    blog-post-card__image
-    blog-post-card__image--{{ block_settings.height }}
-  "
-  style="{% render 'border-override', settings: block_settings %}"
->
+{%- assign block_settings = block.settings -%}
+<div class="blog-post-card__image-container">
+  <a href="{{ article.url }}">
+    <img
+      srcset="
+        {% if image.width >= 350 %}{{ image | image_url: width: 350 }} 350w,{% endif %}
+        {% if image.width >= 750 %}{{ image | image_url: width: 750 }} 750w,{% endif %}
+        {% if image.width >= 1100 %}{{ image | image_url: width: 1100 }} 1100w,{% endif %}
+        {% if image.width >= 1500 %}{{ image | image_url: width: 1500 }} 1500w,{% endif %}
+        {{ image | image_url }} {{ image.width }}w
+      "
+      src="{{ image | image_url: width: 1100 }}"
+      loading="eager"
+      fetchpriority="high"
+      width="{{ image.width }}"
+      height="{{ image.height }}"
+      alt="{{ image.alt | escape }}"
+      class="
+        border-style
+        blog-post-card__image
+        blog-post-card__image--{{ block_settings.height }}
+      "
+      style="{% render 'border-override', settings: block_settings %}"
+    >
+  </a>
+</div>
 
 {% stylesheet %}
   .blog-post-card__image {

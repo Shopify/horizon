@@ -1,40 +1,29 @@
 {%- assign block_settings = block.settings -%}
 
-{% capture title %}
-  {% content_for 'block', id: 'heading', type: '_heading', text: article.title %}
-{% endcapture %}
-
-{% capture details %}
-  {% content_for 'block',
-    id: 'blog-post-details',
-    type: '_blog-post-info-text',
-    alignment: block_settings.alignment,
-    article: article
-  %}
-{% endcapture %}
-
-{% capture description %}
-  {% content_for 'block', id: 'content', type: '_blog-post-description', article: article, show_read_more: true %}
-{% endcapture %}
-
 <div
   class="blog-post-card"
   style="--text-align: {{ block_settings.alignment }}"
 >
-  {%- if article.image -%}
-    <div class="blog-post-card__image-container">
-      <a href="{{ article.url }}">
-        {% content_for 'block', id: 'image', type: '_blog-post-image', image: article.image %}
-      </a>
-    </div>
-  {%- endif -%}
+  {% if article.image %}
+    {% content_for 'block', id: 'image', type: '_blog-post-image', article: article %}
+  {% endif %}
 
   <div class="blog-post-card__content">
-    <a href="{{ article.url }}">{{ title }}</a>
+    <a
+      href="{{ article.url }}"
+      data-testid="blog-post-link"
+    >
+      {%- content_for 'block', id: 'heading', type: '_heading', text: article.title -%}
+    </a>
 
-    {{ details }}
+    {% content_for 'block',
+      id: 'blog-post-details',
+      type: '_blog-post-info-text',
+      alignment: block_settings.alignment,
+      article: article
+    %}
 
-    {{ description }}
+    {% content_for 'block', id: 'content', type: '_blog-post-description', article: article, show_read_more: true %}
   </div>
 </div>
 
@@ -43,6 +32,17 @@
     display: flex;
     flex-direction: column;
     text-align: var(--text-align);
+    column-gap: var(--columns-gap);
+  }
+
+  .blog-post-item--horizontal:has(.blog-post-card__image-container) .blog-post-card {
+    & > *:first-child {
+      flex-basis: 70%;
+    }
+
+    & > *:last-child {
+      flex-basis: 30%;
+    }
   }
 
   .blog-post-card__content {
@@ -56,29 +56,16 @@
     width: 100%;
   }
 
-  .blog-post-item:first-child .blog-post-card {
+  /**
+   * Horizontal layout (image left, content right)
+   * Applied to hero posts based on total article count
+   * Only applies the split layout when an image is actually present
+   */
+  .blog-post-item--horizontal .blog-post-card {
     flex-direction: row;
 
     @media screen and (max-width: 749px) {
       flex-direction: column;
-    }
-  }
-
-  .blog-post-item:first-child .blog-post-card__image-container {
-    width: 70%;
-
-    @media screen and (max-width: 749px) {
-      width: 100%;
-    }
-  }
-
-  .blog-post-item:first-child:has(.blog-post-card__image-container) .blog-post-card__content {
-    padding-inline-start: var(--columns-gap);
-    width: 30%;
-
-    @media screen and (max-width: 749px) {
-      padding-inline-start: 0;
-      width: 100%;
     }
   }
 

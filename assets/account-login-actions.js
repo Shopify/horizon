@@ -1,15 +1,18 @@
+import { Component } from '@theme/component';
+
 /**
  * A custom element that manages the account login actions.
  *
- * @extends {HTMLElement}
+ * @extends {Component}
  */
-class AccountLoginActions extends HTMLElement {
+class AccountLoginActions extends Component {
   /**
    * @type {Element | null}
    */
   shopLoginButton = null;
 
   connectedCallback() {
+    super.connectedCallback();
     this.shopLoginButton = this.querySelector('shop-login-button');
 
     if (this.shopLoginButton) {

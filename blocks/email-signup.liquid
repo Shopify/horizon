@@ -9,7 +9,14 @@
       {{ block_settings.heading | escape }}
     </div>
   {% endif %}
+  {% assign form_id = block.id | prepend: 'EmailSignup-' %}
   {%- form 'customer', class: 'email-signup__form spacing-style' %}
+    <input
+      name="contact[id]"
+      type="hidden"
+      value="{{ form_id }}"
+    >
+
     <div
       class="email-signup__input-group {% if block_settings.integrated_button and block_settings.border_style != 'underline' %}email-signup__input-group--integrated{% endif %} {% if block_settings.border_style == 'underline' %}email-signup__input-group--underline{% endif %} {% if block_settings.border_style == 'none' %}email-signup__input-group--no-border{% endif %} {% if block_settings.display_type == 'arrow' %}email-signup__input-group--arrow{% endif %} {% if block_settings.inherit_color_scheme == false %}color-{{ block_settings.color_scheme }}{% endif %}"
       style="--border-width: {{ block_settings.border_width }}px; --border-radius: {{ block_settings.border_radius }}px;"
@@ -30,11 +37,11 @@
         autocomplete="email"
         placeholder="{{ 'blocks.email_signup.placeholder' | t }}"
         required
-        {% if form.errors %}
+        {% if form.errors and form.id == form_id %}
           autofocus
           aria-invalid="true"
           aria-describedby="Email-signup__message-error-{{ block.id }}"
-        {% elsif form.posted_successfully? %}
+        {% elsif form.posted_successfully? and form.id == form_id %}
           aria-describedby="Email-signup__message-success-{{ block.id }}"
         {% endif %}
       >
@@ -60,10 +67,10 @@
       </button>
     </div>
 
-    {%- if form.errors -%}
+    {%- if form.errors and form.id == form_id -%}
       <div
         id="Email-signup__message-error-{{ block.id }}"
-        class="email-signup__message email-signup__message--error"
+        class="email-signup__message"
         tabindex="-1"
       >
         <svg
@@ -80,10 +87,10 @@
       </div>
     {%- endif -%}
 
-    {%- if form.posted_successfully? -%}
+    {%- if form.posted_successfully? and form.id == form_id -%}
       <div
         id="Email-signup__message-success-{{ block.id }}"
-        class="email-signup__message email-signup__message--success"
+        class="email-signup__message"
         tabindex="-1"
       >
         <span class="svg-wrapper icon-success">

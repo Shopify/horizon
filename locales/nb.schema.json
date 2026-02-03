@@ -525,7 +525,7 @@
       "heading": "Overskrift",
       "description": "Beskrivelse",
       "key": "Egenskapsnavn",
-      "key_info": "Må være unik for hver blokk. Vises i handlekurv, kasse og bestillingsinformasjon.",
+      "key_info": "Kan ikke være tom og må være unik for hver blokk. Vises i handlekurven, i kassen og i bestillingsdetaljene.",
       "placeholder_text": "Plassholdertekst",
       "default_heading": "Tilpass produktet ditt",
       "default_placeholder": "Angi spesielle instruksjoner",
