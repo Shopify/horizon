@@ -7,21 +7,17 @@
 
 {% liquid
   assign block_settings = block.settings
-  assign animation_speed = 200
 %}
 
 {% case variant %}
   {% when 'mobile' %}
     <div
-      class="header__drawer desktop:hidden"
+      class="header__drawer"
       ref="headerDrawerContainer"
+      data-hydration-key="header-drawer-mobile"
       {{ block.shopify_attributes }}
     >
-      {% render 'header-drawer',
-        class: 'header__drawer--mobile',
-        linklist: block_settings.menu,
-        data_header_drawer_type: 'mobile-drawer'
-      %}
+      {% render 'header-drawer', linklist: block_settings.menu, data_header_drawer_type: 'mobile-drawer' %}
     </div>
 
   {% when 'navigation_bar' %}
@@ -29,6 +25,7 @@
       <div
         class="menu-list menu-list--mobile{% if transparent == blank %} color-{{ block_settings.color_scheme_navigation_bar }}{% endif %}"
         style="--menu-horizontal-gap: 15px; --mobile-nav-margin: auto;"
+        data-hydration-key="header-menu-mobile-navigation-bar"
       >
         <div class="menu-list__scroll-container">
           <ul
@@ -150,10 +147,9 @@
 
     <header-menu
       ref="headerMenu"
-      class="header-menu mobile:hidden"
-      data-animation-delay="{{ animation_speed }}"
+      class="header-menu"
       {{ block.shopify_attributes }}
-      style="--submenu-animation-speed: {{ animation_speed }}ms;"
+      data-hydration-key="header-menu"
     >
       <div class="header-menu__inner">
         <nav header-menu>
@@ -275,6 +271,8 @@
   .menu-list__list-item {
     flex-shrink: 0;
     white-space: nowrap;
+    display: flex;
+    align-items: center;
   }
 
   .menu-list__list-item[aria-hidden='true'] {
@@ -399,16 +397,6 @@
     visibility: visible;
   }
 
-  .menu-list__list-item:has([data-animating]) > .menu-list__submenu {
-    --submenu-content-opacity: 0;
-
-    visibility: visible;
-
-    &::before {
-      height: 0;
-    }
-  }
-
   .menu-list__submenu-inner,
   .overflow-menu::part(overflow-list) {
     grid-column: 2;
@@ -483,10 +471,6 @@
 
   .header-menu[data-overflow-expanded='true'] .menu-list__list-item:where([slot='overflow']) .menu-list__link {
     --submenu-content-opacity: 1;
-  }
-
-  .menu-list__list-item:where([slot='overflow']):has([data-animating]) > .menu-list__link {
-    --submenu-content-opacity: 0;
   }
 
   .menu-list__submenu-inner {
@@ -677,18 +661,6 @@
     --menu-child-font-size: var(--font-size--xl);
 
     width: 200px;
-  }
-
-  .mega-menu__more-list-item .mega-menu__link {
-    color: rgb(var(--menu-top-level-font-color-rgb) / var(--opacity-subdued-text));
-  }
-
-  .mega-menu__more-list-item:where(:hover, .active) .mega-menu__link {
-    color: var(--menu-top-level-font-color);
-  }
-
-  .mega-menu__more-list-item[aria-hidden='true'] {
-    display: none;
   }
 
   .mega-menu__submenu {

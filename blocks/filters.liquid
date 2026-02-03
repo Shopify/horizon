@@ -69,11 +69,6 @@
   if block_settings.enable_filtering == false and block_settings.enable_sorting
     assign should_use_select_on_mobile = false
   endif
-
-  assign should_show_vertical_clear_all = true
-  if block_settings.filter_style == 'vertical'
-    assign should_show_vertical_clear_all = false
-  endif
 -%}
 
 {% if block_settings.enable_filtering or block_settings.enable_sorting or block_settings.enable_grid_density %}
@@ -225,13 +220,23 @@
                 {% endif %}
               </div>
 
-              {% render 'facets-actions',
-                results_url: results_url,
-                is_active: is_active,
-                products_count: products_count,
-                should_show_clear_all: should_show_vertical_clear_all,
-                clear_all_button_style: 'button-unstyled'
-              %}
+              {% if block_settings.filter_style == 'horizontal' %}
+                <facet-remove-component
+                  class="facets-horizontal-remove {% if is_active %}facets-horizontal-remove--active{% endif %}"
+                  active-class="facets__clear-all-link--active"
+                  data-url="{{ results_url }}"
+                >
+                  <button
+                    type="button"
+                    class="button-unstyled facets__clear-all-link facets__clear-all-link--horizontal {% if is_active %}facets__clear-all-link--active{% endif %}"
+                    ref="clearButton"
+                    on:click="/removeFilter?form="
+                    on:keydown="/removeFilter?form="
+                  >
+                    {{- 'actions.clear_all' | t -}}
+                  </button>
+                </facet-remove-component>
+              {% endif %}
             {% endif %}
             {% if block_settings.filter_style == 'horizontal' %}
               <div
@@ -354,7 +359,7 @@
 {% if block_settings.enable_filtering %}
   <dialog-component
     id="filters-drawer"
-    class="facets-block-wrapper facets-block-wrapper--vertical facets-block-wrapper--drawer color-{{ settings.drawer_color_scheme }}"
+    class="facets-block-wrapper facets-block-wrapper--vertical color-{{ settings.drawer_color_scheme }}"
   >
     <dialog
       ref="dialog"
@@ -466,29 +471,39 @@
         </form>
       </facets-form-component>
 
-      {% render 'facets-actions',
-        results_url: results_url,
-        is_active: is_active,
-        products_count: products_count,
-        form_component: form_component,
-        should_show_clear_all: true,
-        clear_all_button_style: 'button-secondary'
-      %}
+      <div
+        class="facets__drawer-actions"
+      >
+        <facet-remove-component
+          data-url="{{ results_url }}"
+          active-class="facets__clear-all--active"
+        >
+          <button
+            type="button"
+            class="button-secondary facets__clear-all{% if is_active %} facets__clear-all--active{% endif %}"
+            ref="clearButton"
+            on:click="/removeFilter?form={{ form_component }}"
+            on:keydown="/removeFilter?form={{ form_component }}"
+          >
+            {{- 'actions.clear_all' | t -}}
+          </button>
+        </facet-remove-component>
+
+        {% if products_count > 0 %}
+          <button
+            class="button facets__see-results"
+            type="button"
+            on:click="dialog-component/closeDialog"
+          >
+            {{- 'actions.see_items' | t: count: products_count -}}
+          </button>
+        {% endif %}
+      </div>
     </dialog>
   </dialog-component>
 {% endif %}
 
 {% stylesheet %}
-  .collection-wrapper {
-    @media screen and (min-width: 750px) {
-      --facets-vertical-col-width: 6;
-    }
-
-    @media screen and (min-width: 990px) {
-      --facets-vertical-col-width: 5;
-    }
-  }
-
   .facets-block-wrapper {
     @media screen and (min-width: 750px) {
       margin: var(--facets-margin);
@@ -607,16 +622,6 @@
     }
   }
 
-  .variant-option__swatch-wrapper {
-    position: relative;
-    overflow: visible;
-    border-radius: var(--options-border-radius);
-  }
-
-  .variant-option--swatches-disabled .variant-option__swatch-wrapper {
-    overflow: hidden;
-  }
-
   .facets {
     --facets-form-horizontal-gap: 20px;
     --facets-horizontal-max-input-wrapper-height: 230px;
@@ -688,12 +693,6 @@
     }
   }
 
-  .collection-wrapper--grid-full-width .facets--vertical:not(.facets--drawer) {
-    @media screen and (min-width: 750px) {
-      padding-inline-start: max(var(--padding-sm), var(--padding-inline-start));
-    }
-  }
-
   .facets--drawer {
     border-radius: 0;
     border-right: var(--style-border-drawer);
@@ -738,23 +737,12 @@
     overflow: visible;
   }
 
-  .facets--drawer .facets__actions {
-    flex-shrink: 0;
-    background-color: var(--color-background);
-  }
-
   .facets.facets-controls-wrapper {
     @media screen and (min-width: 750px) {
       grid-column: column-1 / column-12;
       color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
       gap: 0 var(--facets-form-horizontal-gap);
       padding-bottom: var(--padding-xs);
-    }
-  }
-
-  .collection-wrapper:has(.product-grid-mobile--large) .facets-mobile-wrapper.facets-controls-wrapper {
-    @media screen and (max-width: 749px) {
-      display: none;
     }
   }
 
@@ -1072,12 +1060,38 @@
 
   /* Facets - Text */
   .facets__label,
-  .facets__clear-all,
+  .facets__clear-all-link,
   .clear-filter {
     text-decoration-color: transparent;
     text-decoration-thickness: 0.075em;
     text-underline-offset: 0.125em;
     transition: text-decoration-color var(--animation-speed) var(--animation-easing);
+  }
+
+  .facets__clear-all-link {
+    display: none;
+    cursor: pointer;
+    padding: var(--padding-xs);
+    color: var(--button-color);
+    transition: text-decoration-color var(--animation-speed) var(--animation-easing),
+      color var(--animation-speed) var(--animation-easing);
+  }
+
+  .facets__clear-all-link:hover {
+    --button-color: var(--color-primary-hover);
+
+    text-decoration: underline;
+    text-decoration-color: var(--button-color);
+  }
+
+  .facets__clear-all-link--horizontal {
+    height: var(--minimum-touch-target);
+    padding-inline: var(--facets-form-horizontal-gap);
+    min-width: var(--facets-clear-all-min-width);
+  }
+
+  .facets__clear-all-link--active {
+    display: block;
   }
 
   .facets__label,
@@ -1089,6 +1103,30 @@
     background-color: transparent;
     box-shadow: none;
     padding: 0;
+  }
+
+  .clear-filter:hover {
+    text-decoration: underline;
+  }
+
+  /* Clear button */
+  .facets__clear {
+    display: none;
+  }
+
+  .facets--horizontal .facets__clear {
+    @media screen and (min-width: 750px) {
+      width: 100%;
+      justify-content: flex-end;
+      padding: 0 var(--facets-clear-padding) var(--facets-clear-padding) 0;
+      cursor: pointer;
+    }
+  }
+
+  .facets__clear--active {
+    @media screen and (min-width: 750px) {
+      display: flex;
+    }
   }
 
   /* Facets - Label */
@@ -1199,10 +1237,73 @@
     }
   }
 
-  .collection-wrapper:has(> .facets--horizontal) .facets__panel[open] {
-    @media screen and (min-width: 750px) {
-      z-index: var(--facets-open-z-index);
+  /* Facets - Actions */
+  .facets__drawer-actions {
+    --to-top-gradient-background: linear-gradient(
+      to top,
+      rgb(var(--color-background-rgb) / var(--opacity-90)),
+      rgb(var(--color-background-rgb) / var(--opacity-80)),
+      rgb(var(--color-background-rgb) / var(--opacity-40)),
+      transparent
+    );
+
+    position: sticky;
+    bottom: 0;
+    z-index: var(--facets-sticky-z-index);
+    order: 1;
+    display: flex;
+    flex-shrink: 0;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: var(--gap-sm);
+    padding-block-start: var(--padding-xs);
+    padding-block-end: var(--padding-md);
+    padding-inline: var(--padding-lg);
+    margin-top: auto;
+    background-image: var(--to-top-gradient-background);
+    background-color: var(--color-background);
+  }
+
+  /* Clear all button */
+  .facets__clear-all {
+    display: none;
+    cursor: pointer;
+    min-width: var(--facets-clear-all-min-width);
+    flex-grow: 1;
+    padding-block: var(--padding-lg);
+    color: var(--button-color, inherit);
+  }
+
+  .facets__clear-all--active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+    transition: transform var(--animation-values), opacity var(--animation-values);
+  }
+
+  @starting-style {
+    .facets__clear-all--active {
+      opacity: 0;
+      transform: translateY(100%);
     }
+  }
+
+  .facets__see-results {
+    min-width: var(--facets-see-results-min-width);
+    flex-grow: 1;
+    padding-block: var(--padding-lg);
+  }
+
+  .facets-horizontal-remove {
+    display: flex;
+    align-items: center;
+  }
+
+  .facets-horizontal-remove--active::before {
+    content: '';
+    border-inline-start: var(--style-border-width) solid var(--color-border);
+    height: var(--font-paragraph--size);
+    position: absolute;
   }
 {% endstylesheet %}
 

@@ -79,16 +79,18 @@
             data-filter-style="{{ filter_style }}"
           >
             <span
-              {% if filter_style == 'horizontal' %}
-                {% if active_value_count > 1 %}
-                  class="bubble facets__bubble"
-                {% endif %}
-              {% else %}
-                {% if active_value_count > 0 %}
-                  class="bubble facets__bubble"
-                {% endif %}
-              {% endif %}
-              hide-when-empty
+              class="
+                {%- if filter_style == 'horizontal' -%}
+                  {%- if active_value_count > 1 -%}
+                    bubble facets__bubble
+                  {%- endif -%}
+                {%- else -%}
+                  {%- if active_value_count > 0 -%}
+                    bubble facets__bubble
+                  {%- endif -%}
+                {%- endif %}
+                hide-when-empty
+              "
               ref="facetStatus"
             >
               {%- liquid
@@ -280,7 +282,7 @@
                     on:keydown="#facet-inputs-component-{{ filter.param_name | escape | replace: '.', '-' }}/handleKeyDown"
                   >
                     <label
-                      class="variant-option__button-label variant-option__button-label--has-swatch swatch-rounded"
+                      class="variant-option__button-label variant-option__button-label--has-swatch"
                       on:pointerenter="/prefetchPage"
                       on:pointerleave="/cancelPrefetchPage"
                     >
@@ -544,6 +546,15 @@
     position: absolute;
     inset: 0;
     margin: 0;
+    padding: 0;
+    width: auto;
+    height: auto;
+    aspect-ratio: unset;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    appearance: auto;
+    display: block;
     opacity: 0;
     cursor: pointer;
   }
@@ -555,6 +566,130 @@
 
   .facets__swatch-wrapper {
     display: flex;
+  }
+
+  .variant-option__swatch-wrapper {
+    position: relative;
+    overflow: visible;
+    border-radius: var(--options-border-radius);
+  }
+
+  .variant-option--swatches-disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+
+  .variant-option--swatches-disabled .variant-option__swatch-wrapper {
+    overflow: hidden;
+  }
+
+  .facets--horizontal .facets__status--swatches {
+    @media screen and (min-width: 750px) {
+      display: flex;
+    }
+  }
+
+  .facets--horizontal .sorting-filter .facets__status {
+    @media screen and (min-width: 750px) {
+      display: none;
+    }
+  }
+
+  .facets__status--swatches .swatch {
+    width: calc(var(--variant-picker-swatch-width) / 1.5);
+    height: calc(var(--variant-picker-swatch-height) / 1.5);
+  }
+
+  .facets__status--swatches .swatch + .swatch {
+    margin-left: calc(var(--variant-picker-swatch-width) / -3);
+    outline: 1px solid rgb(var(--color-background-rgb));
+  }
+
+  .facets__inputs-wrapper .facets__inputs-list--images {
+    display: grid;
+    grid-template-columns: repeat(var(--image-columns), 125px);
+    gap: var(--gap-sm);
+  }
+
+  .facets--drawer .facets__inputs-wrapper .facets__inputs-list--images {
+    grid-template-columns: repeat(3, 1fr);
+
+    @media screen and (min-width: 750px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .facets--vertical .facets__inputs-wrapper .facets__inputs-list--images {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .facets--drawer .facets__inputs-list--images {
+    padding-top: var(--padding-xs);
+  }
+
+  .facets__image-wrapper {
+    aspect-ratio: 1/1;
+    width: 100%;
+    padding: var(--padding-xs);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .facets__image-wrapper img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    border-radius: calc(var(--border-radius) / 2);
+  }
+
+  .facets__image-label {
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-block-end: var(--padding-xs);
+    cursor: pointer;
+  }
+
+  .facets__inputs-list-item--disabled .facets__image-label {
+    cursor: not-allowed;
+  }
+
+  .facets__inputs-list-item:not(.facets__inputs-list-item--disabled) .facets__image-label:hover {
+    font-weight: 500;
+  }
+
+  /* Filter-specific variant-option styles */
+  .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover .swatch {
+    --focus-outline: var(--focus-outline-width) solid rgb(var(--color-foreground-rgb) / var(--opacity-35-55));
+
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-outline-offset);
+  }
+
+  .facets__inputs-list--swatches-grid .variant-option__button-label:has(:focus-visible) .swatch {
+    --focus-outline: var(--focus-outline-width) solid currentcolor;
+
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-outline-offset);
+  }
+
+  .facets__inputs-list--swatches-grid .variant-option__button-label:has(:focus-visible) {
+    outline: none;
+  }
+
+  .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover {
+    outline: none;
+  }
+
+  .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:has(:checked) {
+    --focus-outline: none;
+  }
+
+  .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:has(:checked) .swatch {
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-outline-offset);
   }
 
   .facets__inputs-list--swatches .variant-option__button-label {
@@ -609,7 +744,9 @@
     cursor: not-allowed;
   }
 
-  .facets__inputs-wrapper .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch {
+  .facets__inputs-wrapper
+    .facets__inputs-list--swatches-grid
+    .variant-option__button-label--has-swatch:has(input[type='checkbox']) {
     align-items: center;
     overflow: visible;
     justify-content: flex-start;
@@ -632,37 +769,17 @@
     width: auto;
   }
 
-  .facets--horizontal .facets__status--swatches {
-    @media screen and (min-width: 750px) {
-      display: flex;
-    }
+  .facets__inputs-list-item:not(.facets__inputs-list-item--disabled) .variant-option__button-label:hover {
+    font-weight: 500;
   }
 
-  .facets--horizontal .sorting-filter .facets__status {
-    @media screen and (min-width: 750px) {
-      display: none;
-    }
-  }
-
-  .facets__status--swatches .swatch {
-    width: calc(var(--variant-picker-swatch-width) / 1.5);
-    height: calc(var(--variant-picker-swatch-height) / 1.5);
-  }
-
-  .facets__status--swatches .swatch + .swatch {
-    margin-left: calc(var(--variant-picker-swatch-width) / -3);
-    outline: 1px solid rgb(var(--color-background-rgb));
-  }
-
-  .variant-option--images {
-    position: relative;
-  }
-
+  /* Variant option images (filters) */
   .variant-option--images {
     --image-facet-border-width: var(--variant-picker-button-border-width);
     --image-facet-border-opacity: var(--facets-low-opacity);
     --image-facet-border-radius: var(--style-border-radius-xs);
 
+    position: relative;
     border-radius: var(--image-facet-border-radius);
     box-shadow: inset 0 0 0 var(--image-facet-border-width)
       rgb(var(--color-foreground-rgb) / var(--image-facet-border-opacity));
@@ -686,8 +803,31 @@
     }
   }
 
+  .variant-option--images input {
+    /* remove the checkbox from the page flow */
+    position: absolute;
+
+    /* set the dimensions to match those of the label */
+    inset: 0;
+
+    /* hide it */
+    opacity: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: unset;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    appearance: auto;
+    display: block;
+    cursor: pointer;
+  }
+
   .facets__inputs-list-item--disabled .variant-option--images {
     --image-facet-border-opacity: 0;
+
     opacity: var(--disabled-opacity);
     cursor: not-allowed;
 
@@ -711,43 +851,6 @@
     }
   }
 
-  .facets__inputs-wrapper .facets__inputs-list--images {
-    display: grid;
-    grid-template-columns: repeat(var(--image-columns), 125px);
-    gap: var(--gap-sm);
-  }
-
-  .facets--drawer .facets__inputs-wrapper .facets__inputs-list--images {
-    grid-template-columns: repeat(3, 1fr);
-
-    @media screen and (min-width: 750px) {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-
-  .facets--vertical .facets__inputs-wrapper .facets__inputs-list--images {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .facets--drawer .facets__inputs-list--images {
-    padding-top: var(--padding-xs);
-  }
-
-  .facets__image-wrapper {
-    aspect-ratio: 1/1;
-    width: 100%;
-    padding: var(--padding-xs);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .facets__image-wrapper img {
-    height: 100%;
-    width: 100%;
-    object-fit: contain;
-    border-radius: calc(var(--border-radius) / 2);
-  }
-
   /* Position disabled-svg */
   .variant-option--images svg {
     position: absolute;
@@ -767,25 +870,22 @@
     min-width: 0;
   }
 
-  .facets__image-label {
-    width: 100%;
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    padding-block-end: var(--padding-xs);
-    cursor: pointer;
-  }
+  /* Safari < 16.4 outline border-radius workaround - filter-specific */
+  @supports not (background-color: rgb(from red 150 g b / alpha)) {
+    .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover .swatch {
+      outline: none;
+      position: relative;
+      overflow: visible;
+    }
 
-  .facets__inputs-list-item--disabled .facets__image-label {
-    cursor: not-allowed;
-  }
-
-  .facets__inputs-list-item:not(.facets__inputs-list-item--disabled) .variant-option__button-label:hover {
-    font-weight: 500;
-  }
-
-  .facets__inputs-list-item:not(.facets__inputs-list-item--disabled) .facets__image-label:hover {
-    font-weight: 500;
+    .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover .swatch::after {
+      content: '';
+      position: absolute;
+      inset: calc(-1 * var(--focus-outline-offset));
+      border: var(--focus-outline);
+      border-radius: var(--focus-outline-radius, 50%);
+      background-color: transparent;
+      display: inherit;
+    }
   }
 {% endstylesheet %}

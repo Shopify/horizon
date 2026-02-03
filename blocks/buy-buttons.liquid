@@ -127,7 +127,7 @@
               data-section-id="{{ section.id }}"
               ref="volumePricing"
             >
-              <span class="volume-pricing__title caption-large">{{ 'content.volume_pricing' | t }}</span>
+              <span class="volume-pricing__title">{{ 'content.volume_pricing' | t }}</span>
               <div class="volume-pricing__table">
                 <div class="volume-pricing__row volume-pricing__row--even">
                   <span>{{ variant.quantity_rule.min }}+</span>
@@ -170,9 +170,9 @@
                         assign total_index = collapsed_index | plus: 2
                         assign modulo_result = total_index | modulo: 2
                         if modulo_result == 1
-                          assign row_class = 'volume-pricing__row volume-pricing__collapsible-row volume-pricing__row--odd'
+                          assign row_class = 'volume-pricing__row volume-pricing__row--odd'
                         else
-                          assign row_class = 'volume-pricing__row volume-pricing__collapsible-row volume-pricing__row--even'
+                          assign row_class = 'volume-pricing__row volume-pricing__row--even'
                         endif
                       -%}
                       <div class="{{ row_class }}">
@@ -209,7 +209,7 @@
               class="product-form-text__error hidden"
               ref="addToCartTextError"
             >
-              <span class="svg-wrapper product-form-icon--error">
+              <span class="svg-wrapper">
                 {{- 'icon-error.svg' | inline_asset_content -}}
               </span>
             </span>
@@ -304,6 +304,7 @@
           class="dialog-modal dialog-drawer pickup-location__dialog color-{{ settings.drawer_color_scheme }}"
           scroll-lock
           aria-labelledby="pickup-dialog-heading"
+          data-testid="pickup-location-dialog"
         >
           <h2
             id="pickup-dialog-heading"
@@ -314,9 +315,11 @@
           <div class="pickup-availability__dialog-row pickup-availability__header-container">
             <div class="pickup-availability__column">
               <h4 class="pickup-location__h4">{{ closest.product.title }}</h4>
-              <p class="pickup-location__text-sm">
-                {{ closest.product.selected_or_first_available_variant.title }}
-              </p>
+              {% unless closest.product.has_only_default_variant %}
+                <p class="pickup-location__text-sm">
+                  {{ closest.product.selected_or_first_available_variant.title }}
+                </p>
+              {% endunless %}
             </div>
             <button
               ref="closeButton"
@@ -661,13 +664,6 @@
 
   .volume-pricing--expanded .volume-pricing__show-less {
     display: inline;
-  }
-
-  .price-per-item {
-    display: block;
-    color: var(--color-foreground);
-    font-size: var(--font-size--sm);
-    font-weight: normal;
   }
 {% endstylesheet %}
 

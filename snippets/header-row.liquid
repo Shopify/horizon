@@ -1,3 +1,19 @@
+{% doc %}
+  Renders a responsive header row with three columns (left, center, right).
+  Organizes header elements based on their configured position and row placement
+
+  @param {string} row - The row identifier ('top' or 'bottom')
+  @param {string} order - Comma-separated list of item names defining the order of elements
+  @param {object} settings - Section settings object containing position and row settings for each item
+  @param {string} [first] - Optional captured HTML for the first item (typically drawer menu for top row)
+  @param {string} [logo] - Captured HTML for the logo element
+  @param {string} [menu] - Captured HTML for the menu navigation
+  @param {string} [actions] - Captured HTML for header actions (cart, account buttons, etc.)
+  @param {string} [localization] - Captured HTML for language/country selector
+  @param {string} [search] - Captured HTML for search input
+  @param {string} [drawer_search] - Captured HTML for drawer-based search
+{% enddoc %}
+
 {%- liquid
   assign order = order | split: ','
   assign left = ''
@@ -66,8 +82,8 @@
               {{ localization }}
             {% when 'search' %}
               {{ search }}
-            {% when 'mobile_search' %}
-              {{ mobile_search }}
+            {% when 'drawer_search' %}
+              {{ drawer_search }}
             {% when 'actions' %}
               {{ actions }}
           {% endcase %}

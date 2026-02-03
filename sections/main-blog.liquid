@@ -14,29 +14,96 @@
       spacing-style
       size-style
     "
+    data-testid="blog-posts"
     style="{% render 'spacing-style', settings: section.settings %}"
   >
     {% content_for 'blocks' %}
 
-    {%- paginate blog.articles by 12 -%}
-      <span ref="viewMorePrevious"></span>
-      <div
-        ref="grid"
-        class="blog-posts-container"
-        data-last-page="{{ paginate.pages }}"
-      >
-        {% for article in blog.articles %}
-          <div
-            class="blog-post-item"
-            ref="cards[]"
-            data-page="{{ paginate.current_page }}"
-          >
-            {% content_for 'block', id: 'static-blog-post-card', type: '_blog-post-card', article: article %}
-          </div>
-        {% endfor %}
-      </div>
-      <span ref="viewMoreNext"></span>
-    {%- endpaginate -%}
+    <div
+      ref="grid"
+      class="blog-posts-container"
+    >
+      {% liquid
+        assign items_on_page = blog.articles.size
+      %}
+      {% for article in blog.articles %}
+        {% liquid
+          # Defaults for compact layout
+          assign col_span = 2
+          assign scale = 0.6
+          assign is_horizontal = false
+
+          case items_on_page
+            when 1
+              # Single post: full width hero
+              assign col_span = 6
+              assign scale = 1
+              assign is_horizontal = true
+            when 2
+              # Two posts: both standard side by side
+              assign col_span = 3
+              assign scale = 0.8
+            when 3
+              # Three posts: hero + 2 standard
+              if forloop.index == 1
+                assign col_span = 6
+                assign scale = 1
+                assign is_horizontal = true
+              else
+                assign col_span = 3
+                assign scale = 0.8
+              endif
+            when 4
+              # Four posts: all standard in 2x2 grid
+              assign col_span = 3
+              assign scale = 0.8
+            when 5
+              # Five posts: hero + 4 standard
+              if forloop.index == 1
+                assign col_span = 6
+                assign scale = 1
+                assign is_horizontal = true
+              else
+                assign col_span = 3
+                assign scale = 0.8
+              endif
+            else
+              # 6+ posts: hero, 2 standard, rest compact
+              if forloop.index == 1
+                assign col_span = 6
+                assign scale = 1
+                assign is_horizontal = true
+              elsif forloop.index <= 3
+                assign col_span = 3
+                assign scale = 0.8
+              else
+                assign col_span = 2
+                assign scale = 0.6
+              endif
+          endcase
+        %}
+        {% style %}
+          [data-blog-index="{{ section.id }}-{{ forloop.index }}"] {
+            --col-span: {{ col_span }};
+            --blog-post-card-scale: {{ scale }};
+          }
+
+          @media screen and (max-width: 749px) {
+            [data-blog-index="{{ section.id }}-{{ forloop.index }}"] {
+              --col-span: 6;
+              --blog-post-card-scale: 0.5;
+            }
+          }
+        {% endstyle %}
+        <div
+          class="blog-post-item{% if is_horizontal %} blog-post-item--horizontal{% endif %}"
+          data-testid="blog-post-item"
+          data-blog-index="{{ section.id }}-{{ forloop.index }}"
+        >
+          {% content_for 'block', id: 'static-blog-post-card', type: '_blog-post-card', article: article %}
+        </div>
+      {% endfor %}
+    </div>
   </div>
 </blog-posts-list>
 
@@ -61,59 +128,12 @@
   }
 
   /**
-   * Apart from the first and second rows in the grid, all remaining blog posts
-   * are arranged in a three-column layout:
-   * +------------+------------+-------------+
-   * |            |            |             |
-   * |  (span 2)  |  (span 2)  |  (span 2)   |
-   * |            |            |             |
-   * +------------+------------+-------------+
+   * Blog post item grid positioning and scaling.
+   * Layout is calculated in Liquid based on total article count.
+   * Mobile overrides are applied per-item in inline styles for proper specificity.
    */
   .blog-post-item {
-    --blog-post-card-scale: 0.6;
-
-    grid-column: span 2;
-
-    @media screen and (max-width: 749px) {
-      --blog-post-card-scale: 0.5;
-
-      grid-column: span 6;
-    }
-  }
-
-  /**
-   * The second row of blog posts has two columns:
-   * +-------------------+-------------------+
-   * |                   |                   |
-   * |  (column span 3)  |  (column span 3)  |
-   * |                   |                   |
-   * +-------------------+-------------------+
-   */
-  .blog-post-item:nth-child(2),
-  .blog-post-item:nth-child(3) {
-    --blog-post-card-scale: 0.8;
-
-    grid-column: span 3;
-
-    @media screen and (max-width: 749px) {
-      --blog-post-card-scale: 0.5;
-
-      grid-column: span 6;
-    }
-  }
-
-  /**
-   * The first row of blog posts has only one column:
-   * +---------------------------------------+
-   * |                                       |
-   * |           (1 column span 6)           |
-   * |                                       |
-   * +---------------------------------------+
-   */
-  .blog-post-item:first-child {
-    --blog-post-card-scale: 1;
-
-    grid-column: span 6;
+    grid-column: span var(--col-span);
   }
 
   /**

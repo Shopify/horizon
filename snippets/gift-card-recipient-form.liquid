@@ -352,7 +352,7 @@
 
   .recipient-fields__input {
     flex-grow: 1;
-    transition: background-color var(--animation-speed) ease;
+    transition: background-color var(--animation-speed) ease, border-color var(--animation-speed) ease;
     padding: var(--input-padding);
     background-color: var(--color-input-background);
     color: var(--color-input-text);
@@ -364,6 +364,10 @@
     &:autofill {
       background-color: var(--color-input-background);
       color: var(--color-input-text);
+    }
+
+    &:is(:focus, :hover) {
+      background-color: var(--color-input-hover-background);
     }
 
     &:is(:focus) {

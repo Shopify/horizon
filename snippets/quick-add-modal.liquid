@@ -12,6 +12,7 @@
     >
       {{- 'icon-close.svg' | inline_asset_content -}}
     </button>
+
     <div
       id="quick-add-modal-content"
       class="quick-add-modal__content"
@@ -20,9 +21,14 @@
 </quick-add-dialog>
 
 {% stylesheet %}
+  #quick-add-dialog {
+    display: contents;
+  }
+
   @media screen and (min-width: 750px) {
     .quick-add-modal {
-      width: var(--wide-content-width);
+      width: var(--quick-add-modal-width);
+      height: var(--quick-add-modal-height);
       max-width: none;
     }
   }
@@ -30,18 +36,24 @@
   .quick-add-modal {
     padding: 0;
     border: var(--style-border-popover);
-    height: fit-content;
     overflow: hidden;
-    min-height: 500px;
     box-shadow: 0 5px 30px rgb(0 0 0 / var(--opacity-15));
 
     @media screen and (max-width: 750px) {
       position: fixed;
-      display: block;
       margin: auto 0 0 0;
       min-height: unset;
       max-width: 100%;
       border-radius: 0;
+      overflow: clip;
+      height: fit-content;
+    }
+  }
+
+  .quick-add-modal[open] {
+    @media screen and (max-width: 750px) {
+      border-top-left-radius: var(--style-border-radius-popover);
+      border-top-right-radius: var(--style-border-radius-popover);
     }
   }
 
@@ -71,10 +83,26 @@
     right: var(--margin-2xs);
     transition: transform 0.15s var(--animation-timing-bounce);
     z-index: var(--layer-raised);
+    overflow: visible;
+    transform-origin: center;
   }
 
   .quick-add-modal__close:active {
-    transform: scale(0.8);
+    transform: scale(0.99) translateY(1px);
+  }
+
+  .quick-add-modal__close {
+    &:focus-visible {
+      outline: none;
+    }
+
+    &:focus-visible::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: calc(var(--style-border-radius-popover) - var(--margin-2xs));
+      outline: var(--focus-outline-width) solid currentColor;
+    }
   }
 
   .quick-add-modal__content {
@@ -111,16 +139,16 @@
   .quick-add-modal__content {
     /* One column */
     .media-gallery--grid:not(.media-gallery--two-column) .product-media > *,
-    /* Two column, small first image */
-    .media-gallery--grid.media-gallery--two-column:not(.media-gallery--large-first-image)
-    .product-media-container:nth-of-type(odd)
-    .product-media > *,
-    /* Two column, large first image */
-    .media-gallery--grid.media-gallery--two-column.media-gallery--large-first-image
-      .product-media-container:is(:first-of-type, :nth-of-type(even))
+      /* Two column, small first image */
+      .media-gallery--grid.media-gallery--two-column:not(.media-gallery--large-first-image)
+      .product-media-container:nth-of-type(odd)
       .product-media > *,
-      /* Carousel */
-    .media-gallery--carousel slideshow-container {
+      /* Two column, large first image */
+      .media-gallery--grid.media-gallery--two-column.media-gallery--large-first-image
+        .product-media-container:is(:first-of-type, :nth-of-type(even))
+        .product-media > *,
+        /* Carousel */
+      .media-gallery--carousel slideshow-container {
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
     }
@@ -177,6 +205,7 @@
     height: 100%;
     min-height: 0;
     overflow-y: auto;
+    position: relative;
 
     dialog[open] & {
       animation: fadeSlideIn 0.3s var(--animation-timing-fade-in) both;
@@ -191,8 +220,56 @@
     }
   }
 
+  @property --quick-add-modal-mask-start {
+    syntax: '<length>';
+    initial-value: 0px;
+    inherits: false;
+  }
+
+  @property --quick-add-modal-mask-end {
+    syntax: '<length>';
+    initial-value: 0px;
+    inherits: true;
+  }
+
+  @keyframes detect-scroll {
+    from,
+    to {
+      --can-scroll: ;
+    }
+  }
+
+  @supports (animation-timeline: scroll(self)) {
+    dialog[open] .quick-add-modal__content .product-details {
+      mask-image: linear-gradient(to bottom, transparent 0%, #000 var(--quick-add-modal-mask-start), #000 100%);
+      animation: 0.3s var(--animation-timing-fade-in) 0.1s both fadeSlideIn, scrollStart 1s linear both,
+        scrollEnd 1s linear both, detect-scroll 1ms linear none;
+      animation-timeline: auto, scroll(self), scroll(self), scroll(self);
+      animation-range: normal, 0px 48px, calc(100% - 48px) 100%, 0% 100%;
+    }
+  }
+
+  @keyframes scrollStart {
+    from {
+      --quick-add-modal-mask-start: 0px;
+    }
+    to {
+      --quick-add-modal-mask-start: 48px;
+    }
+  }
+
+  @keyframes scrollEnd {
+    from {
+      --quick-add-modal-mask-end: 0px;
+    }
+    to {
+      --quick-add-modal-mask-end: 48px;
+    }
+  }
+
   .quick-add-modal__content .product-details > .group-block {
     flex-grow: 1;
+    width: auto;
   }
 
   .quick-add-modal__content > * {
@@ -204,6 +281,39 @@
   }
   .quick-add-modal__content .product-details :is(.buy-buttons-block) {
     margin-top: auto;
+    position: sticky;
+    bottom: 0;
+    padding-bottom: var(--padding-3xl);
+    background-color: var(--color-background);
+    z-index: var(--layer-raised);
+
+    &::before {
+      --quick-add-modal-mask-end-progressive-enhanced: 0px;
+
+      position: absolute;
+      content: '';
+      display: block;
+      inset: auto 0 100% 0;
+      pointer-events: none;
+      height: min(var(--gap-2xl), var(--gap));
+      background-color: inherit;
+      mask-image: linear-gradient(
+        to top,
+        #000 0%,
+        #000 calc(var(--gap-2xs)),
+        transparent calc(100% - var(--quick-add-modal-mask-end-progressive-enhanced)),
+        transparent
+      );
+    }
+  }
+
+  @supports (animation-timeline: scroll(self)) {
+    .quick-add-modal__content .product-details :is(.buy-buttons-block)::before {
+      --mask-if-scroll: var(--can-scroll) var(--quick-add-modal-mask-end);
+      --mask-if-no-scroll: 48px;
+      --quick-add-modal-mask-end-progressive-enhanced: var(--mask-if-scroll, var(--mask-if-no-scroll));
+      height: calc(var(--gap-2xs) + 48px);
+    }
   }
 
   .quick-add-modal__content .product-details .variant-picker {
@@ -231,7 +341,7 @@
     margin-block-end: 12px;
 
     /* Prevent overlap between title and close button */
-    padding-inline: 0 calc(var(--minimum-touch-target) / 2);
+    padding-inline-end: calc(var(--padding-2xl) + calc(var(--minimum-touch-target) / 2));
   }
 
   .quick-add-modal__content .view-product-title a {
@@ -249,8 +359,20 @@
     transition: color 0.2s var(--animation-easing);
   }
 
-  .quick-add-modal__content .view-product-title {
-    display: flex;
+  .quick-add-modal__content .product-details product-price {
+    --text-align: left;
+  }
+
+  .quick-add-modal__content .product-details product-price.text-block--align-center {
+    margin-inline: 0;
+  }
+
+  .quick-add-modal__content .product-details product-price.text-center {
+    --text-align: left;
+  }
+
+  .quick-add-modal__content .product-details product-price > * {
+    text-align: left;
   }
 
   .quick-add-modal__content
@@ -314,7 +436,11 @@
   }
 
   .quick-add-modal__content .product-details > .group-block {
-    padding: var(--padding-2xl);
+    padding-block: var(--padding-3xl) 0;
+  }
+
+  .quick-add-modal__content :where(.product-details > .group-block > .group-block-content > *) {
+    padding-inline: var(--padding-3xl);
   }
 
   .quick-add-modal__content slideshow-slide:not([aria-hidden='false']) {
@@ -332,6 +458,7 @@
     @media screen and (min-width: 750px) {
       position: sticky;
       grid-column: 1 / 4;
+      width: var(--quick-add-modal-gallery-width);
       overflow-y: auto;
       -ms-overflow-style: none;
       scrollbar-width: none;
@@ -402,7 +529,7 @@
     animation-delay: 0.1s;
   }
 
-  .quick-add-modal__content .product-information__media slideshow-controls {
+  .quick-add-modal__content .product-information__media :is(slideshow-controls, slideshow-controls[thumbnails]) {
     display: none;
   }
 

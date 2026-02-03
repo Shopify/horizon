@@ -154,7 +154,7 @@ document.addEventListener('shopify:section:unload', function (event) {
 // Detect when page is about to unload
 // This helps distinguish between theme editor refreshes (which don't trigger beforeunload)
 // and actual navigation (which does trigger beforeunload)
-window.addEventListener('beforeunload', function (event) {
+window.addEventListener('beforeunload', function (_event) {
   // Set a flag to indicate that an actual unload is happening (not just a refresh)
   sessionStorage.setItem('editor-page-unloading', 'true');
 });

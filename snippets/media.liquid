@@ -46,8 +46,8 @@
           unset_image_tag: unset_image_tag
         %}
       {% else %}
-        <div class="placeholder-image media-block__media border-style">
-          {{ 'detailed-apparel-1' | placeholder_svg_tag: 'hero__image' }}
+        <div class="media-block__media border-style">
+          {{ 'detailed-apparel-1' | placeholder_svg_tag: 'hero__media' }}
         </div>
       {% endif %}
     {% endcapture %}
@@ -71,7 +71,7 @@
       section_id: section_id
     %}
   {%- else -%}
-    <div class="placeholder-image media-block__media border-style">
+    <div class="media-block__media border-style">
       {{ 'hero-apparel-3' | placeholder_svg_tag }}
     </div>
   {%- endif -%}

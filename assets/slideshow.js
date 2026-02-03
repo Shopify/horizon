@@ -16,6 +16,68 @@ import { SlideshowSelectEvent } from '@theme/events';
 const SLIDE_VISIBLITY_THRESHOLD = 0.7;
 
 /**
+ * Shared viewport observer manager for lazy scroll enablement.
+ *
+ * Limit the number of compositor layers created by slideshows by only enabling scrolling when the slideshow is in the viewport.
+ * Resolves known issues with iOS Safari where too many composition layers will crash the page.
+ * When a slideshow is NOT in the viewport, it has overflow: hidden (no compositor layer).
+ * When a slideshow enters the viewport, the [in-viewport] attribute is added, enabling scrolling.
+ */
+class SlideshowViewportObserver {
+  /** @type {SlideshowViewportObserver | null} */
+  static #instance = null;
+
+  /** @type {IntersectionObserver | null} */
+  #observer = null;
+
+  /**
+   * Gets the singleton instance
+   * @returns {SlideshowViewportObserver}
+   */
+  static getInstance() {
+    if (!this.#instance) {
+      this.#instance = new SlideshowViewportObserver();
+    }
+    return this.#instance;
+  }
+
+  /**
+   * Registers a slideshow to be observed for viewport visibility
+   * @param {Slideshow} slideshow - The slideshow to observe
+   */
+  observe(slideshow) {
+    if (!this.#observer) {
+      this.#observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            const slideshowElement = /** @type {Slideshow} */ (entry.target);
+            if (entry.isIntersecting) {
+              slideshowElement.setAttribute('in-viewport', '');
+            } else {
+              slideshowElement.removeAttribute('in-viewport');
+            }
+          }
+        },
+        {
+          rootMargin: '100px',
+        }
+      );
+    }
+
+    this.#observer.observe(slideshow);
+  }
+
+  /**
+   * Unregisters a slideshow from viewport observation
+   * @param {Slideshow} slideshow - The slideshow to unobserve
+   */
+  unobserve(slideshow) {
+    this.#observer?.unobserve(slideshow);
+    slideshow.removeAttribute('in-viewport');
+  }
+}
+
+/**
  * Slideshow custom element that allows sliding between content.
  *
  * @typedef {Object} Refs
@@ -63,6 +125,10 @@ export class Slideshow extends Component {
   async connectedCallback() {
     super.connectedCallback();
 
+    // Register with shared viewport observer for lazy scroll enablement.
+    // This prevents iOS Safari crashes caused by too many compositor layers.
+    SlideshowViewportObserver.getInstance().observe(this);
+
     // Wait for any in-progress view transitions to finish
     if (viewTransition.current) {
       await viewTransition.current;
@@ -76,6 +142,9 @@ export class Slideshow extends Component {
 
   disconnectedCallback() {
     super.disconnectedCallback();
+
+    // Unregister from shared viewport observer
+    SlideshowViewportObserver.getInstance().unobserve(this);
 
     if (this.#scroll) {
       const { scroller } = this.refs;
@@ -207,6 +276,14 @@ export class Slideshow extends Component {
 
         // Instantly scroll to the target slide as its position will have changed
         this.#scroll.to(targetSlide, { instant: true });
+
+        // Force Safari to recalculate the timeline state on timeline refresh (after loop)
+        requestAnimationFrame(() => {
+          this.setAttribute('refreshing-timeline', '');
+          requestAnimationFrame(() => {
+            this.removeAttribute('refreshing-timeline');
+          });
+        });
       });
     }
 

@@ -1,8 +1,8 @@
 import { sectionRenderer } from '@theme/section-renderer';
 import { Component } from '@theme/component';
 import { FilterUpdateEvent, ThemeEvents } from '@theme/events';
-import { debounce, formatMoney, startViewTransition } from '@theme/utilities';
-
+import { debounce, startViewTransition } from '@theme/utilities';
+import { convertMoneyToMinorUnits, formatMoney } from '@theme/money-formatting';
 /**
  * Search query parameter.
  * @type {string}
@@ -216,14 +216,31 @@ if (!customElements.get('facet-inputs-component')) {
  * @extends {Component<PriceFacetRefs>}
  */
 class PriceFacetComponent extends Component {
+  /** @type {string} */
+  currency;
+  /** @type {string} */
+  moneyFormat;
+
   connectedCallback() {
     super.connectedCallback();
     this.addEventListener('keydown', this.#onKeyDown);
+    this.currency = this.dataset.currency ?? 'USD';
+    this.moneyFormat = this.#extractMoneyPlaceholder(this.dataset.moneyFormat ?? '{{amount}}');
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
     this.removeEventListener('keydown', this.#onKeyDown);
+  }
+
+  /**
+   * Extracts the placeholder from a money format string, removing currency symbols.
+   * @param {string} format - The money format (e.g., "${{amount}}", "{{amount}} USD")
+   * @returns {string} Just the placeholder (e.g., "{{amount}}")
+   */
+  #extractMoneyPlaceholder(format) {
+    const match = format.match(/{{\s*\w+\s*}}/);
+    return match ? match[0] : '{{amount}}';
   }
 
   /**
@@ -255,18 +272,36 @@ class PriceFacetComponent extends Component {
   }
 
   /**
+   * Parses a formatted money value into minor units
+   * displayValue can come from user input or API response
+   * @param {string} displayValue - The display value (e.g., "10.50" for USD, "9,50" for EUR, "1000" for JPY)
+   * @param {string} currency - The currency code
+   * @returns {number} The value in minor units
+   */
+  #parseDisplayValue(displayValue, currency) {
+    return convertMoneyToMinorUnits(displayValue, currency) ?? 0;
+  }
+
+  /**
    * Adjusts input values to be within valid range
    * @param {HTMLInputElement} input - The input element to adjust
    */
   #adjustToValidValues(input) {
     if (input.value.trim() === '') return;
 
-    const value = Number(input.value);
-    const min = Number(formatMoney(input.getAttribute('data-min') ?? ''));
-    const max = Number(formatMoney(input.getAttribute('data-max') ?? ''));
+    const { currency, moneyFormat } = this;
+    // Parse the user's input value using currency-aware parsing
+    const value = this.#parseDisplayValue(input.value, currency);
 
-    if (value < min) input.value = min.toString();
-    if (value > max) input.value = max.toString();
+    // data-min and data-max now contain raw minor unit values (not formatted)
+    const min = this.#parseDisplayValue(input.getAttribute('data-min') ?? '0', currency);
+    const max = this.#parseDisplayValue(input.getAttribute('data-max') ?? '0', currency);
+
+    if (value < min) {
+      input.value = formatMoney(min, moneyFormat, currency);
+    } else if (value > max) {
+      input.value = formatMoney(max, moneyFormat, currency);
+    }
   }
 
   /**
@@ -432,7 +467,8 @@ class FacetRemoveComponent extends Component {
   #handleFilterUpdate = (event) => {
     const { clearButton } = this.refs;
     if (clearButton instanceof Element) {
-      clearButton.classList.toggle('active', event.shouldShowClearAll());
+      const activeClass = this.getAttribute('active-class') || 'active';
+      clearButton.classList.toggle(activeClass, event.shouldShowClearAll());
     }
   };
 }
@@ -750,29 +786,31 @@ class FacetStatusComponent extends Component {
       return;
     }
 
-    const minInputNum = this.#parseCents(minInputValue, '0');
-    const maxInputNum = this.#parseCents(maxInputValue, facetStatus.dataset.rangeMax);
+    const currency = facetStatus.dataset.currency || '';
+    const minInputNum = this.#parseCents(minInputValue, '0', currency);
+    const maxInputNum = this.#parseCents(maxInputValue, facetStatus.dataset.rangeMax, currency);
     facetStatus.innerHTML = `${this.#formatMoney(minInputNum)}–${this.#formatMoney(maxInputNum)}`;
   }
 
   /**
-   * Parses a decimal number as cents
+   * Parses a decimal number as minor units (cents for most currencies, but adjusted for zero-decimal currencies)
    * @param {string} value - The stringified decimal number to parse
-   * @param {string} fallback - The fallback value in case `value` is invalid
-   * @returns {number} The money value in cents
+   * @param {string} fallback - The fallback value in case `value` is invalid (formatted string like "11,400")
+   * @param {string} currency - The currency code (e.g., 'USD', 'JPY', 'KRW')
+   * @returns {number} The money value in minor units
    */
-  #parseCents(value, fallback = '0') {
-    const parts = value ? value.trim().split(/[^0-9]/) : (parseInt(fallback, 10) / 100).toString();
-    const [wholeStr, fractionStr, ...rest] = parts;
-    if (typeof wholeStr !== 'string' || rest.length > 0) return parseInt(fallback, 10);
+  #parseCents(value, fallback = '0', currency = '') {
+    // Try to parse the value
+    const result = convertMoneyToMinorUnits(value, currency);
+    if (result !== null) return result;
 
-    const whole = parseInt(wholeStr, 10);
-    let fraction = parseInt(fractionStr || '0', 10);
+    // Fall back to parsing the fallback string (which may have formatting like "11,400")
+    const fallbackResult = convertMoneyToMinorUnits(fallback, currency);
+    if (fallbackResult !== null) return fallbackResult;
 
-    // Use two most-significant digits, e.g. 1 -> 10, 12 -> 12, 123 -> 12.3, 1234 -> 12.34, etc
-    fraction = fraction * Math.pow(10, 2 - fraction.toString().length);
-
-    return whole * 100 + fraction;
+    // Last resort: clean and parse as integer
+    const cleanFallback = fallback.replace(/[^\d]/g, '');
+    return parseInt(cleanFallback, 10) || 0;
   }
 
   /**
@@ -783,67 +821,10 @@ class FacetStatusComponent extends Component {
   #formatMoney(moneyValue) {
     if (!(this.refs.moneyFormat instanceof HTMLTemplateElement)) return '';
 
-    const template = this.refs.moneyFormat.content.textContent || '{{amount}}';
+    const format = this.refs.moneyFormat.content.textContent || '{{amount}}';
     const currency = this.refs.facetStatus.dataset.currency || '';
 
-    return template.replace(/{{\s*(\w+)\s*}}/g, (_, placeholder) => {
-      if (typeof placeholder !== 'string') return '';
-      if (placeholder === 'currency') return currency;
-
-      let thousandsSeparator = ',';
-      let decimalSeparator = '.';
-      let precision = CURRENCY_DECIMALS[currency.toUpperCase()] ?? DEFAULT_CURRENCY_DECIMALS;
-
-      if (placeholder === 'amount') {
-        // Check first since it's the most common, use defaults.
-      } else if (placeholder === 'amount_no_decimals') {
-        precision = 0;
-      } else if (placeholder === 'amount_with_comma_separator') {
-        thousandsSeparator = '.';
-        decimalSeparator = ',';
-      } else if (placeholder === 'amount_no_decimals_with_comma_separator') {
-        // Weirdly, this is correct. It uses amount_with_comma_separator's
-        // behaviour but removes decimals, resulting in an unintuitive
-        // output that can't possibly include commas, despite the name.
-        thousandsSeparator = '.';
-        precision = 0;
-      } else if (placeholder === 'amount_no_decimals_with_space_separator') {
-        thousandsSeparator = ' ';
-        precision = 0;
-      } else if (placeholder === 'amount_with_space_separator') {
-        thousandsSeparator = ' ';
-        decimalSeparator = ',';
-      } else if (placeholder === 'amount_with_period_and_space_separator') {
-        thousandsSeparator = ' ';
-        decimalSeparator = '.';
-      } else if (placeholder === 'amount_with_apostrophe_separator') {
-        thousandsSeparator = "'";
-        decimalSeparator = '.';
-      }
-
-      return this.#formatCents(moneyValue, thousandsSeparator, decimalSeparator, precision);
-    });
-  }
-
-  /**
-   * Formats money in cents
-   * @param {number} moneyValue - The money value in cents (hundredths of one major currency unit)
-   * @param {string} thousandsSeparator - The thousands separator
-   * @param {string} decimalSeparator - The decimal separator
-   * @param {number} precision - The precision
-   * @returns {string} The formatted money value
-   */
-  #formatCents(moneyValue, thousandsSeparator, decimalSeparator, precision) {
-    const roundedNumber = (moneyValue / 100).toFixed(precision);
-
-    let [a, b] = roundedNumber.split('.');
-    if (!a) a = '0';
-    if (!b) b = '';
-
-    // Split by groups of 3 digits
-    a = a.replace(/\d(?=(\d\d\d)+(?!\d))/g, (digit) => digit + thousandsSeparator);
-
-    return precision <= 0 ? a : a + decimalSeparator + b.padEnd(precision, '0');
+    return formatMoney(moneyValue, format, currency);
   }
 
   /**
@@ -857,56 +838,3 @@ class FacetStatusComponent extends Component {
 if (!customElements.get('facet-status-component')) {
   customElements.define('facet-status-component', FacetStatusComponent);
 }
-
-/**
- * Default currency decimals used in most currenies
- * @constant {number}
- */
-const DEFAULT_CURRENCY_DECIMALS = 2;
-
-/**
- * Decimal precision for currencies that have a non-default precision
- * @type {Record<string, number>}
- */
-const CURRENCY_DECIMALS = {
-  BHD: 3,
-  BIF: 0,
-  BYR: 0,
-  CLF: 4,
-  CLP: 0,
-  DJF: 0,
-  GNF: 0,
-  IQD: 3,
-  ISK: 0,
-  JOD: 3,
-  JPY: 0,
-  KMF: 0,
-  KRW: 0,
-  KWD: 3,
-  LYD: 3,
-  MRO: 5,
-  OMR: 3,
-  PYG: 0,
-  RWF: 0,
-  TND: 3,
-  UGX: 0,
-  UYI: 0,
-  UYW: 4,
-  VND: 0,
-  VUV: 0,
-  XAF: 0,
-  XAG: 0,
-  XAU: 0,
-  XBA: 0,
-  XBB: 0,
-  XBC: 0,
-  XBD: 0,
-  XDR: 0,
-  XOF: 0,
-  XPD: 0,
-  XPF: 0,
-  XPT: 0,
-  XSU: 0,
-  XTS: 0,
-  XUA: 0,
-};

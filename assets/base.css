@@ -21,6 +21,8 @@ body {
   --hover-transition-timing: ease-out;
   --surface-transition-duration: 0.3s;
   --surface-transition-timing: var(--ease-out-quad);
+  --submenu-animation-speed: 360ms;
+  --submenu-animation-easing: cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 html {
@@ -55,7 +57,8 @@ select {
   border-radius: var(--style-border-radius-inputs);
 }
 
-input:hover {
+input:hover,
+textarea:hover {
   background-color: var(--color-input-hover-background);
 }
 
@@ -791,7 +794,8 @@ slideshow-component [data-placeholder='true'] * {
 /* Base text and heading styles */
 body,
 .paragraph:not(.button),
-.paragraph > * {
+.paragraph > *,
+.text-block.paragraph :is(h1, h2, h3, h4, h5, h6) {
   font-family: var(--font-paragraph--family);
   font-style: var(--font-paragraph--style);
   font-weight: var(--font-paragraph--weight);
@@ -820,7 +824,8 @@ body,
 
 h1,
 .h1.h1,
-.text-block.h1 > * {
+.text-block.h1 > *,
+.text-block.h1 :is(h1, h2, h3, h4, h5, h6) {
   font-family: var(--font-h1--family);
   font-style: var(--font-h1--style);
   font-weight: var(--font-h1--weight);
@@ -841,7 +846,8 @@ h1,
 
 h2,
 .h2.h2,
-.text-block.h2 > * {
+.text-block.h2 > *,
+.text-block.h2 :is(h1, h2, h3, h4, h5, h6) {
   font-family: var(--font-h2--family);
   font-style: var(--font-h2--style);
   font-weight: var(--font-h2--weight);
@@ -863,7 +869,8 @@ h2,
 h3,
 .h3,
 .h3.h3,
-.text-block.h3 > * {
+.text-block.h3 > *,
+.text-block.h3 :is(h1, h2, h3, h4, h5, h6) {
   font-family: var(--font-h3--family);
   font-style: var(--font-h3--style);
   font-weight: var(--font-h3--weight);
@@ -884,7 +891,8 @@ h3,
 
 h4,
 .h4.h4,
-.text-block.h4 > * {
+.text-block.h4 > *,
+.text-block.h4 :is(h1, h2, h3, h4, h5, h6) {
   font-family: var(--font-h4--family);
   font-style: var(--font-h4--style);
   font-weight: var(--font-h4--weight);
@@ -905,7 +913,8 @@ h4,
 
 h5,
 .h5.h5,
-.text-block.h5 > * {
+.text-block.h5 > *,
+.text-block.h5 :is(h1, h2, h3, h4, h5, h6) {
   font-family: var(--font-h5--family);
   font-style: var(--font-h5--style);
   font-weight: var(--font-h5--weight);
@@ -926,7 +935,8 @@ h5,
 
 h6,
 .h6.h6,
-.text-block.h6 > * {
+.text-block.h6 > *,
+.text-block.h6 :is(h1, h2, h3, h4, h5, h6) {
   font-family: var(--font-h6--family);
   font-style: var(--font-h6--style);
   font-weight: var(--font-h6--weight);
@@ -970,10 +980,8 @@ a {
 }
 
 /* Add underline to text using our paragraph styles only. */
-p:not(.h1, .h2, .h3, .h4, .h5, .h6) a:where(:not(.button, .button-primary, .button-secondary)),
-.rte
-  :is(p, ul, ol, table):not(.h1, .h2, .h3, .h4, .h5, .h6)
-  a:where(:not(.button, .button-primary, .button-secondary)) {
+p:not(.h1, .h2, .h3, .h4, .h5, .h6) a:where(:not(.button, .button-secondary)),
+.rte :is(p, ul, ol, table):not(.h1, .h2, .h3, .h4, .h5, .h6) a:where(:not(.button, .button-secondary)) {
   text-decoration-color: currentcolor;
 
   &:hover {
@@ -1371,6 +1379,7 @@ button.shopify-payment-button__button--unbranded {
   border: none;
   font-family: var(--font-paragraph--family);
   font-style: var(--font-paragraph--style);
+  font-weight: var(--font-paragraph--weight);
   font-size: var(--font-paragraph--size);
   line-height: var(--font-paragraph--line-height);
   margin-block: 0;
@@ -1406,7 +1415,7 @@ button.shopify-payment-button__button--unbranded {
 }
 
 textarea,
-input {
+input:not([type='checkbox'], [type='radio']) {
   background-color: var(--color-input-background);
   border-color: var(--color-input-border);
 }
@@ -1617,13 +1626,12 @@ media-gallery {
 }
 
 :not(.dialog-zoomed-gallery) > .product-media-container {
-  /* width and overflow forces children to shrink to parent width */
-  --slide-width: round(up, 100%, 1px);
+  --slide-width: 100%;
 
   display: flex;
   aspect-ratio: var(--gallery-aspect-ratio, var(--media-preview-ratio));
   max-height: var(--constrained-height);
-  width: 100%;
+  width: var(--slide-width, 100%);
 
   /* Relative position needed for video and 3d models */
   position: relative;
@@ -1637,6 +1645,11 @@ media-gallery {
 
     margin-right: auto;
     margin-left: auto;
+  }
+
+  @supports (--test: round(up, 100%, 1px)) {
+    /* width and overflow forces children to shrink to parent width */
+    --slide-width: round(up, 100%, 1px);
   }
 }
 
@@ -1808,6 +1821,8 @@ zoom-dialog dialog {
 }
 
 .dialog-thumbnails-list {
+  --active-thumbnail-border-color: rgb(var(--color-border-rgb) / var(--media-border-opacity));
+
   position: relative;
   display: inline-flex;
   flex-direction: row;
@@ -1834,8 +1849,8 @@ zoom-dialog dialog {
     right: 0;
     max-height: calc(100vh - 200px);
     overflow-y: auto;
-    animation: thumbnailsSlideInTop calc(var(--animation-speed) * 0.5) var(--animation-easing) forwards;
-    animation-delay: calc(var(--animation-speed) * 2);
+    animation: thumbnailsSlideInTop var(--spring-d220-b0-duration) var(--spring-d220-b0-easing) forwards;
+    animation-delay: calc(var(--spring-d220-b0-duration) * 0.5);
   }
 
   .dialog--closed .dialog-thumbnails-list {
@@ -1860,7 +1875,37 @@ zoom-dialog dialog {
   &:is([aria-selected='true']) {
     outline: var(--focus-outline-width) solid currentcolor;
     outline-offset: calc(var(--focus-outline-offset) / 2);
-    border: var(--style-border-width) solid rgb(var(--color-border-rgb) / var(--media-border-opacity));
+    border: var(--style-border-width) solid var(--active-thumbnail-border-color);
+  }
+}
+
+@supports (anchor-name: --test) {
+  .dialog-thumbnails-list:has(.dialog-thumbnails-list__thumbnail:is([aria-selected='true']))::after {
+    --inset-offset: calc(var(--focus-outline-offset) / 2);
+
+    content: '';
+    position: absolute;
+    inset: anchor(top) anchor(right) anchor(bottom) anchor(left);
+    position-anchor: --selected-thumbnail;
+    outline: var(--focus-outline-width) solid currentcolor;
+    outline-offset: calc(var(--focus-outline-offset) / 2);
+    border: var(--style-border-width) solid var(--active-thumbnail-border-color);
+    border-radius: var(--media-radius);
+    z-index: var(--layer-raised);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .dialog-thumbnails-list:has(.dialog-thumbnails-list__thumbnail:is([aria-selected='true']))::after {
+      transition-property: inset;
+      transition-duration: var(--spring-d180-b0-duration);
+      transition-timing-function: var(--spring-d180-b0-easing);
+    }
+  }
+
+  .dialog-thumbnails-list__thumbnail:is([aria-selected='true']) {
+    outline: none;
+    border: none;
+    anchor-name: --selected-thumbnail;
   }
 }
 
@@ -1988,6 +2033,7 @@ deferred-media img {
 }
 
 deferred-media iframe {
+  display: block;
   width: 100%;
   height: 100%;
   border: none;
@@ -2169,6 +2215,383 @@ deferred-media[class] :is(.deferred-media__poster-button img, .deferred-media__p
   border-radius: var(--variant-picker-swatch-radius);
 }
 
+/* Variant option component */
+.variant-option {
+  --options-border-radius: var(--variant-picker-button-radius);
+  --options-border-width: var(--variant-picker-button-border-width);
+  --variant-option-padding-inline: var(--padding-md);
+}
+
+.variant-option + .variant-option {
+  margin-top: var(--padding-lg);
+}
+
+.variant-option--swatches {
+  --options-border-radius: var(--variant-picker-swatch-radius);
+
+  width: 100%;
+
+  overflow-list::part(list) {
+    padding-block: var(--overflow-list-padding-block, 0);
+    padding-inline: var(--overflow-list-padding-inline, 0);
+  }
+}
+
+.variant-option--swatches > overflow-list {
+  justify-content: var(--product-swatches-alignment);
+
+  @media (max-width: 749px) {
+    justify-content: var(--product-swatches-alignment-mobile);
+  }
+}
+
+.variant-option--buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.variant-option--buttons legend {
+  padding: 0;
+  margin-block-end: var(--margin-xs);
+}
+
+.variant-option__swatch-value {
+  padding-inline-start: var(--padding-xs);
+  color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .variant-option__button-label,
+  .variant-option__select-wrapper,
+  .variant-option__button-label::before,
+  .variant-option__button-label::after,
+  .variant-option__button-label:has([data-previous-checked='true'], [data-current-checked='true'])
+    .variant-option__button-label__pill,
+  .variant-option__button-label:not(.variant-option__button-label--has-swatch) svg line:last-of-type {
+    transition-duration: var(--animation-speed);
+    transition-timing-function: var(--animation-easing);
+  }
+
+  .variant-option__button-label__pill {
+    transition-property: transform;
+  }
+
+  .variant-option__button-label:not(.variant-option__button-label--has-swatch) svg line:last-of-type {
+    transition-property: clip-path;
+  }
+
+  .variant-option__button-label:has([data-previous-checked='true'], [data-current-checked='true'])
+    .variant-option__button-label__pill {
+    transition-property: transform;
+  }
+
+  .variant-option__button-label::after {
+    transition-property: clip-path;
+  }
+
+  .variant-option__button-label::before {
+    transition-property: border-color;
+  }
+
+  .variant-option__select-wrapper,
+  .variant-option__button-label {
+    transition-property: background-color, border-color, color;
+  }
+}
+
+.variant-option__button-label {
+  --variant-picker-stroke-color: var(--color-variant-border);
+
+  cursor: pointer;
+  display: flex;
+  flex: 0 0 3.25em;
+  align-items: center;
+  position: relative;
+  padding-block: var(--padding-sm);
+  padding-inline: var(--padding-lg);
+  border: var(--options-border-width) solid var(--color-variant-border);
+  border-radius: var(--options-border-radius);
+  overflow: clip;
+  justify-content: center;
+  min-height: 3.25em;
+  min-width: fit-content;
+  white-space: nowrap;
+  background-color: var(--color-variant-background);
+  color: var(--color-variant-text);
+  gap: 0;
+
+  &:hover,
+  &:hover:has([aria-disabled='true']):has([data-option-available='false']) {
+    background-color: var(--color-variant-hover-background);
+    border-color: var(--color-variant-hover-border);
+    color: var(--color-variant-hover-text);
+  }
+
+  /* we need something like overflow-clip-margin to use the pseudoelement but it doesn't work in Safari */
+
+  /* so instead use the layered background image trick */
+  &:not(.variant-option__button-label--has-swatch):has([data-option-available='false']) {
+    border-width: 0;
+  }
+
+  /* ::after/::before act as a fake border for the button style variant */
+
+  /* ::after is the unavailable variant border that clips in */
+  &:not(.variant-option__button-label--has-swatch)::before,
+  &:has([data-option-available='false']):not(.variant-option__button-label--has-swatch)::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: var(--options-border-width) solid var(--color-selected-variant-border);
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 2;
+    /* stylelint-disable-next-line plugin/no-unsupported-browser-features */
+    clip-path: inset(var(--clip, 0 0 0 0));
+  }
+
+  &:has([data-option-available='false']):not(.variant-option__button-label--has-swatch)::before {
+    inset: 0;
+  }
+
+  &:not(.variant-option__button-label--has-swatch)::before {
+    /* stylelint-disable-next-line plugin/no-unsupported-browser-features */
+    clip-path: inset(0 0 0 0);
+    border-color: var(--color-variant-border);
+    inset: calc(var(--options-border-width) * -1);
+  }
+
+  &:has(:checked):not(.variant-option__button-label--has-swatch, :has([data-option-available='false']))::before {
+    border-color: var(--color-selected-variant-border);
+  }
+
+  /* setting left/right accounts for variant buttons of different widths */
+  &:not(:has(:checked)):has(~ label > :checked),
+  &:has(:checked):has(~ label > [data-previous-checked='true']) {
+    .variant-option__button-label__pill {
+      right: 0;
+      left: unset;
+    }
+  }
+
+  &:has([data-previous-checked='true']) ~ label:has([data-current-checked='true']),
+  &:has(:checked) ~ label {
+    .variant-option__button-label__pill {
+      left: 0;
+      right: unset;
+    }
+  }
+
+  &:not(:has(:checked)):has(~ label > :checked) {
+    --pill-offset: calc(100% + 1px);
+  }
+
+  &:has(:checked) ~ label {
+    --pill-offset: calc(-100% - 1px);
+  }
+
+  &:has([data-current-checked='true']):first-of-type
+    ~ label:last-of-type:not(.variant-option__button-label--has-swatch),
+  &:not(:has(:checked)):has(~ label > :checked):not(.variant-option__button-label--has-swatch) {
+    --clip: 0 0 0 100%;
+  }
+
+  &:not(:has([data-current-checked='true'])):first-of-type:has(~ label:last-of-type > :checked):not(
+      .variant-option__button-label--has-swatch
+    ),
+  &:has(:checked) ~ label:not(.variant-option__button-label--has-swatch) {
+    --clip: 0 100% 0 0;
+  }
+
+  &:has([data-previous-checked='true'], [data-current-checked='true']) .variant-option__button-label__pill {
+    width: max(var(--pill-width-current, 100%), var(--pill-width-previous, 100%));
+  }
+
+  @media screen and (min-width: 750px) {
+    padding: var(--padding-xs) var(--variant-option-padding-inline);
+  }
+}
+
+/* wrap around only for 3 or more variants in a row */
+
+/* the more complex selector rules here produce the wrap around effect for first/last variants */
+.variant-option--buttons:has(:nth-of-type(3)) {
+  .variant-option__button-label:has([data-current-checked='true']):first-of-type ~ label:last-of-type {
+    --pill-offset: calc(100% + 1px);
+  }
+
+  .variant-option__button-label:not(:has([data-current-checked='true'])):first-of-type:has(
+      ~ label:last-of-type > :checked
+    ) {
+    --pill-offset: calc(-100% - 1px);
+  }
+}
+
+.variant-option__button-label__pill {
+  background: var(--color-selected-variant-background);
+  position: absolute;
+  top: calc(var(--options-border-width) * -1);
+  bottom: calc(var(--options-border-width) * -1);
+  border-radius: inherit;
+  pointer-events: none;
+  width: 100%;
+  transform: translateX(var(--pill-offset, 0));
+}
+
+.variant-option__button-label__text {
+  pointer-events: none;
+  text-align: start;
+  text-wrap: auto;
+  z-index: 2;
+}
+
+.variant-option--equal-width-buttons {
+  --variant-min-width: clamp(44px, calc(var(--variant-option-padding-inline) * 2 + var(--variant-ch)), 100%);
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--variant-min-width), 1fr));
+
+  .variant-option__button-label {
+    min-width: var(--variant-min-width);
+  }
+
+  .variant-option__button-label__text {
+    text-align: center;
+    text-wrap: balance;
+  }
+}
+
+.variant-option__button-label:has(:focus-visible) {
+  --variant-picker-stroke-color: var(--color-foreground);
+
+  border-color: var(--color-foreground);
+  outline: var(--focus-outline-width) solid var(--color-foreground);
+  outline-offset: var(--focus-outline-offset);
+}
+
+.variant-option__button-label--has-swatch {
+  --focus-outline-radius: var(--variant-picker-swatch-radius);
+
+  padding: 0;
+  border: none;
+  flex-basis: auto;
+  min-height: auto;
+}
+
+/* Override global label:has(input) display rule with higher specificity */
+.variant-option__button-label--has-swatch:has(input) {
+  display: block;
+}
+
+.variant-option__button-label:has(:checked) {
+  color: var(--color-selected-variant-text);
+  border-color: var(--color-selected-variant-border);
+}
+
+.variant-option__button-label:has(:checked):hover {
+  border-color: var(--color-selected-variant-hover-border);
+  color: var(--color-selected-variant-hover-text);
+
+  .variant-option__button-label__pill {
+    background-color: var(--color-selected-variant-hover-background);
+  }
+}
+
+.variant-option__button-label:has([data-option-available='false']) {
+  color: rgb(var(--color-variant-text-rgb) / var(--opacity-60));
+}
+
+.variant-option__button-label--has-swatch:hover {
+  outline: var(--focus-outline-width) solid rgb(var(--color-foreground-rgb) / var(--opacity-35-55));
+  outline-offset: var(--focus-outline-offset);
+}
+
+.variant-option__button-label--has-swatch:has(:checked) {
+  --focus-outline: var(--focus-outline-width) solid var(--color-foreground);
+
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-outline-offset);
+}
+
+/* This triggers iOS < 16.4. The outline bug is not recognized as a lack of @supports */
+@supports not (background-color: rgb(from red 150 g b / alpha)) {
+  /** There is a bug in safari < 16.4 that causes the outline to not follow the elements border radius. This is a workaround. **/
+  .variant-option__button-label--has-swatch:has(:checked),
+  .variant-option__button-label:has(:focus-visible) .swatch {
+    outline: none;
+    position: relative;
+    overflow: visible;
+  }
+
+  .variant-option__button-label--has-swatch:has(:checked)::after,
+  .variant-option__button-label:has(:focus-visible) .swatch::after {
+    content: '';
+    position: absolute;
+    inset: calc(-1 * var(--focus-outline-offset));
+    border: var(--focus-outline);
+    border-radius: var(--focus-outline-radius, 50%);
+    background-color: transparent;
+    display: inherit;
+  }
+}
+
+.variant-option__button-label:has([data-option-available='false']):has(:checked) {
+  background-color: inherit;
+  color: rgb(var(--color-variant-text-rgb) / var(--opacity-60));
+}
+
+.variant-option__button-label input {
+  /* remove the checkbox from the page flow */
+  position: absolute;
+
+  /* set the dimensions to match those of the label */
+  inset: 0;
+
+  /* hide it */
+  opacity: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: unset;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  appearance: auto;
+  display: block;
+  cursor: pointer;
+}
+
+.variant-option__button-label svg {
+  position: absolute;
+  left: var(--options-border-width);
+  top: var(--options-border-width);
+  height: calc(100% - (var(--options-border-width) * 2));
+  width: calc(100% - (var(--options-border-width) * 2));
+  cursor: pointer;
+  pointer-events: none;
+  stroke-width: var(--style-border-width);
+  stroke: var(--variant-picker-stroke-color);
+}
+
+.variant-option__button-label:not(.variant-option__button-label--has-swatch) svg {
+  stroke: var(--color-variant-border);
+
+  line {
+    stroke-width: var(--options-border-width);
+  }
+
+  line:last-of-type {
+    /* stylelint-disable-next-line plugin/no-unsupported-browser-features */
+    clip-path: inset(var(--clip, 0 0 0 0));
+    stroke: rgb(var(--color-variant-text-rgb) / 1);
+  }
+}
+
 .sticky-content {
   position: sticky;
   top: var(--sticky-header-offset, 0);
@@ -2220,6 +2643,16 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
   .card-gallery:hover .quick-add__button {
     display: none;
   }
+}
+
+/* Hide "Add" button when "Choose" button is shown */
+[data-quick-add-button='choose'] add-to-cart-component {
+  display: none;
+}
+
+/* Hide "Choose" button when "Add" button is shown */
+[data-quick-add-button='add'] .quick-add__button--choose {
+  display: none;
 }
 
 /* Drawer */
@@ -2361,7 +2794,7 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
 
 .custom-font-weight,
 .custom-font-weight > * {
-  font-weight: var(--weight);
+  font-weight: var(--font-weight);
 }
 
 /* Border override style */
@@ -2552,25 +2985,15 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
 }
 
 .checkbox {
-  --checkbox-size: 22px;
   --checkbox-top: 50%;
   --checkbox-left: 1.5px;
   --checkbox-offset: 3px;
-  --checkbox-border-radius: 7px;
-  --checkbox-label-padding: 8px;
   --checkbox-path-opacity: 0;
   --checkbox-cursor: pointer;
-  --checkbox-border: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-35-55));
 
   position: relative;
   display: flex;
   align-items: center;
-
-  @media screen and (min-width: 750px) {
-    --checkbox-size: 16px;
-    --checkbox-border-radius: 5px;
-    --checkbox-label-padding: 6px;
-  }
 
   &:has(.checkbox__input:checked) {
     --checkbox-path-opacity: 1;
@@ -2585,8 +3008,16 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
   position: absolute;
   opacity: 0;
   margin: 0;
+  padding: 0;
   width: var(--checkbox-size);
   height: var(--checkbox-size);
+  aspect-ratio: unset;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  appearance: auto;
+  display: block;
+  cursor: pointer;
 
   /* Outline is on the SVG instead, to allow it to have border-radius */
   &:focus-visible {
@@ -2643,10 +3074,164 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
   color: var(--input-disabled-text-color);
 }
 
+/* Radio buttons and checkboxes - shared base styles */
+:where(input[type='radio']),
+:where(input[type='checkbox']) {
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  aspect-ratio: 1;
+  margin: 0;
+  margin-inline-end: var(--padding-3xs);
+  padding: 0;
+  border: var(--checkbox-border);
+  appearance: none;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+/* Radio buttons */
+input[type='radio'] {
+  border-radius: var(--style-border-radius-50);
+  background: transparent;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+:where(input[type='radio']):checked {
+  border-color: var(--color-foreground);
+  background: var(--color-background);
+}
+
+:where(input[type='radio']):checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(var(--checkbox-size) / 2);
+  height: calc(var(--checkbox-size) / 2);
+  background: var(--color-foreground);
+  border-radius: var(--style-border-radius-50);
+  transition: background 0.2s ease;
+}
+
+:where(input[type='radio']):disabled {
+  border-color: var(--input-disabled-border-color);
+  background-color: var(--input-disabled-background-color);
+  cursor: not-allowed;
+}
+
+:where(input[type='radio']):disabled:checked::after {
+  background: var(--input-disabled-background-color);
+}
+
+:where(input[type='radio']):not(:disabled):hover {
+  border-color: rgb(var(--color-foreground-rgb) / var(--opacity-40-60));
+  background-color: rgb(var(--color-foreground-rgb) / var(--opacity-5));
+}
+
+:where(input[type='radio']):not(:disabled):hover:checked {
+  border-color: var(--color-foreground);
+  background-color: var(--color-background);
+}
+
+:where(input[type='radio']):not(:disabled):hover:checked::after {
+  background: rgb(var(--color-foreground-rgb) / var(--opacity-85));
+}
+
+/* Checkboxes */
+:where(input[type='checkbox']) {
+  border-radius: var(--checkbox-border-radius);
+  background-color: var(--color-background);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+:where(input[type='checkbox']):checked {
+  background-color: var(--color-foreground);
+  border-color: var(--color-foreground);
+}
+
+:where(input[type='checkbox']):checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  background-color: var(--color-background);
+  mask-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4.75439 10.7485L7.68601 14.5888C7.79288 14.7288 7.84632 14.7988 7.91174 14.8242C7.96907 14.8466 8.03262 14.8469 8.09022 14.8253C8.15596 14.8007 8.21026 14.7314 8.31886 14.5927L15.2475 5.74658' stroke='black' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+}
+
+:where(input[type='checkbox']):not(:disabled):hover {
+  border-color: rgb(var(--color-foreground-rgb) / var(--opacity-40-60));
+  background-color: rgb(var(--color-foreground-rgb) / var(--opacity-5));
+}
+
+:where(input[type='checkbox']):not(:disabled):hover:checked {
+  border-color: var(--color-foreground);
+  background-color: rgb(var(--color-foreground-rgb) / var(--opacity-85));
+}
+
+:where(input[type='checkbox']):disabled {
+  background-color: var(--input-disabled-background-color);
+  border-color: var(--input-disabled-border-color);
+  cursor: not-allowed;
+}
+
+:where(input[type='checkbox']):disabled:checked::after {
+  background-color: var(--input-disabled-text-color);
+}
+
+/* Shared styles for radio buttons and checkboxes */
+:where(input[type='radio']) + label,
+:where(input[type='checkbox']) + label {
+  display: inline;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+:where(input[type='radio']):disabled + label,
+:where(input[type='checkbox']):disabled + label {
+  color: var(--input-disabled-text-color);
+  cursor: not-allowed;
+}
+
+/* Flexbox for labels wrapping radio buttons or checkboxes */
+label:has(input[type='radio']),
+label:has(input[type='checkbox']) {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--padding-2xs);
+  cursor: pointer;
+}
+
+label:has(input[type='radio']:disabled),
+label:has(input[type='checkbox']:disabled) {
+  cursor: not-allowed;
+}
+
+/* Override for swatch labels to maintain block display */
+.variant-option__button-label--has-swatch:has(input[type='radio']) {
+  display: block;
+}
+
 /* Add to cart button */
 .button[id^='BuyButtons-ProductSubmitButton-'] {
   position: relative;
   overflow: hidden;
+}
+
+/* Cart items component */
+.cart-items-component {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Cart bubble */
@@ -2666,6 +3251,14 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
   padding-inline: var(--cart-padding);
 }
 
+.cart-bubble[data-maintain-ratio] {
+  aspect-ratio: 1;
+}
+
+.cart-bubble[data-maintain-ratio] .cart-bubble__background {
+  border-radius: var(--style-border-radius-50);
+}
+
 .cart-bubble__background {
   position: absolute;
   inset: 0;
@@ -2680,6 +3273,19 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Cart typography */
+.cart-primary-typography {
+  font-family: var(--cart-primary-font-family);
+  font-style: var(--cart-primary-font-style);
+  font-weight: var(--cart-primary-font-weight);
+}
+
+.cart-secondary-typography {
+  font-family: var(--cart-secondary-font-family);
+  font-style: var(--cart-secondary-font-style);
+  font-weight: var(--cart-secondary-font-weight);
 }
 
 /* Quantity selector */
@@ -2731,16 +3337,19 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
   border-end-end-radius: var(--style-border-radius-inputs);
 }
 
-.product-details .quantity-selector {
+.product-details .quantity-selector,
+.quick-add-modal .quantity-selector {
   border-radius: var(--style-border-radius-buttons-primary);
 }
 
-.product-details .quantity-selector .quantity-minus {
+.product-details .quantity-selector .quantity-minus,
+.quick-add-modal .quantity-selector .quantity-minus {
   border-start-start-radius: var(--style-border-radius-buttons-primary);
   border-end-start-radius: var(--style-border-radius-buttons-primary);
 }
 
-.product-details .quantity-selector .quantity-plus {
+.product-details .quantity-selector .quantity-plus,
+.quick-add-modal .quantity-selector .quantity-plus {
   border-start-end-radius: var(--style-border-radius-buttons-primary);
   border-end-end-radius: var(--style-border-radius-buttons-primary);
 }
@@ -2912,6 +3521,108 @@ fly-to-cart.fly-to-cart--sticky {
 }
 
 /* ------------------------------------------------------------------------------ */
+
+/* Collection Wrapper - Shared layout CSS for collection and search pages */
+
+/* ------------------------------------------------------------------------------ */
+
+.collection-wrapper {
+  @media screen and (min-width: 750px) {
+    --facets-vertical-col-width: 6;
+
+    grid-template-columns:
+      1fr repeat(
+        var(--centered-column-number),
+        minmax(0, calc((var(--page-width) - var(--page-margin) * 2) / var(--centered-column-number)))
+      )
+      1fr;
+  }
+
+  @media screen and (min-width: 990px) {
+    --facets-vertical-col-width: 5;
+  }
+}
+
+.collection-wrapper:has(.facets-block-wrapper--full-width),
+.collection-wrapper:has(.collection-wrapper--full-width) {
+  @media screen and (min-width: 750px) {
+    grid-column: 1 / -1;
+    grid-template-columns:
+      minmax(var(--page-margin), 1fr) repeat(
+        var(--centered-column-number),
+        minmax(0, calc((var(--page-width) - var(--page-margin) * 2) / var(--centered-column-number)))
+      )
+      minmax(var(--page-margin), 1fr);
+  }
+}
+
+.collection-wrapper:has(.facets--vertical) .facets-block-wrapper--vertical:not(.hidden) ~ .main-collection-grid {
+  @media screen and (min-width: 750px) {
+    grid-column: var(--facets-vertical-col-width) / var(--full-width-column-number);
+  }
+}
+
+.collection-wrapper:has(.facets-block-wrapper--vertical:not(#filters-drawer)):has(.collection-wrapper--full-width) {
+  @media screen and (min-width: 750px) {
+    grid-column: 1 / -1;
+    grid-template-columns: 0fr repeat(var(--centered-column-number), minmax(0, 1fr)) 0fr;
+  }
+}
+
+:is(.collection-wrapper--full-width, .collection-wrapper--full-width-on-mobile)
+  [product-grid-view='default']
+  .product-grid__card {
+  @media screen and (max-width: 749px) {
+    padding-inline-start: max(var(--padding-xs), var(--padding-inline-start));
+    padding-inline-end: max(var(--padding-xs), var(--padding-inline-end));
+  }
+}
+
+:is(.collection-wrapper--full-width, .collection-wrapper--full-width-on-mobile)
+  [product-grid-view='mobile-single']
+  .product-grid__card {
+  @media screen and (max-width: 749px) {
+    padding-inline-start: max(var(--padding-xs), var(--padding-inline-start));
+    padding-inline-end: max(var(--padding-xs), var(--padding-inline-end));
+  }
+}
+
+/* Make product media go edge-to-edge by using negative margins */
+:is(.collection-wrapper--full-width) .card-gallery,
+:is(.collection-wrapper--full-width-on-mobile) .card-gallery {
+  @media screen and (max-width: 749px) {
+    margin-inline-start: calc(-1 * max(var(--padding-xs), var(--padding-inline-start)));
+    margin-inline-end: calc(-1 * max(var(--padding-xs), var(--padding-inline-end)));
+  }
+}
+
+.collection-wrapper--full-width .main-collection-grid__title {
+  margin-left: var(--page-margin);
+}
+
+.collection-wrapper--full-width-on-mobile .main-collection-grid__title {
+  @media screen and (max-width: 749px) {
+    margin-left: var(--page-margin);
+  }
+}
+
+.collection-wrapper--grid-full-width .facets--vertical:not(.facets--drawer) {
+  @media screen and (min-width: 750px) {
+    padding-inline-start: max(var(--padding-sm), var(--padding-inline-start));
+  }
+}
+
+.collection-wrapper:has(.product-grid-mobile--large) .facets-mobile-wrapper.facets-controls-wrapper {
+  @media screen and (max-width: 749px) {
+    display: none;
+  }
+}
+
+.collection-wrapper:has(> .facets--horizontal) .facets__panel[open] {
+  @media screen and (min-width: 750px) {
+    z-index: var(--facets-open-z-index);
+  }
+}
 
 /* ------------------------------------------------------------------------------ */
 
@@ -3245,14 +3956,23 @@ slideshow-component.slideshow--content-below-media slideshow-slide {
 }
 
 .slide__content {
-  opacity: 0;
-  animation: slide-reveal both linear;
-  animation-timeline: var(--slideshow-timeline);
+  @supports (animation-timeline: auto) {
+    opacity: 0;
+    animation: slide-reveal both linear;
+    animation-timeline: var(--slideshow-timeline);
+  }
 
   @media (prefers-reduced-motion) {
     opacity: 1;
     animation: none;
   }
+}
+
+/*
+ * Force Safari to recalculate the timeline state on timeline refresh (after loop)
+*/
+slideshow-component[refreshing-timeline] .slide__content {
+  animation: none;
 }
 
 .slideshow--single-media {
@@ -3302,6 +4022,14 @@ slideshow-slides {
 }
 
 slideshow-component[disabled='true'] slideshow-slides {
+  overflow: hidden;
+}
+
+/**
+ * By default, slideshows have overflow: hidden (no compositor layer).
+ * When the slideshow enters the viewport, JavaScript adds [in-viewport] which enables scrolling.
+ */
+slideshow-component:not([in-viewport]) slideshow-slides {
   overflow: hidden;
 }
 
@@ -3418,6 +4146,7 @@ slideshow-container {
   position: relative;
   grid-area: container;
   container-type: inline-size;
+  background-color: var(--color-background);
 }
 
 @media screen and (min-width: 750px) {
@@ -3569,16 +4298,6 @@ slideshow-arrows .slideshow-control.slideshow-control--style-none {
     translate: calc(var(--slideshow-slide-offset, 6) * -1rem) 0;
     opacity: 0;
   }
-}
-
-.block-resource-list {
-  display: flex;
-  flex-direction: column;
-  row-gap: var(--gap);
-  min-width: 0;
-  min-height: 0;
-  container-type: inline-size;
-  container-name: resource-list;
 }
 
 .section-resource-list,
@@ -4007,6 +4726,14 @@ text-component {
   box-shadow: none;
 }
 
+.predictive-search-results__inner {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-block: var(--padding-lg);
+  container-type: inline-size;
+  color: var(--color-foreground);
+}
+
 /* Prevent iOS zoom on input focus by ensuring minimum 16px font size on mobile */
 @media screen and (max-width: 1200px) {
   input,
@@ -4035,5 +4762,206 @@ text-component {
   .h6.h6 textarea,
   .h6.h6 select {
     font-size: max(1rem, 100%);
+  }
+}
+
+.product-recommendations {
+  display: block;
+}
+
+.product-recommendations__skeleton-item {
+  aspect-ratio: 3 / 4;
+  background-color: var(--color-foreground);
+  opacity: var(--skeleton-opacity);
+  border-radius: 4px;
+}
+
+@media screen and (max-width: 749px) {
+  .product-recommendations__skeleton-item:nth-child(2n + 1) {
+    display: none;
+  }
+}
+
+product-recommendations:has([data-has-recommendations='false']) {
+  display: none;
+}
+
+.add-to-cart-button {
+  --text-speed: 0.26;
+  --base-delay: calc(var(--text-speed) * 0.25);
+  --tick-speed: 0.1;
+  --ring-speed: 0.2;
+  --check-speed: 0.2;
+  --burst-speed: 0.32;
+  --step-delay: 3;
+  --speed: 1;
+
+  user-select: none;
+  transition-property: color, box-shadow, background-color, scale, translate;
+  transition-duration: var(--animation-speed);
+  transition-timing-function: var(--ease-out-cubic);
+
+  &:active {
+    scale: 0.99;
+    translate: 0 1px;
+  }
+}
+
+.add-to-cart-button .svg-wrapper .checkmark-burst {
+  width: 30px;
+  height: 30px;
+}
+
+.add-to-cart-text {
+  --atc-opacity: 0;
+  --atc-destination: -1em;
+
+  display: flex;
+  gap: var(--gap-2xs);
+  align-items: center;
+  justify-content: center;
+  animation-duration: var(--animation-speed);
+  animation-timing-function: var(--animation-easing);
+  animation-fill-mode: forwards;
+  transition: width var(--animation-speed) var(--animation-easing),
+    opacity var(--animation-speed) var(--animation-easing);
+}
+
+.add-to-cart__added {
+  --atc-opacity: 1;
+  --atc-destination: 0px;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+}
+
+.add-to-cart__added-icon {
+  width: 32px;
+  height: 32px;
+}
+
+[data-added='true'] .add-to-cart-text,
+[data-added='true'] .add-to-cart__added {
+  animation-name: atc-slide;
+}
+
+.checkmark-burst {
+  opacity: 0;
+  overflow: visible;
+
+  .burst {
+    rotate: 20deg;
+  }
+
+  .check {
+    opacity: 0.2;
+    scale: 0.8;
+    filter: blur(2px);
+    transform: translateZ(0);
+  }
+
+  :is(.ring, .line, .check, .burst, .tick) {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  :is(.line) {
+    stroke-dasharray: 1.5 1.5;
+    stroke-dashoffset: -1.5;
+    translate: 0 -180%;
+  }
+
+  g {
+    transform-origin: center;
+    rotate: calc(var(--index) * (360 / 8) * 1deg);
+  }
+}
+
+.add-to-cart-button[data-added='true'] .checkmark-burst {
+  opacity: 1;
+}
+
+.add-to-cart-button[data-added='true'] {
+  .check {
+    opacity: 1;
+    scale: 1;
+    filter: blur(0);
+  }
+
+  .tick {
+    scale: 1.75;
+  }
+
+  .ring {
+    opacity: 0;
+    scale: 1;
+  }
+
+  .line {
+    stroke-dashoffset: 1.5;
+  }
+
+  .add-to-cart-text {
+    /* stylelint-disable-next-line plugin/no-unsupported-browser-features */
+    clip-path: circle(0% at 50% 50%);
+    filter: blur(2px);
+    opacity: 0;
+    translate: 0 4px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .add-to-cart-button[data-added='true'] {
+    .check {
+      transition-property: opacity, scale, filter;
+      transition-duration: calc(calc(var(--check-speed) * 1s));
+      transition-delay: calc((var(--base-delay) * 1s));
+      transition-timing-function: var(--ease-out-quad);
+    }
+
+    .tick {
+      transition-property: scale;
+      transition-duration: calc((calc(var(--tick-speed) * 1s)));
+      transition-delay: calc(((var(--base-delay) + (var(--check-speed) * (var(--step-delay) * 1.1))) * 1s));
+      transition-timing-function: ease-out;
+    }
+
+    .ring {
+      transition-property: opacity, scale;
+      transition-duration: calc((calc(var(--ring-speed) * 1s)));
+      transition-delay: calc(((var(--base-delay) + (var(--check-speed) * var(--step-delay))) * 1s));
+      transition-timing-function: var(--ease-out-quad);
+    }
+
+    .line {
+      transition-property: stroke-dashoffset;
+      transition-duration: calc((calc(var(--burst-speed) * 1s)));
+      transition-delay: calc(((var(--base-delay) + (var(--check-speed) * var(--step-delay))) * 1s));
+      transition-timing-function: var(--ease-out-cubic);
+    }
+  }
+
+  .add-to-cart-text {
+    transition-property: clip-path, opacity, filter, translate;
+    transition-duration: calc((var(--text-speed) * 0.6s)), calc((var(--text-speed) * 1s));
+    transition-timing-function: ease-out;
+  }
+}
+
+.add-to-cart-text {
+  /* stylelint-disable-next-line plugin/no-unsupported-browser-features */
+  clip-path: circle(100% at 50% 50%);
+}
+
+@keyframes atc-slide {
+  to {
+    opacity: var(--atc-opacity, 1);
+    translate: 0px var(--atc-destination, 0px);
   }
 }

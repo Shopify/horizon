@@ -11,9 +11,6 @@
 
 <div class="facets-remove facets-remove--mobile-and-vertical">
   {%- for filter in filters -%}
-    {%- liquid
-      assign is_first_filter = forloop.first
-    -%}
     {% if filter.type == 'price_range' and filter.min_value.value != null or filter.max_value.value != null %}
       {%- liquid
         assign is_active = true
@@ -29,9 +26,6 @@
         role="button"
         on:click="/removeFilter?form="
         on:keydown="/removeFilter?form="
-        {% if is_first_filter and forloop.first %}
-          autofocus
-        {% endif %}
       >
         {%- if filter.min_value.value != null and filter.max_value.value != null %}
           {{- filter.min_value.value | money -}}
@@ -94,7 +88,7 @@
     >
       <button
         type="button"
-        class="button-unstyled facets__clear-all-link facets__clear-all{% if is_active %} active{% endif %}"
+        class="button-unstyled facets__clear-all-link"
         ref="clearButton"
         on:click="/removeFilter?form="
         on:keydown="/removeFilter?form="
@@ -130,25 +124,6 @@
     display: flex;
     margin-block-start: var(--margin-2xs);
     margin-block-end: var(--margin-md);
-  }
-
-  .facets__clear-all-link {
-    --button-color: var(--color-primary);
-
-    border: none;
-    background-color: transparent;
-    padding: var(--padding-xs);
-    min-width: fit-content;
-    color: var(--button-color);
-    transition: text-decoration-color var(--animation-speed) var(--animation-easing),
-      color var(--animation-speed) var(--animation-easing);
-  }
-
-  .facets__clear-all-link:hover {
-    --button-color: var(--color-primary-hover);
-
-    color: var(--button-color);
-    text-decoration-color: var(--button-color);
   }
 
   .facets:not(.facets--drawer) .facets-remove--mobile-and-vertical {

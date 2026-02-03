@@ -1,10 +1,12 @@
 import { ResizeNotifier, prefersReducedMotion, yieldToMainThread } from '@theme/utilities';
+import { Component } from '@theme/component';
 
 /**
  * A custom element that automatically sizes text to fit its container width.
  */
-class JumboText extends HTMLElement {
+class JumboText extends Component {
   connectedCallback() {
+    super.connectedCallback();
     this.#setIntersectionObserver();
 
     // We need window listener to account for flex containers not shrinking until we reset the font size.
@@ -12,6 +14,7 @@ class JumboText extends HTMLElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
     this.#resizeObserver.disconnect();
     this.#intersectionObserver?.disconnect();
 

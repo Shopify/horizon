@@ -1,7 +1,34 @@
+{% capture cart_page_more_blocks_content %}
+  <div class="cart-page__more-blocks">
+    {%- content_for 'blocks' -%}
+  </div>
+{% endcapture %}
+
 <cart-items-component
   class="cart-items-component"
   data-section-id="{{ section.id }}"
 >
+  <template id="empty-cart-template">
+    <div class="section-background color-{{ section.settings.color_scheme }}"></div>
+    <div
+      class="section color-{{ section.settings.color_scheme }} section--{{ section.settings.section_width }}"
+    >
+      <div
+        class="cart-page spacing-style{% if cart.empty? %} cart-page--empty{% endif %}"
+        style="{% render 'spacing-style', settings: section.settings %}"
+      >
+        <div class="cart-page__title">
+          {%- content_for 'block', id: 'cart-page-title', type: '_cart-title', force_empty: true %}
+        </div>
+        <div class="cart-page__items">
+          {%- content_for 'block', id: 'cart-page-items', type: '_cart-products', force_empty: true %}
+        </div>
+        {{ cart_page_more_blocks_content }}
+      </div>
+    </div>
+  </template>
+
+  {% # theme-check-disable UniqueStaticBlockId %}
   <div class="section-background color-{{ section.settings.color_scheme }}"></div>
   <div
     class="section color-{{ section.settings.color_scheme }} section--{{ section.settings.section_width }}"
@@ -24,23 +51,14 @@
         </div>
       {%- endunless -%}
 
-      <div class="cart-page__more-blocks">
-        {%- content_for 'blocks' -%}
-      </div>
+      {{ cart_page_more_blocks_content }}
     </div>
   </div>
+  {% # theme-check-enable UniqueStaticBlockId %}
 </cart-items-component>
 
 {% stylesheet %}
   .cart-page {
-    --cart-font-size--2xs: var(--font-size--2xs);
-    --cart-font-size--xs: var(--font-size--xs);
-    --cart-font-size--sm: var(--font-size--sm);
-    --cart-font-size--md: var(--font-size--md);
-    --cart-font-size--lg: var(--font-size--lg);
-    --cart-font-size--xl: var(--font-size--xl);
-    --cart-font-size--2xl: var(--font-size--2xl);
-
     display: grid;
     grid-template-columns: 1fr;
     gap: 0 var(--padding-5xl);
@@ -72,6 +90,10 @@
 
   .cart-page__summary {
     padding-top: var(--padding-xl);
+  }
+
+  .cart-page__title + .cart-page__items {
+    margin-block-start: var(--margin-lg);
   }
 
   @media screen and (min-width: 750px) {
@@ -109,6 +131,26 @@
   @media screen and (min-width: 1400px) {
     .cart-page {
       grid-template-columns: 1fr var(--sidebar-width);
+    }
+  }
+
+  html:active-view-transition-type(empty-cart-page) {
+    .cart-items-component {
+      view-transition-name: cart-page-content;
+    }
+  }
+
+  ::view-transition-old(cart-page-content) {
+    animation: cart-page-content-old var(--animation-speed-fast) var(--animation-easing) forwards;
+  }
+
+  @keyframes cart-page-content-old {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+      filter: blur(4px);
     }
   }
 {% endstylesheet %}

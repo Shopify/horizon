@@ -31,7 +31,10 @@
       open
     {% endif %}
   >
-    <summary class="facets__summary">
+    <summary
+      class="facets__summary"
+      data-testid="price-filter"
+    >
       <span class="facets__label">{{ filter.label }}</span>
       <facet-status-component class="facets__status">
         <template ref="moneyFormat">{{ shop.money_format }}</template>
@@ -40,7 +43,7 @@
           class="hide-when-empty"
           ref="facetStatus"
           data-currency="{{ localization.country.currency.iso_code }}"
-          data-range-max="{{ filter.range_max }}"
+          data-range-max="{{ filter.range_max | money_without_currency }}"
         >
           {%- if filter.min_value.value != null or filter.max_value.value != null %}
             {%- if filter.min_value.value != null and filter.max_value.value != null %}
@@ -72,63 +75,82 @@
       {% assign max_input_min_value = filter.min_value.value | default: 0 %}
 
       <price-facet-component
-        class="price-facet"
+        class="
+          price-facet
+          {%- if filter_style == 'horizontal' %}
+            price-facet--horizontal
+          {%- endif %}
+        "
         id="facet-inputs-{{ filter.param_name | escape | replace: '.', '-' }}"
+        data-money-format="{{ shop.money_format | strip_html }}"
+        data-currency="{{ localization.country.currency.iso_code }}"
         on:change="/updatePriceFilterAndResults"
       >
-        <div class="price-facet__inputs-wrapper facets__inputs-wrapper facets__inputs-wrapper--row">
-          <div class="field price-facet__field">
-            <input
-              class="field__input price-facet__input"
-              name="{{ filter.min_value.param_name }}"
-              id="{{ filter.label | escape }}-GTE"
-              {%- if filter.min_value.value -%}
-                value="{{ filter.min_value.value | money_without_currency }}"
-              {%- endif -%}
-              type="text"
-              inputmode="decimal"
-              placeholder="0"
-              data-min="0"
-              data-max="{{ min_input_max_value | money_without_currency }}"
-              ref="minInput"
-              autocomplete="off"
-            >
-            <label
-              class="field__label price-facet__label"
-              for="{{ filter.label | escape }}-GTE"
-            >
-              {{ cart.currency.symbol }}
-            </label>
-          </div>
+        <div class="facets__inputs-wrapper facets__inputs-wrapper--row">
+          <div
+            class="price-facet__inputs-wrapper"
+          >
+            <div class="field price-facet__field">
+              <input
+                class="field__input price-facet__input"
+                name="{{ filter.min_value.param_name }}"
+                id="{{ filter.label | escape }}-GTE"
+                {%- if filter.min_value.value -%}
+                  value="{{ filter.min_value.value | money_without_currency }}"
+                {%- endif -%}
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                data-min="0"
+                data-max="{{ min_input_max_value | money_without_currency }}"
+                ref="minInput"
+                autocomplete="off"
+              >
 
-          <div class="price-facet__separator">{{ 'fields.separator' | t }}</div>
+              <label
+                class="field__label price-facet__label"
+                for="{{ filter.label | escape }}-GTE"
+              >
+                {{ cart.currency.symbol }}
+              </label>
+            </div>
 
-          <div class="field price-facet__field">
-            <input
-              class="field__input price-facet__input"
-              name="{{ filter.max_value.param_name }}"
-              id="{{ filter.label | escape }}-LTE"
-              {%- if filter.max_value.value -%}
-                value="{{ filter.max_value.value | money_without_currency }}"
-              {%- endif -%}
-              type="text"
-              inputmode="decimal"
-              placeholder="{{ filter.range_max | money_without_currency }}"
-              data-min="{{ max_input_min_value | money_without_currency }}"
-              data-max="{{ filter.range_max | money_without_currency }}"
-              ref="maxInput"
-              autocomplete="off"
-            >
-            <label
-              class="field__label price-facet__label"
-              for="{{ filter.label | escape }}-LTE"
-            >
-              {{ cart.currency.symbol }}
-            </label>
+            <div class="price-facet__separator">{{ 'fields.separator' | t }}</div>
+
+            <div class="field price-facet__field">
+              <input
+                class="field__input price-facet__input"
+                name="{{ filter.max_value.param_name }}"
+                id="{{ filter.label | escape }}-LTE"
+                {%- if filter.max_value.value -%}
+                  value="{{ filter.max_value.value | money_without_currency }}"
+                {%- endif -%}
+                type="text"
+                inputmode="decimal"
+                placeholder="{{ filter.range_max | money_without_currency }}"
+                data-min="{{ max_input_min_value | money_without_currency }}"
+                data-max="{{ filter.range_max | money_without_currency }}"
+                ref="maxInput"
+                autocomplete="off"
+              >
+              <label
+                class="field__label price-facet__label"
+                for="{{ filter.label | escape }}-LTE"
+              >
+                {{ cart.currency.symbol }}
+              </label>
+            </div>
           </div>
         </div>
 
-        <div class="price-facet__highest-price">
+        <div
+          class="
+            price-facet__highest-price
+            {%- if filter_style == 'horizontal' %}
+              price-facet__highest-price--horizontal
+            {%- endif %}
+          "
+        >
           {%- assign formatted_highest_price = filter.range_max | money -%}
           {{ 'content.price_filter_html' | t: price: formatted_highest_price }}
         </div>
@@ -164,39 +186,20 @@
     display: flex;
     flex-direction: column;
   }
-
-  .facets__inputs-wrapper.price-facet__inputs-wrapper {
-    flex-wrap: nowrap;
+  .price-facet--horizontal {
+    min-width: 360px;
   }
 
-  .price-facet__field {
-    width: 50%;
-    flex-grow: 0;
-  }
-
-  @container (max-width: 199px) {
-    .facets__inputs-wrapper.price-facet__inputs-wrapper {
-      flex-wrap: wrap;
-      width: 100%;
-    }
-
-    .price-facet__inputs-wrapper .price-facet__field {
-      width: 100%;
-    }
-  }
-
-  .facets .facets__inputs-wrapper.price-facet__inputs-wrapper {
+  .price-facet__inputs-wrapper {
+    display: flex;
+    flex-direction: row;
     padding: var(--style-border-width-inputs);
     gap: calc(var(--gap-sm) + (var(--style-border-width-inputs) * 2));
   }
 
-  .facets--horizontal .facets__panel-content:has(.price-facet) {
-    min-width: 360px;
-  }
-
-  .facets--horizontal .facets__inputs-wrapper.price-facet__inputs-wrapper {
-    @media screen and (min-width: 750px) {
-      padding: calc(var(--padding-md) + var(--style-border-width-inputs));
+  @container (max-width: 199px) {
+    .price-facet__inputs-wrapper {
+      flex-wrap: wrap;
     }
   }
 
@@ -221,11 +224,11 @@
     padding: var(--padding-xs) 0 var(--padding-sm);
   }
 
-  .facets--horizontal .price-facet__highest-price {
+  .price-facet__highest-price--horizontal {
     padding: 0 var(--padding-md) var(--padding-xs);
   }
 
-  .field__label.price-facet__label {
+  .price-facet__label {
     top: 0;
     left: 0;
     color: var(--facets-input-label-color);

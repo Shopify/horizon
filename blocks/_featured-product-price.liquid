@@ -9,7 +9,8 @@
   endif
 
   if product.price_varies
-    assign display_price = 'content.price_from' | t: price: price_min
+    assign price_from_text = 'content.price_from' | t: price: '__PRICE__'
+    assign display_price = price_from_text | replace: '__PRICE__', price_min
   endif
 
   assign has_swatches_only = false

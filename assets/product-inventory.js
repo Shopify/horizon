@@ -1,13 +1,16 @@
 import { ThemeEvents, VariantUpdateEvent } from '@theme/events';
 import { morph } from '@theme/morph';
+import { Component } from '@theme/component';
 
-class ProductInventory extends HTMLElement {
+class ProductInventory extends Component {
   connectedCallback() {
+    super.connectedCallback();
     const closestSection = this.closest('.shopify-section, dialog');
     closestSection?.addEventListener(ThemeEvents.variantUpdate, this.updateInventory);
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
     const closestSection = this.closest('.shopify-section, dialog');
     closestSection?.removeEventListener(ThemeEvents.variantUpdate, this.updateInventory);
   }

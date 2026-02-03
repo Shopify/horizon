@@ -66,6 +66,17 @@ export class MediaGallery extends Component {
     this.refs.zoomDialogComponent?.open(index, event);
   }
 
+  /**
+   * Preloads an image.
+   * @param {number} index - The index of the media to preload.
+   */
+  preloadImage(index) {
+    const zoomDialogMedia = this.refs.zoomDialogComponent?.refs.media[index];
+    if (!zoomDialogMedia) return;
+
+    this.refs.zoomDialogComponent?.loadHighResolutionImage(zoomDialogMedia);
+  }
+
   get slideshow() {
     return this.refs.slideshow;
   }

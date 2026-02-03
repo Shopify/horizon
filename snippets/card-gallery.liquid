@@ -191,7 +191,7 @@
         assign placeholder_index = block_parts.last | default: 0
         assign variant = placeholder_index | modulo: 3 | plus: 1
         assign placeholder_name = 'product-apparel-' | append: variant
-        echo placeholder_name | placeholder_svg_tag: 'placeholder-image'
+        echo placeholder_name | placeholder_svg_tag
       endcapture
       capture placeholder_slide
         render 'slideshow-slide', index: 1, children: placeholder_image, class: 'product-media-container card-gallery__placeholder'

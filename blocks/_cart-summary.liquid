@@ -20,27 +20,11 @@
   {{ block.shopify_attributes }}
 >
   <div class="{{ cart_summary_inner_class }}">
-    {% render 'cart-summary', accelerated_checkout_buttons_layout: 'vertical' %}
+    {% render 'cart-summary', accelerated_checkout_buttons_layout: 'vertical', section_id: section.id %}
   </div>
 </div>
 
 {% stylesheet %}
-  .cart__summary-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .cart__summary-item.tax-note small {
-    font-size: var(--font-size--2xs);
-  }
-
-  .cart__discount-label {
-    display: flex;
-    align-items: center;
-    gap: var(--gap-2xs);
-  }
-
   .cart__total {
     align-items: baseline;
     font-weight: var(--font-weight-bold);
@@ -48,12 +32,6 @@
 
   .cart__tax-note {
     color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
-  }
-
-  .cart__discount-label svg {
-    width: var(--icon-size-sm);
-    height: var(--icon-size-sm);
-    display: inline-block;
   }
 
   .cart__summary-inner {

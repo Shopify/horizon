@@ -1,5 +1,12 @@
 import { Component } from '@theme/component';
-import { fetchConfig, debounce, onAnimationEnd, prefersReducedMotion, resetShimmer } from '@theme/utilities';
+import {
+  fetchConfig,
+  debounce,
+  onAnimationEnd,
+  prefersReducedMotion,
+  resetShimmer,
+  startViewTransition,
+} from '@theme/utilities';
 import { morphSection, sectionRenderer } from '@theme/section-renderer';
 import {
   ThemeEvents,
@@ -90,6 +97,20 @@ class CartItemsComponent extends Component {
       ...this.refs.cartItemRows.filter((row) => row.dataset.parentKey === cartItemRowToRemove.dataset.key),
     ];
 
+    // If the cart item row is the last row, optimistically trigger the cart empty state
+    const isEmptyCart = rowsToRemove.length == this.refs.cartItemRows.length;
+
+    const template = document.getElementById('empty-cart-template');
+    if (isEmptyCart && template instanceof HTMLTemplateElement) {
+      const clone = document.importNode(template.content, true);
+
+      startViewTransition(() => {
+        this.replaceChildren(clone);
+      }, [this.isDrawer ? 'empty-cart-drawer' : 'empty-cart-page']);
+
+      return;
+    }
+
     // Add class to the row to trigger the animation
     rowsToRemove.forEach((row) => {
       const remove = () => row.remove();
@@ -170,7 +191,7 @@ class CartItemsComponent extends Component {
           })
         );
 
-        morphSection(this.sectionId, parsedResponseText.sections[this.sectionId]);
+        morphSection(this.sectionId, parsedResponseText.sections[this.sectionId], this.isDrawer ? 'hydration' : 'full');
 
         this.#updateCartQuantitySelectorButtonStates();
       })
@@ -297,6 +318,13 @@ class CartItemsComponent extends Component {
     if (!sectionId) throw new Error('Section id missing');
 
     return sectionId;
+  }
+
+  /**
+   * @returns {boolean} Whether the component is a drawer.
+   */
+  get isDrawer() {
+    return this.dataset.drawer !== undefined;
   }
 }
 

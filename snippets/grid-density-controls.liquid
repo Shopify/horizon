@@ -141,6 +141,21 @@
     }
   }
 
+  /* Override base rule for grid density controls - only when visible */
+  .column-options-wrapper .column-options__option:has(input[type="radio"]):has(.column-picker-mobile--single),
+  .column-options-wrapper .column-options__option:has(input[type="radio"]):has(.column-picker-mobile--double) {
+    @media screen and (max-width: 749px) {
+      display: flex;
+    }
+  }
+
+  .column-options-wrapper .column-options__option:has(input[type="radio"]):has(.column-picker--default),
+  .column-options-wrapper .column-options__option:has(input[type="radio"]):has(.column-picker--zoom-out) {
+    @media screen and (min-width: 750px) {
+      display: flex;
+    }
+  }
+
   .column-options__legend {
     padding: 0;
     margin: 0;
@@ -158,6 +173,15 @@
     /* hide it */
     opacity: 0;
     margin: 0;
+    padding: 0;
+    width: auto;
+    height: auto;
+    aspect-ratio: unset;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    appearance: auto;
+    display: block;
     cursor: pointer;
   }
 

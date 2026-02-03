@@ -169,27 +169,23 @@
 </product-recommendations>
 
 {% stylesheet %}
+  .block-resource-list {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--gap);
+    min-width: 0;
+    min-height: 0;
+    container-type: inline-size;
+    container-name: resource-list;
+    border-radius: var(--border-radius, 0);
+  }
+
   .product-recommendations-wrapper {
     width: 100%;
   }
 
   .product-recommendations-wrapper:has(product-recommendations[data-shopify-editor-preview]) {
     width: 100vw;
-  }
-
-  .product-recommendations {
-    display: block;
-  }
-
-  .block-resource-list {
-    border-radius: var(--border-radius, 0);
-  }
-
-  .product-recommendations__skeleton-item {
-    aspect-ratio: 3 / 4;
-    background-color: var(--color-foreground);
-    opacity: var(--skeleton-opacity);
-    border-radius: 4px;
   }
 {% endstylesheet %}
 

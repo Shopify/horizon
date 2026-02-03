@@ -211,20 +211,20 @@ Use variables to reduce property assignment redundancy.
 
 ```css
 /* Do this */
-.button {
-  background: rgb(var(--button-color) / 0.75);
+.block-name {
+  background: rgb(var(--block-name-color) / 0.75);
 }
 
-.button--secondary {
-  --button-color: var(--secondary-color);
+.block-name--secondary {
+  --block-name-color: var(--secondary-color);
 }
 
 /* Not this */
-.button {
+.block-name {
   background: rgb(var(--primary-color) / 0.75);
 }
 
-.button--secondary {
+.block-name--secondary {
   background: rgb(var(--secondary-color) / 0.75);
 }
 ```

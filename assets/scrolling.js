@@ -366,6 +366,7 @@ export function scrollIntoView(element, { ancestor, behavior = 'smooth', block =
   ancestor.scrollTo({ top: scrollTop, left: scrollLeft, behavior });
 }
 
+// Still extends HTMLElement over Component so that refs are still available to parent components (e.g. Slideshow)
 class ScrollHint extends HTMLElement {
   /** @type {number | null} */
   #rafId = null;

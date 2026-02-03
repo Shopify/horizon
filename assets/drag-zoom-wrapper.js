@@ -1,5 +1,6 @@
+import { DialogCloseEvent } from './dialog.js';
 import { clamp, preventDefault, isMobileBreakpoint } from './utilities.js';
-import { ZoomDialog } from './zoom-dialog.js';
+import { Component } from '@theme/component';
 
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 5;
@@ -8,7 +9,7 @@ const DOUBLE_TAP_DELAY = 300;
 const DOUBLE_TAP_DISTANCE = 50;
 const DRAG_THRESHOLD = 10;
 
-export class DragZoomWrapper extends HTMLElement {
+export class DragZoomWrapper extends Component {
   #controller = new AbortController();
   /** @type {number} */
   #scale = DEFAULT_ZOOM;
@@ -44,10 +45,11 @@ export class DragZoomWrapper extends HTMLElement {
   }
 
   connectedCallback() {
+    super.connectedCallback();
     if (!this.#image) return;
 
     this.#initResizeListener();
-    this.#setupDialogCloseListener();
+    window.addEventListener(DialogCloseEvent.eventName, this.#resetZoom);
 
     if (!isMobileBreakpoint()) return;
 
@@ -57,27 +59,6 @@ export class DragZoomWrapper extends HTMLElement {
 
   #initResizeListener() {
     this.#resizeObserver.observe(this);
-  }
-
-  /**
-   * Override parent zoom dialog's close method to include reset functionality
-   */
-  #setupDialogCloseListener() {
-    // Find the parent zoom dialog component
-    const zoomDialog = /** @type {ZoomDialog} */ (this.closest('zoom-dialog'));
-    if (!zoomDialog || typeof zoomDialog.close !== 'function') return;
-
-    // Store reference to original close method
-    const originalClose = zoomDialog.close.bind(zoomDialog);
-
-    // Override the close method to include zoom reset
-    zoomDialog.close = async (...args) => {
-      // Reset zoom state before closing
-      this.#resetZoom();
-
-      // Call original close method
-      return await originalClose(...args);
-    };
   }
 
   #initEventListeners() {
@@ -95,6 +76,8 @@ export class DragZoomWrapper extends HTMLElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
+    window.removeEventListener(DialogCloseEvent.eventName, this.#resetZoom);
     this.#controller.abort();
     this.#resizeObserver.disconnect();
     this.#cancelAnimationFrame();
@@ -459,7 +442,7 @@ export class DragZoomWrapper extends HTMLElement {
    * Reset zoom to default state (1.5x scale, centered position)
    * Called when zoom is exited/closed
    */
-  #resetZoom() {
+  #resetZoom = () => {
     // Reset scale and translation to defaults
     this.#scale = DEFAULT_ZOOM;
     this.#startScale = DEFAULT_ZOOM;
@@ -478,7 +461,7 @@ export class DragZoomWrapper extends HTMLElement {
     this.style.setProperty('--drag-zoom-scale', DEFAULT_ZOOM.toString());
     this.style.setProperty('--drag-zoom-translate-x', '0px');
     this.style.setProperty('--drag-zoom-translate-y', '0px');
-  }
+  };
 
   destroy() {
     this.#controller.abort();

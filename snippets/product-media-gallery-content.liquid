@@ -285,6 +285,39 @@
       background-color: var(--color-background);
     }
   {% endif %}
+
+  {% capture view_transition_styles_contain %}
+    ::view-transition-old(gallery-item-open),
+    ::view-transition-new(gallery-item-open),
+    ::view-transition-old(gallery-item-close),
+    ::view-transition-new(gallery-item-close) {
+      height: auto;
+      width: 100%;
+      object-fit: contain;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  {% endcapture %}
+  {% capture view_transition_styles_cover %}
+    ::view-transition-old(gallery-item-open),
+    ::view-transition-new(gallery-item-open),
+    ::view-transition-old(gallery-item-close),
+    ::view-transition-new(gallery-item-close) {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      object-position: var(--gallery-media-focal-point, center);
+    }
+  {% endcapture %}
+  {% if block_settings.aspect_ratio == 'adapt' and block_settings.constrain_to_viewport == false %}
+    {{ view_transition_styles_contain }}
+  {% elsif block_settings.aspect_ratio == 'adapt' and block_settings.constrain_to_viewport == true and block_settings.media_fit == 'contain' %}
+    {{ view_transition_styles_contain }}
+  {% else %}
+    {{ view_transition_styles_cover }}
+  {% endif %}
+
+  :root { --gallery-media-border-radius: {{ block_settings.media_radius }}px; }
 {% endstyle %}
 
 {% if closest.product == blank %}
@@ -296,7 +329,7 @@
     "
     {{ block_shopify_attributes }}
   >
-    {{ 'product-apparel-1' | placeholder_svg_tag: 'placeholder-image' }}
+    {{ 'product-apparel-1' | placeholder_svg_tag: 'product-media-gallery__placeholder-image' }}
   </div>
 {% else %}
   <media-gallery
@@ -330,7 +363,8 @@
               endif
           -%}
           {% if block_settings.aspect_ratio != 'adapt' and block_settings.constrain_to_viewport %}
-            <div class="product-media-constraint-wrapper">
+            <div
+              class="product-media-constraint-wrapper">
               {%- render 'product-media', media: media, sizes: media_sizes, is_main_product_media: forloop.first -%}
             </div>
           {% else %}
@@ -421,6 +455,9 @@
             {% if settings.transition_to_main_product and forloop.first %}
               data-view-transition-type="product-image-transition"
             {% endif %}
+            {% if media.presentation.focal_point != blank %}
+              data-focal-point="{{ media.presentation.focal_point }}"
+            {% endif %}
           >
             {%- if block_settings.zoom and media.media_type == 'image' -%}
               <button
@@ -428,6 +465,9 @@
                 class="button button-unstyled product-media-container__zoom-button"
                 aria-label="{{ 'actions.zoom' | t }}"
                 on:click="/zoom/{{ forloop.index0 }}"
+                {% if block_settings.zoom %}
+                  on:pointerenter="/preloadImage/{{ forloop.index0 }}"
+                {% endif %}
               >
                 <span class="visually-hidden">{{ 'actions.open_image_in_full_screen' | t }}</span>
               </button>
@@ -457,6 +497,7 @@
         id="zoom-dialog-{{ block_id }}"
       >
         <dialog
+          class="dialog-zoomed-gallery__dialog"
           ref="dialog"
           on:keydown="/handleKeyDown"
           scroll-lock
@@ -596,6 +637,10 @@
 {% endif %}
 
 {% stylesheet %}
+  .dialog-zoomed-gallery__dialog {
+    background-color: var(--color-background);
+  }
+
   .dialog-zoomed-gallery {
     cursor: zoom-out;
   }
@@ -733,5 +778,81 @@
   .dialog-zoomed-gallery .product-media-container--model .product-media__image {
     /* Make the height match the height of the model-viewer */
     height: 100vh;
+  }
+
+  .dialog-zoomed-gallery__dialog {
+    view-transition-name: zoom-dialog-ui;
+  }
+
+  :root:active-view-transition .dialog-zoomed-gallery__dialog {
+    background-color: transparent;
+  }
+
+  ::view-transition-group(zoom-dialog-ui) {
+    z-index: calc(var(--layer-overlay) + 1);
+  }
+
+  ::view-transition-old(gallery-item-open),
+  ::view-transition-new(gallery-item-open) {
+    animation-timing-function: step-start;
+  }
+
+  ::view-transition-old(gallery-item-close),
+  ::view-transition-new(gallery-item-close) {
+    animation-timing-function: step-end;
+  }
+
+  @media screen and (min-width: 749px) {
+    :root:active-view-transition .product-media__image {
+      background-color: transparent;
+    }
+  }
+
+  ::view-transition-group(gallery-item-open),
+  ::view-transition-group(gallery-item-close) {
+    z-index: var(--layer-overlay);
+    border-radius: var(--gallery-media-border-radius);
+    overflow: clip;
+  }
+
+  ::view-transition-group(gallery-item-open) {
+    animation-timing-function: var(--spring-d300-b0-easing);
+    animation-duration: var(--spring-d300-b0-duration);
+  }
+
+  ::view-transition-group(gallery-item-close) {
+    animation-timing-function: var(--spring-d220-b0-easing);
+    animation-duration: var(--spring-d220-b0-duration);
+  }
+
+  @media screen and (max-width: 749px) {
+    ::view-transition-group(gallery-item-open),
+    ::view-transition-group(gallery-item-close) {
+      animation-timing-function: step-start;
+      animation-duration: 0.1s;
+    }
+
+    ::view-transition-new(gallery-item-open) {
+      animation: fade-in var(--spring-d180-b0-duration) var(--spring-d180-b0-easing) forwards;
+      animation-timing-function: var(--spring-d180-b0-easing);
+      animation-duration: var(--spring-d180-b0-duration);
+    }
+
+    ::view-transition-old(gallery-item-close) {
+      animation: fade-out 0.08s linear forwards;
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      scale: 0.98;
+      opacity: 0.8;
+    }
+  }
+
+  @keyframes fade-out {
+    to {
+      opacity: 0;
+    }
   }
 {% endstylesheet %}

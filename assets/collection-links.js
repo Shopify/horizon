@@ -136,6 +136,27 @@ class CollectionLinks extends Component {
   };
 
   /**
+   * Clear all selections
+   */
+  clearSelections = () => {
+    // Clear all selections when mouse leaves container
+    const { links } = this;
+    const { images } = this.refs;
+
+    // Reset all links to unselected state (opacity will reset via CSS)
+    for (const link of links) {
+      link.setAttribute('aria-current', 'false');
+    }
+
+    // Hide any revealed images
+    if (images) {
+      for (const image of images) {
+        image.removeAttribute('reveal');
+      }
+    }
+  };
+
+  /**
    * Reveal an image
    *
    * @param {Event} event

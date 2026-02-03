@@ -9,6 +9,17 @@
   endfor
 -%}
 
+{% stylesheet %}
+  product-swatches {
+    width: 100%;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    gap: 0;
+    flex-shrink: 0;
+  }
+{% endstylesheet %}
+
 {% if product_has_swatches %}
   <product-swatches
     data-product-id="{{ closest.product.id }}"
@@ -28,73 +39,6 @@
     {% render 'variant-swatches', product_resource: closest.product %}
   </product-swatches>
 {% endif %}
-
-{% # theme-check-disable %}
-{% stylesheet %}
-  product-swatches {
-    width: 100%;
-    display: flex;
-    position: relative;
-    overflow: hidden;
-    gap: 0;
-    flex-shrink: 0;
-  }
-
-  swatches-variant-picker-component {
-    display: flex;
-    width: 100%;
-    flex-direction: row;
-    justify-content: var(--product-swatches-alignment-mobile);
-
-    @media (min-width: 750px) {
-      justify-content: var(--product-swatches-alignment);
-    }
-
-    --overflow-list-padding-block: calc(
-        var(--product-swatches-padding-block-start) + var(--focus-outline-offset) + var(--focus-outline-width)
-      )
-      calc(var(--product-swatches-padding-block-end) + var(--focus-outline-offset) + var(--focus-outline-width));
-    --overflow-list-padding-inline: calc(
-        var(--product-swatches-padding-inline-start) + var(--focus-outline-offset) + (1.5 * var(--focus-outline-width))
-      )
-      calc(var(--product-swatches-padding-inline-end) + var(--focus-outline-offset) + var(--focus-outline-width));
-
-    overflow-list::part(list) {
-      gap: var(--gap-sm);
-    }
-  }
-
-  .variant-option--swatches {
-    overflow-list::part(list) {
-      padding-block: var(--overflow-list-padding-block, 0);
-      padding-inline: var(--overflow-list-padding-inline, 0);
-    }
-  }
-
-  .hidden-swatches__count {
-    display: flex;
-    align-self: center;
-    align-items: center;
-    justify-content: center;
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-40-60));
-    background-color: transparent;
-    padding: 0;
-    border: 0;
-    border-radius: 0;
-
-    &::before {
-      /* This doesn't work in Safari without the counter-reset. https://stackoverflow.com/a/40179718 */
-      counter-reset: overflow-count var(--overflow-count);
-      content: '+' counter(overflow-count);
-      line-height: 1;
-      cursor: pointer;
-    }
-  }
-
-  .hidden-swatches__count:hover {
-    color: var(--color-foreground-rgb);
-  }
-{% endstylesheet %}
 
 {% schema %}
 {

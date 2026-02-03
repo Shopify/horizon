@@ -12,12 +12,11 @@
   <search-button class="search-action{% if class != blank %} {{ class | strip }}{% endif %}">
     <button
       on:click="#search-modal/showDialog"
-      class="button button-unstyled search-modal__button header-actions__action"
+      class="button-unstyled header-actions__action"
       aria-label="{{ 'content.search_input_label' | t }}"
       aria-haspopup="dialog"
     >
       <span
-        aria-hidden="true"
         class="svg-wrapper"
       >
         {{ 'icon-search.svg' | inline_asset_content }}
@@ -34,12 +33,23 @@
     display: flex;
   }
 
-  .header__column--center .search-action {
-    width: auto;
-    flex-grow: 1;
+  @media screen and (max-width: 749px) {
+    .search-action--hidden-on-drawer {
+      display: none;
+    }
   }
 
-  :is(.header__column--left, .header__column--center) .search-action {
+  @media screen and (min-width: 750px) {
+    [data-menu-style='drawer'] .search-action--hidden-on-drawer {
+      display: none;
+    }
+
+    [data-menu-style='menu'] .search-action--hidden-on-menu {
+      display: none;
+    }
+  }
+
+  [data-menu-style='menu'] .header__column--left .search-action {
     @media screen and (min-width: 750px) {
       margin-inline: calc(var(--padding-lg) * -1);
     }
