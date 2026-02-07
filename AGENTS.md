@@ -132,7 +132,7 @@ Vue, JSX, TSX, HTML, PHP, JS, TS, and Liquid Rules: [Flip Card Accessibility](.c
 
 Mobile accessibility standards per WCAG 2.5.8 Target Size (Minimum), 2.4.1 Bypass Blocks, and 1.3.4 Orientation requirements
 
-Vue, JSX, TSX, HTML, PHP, JS, TS, Liquid, CSS, SCSS, SASS, and LESS Rules: [Mobile Accessibility](.cursor/rules/mobile-accessibility.mdc)
+Vue, JSX, TSX, HTML, PHP, JS, TS, Liquid, CSS, SCSS, SASS, and LESS Rules: [Mobile Accessibility](.cursor/rules/mobile-accessibility-standards.mdc)
 
 ### Modal Window Accessibility Standards
 
