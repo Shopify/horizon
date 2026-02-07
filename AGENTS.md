@@ -48,7 +48,7 @@ Always apply CSS, SCSS, SASS, LESS, Vue, JSX, TSX, HTML, PHP, JS, and TS Rules: 
 
 Focus order and focus styles accessibility standards per WCAG 2.4.7 Focus Visible, 1.4.11 Non-Text Contrast, 2.4.13 Focus Appearance, and 2.4.11 Focus Not Obscured requirements
 
-Always apply Vue, JSX, TSX, HTML, PHP, JS, TS, Liquid, CSS, SCSS, SASS, and LESS Rules: [Focus Order and Focus Styles Accessibility](.cursor/rules/focus-order-and-focus-styles-accessibility.mdc)
+Always apply Vue, JSX, TSX, HTML, PHP, JS, TS, Liquid, CSS, SCSS, SASS, and LESS Rules: [Focus Order and Focus Styles Accessibility](.cursor/rules/focus-order-and-styles-accessibility.mdc)
 
 ### Form Accessibility Standards
 
