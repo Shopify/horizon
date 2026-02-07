@@ -36,7 +36,7 @@ Liquid Rules: [Modern HTML Standards](.cursor/rules/html-standards.mdc)
 
 Global scope accessibility standards per WCAG requirements for page language, viewport, title attributes, and skip links
 
-Always apply Vue, JSX, TSX, HTML, PHP, JS, TS, and Liquid Rules: [Global Scope Accessibility](.cursor/rules/global-scope-accessibility.mdc)
+Always apply Vue, JSX, TSX, HTML, PHP, JS, TS, and Liquid Rules: [Global Scope Accessibility](.cursor/rules/global-accessibility-standards.mdc)
 
 ### Color Contrast Accessibility Standards
 
