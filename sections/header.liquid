@@ -989,6 +989,116 @@
   .header__column .localization-form__select {
     background-color: var(--header-bg-color);
   }
+
+  /* ===== Kanva-inspired clean header design ===== */
+
+  /* Increase header height for a more spacious feel */
+  body {
+    --header-height: 70px;
+  }
+
+  .header {
+    --header-padding: var(--padding-md);
+  }
+
+  .header.header--compact {
+    --header-padding: var(--padding-sm);
+  }
+
+  /* Clean white background with subtle bottom border */
+  .header__row {
+    background-color: var(--header-bg-color, #fff);
+    border-bottom-color: rgba(0, 0, 0, 0.08);
+  }
+
+  /* More generous column spacing */
+  .header__columns {
+    gap: var(--gap-2xl, 2rem);
+    align-items: center;
+    min-height: 70px;
+  }
+
+  /* Ensure left column (nav) has enough room */
+  .header__column--left {
+    gap: var(--gap-lg, 1.5rem);
+  }
+
+  /* Center column: logo area */
+  .header__column--center {
+    justify-content: center;
+  }
+
+  /* Right column: icons with tighter but even spacing */
+  .header__column--right {
+    gap: var(--gap-sm, 0.5rem);
+  }
+
+  /* Navigation tab styling - clean, minimal with refined typography */
+  @media screen and (min-width: 750px) {
+    .header-menu .menu-list__link {
+      font-size: 0.875rem;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+      text-transform: none;
+      color: var(--color-foreground);
+      text-decoration: none;
+      padding: 0.5rem 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .header-menu .menu-list__link:hover {
+      opacity: 0.65;
+    }
+
+    /* Dropdown caret for menu items with children */
+    .header-menu .menu-list__link[aria-haspopup]::after {
+      content: '';
+      display: inline-block;
+      width: 0;
+      height: 0;
+      margin-left: 5px;
+      border-left: 3.5px solid transparent;
+      border-right: 3.5px solid transparent;
+      border-top: 3.5px solid currentColor;
+      vertical-align: middle;
+      opacity: 0.6;
+    }
+
+    /* If the menu item already has a caret icon, ensure proper styling */
+    .header-menu .menu-list__link .icon-caret {
+      width: 10px;
+      height: 10px;
+      opacity: 0.6;
+      margin-left: 2px;
+    }
+  }
+
+  /* Header action buttons - consistent sizing for Kanva icon row */
+  .header-actions__action {
+    --button-color: var(--color-foreground);
+    width: var(--button-size, 44px);
+    height: var(--button-size, 44px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+
+  .header-actions__action:hover {
+    opacity: 0.65;
+  }
+
+  .header-actions__action svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Ensure header-actions items are evenly spaced */
+  header-actions {
+    gap: 0;
+    align-items: center;
+  }
 {% endstylesheet %}
 
 {% unless request.design_mode %}
