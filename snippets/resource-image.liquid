@@ -10,6 +10,9 @@
   @param {object} block_settings - Block settings object
   @param {object} [section_settings] - Section settings for layout-aware sizing
   @param {string} [block_attributes] - Block shopify attributes for theme editor
+  @param {string} [loading] - Image loading attribute ('eager' | 'lazy')
+  @param {string} [fetch_priority] - Image fetch priority ('high' | 'auto' | 'low')
+  @param {string} [decoding] - Image decoding hint ('async' | 'auto' | 'sync')
 
   @example
   {% render 'resource-image',
@@ -78,7 +81,9 @@
   # Generate responsive image attributes
   assign sizes = '(min-width: 750px) 50vw, 100vw'
   assign lazy_sizes = 'auto, ' | append: sizes
-  assign loading = 'eager'
+  assign loading = loading | default: 'lazy'
+  assign fetch_priority = fetch_priority | default: 'auto'
+  assign decoding = decoding | default: 'async'
 
   # Layout-aware sizing for resource lists
   if section_settings.layout_type
@@ -87,7 +92,6 @@
         assign calculated_width = 100 | divided_by: section_settings.columns | append: 'vw'
         assign sizes = '(min-width: 750px) [calc-width], 100vw' | replace: '[calc-width]', calculated_width
       when 'editorial', 'bento'
-        assign loading = 'lazy'
         assign sizes = lazy_sizes
     endcase
   endif
@@ -152,7 +156,13 @@
     {{
       image_resource
       | image_url: width: 3840
-      | image_tag: widths: widths, class: 'image-block__image', sizes: sizes, loading: loading
+      | image_tag:
+        widths: widths,
+        class: 'image-block__image',
+        sizes: sizes,
+        loading: loading,
+        fetchpriority: fetch_priority,
+        decoding: decoding
     }}
   </div>
 {% else %}

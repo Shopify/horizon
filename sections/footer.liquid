@@ -47,44 +47,7 @@
   </div>
 </div>
 
-{% stylesheet %}
-  /* Mobile: Single column layout (base styles) */
-  .footer-content {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--footer-gap);
-  }
 
-  @media screen and (min-width: 750px) and (max-width: 989px) {
-    .footer-content {
-      grid-template-columns: repeat(min(var(--grid-columns), 3), 1fr);
-      grid-auto-flow: row;
-    }
-    .footer-content--isolated-grid-item-tablet > :last-child {
-      grid-column: 1 / -1;
-    }
-  }
-
-  @media screen and (min-width: 990px) {
-    .footer-content {
-      grid-template-columns: repeat(var(--grid-columns), 1fr);
-    }
-
-    /* Single item centered */
-    .footer-content[style*='--grid-columns: 1'] {
-      justify-items: center;
-    }
-
-    .footer-content--isolated-grid-item-desktop > :last-child {
-      grid-column: 1 / -1;
-    }
-  }
-  /* Two-column layout on mobile for footer menus */
-  .footer-content.footer-content--mobile-columns {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-{% endstylesheet %}
 
 {% schema %}
 {

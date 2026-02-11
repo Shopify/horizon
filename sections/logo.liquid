@@ -74,49 +74,7 @@
   </div>
 </div>
 
-{% stylesheet %}
-  .logo-section {
-    width: calc(var(--logo-width) + var(--padding-inline-start) + var(--padding-inline-end));
-    max-width: 100%;
-    max-height: calc(var(--logo-height, 100%) + var(--padding-block-start) + var(--padding-block-end));
-    font-size: var(--logo-height);
-    display: flex;
 
-    @media screen and (max-width: 750px) {
-      max-height: calc(
-        var(--logo-height-mobile, var(--logo-height, 100%)) + var(--padding-block-start) + var(--padding-block-end)
-      );
-      font-size: var(--logo-height-mobile, var(--logo-height));
-      width: calc(
-        var(--logo-width-mobile, var(--logo-width)) + var(--padding-inline-start) + var(--padding-inline-end)
-      );
-    }
-  }
-
-  .logo-section--center {
-    margin-inline: auto;
-  }
-
-  .logo-section--flex-end {
-    margin-inline-start: auto;
-  }
-
-  .logo-section--flex-start {
-    margin-inline-end: auto;
-  }
-
-  .logo-section__image-wrapper {
-    display: flex;
-    width: 100%;
-    max-width: 100%;
-    max-height: 100%;
-  }
-
-  .logo-section__image {
-    object-fit: contain;
-    width: 100%;
-  }
-{% endstylesheet %}
 
 {% schema %}
 {
