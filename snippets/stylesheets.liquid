@@ -2,8 +2,7 @@
 {{ 'base.css' | asset_url | stylesheet_tag: preload: true }}
 
 {%- liquid
-  assign optional_css_tokens = 'collection-links-component,featured-blog-posts,featured-product-section,hero--splash,logo-section,marquee__wrapper,media-with-content,section-password,predictive-search,footer-content'
-    | split: ','
+  assign optional_css_tokens = 'collection-links-component,featured-blog-posts,featured-product-section,hero--splash,logo-section,marquee__wrapper,media-with-content,section-password,predictive-search,footer-content' | split: ','
   assign load_optional_css = false
 
   for token in optional_css_tokens

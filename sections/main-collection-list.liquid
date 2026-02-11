@@ -45,7 +45,10 @@
       when 'editorial'
         assign eager_count = 1
     endcase
-    assign should_eager_load = section.index == 1
+    assign should_eager_load = false
+    if section.index == 1
+      assign should_eager_load = true
+    endif
   %}
 
   {% capture list_items %}
