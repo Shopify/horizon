@@ -41,44 +41,7 @@
   </div>
 </div>
 
-{% stylesheet %}
-  .featured-product-section .section-content-wrapper {
-    grid-template-columns: 1fr;
-    display: grid;
-    overflow: hidden;
 
-    @media (min-width: 750px) {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-
-  /* Here I should maybe set the width to auto when the ratio is set to adapt */
-  .featured-product-section .product-media-container.constrain-height {
-    /* arbitrary offset value based on average theme spacing and header height */
-    --viewport-offset: 400px;
-    --constrained-min-height: var(--visual-preview--height, 80dvh);
-
-    @media screen and (min-width: 750px) {
-      --viewport-offset: 300px;
-    }
-  }
-
-  .featured-product-section .product-grid__card {
-    --padding-block: 20px;
-    --padding-inline: 20px;
-
-    @media screen and (min-width: 750px) {
-      --padding-block: 40px;
-      --padding-inline: 40px;
-    }
-  }
-
-  @media screen and (max-width: 749px) {
-    .featured-product-section .media-block {
-      order: -1;
-    }
-  }
-{% endstylesheet %}
 
 {% schema %}
 {

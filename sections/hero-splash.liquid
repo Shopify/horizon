@@ -69,9 +69,11 @@
   endif
 
   assign fetch_priority = 'auto'
+  assign loading = 'lazy'
 
   if section.index == 1
     assign fetch_priority = 'high'
+    assign loading = 'eager'
   endif
 %}
 
@@ -88,7 +90,9 @@
         alt: section.settings.image_1.alt,
         class: 'hero__image',
         sizes: sizes,
-        fetchpriority: fetch_priority
+        fetchpriority: fetch_priority,
+        loading: loading,
+        decoding: 'async'
     }}
   {%- endif -%}
 
@@ -112,7 +116,9 @@
             alt: section.settings.video_1.alt,
             class: 'hero__video-poster',
             sizes: sizes,
-            fetchpriority: fetch_priority_poster
+            fetchpriority: fetch_priority_poster,
+            loading: loading,
+            decoding: 'async'
         }}
       {%- endif -%}
       {{
@@ -140,7 +146,9 @@
         alt: section.settings.image_2.alt,
         class: 'hero__image',
         sizes: sizes,
-        fetchpriority: fetch_priority
+        fetchpriority: fetch_priority,
+        loading: loading,
+        decoding: 'async'
     }}
   {%- endif -%}
 
@@ -157,7 +165,9 @@
             height: section.settings.video_2.preview_image.height,
             alt: section.settings.video_2.alt,
             class: 'hero__video-poster',
-            sizes: sizes
+            sizes: sizes,
+            loading: loading,
+            decoding: 'async'
         }}
       {%- endif -%}
       {{
@@ -189,7 +199,9 @@
         height: section.settings.image_1.height,
         alt: '',
         class: 'hero__image',
-        sizes: sizes
+        sizes: sizes,
+        loading: 'lazy',
+        decoding: 'async'
     }}
   {% endif %}
   {% if has_image_2 %}
@@ -202,7 +214,9 @@
         height: section.settings.image_2.height,
         alt: '',
         class: 'hero__image',
-        sizes: sizes
+        sizes: sizes,
+        loading: 'lazy',
+        decoding: 'async'
     }}
   {% endif %}
   {% if has_media == false and is_transparent %}
@@ -289,182 +303,7 @@
 
 {% endif %}
 
-{% stylesheet %}
-  .hero-wrapper {
-    --hero-height-offset: 0px;
-  }
 
-  /* Being extra specific in the selector for performance reasons */
-  body:has(> #header-group > .header-section > #header-component) .hero-wrapper:first-child {
-    --hero-height-offset: var(--header-height, 0px);
-  }
-
-  .hero {
-    position: relative;
-    min-height: calc(var(--hero-min-height) - var(--hero-height-offset));
-  }
-
-  .hero[data-shopify-visual-preview] {
-    --hero-min-height: 600px;
-
-    min-height: 600px;
-  }
-
-  .hero__container {
-    position: relative;
-    overflow: hidden;
-    border: var(--hero-border-width) var(--hero-border-style) rgb(var(--color-border-rgb) / var(--hero-border-opacity));
-    min-height: inherit;
-    align-items: var(--vertical-alignment-mobile);
-    justify-content: var(--horizontal-alignment);
-    z-index: var(--layer-base);
-
-    @media screen and (min-width: 750px) {
-      align-items: var(--vertical-alignment);
-    }
-  }
-
-  .hero__content-wrapper.page-width {
-    grid-column: 2 / 3;
-  }
-
-  .hero__content-wrapper {
-    position: relative;
-    inset: 0;
-    z-index: var(--layer-flat);
-  }
-
-  .hero__content-wrapper .group-block-content {
-    position: relative;
-  }
-
-  .hero__media-wrapper {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    grid-column: 1 / -1;
-    grid-template-columns: repeat(var(--hero-media-count, 1), 1fr);
-  }
-
-  .hero--auto .hero__image,
-  .hero--auto .hero__video {
-    aspect-ratio: var(--hero-media-aspect-ratio);
-  }
-
-  .hero--no-blocks-auto-height {
-    :is(.hero__image, .hero__video) {
-      width: 100%;
-      aspect-ratio: auto;
-    }
-
-    .hero__media-wrapper {
-      /* When there are no blocks and the height is auto, allow the image to appear. */
-      position: relative;
-    }
-  }
-
-  .hero__image,
-  .hero__video,
-  .hero__video-poster {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-    object-position: center center;
-    overflow: hidden;
-    position: relative;
-    z-index: var(--layer-base);
-  }
-
-  .hero__video-wrapper {
-    position: relative;
-  }
-
-  .hero__video-poster {
-    position: absolute;
-  }
-
-  .hero__link {
-    position: absolute;
-    inset: 0;
-    grid-column: 1 / -1;
-  }
-
-  .hero__media-wrapper,
-  .hero__content-wrapper {
-    pointer-events: none;
-
-    :is(a, button, input, textarea, select) {
-      pointer-events: auto;
-    }
-  }
-
-  .hero__content-wrapper--design-mode * {
-    pointer-events: auto;
-  }
-
-  .hero[data-blur-shadow='true'] {
-    --blurred-reflection-filter-saturate: saturate(1.5);
-    --blurred-reflection-mask-image: linear-gradient(to bottom, #000 0%, #000 60%, transparent 100%);
-    --blurred-reflection-box-shadow: rgb(0 0 0 / 5%) 0 0 1rem;
-    --blurred-reflection-filter-blur: blur(20px);
-    --blurred-reflection-scale: scale(2, 1.25);
-    --blurred-reflection-padding-block-end: 60px;
-  }
-
-  .hero[data-blur-shadow='true'] .hero__container::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    box-shadow: var(--blurred-reflection-box-shadow);
-    mix-blend-mode: overlay;
-    pointer-events: none;
-    z-index: -1;
-  }
-
-  .hero__blurred-image {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    mask-image: var(--blurred-reflection-mask-image);
-    filter: var(--blurred-reflection-filter-saturate);
-    pointer-events: none;
-    transform: translateY(50%);
-    overflow: hidden;
-  }
-
-  .hero__blurred-image img,
-  .hero__blurred-image svg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center center;
-    filter: var(--blurred-reflection-filter-blur);
-    opacity: var(--blur-opacity);
-    transform: var(--blurred-reflection-scale);
-    padding-block-end: var(--blurred-reflection-padding-block-end);
-
-    &:not(:only-child) {
-      width: 50%;
-
-      &:last-child {
-        right: 0;
-        left: auto;
-      }
-    }
-  }
-
-  .hero-splash--over-header {
-    --hero-height-offset: 0px;
-  }
-
-  :root[data-hero-over-header='true'][data-hero-in-view='true'] .hero-splash--over-header .hero__container {
-    padding-bottom: calc(var(--padding-block-end, 0px) + var(--header-group-height, 0px));
-  }
-
-
-{% endstylesheet %}
 
 
 {% javascript %}

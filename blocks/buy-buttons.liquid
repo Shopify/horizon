@@ -89,12 +89,14 @@
               </span>
             </span>
           {%- endunless -%}
-          {% content_for 'block',
-            type: 'accelerated-checkout',
-            id: 'accelerated-checkout',
-            can_add_to_cart: can_add_to_cart,
-            form_obj: form
-          %}
+          {% if settings.show_accelerated_checkout_buttons %}
+            {% content_for 'block',
+              type: 'accelerated-checkout',
+              id: 'accelerated-checkout',
+              can_add_to_cart: can_add_to_cart,
+              form_obj: form
+            %}
+          {% endif %}
         </div>
       {%- endform -%}
     </product-form-component>
