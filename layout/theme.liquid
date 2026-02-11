@@ -36,7 +36,6 @@
 
     {{ content_for_header }}
 
-    {{ 'font-override.css' | asset_url | stylesheet_tag }}
     {% liquid
       assign section_gridline_color = settings.section_gridline_color | default: '#e5e5e5'
       assign section_gridline_color_dark = settings.section_gridline_color_dark | default: 'rgba(255,255,255,0.12)'

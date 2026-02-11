@@ -48,9 +48,11 @@
   endif
 
   assign fetch_priority = 'auto'
+  assign loading = 'lazy'
 
   if section.index == 1
     assign fetch_priority = 'high'
+    assign loading = 'eager'
   endif
 %}
 
@@ -67,7 +69,9 @@
         alt: section.settings.image_1.alt,
         class: 'hero__image',
         sizes: sizes,
-        fetchpriority: fetch_priority
+        fetchpriority: fetch_priority,
+        loading: loading,
+        decoding: 'async'
     }}
   {%- endif -%}
 
@@ -91,7 +95,9 @@
             alt: section.settings.video_1.alt,
             class: 'hero__video-poster',
             sizes: sizes,
-            fetchpriority: fetch_priority_poster
+            fetchpriority: fetch_priority_poster,
+            loading: loading,
+            decoding: 'async'
         }}
       {%- endif -%}
       {{
@@ -119,7 +125,9 @@
         alt: section.settings.image_2.alt,
         class: 'hero__image',
         sizes: sizes,
-        fetchpriority: fetch_priority
+        fetchpriority: fetch_priority,
+        loading: loading,
+        decoding: 'async'
     }}
   {%- endif -%}
 
@@ -136,7 +144,9 @@
             height: section.settings.video_2.preview_image.height,
             alt: section.settings.video_2.alt,
             class: 'hero__video-poster',
-            sizes: sizes
+            sizes: sizes,
+            loading: loading,
+            decoding: 'async'
         }}
       {%- endif -%}
       {{
@@ -168,7 +178,9 @@
         height: section.settings.image_1.height,
         alt: '',
         class: 'hero__image',
-        sizes: sizes
+        sizes: sizes,
+        loading: 'lazy',
+        decoding: 'async'
     }}
   {% endif %}
   {% if has_image_2 %}
@@ -181,7 +193,9 @@
         height: section.settings.image_2.height,
         alt: '',
         class: 'hero__image',
-        sizes: sizes
+        sizes: sizes,
+        loading: 'lazy',
+        decoding: 'async'
     }}
   {% endif %}
   {% if has_media == false %}

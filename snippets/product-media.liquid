@@ -18,6 +18,7 @@
 
 {% liquid
   assign widths = widths | default: '240, 352, 832, 1200, 1600, 1920, 2560, 3840'
+  assign loading = loading | default: 'lazy'
 %}
 
 <div
@@ -45,7 +46,8 @@
       transitionToProduct: settings.transition_to_main_product,
       data_max_resolution: high_res_url,
       fetchpriority: fetch_priority,
-      style: focal_point_style
+      style: focal_point_style,
+      decoding: 'async'
   }}
 
   {% unless preview_image_only %}
@@ -68,7 +70,8 @@
                 alt: media.alt,
                 sizes: sizes,
                 loading: loading,
-                class: 'deferred-media__poster-image'
+                class: 'deferred-media__poster-image',
+                decoding: 'async'
             }}
             <span class="deferred-media__poster-icon">
               <span class="visually-hidden">{{ 'accessibility.play_model' | t }}</span>

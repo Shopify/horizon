@@ -34,10 +34,38 @@
     {% assign section_articles = section_articles | split: ',' %}
   {% endif %}
 
+  {% liquid
+    assign eager_count = 1
+    case section.settings.layout_type
+      when 'grid'
+        assign eager_count = section.settings.columns | default: 3
+      when 'carousel'
+        assign eager_count = 1
+      when 'editorial'
+        assign eager_count = 1
+    endcase
+    assign should_eager_load = section.index == 1
+  %}
+
   {% capture list_items %}
     {% for article in section_articles limit: max_items %}
+      {% liquid
+        assign image_loading = 'lazy'
+        assign image_fetchpriority = 'auto'
+        if should_eager_load and forloop.index <= eager_count
+          assign image_loading = 'eager'
+          assign image_fetchpriority = 'high'
+        endif
+      %}
       <div class="resource-list__item">
-        {% content_for 'block', id: 'static-blog-post-card', type: '_featured-blog-posts-card', article: article, closest.article: article %}
+        {% content_for 'block',
+          id: 'static-blog-post-card',
+          type: '_featured-blog-posts-card',
+          article: article,
+          closest.article: article,
+          image_loading: image_loading,
+          image_fetchpriority: image_fetchpriority
+        %}
       </div>
       {% unless forloop.last %}
         <!--@list/split-->
@@ -60,11 +88,7 @@
   %}
 </div>
 
-{% stylesheet %}
-  .featured-blog-posts h3 {
-    text-transform: uppercase;
-  }
-{% endstylesheet %}
+
 
 {% schema %}
 {
