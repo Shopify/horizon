@@ -136,7 +136,7 @@
       grid-template-columns: 1fr var(--template-column-ratio);
       grid-template-areas: 'text image';
 
-      @media (min-width: 749px) {
+      @media screen and (min-width: 750px) {
         &[reverse] {
           grid-template-areas: 'image text';
           grid-template-columns: var(--template-column-ratio) 1fr;
@@ -147,7 +147,7 @@
         align-items: var(--alignment);
       }
 
-      @media (max-width: 749px) {
+      @media screen and (max-width: 749px) {
         grid-template-columns: 1fr;
         grid-template-areas: 'text' 'image';
         grid-gap: var(--gap-2xl);
@@ -182,7 +182,7 @@
     overflow: hidden;
     grid-area: image;
 
-    @media (max-width: 749px) {
+    @media screen and (max-width: 749px) {
       image-block {
         max-width: 100%;
       }

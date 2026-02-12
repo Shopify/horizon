@@ -460,7 +460,7 @@ p:empty {
 }
 
 /* Make the actual section background transparent, and instead apply it to a separate sibling element to enable stacking with hero shadow  */
-.shopify-section:not(.header-section) :is(.section, .cart__summary-container) {
+.shopify-section:not(.header-section) :is(.section, .cart-summary) {
   background: transparent;
 }
 
@@ -648,27 +648,6 @@ p:empty {
   margin: 0;
   padding: 0;
   list-style: none;
-}
-
-.skip-to-content-link {
-  position: absolute;
-  overflow: hidden;
-  height: 1px;
-  left: -99999px;
-  /* stylelint-disable-next-line declaration-no-important */
-  word-wrap: normal !important;
-}
-
-.skip-to-content-link:focus {
-  z-index: var(--layer-temporary);
-  overflow: auto;
-  width: auto;
-  height: auto;
-  padding: var(--padding-lg) var(--padding-4xl);
-  left: var(--margin-lg);
-  top: var(--margin-lg);
-  background-color: var(--color-background);
-  box-shadow: 0 0 0 var(--focus-outline-offset) var(--color-background);
 }
 
 .text-left {
@@ -2240,7 +2219,7 @@ deferred-media[class] :is(.deferred-media__poster-button img, .deferred-media__p
 .variant-option--swatches > overflow-list {
   justify-content: var(--product-swatches-alignment);
 
-  @media (max-width: 749px) {
+  @media screen and (max-width: 749px) {
     justify-content: var(--product-swatches-alignment-mobile);
   }
 }
@@ -2861,7 +2840,7 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
   }
 }
 
-@media (min-width: 750px) {
+@media screen and (min-width: 750px) {
   .layout-panel-flex {
     flex-direction: var(--flex-direction);
   }
@@ -3485,7 +3464,7 @@ fly-to-cart.fly-to-cart--sticky {
   --scale-timing: cubic-bezier(0.86, 0.08, 0.98, 0.98);
   --radius: var(--style-border-radius-buttons-primary);
 
-  @media (max-width: 749px) {
+  @media screen and (max-width: 749px) {
     --x-timing: cubic-bezier(0.98, -0.1, 0.92, 0.5);
   }
 
@@ -3887,7 +3866,7 @@ fly-to-cart.fly-to-cart--sticky {
   clip-path: inset(-50px 0 0 0); /* stylelint-disable-line */
 }
 
-@media (min-width: 750px) {
+@media screen and (min-width: 750px) {
   .top-shadow--mobile::before {
     display: none;
   }
@@ -3902,7 +3881,7 @@ fly-to-cart.fly-to-cart--sticky {
   clip-path: inset(0 0 -50px 0); /* stylelint-disable-line */
 }
 
-@media (min-width: 750px) {
+@media screen and (min-width: 750px) {
   .bottom-shadow--mobile::before {
     display: none;
   }

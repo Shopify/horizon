@@ -115,16 +115,12 @@
       position: relative;
     }
 
-    .section--page-width .cart-page:has(.cart__container--extend) {
+    .section--page-width .cart-page:has(.cart-summary--extend) {
       grid-column: 2 / 4;
       grid-template-columns: 1fr minmax(
           var(--sidebar-width),
           calc((100vw - var(--page-width)) / 2 + var(--sidebar-width))
         );
-    }
-
-    .cart__container--extend {
-      height: 100%;
     }
   }
 

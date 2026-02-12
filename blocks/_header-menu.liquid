@@ -139,7 +139,7 @@
         on:pointerenter="/activate"
         on:pointerleave="/deactivate"
       >
-        <button role="menuitem" class="button menu-list__link button-unstyled">
+        <button role="menuitem" class="menu-list__link button-unstyled">
           <span class="menu-list__link-title">{{ 'actions.more' | t }}</span>
         </button>
       </li>
@@ -152,21 +152,19 @@
       data-hydration-key="header-menu"
     >
       <div class="header-menu__inner">
-        <nav header-menu>
-          <div
-            class="menu-list"
-            style="{% render 'menu-font-styles', settings: block_settings %}"
-          >
-            {% assign class = 'overflow-menu' | append: color_scheme_classes %}
-            {% render 'overflow-list',
-              class: class,
-              ref: 'overflowMenu',
-              children: children,
-              minimum-items: 2,
-              data-testid: 'header-menu-overflow-list',
-              attributes: 'data-skip-node-update'
-            %}
-          </div>
+        <nav
+          class="menu-list"
+          style="{% render 'menu-font-styles', settings: block_settings %}"
+        >
+          {% assign class = 'overflow-menu' | append: color_scheme_classes %}
+          {% render 'overflow-list',
+            class: class,
+            ref: 'overflowMenu',
+            children: children,
+            minimum-items: 2,
+            data-testid: 'header-menu-overflow-list',
+            attributes: 'data-skip-node-update'
+          %}
         </nav>
       </div>
 
@@ -215,10 +213,6 @@
     padding-block: var(--padding-2xs);
   }
 
-  header-menu {
-    width: 100%;
-  }
-
   /* Drawer menu featured content */
   .menu-drawer__featured-content {
     z-index: var(--layer-base);
@@ -261,6 +255,7 @@
     --menu-vertical-gap: var(--gap-xl);
 
     display: flex;
+    height: 100%;
   }
 
   .menu-list__list {
@@ -273,6 +268,7 @@
     white-space: nowrap;
     display: flex;
     align-items: center;
+    height: 100%;
   }
 
   .menu-list__list-item[aria-hidden='true'] {
@@ -290,8 +286,11 @@
     transition: color var(--animation-speed) var(--animation-easing);
     text-decoration: none;
     display: flex;
-    min-height: var(--minimum-touch-target);
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    height: 100%;
+    margin-block: 0;
 
     &:hover,
     &:focus {
@@ -303,10 +302,31 @@
     }
   }
 
+  .menu-list__link-title {
+    padding-inline: calc(var(--gap-xl) / 2);
+  }
+  [slot='overflow'] .menu-list__link-title {
+    padding-inline: 0;
+  }
+
+  .menu-list__list-item:not([slot='overflow']) {
+    flex-direction: column;
+  }
+  .menu-list__list-item:not([slot='overflow'])::after {
+    content: '';
+    width: 100%;
+    height: var(--header-padding);
+    margin-bottom: calc(-1 * var(--header-padding));
+  }
+
+  [slot='overflow'] > .menu-list__link::after {
+    content: none;
+  }
+
   /*
-      High specificity selectors to subdue non-hovered links without javascript.
-      If the need for js-generated `hovered` and `focused` classes arises for another reason we can simplify these.
-    */
+        High specificity selectors to subdue non-hovered links without javascript.
+        If the need for js-generated `hovered` and `focused` classes arises for another reason we can simplify these.
+      */
   .menu-list:where(:has(.menu-list__list-item:hover)),
   .menu-list:where(:has(.menu-list__list-item:focus-within)),
   .menu-list:where(:has(.menu-list__list-item:not([aria-hidden='true']) .menu-list__link--active)) {
@@ -326,7 +346,8 @@
     /* Make sure focus outline is not cut off by overflow hidden */
     --focus-outline-size: calc(var(--focus-outline-offset) + var(--focus-outline-width));
 
-    gap: 0 var(--menu-horizontal-gap);
+    gap: 0;
+    margin-inline: calc(-1 * var(--menu-horizontal-gap) / 2);
   }
 
   .overflow-menu {
@@ -469,6 +490,9 @@
     }
   }
 
+  .header-menu {
+    height: 100%;
+  }
   .header-menu[data-overflow-expanded='true'] .menu-list__list-item:where([slot='overflow']) .menu-list__link {
     --submenu-content-opacity: 1;
   }

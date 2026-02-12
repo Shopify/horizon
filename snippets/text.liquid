@@ -9,7 +9,8 @@
 
 {% liquid
   assign block_settings = block.settings
-  assign plain_text = block_settings.text | strip_newlines | strip_html | strip
+  assign plain_text = block_settings.text | strip_newlines | strip
+  assign visible_text = plain_text | strip_html
   assign text_width = width | default: block_settings.width
 
   if block_settings.font_size contains 'heading-lg' or block_settings.font_size contains 'heading-xl'
@@ -82,7 +83,7 @@
   endif
 %}
 
-{% if fallback_text != blank and plain_text == blank %}
+{% if fallback_text != blank and visible_text == blank %}
   <div {{ attributes | strip_newlines | strip }}>
     {{ fallback_text }}
   </div>

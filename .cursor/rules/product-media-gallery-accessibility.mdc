@@ -332,7 +332,7 @@ actions:
       }
 
       /* Mobile slider layout */
-      @media (max-width: 768px) {
+      @media screen and (max-width: 749px) {
         .thumbnail-container {
           overflow: hidden;
           padding: 0 50px;
@@ -370,7 +370,7 @@ actions:
       }
 
       /* Hide navigation on desktop */
-      @media (min-width: 769px) {
+      @media screen and (min-width: 750px) {
         .slider-nav {
           display: none;
         }

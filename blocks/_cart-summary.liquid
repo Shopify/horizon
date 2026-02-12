@@ -1,6 +1,6 @@
 {% assign block_settings = block.settings %}
 {%- capture cart_summary_inner_class -%}
-  cart__summary-inner
+  cart-summary__inner
   {% if block_settings.extend_summary == false and block_settings.inherit_color_scheme == false -%}
     color-{{ block_settings.color_scheme }} inherit-parent-scheme--mobile
   {%- endif %}
@@ -15,7 +15,7 @@
   ></div>
 {% endif %}
 <div
-  class="cart__summary-container border-style{% if block_settings.extend_summary == true %} cart__container--extend {% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }} inherit-parent-scheme--mobile{% endif %}{% endif %}{% if block_settings.border_radius > 0 %} has-border-radius{% endif %}"
+  class="cart-summary border-style{% if block_settings.extend_summary == true %} cart-summary--extend {% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }} inherit-parent-scheme--mobile{% endif %}{% endif %}{% if block_settings.border_radius > 0 %} has-border-radius{% endif %}"
   style="{% render 'border-override', settings: block_settings %}"
   {{ block.shopify_attributes }}
 >
@@ -25,16 +25,7 @@
 </div>
 
 {% stylesheet %}
-  .cart__total {
-    align-items: baseline;
-    font-weight: var(--font-weight-bold);
-  }
-
-  .cart__tax-note {
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
-  }
-
-  .cart__summary-inner {
+  .cart-summary__inner {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -51,11 +42,11 @@
     }
   }
 
-  body:has(> #header-group .header[sticky]) .cart__summary-inner {
+  body:has(> #header-group .header[sticky]) .cart-summary__inner {
     top: var(--header-height, 0);
   }
 
-  .cart__summary-container {
+  .cart-summary {
     @media screen and (max-width: 749px) {
       border: none;
     }
@@ -67,12 +58,12 @@
     }
   }
 
-  .cart__summary-container:not(.cart__container--extend),
-  .cart__summary-container:not(.cart__container--extend) .cart__summary-inner {
+  .cart-summary:not(.cart-summary--extend),
+  .cart-summary:not(.cart-summary--extend) .cart-summary__inner {
     height: auto;
   }
 
-  .cart__container--extend {
+  .cart-summary--extend {
     height: 100%;
 
     @media screen and (min-width: 750px) {
@@ -83,14 +74,14 @@
   }
 
   /* If extend is on, only include top and bottom borders when the border radius is 0. */
-  .cart__container--extend:not(.has-border-radius) {
+  .cart-summary--extend:not(.has-border-radius) {
     @media screen and (min-width: 750px) {
       border-top: none;
       border-bottom: none;
     }
   }
 
-  .cart__container--extend .cart__summary-inner {
+  .cart-summary--extend .cart-summary__inner {
     height: 100%;
     padding: var(--padding-md) 0 var(--padding-4xl);
 
@@ -102,7 +93,7 @@
   }
 
   /* If extend is off, apply the border radius to the inner summary container */
-  .cart__summary-inner.has-border-radius {
+  .cart-summary__inner.has-border-radius {
     border-radius: var(--border-radius);
   }
 
