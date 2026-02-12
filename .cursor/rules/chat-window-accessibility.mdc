@@ -736,7 +736,7 @@ actions:
       }
 
       /* Mobile responsive adjustments */
-      @media (max-width: 480px) {
+      @media screen and (max-width: 480px) {
         .chat-window {
           bottom: 0;
           right: 0;
@@ -749,7 +749,7 @@ actions:
       }
 
       /* Ensure minimum width compliance */
-      @media (max-width: 320px) {
+      @media screen and (max-width: 320px) {
         .chat-window {
           width: 320px;
           min-width: 320px;

@@ -8,9 +8,29 @@
   @example
   {% render 'skip-to-content-link', href: '#MainContent', text: 'Skip to main content' %}
 {%- enddoc -%}
+
 <a
   class="skip-to-content-link button-secondary"
   href="{{ href }}"
 >
   {{ text | t }}
 </a>
+
+{% stylesheet %}
+  .skip-to-content-link {
+    position: absolute;
+    left: -99999px;
+  }
+
+  .skip-to-content-link:focus {
+    z-index: var(--layer-temporary);
+    overflow: auto;
+    width: auto;
+    height: auto;
+    padding: var(--padding-lg) var(--padding-4xl);
+    left: var(--margin-lg);
+    top: var(--margin-lg);
+    background-color: var(--color-background);
+    box-shadow: 0 0 0 var(--focus-outline-offset) var(--color-background);
+  }
+{% endstylesheet %}

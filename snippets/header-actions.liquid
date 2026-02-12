@@ -466,6 +466,17 @@
     min-height: var(--minimum-touch-target);
   }
 
+  .cart-drawer__summary .cart__summary-totals:not(:has(.cart__subtotal-container:empty)) {
+    border-block-start: var(--style-border-width) solid var(--color-border);
+    padding-block-start: var(--padding-2xl);
+  }
+
+  .cart-drawer__summary .cart-note {
+    @media screen and (min-width: 750px) {
+      margin-block-start: var(--margin-3xs);
+    }
+  }
+
   .cart-drawer__heading--empty {
     display: flex;
     justify-content: center;

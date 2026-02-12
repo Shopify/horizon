@@ -15,7 +15,7 @@
 {% assign product_card_size = product_card_size | strip %}
 
 {% style %}
-  @media (min-width: 750px) {
+  @media screen and (min-width: 750px) {
     {% case section.settings.layout_type %}
       {% when 'grid' %}
         .product-grid--{{ section.id }}:is(.product-grid--grid) {
