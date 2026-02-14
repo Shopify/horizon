@@ -1,3 +1,26 @@
+{% doc %}
+  Account Actions Component
+
+  Renders the account actions panel with customer information, login options, and navigation links.
+  Displays personalized content for logged-in customers or login options for guests.
+
+  @param autofocus_enabled - {Boolean} Enable autofocus on interactive elements (default: false)
+
+  @example
+  {% render 'account-actions', autofocus_enabled: true %}
+
+  @notes
+    - Automatically detects customer login state
+    - Shows personalized greeting with customer name if available
+    - Displays customer email or phone number
+    - Provides login options for guests
+    - Includes navigation to orders and profile pages
+{% enddoc %}
+
+{% liquid
+  assign autofocus_enabled = autofocus_enabled | default: false
+%}
+
 <div class="account-actions">
   <div class="account-actions__main-menu">
     <header class="account-actions__header">
