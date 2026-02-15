@@ -76,5 +76,8 @@
     {% endif %}
     --letter-spacing: var(--letter-spacing--{{ type }}-{{ settings.letter_spacing }});
   {%- endif -%}
+  {% if settings.enable_mobile_size and settings.mobile_font_size != blank %}
+    --mobile-font-size:  {{ settings.mobile_font_size }};
+  {% endif %}
 {%- endcapture -%}
 {{- variables | strip | strip_newlines -}}

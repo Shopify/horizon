@@ -1,0 +1,90 @@
+.button-unstyled.slideshow-control.slideshow-control--shape-circle {
+    width: var(--minimum-touch-target);
+    height: var(--minimum-touch-target);
+}
+
+
+slideshow-controls.carousel-controls:has(.icon-pause) {
+    justify-content: center !important;
+}
+
+slideshow-controls.carousel-controls .icon-pause,
+slideshow-controls.carousel-controls .icon-play {
+    display: none !important;
+}
+
+@media (max-width: 749px) {
+    :is(.carousel--mobile-full-width) > .resource-list__carousel, :is(.carousel--mobile-full-width) > .custom-section-content {
+        grid-column: 1 / -1;
+    }
+
+    .carousel--mobile-full-width .resource-list__carousel[style*="--mobile-card-size: 100%;"] slideshow-slides {
+        padding-inline: 0 !important;
+        scroll-padding-inline-start: 0;
+    }
+
+    :is(.carousel--mobile-full-width) .featured-blog-posts-card__content {
+        padding-inline: var(--page-margin);
+    }
+
+    .section--mobile-full-width .custom-section-content {
+        grid-column: 1 / -1;
+    }
+
+    .mobile-group-column-reverse > .group-block-content {
+        flex-direction: column-reverse !important;
+    }
+
+    .mobile-section-column-reverse {
+        flex-direction: column-reverse !important;
+    }
+
+    .spacing-style[style*="--mobile-padding-block-start"] {
+        padding-block: calc(var(--mobile-padding-block-start) + var(--section-top-offset, 0px)) var(--mobile-padding-block-end) !important;
+    }
+
+    .spacing-style[style*="--mobile-padding-inline-start"] {
+        padding-inline: var(--mobile-padding-inline-start) var(--mobile-padding-inline-end) !important;
+    }
+
+    .spacing-style[style*="--mobile-margin-block-start"] {
+        margin-inline: var(--mobile-margin-block-start) var(--mobile-margin-block-end) !important;
+    }
+
+    .spacing-style[style*="--mobile-margin-block-start"] {
+        margin-inline: var(--mobile-margin-block-start) var(--mobile-margin-block-end) !important;
+    }
+
+    [style*="--mobile-font-size"],
+    [style*="--mobile-font-size"] > * {
+        font-size: var(--mobile-font-size) !important;
+    }
+
+    [style*="--mobile-border-radius"] {
+        border-radius: var(--mobile-border-radius) !important;
+    }
+
+    .mobile-column[style*="--horizontal-mobile-alignment"] {
+        align-items: var(--horizontal-mobile-alignment) !important;
+    }
+
+    .mobile-column[style*="--horizontal-mobile-alignment: flex-start"] {
+        > .text-block {
+            text-align: left;
+        }
+    }
+
+    .mobile-column[style*="--horizontal-mobile-alignment: center"] {
+        > .text-block, .text-block > * {
+            text-align: center;
+        }
+    }
+
+    [style*="--mobile-gap"] {
+        gap: var(--mobile-gap) !important;
+    }
+
+    [style*="--mobile-ratio"] > img,  [style*="--mobile-ratio"] > video {
+       aspect-ratio: var(--mobile-ratio) !important;
+    }
+}

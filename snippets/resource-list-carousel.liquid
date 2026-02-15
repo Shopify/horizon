@@ -6,7 +6,6 @@
   @param {number} slide_count - The number of slides to display in the carousel
   @param {object} settings - The block or sections settings from the parent block/section.
   @param {string} [slide_width_max] - The maximum width of the slides in the carousel.
-
   @example
   {% render 'resource-list-carousel', slides: slides, slide_count: slide_count, settings: block.settings %}
 {%- enddoc -%}
@@ -38,6 +37,21 @@
   {% endfor %}
 {% endcapture %}
 
+{% if settings.enable_dots == true and slide_count > 1 %}
+  {% capture controls %}
+    {%- render 'slideshow-controls',
+      style: 'dots',
+      autoplay: settings.autoplay,
+      item_count: slide_count,
+      show_arrows: false,
+      arrows_on_media: false,
+      controls_on_media: false,
+      pagination_position: 'center',
+      class: 'carousel-controls'
+    -%}
+  {% endcapture %}
+{% endif %}
+
 <div style="{{ gutter_style }} --slide-width-max: {{ slide_width_max | default: '300px' }};">
   {% render 'slideshow',
     ref: slideshow_ref,
@@ -50,7 +64,10 @@
     infinite: false,
     initial_slide: 0,
     slide_count: slide_count,
-    slideshow_gutters: slideshow_gutters
+    slideshow_gutters: slideshow_gutters,
+    controls: controls,
+    autoplay: settings.autoplay,
+    autoplay_speed: settings.autoplay_speed
   %}
 </div>
 

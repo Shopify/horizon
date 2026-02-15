@@ -10,6 +10,7 @@
 {%- liquid
   assign scale_min = 20
   assign keys = 'padding-block-start,padding-block-end,padding-inline-start,padding-inline-end' | split: ','
+  assign mobile_keys = 'mobile-padding-block-start,mobile-padding-block-end,mobile-padding-inline-start,mobile-padding-inline-end' | split: ','
 
   for key in keys
     assign value = settings[key]
@@ -33,4 +34,28 @@
       echo ';'
     endif
   endfor
+  if settings.custom_mobile_padding == true
+  for mobile_key in mobile_keys
+    assign mobile_value = settings[mobile_key]
+
+    if mobile_value != blank
+      echo '--'
+      echo mobile_key
+      echo ': '
+
+      if mobile_value > scale_min
+        echo 'max('
+        echo scale_min
+        echo 'px, calc(var(--spacing-scale) * '
+        echo mobile_value
+        echo 'px))'
+      else
+        echo mobile_value
+        echo 'px'
+      endif
+
+      echo ';'
+    endif
+  endfor
+  endif
 -%}

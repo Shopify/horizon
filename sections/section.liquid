@@ -1,3 +1,5 @@
+
+
 {% capture children %}
   {% content_for 'blocks' %}
 {% endcapture %}
@@ -49,6 +51,14 @@
       "label": "t:settings.vertical_on_mobile",
       "default": true,
       "visible_if": "{{ section.settings.content_direction == 'row' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "reverse_on_mobile",
+      "label": "Reverse order on mobile",
+      "info": "only works for vertical mobile",
+      "default": false,
+      "visible_if": "{{ section.settings.vertical_on_mobile == true or section.settings.content_direction == 'column' }}"
     },
     {
       "type": "select",
@@ -160,6 +170,23 @@
       "default": 12
     },
     {
+      "type": "checkbox",
+      "id": "enable_mobile_gap",
+      "label": "Custom mobile gap",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "mobile_gap",
+      "label": "Mobile gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 12,
+      "visible_if": "{{ section.settings.enable_mobile_gap == true }}"
+    },
+    {
       "type": "header",
       "content": "t:content.size"
     },
@@ -178,6 +205,13 @@
         }
       ],
       "default": "page-width"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width_on_mobile",
+      "label": "t:settings.full_width_on_mobile",
+      "default": false,
+      "visible_if": "{{ section.settings.section_width == 'page-width' }}"
     },
     {
       "type": "select",
@@ -416,6 +450,75 @@
       "step": 1,
       "unit": "px",
       "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_mobile_padding",
+      "label": "Custom Mobile Padding",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "mobile-padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.custom_mobile_padding == true }}"
+    },
+    {
+      "type": "range",
+      "id": "mobile-padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.custom_mobile_padding == true }}"
+    },
+    {
+      "type": "range",
+      "id": "mobile-padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.custom_mobile_padding == true }}"
+    },
+    {
+      "type": "range",
+      "id": "mobile-padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.custom_mobile_padding == true }}"
+    },
+    {
+      "type": "text",
+      "id": "css_class",
+      "label": "CSS class",
+      "info": "optional"
+    },
+    {
+      "type": "checkbox",
+      "id": "add_section_id",
+      "label": "Add section ID",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section ID",
+      "info": "optional",
+      "visible_if": "{{ section.settings.add_section_id == true }}"
     }
   ],
   "presets": [

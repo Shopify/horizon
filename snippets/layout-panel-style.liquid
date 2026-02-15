@@ -29,5 +29,13 @@
 
 {% render 'gap-style', value: settings.gap %}
 
+{% if settings.enable_mobile_gap %}
+  --mobile-gap: {{ settings.mobile_gap }}px;
+{% endif %}
+
 --horizontal-alignment: {{ horizontal_alignment }}; --vertical-alignment: {{ vertical_alignment }};
 --vertical-alignment-mobile: {{ vertical_alignment_mobile }};
+
+{% if settings.custom_mobile_alignment == true %}
+  --horizontal-mobile-alignment: {{ settings.mobile_vertical_alignment }};
+{% endif %}

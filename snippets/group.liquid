@@ -19,7 +19,9 @@
     border-style
     spacing-style
     size-style
+    {% if settings.reverse_on_mobile == true %}mobile-group-column-reverse{% endif %}
     {% if settings.inherit_color_scheme == false %} color-{{ settings.color_scheme }}{% endif %}
+    {{ settings.css_class }}
     {{ class }}
   "
   style="

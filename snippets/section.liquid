@@ -7,7 +7,10 @@
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div
-  class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
+  {% if section.settings.add_section_id == true and section.settings.section_id != blank %}
+    data-section-id="{{ section.settings.section_id }}"
+  {% endif %}
+  class="section  {% if section.settings.full_width_on_mobile %}section--mobile-full-width{% endif %} section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} {{ section.settings.css_class }}"
   data-testid="ui-test-section"
 
   {% if request.visual_preview_mode %}
@@ -52,6 +55,7 @@
         layout-panel-flex
         layout-panel-flex--{{ section.settings.content_direction }}
         section-content-wrapper
+        {% if section.settings.reverse_on_mobile == true %}mobile-section-column-reverse{% endif %}
         {% if section.settings.vertical_on_mobile %} mobile-column{% endif %}
       "
       style="

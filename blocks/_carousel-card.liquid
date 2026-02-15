@@ -1,14 +1,13 @@
-
-
 {% capture children %}
   {% content_for 'blocks' %}
 {% endcapture %}
 
 {% render 'group', children: children, settings: block.settings, shopify_attributes: block.shopify_attributes %}
+<!--@list/split-->
 
 {% schema %}
 {
-  "name": "t:names.group",
+  "name": "Carousel Item",
   "tag": null,
   "blocks": [
     {
@@ -16,23 +15,9 @@
     },
     {
       "type": "@app"
-    },
-    {
-      "type": "_divider"
     }
   ],
   "settings": [
-    {
-      "type": "url",
-      "id": "link",
-      "label": "t:settings.link"
-    },
-    {
-      "type": "checkbox",
-      "id": "open_in_new_tab",
-      "label": "t:settings.open_new_tab",
-      "default": false
-    },
     {
       "type": "header",
       "content": "t:content.layout"
@@ -209,23 +194,6 @@
       "default": 12
     },
     {
-      "type": "checkbox",
-      "id": "enable_mobile_gap",
-      "label": "Custom mobile gap",
-      "default": false
-    },
-    {
-      "type": "range",
-      "id": "mobile_gap",
-      "label": "Mobile gap",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 12,
-      "visible_if": "{{ block.settings.enable_mobile_gap == true }}"
-    },
-    {
       "type": "header",
       "content": "t:content.size"
     },
@@ -341,72 +309,6 @@
     },
     {
       "type": "select",
-      "id": "background_media",
-      "label": "t:settings.background_media",
-      "options": [
-        {
-          "value": "none",
-          "label": "t:options.none"
-        },
-        {
-          "value": "image",
-          "label": "t:options.image"
-        },
-        {
-          "value": "video",
-          "label": "t:options.video"
-        }
-      ],
-      "default": "none"
-    },
-    {
-      "type": "video",
-      "id": "video",
-      "label": "t:settings.video",
-      "visible_if": "{{ block.settings.background_media == 'video' }}"
-    },
-    {
-      "type": "select",
-      "id": "video_position",
-      "label": "t:settings.video_position",
-      "options": [
-        {
-          "value": "cover",
-          "label": "t:options.cover"
-        },
-        {
-          "value": "contain",
-          "label": "t:options.contain"
-        }
-      ],
-      "default": "cover",
-      "visible_if": "{{ block.settings.background_media == 'video' }}"
-    },
-    {
-      "type": "image_picker",
-      "id": "background_image",
-      "label": "t:settings.image",
-      "visible_if": "{{ block.settings.background_media == 'image' }}"
-    },
-    {
-      "type": "select",
-      "id": "background_image_position",
-      "label": "t:settings.image_position",
-      "options": [
-        {
-          "value": "cover",
-          "label": "t:options.cover"
-        },
-        {
-          "value": "fit",
-          "label": "t:options.fit"
-        }
-      ],
-      "default": "cover",
-      "visible_if": "{{ block.settings.background_media == 'image' }}"
-    },
-    {
-      "type": "select",
       "id": "border",
       "label": "t:settings.borders",
       "options": [
@@ -469,59 +371,6 @@
       "unit": "px",
       "default": 0,
       "visible_if": "{{ block.settings.enable_mobile_radius == true }}"
-    },
-    {
-      "type": "text",
-      "id": "placeholder",
-      "label": "t:settings.image",
-      "visible_if": "{{ false }}"
-    },
-    {
-      "type": "checkbox",
-      "id": "toggle_overlay",
-      "label": "t:settings.background_overlay"
-    },
-    {
-      "type": "color",
-      "id": "overlay_color",
-      "label": "t:settings.overlay_color",
-      "alpha": true,
-      "default": "#00000026",
-      "visible_if": "{{ block.settings.toggle_overlay }}"
-    },
-    {
-      "type": "select",
-      "id": "overlay_style",
-      "label": "t:settings.overlay_style",
-      "options": [
-        {
-          "value": "solid",
-          "label": "t:options.solid"
-        },
-        {
-          "value": "gradient",
-          "label": "t:options.gradient"
-        }
-      ],
-      "default": "solid",
-      "visible_if": "{{ block.settings.toggle_overlay }}"
-    },
-    {
-      "type": "select",
-      "id": "gradient_direction",
-      "label": "t:settings.gradient_direction",
-      "options": [
-        {
-          "value": "to top",
-          "label": "t:options.up"
-        },
-        {
-          "value": "to bottom",
-          "label": "t:options.down"
-        }
-      ],
-      "default": "to top",
-      "visible_if": "{{ block.settings.toggle_overlay and block.settings.overlay_style == 'gradient' }}"
     },
     {
       "type": "header",
@@ -626,8 +475,68 @@
   ],
   "presets": [
     {
-      "name": "t:names.group",
-      "category": "t:categories.layout"
+      "name": "Carousel Item",
+      "blocks": {
+        "group": {
+            "type": "group",
+            "name": "Item Link",
+            "settings": {
+                "horizontal_alignment_flex_direction_column": "center",
+                "width": "fill",
+                "width_mobile": "fill",
+                "inherit_color_scheme": false,
+                "color_scheme": "scheme-6",
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0
+            },
+            "blocks": {
+                "image": {
+                    "type": "image",
+                    "settings": {
+                        "image": "",
+                        "image_ratio": "square"
+                    }
+                },
+                "group": {
+                "type": "group",
+                "settings": {
+                    "horizontal_alignment_flex_direction_column": "flex-start",
+                    "width": "fill",
+                    "inherit_color_scheme": false
+                },
+                "blocks": {
+                    "heading": {
+                    "type": "text",
+                    "name": "t:names.heading",
+                    "settings": {
+                        "text": "<h2>Our signature product.</h2>",
+                        "type_preset": "h3"
+                    }
+                    },
+                    "text": {
+                    "type": "text",
+                    "settings": {
+                        "text": "<p>Made with care and unconditionally loved by our customers, this signature bestseller exceeds all expectations.</p>",
+                        "max_width": "narrow"
+                    }
+                    },
+                    "button": {
+                    "type": "button",
+                    "settings": {
+                        "label": "Shop now",
+                        "link": "shopify://collections/all"
+                    }
+                    }
+                },
+                "block_order": ["heading", "text", "button"]
+                }
+            },
+            "block_order": ["image", "group"]
+        }
+      },
+      "block_order": ["group"]
     }
   ]
 }
