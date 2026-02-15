@@ -9,118 +9,6 @@
  */
 {
   "sections": {
-    "collection_list_kXrJya": {
-      "type": "collection-list",
-      "blocks": {
-        "static-collection-card": {
-          "type": "_collection-card",
-          "name": "t:names.collection_card",
-          "static": true,
-          "settings": {
-            "placement": "on_image",
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "flex-start",
-            "collection_card_gap": 11,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0
-          },
-          "blocks": {
-            "collection_title_GQnKK9": {
-              "type": "collection-title",
-              "name": "t:names.collection_title",
-              "settings": {
-                "width": "fit-content",
-                "max_width": "none",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": true,
-                "background_color": "#ffffff",
-                "corner_radius": 10,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "collection-card-image": {
-              "type": "_collection-card-image",
-              "name": "t:names.collection_card_image",
-              "static": true,
-              "settings": {
-                "image_ratio": "adapt",
-                "toggle_overlay": false,
-                "overlay_color": "#00000026",
-                "overlay_style": "solid",
-                "gradient_direction": "to top",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "collection_title_GQnKK9"
-          ]
-        }
-      },
-      "disabled": true,
-      "name": "t:names.collections_grid",
-      "settings": {
-        "collection_list": [
-          "fabric",
-          "spandex",
-          "mesh",
-          "lining",
-          "shiny-spandex",
-          "sparkly-spandex",
-          "stretchy-velvet",
-          "stretch-lace",
-          "appliques",
-          "fringes",
-          "swarovski-emelents-fb-hf",
-          "preciosa-viva12-fb-hf",
-          "premium-dmc-fb-hf",
-          "premium-dmc-sew-on",
-          "preciosa-sew-on",
-          "cabochon-fb-hf",
-          "acrylic-beads",
-          "tools-and-accessories",
-          "preciosa-viva12-fb",
-          "threads",
-          "nalheads"
-        ],
-        "layout_type": "grid",
-        "carousel_on_mobile": false,
-        "columns": 3,
-        "mobile_columns": "2",
-        "mobile_card_size": "60cqw",
-        "columns_gap": 8,
-        "bento_gap": 8,
-        "rows_gap": 8,
-        "max_collections": 4,
-        "icons_style": "arrow",
-        "icons_shape": "none",
-        "section_width": "page-width",
-        "gap": 12,
-        "color_scheme": "",
-        "padding-block-start": 48,
-        "padding-block-end": 48
-      }
-    },
     "collection_list_AYBmXc": {
       "type": "collection-list",
       "blocks": {
@@ -269,9 +157,26 @@
           "fabric",
           "spandex",
           "mesh",
-          "lining"
+          "lining",
+          "shiny-spandex",
+          "sparkly-spandex",
+          "stretchy-velvet",
+          "stretch-lace",
+          "appliques",
+          "fringes",
+          "swarovski-emelents-fb-hf",
+          "preciosa-viva12-fb-hf",
+          "premium-dmc-fb-hf",
+          "premium-dmc-sew-on",
+          "preciosa-sew-on",
+          "cabochon-fb-hf",
+          "acrylic-beads",
+          "tools-and-accessories",
+          "preciosa-viva12-fb",
+          "threads",
+          "nalheads"
         ],
-        "layout_type": "carousel",
+        "layout_type": "grid",
         "carousel_on_mobile": false,
         "columns": 4,
         "mobile_columns": "2",
@@ -288,105 +193,9 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
-    },
-    "collection_list_VQzGtQ": {
-      "type": "collection-list",
-      "blocks": {
-        "static-collection-card": {
-          "type": "_collection-card",
-          "name": "t:names.collection_card",
-          "static": true,
-          "settings": {
-            "placement": "below_image",
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "collection_card_gap": 8,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0
-          },
-          "blocks": {
-            "collection_title_ifUBkC": {
-              "type": "collection-title",
-              "name": "t:names.collection_title",
-              "settings": {
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "collection-card-image": {
-              "type": "_collection-card-image",
-              "name": "t:names.collection_card_image",
-              "static": true,
-              "settings": {
-                "image_ratio": "adapt",
-                "toggle_overlay": false,
-                "overlay_color": "#00000026",
-                "overlay_style": "solid",
-                "gradient_direction": "to top",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "collection_title_ifUBkC"
-          ]
-        }
-      },
-      "name": "t:names.collections_carousel",
-      "settings": {
-        "collection_list": [
-          "sparkly-spandex",
-          "stretchy-velvet",
-          "stretch-lace",
-          "appliques"
-        ],
-        "layout_type": "carousel",
-        "carousel_on_mobile": false,
-        "columns": 4,
-        "mobile_columns": "2",
-        "mobile_card_size": "60cqw",
-        "columns_gap": 8,
-        "bento_gap": 8,
-        "rows_gap": 8,
-        "max_collections": 4,
-        "icons_style": "arrow",
-        "icons_shape": "circle",
-        "section_width": "page-width",
-        "gap": 12,
-        "color_scheme": "",
-        "padding-block-start": 48,
-        "padding-block-end": 48
-      }
     }
   },
   "order": [
-    "collection_list_kXrJya",
-    "collection_list_AYBmXc",
-    "collection_list_VQzGtQ"
+    "collection_list_AYBmXc"
   ]
 }
