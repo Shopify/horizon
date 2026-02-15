@@ -9,77 +9,119 @@
  */
 {
   "sections": {
-    "collection_links_JQn9CP": {
-      "type": "collection-links",
+    "collection_list_kXrJya": {
+      "type": "collection-list",
       "blocks": {
-        "link": {
-          "type": "_collection-link",
+        "static-collection-card": {
+          "type": "_collection-card",
+          "name": "t:names.collection_card",
           "static": true,
           "settings": {
-            "show_count": true
+            "placement": "on_image",
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "flex-start",
+            "collection_card_gap": 8,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0
           },
           "blocks": {
-            "title": {
-              "type": "_inline-collection-title",
-              "name": "t:names.title",
-              "static": true,
+            "collection_title_fgVYqG": {
+              "type": "collection-title",
+              "name": "t:names.collection_title",
               "settings": {
-                "font": "var(--font-subheading--family)",
-                "weight": "",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
                 "line_height": "normal",
                 "letter_spacing": "normal",
-                "case": "none"
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": true,
+                "background_color": "#ffffff",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 4,
+                "padding-inline-start": 8,
+                "padding-inline-end": 8
               },
               "blocks": {}
             },
-            "image": {
-              "type": "_image",
+            "collection-card-image": {
+              "type": "_collection-card-image",
+              "name": "t:names.collection_card_image",
               "static": true,
               "settings": {
-                "height": "large",
-                "ratio": "square",
+                "image_ratio": "adapt",
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
                 "border_radius": 0
               },
               "blocks": {}
             }
           },
-          "block_order": []
+          "block_order": [
+            "collection_title_fgVYqG"
+          ]
         }
       },
-      "name": "t:names.collection_links_spotlight",
+      "name": "t:names.collections_grid",
       "settings": {
         "collection_list": [
-          "acrylic-beads",
           "fabric",
-          "cabochon-fb-hf",
-          "fringes",
-          "lining",
-          "mesh",
-          "nalheads",
           "spandex",
-          "swarovski-emelents-fb-hf",
+          "mesh",
+          "lining",
           "shiny-spandex",
-          "appliques",
-          "preciosa-viva12-fb-hf",
-          "preciosa-sew-on",
-          "premium-dmc-fb-hf",
           "sparkly-spandex",
-          "stretch-lace",
           "stretchy-velvet",
+          "stretch-lace",
+          "appliques",
+          "fringes",
+          "swarovski-emelents-fb-hf",
+          "preciosa-viva12-fb-hf",
+          "premium-dmc-fb-hf",
+          "premium-dmc-sew-on",
+          "preciosa-sew-on",
+          "cabochon-fb-hf",
+          "acrylic-beads",
+          "tools-and-accessories",
+          "preciosa-viva12-fb",
           "threads",
-          "tools-and-accessories"
+          "nalheads"
         ],
-        "layout": "spotlight",
+        "layout_type": "grid",
+        "carousel_on_mobile": false,
+        "columns": 3,
+        "mobile_columns": "2",
+        "mobile_card_size": "60cqw",
+        "columns_gap": 8,
+        "bento_gap": 8,
+        "rows_gap": 8,
+        "max_collections": 4,
+        "icons_style": "arrow",
+        "icons_shape": "none",
         "section_width": "page-width",
-        "alignment": "left",
-        "image_position": "right",
+        "gap": 12,
         "color_scheme": "",
-        "padding-block-start": 40,
-        "padding-block-end": 40
+        "padding-block-start": 48,
+        "padding-block-end": 48
       }
     }
   },
   "order": [
-    "collection_links_JQn9CP"
+    "collection_list_kXrJya"
   ]
 }
