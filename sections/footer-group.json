@@ -72,8 +72,8 @@
         "section_width": "page-width",
         "gap": 20,
         "color_scheme": "scheme-1",
-        "padding-block-start": 36,
-        "padding-block-end": 36
+        "padding-block-start": 20,
+        "padding-block-end": 20
       }
     },
     "footer_utilities_wiLgXM": {
@@ -83,7 +83,7 @@
           "type": "footer-copyright",
           "name": "t:names.copyright",
           "settings": {
-            "show_powered_by": true,
+            "show_powered_by": false,
             "font_size": "0.75rem",
             "case": "none"
           },
@@ -105,8 +105,8 @@
       "name": "t:names.policies_and_links",
       "settings": {
         "section_width": "page-width",
-        "gap": 24,
-        "divider_thickness": 1,
+        "gap": 23,
+        "divider_thickness": 1.5,
         "color_scheme": "",
         "padding-block-start": 20,
         "padding-block-end": 20
