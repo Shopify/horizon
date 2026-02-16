@@ -270,6 +270,23 @@
         "padding-block-end": 0
       }
     },
+    "safety_warnings": {
+      "type": "product-safety-warnings",
+      "settings": {
+        "collection_handles": "Preciosa VIVA12® HF, Swarovski Elements®, Premium DMC Flat-Back Hot-Fix Machine-Cut Glass Rhinestones, Premium DMC Sew-On Flat-Back Machine-Cut Glass Rhinestones, Preciosa® Sew-On, Cabochons FB HF, Acrylic Mirrors, Preciosa VIVA12® NoHF, Nalheads",
+        "show_for_all_products": false,
+        "show_icon": false,
+        "heading": "WARNING",
+        "warning_text": "<p>Small parts. Choking hazard. Not suitable for small children.</p>",
+        "icon_size": 24,
+        "heading_font_size": 14,
+        "text_font_size": 12,
+        "color_scheme": "scheme-1",
+        "section_width": "page-width",
+        "padding-block-start": 20,
+        "padding-block-end": 20
+      }
+    },
     "product_recommendations_qggXJq": {
       "type": "product-recommendations",
       "blocks": {
@@ -470,20 +487,6 @@
         "gradient_direction": "to top",
         "padding-block-start": 0,
         "padding-block-end": 0
-      }
-    },
-    "safety_warnings": {
-      "type": "product-safety-warnings",
-      "settings": {
-        "collection_handles": "Preciosa VIVA12\u00ae HF, Swarovski Elements\u00ae, Premium DMC Flat-Back Hot-Fix Machine-Cut Glass Rhinestones, Premium DMC Sew-On Flat-Back Machine-Cut Glass Rhinestones, Preciosa\u00ae Sew-On, Cabochons FB HF, Acrylic Mirrors, Preciosa VIVA12\u00ae NoHF, Nalheads", 
-        "show_for_all_products": false,
-        "show_icon": true,
-        "heading": "WARNING",
-        "warning_text": "<p>Small parts. Choking hazard. Not suitable for small children.</p>",
-        "color_scheme": "scheme-1",
-        "section_width": "page-width",
-        "padding-block-start": 20,
-        "padding-block-end": 20
       }
     }
   },
