@@ -13,6 +13,10 @@ slideshow-controls.carousel-controls .icon-play {
     display: none !important;
 }
 
+.section {
+  --page--width: 90rem !important;
+}
+
 @media (max-width: 749px) {
     :is(.carousel--mobile-full-width) > .resource-list__carousel, :is(.carousel--mobile-full-width) > .custom-section-content {
         grid-column: 1 / -1;
