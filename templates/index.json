@@ -8025,7 +8025,7 @@
       "custom_css": [
         ".image-block__image {object-fit: contain;}",
         ".background-image-fit img {object-position: bottom;}",
-        ".tes-shadow {box-shadow: 7px 10px 9.8px #56bcf940;}"
+        ".tes-shadow {box-shadow: 7px 2px 9.8px #56bcf940;}"
       ],
       "name": "Grid Section",
       "settings": {
@@ -8047,7 +8047,7 @@
         "section_width": "full-width",
         "full_width_on_mobile": false,
         "gap": 0,
-        "color_scheme": "scheme-bbc83d4c-338a-47eb-baca-3eaa1eabc62f",
+        "color_scheme": "scheme-1",
         "background_media": "none",
         "video_position": "cover",
         "background_image": "shopify://shop_images/Ellipse_4_6.png",
@@ -8067,6 +8067,183 @@
         "add_section_id": false,
         "section_id": ""
       }
+    },
+    "section_83wziJ": {
+      "type": "section",
+      "blocks": {
+        "group_7Nh3yB": {
+          "type": "group",
+          "settings": {
+            "link": "",
+            "open_in_new_tab": false,
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "reverse_on_mobile": false,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "custom_mobile_alignment": false,
+            "mobile_vertical_alignment": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 24,
+            "enable_mobile_gap": false,
+            "mobile_gap": 12,
+            "width": "custom",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "enable_mobile_radius": false,
+            "mobile_border_radius": 0,
+            "placeholder": "",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "custom_mobile_padding": false,
+            "mobile-padding-block-start": 0,
+            "mobile-padding-block-end": 0,
+            "mobile-padding-inline-start": 0,
+            "mobile-padding-inline-end": 0,
+            "css_class": ""
+          },
+          "blocks": {
+            "text_rTYmtY": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<h2>Learn more about Konnected</h2>",
+                "width": "100%",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "h2",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "enable_mobile_size": true,
+                "mobile_font_size": "1.92rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "custom_mobile_padding": false,
+                "mobile-padding-block-start": 0,
+                "mobile-padding-block-end": 0,
+                "mobile-padding-inline-start": 0,
+                "mobile-padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "button_UzTVnG": {
+              "type": "button",
+              "settings": {
+                "label": "About Us",
+                "link": "shopify://pages/about-us",
+                "open_in_new_tab": false,
+                "style_class": "button",
+                "width": "custom",
+                "custom_width": 35,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_rTYmtY",
+            "button_UzTVnG"
+          ]
+        },
+        "image_J67xLz": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Group_1180_3.png",
+            "link": "",
+            "open_in_new_tab": false,
+            "image_ratio": "adapt",
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "group_7Nh3yB",
+        "image_J67xLz"
+      ],
+      "name": "t:names.image_with_text",
+      "settings": {
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "reverse_on_mobile": false,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 32,
+        "enable_mobile_gap": false,
+        "mobile_gap": 12,
+        "section_width": "page-width",
+        "full_width_on_mobile": false,
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-bbc83d4c-338a-47eb-baca-3eaa1eabc62f",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 40,
+        "padding-block-end": 40,
+        "custom_mobile_padding": false,
+        "mobile-padding-block-start": 0,
+        "mobile-padding-block-end": 0,
+        "mobile-padding-inline-start": 0,
+        "mobile-padding-inline-end": 0,
+        "css_class": "",
+        "add_section_id": false,
+        "section_id": ""
+      }
     }
   },
   "order": [
@@ -8077,6 +8254,7 @@
     "grid_section_8QXyM9",
     "grid_section_YpMKx9",
     "grid_section_yYbgJF",
-    "grid_section_PWRXb3"
+    "grid_section_PWRXb3",
+    "section_83wziJ"
   ]
 }
