@@ -33,12 +33,16 @@
       ],
       "name": "t:names.announcement_bar",
       "settings": {
-        "speed": 5,
+        "speed": 2,
         "section_width": "page-width",
         "color_scheme": "scheme-5",
         "divider_width": 0,
         "padding-block-start": 20,
-        "padding-block-end": 20
+        "padding-block-end": 20,
+        "facebook_url": "https://www.facebook.com/asecrystals/",
+        "instagram_url": "https://www.instagram.com/asecrystals",
+        "tiktok_url": "https://www.tiktok.com/@asecrystals",
+        "whatsapp_url": "https://wa.me/16047825025"
       }
     },
     "header_section": {

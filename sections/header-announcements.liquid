@@ -1,3 +1,15 @@
+{% liquid
+  assign social_platforms = 'facebook,instagram,youtube,tiktok,twitter,threads,linkedin,bluesky,snapchat,pinterest,tumblr,vimeo,whatsapp' | split: ','
+  assign has_social_links = false
+  for platform in social_platforms
+    assign setting_key = platform | append: '_url'
+    if section.settings[setting_key] != blank
+      assign has_social_links = true
+      break
+    endif
+  endfor
+%}
+
 {% if section.blocks.size > 1 %}
   <script
     src="{{ 'announcement-bar.js' | asset_url }}"
@@ -20,20 +32,52 @@
     endif
   %}
 
-  <announcement-bar-component
-    class="announcement-bar__slider"
-    {% if autoplay == true %}
-      autoplay="{{ section.settings.speed }}" aria-live="polite"
-    {% endif %}
-  >
-    {% if show_arrows %}
-      {% render 'slideshow-arrows', icon_style: 'chevron' %}
+  <div class="announcement-bar__inner{% if has_social_links %} announcement-bar__inner--has-social{% endif %}">
+    {% if has_social_links %}
+      <div class="announcement-bar__social">
+        {% for platform in social_platforms %}
+          {% liquid
+            assign setting_key = platform | append: '_url'
+            assign link_url = section.settings[setting_key]
+          %}
+          {% if link_url != blank %}
+            <a
+              href="{{ link_url }}"
+              class="announcement-bar__social-link"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="{{ platform | capitalize }}"
+            >
+              <svg
+                class="announcement-bar__social-icon icon-default"
+                aria-hidden="true"
+                focusable="false"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+              >
+                {%- render 'icon', icon: platform -%}
+              </svg>
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
     {% endif %}
 
-    <div class="announcement-bar__slides">
-      {% content_for 'blocks' %}
-    </div>
-  </announcement-bar-component>
+    <announcement-bar-component
+      class="announcement-bar__slider"
+      {% if autoplay == true %}
+        autoplay="{{ section.settings.speed }}" aria-live="polite"
+      {% endif %}
+    >
+      {% if show_arrows %}
+        {% render 'slideshow-arrows', icon_style: 'chevron' %}
+      {% endif %}
+
+      <div class="announcement-bar__slides">
+        {% content_for 'blocks' %}
+      </div>
+    </announcement-bar-component>
+  </div>
 </aside>
 
 {% stylesheet %}
@@ -119,6 +163,44 @@
     position: absolute;
     inset: 0;
   }
+
+  .announcement-bar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .announcement-bar__inner--has-social {
+    gap: var(--gap-md);
+  }
+
+  .announcement-bar__inner--has-social .announcement-bar__slider {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .announcement-bar__social {
+    display: none;
+    flex-shrink: 0;
+
+    @media screen and (min-width: 750px) {
+      display: flex;
+      align-items: center;
+      gap: var(--gap-sm);
+    }
+  }
+
+  .announcement-bar__social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: currentColor;
+  }
+
+  .announcement-bar__social-icon {
+    width: var(--icon-size-lg);
+    height: var(--icon-size-lg);
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -201,6 +283,75 @@
       "step": 1,
       "unit": "px",
       "default": 15
+    },
+    {
+      "type": "header",
+      "content": "t:names.social_media_links"
+    },
+    {
+      "type": "url",
+      "id": "facebook_url",
+      "label": "t:options.facebook"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "t:options.instagram"
+    },
+    {
+      "type": "url",
+      "id": "youtube_url",
+      "label": "t:options.youtube"
+    },
+    {
+      "type": "url",
+      "id": "tiktok_url",
+      "label": "t:options.tiktok"
+    },
+    {
+      "type": "url",
+      "id": "twitter_url",
+      "label": "t:options.twitter"
+    },
+    {
+      "type": "url",
+      "id": "threads_url",
+      "label": "t:options.threads"
+    },
+    {
+      "type": "url",
+      "id": "linkedin_url",
+      "label": "t:options.linkedin"
+    },
+    {
+      "type": "url",
+      "id": "bluesky_url",
+      "label": "t:options.bluesky"
+    },
+    {
+      "type": "url",
+      "id": "snapchat_url",
+      "label": "t:options.snapchat"
+    },
+    {
+      "type": "url",
+      "id": "pinterest_url",
+      "label": "t:options.pinterest"
+    },
+    {
+      "type": "url",
+      "id": "tumblr_url",
+      "label": "t:options.tumblr"
+    },
+    {
+      "type": "url",
+      "id": "vimeo_url",
+      "label": "t:options.vimeo"
+    },
+    {
+      "type": "url",
+      "id": "whatsapp_url",
+      "label": "t:options.whatsapp"
     }
   ],
   "presets": [
