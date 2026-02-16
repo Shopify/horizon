@@ -11,19 +11,12 @@
   "type": "footer",
   "name": "t:names.footer",
   "sections": {
-    "footer_utilities_wiLgXM": {
-      "type": "footer-utilities",
+    "footer_eHkxBX": {
+      "type": "footer",
       "blocks": {
-        "footer_policy_list_dpr4it": {
-          "type": "footer-policy-list",
-          "settings": {
-            "font_size": "0.75rem",
-            "case": "none"
-          },
-          "blocks": {}
-        },
-        "social_links_tbHcU9": {
+        "social_links_xBwmjm": {
           "type": "social-links",
+          "name": "t:names.social_media_links",
           "settings": {
             "facebook_url": "https://www.facebook.com/asecrystals/",
             "instagram_url": "https://www.instagram.com/asecrystals",
@@ -43,8 +36,71 @@
         }
       },
       "block_order": [
-        "footer_policy_list_dpr4it",
-        "social_links_tbHcU9"
+        "social_links_xBwmjm"
+      ],
+      "name": "t:names.footer",
+      "settings": {
+        "section_width": "page-width",
+        "gap": 20,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 20,
+        "padding-block-end": 20
+      }
+    },
+    "footer_QHWT3R": {
+      "type": "footer",
+      "blocks": {
+        "payment_icons_mY8z97": {
+          "type": "payment-icons",
+          "name": "t:names.payment_icons",
+          "settings": {
+            "horizontal_alignment": "center",
+            "gap": 10,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "payment_icons_mY8z97"
+      ],
+      "name": "t:names.footer",
+      "settings": {
+        "section_width": "page-width",
+        "gap": 20,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 36,
+        "padding-block-end": 36
+      }
+    },
+    "footer_utilities_wiLgXM": {
+      "type": "footer-utilities",
+      "blocks": {
+        "footer_copyright_97wXpW": {
+          "type": "footer-copyright",
+          "name": "t:names.copyright",
+          "settings": {
+            "show_powered_by": true,
+            "font_size": "0.75rem",
+            "case": "none"
+          },
+          "blocks": {}
+        },
+        "footer_policy_list_dpr4it": {
+          "type": "footer-policy-list",
+          "settings": {
+            "font_size": "0.75rem",
+            "case": "none"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "footer_copyright_97wXpW",
+        "footer_policy_list_dpr4it"
       ],
       "name": "t:names.policies_and_links",
       "settings": {
@@ -58,6 +114,8 @@
     }
   },
   "order": [
+    "footer_eHkxBX",
+    "footer_QHWT3R",
     "footer_utilities_wiLgXM"
   ]
 }
