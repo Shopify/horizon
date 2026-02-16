@@ -98,6 +98,22 @@
         "padding-block-end": 48
       }
     },
+    "color_grid": {
+      "type": "collection-color-grid",
+      "settings": {
+        "filter_option": "Color",
+        "heading": "Filter by color",
+        "heading_font_size": 16,
+        "show_all_label": "All",
+        "show_labels": true,
+        "swatch_size": 28,
+        "swatch_gap": 10,
+        "color_scheme": "scheme-1",
+        "section_width": "page-width",
+        "padding-block-start": 0,
+        "padding-block-end": 16
+      }
+    },
     "main": {
       "type": "main-collection",
       "blocks": {
@@ -246,6 +262,7 @@
   },
   "order": [
     "section",
+    "color_grid",
     "main"
   ]
 }
