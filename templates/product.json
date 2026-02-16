@@ -471,10 +471,25 @@
         "padding-block-start": 0,
         "padding-block-end": 0
       }
+    },
+    "safety_warnings": {
+      "type": "product-safety-warnings",
+      "settings": {
+        "collection_handles": "Mesh",
+        "show_for_all_products": false,
+        "show_icon": true,
+        "heading": "WARNING",
+        "warning_text": "<p>Small parts. Choking hazard. Not suitable for small children.</p>",
+        "color_scheme": "scheme-1",
+        "section_width": "page-width",
+        "padding-block-start": 20,
+        "padding-block-end": 20
+      }
     }
   },
   "order": [
     "main",
+    "safety_warnings",
     "product_recommendations_qggXJq",
     "17712757341f59fb2f"
   ]

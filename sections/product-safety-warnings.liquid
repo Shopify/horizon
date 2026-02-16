@@ -1,0 +1,205 @@
+{% liquid
+  assign show_warning = false
+
+  if section.settings.show_for_all_products
+    assign show_warning = true
+  elsif product != blank and section.settings.collection_handles != blank
+    assign target_handles = section.settings.collection_handles | split: ',' 
+    for collection in product.collections
+      for handle in target_handles
+        assign trimmed_handle = handle | strip
+        if collection.handle == trimmed_handle
+          assign show_warning = true
+          break
+        endif
+      endfor
+      if show_warning
+        break
+      endif
+    endfor
+  endif
+%}
+
+{% if show_warning %}
+  <div class="section-background color-{{ section.settings.color_scheme }}"></div>
+  <div
+    class="section section--{{ section.settings.section_width }} spacing-style color-{{ section.settings.color_scheme }}"
+    style="{% render 'spacing-padding', settings: section.settings %}"
+  >
+    <div class="safety-warning">
+      {% if section.settings.show_icon %}
+        <div class="safety-warning__icon" aria-hidden="true">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+        </div>
+      {% endif %}
+      <div class="safety-warning__content">
+        {% if section.settings.heading != blank %}
+          <p class="safety-warning__heading">{{ section.settings.heading }}</p>
+        {% endif %}
+        <div class="safety-warning__text">{{ section.settings.warning_text }}</div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% stylesheet %}
+  .safety-warning {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--gap-md, 16px);
+    padding: var(--gap-md, 16px);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius, 4px);
+  }
+
+  .safety-warning__icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    color: var(--color-foreground);
+  }
+
+  .safety-warning__icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .safety-warning__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-xs, 4px);
+  }
+
+  .safety-warning__heading {
+    margin: 0;
+    font-weight: bold;
+    font-size: var(--font-body--size, 1rem);
+  }
+
+  .safety-warning__text {
+    margin: 0;
+    font-size: var(--font-body--size, 0.875rem);
+  }
+
+  .safety-warning__text p {
+    margin: 0;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Safety warnings",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Visibility"
+    },
+    {
+      "type": "text",
+      "id": "collection_handles",
+      "label": "Collection handles",
+      "info": "Comma-separated list of collection handles (e.g., preciosa, swarowski, dmc). Only products in these collections will show the warning.",
+      "default": "Preciosa VIVA12® HF"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_for_all_products",
+      "label": "Show for all products",
+      "info": "Override the collection tag and show on every product.",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_icon",
+      "label": "Show warning icon",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "WARNING"
+    },
+    {
+      "type": "richtext",
+      "id": "warning_text",
+      "label": "Warning text",
+      "default": "<p>Small parts. Choking hazard. Not suitable for small children.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Width",
+      "options": [
+        {
+          "value": "page-width",
+          "label": "Page"
+        },
+        {
+          "value": "full-width",
+          "label": "Full"
+        }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "Safety warnings"
+    }
+  ]
+}
+{% endschema %}
