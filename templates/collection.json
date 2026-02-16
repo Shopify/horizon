@@ -102,15 +102,15 @@
       "type": "collection-color-grid",
       "settings": {
         "filter_option": "Color",
-        "heading": "Filter by color",
+        "heading": "",
         "heading_font_size": 16,
         "show_all_label": "All",
         "show_labels": true,
         "swatch_size": 28,
-        "swatch_gap": 10,
+        "swatch_gap": 12,
         "color_scheme": "scheme-1",
         "section_width": "page-width",
-        "padding-block-start": 0,
+        "padding-block-start": 16,
         "padding-block-end": 16
       }
     },
