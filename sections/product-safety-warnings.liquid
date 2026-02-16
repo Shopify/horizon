@@ -29,7 +29,7 @@
   >
     <div class="safety-warning">
       {% if section.settings.show_icon %}
-        <div class="safety-warning__icon" aria-hidden="true">
+        <div class="safety-warning__icon" style="width: {{ section.settings.icon_size }}px; height: {{ section.settings.icon_size }}px;" aria-hidden="true">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -47,9 +47,9 @@
       {% endif %}
       <div class="safety-warning__content">
         {% if section.settings.heading != blank %}
-          <p class="safety-warning__heading">{{ section.settings.heading }}</p>
+          <p class="safety-warning__heading" style="font-size: {{ section.settings.heading_font_size }}px;">{{ section.settings.heading }}</p>
         {% endif %}
-        <div class="safety-warning__text">{{ section.settings.warning_text }}</div>
+        <div class="safety-warning__text" style="font-size: {{ section.settings.text_font_size }}px;">{{ section.settings.warning_text }}</div>
       </div>
     </div>
   </div>
@@ -61,8 +61,6 @@
     align-items: flex-start;
     gap: var(--gap-md, 16px);
     padding: var(--gap-md, 16px);
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius, 4px);
   }
 
   .safety-warning__icon {
@@ -86,12 +84,10 @@
   .safety-warning__heading {
     margin: 0;
     font-weight: bold;
-    font-size: var(--font-body--size, 1rem);
   }
 
   .safety-warning__text {
     margin: 0;
-    font-size: var(--font-body--size, 0.875rem);
   }
 
   .safety-warning__text p {
@@ -149,6 +145,36 @@
     {
       "type": "header",
       "content": "Appearance"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon size",
+      "min": 16,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size",
+      "label": "Heading font size",
+      "min": 10,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "text_font_size",
+      "label": "Text font size",
+      "min": 10,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 14
     },
     {
       "type": "color_scheme",
