@@ -111,6 +111,12 @@ video-media video {
     border: 1px solid rgb(var(--color-border-rgb) / var(--opacity-25)) !important;
 }
 
+.use-height-icon img, .use-height-icon svg {
+    width: auto !important;
+    height: var(--height) !important;
+    object-fit: contain;
+}
+
 @media (max-width: 749px) {
     :is(.carousel--mobile-full-width) > .resource-list__carousel, :is(.carousel--mobile-full-width) > .custom-section-content {
         grid-column: 1 / -1;
@@ -184,5 +190,9 @@ video-media video {
 
     [style*="--mobile-ratio"] > img,  [style*="--mobile-ratio"] > video {
        aspect-ratio: var(--mobile-ratio) !important;
+    }
+
+    .use-height-icon[style*="--mobile-height"] img, .use-height-icon[style*="--mobile-height"] svg {
+        height: var(--mobile-height) !important;
     }
 }

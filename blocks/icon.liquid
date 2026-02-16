@@ -1,29 +1,36 @@
 {% assign block_settings = block.settings %}
 {% assign icon_block_class = 'icon-block__media icon-block-' | append: block.id %}
 
-{% capture icon %}
-  {% render 'icon-or-image',
-    icon: block_settings.icon,
-    image_upload: block_settings.image_upload,
-    width: block_settings.width,
-    class_name: icon_block_class,
-    attributes: block.shopify_attributes
-  %}
-{% endcapture %}
 
-{%- if block_settings.link != blank -%}
-  <a
-    href="{{ block_settings.link }}"
-    class="text-inherit"
-    {% if block_settings.open_in_new_tab %}
-      target="_blank" rel="noopener"
-    {% endif %}
-  >
+{% if block_settings.use_height != blank %}
+  <div class="use-height-icon" style="--height: {{ block_settings.height }}px;{% if block_settings.custom_mobile_height == true %}--mobile-height: {{ block_settings.mobile-height }}px;{% endif %}">
+{% endif %}
+  {% capture icon %}
+    {% render 'icon-or-image',
+      icon: block_settings.icon,
+      image_upload: block_settings.image_upload,
+      width: block_settings.width,
+      class_name: icon_block_class,
+      attributes: block.shopify_attributes
+    %}
+  {% endcapture %}
+
+  {%- if block_settings.link != blank -%}
+    <a
+      href="{{ block_settings.link }}"
+      class="text-inherit"
+      {% if block_settings.open_in_new_tab %}
+        target="_blank" rel="noopener"
+      {% endif %}
+    >
+      {{ icon }}
+    </a>
+  {%- else -%}
     {{ icon }}
-  </a>
-{%- else -%}
-  {{ icon }}
-{%- endif -%}
+  {%- endif -%}
+{% if block_settings.use_height != blank %}
+  </div>
+{% endif %}
 
 {% stylesheet %}
   .icon-block {
@@ -298,7 +305,41 @@
       "max": 200,
       "step": 2,
       "unit": "px",
-      "default": 24
+      "default": 24,
+      "visible_if": "{{ block.settings.use_height == false }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_height",
+      "label": "Use height"
+    },
+    {
+      "type": "range",
+      "id": "height",
+      "label": "Height",
+      "min": 12,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 24,
+      "visible_if": "{{ block.settings.use_height == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_mobile_height",
+      "label": "Custom mobile height",
+      "visible_if": "{{ block.settings.use_height == true }}"
+    },
+    {
+      "type": "range",
+      "id": "mobile-height",
+      "label": "Mobile height",
+      "min": 12,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 24,
+      "visible_if": "{{ block.settings.custom_mobile_height == true }}"
     },
     {
       "type": "url",
