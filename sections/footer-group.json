@@ -11,19 +11,53 @@
   "type": "footer",
   "name": "t:names.footer",
   "sections": {
-    "footer": {
-      "type": "footer",
-      "name": "t:names.footer",
+    "footer_utilities_wiLgXM": {
+      "type": "footer-utilities",
+      "blocks": {
+        "footer_policy_list_dpr4it": {
+          "type": "footer-policy-list",
+          "settings": {
+            "font_size": "0.75rem",
+            "case": "none"
+          },
+          "blocks": {}
+        },
+        "social_links_tbHcU9": {
+          "type": "social-links",
+          "settings": {
+            "facebook_url": "https://www.facebook.com/asecrystals/",
+            "instagram_url": "https://www.instagram.com/asecrystals",
+            "youtube_url": "",
+            "tiktok_url": "https://www.instagram.com/asecrystals",
+            "twitter_url": "",
+            "threads_url": "",
+            "linkedin_url": "",
+            "bluesky_url": "",
+            "snapchat_url": "",
+            "pinterest_url": "",
+            "tumblr_url": "",
+            "vimeo_url": "",
+            "custom_url": ""
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "footer_policy_list_dpr4it",
+        "social_links_tbHcU9"
+      ],
+      "name": "t:names.policies_and_links",
       "settings": {
         "section_width": "page-width",
-        "gap": 20,
-        "color_scheme": "scheme-1",
-        "padding-block-start": 36,
-        "padding-block-end": 36
+        "gap": 24,
+        "divider_thickness": 1,
+        "color_scheme": "",
+        "padding-block-start": 20,
+        "padding-block-end": 20
       }
     }
   },
   "order": [
-    "footer"
+    "footer_utilities_wiLgXM"
   ]
 }

@@ -37,8 +37,8 @@
         "section_width": "page-width",
         "color_scheme": "scheme-5",
         "divider_width": 0,
-        "padding-block-start": 15,
-        "padding-block-end": 15
+        "padding-block-start": 20,
+        "padding-block-end": 20
       }
     },
     "header_section": {
@@ -109,10 +109,25 @@
         "enable_transparent_header_collection": false,
         "collection_color_scheme": "default"
       }
+    },
+    "divider_bVTdVf": {
+      "type": "divider",
+      "name": "t:names.divider_section",
+      "settings": {
+        "color_scheme": "",
+        "section_width": "full-width",
+        "thickness": 1,
+        "corner_radius": "square",
+        "width_percent": 100,
+        "alignment_horizontal": "center",
+        "padding-block-start": 16,
+        "padding-block-end": 16
+      }
     }
   },
   "order": [
     "header_announcements_cA9VrL",
-    "header_section"
+    "header_section",
+    "divider_bVTdVf"
   ]
 }
