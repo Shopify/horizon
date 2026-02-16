@@ -159,4 +159,44 @@
       aspect-ratio: 99;
     }
   }
+  /* Hover zoom for collection images
+     - Adds a subtle scale transform to the image inside a collection card
+     - `transition` defines the animation timing and easing
+     - `will-change: transform` gives the browser a hint to optimize for animation
+     - `transform-origin: center center` makes the image scale from its center
+  */
+  .collection-card__image .image-block__image {
+    transition: transform 240ms cubic-bezier(.2,.8,.2,1);
+    will-change: transform;
+    transform-origin: center center;
+  }
+
+  /* Respect users who prefer reduced motion:
+     - Remove transitions when `prefers-reduced-motion: reduce` is set
+  */
+  @media (prefers-reduced-motion: reduce) {
+    .collection-card__image .image-block__image {
+      transition: none;
+    }
+  }
+
+  /* Apply the zoom effect only on devices that support hover and have a
+     fine pointer (usually non-touch desktop devices). This prevents the
+     scale effect from triggering on touch devices where hover isn't meaningful.
+  */
+  @media (hover: hover) and (pointer: fine) {
+    .collection-card:hover .collection-card__image .image-block__image,
+    .collection-card:focus-within .collection-card__image .image-block__image {
+      transform: scale(1.06);
+    }
+  }
+
+  /* Arrow nudge for inline links in card content
+     - Moves the generated ::after arrow slightly to the right on hover/focus
+     - A micro-interaction that signals the link is actionable
+  */
+  .collection-card__content a:hover::after,
+  .collection-card__content a:focus::after {
+    transform: translateX(4px);
+  }
 {% endstylesheet %}
