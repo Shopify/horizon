@@ -4,11 +4,12 @@
   if section.settings.show_for_all_products
     assign show_warning = true
   elsif product != blank and section.settings.collection_handles != blank
-    assign target_handles = section.settings.collection_handles | split: ',' 
+    assign target_names = section.settings.collection_handles | split: ',' 
     for collection in product.collections
-      for handle in target_handles
-        assign trimmed_handle = handle | strip
-        if collection.handle == trimmed_handle
+      assign collection_title_down = collection.title | downcase | strip
+      for name in target_names
+        assign trimmed_name = name | downcase | strip
+        if collection_title_down == trimmed_name
           assign show_warning = true
           break
         endif
@@ -112,9 +113,9 @@
     {
       "type": "text",
       "id": "collection_handles",
-      "label": "Collection handles",
-      "info": "Comma-separated list of collection handles (e.g., preciosa, swarowski, dmc). Only products in these collections will show the warning.",
-      "default": "Preciosa VIVA12® HF"
+      "label": "Collection names",
+      "info": "Comma-separated list of collection titles as they appear in your Shopify admin. Case-insensitive.",
+      "default": "Preciosa VIVA12\u00ae HF"
     },
     {
       "type": "checkbox",
