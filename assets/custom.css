@@ -14,7 +14,101 @@ slideshow-controls.carousel-controls .icon-play {
 }
 
 .section {
-  --page--width: 90rem !important;
+    --full-page-grid-central-column-width: min(75rem - var(--page-margin) * 2, calc(100% - var(--page-margin) * 2)) !important;
+}
+
+.slideshow-controls__dots button {
+    --size: .32rem !important;
+}
+
+.text-block ul {
+    margin: 0;
+    padding-left: 1.5rem;
+    list-style-position: outside;
+    list-style-type: none;
+}
+
+.text-block li {
+    position: relative;
+}
+
+.text-block li::before {
+    content: "✓";
+    position: absolute;
+    left: -1.5rem;
+    top: 0;
+    color: var(--color-primary-button-background);
+    font-weight: 600;
+}
+
+
+video-media {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: var(--video-aspect-ratio, auto);
+}
+
+video-media img {
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+video-media video {
+  /* only apply this on the video block not product media */
+  object-fit: cover;
+  height: 100%;
+  aspect-ratio: var(--size-style-aspect-ratio, auto);
+  width: 100%;
+}
+
+.menu-drawer__menu-item--mainlist {
+    --menu-top-level-font-size: var(--menu-font-xl--size) !important;
+}
+
+.menu-list__link:has(.menu-arrow-icon) {
+    gap: 0;
+    flex-direction: row;
+    align-items: center;
+}
+
+
+.menu-list__list-item {
+    position: relative;
+}
+
+.mega-menu__list, .mega-menu__grid {
+    --menu-columns-desktop: 1 !important;
+    --menu-columns-tablet: 1 !important;
+}
+
+.mega-menu {
+    grid-template-columns: 1fr !important;
+}
+
+.mega-menu__grid {
+    grid-column: -1 /1 !important;
+}
+
+.overflow-menu:after {
+    display: none !important;
+}
+
+.menu-list__submenu-inner {
+    padding-block: var(--padding-lg) !important;
+    padding-inline: var(--padding-md) !important;
+}
+
+.menu-list__submenu {
+    width: 10rem !important;
+}
+
+.mega-menu__link {
+    --menu-child-font-size: var(--menu-font-md--size) !important;
+}
+
+.menu-list__list-item > .menu-list__submenu {
+    border: 1px solid rgb(var(--color-border-rgb) / var(--opacity-25)) !important;
 }
 
 @media (max-width: 749px) {

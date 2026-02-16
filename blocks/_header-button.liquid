@@ -1,0 +1,132 @@
+{% assign block_settings = block.settings %}
+
+<a
+  {% if block_settings.link == blank %}
+    role="link"
+    aria-disabled="true"
+  {% else %}
+    href="{{ block_settings.link }}"
+  {% endif %}
+  class="
+    size-style header-button
+    {{ visibility_class }}
+    {{ block_settings.style_class }}
+    {{ block_settings.style_class }}--{{ block.id }}
+  "
+  style="{% render 'size-style', settings: block_settings %}
+  {% if block_settings.style_class == 'button' %}
+   --button-background-color: {{ block_settings.button_bg_color }};
+   --button-color: {{ block_settings.button_text_color }};
+   --color-primary-button-hover-background: rgba({{ block_settings.button_bg_color.red }} {{ block_settings.button_bg_color.green }} {{ block_settings.button_bg_color.blue }} / .5);
+  {% endif %}
+  "
+  {%- if block_settings.open_in_new_tab -%}
+    target="_blank"
+    rel="noopener noreferrer"
+  {%- endif -%}
+  {{ block.shopify_attributes }}
+>
+    {% if block_settings.use_custom_icon == true and block_settings.custom_icon != blank %}
+        <span class="button--icon">{{ block_settings.custom_icon }}</span>
+    {% endif %}
+    <span class="button--text">
+        {{ block_settings.label }}
+    </span>
+</a>
+
+{% stylesheet %}
+  .link {
+    text-decoration: none;
+    text-decoration-color: currentcolor;
+
+    &:hover {
+      color: var(--color-primary-hover);
+      text-decoration-color: transparent;
+    }
+  }
+
+
+  .header-button.button {
+    padding-inline: var(--padding-3xl);
+  }
+
+  .header-button:has(.button--icon) {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-xs);
+    line-height: 1em;
+  }
+
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Header button",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "t:settings.label",
+      "default": "t:text_defaults.button_label"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "t:settings.link"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_custom_icon",
+      "label": "Use custom icon",
+      "default": false
+    },
+    {
+      "type": "liquid",
+      "id": "custom_icon",
+      "label": "Custom Icon",
+      "visible_if": "{{ block.settings.use_custom_icon == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_in_new_tab",
+      "label": "t:settings.open_new_tab",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "style_class",
+      "label": "t:settings.style",
+      "options": [
+        {
+          "value": "button",
+          "label": "t:options.primary"
+        },
+        {
+          "value": "button-secondary",
+          "label": "t:options.secondary"
+        },
+        {
+          "value": "link",
+          "label": "t:options.link"
+        }
+      ],
+      "default": "button"
+    },
+    {
+        "type": "color",
+        "id": "button_bg_color",
+        "label": "Button background color",
+        "default": "#F7F5F4",
+        "visible_if": "{{ block.settings.style_class == 'button' }}"
+    },
+    {
+        "type": "color",
+        "id": "button_text_color",
+        "label": "Button text color",
+        "default": "#1F1919",
+        "visible_if": "{{ block.settings.style_class == 'button' }}"
+    }
+  ]
+}
+{% endschema %}

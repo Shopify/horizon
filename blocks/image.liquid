@@ -71,6 +71,9 @@
     href="{{ block_settings.link }}"
     class="{{ class }}"
     style="{{ style }}"
+    {% if block_settings.open_in_new_tab %}
+      target="_blank" rel="noopener"
+    {% endif %}
     {{ block.shopify_attributes }}
   >
     {{ image }}
@@ -124,6 +127,12 @@
       "type": "url",
       "id": "link",
       "label": "t:settings.link"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_in_new_tab",
+      "label": "t:settings.open_new_tab",
+      "default": false
     },
     {
       "type": "header",

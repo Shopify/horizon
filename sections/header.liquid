@@ -1,8 +1,16 @@
 {% liquid
   assign order = 'logo,menu,localization,search,drawer_search,actions'
 
+  capture header_button
+    content_for 'block', type: '_header-button', id: 'header-button', visibility_class: 'mobile:hidden'
+  endcapture
+
   if shop.customer_accounts_enabled
     assign order = 'drawer_search,logo,menu,localization,search,actions'
+
+    if header_button != blank
+      assign order = 'drawer_search,logo,menu,header_button,localization,search,actions'
+    endif
   endif
 
   assign rows = 'top,bottom' | split: ','
@@ -77,22 +85,45 @@
     if section.settings.search_position == 'left'
       if shop.customer_accounts_enabled
         assign order = 'drawer_search,logo,search,localization,menu,actions'
+
+        if header_button != blank
+          assign order = 'drawer_search,logo,search,header_button,localization,menu,actions'
+        endif
       else
         assign order = 'logo,search,localization,menu,drawer_search,actions'
+
+        if header_button != blank
+          assign order = 'logo,search,header_button,localization,menu,drawer_search,actions'
+        endif
       endif
     else
       if shop.customer_accounts_enabled
         assign order = 'drawer_search,logo,localization,menu,search,actions'
+
+        if header_button != blank
+          assign order = 'drawer_search,logo,header_button,localization,menu,search,actions'
+        endif
       else
         assign order = 'logo,localization,menu,search,drawer_search,actions'
+
+        if header_button != blank
+          assign order = 'logo,header_button,localization,menu,search,drawer_search,actions'
+        endif
       endif
     endif
   else
+ 
     if section.settings.search_position == 'left'
       if shop.customer_accounts_enabled
         assign order = 'drawer_search,logo,search,menu,localization,actions'
+        if header_button != blank
+          assign order = 'drawer_search,logo,search,menu,header_button,localization,actions'
+        endif
       else
         assign order = 'logo,search,menu,localization,drawer_search,actions'
+        if header_button != blank
+          assign order = 'logo,search,menu,header_button,localization,drawer_search,actions'
+        endif
       endif
     endif
   endif
@@ -370,6 +401,7 @@
         first: first,
         logo: logo,
         menu: menu,
+        header_button: header_button,
         actions: actions,
         localization: localization_markup,
         search: search,

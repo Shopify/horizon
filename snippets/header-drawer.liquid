@@ -6,6 +6,7 @@
   @param {string} [data_header_drawer_type] - The type of header drawer to render
   @param {object} [block] - The block that can be used to provide settings
   @param {object} [section] - The section that can be used to provide settings
+  @param {string} [header_button] - Header button
 
   @example
   {% render 'header-drawer', linklist: section.settings.menu, class: 'header-drawer--mobile' %}
@@ -571,6 +572,12 @@
             {%- endfor -%}
           {% endif %}
         </ul>
+
+        {% if header_button != blank %}
+          <div class="header-drawer-button menu-drawer__animated-element" style="--menu-drawer-animation-index: {{ animation_index | plus: 1}};">
+            {{ header_button }}
+          </div>
+        {% endif %}
       </nav>
       <div
         class="menu-drawer__utility-links menu-drawer__animated-element"

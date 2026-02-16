@@ -12,6 +12,7 @@
   @param {string} [localization] - Captured HTML for language/country selector
   @param {string} [search] - Captured HTML for search input
   @param {string} [drawer_search] - Captured HTML for drawer-based search
+  @param {string} [header_button] - Header button
 {% enddoc %}
 
 {%- liquid
@@ -32,6 +33,8 @@
 
     case item
       when 'actions'
+        assign item_column = 'right'
+      when 'header_button'
         assign item_column = 'right'
     endcase
 
@@ -80,6 +83,8 @@
               {{ menu }}
             {% when 'localization' %}
               {{ localization }}
+            {% when 'header_button' %}
+              {{ header_button }}
             {% when 'search' %}
               {{ search }}
             {% when 'drawer_search' %}

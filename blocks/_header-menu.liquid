@@ -3,6 +3,7 @@
 
   @param {string} [variant] - What version of the menu to render. Defaults to header menu.
   @param {string} [transparent] - Show a transparent menu
+  @param {string} [header_button] - Header button
 {%- enddoc -%}
 
 {% liquid
@@ -17,7 +18,7 @@
       data-hydration-key="header-drawer-mobile"
       {{ block.shopify_attributes }}
     >
-      {% render 'header-drawer', linklist: block_settings.menu, data_header_drawer_type: 'mobile-drawer', block: block, section: section %}
+      {% render 'header-drawer', linklist: block_settings.menu, data_header_drawer_type: 'mobile-drawer', block: block, section: section, header_button: header_button %}
     </div>
 
   {% when 'navigation_bar' %}
@@ -100,7 +101,7 @@
             {% endif %}
             ref="menuitem"
           >
-            <span class="menu-list__link-title">{{- link.title -}}</span>
+            <span class="menu-list__link-title">{{- link.title -}}</span> {%- if link.links != blank -%}<span class="menu-arrow-icon">{{ 'icon-caret.svg' | inline_asset_content }}</span>{%- endif -%}
           </a>
           {%- if link.links != blank -%}
             <div class="menu-list__submenu{{ color_scheme_classes }}" ref="submenu[]">

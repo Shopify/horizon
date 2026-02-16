@@ -212,6 +212,102 @@
       "visible_if": "{{ block.settings.type_preset == 'custom' }}"
     },
     {
+      "type": "checkbox",
+      "id": "enable_mobile_size",
+      "label": "Enable mobile custom font size",
+      "default": false,
+      "info": "optional"
+    },
+    {
+      "type": "select",
+      "id": "mobile_font_size",
+      "label": "Mobile custom font size",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.default"
+        },
+        {
+          "value": "0.625rem",
+          "label": "10px"
+        },
+        {
+          "value": "0.75rem",
+          "label": "12px"
+        },
+        {
+          "value": "0.875rem",
+          "label": "14px"
+        },
+        {
+          "value": "1rem",
+          "label": "16px"
+        },
+        {
+          "value": "1.125rem",
+          "label": "18px"
+        },
+        {
+          "value": "1.25rem",
+          "label": "20px"
+        },
+        {
+          "value": "1.5rem",
+          "label": "24px"
+        },
+        {
+          "value": "1.6rem",
+          "label": "26px"
+        },
+        {
+          "value": "1.8rem",
+          "label": "28px"
+        },
+        {
+          "value": "1.92rem",
+          "label": "30px"
+        },
+        {
+          "value": "2rem",
+          "label": "32px"
+        },
+        {
+          "value": "2.5rem",
+          "label": "40px"
+        },
+        {
+          "value": "3rem",
+          "label": "48px"
+        },
+        {
+          "value": "3.5rem",
+          "label": "56px"
+        },
+        {
+          "value": "4.5rem",
+          "label": "72px"
+        },
+        {
+          "value": "5.5rem",
+          "label": "88px"
+        },
+        {
+          "value": "7.5rem",
+          "label": "120px"
+        },
+        {
+          "value": "9.5rem",
+          "label": "152px"
+        },
+        {
+          "value": "11.5rem",
+          "label": "184px"
+        }
+      ],
+      "default": "1rem",
+      "visible_if": "{{ block.settings.enable_mobile_size == true }}"
+    },
+    {
       "type": "select",
       "id": "line_height",
       "label": "t:settings.line_height",

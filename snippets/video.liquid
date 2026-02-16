@@ -98,6 +98,10 @@
       assign controls = true
       assign enable_js_api = false
     endif
+
+    if video.host == blank and video_autoplay == true
+      assign controls = false
+    endif
   %}
 
   {% capture video_tag %}
@@ -114,12 +118,31 @@
         | external_video_tag: data-video-type: 'vimeo'
       }}
     {% else %}
-      {{ video | video_tag: image_size: '2500x', autoplay: true, loop: video_loop, muted: true, controls: controls }}
+      {{ video | video_tag: image_size: '300x', autoplay: true, loop: video_loop, muted: true, controls: controls }}
     {% endif %}
   {% endcapture %}
 {% endif %}
 
-{% if video != blank %}
+{% if video != blank and video_from_url == blank and video_autoplay == true %}
+    <video-media
+        class="{{ video_class }}"
+        style="
+        --video-aspect-ratio: {{ video.aspect_ratio }}
+        {{ video_style }}"
+        data-video-src="{{ video.sources[0].url }}"
+    >
+    {% if video_preview_image != blank %}
+      {{
+        video_preview_image
+        | image_url: width: 3840
+        | image_tag: widths: widths, sizes: sizes, loading: loading, class: 'deferred-media__poster-image'
+      }}
+    {% endif %}
+        <noscript>
+          {{ video_tag }}
+        </noscript>
+    </video-media>
+{% elsif video != blank %}
   <deferred-media
     class="{{ video_class }}"
     style="{{ video_style }}"
@@ -137,11 +160,13 @@
         on:click="/showDeferredMedia"
         style="--video-aspect-ratio: {{ video.aspect_ratio }}"
       >
+        {% unless video_autoplay == true %}
         {{
           video_preview_image
           | image_url: width: 3840
           | image_tag: widths: widths, sizes: sizes, loading: loading, class: 'deferred-media__poster-image'
         }}
+        {% endunless %}
 
         <span class="deferred-media__poster-icon icon-play">
           <span class="visually-hidden">{{ 'accessibility.play_video' | t }}</span>

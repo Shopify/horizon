@@ -247,6 +247,11 @@
   type="module"
   fetchpriority="low"
 ></script>
+<script
+  src="{{ 'custom.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
 
 {% if localization.available_countries.size > 1 or localization.available_languages.size > 1 %}
   <script
