@@ -1,0 +1,396 @@
+{% liquid
+  assign color_filter = nil
+  assign filter_option = section.settings.filter_option | downcase
+
+  for filter in collection.filters
+    assign filter_label_down = filter.label | downcase
+    if filter_label_down == filter_option
+      assign color_filter = filter
+      break
+    endif
+  endfor
+
+  assign has_swatch = false
+  if color_filter != blank
+    assign swatch_index = color_filter.values | find_index: 'swatch'
+    if swatch_index != null
+      assign has_swatch = true
+    endif
+  endif
+
+  assign columns_desktop = section.settings.columns_desktop
+  assign columns_mobile = section.settings.columns_mobile
+  assign gap = section.settings.grid_gap
+  assign gap_mobile = gap | divided_by: 2
+%}
+
+{% if color_filter != blank and color_filter.values.size > 0 %}
+  <div class="section-background color-{{ section.settings.color_scheme }}"></div>
+  <div
+    class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
+    style="{% render 'spacing-padding', settings: section.settings %}"
+  >
+    <div class="ase-color-grid">
+      {% if section.settings.heading != blank %}
+        <p class="ase-color-grid__heading" style="font-size: {{ section.settings.heading_font_size }}px;">
+          {{ section.settings.heading }}
+        </p>
+      {% endif %}
+
+      <ul
+        class="ase-color-grid__list"
+        style="
+          --grid-desktop-columns: {{ columns_desktop }};
+          --grid-mobile-columns: {{ columns_mobile }};
+          --grid-gap: {{ gap }}px;
+          --grid-gap-mobile: {{ gap_mobile }}px;
+        "
+      >
+        {%- comment -%} Show All button {%- endcomment -%}
+        <li class="ase-color-grid__item">
+          <button
+            type="button"
+            class="ase-color-grid__card {% unless color_filter.active_values.size > 0 %}ase-color-grid__card--active{% endunless %}"
+            data-color-grid-clear
+            aria-label="{{ section.settings.show_all_label }}"
+          >
+            <span class="ase-color-grid__swatch ase-color-grid__show-all">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="40%" height="40%">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </span>
+            <span class="ase-color-grid__label">{{ section.settings.show_all_label }}</span>
+          </button>
+        </li>
+
+        {%- for value in color_filter.values -%}
+          {%- if value.count > 0 or value.active -%}
+            <li class="ase-color-grid__item">
+              <button
+                type="button"
+                class="ase-color-grid__card {% if value.active %}ase-color-grid__card--active{% endif %}"
+                data-color-grid-filter
+                data-param-name="{{ value.param_name }}"
+                data-param-value="{{ value.value }}"
+                aria-label="{{ value.label }}"
+                aria-pressed="{{ value.active }}"
+              >
+                <span class="ase-color-grid__swatch">
+                  {% if has_swatch %}
+                    {% render 'swatch', swatch: value.swatch, mode: 'filter' %}
+                  {% else %}
+                    <span class="ase-color-grid__color-fallback">{{ value.label | truncate: 2, '' }}</span>
+                  {% endif %}
+                </span>
+                <span class="ase-color-grid__label">{{ value.label }}</span>
+              </button>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+  </div>
+{% endif %}
+
+{% stylesheet %}
+  .ase-color-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .ase-color-grid__heading {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .ase-color-grid__list {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    column-gap: var(--grid-gap-mobile, 8px);
+    row-gap: var(--grid-gap-mobile, 8px);
+  }
+
+  /* Mobile: calc-based columns */
+  .ase-color-grid__item {
+    width: calc(100% / var(--grid-mobile-columns) - var(--grid-gap-mobile) * (var(--grid-mobile-columns) - 1) / var(--grid-mobile-columns));
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
+
+  /* Desktop: calc-based columns */
+  @media screen and (min-width: 750px) {
+    .ase-color-grid__list {
+      column-gap: var(--grid-gap, 16px);
+      row-gap: var(--grid-gap, 16px);
+    }
+
+    .ase-color-grid__item {
+      width: calc(100% / var(--grid-desktop-columns) - var(--grid-gap) * (var(--grid-desktop-columns) - 1) / var(--grid-desktop-columns));
+    }
+  }
+
+  .ase-color-grid__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px 8px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    background: var(--color-background);
+    cursor: pointer;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    text-align: center;
+  }
+
+  .ase-color-grid__card:hover {
+    border-color: var(--color-border, rgba(0, 0, 0, 0.12));
+  }
+
+  .ase-color-grid__card--active {
+    border-color: var(--color-foreground);
+    box-shadow: 0 0 0 1px var(--color-foreground);
+  }
+
+  .ase-color-grid__swatch {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .ase-color-grid__swatch .swatch {
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 50%;
+  }
+
+  .ase-color-grid__show-all {
+    border: 2px solid var(--color-border, rgba(0, 0, 0, 0.12));
+    color: var(--color-foreground);
+  }
+
+  .ase-color-grid__label {
+    font-size: 0.8125rem;
+    color: var(--color-foreground);
+    line-height: 1.3;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .ase-color-grid__color-fallback {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-border, #ccc);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--color-foreground);
+  }
+{% endstylesheet %}
+
+<script>
+  (function() {
+    const section = document.querySelector('[data-section-id="{{ section.id }}"]') || document.getElementById('shopify-section-{{ section.id }}');
+    if (!section) return;
+
+    function getFacetsForm() {
+      return document.querySelector('facets-form-component');
+    }
+
+    function buildFilterURL(paramName, paramValue, toggle) {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('page');
+
+      if (toggle) {
+        const existing = url.searchParams.getAll(paramName);
+        if (existing.includes(paramValue)) {
+          url.searchParams.delete(paramName);
+          existing.filter(v => v !== paramValue).forEach(v => url.searchParams.append(paramName, v));
+        } else {
+          url.searchParams.append(paramName, paramValue);
+        }
+      }
+
+      return url.toString();
+    }
+
+    function clearColorFilter() {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('page');
+      const paramName = '{{ color_filter.values[0].param_name | default: "" }}';
+      if (paramName) {
+        url.searchParams.delete(paramName);
+      }
+      return url.toString();
+    }
+
+    section.querySelectorAll('[data-color-grid-filter]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const paramName = btn.getAttribute('data-param-name');
+        const paramValue = btn.getAttribute('data-param-value');
+        const newURL = buildFilterURL(paramName, paramValue, true);
+        const facetsForm = getFacetsForm();
+        if (facetsForm) {
+          facetsForm.updateFiltersByURL(newURL);
+        } else {
+          window.location.href = newURL;
+        }
+      });
+    });
+
+    section.querySelectorAll('[data-color-grid-clear]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const newURL = clearColorFilter();
+        const facetsForm = getFacetsForm();
+        if (facetsForm) {
+          facetsForm.updateFiltersByURL(newURL);
+        } else {
+          window.location.href = newURL;
+        }
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "ASE Color palette",
+  "templates": ["collection"],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Filter"
+    },
+    {
+      "type": "text",
+      "id": "filter_option",
+      "label": "Filter option name",
+      "info": "Enter the filter label exactly as it appears in your Shopify filters (e.g., Color, Colour, Material).",
+      "default": "Color"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Filter by color"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size",
+      "label": "Heading font size",
+      "min": 10,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "text",
+      "id": "show_all_label",
+      "label": "Show all label",
+      "default": "All"
+    },
+    {
+      "type": "header",
+      "content": "Grid layout"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Desktop columns",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Mobile columns",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "Grid spacing",
+      "min": 4,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Width",
+      "options": [
+        { "value": "page-width", "label": "Page" },
+        { "value": "full-width", "label": "Full" }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    }
+  ],
+  "presets": [
+    {
+      "name": "ASE Color palette"
+    }
+  ]
+}
+{% endschema %}
