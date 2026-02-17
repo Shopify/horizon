@@ -154,13 +154,12 @@
   }
 
   .ase-color-grid__card--active {
-    border-color: var(--color-foreground);
-    box-shadow: 0 0 0 1px var(--color-foreground);
+    border-color: rgba(0, 0, 0, 0.25);
   }
 
   .ase-color-grid__swatch {
-    width: 48px;
-    height: 48px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     overflow: hidden;
     display: flex;
@@ -176,7 +175,8 @@
   }
 
   .ase-color-grid__show-all {
-    border: 2px solid var(--color-border, rgba(0, 0, 0, 0.12));
+    border: none;
+    background: rgba(0, 0, 0, 0.04);
     color: var(--color-foreground);
   }
 
@@ -238,6 +238,24 @@
       return url.toString();
     }
 
+    function updateActiveStates() {
+      const url = new URL(window.location.href);
+      const paramName = '{{ color_filter.values[0].param_name | default: "" }}';
+      const activeValues = url.searchParams.getAll(paramName);
+
+      // Update color buttons
+      section.querySelectorAll('[data-color-grid-filter]').forEach(b => {
+        const val = b.getAttribute('data-param-value');
+        b.classList.toggle('ase-color-grid__card--active', activeValues.includes(val));
+        b.setAttribute('aria-pressed', activeValues.includes(val));
+      });
+
+      // Update "All" button — active when no filters selected
+      section.querySelectorAll('[data-color-grid-clear]').forEach(b => {
+        b.classList.toggle('ase-color-grid__card--active', activeValues.length === 0);
+      });
+    }
+
     section.querySelectorAll('[data-color-grid-filter]').forEach(btn => {
       btn.addEventListener('click', () => {
         const paramName = btn.getAttribute('data-param-name');
@@ -249,6 +267,9 @@
         } else {
           window.location.href = newURL;
         }
+        // Update active states immediately in the UI
+        history.replaceState(null, '', newURL);
+        updateActiveStates();
       });
     });
 
@@ -258,6 +279,8 @@
         const facetsForm = getFacetsForm();
         if (facetsForm) {
           facetsForm.updateFiltersByURL(newURL);
+          history.replaceState(null, '', newURL);
+          updateActiveStates();
         } else {
           window.location.href = newURL;
         }
