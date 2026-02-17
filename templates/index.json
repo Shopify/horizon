@@ -919,7 +919,12 @@
             "padding-block-start": 0,
             "padding-block-end": 12,
             "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "padding-inline-end": 0,
+            "custom_mobile_padding": false,
+            "mobile-padding-block-start": 0,
+            "mobile-padding-block-end": 0,
+            "mobile-padding-inline-start": 0,
+            "mobile-padding-inline-end": 0
           },
           "blocks": {
             "product_list_text_dFPcWy": {
@@ -1399,7 +1404,12 @@
             "padding-block-start": 0,
             "padding-block-end": 24,
             "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "padding-inline-end": 0,
+            "custom_mobile_padding": false,
+            "mobile-padding-block-start": 0,
+            "mobile-padding-block-end": 0,
+            "mobile-padding-inline-start": 0,
+            "mobile-padding-inline-end": 0
           },
           "blocks": {
             "product_list_text_YWFjGL": {
@@ -2302,7 +2312,12 @@
             "padding-block-start": 0,
             "padding-block-end": 36,
             "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "padding-inline-end": 0,
+            "custom_mobile_padding": false,
+            "mobile-padding-block-start": 0,
+            "mobile-padding-block-end": 0,
+            "mobile-padding-inline-start": 0,
+            "mobile-padding-inline-end": 0
           },
           "blocks": {
             "product_list_text_QH46ti": {
@@ -2345,7 +2360,9 @@
         "carousel_card_q6Q7pE",
         "carousel_card_xeYqBm"
       ],
-      "custom_css": [],
+      "custom_css": [
+        "@media (max-width: 749px) {.resource-list {--resource-list-row-gap: 24px !important; }}"
+      ],
       "name": "Grid Section",
       "settings": {
         "alignment": "left",
@@ -2463,7 +2480,7 @@
                 "border": "none",
                 "border_width": 1,
                 "border_opacity": 100,
-                "border_radius": 0,
+                "border_radius": 12,
                 "enable_mobile_radius": false,
                 "mobile_border_radius": 0,
                 "placeholder": "",
@@ -2476,8 +2493,8 @@
                 "padding-inline-start": 20,
                 "padding-inline-end": 20,
                 "custom_mobile_padding": true,
-                "mobile-padding-block-start": 10,
-                "mobile-padding-block-end": 10,
+                "mobile-padding-block-start": 24,
+                "mobile-padding-block-end": 24,
                 "mobile-padding-inline-start": 10,
                 "mobile-padding-inline-end": 10,
                 "css_class": ""
@@ -2683,7 +2700,7 @@
                 "border": "none",
                 "border_width": 1,
                 "border_opacity": 100,
-                "border_radius": 0,
+                "border_radius": 12,
                 "enable_mobile_radius": false,
                 "mobile_border_radius": 0,
                 "placeholder": "",
@@ -2696,8 +2713,8 @@
                 "padding-inline-start": 20,
                 "padding-inline-end": 20,
                 "custom_mobile_padding": true,
-                "mobile-padding-block-start": 10,
-                "mobile-padding-block-end": 10,
+                "mobile-padding-block-start": 24,
+                "mobile-padding-block-end": 24,
                 "mobile-padding-inline-start": 10,
                 "mobile-padding-inline-end": 10,
                 "css_class": ""
@@ -2860,7 +2877,12 @@
             "padding-block-start": 0,
             "padding-block-end": 36,
             "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "padding-inline-end": 0,
+            "custom_mobile_padding": false,
+            "mobile-padding-block-start": 0,
+            "mobile-padding-block-end": 0,
+            "mobile-padding-inline-start": 0,
+            "mobile-padding-inline-end": 0
           },
           "blocks": {
             "product_list_text_NrV9yj": {
@@ -3789,7 +3811,12 @@
             "padding-block-start": 0,
             "padding-block-end": 36,
             "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "padding-inline-end": 0,
+            "custom_mobile_padding": false,
+            "mobile-padding-block-start": 0,
+            "mobile-padding-block-end": 0,
+            "mobile-padding-inline-start": 0,
+            "mobile-padding-inline-end": 0
           },
           "blocks": {
             "product_list_text_Czbxd6": {
@@ -5140,7 +5167,12 @@
             "padding-block-start": 0,
             "padding-block-end": 36,
             "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "padding-inline-end": 0,
+            "custom_mobile_padding": false,
+            "mobile-padding-block-start": 0,
+            "mobile-padding-block-end": 0,
+            "mobile-padding-inline-start": 0,
+            "mobile-padding-inline-end": 0
           },
           "blocks": {
             "product_list_text_eEgqp3": {
@@ -7973,7 +8005,12 @@
             "padding-block-start": 0,
             "padding-block-end": 36,
             "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "padding-inline-end": 0,
+            "custom_mobile_padding": true,
+            "mobile-padding-block-start": 0,
+            "mobile-padding-block-end": 36,
+            "mobile-padding-inline-start": 24,
+            "mobile-padding-inline-end": 24
           },
           "blocks": {
             "product_list_text_YjcnBC": {
