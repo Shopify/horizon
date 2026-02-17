@@ -39,9 +39,10 @@
     "type_size_h4": "20",
     "type_line_height_h4": "display-tight",
     "type_letter_spacing_h4": "heading-loose",
-    "type_font_h5": "subheading",
-    "type_size_h5": "14",
-    "type_line_height_h5": "display-loose",
+    "type_font_h5": "heading",
+    "type_size_h5": "18",
+    "type_line_height_h5": "display-tight",
+    "type_letter_spacing_h5": "heading-loose",
     "type_font_h6": "subheading",
     "type_size_h6": "12",
     "type_line_height_h6": "display-loose",
@@ -73,6 +74,9 @@
     "currency_code_enabled_product_pages": false,
     "currency_code_enabled_product_cards": false,
     "currency_code_enabled_cart_items": false,
+    "quick_add": false,
+    "show_second_image_on_hover": false,
+    "product_card_carousel": false,
     "product_corner_radius": 0,
     "card_corner_radius": 4,
     "show_variant_image": false,
@@ -84,6 +88,25 @@
     "variant_button_width": "equal-width-buttons",
     "button_font_weight_secondary": "default",
     "content_for_index": [],
+    "blocks": {
+      "855628211100114053": {
+        "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/klaviyo-onsite-embed/2632fe16-c075-4321-a88b-50b567f42507",
+        "disabled": false,
+        "settings": {}
+      },
+      "12102000267677336833": {
+        "type": "shopify://apps/kopa-ai/blocks/preorders-embed/620872b9-a462-4846-ac89-03680b41edb8",
+        "disabled": true,
+        "settings": {}
+      },
+      "3667842014806057753": {
+        "type": "shopify://apps/one-click-upsell/blocks/app-embed/bfe6e378-b73a-4871-b8d3-7d6ede22678e",
+        "disabled": false,
+        "settings": {
+          "allowed_templates": ""
+        }
+      }
+    },
     "color_schemes": {
       "scheme-1": {
         "settings": {
@@ -482,7 +505,7 @@
           "foreground": "#ffffff",
           "primary": "#ffffff",
           "primary_hover": "#ffffff",
-          "border": "#ffffff74",
+          "border": "#ffffff73",
           "shadow": "#ffffff",
           "primary_button_background": "{{ shop.brand.colors.primary[0].background }}",
           "primary_button_text": "#ffffff",

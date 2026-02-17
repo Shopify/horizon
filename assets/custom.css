@@ -126,6 +126,39 @@ video-media video {
     min-height: calc(2 * var(--padding-xl) + var(--icon-size-xs)) !important;
 }
 
+.facets__filters-wrapper:has(.pills-filter) {
+    max-width: 100% !important;
+    width: 100%;
+}
+
+.pills-filter .facets__inputs-list {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    width: 100% !important;
+}
+
+.facets:has(.pills-filter) {
+    --facets-panel-height: auto !important;
+    --facets-grid-panel-width: 100% !important;
+}
+
+.facets:has(.pills-filter) .facets-horizontal-remove {
+    display: none !important;
+}
+
+.facets--drawer:has(.pills-filter) .facets-remove {
+    display: none;
+}
+
+.facets--drawer .pills-filter {
+    padding-inline: var(--padding-sm) !important;
+    display: block;
+}
+
+.facets__see-results {
+    padding-block: var(--padding-sm) !important;
+}
+
 @media (max-width: 749px) {
     :is(.carousel--mobile-full-width) > .resource-list__carousel, :is(.carousel--mobile-full-width) > .custom-section-content {
         grid-column: 1 / -1;

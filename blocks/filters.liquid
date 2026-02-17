@@ -194,14 +194,19 @@
                         else
                           assign should_render_clear = false
                         endif
-                        render 'list-filter', filter: filter, filter_style: block_settings.filter_style, active_value_count: active_value_count, should_render_clear: should_render_clear, show_swatch_label: block_settings.show_swatch_label, sectionId: section.id
+
+                        if block_settings.set_as_pills == true
+                          render 'pill-filter', filter: filter, filter_style: block_settings.filter_style, active_value_count: active_value_count, should_render_clear: false, show_swatch_label: block_settings.show_swatch_label, sectionId: section.id
+                        else
+                          render 'list-filter', filter: filter, filter_style: block_settings.filter_style, active_value_count: active_value_count, should_render_clear: should_render_clear, show_swatch_label: block_settings.show_swatch_label, sectionId: section.id
+                        endif
                       %}
                   {% endcase %}
                 {%- endfor -%}
               {% endcapture %}
 
               <div class="facets__filters-wrapper">
-                {% if block_settings.filter_style == 'horizontal' %}
+                {% if block_settings.filter_style == 'horizontal' and block_settings.set_as_pills == false %}
                   {% liquid
                     assign more_attributes = 'on:click="#filters-drawer/showDialog"'
                     if block_settings.text_label_case == 'uppercase'
@@ -452,7 +457,12 @@
 
                         assign active_value_count = filter.active_values | size
                         assign total_active_values = total_active_values | plus: active_value_count
-                        render 'list-filter', filter: filter, filter_style: 'vertical', active_value_count: active_value_count, should_render_clear: false, in_drawer: true, sectionId: section.id
+
+                        if block_settings.set_as_pills == true
+                          render 'pill-filter', filter: filter, filter_style: 'vertical', active_value_count: active_value_count, should_render_clear: false, in_drawer: true, sectionId: section.id
+                        else
+                          render 'list-filter', filter: filter, filter_style: 'vertical', active_value_count: active_value_count, should_render_clear: false, in_drawer: true, sectionId: section.id
+                        endif
                       %}
                   {% endcase %}
                 {%- endfor -%}
@@ -1337,6 +1347,13 @@
       ],
       "default": "horizontal",
       "visible_if": "{{ block.settings.enable_filtering == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "set_as_pills",
+      "label": "Set option as pills",
+      "default": false,
+      "visible_if": "{{ block.settings.filter_style == 'horizontal' }}"
     },
     {
       "type": "select",
