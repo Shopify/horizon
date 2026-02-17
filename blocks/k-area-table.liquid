@@ -32,6 +32,8 @@
                         <td class="area-item">
                             {% if non_us_state_objects[i] %}
                                 <a href="{{ non_us_state_objects[i].page.url }}" class="area-item-link link">
+                                    {% if non_us_state_objects[i].country_flag %}
+                                        
                                         {{-
                                             non_us_state_objects[i].country_flag
                                             | image_url: width: 3840
@@ -43,6 +45,7 @@
                                                 class: 'area-block__image',
                                                 alt: non_us_state_objects[i].country_name
                                         -}}
+                                    {% endif %}
                                     {{ non_us_state_objects[i].country_name }}
                                 </a>
                             {% endif %}
@@ -66,9 +69,11 @@
                     <div class="details-content">
                         <div class="area-accordion__content">
                             {% for item in us_state_objects %}
-                                <a href="{{ item.page.url }}" class="area-accordion__item-link link">
-                                    {{ item.country_name }}
-                                </a>
+                                <div class="area-accordion-link-wrapper">
+                                    <a href="{{ item.page.url }}" class="area-accordion__item-link link">
+                                        {{ item.country_name }}
+                                    </a>
+                                </div>
                             {% endfor %}
                         </div>
                     </div>
@@ -87,22 +92,24 @@
                     <div class="details-content">
                         <div class="area-accordion__content">
                             {% for item in non_us_state_objects %}
-                                <a href="{{ item.page.url }}" class="area-accordion__item-link {% if block_settings.show_flag and item.country_flag %}area-accordion__item-link--with-flag{% endif %}">
-                                    {% if block_settings.show_flag and item.country_flag %}
-                                        {{-
-                                            item.country_flag
-                                            | image_url: width: 3840
-                                            | image_tag:
-                                                width: item.country_flag.width,
-                                                widths: '86',
-                                                sizes: '43px',
-                                                loading: 'lazy',
-                                                class: 'area-accordion__image',
-                                                alt: item.country_name
-                                        -}}
-                                    {% endif %}
-                                    {{ item.country_name }}
-                                </a>
+                                <div class="area-accordion-link-wrapper">
+                                    <a href="{{ item.page.url }}" class="area-accordion__item-link {% if item.country_flag %}area-accordion__item-link--with-flag{% endif %}">
+                                        {% if item.country_flag %}
+                                            {{-
+                                                item.country_flag
+                                                | image_url: width: 3840
+                                                | image_tag:
+                                                    width: item.country_flag.width,
+                                                    widths: '86',
+                                                    sizes: '43px',
+                                                    loading: 'lazy',
+                                                    class: 'area-accordion__image',
+                                                    alt: item.country_name
+                                            -}}
+                                        {% endif %}
+                                        {{ item.country_name }}
+                                    </a>
+                                </div>
                             {% endfor %}
                         </div>
                     </div>
@@ -118,7 +125,7 @@
             color: var(--color-primary-button-background);
         }
     }
-    .area-block__image {
+    .area-block__image, .area-accordion__image {
         width: 1.6rem;
         height: 1.6rem;
         display: block;
@@ -126,12 +133,16 @@
         object-fit: cover;
     }
 
-    .area-item-link:has(.area-block__image) {
-        display: flex;
+    .area-item-link:has(.area-block__image), .area-accordion__item-link--with-flag {
+        display: flex !important;
         gap: var(--gap-sm);
         align-items: center;
         max-width: 9rem;
         margin: auto;
+    }
+
+    .area-accordion__item-link--with-flag {
+        max-width: 11rem;
     }
 
     .areas-table th,
@@ -146,7 +157,9 @@
         text-align: center;
         padding: var(--padding-md);
         color: var(--color-primary-button-background);
+    }
 
+    .area-accordion-link-wrapper {
         &:not(:last-child) {
             border-bottom: 1px solid var(--color-border);
         }
@@ -211,12 +224,6 @@
         "type": "checkbox",
         "id": "states_only",
         "label": "Assign US states only",
-        "default": false   
-    },
-    {
-        "type": "checkbox",
-        "id": "show_flag",
-        "label": "Show flag",
         "default": false   
     }
   ],
