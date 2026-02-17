@@ -1,0 +1,230 @@
+{% assign block_settings = block.settings %}
+
+<div class="area-table">
+    {% assign key = block_settings.metaobject_key %}
+    {% assign objects = shop.metaobjects[key].values %}
+
+
+    {% paginate objects by 250 %}
+        {% assign us_state_objects = objects | where: 'is_us_state', true %}
+        {% assign non_us_state_objects = objects | where: 'is_us_state', false %}
+
+        <table class="areas-table hidden--mobile">
+            <thead>
+                <tr>
+                    <th><h3>{{ 'accessibility.united_states' | t }}</h3></th>
+                    <th><h3>{{ 'accessibility.worldwide' | t }}</h3></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% assign max_rows = us_state_objects.size | at_least: non_us_state_objects.size %}
+                {% assign max_index = max_rows | minus: 1 %}
+
+                {% for i in (0..max_index) %}
+                    <tr>
+                        <td class="area-item">
+                            {% if us_state_objects[i] %}
+                                <a href="{{ us_state_objects[i].page.url }}" class="area-item-link link">
+                                    {{ us_state_objects[i].country_name }}
+                                </a>
+                            {% endif %}
+                        </td>
+                        <td class="area-item">
+                            {% if non_us_state_objects[i] %}
+                                <a href="{{ non_us_state_objects[i].page.url }}" class="area-item-link link">
+                                        {{-
+                                            non_us_state_objects[i].country_flag
+                                            | image_url: width: 3840
+                                            | image_tag:
+                                                width: non_us_state_objects[i].country_flag.width,
+                                                widths: '86',
+                                                sizes: '43px',
+                                                loading: 'lazy',
+                                                class: 'area-block__image',
+                                                alt: non_us_state_objects[i].country_name
+                                        -}}
+                                    {{ non_us_state_objects[i].country_name }}
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Mobile Accordion View -->
+        <div class="area-accordions hidden--desktop">
+            <!-- US States Accordion -->
+            <accordion-custom class="area-accordion">
+                <details class="details">
+                    <summary class="area-accordion__summary">
+                        <span class="area-accordion__label h4">{{ 'accessibility.united_states' | t }}</span>
+                        <span class="area-accordion__icon">
+                            {{ 'icon-chevron-right.svg' | inline_asset_content }}
+                        </span>
+                    </summary>
+                    <div class="details-content">
+                        <div class="area-accordion__content">
+                            {% for item in us_state_objects %}
+                                <a href="{{ item.page.url }}" class="area-accordion__item-link link">
+                                    {{ item.country_name }}
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </details>
+            </accordion-custom>
+
+            <!-- Worldwide Accordion -->
+            <accordion-custom class="area-accordion">
+                <details class="details">
+                    <summary class="area-accordion__summary">
+                        <span class="area-accordion__label h4">{{ 'accessibility.worldwide' | t }}</span>
+                        <span class="area-accordion__icon">
+                            {{ 'icon-chevron-right.svg' | inline_asset_content }}
+                        </span>
+                    </summary>
+                    <div class="details-content">
+                        <div class="area-accordion__content">
+                            {% for item in non_us_state_objects %}
+                                <a href="{{ item.page.url }}" class="area-accordion__item-link {% if block_settings.show_flag and item.country_flag %}area-accordion__item-link--with-flag{% endif %}">
+                                    {% if block_settings.show_flag and item.country_flag %}
+                                        {{-
+                                            item.country_flag
+                                            | image_url: width: 3840
+                                            | image_tag:
+                                                width: item.country_flag.width,
+                                                widths: '86',
+                                                sizes: '43px',
+                                                loading: 'lazy',
+                                                class: 'area-accordion__image',
+                                                alt: item.country_name
+                                        -}}
+                                    {% endif %}
+                                    {{ item.country_name }}
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </details>
+            </accordion-custom>
+        </div>
+    {% endpaginate %}
+</div>
+
+{% stylesheet %}
+    .area-item {
+        .link {
+            color: var(--color-primary-button-background);
+        }
+    }
+    .area-block__image {
+        width: 1.6rem;
+        height: 1.6rem;
+        display: block;
+        border-radius: 6px;
+        object-fit: cover;
+    }
+
+    .area-item-link:has(.area-block__image) {
+        display: flex;
+        gap: var(--gap-sm);
+        align-items: center;
+        max-width: 9rem;
+        margin: auto;
+    }
+
+    .areas-table th,
+    .areas-table td {
+        text-align: center;
+        border: 1px solid var(--color-border);
+        padding: var(--padding-md);
+    }
+
+    .area-accordion__item-link {
+        display: block;
+        text-align: center;
+        padding: var(--padding-md);
+        color: var(--color-primary-button-background);
+
+        &:not(:last-child) {
+            border-bottom: 1px solid var(--color-border);
+        }
+    }
+
+    .area-accordion__content {
+        padding-block-end: var(--padding-md);
+        padding-inline: var(--padding-md);
+    }
+
+    .area-table {
+        width: 100%;
+    }
+
+    table.areas-table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+    }
+
+    .area-accordion__summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--padding-lg);
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .area-accordions {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-md);
+    }
+
+    accordion-custom.area-accordion {
+        border: 1px solid var(--color-border);
+        border-radius: 20px;
+    }
+
+    .area-accordion__summary .area-accordion__icon {
+        transition: all var(--animation-speed) var(--animation-easing);
+        transform: rotate(0deg);
+    }
+
+    .details[open] .area-accordion__summary .area-accordion__icon {
+        transform: rotate(90deg);
+    }
+
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Area table",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "metaobject_key",
+      "label": "Metaobject key",
+    },
+    {
+        "type": "checkbox",
+        "id": "states_only",
+        "label": "Assign US states only",
+        "default": false   
+    },
+    {
+        "type": "checkbox",
+        "id": "show_flag",
+        "label": "Show flag",
+        "default": false   
+    }
+  ],
+  "presets": [
+    {
+      "name": "Area table",
+      "category": "t:categories.layout"
+    }
+  ]
+}
+{% endschema %}
