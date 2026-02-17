@@ -13,6 +13,10 @@
 </div>
 
 {% stylesheet %}
+  .utilities-wrapper {
+    border-top: var(--border-width) solid var(--color-border);
+  }
+
   .utilities {
     width: 100%;
     display: flex;
@@ -20,7 +24,6 @@
     align-items: center;
     gap: var(--gap);
     text-wrap: nowrap;
-    border-top: var(--border-width) solid var(--color-border);
     color: var(--color-foreground-muted);
 
     @media screen and (min-width: 750px) {
@@ -82,6 +85,33 @@
     .utilities--blocks-3 > *:nth-child(3) {
       justify-self: end;
       text-align: right;
+    }
+
+    
+    /* Text + Payment icons => Text left, Payment icons right */
+    .utilities:has(.footer-utilities__text:first-child:nth-last-child(2) + .payment-icons:last-child) {
+      grid-template-columns: 1fr 1fr;
+
+      .footer-utilities__text:nth-child(1) {
+        justify-self: start;
+      }
+
+      .payment-icons:nth-child(2) .payment-icons__list {
+        justify-self: end;
+      }
+    }
+
+    /* Payment icons + Text => Text left, Payment icons right (order reversed in DOM) */
+    .utilities:has(.payment-icons:first-child:nth-last-child(2) + .footer-utilities__text:last-child) {
+      grid-template-columns: 1fr 1fr;
+
+      .footer-utilities__text:nth-child(2) {
+        justify-self: start;
+      }
+
+      .payment-icons:nth-child(1) {
+        justify-self: end;
+      }
     }
   }
 {% endstylesheet %}
@@ -172,6 +202,9 @@
     },
     {
       "type": "social-links"
+    },
+    {
+      "type": "payment-icons"
     }
   ],
   "presets": [

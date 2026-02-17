@@ -21,7 +21,7 @@
         echo '--resource-list-column-gap-desktop: ' | append: section.settings.columns_gap | append: 'px;'
 
         if section.settings.peek_desktop == true
-          echo '--column-count: ' | append: 2 | append: ';'
+          echo '--column-count: ' | append: 1.5 | append: ';'
         else
           echo '--column-count: ' | append: section.settings.columns | append: ';'
         endif

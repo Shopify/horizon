@@ -117,8 +117,13 @@ video-media video {
     object-fit: contain;
 }
 
-a.button {
+.button {
     font-size: var(--font-size--lg);
+    --button-padding-block: 12px !important;
+}
+
+.menu-drawer__list-item--divider .menu-drawer__menu-item:not(.menu-drawer__menu-item--child) {
+    min-height: calc(2 * var(--padding-xl) + var(--icon-size-xs)) !important;
 }
 
 @media (max-width: 749px) {
