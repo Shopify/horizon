@@ -102,9 +102,10 @@
       "type": "ase-color-palette",
       "settings": {
         "filter_option": "Color",
-        "heading": "Filter by color",
+        "heading": "Color Grid",
         "heading_font_size": 16,
         "show_all_label": "All",
+        "default_open": true,
         "columns_desktop": 6,
         "columns_mobile": "3",
         "grid_gap": 16,
