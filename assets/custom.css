@@ -16,8 +16,8 @@ slideshow-controls.carousel-controls:has(.icon-pause) {
     justify-content: center !important;
 }
 
-slideshow-controls.carousel-controls .icon-pause,
-slideshow-controls.carousel-controls .icon-play {
+slideshow-controls .icon-pause,
+slideshow-controls .icon-play {
     display: none !important;
 }
 
