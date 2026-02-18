@@ -120,7 +120,7 @@ video-media video {
 }
 
 .menu-list__list-item > .menu-list__submenu {
-    border: 1px solid rgb(var(--color-border-rgb) / var(--opacity-25)) !important;
+    border: 1px solid rgb(var(--color-border-rgb) / 1) !important;
 }
 
 .use-height-icon img, .use-height-icon svg {
