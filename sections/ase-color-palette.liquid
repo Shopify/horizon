@@ -31,12 +31,25 @@
     style="{% render 'spacing-padding', settings: section.settings %}"
   >
     <div class="ase-color-grid">
-      {% if section.settings.heading != blank %}
-        <p class="ase-color-grid__heading" style="font-size: {{ section.settings.heading_font_size }}px;">
-          {{ section.settings.heading }}
-        </p>
-      {% endif %}
+      <button
+        type="button"
+        class="ase-color-grid__toggle"
+        data-color-grid-toggle
+        aria-expanded="{{ section.settings.default_open }}"
+      >
+        {% if section.settings.heading != blank %}
+          <span class="ase-color-grid__heading" style="font-size: {{ section.settings.heading_font_size }}px;">
+            {{ section.settings.heading }}
+          </span>
+        {% endif %}
+        <span class="ase-color-grid__chevron">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </span>
+      </button>
 
+      <div class="ase-color-grid__collapsible{% unless section.settings.default_open %} ase-color-grid__collapsible--closed{% endunless %}" data-color-grid-collapsible>
       <ul
         class="ase-color-grid__list"
         style="
@@ -89,6 +102,7 @@
           {%- endif -%}
         {%- endfor -%}
       </ul>
+      </div>
     </div>
   </div>
 {% endif %}
@@ -100,9 +114,50 @@
     gap: 16px;
   }
 
+  .ase-color-grid__toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    gap: 8px;
+  }
+
   .ase-color-grid__heading {
     margin: 0;
     font-weight: 600;
+  }
+
+  .ase-color-grid__chevron {
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+  }
+
+  .ase-color-grid__toggle[aria-expanded="false"] .ase-color-grid__chevron {
+    transform: rotate(-90deg);
+  }
+
+  .ase-color-grid__collapsible {
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: grid-template-rows 0.3s ease, opacity 0.3s ease;
+    opacity: 1;
+  }
+
+  .ase-color-grid__collapsible--closed {
+    grid-template-rows: 0fr;
+    opacity: 0;
+  }
+
+  .ase-color-grid__collapsible > ul {
+    overflow: hidden;
   }
 
   .ase-color-grid__list {
@@ -206,6 +261,27 @@
   (function() {
     const section = document.querySelector('[data-section-id="{{ section.id }}"]') || document.getElementById('shopify-section-{{ section.id }}');
     if (!section) return;
+
+    // Toggle visibility with localStorage persistence
+    const STORAGE_KEY = 'ase-color-grid-open-{{ section.id }}';
+    const toggleBtn = section.querySelector('[data-color-grid-toggle]');
+    const collapsible = section.querySelector('[data-color-grid-collapsible]');
+    if (toggleBtn && collapsible) {
+      // Restore saved state on load
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved !== null) {
+        const isOpen = saved === 'true';
+        toggleBtn.setAttribute('aria-expanded', isOpen);
+        collapsible.classList.toggle('ase-color-grid__collapsible--closed', !isOpen);
+      }
+
+      toggleBtn.addEventListener('click', () => {
+        const isOpen = toggleBtn.getAttribute('aria-expanded') === 'true';
+        toggleBtn.setAttribute('aria-expanded', !isOpen);
+        collapsible.classList.toggle('ase-color-grid__collapsible--closed', isOpen);
+        localStorage.setItem(STORAGE_KEY, !isOpen);
+      });
+    }
 
     function getFacetsForm() {
       return document.querySelector('facets-form-component');
@@ -330,6 +406,12 @@
       "id": "show_all_label",
       "label": "Show all label",
       "default": "All"
+    },
+    {
+      "type": "checkbox",
+      "id": "default_open",
+      "label": "Open by default",
+      "default": true
     },
     {
       "type": "header",
