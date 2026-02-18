@@ -19,13 +19,13 @@
       {% render 'typography-style', settings: block_settings, preset: 'custom' %}
       --width: 100%;
       --text-align: center;
-      --line-height: 1;
+      --line-height: 1.4;
     "
     {{ block.shopify_attributes }}
     aria-hidden="{% if block_index == 0 %}false{% else %}true{% endif %}"
   >
     <p class="announcement-bar__text">
-      {{ block.settings.text }}
+      {{ block.settings.text | split: '||' | join: '<br>' }}
     </p>
 
     {% if block_settings.link != blank %}
