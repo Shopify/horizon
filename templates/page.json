@@ -23,8 +23,8 @@
             "type_preset": "h2",
             "font": "var(--font-primary--family)",
             "font_size": "",
-            "enable_mobile_size": false,
-            "mobile_font_size": "1rem",
+            "enable_mobile_size": true,
+            "mobile_font_size": "1.92rem",
             "line_height": "normal",
             "letter_spacing": "normal",
             "case": "none",
@@ -56,7 +56,7 @@
         "page-content"
       ],
       "custom_css": [
-        ".page-width-content {--full-page-grid-central-column-width: min(46rem - var(--page-margin) * 2, calc(100% - var(--page-margin) * 2)) !important;}"
+        ".page-width-content {--full-page-grid-central-column-width: min( 46rem - var(--page-margin) * 2, calc(100% - var(--page-margin) * 2) ) !important;}"
       ],
       "settings": {
         "content_direction": "column",

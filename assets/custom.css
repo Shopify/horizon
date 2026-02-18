@@ -176,6 +176,21 @@ video-media video {
     --resource-card-aspect-ratio: 1 !important;
 }
 
+.header-actions__action svg {
+    width: var(--icon-size-sm) !important;
+    height: var(--icon-size-sm) !important;
+}
+
+.header-drawer-button {
+    padding-block: var(--padding-md);
+    padding-inline: var(--drawer-padding) !important;
+}
+
+.header-drawer-button .header-button {
+    display: block !important;
+    width: fit-content;
+}
+
 @media (max-width: 749px) {
     :is(.carousel--mobile-full-width) > .resource-list__carousel, :is(.carousel--mobile-full-width) > .custom-section-content {
         grid-column: 1 / -1;
