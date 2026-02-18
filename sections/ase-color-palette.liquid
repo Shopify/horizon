@@ -362,6 +362,12 @@
         }
       });
     });
+
+    // Sync active states when the built-in filter changes
+    document.addEventListener('filter:update', () => {
+      // Small delay to let the URL update from the facets component
+      requestAnimationFrame(() => updateActiveStates());
+    });
   })();
 </script>
 
