@@ -23,6 +23,8 @@
             "type_preset": "h2",
             "font": "var(--font-primary--family)",
             "font_size": "",
+            "enable_mobile_size": false,
+            "mobile_font_size": "1rem",
             "line_height": "normal",
             "letter_spacing": "normal",
             "case": "none",
@@ -34,7 +36,12 @@
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "padding-inline-end": 0,
+            "custom_mobile_padding": false,
+            "mobile-padding-block-start": 0,
+            "mobile-padding-block-end": 0,
+            "mobile-padding-inline-start": 0,
+            "mobile-padding-inline-end": 0
           },
           "blocks": {}
         },
@@ -44,15 +51,23 @@
           "blocks": {}
         }
       },
-      "block_order": ["heading", "page-content"],
+      "block_order": [
+        "heading",
+        "page-content"
+      ],
+      "custom_css": [
+        ".page-width-content {--full-page-grid-central-column-width: min(46rem - var(--page-margin) * 2, calc(100% - var(--page-margin) * 2)) !important;}"
+      ],
       "settings": {
         "content_direction": "column",
         "gap": 32,
         "color_scheme": "",
-        "padding-block-start": 40,
+        "padding-block-start": 72,
         "padding-block-end": 80
       }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }
