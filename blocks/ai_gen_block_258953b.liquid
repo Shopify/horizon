@@ -1,0 +1,536 @@
+{% doc %}
+  @prompt
+    generate a details block with icon chevron on the right, initial state: button with text and chevron down, onclick toggle, should show a panel box below with 1-10 bullet items fields and an image picker to assign icon for all items., the box popup should be on absolute position below button
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-details-block-{{ ai_gen_id }} {
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    position: relative;
+  }
+
+  .ai-details-toggle-{{ ai_gen_id }} {
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--padding-sm) var(--padding-xl);
+    background-color: {{ block.settings.button_bg_color }};
+    color: {{ block.settings.button_text_color }};
+    border: {{ block.settings.button_border_width }}px solid {{ block.settings.button_border_color }};
+    border-radius: {{ block.settings.button_border_radius }}px;
+    cursor: pointer;
+    font-size: {{ block.settings.button_font_size }}px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+
+  .ai-details-toggle-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_bg_color }};
+  }
+
+  .ai-details-toggle-text-{{ ai_gen_id }} {
+    flex-grow: 1;
+    text-align: left;
+  }
+
+  .ai-details-chevron-{{ ai_gen_id }} {
+    width: {{ block.settings.chevron_size }}px;
+    height: {{ block.settings.chevron_size }}px;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    margin-left: 12px;
+  }
+
+  .ai-details-chevron-{{ ai_gen_id }}.open {
+    transform: rotate(180deg);
+  }
+
+  .ai-details-panel-{{ ai_gen_id }} {
+    position: absolute;
+    top: calc(100% + {{ block.settings.panel_spacing }}px);
+    left: 0;
+    width: 21rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    z-index: 10;
+    display: none;
+  }
+
+  .ai-details-panel-{{ ai_gen_id }}.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    display: block;
+  }
+
+  .ai-details-panel-content-{{ ai_gen_id }} {
+    padding: {{ block.settings.panel_padding }}px;
+    background-color: {{ block.settings.panel_bg_color }};
+    border: {{ block.settings.panel_border_width }}px solid {{ block.settings.panel_border_color }};
+    border-radius: {{ block.settings.panel_border_radius }}px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .ai-details-list-{{ ai_gen_id }} {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: {{ block.settings.item_spacing }}px;
+  }
+
+  .ai-details-item-{{ ai_gen_id }} {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: {{ block.settings.item_font_size }}px;
+  }
+
+  .ai-details-icon-{{ ai_gen_id }} {
+    width: {{ block.settings.icon_size }}px;
+    height: {{ block.settings.icon_size }}px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .ai-details-icon-{{ ai_gen_id }} img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .ai-details-icon-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+  }
+
+  .ai-details-item-text-{{ ai_gen_id }} {
+    flex-grow: 1;
+  }
+
+  @media (max-width: 749px) {
+    .ai-details-panel-{{ ai_gen_id }} {
+      width: calc(100vw - 32px) !important; /* 16px margin on each side */
+      max-width: 20rem;
+      left: 50% !important;
+      transform: translateX(-50%) translateY(-10px);
+      position: fixed; /* Change to fixed positioning */
+      z-index: 1000; /* Increase z-index to ensure it appears above other content */
+    }
+    
+    .ai-details-panel-{{ ai_gen_id }}.open {
+      transform: translateX(-50%) translateY(0);
+    }
+    
+    .ai-details-toggle-{{ ai_gen_id }} {
+      width: 100%;
+      font-size: 16px;
+    }
+  }
+{% endstyle %}
+
+<details-block-{{ ai_gen_id }} class="ai-details-block-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <button
+    class="ai-details-toggle-{{ ai_gen_id }}"
+    aria-expanded="false"
+    type="button"
+  >
+    <span class="ai-details-toggle-text-{{ ai_gen_id }}">
+      {{ block.settings.button_text }}
+    </span>
+    <svg
+      class="ai-details-chevron-{{ ai_gen_id }}"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </button>
+
+  <div class="ai-details-panel-{{ ai_gen_id }}">
+    <div class="ai-details-panel-content-{{ ai_gen_id }}">
+      <ul class="ai-details-list-{{ ai_gen_id }}">
+        {% for i in (1..10) %}
+          {% liquid
+            assign item_key = 'item_' | append: i
+            assign item_text = block.settings[item_key]
+          %}
+          {% if item_text != blank %}
+            <li class="ai-details-item-{{ ai_gen_id }}">
+              <div class="ai-details-icon-{{ ai_gen_id }}">
+                {% if block.settings.item_icon %}
+                  <img
+                    src="{{ block.settings.item_icon | image_url: width: 100 }}"
+                    alt=""
+                    loading="lazy"
+                    width="100"
+                    height="100"
+                  >
+                {% else %}
+                  <div class="ai-details-icon-placeholder-{{ ai_gen_id }}"></div>
+                {% endif %}
+              </div>
+              <span class="ai-details-item-text-{{ ai_gen_id }}">{{ item_text }}</span>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</details-block-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class DetailsBlock{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.button = this.querySelector('.ai-details-toggle-{{ ai_gen_id }}');
+        this.panel = this.querySelector('.ai-details-panel-{{ ai_gen_id }}');
+        this.chevron = this.querySelector('.ai-details-chevron-{{ ai_gen_id }}');
+        this.isOpen = false;
+
+        this.button.addEventListener('click', () => this.toggle());
+        
+        document.addEventListener('click', (event) => {
+          if (!this.contains(event.target) && this.isOpen) {
+            this.close();
+          }
+        });
+        
+        // Handle resize events
+        window.addEventListener('resize', () => {
+          if (this.isOpen && window.innerWidth <= 749) {
+            const buttonRect = this.button.getBoundingClientRect();
+            this.panel.style.top = (buttonRect.bottom + {{ block.settings.panel_spacing }}) + 'px';
+          }
+        });
+      }
+
+      toggle() {
+        if (this.isOpen) {
+          this.close();
+        } else {
+          this.open();
+        }
+      }
+
+      open() {
+        this.isOpen = true;
+        this.panel.classList.add('open');
+        this.chevron.classList.add('open');
+        this.button.setAttribute('aria-expanded', 'true');
+        
+        // On mobile, position the fixed panel relative to button
+        if (window.innerWidth <= 749) {
+          const buttonRect = this.button.getBoundingClientRect();
+          this.panel.style.top = (buttonRect.bottom + {{ block.settings.panel_spacing }}) + 'px';
+        }
+      }
+
+      close() {
+        this.isOpen = false;
+        this.panel.classList.remove('open');
+        this.chevron.classList.remove('open');
+        this.button.setAttribute('aria-expanded', 'false');
+        
+        // Reset inline styles when closing
+        if (window.innerWidth <= 749) {
+          this.panel.style.top = '';
+        }
+      }
+    }
+
+    customElements.define('details-block-{{ ai_gen_id }}', DetailsBlock{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Details block",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "View details"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Background color",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg_color",
+      "label": "Hover background color",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Text color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "button_border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Border color",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "chevron_size",
+      "label": "Chevron size",
+      "min": 16,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Panel"
+    },
+    {
+      "type": "range",
+      "id": "panel_spacing",
+      "label": "Spacing from button",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "panel_padding",
+      "label": "Padding",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "panel_bg_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "panel_border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "panel_border_color",
+      "label": "Border color",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "range",
+      "id": "panel_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Items"
+    },
+    {
+      "type": "image_picker",
+      "id": "item_icon",
+      "label": "Icon for all items"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon size",
+      "min": 16,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "item_spacing",
+      "label": "Spacing between items",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "item_font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Item 1"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "item_1",
+      "label": "Text",
+      "default": "Feature or benefit one"
+    },
+    {
+      "type": "header",
+      "content": "Item 2"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "item_2",
+      "label": "Text",
+      "default": "Feature or benefit two"
+    },
+    {
+      "type": "header",
+      "content": "Item 3"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "item_3",
+      "label": "Text",
+      "default": "Feature or benefit three"
+    },
+    {
+      "type": "header",
+      "content": "Item 4"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "item_4",
+      "label": "Text"
+    },
+    {
+      "type": "header",
+      "content": "Item 5"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "item_5",
+      "label": "Text"
+    },
+    {
+      "type": "header",
+      "content": "Item 6"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "item_6",
+      "label": "Text"
+    },
+    {
+      "type": "header",
+      "content": "Item 7"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "item_7",
+      "label": "Text"
+    },
+    {
+      "type": "header",
+      "content": "Item 8"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "item_8",
+      "label": "Text"
+    },
+    {
+      "type": "header",
+      "content": "Item 9"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "item_9",
+      "label": "Text"
+    },
+    {
+      "type": "header",
+      "content": "Item 10"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "item_10",
+      "label": "Text"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Details block"
+    }
+  ]
+}
+{% endschema %}

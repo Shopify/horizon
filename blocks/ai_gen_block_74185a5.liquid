@@ -1,0 +1,270 @@
+{% doc %}
+  @prompt
+    create a block where it has height rem adjuster for dektop mobile, for the width just set to 100%, the block should look like this
+    
+    <div class="quality-item" style="--dash-color: #3f75ff; --bg-color: #3f75ff; --text-color: #ffffff;--divider-color: #ffffff;">
+                                                <div class="quality-inner">
+                                                    
+                                                        <h3>Strong work ethic</h3>
+                                                    
+                                                    <span class="divider-quality"></span>
+                                                </div>
+                                            </div>
+    
+        .quality-item {
+            background-color: var(--bg-color);
+            display: flex;
+            align-items: center;
+            min-height: var;
+        }
+    
+        .divider-quality {
+            width: 40px;
+            height: 3px;
+            display: block;
+            background-color: var(--divider-color);
+        }
+    , heading size should have size adjuster for desktop and mobile, on mobile, the layout should be like this
+    
+        .quality-item h3 {
+            position: relative;
+            padding-left: 1.5rem;
+        }
+    
+        .quality-item h3:before {
+            content: "";
+            height: 12px;
+            width: 3px;
+            background-color: var(--dash-color);
+            position: absolute;
+            left: 0;
+            top: 3px;
+            display: block;
+        }
+    
+    the divider from desktop should hide onn mobile , should have no height and box on mobile, the :before height on mobile should be 100%, the padding left of heading on mobile should be 1rem, heading line height should be 1em, heading font weight and family should be the body of my theme, the body and weight font on mobile should only be in mobile, no font declarations on desktop
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-quality-item-{{ ai_gen_id }} {
+    background-color: {{ block.settings.bg_color }};
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: {{ block.settings.desktop_height }}rem;
+  }
+
+  .ai-quality-inner-{{ ai_gen_id }} {
+    width: 100%;
+    padding: 0 28px;
+  }
+
+  .ai-quality-inner-{{ ai_gen_id }} h3 {
+    color: {{ block.settings.text_color }};
+    margin: 0 0 18px 0;
+    font-size: {{ block.settings.desktop_heading_size }}px;
+    line-height: 1.2em;
+  }
+
+  .ai-divider-quality-{{ ai_gen_id }} {
+    width: {{ block.settings.divider_width }}px;
+    height: {{ block.settings.divider_height }}px;
+    display: block;
+    background-color: {{ block.settings.divider_color }};
+  }
+
+  @media (min-width: 750px) {
+    .ai-quality-inner-{{ ai_gen_id }} {
+      max-width: 12rem;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-quality-item-{{ ai_gen_id }} {
+      min-height: auto;
+      background-color: transparent;
+    }
+
+    .ai-quality-inner-{{ ai_gen_id }} {
+      padding: 0;
+    }
+
+    .ai-quality-inner-{{ ai_gen_id }} h3 {
+      font-size: {{ block.settings.mobile_heading_size }}px;
+      position: relative;
+      padding-left: 1rem;
+      margin-bottom: 0;
+      color: {{ block.settings.mobile_text_color }};
+      line-height: 1.2em;
+      font-family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+      font-weight: {{ settings.type_body_font.weight }};
+    }
+
+    .ai-quality-inner-{{ ai_gen_id }} h3:before {
+      content: "";
+      height: 100%;
+      width: {{ block.settings.mobile_dash_width }}px;
+      background-color: {{ block.settings.dash_color }};
+      position: absolute;
+      left: 0;
+      top: 0;
+      display: block;
+    }
+
+    .ai-divider-quality-{{ ai_gen_id }} {
+      display: none;
+    }
+  }
+{% endstyle %}
+
+<div
+  class="ai-quality-item-{{ ai_gen_id }}"
+  style="--dash-color: {{ block.settings.dash_color }}; --bg-color: {{ block.settings.bg_color }}; --text-color: {{ block.settings.text_color }}; --divider-color: {{ block.settings.divider_color }};"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-quality-inner-{{ ai_gen_id }}">
+    {% if block.settings.heading != blank %}
+      <h3>{{ block.settings.heading }}</h3>
+    {% endif %}
+    <span class="ai-divider-quality-{{ ai_gen_id }}"></span>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Quality item",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Strong work ethic"
+    },
+    {
+      "type": "header",
+      "content": "Desktop height"
+    },
+    {
+      "type": "range",
+      "id": "desktop_height",
+      "label": "Height",
+      "min": 5,
+      "max": 30,
+      "step": 0.5,
+      "unit": "rem",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Heading size"
+    },
+    {
+      "type": "range",
+      "id": "desktop_heading_size",
+      "label": "Desktop size",
+      "min": 12,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "mobile_heading_size",
+      "label": "Mobile size",
+      "min": 12,
+      "max": 72,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Desktop colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#3f75ff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Mobile colors"
+    },
+    {
+      "type": "color",
+      "id": "mobile_text_color",
+      "label": "Text",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "dash_color",
+      "label": "Dash",
+      "default": "#3f75ff"
+    },
+    {
+      "type": "header",
+      "content": "Desktop divider"
+    },
+    {
+      "type": "range",
+      "id": "divider_width",
+      "label": "Width",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "divider_height",
+      "label": "Height",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Mobile dash"
+    },
+    {
+      "type": "range",
+      "id": "mobile_dash_width",
+      "label": "Width",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": 3
+    }
+  ],
+  "presets": [
+    {
+      "name": "Quality item"
+    }
+  ]
+}
+{% endschema %}
