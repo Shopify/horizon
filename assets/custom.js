@@ -189,3 +189,23 @@ class VideoMedia extends HTMLElement {
 }
   
 customElements.define('video-media', VideoMedia);
+
+
+// Hubspot Installers form
+document.querySelectorAll('.form-opener').forEach(e=> {
+    e.addEventListener('click', function(el) {
+        el.preventDefault()
+
+        var parent = e.closest('.tab__content')
+        var formWrapper = parent.querySelector('.hubspot-form-wrapper')
+        var link = e.href
+
+        formWrapper.removeAttribute('hidden')
+        
+        if ( formWrapper.querySelector('iframe') == null ) {
+            formWrapper.insertAdjacentHTML('afterbegin', `<iframe src="${link}" frameborder="0"></iframe>`)
+            formWrapper.scrollIntoView({ behavior: 'smooth', block: 'center',inline: 'center' });
+            e.style.display = 'none';
+        }
+    }) 
+})
