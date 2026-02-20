@@ -24,16 +24,15 @@
                     <tr>
                         <td class="area-item">
                             {% if us_state_objects[i] %}
-                                <a href="{{ us_state_objects[i].page.url }}" class="area-item-link link">
+                                <a href="{{ us_state_objects[i].system.url }}" class="area-item-link link">
                                     {{ us_state_objects[i].country_name }}
                                 </a>
                             {% endif %}
                         </td>
                         <td class="area-item">
                             {% if non_us_state_objects[i] %}
-                                <a href="{{ non_us_state_objects[i].page.url }}" class="area-item-link link">
+                                <a href="{{ non_us_state_objects[i].system.url }}" class="area-item-link link">
                                     {% if non_us_state_objects[i].country_flag %}
-                                        
                                         {{-
                                             non_us_state_objects[i].country_flag
                                             | image_url: width: 3840
@@ -70,7 +69,7 @@
                         <div class="area-accordion__content">
                             {% for item in us_state_objects %}
                                 <div class="area-accordion-link-wrapper">
-                                    <a href="{{ item.page.url }}" class="area-accordion__item-link link">
+                                    <a href="{{ item.system.url }}" class="area-accordion__item-link link">
                                         {{ item.country_name }}
                                     </a>
                                 </div>
@@ -93,7 +92,7 @@
                         <div class="area-accordion__content">
                             {% for item in non_us_state_objects %}
                                 <div class="area-accordion-link-wrapper">
-                                    <a href="{{ item.page.url }}" class="area-accordion__item-link {% if item.country_flag %}area-accordion__item-link--with-flag{% endif %}">
+                                    <a href="{{ item.system.url }}" class="area-accordion__item-link {% if item.country_flag %}area-accordion__item-link--with-flag{% endif %}">
                                         {% if item.country_flag %}
                                             {{-
                                                 item.country_flag
