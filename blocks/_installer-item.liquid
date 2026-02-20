@@ -166,24 +166,14 @@
     overflow: unset !important;
   }
 
+  .installer-item-block details[open] summary {
+    display: none;
+  }
+
   .installer-item-block .text-block {
     padding: 0 !important;
   }
 
-  .installer-item-block .details-content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    padding-top: var(--padding-block-start);
-    padding-bottom: var(--padding-block-end);
-    padding-left: var(--padding-inline-start);
-    padding-right: var(--padding-inline-end);
-    z-index: 2;
-    border-radius: var(--border-radius);
-    border: var(--border-width) var(--border-style) var(--border-color);
-  }
 
   .logo-installer-rich {
     margin-top: var(--gap-lg);
