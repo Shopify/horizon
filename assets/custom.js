@@ -209,3 +209,23 @@ document.querySelectorAll('.form-opener').forEach(e=> {
         }
     }) 
 })
+
+document.querySelectorAll('.form-opener, .button--quote').forEach(e => {
+    e.addEventListener('click', function(el) {
+        el.preventDefault()
+
+        var targetId = e.dataset.id
+        var formWrapper = document.getElementById(targetId)
+        var link = e.href
+
+        if (formWrapper) {
+            formWrapper.removeAttribute('hidden')
+            
+            if (formWrapper.querySelector('iframe') == null) {
+                formWrapper.insertAdjacentHTML('afterbegin', `<iframe src="${link}" frameborder="0"></iframe>`)
+                formWrapper.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' })
+                e.style.display = 'none'
+            }
+        }
+    })
+})
