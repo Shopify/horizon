@@ -26,6 +26,27 @@
 <header-actions
   {{- block.shopify_attributes -}}
 >
+  <a
+    href="https://wa.me/16047825025"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="header-actions__action header-actions__whatsapp desktop:hidden"
+    aria-label="WhatsApp"
+  >
+    <svg
+      class="header-actions__whatsapp-icon"
+      aria-hidden="true"
+      focusable="false"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
+      width="22"
+      height="22"
+      fill="currentColor"
+    >
+      {%- render 'icon', icon: 'whatsapp' -%}
+    </svg>
+  </a>
+
   {% if shop.customer_accounts_enabled %}
     <script
       src="{{ 'dialog.js' | asset_url }}"
@@ -211,9 +232,26 @@
       {{ cart_icon }}
     </a>
   {% endif %}
+
 </header-actions>
 
 {% stylesheet %}
+  .header-actions__whatsapp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #25D366;
+    text-decoration: none;
+    padding: 0;
+    min-width: var(--minimum-touch-target);
+    min-height: var(--minimum-touch-target);
+    order: -1;
+  }
+
+  .header-actions__whatsapp:hover {
+    color: #128C7E;
+  }
+
   .account-popover {
     --account-popover-min-width: 22rem;
     --account-actions-max-width: 22rem;
