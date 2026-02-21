@@ -31,7 +31,7 @@
       ],
       "name": "ASE Featured Products",
       "settings": {
-        "title": "Popular Items",
+        "title": "Samples",
         "heading_size": "h3",
         "heading_alignment": "left",
         "heading_spacing": 12,
@@ -47,32 +47,6 @@
     "collection_list_AYBmXc": {
       "type": "collection-list",
       "blocks": {
-        "text_9TfQeg": {
-          "type": "text",
-          "name": "t:names.heading",
-          "settings": {
-            "text": "<h2>Catalog</h2>",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "rte",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
         "static-collection-card": {
           "type": "_collection-card",
           "name": "t:names.collection_card",
@@ -138,9 +112,6 @@
           ]
         }
       },
-      "block_order": [
-        "text_9TfQeg"
-      ],
       "name": "t:names.collections_carousel",
       "settings": {
         "collection_list": [
