@@ -3,7 +3,7 @@
   {{ block.shopify_attributes }}
 >
   {% liquid
-    assign social_links = 'facebook_url,instagram_url,youtube_url,tiktok_url,twitter_url,threads_url,linkedin_url,bluesky_url,snapchat_url,pinterest_url,tumblr_url,vimeo_url,custom_url' | split: ','
+    assign social_links = 'facebook_url,instagram_url,youtube_url,tiktok_url,twitter_url,threads_url,linkedin_url,bluesky_url,snapchat_url,pinterest_url,tumblr_url,vimeo_url,whatsapp_url,custom_url' | split: ','
   %}
 
   {% for link_key in social_links %}
@@ -38,6 +38,8 @@
             assign platform = 'tumblr'
           when 'vimeo_url'
             assign platform = 'vimeo'
+          when 'whatsapp_url'
+            assign platform = 'whatsapp'
           when 'custom_url'
             # For custom URLs, extract domain from URL for platform identification
             assign platform = link_url | split: '//' | last | remove: 'www.' | split: '.' | first
@@ -223,6 +225,11 @@
       "type": "url",
       "id": "vimeo_url",
       "label": "t:options.vimeo"
+    },
+    {
+      "type": "url",
+      "id": "whatsapp_url",
+      "label": "t:options.whatsapp"
     },
     {
       "type": "url",

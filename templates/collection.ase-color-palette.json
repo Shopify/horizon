@@ -12,7 +12,7 @@
     "section": {
       "type": "section",
       "blocks": {
-        "text_tqQTNE": {
+        "text_title": {
           "type": "text",
           "name": "Title",
           "settings": {
@@ -38,7 +38,7 @@
           },
           "blocks": {}
         },
-        "text_twGGkJ": {
+        "text_desc": {
           "type": "text",
           "name": "Description",
           "settings": {
@@ -66,8 +66,8 @@
         }
       },
       "block_order": [
-        "text_tqQTNE",
-        "text_twGGkJ"
+        "text_title",
+        "text_desc"
       ],
       "name": "Collection heading",
       "settings": {
@@ -96,6 +96,22 @@
         "gradient_direction": "to top",
         "padding-block-start": 48,
         "padding-block-end": 48
+      }
+    },
+    "color_grid": {
+      "type": "ase-color-palette",
+      "settings": {
+        "filter_option": "Color",
+        "heading": "Filter by color",
+        "heading_font_size": 16,
+        "show_all_label": "All",
+        "columns_desktop": 6,
+        "columns_mobile": "3",
+        "grid_gap": 16,
+        "color_scheme": "scheme-1",
+        "section_width": "page-width",
+        "padding-block-start": 0,
+        "padding-block-end": 16
       }
     },
     "main": {
@@ -156,7 +172,7 @@
               },
               "blocks": {}
             },
-            "product_title_4nY4eT": {
+            "product_title": {
               "type": "product-title",
               "name": "t:names.product_title",
               "settings": {
@@ -181,7 +197,7 @@
               },
               "blocks": {}
             },
-            "price_EzJzMm": {
+            "price": {
               "type": "price",
               "settings": {
                 "show_sale_price_first": true,
@@ -220,8 +236,8 @@
           },
           "block_order": [
             "card-gallery",
-            "product_title_4nY4eT",
-            "price_EzJzMm",
+            "product_title",
+            "price",
             "swatches"
           ]
         }
@@ -246,6 +262,7 @@
   },
   "order": [
     "section",
+    "color_grid",
     "main"
   ]
 }

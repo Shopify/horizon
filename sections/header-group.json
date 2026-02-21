@@ -11,34 +11,47 @@
   "type": "header",
   "name": "t:names.header",
   "sections": {
-    "header_announcements_9jGBFp": {
+    "header_announcements_cA9VrL": {
       "type": "header-announcements",
       "blocks": {
-        "announcement_BxgCk9": {
+        "announcement_kTNgBf": {
           "type": "_announcement",
           "settings": {
-            "text": "Welcome to our store",
+            "text": "Artistic Sports Essentials and Crystals since 2014. We ship to Canada and US. || ☎ +1 604-782-5025",
             "link": "",
-            "font": "var(--font-subheading--family)",
-            "font_size": "0.75rem",
+            "font": "var(--font-body--family)",
+            "font_size": "0.875rem",
             "weight": "",
-            "letter_spacing": "normal",
+            "letter_spacing": "loose",
             "case": "none"
           },
           "blocks": {}
         }
       },
       "block_order": [
-        "announcement_BxgCk9"
+        "announcement_kTNgBf"
       ],
       "name": "t:names.announcement_bar",
       "settings": {
-        "speed": 5,
+        "speed": 2,
         "section_width": "page-width",
-        "color_scheme": "scheme-1",
-        "divider_width": 1,
-        "padding-block-start": 15,
-        "padding-block-end": 15
+        "color_scheme": "scheme-5",
+        "divider_width": 0,
+        "padding-block-start": 20,
+        "padding-block-end": 20,
+        "facebook_url": "https://www.facebook.com/asecrystals/",
+        "instagram_url": "https://www.instagram.com/asecrystals",
+        "youtube_url": "",
+        "tiktok_url": "https://www.tiktok.com/@ase.crystals",
+        "twitter_url": "",
+        "threads_url": "",
+        "linkedin_url": "",
+        "bluesky_url": "",
+        "snapchat_url": "",
+        "pinterest_url": "",
+        "tumblr_url": "",
+        "vimeo_url": "",
+        "whatsapp_url": "https://wa.me/16047825025"
       }
     },
     "header_section": {
@@ -61,7 +74,7 @@
           "static": true,
           "settings": {
             "menu": "main-menu",
-            "color_scheme": "",
+            "color_scheme": "scheme-1",
             "type_font_primary_size": "0.875rem",
             "menu_font_style": "inverse",
             "type_font_primary_link": "body",
@@ -109,10 +122,25 @@
         "enable_transparent_header_collection": false,
         "collection_color_scheme": "default"
       }
+    },
+    "divider_bVTdVf": {
+      "type": "divider",
+      "name": "t:names.divider_section",
+      "settings": {
+        "color_scheme": "",
+        "section_width": "full-width",
+        "thickness": 1,
+        "corner_radius": "square",
+        "width_percent": 100,
+        "alignment_horizontal": "center",
+        "padding-block-start": 16,
+        "padding-block-end": 16
+      }
     }
   },
   "order": [
-    "header_announcements_9jGBFp",
-    "header_section"
+    "header_announcements_cA9VrL",
+    "header_section",
+    "divider_bVTdVf"
   ]
 }
