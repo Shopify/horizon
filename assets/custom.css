@@ -209,6 +209,21 @@ video-media video {
     height: 2.4rem;
 }
 
+.menu-list__link[aria-haspopup="true"] .menu-list__link-title {
+    padding-inline-end: calc(var(--gap-xs) / 2) !important;
+}
+
+.compare-at-price {
+    opacity: .6;
+    font-size: var(--font-size--sm);
+    color: var(--color-primary);
+    font-weight: normal;
+}
+
+.product-badges__badge--rectangle {
+    --badge-rectangle-padding-block: 2px !important;
+}
+
 
 @media (min-width: 750px) {
     .slideshow-section slideshow-arrows .slideshow-control:first-of-type {
