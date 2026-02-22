@@ -43,8 +43,8 @@
     "type_size_h5": "18",
     "type_line_height_h5": "display-tight",
     "type_letter_spacing_h5": "heading-loose",
-    "type_font_h6": "subheading",
-    "type_size_h6": "12",
+    "type_font_h6": "heading",
+    "type_size_h6": "14",
     "type_line_height_h6": "display-loose",
     "page_width": "narrow",
     "page_transition_enabled": false,
@@ -107,6 +107,13 @@
         "disabled": false,
         "settings": {
           "allowed_templates": ""
+        }
+      },
+      "733389323033596483": {
+        "type": "shopify://apps/okendo/blocks/theme-settings/bb689e69-ea70-4661-8fb7-ad24a2e23c29",
+        "disabled": false,
+        "settings": {
+          "show_preview_data": true
         }
       }
     },
