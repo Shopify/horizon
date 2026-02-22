@@ -1,11 +1,7 @@
-{% doc %}
-  @prompt
-    Can you make a custom policies tab that has a title "policies", lists all the policies below with links and is centered, make it centred, and make the policies all on one line
-{% enddoc %}
-{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+{% assign block_id = block.id | replace: '_', '' | downcase %}
 
 {% style %}
-  .ai-policies-tab-{{ ai_gen_id }} {
+  .policies-tab-{{ block_id }} {
     display: block;
     width: {{ block.settings.desktop_width_percent }}%;
     max-width: 100%;
@@ -16,30 +12,25 @@
     text-align: center;
   }
 
-  .ai-policies-tab__title-{{ ai_gen_id }} {
+  .policies-tab__title-{{ block_id }} {
     margin: 0 0 {{ block.settings.title_spacing }}px;
     color: {{ block.settings.title_color }};
     font-size: {{ block.settings.title_size }}px;
     font-weight: 700;
   }
 
-  .ai-policies-tab__list-{{ ai_gen_id }} {
+  .policies-tab__list-{{ block_id }} {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
     gap: {{ block.settings.link_spacing }}px;
     justify-content: center;
     align-items: center;
   }
 
-  .ai-policies-tab__item-{{ ai_gen_id }} {
-    margin: 0;
-  }
-
-  .ai-policies-tab__link-{{ ai_gen_id }} {
+  .policies-tab__link-{{ block_id }} {
     color: {{ block.settings.link_color }};
     font-size: {{ block.settings.link_size }}px;
     text-decoration: {{ block.settings.link_underline }};
@@ -47,11 +38,11 @@
     white-space: nowrap;
   }
 
-  .ai-policies-tab__link-{{ ai_gen_id }}:hover {
+  .policies-tab__link-{{ block_id }}:hover {
     color: {{ block.settings.link_hover_color }};
   }
 
-  .ai-policies-tab__empty-{{ ai_gen_id }} {
+  .policies-tab__empty-{{ block_id }} {
     color: {{ block.settings.title_color }};
     opacity: 0.6;
     font-size: {{ block.settings.link_size }}px;
@@ -59,75 +50,56 @@
   }
 
   @media screen and (max-width: 749px) {
-    .ai-policies-tab-{{ ai_gen_id }} {
+    .policies-tab-{{ block_id }} {
       padding: {{ block.settings.padding_top | times: 0.7 }}px {{ block.settings.padding_horizontal | times: 0.7 }}px {{ block.settings.padding_bottom | times: 0.7 }}px;
     }
 
-    .ai-policies-tab__title-{{ ai_gen_id }} {
+    .policies-tab__title-{{ block_id }} {
       font-size: {{ block.settings.title_size | times: 0.8 }}px;
     }
 
-    .ai-policies-tab__link-{{ ai_gen_id }} {
+    .policies-tab__link-{{ block_id }} {
       font-size: {{ block.settings.link_size | times: 0.9 }}px;
     }
   }
 {% endstyle %}
 
-<div class="ai-policies-tab-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
-  <h2 class="ai-policies-tab__title-{{ ai_gen_id }}">{{ block.settings.title }}</h2>
-  
+<div class="policies-tab-{{ block_id }}" {{ block.shopify_attributes }}>
+  <h2 class="policies-tab__title-{{ block_id }}">{{ block.settings.title }}</h2>
+
   {% liquid
-    assign has_policies = false
-    if shop.privacy_policy or shop.refund_policy or shop.shipping_policy or shop.terms_of_service or shop.contact_information
-      assign has_policies = true
+    assign menu = block.settings.menu
+    assign has_menu = false
+    if menu != blank and menu.links.size > 0
+      assign has_menu = true
     endif
   %}
 
-  {% if has_policies %}
-    <ul class="ai-policies-tab__list-{{ ai_gen_id }}">
-      {% if shop.privacy_policy %}
-        <li class="ai-policies-tab__item-{{ ai_gen_id }}">
-          <a href="{{ shop.privacy_policy.url }}" class="ai-policies-tab__link-{{ ai_gen_id }}">
-            {{ shop.privacy_policy.title }}
+  {% if has_menu %}
+    <ul class="policies-tab__list-{{ block_id }}">
+      {% for link in menu.links %}
+        <li>
+          <a href="{{ link.url }}" class="policies-tab__link-{{ block_id }}">
+            {{ link.title }}
           </a>
         </li>
-      {% endif %}
-
-      {% if shop.refund_policy %}
-        <li class="ai-policies-tab__item-{{ ai_gen_id }}">
-          <a href="{{ shop.refund_policy.url }}" class="ai-policies-tab__link-{{ ai_gen_id }}">
-            {{ shop.refund_policy.title }}
-          </a>
-        </li>
-      {% endif %}
-
-      {% if shop.shipping_policy %}
-        <li class="ai-policies-tab__item-{{ ai_gen_id }}">
-          <a href="{{ shop.shipping_policy.url }}" class="ai-policies-tab__link-{{ ai_gen_id }}">
-            {{ shop.shipping_policy.title }}
-          </a>
-        </li>
-      {% endif %}
-
-      {% if shop.terms_of_service %}
-        <li class="ai-policies-tab__item-{{ ai_gen_id }}">
-          <a href="{{ shop.terms_of_service.url }}" class="ai-policies-tab__link-{{ ai_gen_id }}">
-            {{ shop.terms_of_service.title }}
-          </a>
-        </li>
-      {% endif %}
-
-      {% if shop.contact_information %}
-        <li class="ai-policies-tab__item-{{ ai_gen_id }}">
-          <a href="{{ shop.contact_information.url }}" class="ai-policies-tab__link-{{ ai_gen_id }}">
-            {{ shop.contact_information.title }}
-          </a>
-        </li>
-      {% endif %}
+      {% endfor %}
+    </ul>
+  {% elsif shop.policies.size > 0 %}
+    <ul class="policies-tab__list-{{ block_id }}">
+      {%- for policy in shop.policies -%}
+        {%- if policy != blank -%}
+          <li>
+            <a href="{{ policy.url }}" class="policies-tab__link-{{ block_id }}">
+              {{ policy.title }}
+            </a>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
     </ul>
   {% else %}
-    <p class="ai-policies-tab__empty-{{ ai_gen_id }}">
-      No policies have been added yet. Add them in your store settings.
+    <p class="policies-tab__empty-{{ block_id }}">
+      No policies found. Select a menu or add policies in your store settings.
     </p>
   {% endif %}
 </div>
@@ -145,6 +117,13 @@
       "id": "title",
       "label": "Title",
       "default": "Policies"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "footer",
+      "info": "Select a navigation menu for policy links. Falls back to store policies if empty."
     },
     {
       "type": "range",

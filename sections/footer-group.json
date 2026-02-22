@@ -28,8 +28,8 @@
     "17712692021bcf299f": {
       "type": "_blocks",
       "blocks": {
-        "ai_gen_block_2a866df_RKwNFK": {
-          "type": "ai_gen_block_2a866df",
+        "policies_tab_block": {
+          "type": "policies-tab",
           "settings": {
             "title": "Policies",
             "desktop_width_percent": 100,
@@ -51,7 +51,7 @@
         }
       },
       "block_order": [
-        "ai_gen_block_2a866df_RKwNFK"
+        "policies_tab_block"
       ],
       "settings": {
         "content_direction": "column",
