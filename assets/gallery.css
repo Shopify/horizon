@@ -1,0 +1,35 @@
+.gallery-section {
+  width: 100%;
+}
+
+.gallery-container {
+  display: grid;
+  width: 100%;
+}
+
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.gallery-item img {
+  transition: transform 0.3s ease;
+  width: 100%;
+  height: 100%;
+}
+
+.gallery-item a:hover img {
+  transform: scale(1.05);
+}
+
+.gallery-item a {
+  position: relative;
+  display: block;
+}
+
+.placeholder-svg {
+  background: #f0f0f0;
+  width: 100%;
+  height: 100%;
+}
