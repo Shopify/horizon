@@ -9,16 +9,16 @@
  */
 {
   "sections": {
-    "ase_featured_products_GVWy4Q": {
+    "ase_featured_products_nCX33t": {
       "type": "ase-featured-products",
       "blocks": {
-        "product_CRGggp": {
+        "product_WAtXUB": {
           "type": "product",
           "settings": {
             "product": "fabric-sample-cards"
           }
         },
-        "product_nDyXXd": {
+        "product_MP3BgU": {
           "type": "product",
           "settings": {
             "product": "rhinestones-sample-card-page-size"
@@ -26,15 +26,15 @@
         }
       },
       "block_order": [
-        "product_CRGggp",
-        "product_nDyXXd"
+        "product_WAtXUB",
+        "product_MP3BgU"
       ],
       "name": "ASE Featured Products",
       "settings": {
-        "title": "Samples",
-        "heading_size": "h3",
+        "title": "",
+        "heading_size": "h2",
         "heading_alignment": "left",
-        "heading_spacing": 12,
+        "heading_spacing": 0,
         "columns": 5,
         "gap": 16,
         "image_ratio": "adapt",
@@ -156,7 +156,7 @@
     }
   },
   "order": [
-    "ase_featured_products_GVWy4Q",
+    "ase_featured_products_nCX33t",
     "collection_list_AYBmXc"
   ]
 }
