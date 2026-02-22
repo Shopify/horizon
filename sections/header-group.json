@@ -50,6 +50,8 @@
           "settings": {
             "label": "Shop Now",
             "link": "shopify://collections/shop-now",
+            "custom_link_customer": true,
+            "customer_link": "shopify://collections/wholesale",
             "use_custom_icon": false,
             "custom_icon": "",
             "open_in_new_tab": false,

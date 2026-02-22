@@ -1,0 +1,17 @@
+{% liquid
+    assign customer_tag_shop = shop.metafields.custom.customer_discounts.value
+    assign discount_label = blank
+
+    if customer and customer_tag_shop.size > 0
+        for tag in customer.tags
+        assign found_tag = customer_tag_shop | where: 'customer_tag' , tag
+        assign applies_to = found_tag[0].applies_to.value.products | where: 'id', product.id
+
+        if applies_to.size > 0 and found_tag.size > 0
+            assign discount_label = found_tag[0].discount_label
+            break
+        endif
+        endfor
+    endif
+    echo discount_label
+%}

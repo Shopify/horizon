@@ -5,6 +5,7 @@
   @param {product} product_resource - The product to render
   @param {boolean} [show_unit_price] - Whether to show the unit price
   @param {boolean} [show_sale_price_first] - Whether to show the sale price first
+  @param {string} [badge] - Product badge
 {%- enddoc -%}
 
 {%- liquid
@@ -136,6 +137,7 @@
     -%}
     {% render 'unit-price', price: unit_price, measurement: selected_variant.unit_price_measurement %}
   {%- endif -%}
+  {{ badge }}
 </div>
 {%- if has_volume_pricing -%}
   <small

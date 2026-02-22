@@ -5,7 +5,11 @@
     role="link"
     aria-disabled="true"
   {% else %}
-    href="{{ block_settings.link }}"
+    {% if block_settings.custom_link_customer == true and block_settings.customer_link != blank %}
+      href="{{ block_settings.customer_link }}"
+    {% else %}
+      href="{{ block_settings.link }}"
+    {% endif %}
   {% endif %}
   class="
     size-style header-button
@@ -74,6 +78,18 @@
       "type": "url",
       "id": "link",
       "label": "t:settings.link"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_link_customer",
+      "label": "Custom link for wholesale",
+      "default": false
+    },
+    {
+      "type": "url",
+      "id": "customer_link",
+      "label": "t:settings.link",
+      "visible_if": "{{ block.settings.custom_link_customer == true }}"
     },
     {
       "type": "checkbox",

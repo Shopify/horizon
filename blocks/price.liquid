@@ -45,9 +45,31 @@
   "
   {{ block.shopify_attributes }}
 >
+  
+  {% if block_settings.show_badge == true %}
+    {% capture badge %}
+
+      {% capture discount_label %}
+        {% render 'customer-tag', product: product %}
+      {% endcapture %}
+
+      {% if discount_label != blank %}
+        <div
+          class="
+            product-badges__badge product-badges__badge--rectangle
+            color-{{ settings.badge_sale_color_scheme }}
+          "
+        >
+          {{ discount_label }}
+        </div>
+      {% endif %}
+    {% endcapture %}
+  {% endif %}
+
   {% render 'price',
     show_unit_price: true,
     product_resource: product_resource,
+    badge: badge,
     show_sale_price_first: block_settings.show_sale_price_first
   %}
 
@@ -111,6 +133,12 @@
       "type": "checkbox",
       "id": "show_tax_info",
       "label": "t:settings.show_tax_info",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badge",
+      "label": "Show badge",
       "default": false
     },
     {

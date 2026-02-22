@@ -9,7 +9,20 @@
         --badge-font-family: var(--font-{{ settings.badge_font_family }}--family); --badge-font-weight: var(--font-{{ settings.badge_font_family }}--weight); --badge-text-transform: {{ settings.badge_text_transform }};
       "
     >
-      {%- if product.available == false or product.compare_at_price > product.price -%}
+      {% capture discount_label %}
+        {% render 'customer-tag', product: product %}
+      {% endcapture %}
+
+      {% if discount_label != blank %}
+        <div
+          class="
+            product-badges__badge product-badges__badge--rectangle
+            color-{{ settings.badge_sale_color_scheme }}
+          "
+        >
+          {{ discount_label }}
+        </div>
+      {%- elsif product.available == false or product.compare_at_price > product.price -%}
         <div
           class="
             product-badges__badge product-badges__badge--rectangle
@@ -22,7 +35,7 @@
             {{ 'content.product_badge_sale' | t }}
           {%- endif -%}
         </div>
-      {%- endif -%}
+      {% endif %}
     </div>
     {%  if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add', product: product, section_id: section.id %}
