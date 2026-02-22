@@ -4,6 +4,8 @@
   .gallery-section {
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
+    padding-left: {{ section.settings.padding_sides }}px;
+    padding-right: {{ section.settings.padding_sides }}px;
   }
 
   .gallery-container {
@@ -38,6 +40,8 @@
     .gallery-section {
       padding-top: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px;
       padding-bottom: {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px;
+      padding-left: {{ section.settings.padding_sides | times: 0.5 | round: 0 }}px;
+      padding-right: {{ section.settings.padding_sides | times: 0.5 | round: 0 }}px;
     }
 
     .gallery-container {
@@ -227,6 +231,16 @@
       "unit": "px",
       "label": "Bottom padding",
       "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_sides",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Side padding",
+      "default": 0
     }
   ],
   "blocks": [
