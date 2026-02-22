@@ -366,6 +366,16 @@
       });
     }
 
+    {% if section.settings.collapse_on_select %}
+    function collapseGrid() {
+      if (toggleBtn && collapsible) {
+        toggleBtn.setAttribute('aria-expanded', false);
+        collapsible.classList.add('ase-color-grid__collapsible--closed');
+        localStorage.setItem(STORAGE_KEY, false);
+      }
+    }
+    {% endif %}
+
     section.querySelectorAll('[data-color-grid-filter]').forEach(btn => {
       btn.addEventListener('click', () => {
         const paramName = btn.getAttribute('data-param-name');
@@ -380,6 +390,9 @@
         // Update active states immediately in the UI
         history.replaceState(null, '', newURL);
         updateActiveStates();
+        {% if section.settings.collapse_on_select %}
+        collapseGrid();
+        {% endif %}
       });
     });
 
@@ -462,6 +475,13 @@
       "type": "checkbox",
       "id": "default_open",
       "label": "Open by default",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "collapse_on_select",
+      "label": "Collapse after selection",
+      "info": "Automatically minimizes the color grid after a swatch is selected.",
       "default": true
     },
     {
