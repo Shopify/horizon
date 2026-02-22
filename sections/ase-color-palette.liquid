@@ -110,22 +110,8 @@
                     {% endif %}
                   {% else %}
                     {%- comment -%} Color-first: show solid color, fall back to image {%- endcomment -%}
-                    {% if has_swatch and value.swatch.color %}
-                      <span
-                        class="swatch swatch--filter"
-                        style="--swatch-background: rgb({{ value.swatch.color.rgb }});"
-                      ></span>
-                    {% elsif has_swatch and value.swatch.image %}
-                      <img
-                        src="{{ value.swatch.image | image_url: width: 120 }}"
-                        alt="{{ value.label }}"
-                        width="60"
-                        height="60"
-                        loading="lazy"
-                        class="ase-color-grid__swatch-image"
-                      >
-                    {% elsif has_swatch %}
-                      {% render 'swatch', swatch: value.swatch, mode: 'filter' %}
+                    {% if has_swatch %}
+                      {% render 'swatch', swatch: value.swatch, mode: 'filter', prefer: 'color' %}
                     {% else %}
                       <span class="ase-color-grid__color-fallback">{{ value.label | truncate: 2, '' }}</span>
                     {% endif %}

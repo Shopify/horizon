@@ -157,7 +157,8 @@
               filters: filters,
               results_url: results_url,
               show_filter_label: block_settings.show_filter_label,
-              should_show_clear_all: true
+              should_show_clear_all: true,
+              prefer: block_settings.filter_swatch_display
             %}
 
             {% if block_settings.enable_filtering %}
@@ -194,7 +195,7 @@
                         else
                           assign should_render_clear = false
                         endif
-                        render 'list-filter', filter: filter, filter_style: block_settings.filter_style, active_value_count: active_value_count, should_render_clear: should_render_clear, show_swatch_label: block_settings.show_swatch_label, sectionId: section.id
+                        render 'list-filter', filter: filter, filter_style: block_settings.filter_style, active_value_count: active_value_count, should_render_clear: should_render_clear, show_swatch_label: block_settings.show_swatch_label, sectionId: section.id, prefer: block_settings.filter_swatch_display
                       %}
                   {% endcase %}
                 {%- endfor -%}
@@ -424,7 +425,8 @@
                 filters: filters,
                 results_url: results_url,
                 show_filter_label: block_settings.show_filter_label,
-                should_show_clear_all: false
+                should_show_clear_all: false,
+                prefer: block_settings.filter_swatch_display
               %}
 
               <div class="facets__filters-wrapper">
@@ -450,7 +452,7 @@
 
                         assign active_value_count = filter.active_values | size
                         assign total_active_values = total_active_values | plus: active_value_count
-                        render 'list-filter', filter: filter, filter_style: 'vertical', active_value_count: active_value_count, should_render_clear: false, in_drawer: true, sectionId: section.id
+                        render 'list-filter', filter: filter, filter_style: 'vertical', active_value_count: active_value_count, should_render_clear: false, in_drawer: true, sectionId: section.id, prefer: block_settings.filter_swatch_display
                       %}
                   {% endcase %}
                 {%- endfor -%}
@@ -1368,6 +1370,24 @@
         }
       ],
       "default": "default",
+      "visible_if": "{{ block.settings.enable_filtering == true }}"
+    },
+    {
+      "type": "select",
+      "id": "filter_swatch_display",
+      "label": "Filter swatch display",
+      "info": "Controls whether filter swatches prefer showing solid colors or images when both are available.",
+      "options": [
+        {
+          "value": "image",
+          "label": "Image first"
+        },
+        {
+          "value": "color",
+          "label": "Color first"
+        }
+      ],
+      "default": "image",
       "visible_if": "{{ block.settings.enable_filtering == true }}"
     },
     {

@@ -4,9 +4,11 @@
   @param {object} swatch - a swatch object
   @param {object} [variant_image] - an alternate image when there is no swatch value
   @param {string} [mode] - one of 'unscaled', 'filter', 'pill'
+  @param {string} [prefer] - one of 'image' (default), 'color'. When 'color', solid color is shown even if an image exists.
 
   @example
   {% render 'swatch', swatch: swatch, variant_image: variant_image, mode: 'unscaled' %}
+  {% render 'swatch', swatch: swatch, mode: 'filter', prefer: 'color' %}
 {%- enddoc -%}
 
 {% liquid
@@ -17,6 +19,11 @@
     assign swatch_image_url = variant_image | image_url: width: swatch_image_width
     assign swatch_value = 'url(' | append: swatch_image_url | append: ')'
     assign extra_classes = extra_classes | append: ' swatch--variant-image'
+  elsif prefer == 'color' and swatch.color
+    assign swatch_value = 'rgb(' | append: swatch.color.rgb | append: ')'
+  elsif prefer == 'color' and swatch.image
+    assign swatch_image_url = swatch.image | image_url: width: 80
+    assign swatch_value = 'url(' | append: swatch_image_url | append: ')'
   elsif swatch.image
     assign swatch_image_url = swatch.image | image_url: width: 80
     assign swatch_value = 'url(' | append: swatch_image_url | append: ')'

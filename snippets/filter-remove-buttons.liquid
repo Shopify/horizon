@@ -7,6 +7,7 @@
   @param {boolean} show_filter_label - Whether to show the filter label
   @param {string} results_url - The results URL
   @param {boolean} should_show_clear_all - Whether to show the clear all button
+  @param {string} [prefer] - Swatch display preference ('image' | 'color')
 {%- enddoc -%}
 
 <div class="facets-remove facets-remove--mobile-and-vertical">
@@ -65,7 +66,7 @@
           {% endif %}
         >
           {% if value.swatch %}
-            {% render 'swatch', swatch: value.swatch, mode: 'pill' %}
+            {% render 'swatch', swatch: value.swatch, mode: 'pill', prefer: prefer %}
           {% endif %}
 
           {% if filter.type == 'boolean' or show_filter_label %}

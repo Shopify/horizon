@@ -8,6 +8,7 @@
   @param {boolean} [should_render_clear] - Whether to render the clear button
   @param {boolean} [show_swatch_label] - Whether to show the swatch label
   @param {boolean} [in_drawer] - Whether the filter is in a drawer
+  @param {string} [prefer] - Swatch display preference ('image' | 'color')
 {%- enddoc -%}
 
 {% liquid
@@ -66,7 +67,7 @@
                   echo active_value_count
                 elsif active_value_count > 0 and active_value_count <= 3
                   for value in filter.active_values
-                    render 'swatch', swatch: value.swatch, mode: 'filter'
+                    render 'swatch', swatch: value.swatch, mode: 'filter', prefer: prefer
                   endfor
                 endif
               -%}
@@ -304,7 +305,7 @@
                           {% endif %}
                           ref="facetInputs[]"
                         >
-                        {% render 'swatch', swatch: value.swatch, mode: 'filter' %}
+                        {% render 'swatch', swatch: value.swatch, mode: 'filter', prefer: prefer %}
                         {% if is_disabled %}
                           <svg
                             aria-hidden="true"
