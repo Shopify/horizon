@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -33,9 +42,79 @@
           "type": "page-content",
           "settings": {},
           "blocks": {}
+        },
+        "testimonials_D38gLT": {
+          "type": "testimonials",
+          "name": "Testimonials",
+          "settings": {
+            "title": "What Our Customers Say",
+            "subtitle": "Reviews from our clients",
+            "columns": 3,
+            "card_gap": 20,
+            "card_bg_color": "#FFFFFF",
+            "card_border_color": "#E5E5E5",
+            "card_border_radius": 8,
+            "card_padding": 24,
+            "star_color": "#FFB800",
+            "star_empty_color": "#D4D4D4",
+            "title_color": "#121212",
+            "title_size": 28,
+            "title_spacing": 10,
+            "subtitle_color": "#555555",
+            "subtitle_size": 16,
+            "subtitle_spacing": 25,
+            "review_text_color": "#333333",
+            "review_font_size": 14,
+            "name_color": "#121212",
+            "name_font_size": 14,
+            "padding_top": 40,
+            "padding_bottom": 40,
+            "padding_horizontal": 20
+          },
+          "blocks": {
+            "testimonial_card_CrnNc8": {
+              "type": "_testimonial-card",
+              "settings": {
+                "review_text": "High quality service & rhinestones. Highly recommend.",
+                "reviewer_name": "Marcelle B.",
+                "rating": 5,
+                "source": "google"
+              },
+              "blocks": {}
+            },
+            "testimonial_card_jU4Pnb": {
+              "type": "_testimonial-card",
+              "settings": {
+                "review_text": "Excellent customer service, help and fast shipping! So easy to work with to get everything I need. Highly recommend.",
+                "reviewer_name": "Justin R.",
+                "rating": 5,
+                "source": "facebook"
+              },
+              "blocks": {}
+            },
+            "testimonial_card_xcKe7a": {
+              "type": "_testimonial-card",
+              "settings": {
+                "review_text": "Amazing customer service. This vendor is in the market for more than a decade. I highly recommend to shop from ASE Crystals!",
+                "reviewer_name": "Asset M.",
+                "rating": 5,
+                "source": "google"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "testimonial_card_CrnNc8",
+            "testimonial_card_jU4Pnb",
+            "testimonial_card_xcKe7a"
+          ]
         }
       },
-      "block_order": ["heading", "page-content"],
+      "block_order": [
+        "heading",
+        "page-content",
+        "testimonials_D38gLT"
+      ],
       "settings": {
         "content_direction": "column",
         "gap": 32,
@@ -45,5 +124,7 @@
       }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }
