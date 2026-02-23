@@ -247,12 +247,19 @@
                   },
                   "blocks": {}
                 },
+                "okendo_star_rating_7AjDHk": {
+                  "type": "shopify://apps/okendo/blocks/star-rating/bb689e69-ea70-4661-8fb7-ad24a2e23c29",
+                  "settings": {
+                    "product": "{{closest.product}}"
+                  }
+                },
                 "price_P3L3Mf": {
                   "type": "price",
                   "settings": {
                     "show_sale_price_first": true,
                     "show_installments": false,
                     "show_tax_info": false,
+                    "show_badge": false,
                     "type_preset": "h5",
                     "width": "100%",
                     "alignment": "left",
@@ -286,6 +293,7 @@
               },
               "block_order": [
                 "product_title_cPgbmL",
+                "okendo_star_rating_7AjDHk",
                 "price_P3L3Mf",
                 "swatches_a4J3VT"
               ]
