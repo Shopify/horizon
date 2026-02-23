@@ -90,7 +90,7 @@
     "continue_shopping": "Continue shopping",
     "enter_password": "Enter password",
     "log_in_html": "Have an account? <a href=\"{{ link }}\">Log in</a> to check out faster.",
-    "log_in": "Sign in",
+    "log_in": "Log in",
     "log_out": "Log out",
     "open_image_in_full_screen": "Open image in full screen",
     // Button to remove applied filters from search/collection results
@@ -164,6 +164,7 @@
     }
   },
   "content": {
+    "lock_content": "This content is protected. Please log in with your customer account to continue.",
     "cancel": "Cancel",
     "discount": "Discount",
     "account_title": "Account",

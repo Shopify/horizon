@@ -128,7 +128,7 @@
       {% assign unlock_page = unlock_page | strip %}
 
       {% if unlock_page == 'false' %}
-        test 
+        {% render 'lock-content' %} 
       {% else %}
         {{ content_for_layout }}
       {% endif %}

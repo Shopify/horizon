@@ -1,0 +1,20 @@
+{% style %}
+.lock-content {
+    min-height: 32svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: var(--gap-xl);
+    padding: var(--padding-md);
+}
+{% endstyle %}
+
+<div class="lock-content text-center">
+    <div class="rte">
+        <p>{{ 'content.lock_content' | t }}</p>
+    </div>
+    <a href="{{ routes.account_url }}" class="button">
+        {{ 'actions.log_in' | t }}
+    </a>
+</div>
