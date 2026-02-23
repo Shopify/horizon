@@ -1,0 +1,60 @@
+<back-to-top threshold="400" smooth>
+    <button type="button" aria-label="Back to top" class="back-to-top">
+        {{ 'icon-arrow.svg' | inline_asset_content }}
+    </button>
+</back-to-top>
+
+<script>
+// back-to-top.js
+class BackToTop extends HTMLElement {
+  constructor() {
+    super();
+    this.visible = false;
+  }
+
+  connectedCallback() {
+    // Add base class to component
+    this.classList.add('back-to-top-component');
+    this.button = this.querySelector('.back-to-top')
+
+    // Bind methods
+    this.toggleVisibility = this.toggleVisibility.bind(this);
+    this.scrollToTop = this.scrollToTop.bind(this);
+    
+    // Add event listeners
+    window.addEventListener('scroll', this.toggleVisibility);
+    this.button.addEventListener('click', this.scrollToTop);
+    
+    // Initial check
+    this.toggleVisibility();
+  }
+
+  disconnectedCallback() {
+    window.removeEventListener('scroll', this.toggleVisibility);
+    this.button.removeEventListener('click', this.scrollToTop);
+  }
+
+  toggleVisibility() {
+    const scrollY = window.scrollY || window.pageYOffset;
+    const threshold = this.getAttribute('threshold') || 300;
+    
+    if (scrollY > threshold && !this.visible) {
+      this.classList.add('active');
+      this.visible = true;
+    } else if (scrollY <= threshold && this.visible) {
+      this.classList.remove('active');
+      this.visible = false;
+    }
+  }
+
+  scrollToTop(e) {
+    e.preventDefault();
+    window.scrollTo({
+      top: 0,
+      behavior: this.hasAttribute('smooth') ? 'smooth' : 'auto'
+    });
+  }
+}
+
+customElements.define('back-to-top', BackToTop);
+</script>
