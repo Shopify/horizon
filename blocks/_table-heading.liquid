@@ -1,0 +1,103 @@
+{% assign block_settings = block.settings %}
+
+<tr {{ block.shopify_attributes }}>
+    <th>
+        {% if block_settings.text_column_1 != blank %}
+            {{ block_settings.text_column_1 }}
+        {% endif %}
+    </th>
+    <th {% if block_settings.center_text_2 == true %}
+        class="text-center"
+    {% endif %}>
+        {% if block_settings.use_image_2 == true and block_settings.image_2 != blank %}
+            {% render 'image', image: block_settings.image_2, class: 'table-heading-image' %}
+        {% else %}
+            {% if block_settings.text_column_2 != blank %}
+                {{ block_settings.text_column_2 }}
+            {% endif %}
+        {% endif %}
+    </th>
+    <th {% if block_settings.center_text_3 == true %}
+        class="text-center"
+    {% endif %}>
+        {% if block_settings.use_image_3 == true and block_settings.image_3 != blank %}
+            {% render 'image', image: block_settings.image_3, class: 'table-heading-image' %}
+        {% else %}
+            {% if block_settings.text_column_3 != blank %}
+                {{ block_settings.text_column_3 }}
+            {% endif %}
+        {% endif %}
+    </th>
+</tr>
+
+
+{% stylesheet %}
+    .table-heading-image {
+        width: 10rem;
+        margin: auto;
+    }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Table header",
+  "tag": null,
+  "settings": [
+    {
+        "type": "richtext",
+        "id": "text_column_1",
+        "label": "Text column 1"
+    },
+    {
+        "type": "richtext",
+        "id": "text_column_2",
+        "label": "Text column 2",
+        "visible_if": "{{ block.settings.use_image_2 == false }}"
+    },
+    {
+        "type": "checkbox",
+        "id": "center_text_2",
+        "label": "Center text 2",
+        "default": false,
+        "visible_if": "{{ block.settings.use_image_2 == false }}"
+    },
+    {
+        "type": "checkbox",
+        "id": "use_image_2",
+        "label": "Use image for column 2",
+        "default": true
+    },
+    {
+        "type": "image_picker",
+        "id": "image_2",
+        "label": "Image 2",
+        "visible_if": "{{ block.settings.use_image_2 == true }}"
+    },
+    {
+        "type": "richtext",
+        "id": "text_column_3",
+        "label": "Text column 3",
+        "visible_if": "{{ block.settings.use_image_3 == false }}"
+    },
+    {
+        "type": "checkbox",
+        "id": "center_text_3",
+        "label": "Center text 3",
+        "default": false,
+        "visible_if": "{{ block.settings.use_image_3 == false }}"
+    },
+    {
+        "type": "checkbox",
+        "id": "use_image_3",
+        "label": "Use image for column 3",
+        "default": true
+    },
+    {
+        "type": "image_picker",
+        "id": "image_3",
+        "label": "Image 3",
+        "visible_if": "{{ block.settings.use_image_3 == true }}"
+    }
+  ]
+}
+{% endschema %}

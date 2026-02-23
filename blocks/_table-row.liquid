@@ -1,0 +1,470 @@
+{% assign block_settings = block.settings %}
+
+<tr {{ block.shopify_attributes }}>
+    <td>
+        {% if block_settings.text_column_1 != blank %}
+            {{ block_settings.text_column_1 }}
+        {% endif %}
+    </td>
+    <td 
+        class="{% if block_settings.center_text_2 == true %}text-center{% endif %}"
+        style="
+            {% if block_settings.add_background_color_2 == true and block_settings.background_color_2 %}--bg-color: {{ block_settings.background_color_2 }};{% endif %}
+            {% if block_settings.add_text_color_2 == true and block_settings.text_color_2 %}--text-color: {{ block_settings.text_color_2 }};{% endif %}
+            {% if block_settings.add_radius_2 == true and block_settings.radius_2 == 'top-left' %}--radius-top-left: var(--gap-sm);{% endif %}
+            {% if block_settings.add_radius_2 == true and block_settings.radius_2 == 'top-right' %}--radius-top-right: var(--gap-sm);{% endif %}
+        "
+    >
+        {% if block_settings.use_product_2 == true %}
+            {% assign block_product = all_products[block_settings.product_2] %}
+            {% case block_settings.product_element_2 %}
+                {% when 'price' %}
+                    {% if block_product %}
+                        <span class="h4 text-center price-table-element">
+                            {% render 'price', product_resource: block_product %}
+                        </span>
+                    {% endif %}
+                {% when 'add_to_cart' %}
+                    {% liquid
+                    if request.visual_preview_mode and block_product == blank
+                        assign block_product = collections.all.products.first
+                    endif
+
+                    assign variant = block_product.selected_or_first_available_variant
+                    assign inventory_quantity = variant.inventory_quantity
+                    assign inventory_policy = variant.inventory_policy
+
+                    if variant.inventory_management == 'shopify'
+                        assign inventory_managed = true
+                    endif
+
+                    assign can_add_to_cart = false
+                    assign add_to_cart_text = 'products.product.unavailable' | t
+
+                    if variant
+                        if variant.quantity_rule.min > variant.inventory_quantity and inventory_managed and inventory_policy == 'deny'
+                        assign quantity_rule_soldout = true
+                        endif
+
+                        if variant.available
+                        assign can_add_to_cart = true
+                        assign add_to_cart_text = 'products.product.add_to_cart' | t
+                        elsif inventory_managed and inventory_quantity <= 0 and inventory_policy == 'deny' or quantity_rule_soldout
+                        assign can_add_to_cart = false
+                        assign add_to_cart_text = 'products.product.sold_out' | t
+                        else
+                        assign can_add_to_cart = false
+                        assign add_to_cart_text = 'products.product.unavailable' | t
+                        endif
+                    endif
+                    %}
+
+                    {%- assign product_form_id = 'BuyButtons-ProductForm-' | append: block.id -%}
+
+                    <product-form-component
+                    data-section-id="{{ block.id }}"
+                    data-product-id="{{ block_product.id }}"
+                    data-product-url="{{ block_product.url }}"
+                    on:submit="/handleSubmit"
+                    data-quantity-default="{% if block_product.selected_or_first_available_variant.quantity_rule.min %}{{ block_product.selected_or_first_available_variant.quantity_rule.min }}{% else %}1{% endif %}"
+                    data-quantity-error-max="{{ 'products.product.quantity_error_max' | t }}"
+                    >
+                    <div
+                        class="visually-hidden"
+                        aria-live="assertive"
+                        role="status"
+                        aria-atomic="true"
+                        ref="liveRegion"
+                    ></div>
+                    {%- form 'product', block_product, id: product_form_id, data-type: 'add-to-cart-form' -%}
+                        <input
+                        type="hidden"
+                        name="id"
+                        ref="variantId"
+                        value="{{ block_product.selected_or_first_available_variant.id }}"
+                        >
+                        <div
+                        class="product-form-buttons product-form-buttons--stacked"
+                        ref="productFormButtons"
+                        >
+
+                            {%- unless block_settings.gift_card_form and product.gift_card? -%}
+                                <span
+                                class="product-form-text__error hidden"
+                                ref="addToCartTextError"
+                                >
+                                <span class="svg-wrapper">
+                                    {{- 'icon-error.svg' | inline_asset_content -}}
+                                </span>
+                                </span>
+                            {%- endunless -%}
+
+                            {% content_for 'block',
+                                type: 'add-to-cart',
+                                id: 'add-to-cart',
+                                can_add_to_cart: can_add_to_cart,
+                                add_to_cart_text: add_to_cart_text
+                            %}
+                        </div>
+                    {%- endform -%}
+                    </product-form-component>
+            {% endcase %}
+        {% else %}
+            {% if block_settings.use_icon_2 == true %}
+                {% if block_settings.icon_type_2 == 'check' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-check" width="41" height="31" viewBox="0 0 41 31" fill="none">
+                        <path d="M13.75 29.4531L0.78125 16.4844C0 15.7031 0 14.375 0.78125 13.5938L3.59375 10.7812C4.375 10 5.625 10 6.40625 10.7812L15.2344 19.5312L33.9844 0.78125C34.7656 0 36.0156 0 36.7969 0.78125L39.6094 3.59375C40.3906 4.375 40.3906 5.70312 39.6094 6.48438L16.6406 29.4531C15.8594 30.2344 14.5312 30.2344 13.75 29.4531Z" fill="currentColor"/>
+                    </svg>
+                {% elsif block_settings.icon_type_2 == 'dash' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 945.23 118.15" fill="currentColor"><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path d="M945.23,88.62c0,15.75-13.78,29.53-29.54,29.53H29.54C13.78,118.15,0,104.37,0,88.62V29.54C0,13.78,13.78,0,29.54,0H915.69c15.76,0,29.54,13.78,29.54,29.54Z"/></g></g></svg>
+                {% endif %}
+            {% else %}
+                {% if block_settings.text_column_2 != blank %}
+                    {{ block_settings.text_column_2 }}
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    </td>
+    <td
+        class="{% if block_settings.center_text_3 == true %}text-center{% endif %}"
+        style="
+            {% if block_settings.add_background_color_3 == true and block_settings.background_color_3 %}--bg-color: {{ block_settings.background_color_3 }};{% endif %}
+            {% if block_settings.add_text_color_3 == true and block_settings.text_color_3 %}--text-color: {{ block_settings.text_color_3 }};{% endif %}
+            {% if block_settings.add_radius_3 == true and block_settings.radius_3 == 'top-left' %}--radius-top-left: var(--gap-sm);{% endif %}
+            {% if block_settings.add_radius_3 == true and block_settings.radius_3 == 'top-right' %}--radius-top-right: var(--gap-sm);{% endif %}
+        "
+    >
+        {% if block_settings.use_product_3 == true %}
+            {% assign block_product = all_products[block_settings.product_3] %}
+            {% case block_settings.product_element_2 %}
+                {% when 'price' %}
+                    {% if block_product %}
+                        <span class="h4 text-center price-table-element">
+                            {% render 'price', product_resource: block_product %}
+                        </span>
+                    {% endif %}
+                {% when 'add_to_cart' %}
+                    {% liquid
+                    if request.visual_preview_mode and block_product == blank
+                        assign block_product = collections.all.products.first
+                    endif
+
+                    assign variant = block_product.selected_or_first_available_variant
+                    assign inventory_quantity = variant.inventory_quantity
+                    assign inventory_policy = variant.inventory_policy
+
+                    if variant.inventory_management == 'shopify'
+                        assign inventory_managed = true
+                    endif
+
+                    assign can_add_to_cart = false
+                    assign add_to_cart_text = 'products.product.unavailable' | t
+
+                    if variant
+                        if variant.quantity_rule.min > variant.inventory_quantity and inventory_managed and inventory_policy == 'deny'
+                        assign quantity_rule_soldout = true
+                        endif
+
+                        if variant.available
+                        assign can_add_to_cart = true
+                        assign add_to_cart_text = 'products.product.add_to_cart' | t
+                        elsif inventory_managed and inventory_quantity <= 0 and inventory_policy == 'deny' or quantity_rule_soldout
+                        assign can_add_to_cart = false
+                        assign add_to_cart_text = 'products.product.sold_out' | t
+                        else
+                        assign can_add_to_cart = false
+                        assign add_to_cart_text = 'products.product.unavailable' | t
+                        endif
+                    endif
+                    %}
+
+                    {%- assign product_form_id = 'BuyButtons-ProductForm-' | append: block.id -%}
+
+                    <product-form-component
+                    data-section-id="{{ block.id }}"
+                    data-product-id="{{ block_product.id }}"
+                    data-product-url="{{ block_product.url }}"
+                    on:submit="/handleSubmit"
+                    data-quantity-default="{% if block_product.selected_or_first_available_variant.quantity_rule.min %}{{ block_product.selected_or_first_available_variant.quantity_rule.min }}{% else %}1{% endif %}"
+                    data-quantity-error-max="{{ 'products.product.quantity_error_max' | t }}"
+                    >
+                    <div
+                        class="visually-hidden"
+                        aria-live="assertive"
+                        role="status"
+                        aria-atomic="true"
+                        ref="liveRegion"
+                    ></div>
+                    {%- form 'product', block_product, id: product_form_id, data-type: 'add-to-cart-form' -%}
+                        <input
+                        type="hidden"
+                        name="id"
+                        ref="variantId"
+                        value="{{ block_product.selected_or_first_available_variant.id }}"
+                        >
+                        <div
+                        class="product-form-buttons product-form-buttons--stacked"
+                        ref="productFormButtons"
+                        >
+
+                            {%- unless block_settings.gift_card_form and product.gift_card? -%}
+                                <span
+                                class="product-form-text__error hidden"
+                                ref="addToCartTextError"
+                                >
+                                <span class="svg-wrapper">
+                                    {{- 'icon-error.svg' | inline_asset_content -}}
+                                </span>
+                                </span>
+                            {%- endunless -%}
+
+                            {% content_for 'block',
+                                type: 'add-to-cart',
+                                id: 'add-to-cart',
+                                can_add_to_cart: can_add_to_cart,
+                                add_to_cart_text: add_to_cart_text
+                            %}
+                        </div>
+                    {%- endform -%}
+                    </product-form-component>
+            {% endcase %}
+        {% else %}
+            {% if block_settings.use_icon_3 == true %}
+                {% if block_settings.icon_type_3 == 'check' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-check" width="41" height="31" viewBox="0 0 41 31" fill="none">
+                        <path d="M13.75 29.4531L0.78125 16.4844C0 15.7031 0 14.375 0.78125 13.5938L3.59375 10.7812C4.375 10 5.625 10 6.40625 10.7812L15.2344 19.5312L33.9844 0.78125C34.7656 0 36.0156 0 36.7969 0.78125L39.6094 3.59375C40.3906 4.375 40.3906 5.70312 39.6094 6.48438L16.6406 29.4531C15.8594 30.2344 14.5312 30.2344 13.75 29.4531Z" fill="currentColor"/>
+                    </svg>
+                {% elsif block_settings.icon_type_3 == 'dash' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 945.23 118.15" fill="currentColor"><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path d="M945.23,88.62c0,15.75-13.78,29.53-29.54,29.53H29.54C13.78,118.15,0,104.37,0,88.62V29.54C0,13.78,13.78,0,29.54,0H915.69c15.76,0,29.54,13.78,29.54,29.54Z"/></g></g></svg>
+                {% endif %}
+            {% else %}
+                {% if block_settings.text_column_3 != blank %}
+                    {{ block_settings.text_column_3 }}
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    </td>
+</tr>
+<!--@list/split-->
+
+{% schema %}
+{
+  "name": "Table row",
+  "tag": null,
+  "settings": [
+    {
+        "type": "richtext",
+        "id": "text_column_1",
+        "label": "Text column 1"
+    },
+    {
+        "type": "checkbox",
+        "id": "center_text_1",
+        "label": "Center text 1",
+        "default": false
+    },
+    {
+        "type": "header",
+        "content": "Column 2"
+    },
+    {
+        "type": "richtext",
+        "id": "text_column_2",
+        "label": "Text column 2",
+        "visible_if": "{{ block.settings.use_icon_2 == false and block.settings.use_product_2 == false }}"
+    },
+    {
+        "type": "checkbox",
+        "id": "center_text_2",
+        "label": "Center text 2",
+        "default": false,
+        "visible_if": "{{ block.settings.use_icon_2 == false and block.settings.use_product_2 == false }}"
+    },
+    {
+        "type": "checkbox",
+        "id": "use_icon_2",
+        "label": "Use Icon for column 2",
+        "default": true,
+        "visible_if": "{{ block.settings.use_product_2 == false }}"
+    },
+    {
+      "type": "select",
+      "id": "icon_type_2",
+      "label": "Icon type",
+      "default": "check",
+      "options": [
+        { "value": "check", "label": "Check" },
+        { "value": "dash", "label": "Dash" }
+      ],
+      "visible_if": "{{ block.settings.use_icon_2 == true and block.settings.use_product_2 == false }}"
+    },
+    {
+        "type": "checkbox",
+        "id": "use_product_2",
+        "label": "Use Product 2",
+        "default": false
+    },
+    {
+        "type": "product",
+        "id": "product_2",
+        "label": "Product 2",
+        "info": "optional"
+    },
+    {
+      "type": "select",
+      "id": "product_element_2",
+      "label": "Product element 2",
+      "default": "price",
+      "options": [
+        { "value": "price", "label": "Price" },
+        { "value": "add_to_cart", "label": "Add to cart" }
+      ],
+      "visible_if": "{{ block.settings.use_product_2 == true }}"
+    },
+    {
+        "type": "checkbox",
+        "id": "add_background_color_2",
+        "label": "Add background color 2",
+        "default": false
+    },
+    {
+        "type": "color",
+        "id": "background_color_2",
+        "label": "Background color 2",
+        "visible_if": "{{ block.settings.add_background_color_2 == true }}"
+    },
+    {
+        "type": "checkbox",
+        "id": "add_text_color_2",
+        "label": "Add text color 2",
+        "default": false
+    },
+    {
+        "type": "color",
+        "id": "text_color_2",
+        "label": "Text color 2",
+        "visible_if": "{{ block.settings.add_text_color_2 == true }}"
+    },
+    {
+        "type": "checkbox",
+        "id": "add_radius_2",
+        "label": "Add radius 2",
+        "default": false
+    },
+    {
+      "type": "select",
+      "id": "radius_2",
+      "label": "Add border radius 2",
+      "default": "top-left",
+      "options": [
+        { "value": "top-left", "label": "Top left" },
+        { "value": "top-right", "label": "Top right" }
+      ],
+      "visible_if": "{{ block.settings.add_radius_2 == true }}"
+    },
+    {
+        "type": "header",
+        "content": "Column 3"
+    },
+    {
+        "type": "richtext",
+        "id": "text_column_3",
+        "label": "Text column 3",
+        "visible_if": "{{ block.settings.use_icon_3 == false }}"
+    },
+    {
+        "type": "checkbox",
+        "id": "center_text_3",
+        "label": "Center text 3",
+        "default": false,
+        "visible_if": "{{ block.settings.use_icon_3 == false }}"
+    },
+    {
+        "type": "checkbox",
+        "id": "use_icon_3",
+        "label": "Use Icon for column 3",
+        "default": true
+    },
+    {
+      "type": "select",
+      "id": "icon_type_3",
+      "label": "Icon type",
+      "default": "check",
+      "options": [
+        { "value": "check", "label": "Check" },
+        { "value": "dash", "label": "Dash" }
+      ],
+      "visible_if": "{{ block.settings.use_icon_3 == true }}"
+    },
+    {
+        "type": "checkbox",
+        "id": "use_product_3",
+        "label": "Use Product 3",
+        "default": false
+    },
+    {
+        "type": "product",
+        "id": "product_3",
+        "label": "Product 3",
+        "info": "optional"
+    },
+    {
+      "type": "select",
+      "id": "product_element_3",
+      "label": "Product element 3",
+      "default": "price",
+      "options": [
+        { "value": "price", "label": "Price" },
+        { "value": "add_to_cart", "label": "Add to cart" }
+      ],
+      "visible_if": "{{ block.settings.use_product_3 == true }}"
+    },
+    {
+        "type": "checkbox",
+        "id": "add_background_color_3",
+        "label": "Add background color 3",
+        "default": false
+    },
+    {
+        "type": "color",
+        "id": "background_color_3",
+        "label": "Background color 3",
+        "visible_if": "{{ block.settings.add_background_color_3 == true }}"
+    },
+    {
+        "type": "checkbox",
+        "id": "add_text_color_3",
+        "label": "Add text color 3",
+        "default": false
+    },
+    {
+        "type": "color",
+        "id": "text_color_3",
+        "label": "Text color 3",
+        "visible_if": "{{ block.settings.add_text_color_3 == true }}"
+    },
+    {
+        "type": "checkbox",
+        "id": "add_radius_3",
+        "label": "Add radius 3",
+        "default": false
+    },
+    {
+      "type": "select",
+      "id": "radius_3",
+      "label": "Add border radius 3",
+      "default": "top-left",
+      "options": [
+        { "value": "top-left", "label": "Top left" },
+        { "value": "top-right", "label": "Top right" }
+      ],
+      "visible_if": "{{ block.settings.add_radius_3 == true }}"
+    }
+  ],
+  "presets": [
+        {
+            "name": "Table row"
+        }
+    ]
+}
+{% endschema %}

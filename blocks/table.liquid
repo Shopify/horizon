@@ -1,0 +1,165 @@
+{% capture table_heading %}
+  {%- content_for 'block', id: 'table-heading', type: '_table-heading' -%}
+{% endcapture %}
+
+{% capture list_items %}
+  {% content_for 'blocks' %}
+{% endcapture %}
+{% liquid
+  # Create an array from the list items to be used for different layout types
+  assign list_items_array = list_items | strip | remove_last: '<!--@list/split-->' | split: '<!--@list/split-->'
+%}
+
+{% if list_items_array.size > 0 %}
+  <div class="table-wrapper" style="--width: {{ block.settings.custom_width }}%; --column-bg: {{ block.settings.column_bg }};">
+    <table>
+      <tbody>
+        {{ table_heading }}
+        {% for item in list_items_array %}
+          {{ item }}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endif %}
+
+
+{% stylesheet %}
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  th, td {
+    padding: var(--padding-sm) var(--padding-lg);
+    vertical-align: middle;
+  }
+
+  td {
+    line-height: 1.2em;
+  }
+
+  td:not(:has(*)) {
+    border: 0 !important;
+  }
+
+  th:not(.text-center), td:not(.text-center) {
+    text-align: left;
+  }
+
+  td[style*="--bg-color"] {
+    background: var(--bg-color);
+    color: var(--text-color);
+  }
+
+  td[style*="--radius-top-left"] {
+    border-top-left-radius: var(--radius-top-left);
+  }
+
+  td[style*="--radius-top-right"] {
+    border-top-right-radius: var(--radius-top-right);
+  }
+
+  tr td:first-child {
+    width: 24rem;
+    min-width: 24rem;
+  }
+
+  tbody {
+    /* apply borders only from 2nd row */
+    tr:not(:first-child) {
+      td {
+        border: 1px solid var(--color-border);
+        border-right: 0;
+      }
+
+      td:last-child {
+        border-right: 1px solid var(--color-border);
+      }
+    }
+  }
+
+  svg {
+    display: block;
+    width: var(--icon-size-xs);
+    margin-inline: auto;
+  }
+
+  svg.icon-check {
+    color: var(--color-primary-button-background);
+  }
+
+  add-to-cart-component .add-to-cart-button {
+    margin: auto;
+    padding-block: var(--padding-xs) !important;
+    height: auto;
+    font-size: var(--font-size--md);
+
+    .add-to-cart-icon {
+      display: none;
+    }
+  }
+
+  @media (min-width: 750px) {
+    max-width: var(--width);
+    margin-inline: auto;
+  }
+
+  @media (max-width: 749px) {
+    table {
+      min-width: 500px;
+      margin-inline: var(--page-margin);
+    }
+
+    td {
+      font-size: var(--font-size--sm) !important;
+    }
+
+    tr:not(:first-child) td {
+        width: 13rem;
+        min-width: 13rem;
+    }
+  }
+}
+
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Table",
+  "tag": null,
+  "settings": [
+    {
+      "type": "range",
+      "id": "custom_width",
+      "label": "t:settings.custom_width",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "color",
+      "id": "column_bg",
+      "label": "Column Background"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "_table-row",
+    }
+  ],
+  "presets": [
+    {
+      "name": "Table",
+      "category": "t:categories.layout"
+    }
+  ]
+}
+{% endschema %}
