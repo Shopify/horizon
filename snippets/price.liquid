@@ -9,11 +9,43 @@
 {%- enddoc -%}
 
 {%- liquid
+  assign customer_tag_shop = shop.metafields.custom.customer_discounts.value
+  assign discount = blank
+
+  capture discount_label
+    render 'discount-label'
+  endcapture
+
+  if customer_tag_shop.size > 0 and discount_label == blank
+      for item in customer_tag_shop
+          assign applies_to = item.applies_to.value.products | where: 'id', product.id
+
+          if item.customer_tag == blank
+              assign applies_to = item.applies_to.value.products | where: 'id', product.id
+            
+              if applies_to.size > 0 and item.discount != blank
+                  assign discount = item.discount
+                  break
+              endif
+          endif
+      endfor
+  endif
+
   assign show_unit_price = show_unit_price | default: false
   assign show_sale_price_first = show_sale_price_first | default: false
   assign selected_variant = product_resource.selected_or_first_available_variant
   assign price = selected_variant.price
   assign compare_at_price = selected_variant.compare_at_price
+
+  if discount
+    assign discount_percentage = discount | plus: 0
+    assign discount_multiplier = 100 | minus: discount_percentage
+
+    assign discounted_price = price | times: discount_multiplier | divided_by: 100
+
+    assign compare_at_price = price
+    assign price = discounted_price
+  endif
 
   assign show_compare_price = false
   if compare_at_price > price

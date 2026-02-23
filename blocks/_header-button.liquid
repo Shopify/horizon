@@ -1,13 +1,15 @@
 {% assign block_settings = block.settings %}
-{% capture discount_label %}
-  {% render 'customer-tag', product: product %}
+{% capture customer_tag %}
+  {% render 'customer-tag' %}
 {% endcapture %}
+{% assign customer_tag = customer_tag | strip %}
+
 <a
   {% if block_settings.link == blank %}
     role="link"
     aria-disabled="true"
   {% else %}
-    {% if discount_label != blank and block_settings.custom_link_customer == true and block_settings.customer_link != blank %}
+    {% if customer and customer_tag == 'true' and block_settings.custom_link_customer == true and block_settings.customer_link != blank %}
       href="{{ block_settings.customer_link }}"
     {% else %}
       href="{{ block_settings.link }}"

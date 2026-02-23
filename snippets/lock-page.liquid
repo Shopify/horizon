@@ -1,6 +1,6 @@
 {% liquid
     assign customer_tag_shop = shop.metafields.custom.customer_discounts.value
-    assign customer_tag = false
+    assign unlock_page = true
 
     if customer and customer_tag_shop.size > 0
         for tag in customer.tags
@@ -8,10 +8,20 @@
             assign applies_to = found_tag[0].applies_to.value.products | where: 'id', product.id
 
             if applies_to.size > 0 and found_tag.size > 0
-                assign customer_tag = true
+                assign unlock_page = true
+                break
+            endif
+        endfor
+    elsif customer_tag_shop.size > 0 and template.name == 'product'
+        for item in customer_tag_shop
+            assign applies_to = item.applies_to.value.products | where: 'id', product.id
+
+            if item.customer_tag != blank and applies_to.size > 0
+                assign unlock_page = false
                 break
             endif
         endfor
     endif
-    echo customer_tag
+
+    echo unlock_page
 %}

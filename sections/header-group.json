@@ -13,7 +13,6 @@
   "sections": {
     "hero_BzLcdE": {
       "type": "hero",
-      "disabled": true,
       "name": "Promotional Banner",
       "settings": {
         "media_type_1": "image",
@@ -123,7 +122,7 @@
             "label": "Shop Now",
             "link": "shopify://collections/shop-now",
             "custom_link_customer": true,
-            "customer_link": "shopify://collections/wholesale",
+            "customer_link": "shopify://collections/partners-and-resellers",
             "use_custom_icon": false,
             "custom_icon": "",
             "open_in_new_tab": false,

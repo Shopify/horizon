@@ -50,7 +50,7 @@
     {% capture badge %}
 
       {% capture discount_label %}
-        {% render 'customer-tag', product: product %}
+        {% render 'discount-label', product: product, under_product_page: true %}
       {% endcapture %}
 
       {% if discount_label != blank %}
