@@ -303,6 +303,34 @@
                   "type": "_accordion-row-dynamic",
                   "name": "Accordion row (dynamic)",
                   "settings": {
+                    "heading": "Important Note",
+                    "content": "{{ closest.product.metafields.custom.important_note_ | metafield_tag }}",
+                    "open_by_default": false,
+                    "icon": "clipboard",
+                    "width": 20,
+                    "add_color_scheme": false,
+                    "color_scheme": ""
+                  },
+                  "blocks": {}
+                },
+                "accordion_row_dynamic_gM6feR": {
+                  "type": "_accordion-row-dynamic",
+                  "name": "Accordion row (dynamic)",
+                  "settings": {
+                    "heading": "Kit Contents",
+                    "content": "<ul><li>12-Zone Alarm Panel Pro</li><li>2x Interface Module w/ Built-In Relay</li><li>12V Power Adapter</li><li>Piezo Buzzer</li><li>Jumper Wires</li><li>Ribbon Cables</li><li>Adhesive-backed Mounting Standoffs</li><li>Mini Screwdriver-pen</li><li>Wire Labels Sheet</li><li>Konnected Window Stickers</li></ul>",
+                    "open_by_default": false,
+                    "icon": "clipboard",
+                    "width": 20,
+                    "add_color_scheme": false,
+                    "color_scheme": ""
+                  },
+                  "blocks": {}
+                },
+                "accordion_row_dynamic_69mNJb": {
+                  "type": "_accordion-row-dynamic",
+                  "name": "Accordion row (dynamic)",
+                  "settings": {
                     "heading": "What's Included",
                     "content": "{{ closest.product.metafields.custom.whats_included_row_content | metafield_tag }}",
                     "open_by_default": false,
@@ -358,6 +386,8 @@
               },
               "block_order": [
                 "accordion_row_dynamic_EGbjwF",
+                "accordion_row_dynamic_gM6feR",
+                "accordion_row_dynamic_69mNJb",
                 "accordion_row_dynamic_wQCPtj",
                 "accordion_row_dynamic_aCcikc",
                 "accordion_row_dynamic_HVC8gb"
@@ -6088,7 +6118,7 @@
         "table_NrFpnK"
       ],
       "custom_css": [
-        "@media (max-width: 989px) {.section--page-width {overflow: hidden; }}"
+        "@media (max-width: 989px) {.section--mobile-full-width {overflow: hidden; }}"
       ],
       "name": "Compare Table",
       "settings": {
