@@ -28,10 +28,15 @@
       {{ block.settings.text }}
     </p>
 
-    {% if block_settings.link != blank %}
+    {% if block_settings.link != blank or block_settings.use_klaviyo_trigger == true %}
       <a
         class="announcement-bar__link"
-        href="{{ block_settings.link }}"
+        {% if block_settings.use_klaviyo_trigger %}
+          href="#"
+          data-klaviyo="{{ block_settings.klaviyo_id }}"
+        {% else %}
+          href="{{ block_settings.link }}"
+        {% endif %}
       >
         <span class="visually-hidden">
           {{ block_settings.text | strip_html }}
@@ -126,7 +131,20 @@
     {
       "type": "url",
       "id": "link",
-      "label": "t:settings.link"
+      "label": "t:settings.link",
+      "visible_if": "{{ block.settings.use_klaviyo_trigger == false }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_klaviyo_trigger",
+      "label": "Use Klaviyo trigger",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_id",
+      "label": "Klaviyo ID",
+      "visible_if": "{{ block.settings.use_klaviyo_trigger == true }}"
     },
     {
       "type": "header",

@@ -11,16 +11,86 @@
   "type": "header",
   "name": "t:names.header",
   "sections": {
+    "hero_BzLcdE": {
+      "type": "hero",
+      "disabled": true,
+      "name": "Promotional Banner",
+      "settings": {
+        "media_type_1": "image",
+        "image_1": "shopify://shop_images/Winter_Sale_2025_Winter_Sale_-_Desktop.png",
+        "media_type_2": "image",
+        "stack_media_on_mobile": false,
+        "custom_mobile_media": true,
+        "media_type_1_mobile": "image",
+        "image_1_mobile": "shopify://shop_images/Winter_Sale_2025_Winter_Sale_-_Mobile.png",
+        "media_type_2_mobile": "image",
+        "link": "shopify://collections/shop-now",
+        "open_in_new_tab": false,
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 0,
+        "section_width": "page-width",
+        "section_height": "auto",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-5",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "gradient",
+        "gradient_direction": "to top",
+        "blurred_reflection": false,
+        "reflection_opacity": 75,
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
     "header_announcements_9jGBFp": {
       "type": "header-announcements",
       "blocks": {
         "announcement_BxgCk9": {
           "type": "_announcement",
           "settings": {
-            "text": "Welcome to our store",
-            "link": "",
+            "text": "Join the Konnected Community here",
+            "link": "https://community.konnected.io/",
+            "use_klaviyo_trigger": false,
+            "klaviyo_id": "",
             "font": "var(--font-subheading--family)",
-            "font_size": "0.75rem",
+            "font_size": "0.875rem",
+            "weight": "",
+            "letter_spacing": "normal",
+            "case": "none"
+          },
+          "blocks": {}
+        },
+        "announcement_CnmdUR": {
+          "type": "_announcement",
+          "settings": {
+            "text": "Sign up for our Newsletter and get 10% Off",
+            "link": "https://community.konnected.io/",
+            "use_klaviyo_trigger": true,
+            "klaviyo_id": "TC3Wtc",
+            "font": "var(--font-subheading--family)",
+            "font_size": "0.875rem",
+            "weight": "",
+            "letter_spacing": "normal",
+            "case": "none"
+          },
+          "blocks": {}
+        },
+        "announcement_N8PCk4": {
+          "type": "_announcement",
+          "disabled": true,
+          "settings": {
+            "text": "WINTER SALE IS LIVE! - SAVE 2O%",
+            "link": "shopify://collections/shop-now",
+            "use_klaviyo_trigger": false,
+            "klaviyo_id": "",
+            "font": "var(--font-subheading--family)",
+            "font_size": "0.875rem",
             "weight": "",
             "letter_spacing": "normal",
             "case": "none"
@@ -29,13 +99,15 @@
         }
       },
       "block_order": [
-        "announcement_BxgCk9"
+        "announcement_BxgCk9",
+        "announcement_CnmdUR",
+        "announcement_N8PCk4"
       ],
       "name": "t:names.announcement_bar",
       "settings": {
         "speed": 5,
         "section_width": "page-width",
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-5",
         "divider_width": 1,
         "padding-block-start": 15,
         "padding-block-end": 15
@@ -134,6 +206,7 @@
     }
   },
   "order": [
+    "hero_BzLcdE",
     "header_announcements_9jGBFp",
     "header_section"
   ]
