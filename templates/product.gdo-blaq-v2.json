@@ -203,39 +203,6 @@
               },
               "blocks": {}
             },
-            "text_aEtTtq": {
-              "type": "text",
-              "name": "Product description",
-              "settings": {
-                "text": "{{ closest.product.description }}",
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-primary--family)",
-                "font_size": "",
-                "enable_mobile_size": false,
-                "mobile_font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0,
-                "custom_mobile_padding": false,
-                "mobile-padding-block-start": 0,
-                "mobile-padding-block-end": 0,
-                "mobile-padding-inline-start": 0,
-                "mobile-padding-inline-end": 0
-              },
-              "blocks": {}
-            },
             "group_UEwDPt": {
               "type": "group",
               "name": "t:names.group",
@@ -328,6 +295,7 @@
                 "text_icon_ky7CAk": {
                   "type": "text-icon",
                   "name": "Status Banner",
+                  "disabled": true,
                   "settings": {
                     "icon_position": "left",
                     "icon": "apple",
@@ -399,6 +367,39 @@
               "name": "t:names.custom_liquid",
               "settings": {
                 "custom_liquid": "{% style %}\n.table-price-chart .product-badges {\n    position: relative !important;\n    top: unset;\n    left: unset;\n    right: unset;\n    bottom: unset;\n}\n.chart-subtitle {\n    display: block;\n    font-size: var(--font-size--xs);\n    line-height: 1em;\n    margin-top: var(--gap-2xs);\n}\n.table-price-chart .product-badges {\n    width: fit-content !important;\n    margin-inline: auto;\n    display: block;\n    margin-top: var(--gap-2xs);\n}\n.table-price-chart {\n    text-align: center;\n}\n.table-price-chart th, \n.table-price-chart td {\n    padding: var(--padding-xs);\n    line-height: 1em;\n    border-left: 1px solid rgb(189 189 189);\n    border-right: 1px solid rgb(189 189 189);\n}\n.table-price-chart th:first-child,\n.table-price-chart td:first-child {\n    border-left: none;\n}\n.table-price-chart th:last-child,\n.table-price-chart td:last-child {\n    border-right: none;\n}\n.table-price-chart table {\n    width: 100%;\n    border-collapse: collapse;\n}\n.price.partner--price {\n    color: var(--color-primary);\n    font-weight: 600;\n}\n.table-price-chart th {\n    background: var(--color-border);\n    font-family: var(--font-paragraph--family);\n    font-style: var(--font-paragraph--style);\n    font-weight: var(--font-paragraph--weight);\n    font-size: var(--font-paragraph--size);\n    line-height: 1em;\n}\n.table-price-chart table {\n    background: #f9f9f9;\n}\n.align-tbl-top {\n    vertical-align: top;\n}\n\n@media (max-width: 749px) {\n    .table-price-chart {\n        overflow-x: auto;\n        width: 100%;\n        -webkit-overflow-scrolling: touch;\n    }\n    .table-price-chart th {\n        font-size: var(--font-size--xs);\n        min-width: 8rem;\n    }\n}\n{% endstyle %}\n{% if product.has_only_default_variant %}\n    {% if product.metafields.custom.price_tiers.value != blank %}\n        {% assign saved_base_price = product.compare_at_price | default: product.price %}\n        <div class=\"table-price-chart center\">\n            <table>\n                <tbody>\n                    <tr>\n                        {% if product.type == 'Wholesale' %}\n                            <th>{{ 'content.retail_price' | t }}</th>\n                            <th>{{ 'content.partner_price' | t }}</th>\n                        {% else %}\n                            <th>1</th>\n                        {% endif %}\n\n                        {% for i in product.metafields.custom.price_tiers.value %}\n                            <th>{{ i.name }} {% if i.subtitle != blank %}<small class=\"chart-subtitle\">{{ i.subtitle }}</small>{% endif %}</th>\n                        {% endfor %}\n                    </tr>\n                    <tr>\n                        {% if product.type == 'Wholesale' %}\n                            <td class=\"align-tbl-top\">\n                                <span class=\"price table--price\">{{ saved_base_price | money_without_trailing_zeros }}</span>\n                            </td>\n                            <td>\n                                <span class=\"price partner--price\">{{ product.price | money_without_trailing_zeros }}</span>\n                                <span class=\"product-badges product-badges--{{ settings.badge_position }}\"\n                                style=\"\n                                    --badge-border-radius: {{ settings.badge_corner_radius }}px;\n                                    --badge-font-family: var(--font-{{ settings.badge_font_family }}--family); --badge-font-weight: var(--font-{{ settings.badge_font_family }}--weight); --badge-text-transform: {{ settings.badge_text_transform }};\n                                \">\n                                    <div\n                                        class=\"\n                                            product-badges__badge product-badges__badge--rectangle\n                                            color-{{ settings.badge_sale_color_scheme }}\n                                        \"\n                                        >\n                                        {% assign savings = saved_base_price | minus: product.price | times: 100 | divided_by: saved_base_price %}\n                                        {{ 'content.save' | t: save: savings }}\n                                    </div>\n                                </span>\n                            </td>\n                        {% else %}\n                            <td class=\"align-tbl-top\">\n                                <span class=\"price table--price\">{{ product.price | money_without_trailing_zeros }}</span>\n                            </td>\n                        {% endif %}\n                        {% for i in product.metafields.custom.price_tiers.value %}\n                            {% assign custom_price = i.value.value %}\n                            <td>\n                                <span class=\"price table--price\">{{ custom_price | money_without_trailing_zeros }}</span>\n                                <span class=\"product-badges product-badges--{{ settings.badge_position }}\"\n                                    style=\"\n                                        --badge-border-radius: {{ settings.badge_corner_radius }}px;\n                                        --badge-font-family: var(--font-{{ settings.badge_font_family }}--family); --badge-font-weight: var(--font-{{ settings.badge_font_family }}--weight); --badge-text-transform: {{ settings.badge_text_transform }};\n                                \">\n                                    <div\n                                        class=\"\n                                            product-badges__badge product-badges__badge--rectangle\n                                            color-{{ settings.badge_sale_color_scheme }}\n                                        \"\n                                        >\n                                        {% assign savings = saved_base_price | minus: custom_price | times: 100 | divided_by: saved_base_price | round %}\n                                        {{ 'content.save' | t: save: savings }}\n                                    </div>\n                                </span>\n                            </td>\n                        {% endfor %}\n                    </tr>\n                </tbody>\n            </table>\n        </div>\n    {% endif %}\n{% else %}\n    {% if product.metafields.custom.price_tiers != blank or product.variants[0].metafields.custom.price_tiers.value != blank %}\n        <div class=\"variant-price-table\">\n            <div class=\"table-price-chart center\">\n                <table>\n                    <tbody>\n                        <tr>\n                            <th>&nbsp;</th>\n                            {% if product.type == 'Wholesale' %}\n                                <th>{{ 'content.retail_price' | t }}</th>\n                                <th>{{ 'content.partner_price' | t }}</th>\n                            {% else %}\n                                <th>1</th>\n                            {% endif %}\n                            {% for i in product.variants[0].metafields.custom.price_tiers.value %}\n                                <th>{{ i.name }} {% if i.subtitle != blank %}<small class=\"chart-subtitle\">{{ i.subtitle }}</small>{% endif %}</th>\n                            {% endfor %}\n                        </tr>\n\n                        {% for variant in product.variants %}\n                            {% if variant.metafields.custom.price_tiers.value != blank %}\n                                    {% assign saved_base_price = variant.compare_at_price | default: variant.price %}\n                                    <tr>\n                                        {% if product.type == 'Wholesale' %}\n                                            <td>{{ variant.title }}</td>\n                                            <td class=\"align-tbl-top\">\n                                                <span class=\"price table--price\">{{ saved_base_price | money_without_trailing_zeros }}</span>\n                                            </td>\n                                            <td>\n                                                <span class=\"price partner--price\">{{ variant.price | money_without_trailing_zeros }}</span>\n                                                <span class=\"product-badges product-badges--{{ settings.badge_position }}\"\n                                                style=\"\n                                                    --badge-border-radius: {{ settings.badge_corner_radius }}px;\n                                                    --badge-font-family: var(--font-{{ settings.badge_font_family }}--family); --badge-font-weight: var(--font-{{ settings.badge_font_family }}--weight); --badge-text-transform: {{ settings.badge_text_transform }};\n                                                \">\n                                                    <div\n                                                        class=\"\n                                                            product-badges__badge product-badges__badge--rectangle\n                                                            color-{{ settings.badge_sale_color_scheme }}\n                                                        \"\n                                                        >\n                                                        {% assign savings = saved_base_price | minus: variant.price | times: 100 | divided_by: saved_base_price %}\n                                                        {{ 'content.save' | t: save: savings }}\n                                                    </div>\n                                                </span>\n                                            </td>\n                                        {% else %}\n                                            <td>{{ variant.title }}</td>\n                                            <td>\n                                                <span class=\"price table--price\">{{ variant.price | money_without_trailing_zeros }}</span>\n                                            </td>\n                                        {% endif %}\n                                        {% for i in variant.metafields.custom.price_tiers.value %}\n                                            {% assign custom_price = i.value.value %}\n                                            <td>\n                                                <span class=\"price table--price\">{{ custom_price | money_without_trailing_zeros }}</span>\n                                                <span class=\"product-badges product-badges--{{ settings.badge_position }}\"\n                                                style=\"\n                                                    --badge-border-radius: {{ settings.badge_corner_radius }}px;\n                                                    --badge-font-family: var(--font-{{ settings.badge_font_family }}--family); --badge-font-weight: var(--font-{{ settings.badge_font_family }}--weight); --badge-text-transform: {{ settings.badge_text_transform }};\n                                                \">\n                                                    <div\n                                                        class=\"\n                                                            product-badges__badge product-badges__badge--rectangle\n                                                            color-{{ settings.badge_sale_color_scheme }}\n                                                        \"\n                                                        >\n                                                        {% assign savings = saved_base_price | minus: custom_price | times: 100 | divided_by: saved_base_price | round %}\n                                                        {{ 'content.save' | t: save: savings }}\n                                                    </div>\n                                                </span>\n                                            </td>\n                                        {% endfor %}\n                                    </tr>\n                            {% endif %}\n                        {% endfor %}\n                    </tbody>\n                </table>\n            </div>\n        </div>\n    {% endif %}\n{% endif %}"
+              },
+              "blocks": {}
+            },
+            "text_aEtTtq": {
+              "type": "text",
+              "name": "Product description",
+              "settings": {
+                "text": "{{ closest.product.description }}",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-primary--family)",
+                "font_size": "",
+                "enable_mobile_size": false,
+                "mobile_font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "custom_mobile_padding": false,
+                "mobile-padding-block-start": 0,
+                "mobile-padding-block-end": 0,
+                "mobile-padding-inline-start": 0,
+                "mobile-padding-inline-end": 0
               },
               "blocks": {}
             },
@@ -535,9 +536,9 @@
           "block_order": [
             "group_icgrde",
             "variant_picker_R3rGDr",
-            "text_aEtTtq",
             "group_UEwDPt",
             "custom_liquid_93LYaA",
+            "text_aEtTtq",
             "accordion_XkV7wa"
           ]
         }
