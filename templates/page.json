@@ -259,12 +259,68 @@
         "padding_bottom": 40,
         "padding_sides": 0
       }
+    },
+    "gallery_Ur6nbz": {
+      "type": "gallery",
+      "blocks": {
+        "image_Jy7rwg": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_0367.jpg",
+            "alt_text": "Figure Skater",
+            "link": ""
+          }
+        },
+        "image_aNVWXj": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_0368.jpg",
+            "alt_text": "Figure Skater",
+            "link": ""
+          }
+        },
+        "image_QYi6EN": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Bluedress.png",
+            "alt_text": "Figure Skater",
+            "link": ""
+          }
+        },
+        "image_TTWKqc": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/greendress.png",
+            "alt_text": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_Jy7rwg",
+        "image_aNVWXj",
+        "image_QYi6EN",
+        "image_TTWKqc"
+      ],
+      "name": "Gallery",
+      "settings": {
+        "minimum_column_width": 200,
+        "gap": 10,
+        "aspect_ratio": "1",
+        "object_fit": "cover",
+        "border_radius": 0,
+        "color_scheme": "accent-1",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_sides": 0
+      }
     }
   },
   "order": [
     "main",
     "gallery_76PPx8",
     "gallery_VBeXdT",
-    "gallery_HP3hDJ"
+    "gallery_HP3hDJ",
+    "gallery_Ur6nbz"
   ]
 }
