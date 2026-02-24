@@ -16,7 +16,7 @@
           "type": "text",
           "name": "Title",
           "settings": {
-            "text": "<h1>{{ closest.page.title }}</h1>",
+            "text": "<h1>Made with our products</h1>",
             "width": "100%",
             "max_width": "normal",
             "alignment": "center",
@@ -42,89 +42,208 @@
           "type": "page-content",
           "settings": {},
           "blocks": {}
-        },
-        "testimonials_D38gLT": {
-          "type": "testimonials",
-          "name": "Testimonials",
-          "settings": {
-            "title": "",
-            "subtitle": "Testimonials and Reviews from our customers",
-            "columns": 3,
-            "card_gap": 20,
-            "card_bg_color": "#ffffff",
-            "card_border_color": "#e5e5e5",
-            "card_border_radius": 8,
-            "card_padding": 24,
-            "star_color": "#ffb800",
-            "star_empty_color": "#d4d4d4",
-            "title_color": "#121212",
-            "title_size": 28,
-            "title_spacing": 10,
-            "subtitle_color": "#555555",
-            "subtitle_size": 16,
-            "subtitle_spacing": 25,
-            "review_text_color": "#333333",
-            "review_font_size": 14,
-            "name_color": "#121212",
-            "name_font_size": 14,
-            "padding_top": 40,
-            "padding_bottom": 40,
-            "padding_horizontal": 20
-          },
-          "blocks": {
-            "testimonial_card_CrnNc8": {
-              "type": "_testimonial-card",
-              "settings": {
-                "review_text": "High quality service & rhinestones. Highly recommend.",
-                "reviewer_name": "Marcelle B.",
-                "rating": 5,
-                "source": "google"
-              },
-              "blocks": {}
-            },
-            "testimonial_card_jU4Pnb": {
-              "type": "_testimonial-card",
-              "settings": {
-                "review_text": "Excellent customer service, help and fast shipping! So easy to work with to get everything I need. Highly recommend.",
-                "reviewer_name": "Justin R.",
-                "rating": 5,
-                "source": "facebook"
-              },
-              "blocks": {}
-            },
-            "testimonial_card_xcKe7a": {
-              "type": "_testimonial-card",
-              "settings": {
-                "review_text": "Amazing customer service. This vendor is in the market for more than a decade. I highly recommend to shop from ASE Crystals!",
-                "reviewer_name": "Asset M.",
-                "rating": 5,
-                "source": "google"
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "testimonial_card_CrnNc8",
-            "testimonial_card_jU4Pnb",
-            "testimonial_card_xcKe7a"
-          ]
         }
       },
       "block_order": [
         "heading",
-        "page-content",
-        "testimonials_D38gLT"
+        "page-content"
       ],
       "settings": {
         "content_direction": "column",
         "gap": 32,
         "color_scheme": "",
         "padding-block-start": 40,
-        "padding-block-end": 80
+        "padding-block-end": 0
+      }
+    },
+    "gallery_76PPx8": {
+      "type": "gallery",
+      "blocks": {
+        "image_EXA4ax": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_20190108_105046860.jpg",
+            "alt_text": "Figure Skating Dress",
+            "link": ""
+          }
+        },
+        "image_VeKFLN": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_20190308_073803429.jpg",
+            "alt_text": "Figure Skating Dress",
+            "link": ""
+          }
+        },
+        "image_6mdajY": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/PXL_20221025_150422714.jpg",
+            "alt_text": "Figure Skating Dress",
+            "link": ""
+          }
+        },
+        "image_XmTXhF": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/PXL_20221031_151509898.jpg",
+            "alt_text": "Dress",
+            "link": ""
+          }
+        },
+        "image_V4jdTT": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/PXL_20211007_155218089.jpg",
+            "alt_text": "Figure Skating Dress",
+            "link": ""
+          }
+        },
+        "image_yAdNy6": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Isabella_2.jpg",
+            "alt_text": "Figure Skating Dress",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_EXA4ax",
+        "image_VeKFLN",
+        "image_6mdajY",
+        "image_XmTXhF",
+        "image_V4jdTT",
+        "image_yAdNy6"
+      ],
+      "name": "Gallery",
+      "settings": {
+        "minimum_column_width": 200,
+        "gap": 10,
+        "aspect_ratio": "1",
+        "object_fit": "cover",
+        "border_radius": 0,
+        "color_scheme": "accent-1",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_sides": 0
+      }
+    },
+    "gallery_VBeXdT": {
+      "type": "gallery",
+      "blocks": {
+        "image_zpNPmG": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Olga_Shiryeva_for_site.png",
+            "alt_text": "Figure Skating Dress",
+            "link": ""
+          }
+        },
+        "image_GmXDKY": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Nancy_Rodriguez_for_site.png",
+            "alt_text": "Figure Skating Dress",
+            "link": ""
+          }
+        },
+        "image_wDde4x": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Susan_Riddell_for_site.png",
+            "alt_text": "Figure Skating Dress",
+            "link": ""
+          }
+        },
+        "image_CxJiXV": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Malika_Vainer_fpr_site_9b58d645-d650-411e-bce2-09bbe1f53cf0.png",
+            "alt_text": "Figure Skating Dress",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_zpNPmG",
+        "image_GmXDKY",
+        "image_wDde4x",
+        "image_CxJiXV"
+      ],
+      "name": "Gallery",
+      "settings": {
+        "minimum_column_width": 200,
+        "gap": 10,
+        "aspect_ratio": "1",
+        "object_fit": "cover",
+        "border_radius": 0,
+        "color_scheme": "accent-1",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_sides": 0
+      }
+    },
+    "gallery_HP3hDJ": {
+      "type": "gallery",
+      "blocks": {
+        "image_WpFxzg": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Nancy_Rodriguez_1_for_site.png",
+            "alt_text": "Figure Skating Dress",
+            "link": ""
+          }
+        },
+        "image_hL8zrC": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Kayla_Halliday_for_site.png",
+            "alt_text": "Figure Skating Dress",
+            "link": ""
+          }
+        },
+        "image_G8Yzbz": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Katerynn_Petrak_for_site.png",
+            "alt_text": "Figure Skating Dress",
+            "link": ""
+          }
+        },
+        "image_hUqKiC": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Nancy_Rodriguez_2_for-site.png",
+            "alt_text": "Figure Skating Dress",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_WpFxzg",
+        "image_hL8zrC",
+        "image_G8Yzbz",
+        "image_hUqKiC"
+      ],
+      "name": "Gallery",
+      "settings": {
+        "minimum_column_width": 200,
+        "gap": 10,
+        "aspect_ratio": "1",
+        "object_fit": "cover",
+        "border_radius": 0,
+        "color_scheme": "accent-1",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_sides": 0
       }
     }
   },
   "order": [
-    "main"
+    "main",
+    "gallery_76PPx8",
+    "gallery_VBeXdT",
+    "gallery_HP3hDJ"
   ]
 }
