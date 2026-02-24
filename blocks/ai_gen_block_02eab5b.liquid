@@ -1,0 +1,1487 @@
+{% doc %}
+  @prompt
+    create a table with th, has custom background picker, no need for any text size css, should have six columns, should have up to 10 rows, 1st column should have left aligned texts, 
+    should have check and close icon option for other columns,
+    
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon-check" width="41" height="31" viewBox="0 0 41 31" fill="none">
+                            <path d="M13.75 29.4531L0.78125 16.4844C0 15.7031 0 14.375 0.78125 13.5938L3.59375 10.7812C4.375 10 5.625 10 6.40625 10.7812L15.2344 19.5312L33.9844 0.78125C34.7656 0 36.0156 0 36.7969 0.78125L39.6094 3.59375C40.3906 4.375 40.3906 5.70312 39.6094 6.48438L16.6406 29.4531C15.8594 30.2344 14.5312 30.2344 13.75 29.4531Z" fill="currentColor"/>
+                        </svg>
+    
+    <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 29 29" fill="none">
+                        <path d="M19.2188 13.9844L27.0312 21.875C28.0469 22.8125 28.0469 24.375 27.0312 25.3125L25.3125 27.0312C24.375 28.0469 22.8125 28.0469 21.875 27.0312L14.0625 19.2188L6.17188 27.0312C5.23438 28.0469 3.67188 28.0469 2.73438 27.0312L1.01562 25.3125C0 24.375 0 22.8125 1.01562 21.875L8.82812 13.9844L1.01562 6.17188C0 5.23438 0 3.67188 1.01562 2.73438L2.73438 1.01562C3.67188 0 5.23438 0 6.17188 1.01562L14.0625 8.82812L21.875 1.01562C22.8125 0 24.375 0 25.3125 1.01562L27.0312 2.73438C28.0469 3.67188 28.0469 5.23438 27.0312 6.17188L19.2188 13.9844Z" fill="currentColor"></path>
+                    </svg>
+    
+    should be horizontally scrollable on mobile, border should be     border: 1px solid var(--color-border); and use this for icons sizing width: var(--icon-size-xs);
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-comparison-table-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+  }
+
+  .ai-comparison-table-wrapper-{{ ai_gen_id }} {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .ai-comparison-table-element-{{ ai_gen_id }} {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: {{ block.settings.table_background }};
+  }
+
+  .ai-comparison-table-element-{{ ai_gen_id }} th {
+    background-color: {{ block.settings.header_background }};
+    color: {{ block.settings.header_text_color }};
+    padding: var(--padding-xs) var(--padding-lg);
+    text-align: center;
+    font-weight: 600;
+    border: 1px solid var(--color-border);
+    min-width: 10rem;
+  }
+
+  .ai-comparison-table-element-{{ ai_gen_id }} th:first-child {
+    text-align: left;
+    min-width: 15rem;
+  }
+
+  .ai-comparison-table-element-{{ ai_gen_id }} td {
+    padding: var(--padding-xs) var(--padding-lg);
+    text-align: center;
+    border: 1px solid var(--color-border);
+    color: {{ block.settings.cell_text_color }};
+  }
+
+  .ai-comparison-table-element-{{ ai_gen_id }} td:first-child {
+    text-align: left;
+    font-weight: 500;
+  }
+
+  .ai-comparison-table-icon-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-comparison-table-icon-{{ ai_gen_id }} svg {
+    width: var(--icon-size-xs);
+    height: auto;
+  }
+
+  .ai-comparison-table-icon-check-{{ ai_gen_id }} {
+    color: {{ block.settings.check_icon_color }};
+  }
+
+  .ai-comparison-table-icon-close-{{ ai_gen_id }} {
+    color: {{ block.settings.close_icon_color }};
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-comparison-table-wrapper-{{ ai_gen_id }} {
+      overflow-x: scroll;
+      padding-inline: var(--page-margin);
+    }
+
+    .ai-comparison-table-element-{{ ai_gen_id }} {
+      min-width: 600px;
+    }
+  }
+{% endstyle %}
+
+<comparison-table-{{ ai_gen_id }} class="ai-comparison-table-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-comparison-table-wrapper-{{ ai_gen_id }}">
+    <table class="ai-comparison-table-element-{{ ai_gen_id }}">
+      <thead>
+        <tr>
+          <th>{{ block.settings.header_col_1 }}</th>
+          <th>{{ block.settings.header_col_2 }}</th>
+          <th>{{ block.settings.header_col_3 }}</th>
+          <th>{{ block.settings.header_col_4 }}</th>
+          <th>{{ block.settings.header_col_5 }}</th>
+          <th>{{ block.settings.header_col_6 }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in (1..10) %}
+          {% liquid
+            assign row_enabled_key = 'row_' | append: i | append: '_enabled'
+            assign row_label_key = 'row_' | append: i | append: '_label'
+            assign col_2_key = 'row_' | append: i | append: '_col_2'
+            assign col_3_key = 'row_' | append: i | append: '_col_3'
+            assign col_4_key = 'row_' | append: i | append: '_col_4'
+            assign col_5_key = 'row_' | append: i | append: '_col_5'
+            assign col_6_key = 'row_' | append: i | append: '_col_6'
+
+            assign row_enabled = block.settings[row_enabled_key]
+            assign row_label = block.settings[row_label_key]
+            assign col_2_value = block.settings[col_2_key]
+            assign col_3_value = block.settings[col_3_key]
+            assign col_4_value = block.settings[col_4_key]
+            assign col_5_value = block.settings[col_5_key]
+            assign col_6_value = block.settings[col_6_key]
+          %}
+
+          {% if row_enabled %}
+            <tr>
+              <td>{{ row_label }}</td>
+              <td>
+                {% if col_2_value == 'check' %}
+                  <span class="ai-comparison-table-icon-{{ ai_gen_id }} ai-comparison-table-icon-check-{{ ai_gen_id }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="41" height="31" viewBox="0 0 41 31" fill="none">
+                      <path d="M13.75 29.4531L0.78125 16.4844C0 15.7031 0 14.375 0.78125 13.5938L3.59375 10.7812C4.375 10 5.625 10 6.40625 10.7812L15.2344 19.5312L33.9844 0.78125C34.7656 0 36.0156 0 36.7969 0.78125L39.6094 3.59375C40.3906 4.375 40.3906 5.70312 39.6094 6.48438L16.6406 29.4531C15.8594 30.2344 14.5312 30.2344 13.75 29.4531Z" fill="currentColor"/>
+                    </svg>
+                  </span>
+                {% elsif col_2_value == 'close' %}
+                  <span class="ai-comparison-table-icon-{{ ai_gen_id }} ai-comparison-table-icon-close-{{ ai_gen_id }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 29 29" fill="none">
+                      <path d="M19.2188 13.9844L27.0312 21.875C28.0469 22.8125 28.0469 24.375 27.0312 25.3125L25.3125 27.0312C24.375 28.0469 22.8125 28.0469 21.875 27.0312L14.0625 19.2188L6.17188 27.0312C5.23438 28.0469 3.67188 28.0469 2.73438 27.0312L1.01562 25.3125C0 24.375 0 22.8125 1.01562 21.875L8.82812 13.9844L1.01562 6.17188C0 5.23438 0 3.67188 1.01562 2.73438L2.73438 1.01562C3.67188 0 5.23438 0 6.17188 1.01562L14.0625 8.82812L21.875 1.01562C22.8125 0 24.375 0 25.3125 1.01562L27.0312 2.73438C28.0469 3.67188 28.0469 5.23438 27.0312 6.17188L19.2188 13.9844Z" fill="currentColor"></path>
+                    </svg>
+                  </span>
+                {% endif %}
+              </td>
+              <td>
+                {% if col_3_value == 'check' %}
+                  <span class="ai-comparison-table-icon-{{ ai_gen_id }} ai-comparison-table-icon-check-{{ ai_gen_id }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="41" height="31" viewBox="0 0 41 31" fill="none">
+                      <path d="M13.75 29.4531L0.78125 16.4844C0 15.7031 0 14.375 0.78125 13.5938L3.59375 10.7812C4.375 10 5.625 10 6.40625 10.7812L15.2344 19.5312L33.9844 0.78125C34.7656 0 36.0156 0 36.7969 0.78125L39.6094 3.59375C40.3906 4.375 40.3906 5.70312 39.6094 6.48438L16.6406 29.4531C15.8594 30.2344 14.5312 30.2344 13.75 29.4531Z" fill="currentColor"/>
+                    </svg>
+                  </span>
+                {% elsif col_3_value == 'close' %}
+                  <span class="ai-comparison-table-icon-{{ ai_gen_id }} ai-comparison-table-icon-close-{{ ai_gen_id }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 29 29" fill="none">
+                      <path d="M19.2188 13.9844L27.0312 21.875C28.0469 22.8125 28.0469 24.375 27.0312 25.3125L25.3125 27.0312C24.375 28.0469 22.8125 28.0469 21.875 27.0312L14.0625 19.2188L6.17188 27.0312C5.23438 28.0469 3.67188 28.0469 2.73438 27.0312L1.01562 25.3125C0 24.375 0 22.8125 1.01562 21.875L8.82812 13.9844L1.01562 6.17188C0 5.23438 0 3.67188 1.01562 2.73438L2.73438 1.01562C3.67188 0 5.23438 0 6.17188 1.01562L14.0625 8.82812L21.875 1.01562C22.8125 0 24.375 0 25.3125 1.01562L27.0312 2.73438C28.0469 3.67188 28.0469 5.23438 27.0312 6.17188L19.2188 13.9844Z" fill="currentColor"></path>
+                    </svg>
+                  </span>
+                {% endif %}
+              </td>
+              <td>
+                {% if col_4_value == 'check' %}
+                  <span class="ai-comparison-table-icon-{{ ai_gen_id }} ai-comparison-table-icon-check-{{ ai_gen_id }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="41" height="31" viewBox="0 0 41 31" fill="none">
+                      <path d="M13.75 29.4531L0.78125 16.4844C0 15.7031 0 14.375 0.78125 13.5938L3.59375 10.7812C4.375 10 5.625 10 6.40625 10.7812L15.2344 19.5312L33.9844 0.78125C34.7656 0 36.0156 0 36.7969 0.78125L39.6094 3.59375C40.3906 4.375 40.3906 5.70312 39.6094 6.48438L16.6406 29.4531C15.8594 30.2344 14.5312 30.2344 13.75 29.4531Z" fill="currentColor"/>
+                    </svg>
+                  </span>
+                {% elsif col_4_value == 'close' %}
+                  <span class="ai-comparison-table-icon-{{ ai_gen_id }} ai-comparison-table-icon-close-{{ ai_gen_id }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 29 29" fill="none">
+                      <path d="M19.2188 13.9844L27.0312 21.875C28.0469 22.8125 28.0469 24.375 27.0312 25.3125L25.3125 27.0312C24.375 28.0469 22.8125 28.0469 21.875 27.0312L14.0625 19.2188L6.17188 27.0312C5.23438 28.0469 3.67188 28.0469 2.73438 27.0312L1.01562 25.3125C0 24.375 0 22.8125 1.01562 21.875L8.82812 13.9844L1.01562 6.17188C0 5.23438 0 3.67188 1.01562 2.73438L2.73438 1.01562C3.67188 0 5.23438 0 6.17188 1.01562L14.0625 8.82812L21.875 1.01562C22.8125 0 24.375 0 25.3125 1.01562L27.0312 2.73438C28.0469 3.67188 28.0469 5.23438 27.0312 6.17188L19.2188 13.9844Z" fill="currentColor"></path>
+                    </svg>
+                  </span>
+                {% endif %}
+              </td>
+              <td>
+                {% if col_5_value == 'check' %}
+                  <span class="ai-comparison-table-icon-{{ ai_gen_id }} ai-comparison-table-icon-check-{{ ai_gen_id }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="41" height="31" viewBox="0 0 41 31" fill="none">
+                      <path d="M13.75 29.4531L0.78125 16.4844C0 15.7031 0 14.375 0.78125 13.5938L3.59375 10.7812C4.375 10 5.625 10 6.40625 10.7812L15.2344 19.5312L33.9844 0.78125C34.7656 0 36.0156 0 36.7969 0.78125L39.6094 3.59375C40.3906 4.375 40.3906 5.70312 39.6094 6.48438L16.6406 29.4531C15.8594 30.2344 14.5312 30.2344 13.75 29.4531Z" fill="currentColor"/>
+                    </svg>
+                  </span>
+                {% elsif col_5_value == 'close' %}
+                  <span class="ai-comparison-table-icon-{{ ai_gen_id }} ai-comparison-table-icon-close-{{ ai_gen_id }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 29 29" fill="none">
+                      <path d="M19.2188 13.9844L27.0312 21.875C28.0469 22.8125 28.0469 24.375 27.0312 25.3125L25.3125 27.0312C24.375 28.0469 22.8125 28.0469 21.875 27.0312L14.0625 19.2188L6.17188 27.0312C5.23438 28.0469 3.67188 28.0469 2.73438 27.0312L1.01562 25.3125C0 24.375 0 22.8125 1.01562 21.875L8.82812 13.9844L1.01562 6.17188C0 5.23438 0 3.67188 1.01562 2.73438L2.73438 1.01562C3.67188 0 5.23438 0 6.17188 1.01562L14.0625 8.82812L21.875 1.01562C22.8125 0 24.375 0 25.3125 1.01562L27.0312 2.73438C28.0469 3.67188 28.0469 5.23438 27.0312 6.17188L19.2188 13.9844Z" fill="currentColor"></path>
+                    </svg>
+                  </span>
+                {% endif %}
+              </td>
+              <td>
+                {% if col_6_value == 'check' %}
+                  <span class="ai-comparison-table-icon-{{ ai_gen_id }} ai-comparison-table-icon-check-{{ ai_gen_id }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="41" height="31" viewBox="0 0 41 31" fill="none">
+                      <path d="M13.75 29.4531L0.78125 16.4844C0 15.7031 0 14.375 0.78125 13.5938L3.59375 10.7812C4.375 10 5.625 10 6.40625 10.7812L15.2344 19.5312L33.9844 0.78125C34.7656 0 36.0156 0 36.7969 0.78125L39.6094 3.59375C40.3906 4.375 40.3906 5.70312 39.6094 6.48438L16.6406 29.4531C15.8594 30.2344 14.5312 30.2344 13.75 29.4531Z" fill="currentColor"/>
+                    </svg>
+                  </span>
+                {% elsif col_6_value == 'close' %}
+                  <span class="ai-comparison-table-icon-{{ ai_gen_id }} ai-comparison-table-icon-close-{{ ai_gen_id }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 29 29" fill="none">
+                      <path d="M19.2188 13.9844L27.0312 21.875C28.0469 22.8125 28.0469 24.375 27.0312 25.3125L25.3125 27.0312C24.375 28.0469 22.8125 28.0469 21.875 27.0312L14.0625 19.2188L6.17188 27.0312C5.23438 28.0469 3.67188 28.0469 2.73438 27.0312L1.01562 25.3125C0 24.375 0 22.8125 1.01562 21.875L8.82812 13.9844L1.01562 6.17188C0 5.23438 0 3.67188 1.01562 2.73438L2.73438 1.01562C3.67188 0 5.23438 0 6.17188 1.01562L14.0625 8.82812L21.875 1.01562C22.8125 0 24.375 0 25.3125 1.01562L27.0312 2.73438C28.0469 3.67188 28.0469 5.23438 27.0312 6.17188L19.2188 13.9844Z" fill="currentColor"></path>
+                    </svg>
+                  </span>
+                {% endif %}
+              </td>
+            </tr>
+          {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</comparison-table-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class ComparisonTable{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+    }
+
+    customElements.define('comparison-table-{{ ai_gen_id }}', ComparisonTable{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Comparison table",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Table headers"
+    },
+    {
+      "type": "text",
+      "id": "header_col_1",
+      "label": "Column 1 header",
+      "default": "Feature"
+    },
+    {
+      "type": "text",
+      "id": "header_col_2",
+      "label": "Column 2 header",
+      "default": "Option 1"
+    },
+    {
+      "type": "text",
+      "id": "header_col_3",
+      "label": "Column 3 header",
+      "default": "Option 2"
+    },
+    {
+      "type": "text",
+      "id": "header_col_4",
+      "label": "Column 4 header",
+      "default": "Option 3"
+    },
+    {
+      "type": "text",
+      "id": "header_col_5",
+      "label": "Column 5 header",
+      "default": "Option 4"
+    },
+    {
+      "type": "text",
+      "id": "header_col_6",
+      "label": "Column 6 header",
+      "default": "Option 5"
+    },
+    {
+      "type": "header",
+      "content": "Row 1"
+    },
+    {
+      "type": "checkbox",
+      "id": "row_1_enabled",
+      "label": "Enable row 1",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "row_1_label",
+      "label": "Label",
+      "default": "Feature 1"
+    },
+    {
+      "type": "select",
+      "id": "row_1_col_2",
+      "label": "Column 2",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_1_col_3",
+      "label": "Column 3",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_1_col_4",
+      "label": "Column 4",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "close"
+    },
+    {
+      "type": "select",
+      "id": "row_1_col_5",
+      "label": "Column 5",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_1_col_6",
+      "label": "Column 6",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "close"
+    },
+    {
+      "type": "header",
+      "content": "Row 2"
+    },
+    {
+      "type": "checkbox",
+      "id": "row_2_enabled",
+      "label": "Enable row 2",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "row_2_label",
+      "label": "Label",
+      "default": "Feature 2"
+    },
+    {
+      "type": "select",
+      "id": "row_2_col_2",
+      "label": "Column 2",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_2_col_3",
+      "label": "Column 3",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "close"
+    },
+    {
+      "type": "select",
+      "id": "row_2_col_4",
+      "label": "Column 4",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_2_col_5",
+      "label": "Column 5",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "close"
+    },
+    {
+      "type": "select",
+      "id": "row_2_col_6",
+      "label": "Column 6",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "header",
+      "content": "Row 3"
+    },
+    {
+      "type": "checkbox",
+      "id": "row_3_enabled",
+      "label": "Enable row 3",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "row_3_label",
+      "label": "Label",
+      "default": "Feature 3"
+    },
+    {
+      "type": "select",
+      "id": "row_3_col_2",
+      "label": "Column 2",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_3_col_3",
+      "label": "Column 3",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_3_col_4",
+      "label": "Column 4",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "close"
+    },
+    {
+      "type": "select",
+      "id": "row_3_col_5",
+      "label": "Column 5",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_3_col_6",
+      "label": "Column 6",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "close"
+    },
+    {
+      "type": "header",
+      "content": "Row 4"
+    },
+    {
+      "type": "checkbox",
+      "id": "row_4_enabled",
+      "label": "Enable row 4",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "row_4_label",
+      "label": "Label",
+      "default": "Feature 4"
+    },
+    {
+      "type": "select",
+      "id": "row_4_col_2",
+      "label": "Column 2",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_4_col_3",
+      "label": "Column 3",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_4_col_4",
+      "label": "Column 4",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_4_col_5",
+      "label": "Column 5",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_4_col_6",
+      "label": "Column 6",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "header",
+      "content": "Row 5"
+    },
+    {
+      "type": "checkbox",
+      "id": "row_5_enabled",
+      "label": "Enable row 5",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "row_5_label",
+      "label": "Label",
+      "default": "Feature 5"
+    },
+    {
+      "type": "select",
+      "id": "row_5_col_2",
+      "label": "Column 2",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_5_col_3",
+      "label": "Column 3",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_5_col_4",
+      "label": "Column 4",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_5_col_5",
+      "label": "Column 5",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_5_col_6",
+      "label": "Column 6",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "header",
+      "content": "Row 6"
+    },
+    {
+      "type": "checkbox",
+      "id": "row_6_enabled",
+      "label": "Enable row 6",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "row_6_label",
+      "label": "Label",
+      "default": "Feature 6"
+    },
+    {
+      "type": "select",
+      "id": "row_6_col_2",
+      "label": "Column 2",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_6_col_3",
+      "label": "Column 3",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_6_col_4",
+      "label": "Column 4",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_6_col_5",
+      "label": "Column 5",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_6_col_6",
+      "label": "Column 6",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "header",
+      "content": "Row 7"
+    },
+    {
+      "type": "checkbox",
+      "id": "row_7_enabled",
+      "label": "Enable row 7",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "row_7_label",
+      "label": "Label",
+      "default": "Feature 7"
+    },
+    {
+      "type": "select",
+      "id": "row_7_col_2",
+      "label": "Column 2",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_7_col_3",
+      "label": "Column 3",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_7_col_4",
+      "label": "Column 4",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_7_col_5",
+      "label": "Column 5",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_7_col_6",
+      "label": "Column 6",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "header",
+      "content": "Row 8"
+    },
+    {
+      "type": "checkbox",
+      "id": "row_8_enabled",
+      "label": "Enable row 8",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "row_8_label",
+      "label": "Label",
+      "default": "Feature 8"
+    },
+    {
+      "type": "select",
+      "id": "row_8_col_2",
+      "label": "Column 2",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_8_col_3",
+      "label": "Column 3",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_8_col_4",
+      "label": "Column 4",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_8_col_5",
+      "label": "Column 5",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_8_col_6",
+      "label": "Column 6",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "header",
+      "content": "Row 9"
+    },
+    {
+      "type": "checkbox",
+      "id": "row_9_enabled",
+      "label": "Enable row 9",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "row_9_label",
+      "label": "Label",
+      "default": "Feature 9"
+    },
+    {
+      "type": "select",
+      "id": "row_9_col_2",
+      "label": "Column 2",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_9_col_3",
+      "label": "Column 3",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_9_col_4",
+      "label": "Column 4",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_9_col_5",
+      "label": "Column 5",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_9_col_6",
+      "label": "Column 6",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "header",
+      "content": "Row 10"
+    },
+    {
+      "type": "checkbox",
+      "id": "row_10_enabled",
+      "label": "Enable row 10",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "row_10_label",
+      "label": "Label",
+      "default": "Feature 10"
+    },
+    {
+      "type": "select",
+      "id": "row_10_col_2",
+      "label": "Column 2",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_10_col_3",
+      "label": "Column 3",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_10_col_4",
+      "label": "Column 4",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_10_col_5",
+      "label": "Column 5",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_10_col_6",
+      "label": "Column 6",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "close",
+          "label": "Close"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "color",
+      "id": "header_background",
+      "label": "Header background",
+      "default": "#22beff"
+    },
+    {
+      "type": "color",
+      "id": "header_text_color",
+      "label": "Header text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "table_background",
+      "label": "Table background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "cell_text_color",
+      "label": "Cell text",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "check_icon_color",
+      "label": "Check icon",
+      "default": "#22beff"
+    },
+    {
+      "type": "color",
+      "id": "close_icon_color",
+      "label": "Close icon",
+      "default": "#d82c0d"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Comparison table"
+    }
+  ]
+}
+{% endschema %}
