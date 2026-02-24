@@ -42,13 +42,6 @@ slideshow-component:not(.slideshow--content-on-media) .slideshow-controls__dots 
     --shopify-account-signed-in-avatar-size: 24px !important;
 }
 
-.text-block ul {
-    margin: 0;
-    padding-left: 1.5rem;
-    list-style-position: outside;
-    list-style-type: none;
-}
-
 .text-block li {
     position: relative;
 }
@@ -219,8 +212,8 @@ video-media video {
 }
 
 .deferred-media__poster-icon svg, .video-placeholder-wrapper__poster-icon svg {
-    width: 2.4rem;
-    height: 2.4rem;
+    width: 2rem;
+    height: 2rem;
 }
 
 .menu-list__link[aria-haspopup="true"] .menu-list__link-title {

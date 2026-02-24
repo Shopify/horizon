@@ -16,7 +16,7 @@
         for item in customer_tag_shop
             assign applies_to = item.applies_to.value.products | where: 'id', product.id
 
-            if item.customer_tag != blank and applies_to.size > 0
+            if item.customer_tag != blank and applies_to.size > 0 and applies_to[0].type == 'Wholesale'
                 assign unlock_page = false
                 break
             endif
