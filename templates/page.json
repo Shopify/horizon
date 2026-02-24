@@ -42,10 +42,10 @@
           "type": "text",
           "name": "t:names.heading",
           "settings": {
-            "text": "<h4>We do create costumes, contact us for more information!</h4>",
-            "width": "fit-content",
+            "text": "<h4>We do create costumes, contact us for information!</h4>",
+            "width": "100%",
             "max_width": "normal",
-            "alignment": "left",
+            "alignment": "center",
             "type_preset": "rte",
             "font": "var(--font-body--family)",
             "font_size": "1rem",
