@@ -1,0 +1,553 @@
+{% doc %}
+  @prompt
+    create a slider block where it has no slider arrows, only dots navigation but like line with like this css .feature-dot {
+        cursor: pointer;
+        border: 0;
+        background: #EEF8FE;
+        width: 55px;
+        height: 6px;
+        border-radius: 20px;
+    }
+    .feature-dot.active {
+        background: var(--color-primary-button-background);
+    }
+    
+    slider be swipeable, fade in transition on change. only need full column and width, remove the image, remove padding, should only have 1 heading h3 and content richtext setting, get rid of min height, should have text alignment setting, block container should be width 100%, the nav should be fixed to bottom. getting clunky when slide changes, also, i only see 3 slides when 4 slides are populated. dot should be in flex-start, get rid of any px css sizes , remove slide background setting.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-slider-container-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    position: relative;
+  }
+
+  .ai-slider-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+  }
+
+  .ai-slider-slides-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+  }
+
+  .ai-slider-slide-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity {{ block.settings.transition_duration }}s ease-in-out;
+    cursor: grab;
+    -webkit-user-select: none;  /* Chrome, Safari, Opera */
+    -moz-user-select: none;     /* Firefox */
+    -ms-user-select: none;      /* Internet Explorer/Edge */
+    user-select: none;          /* Non-prefixed version */
+  }
+
+  .ai-slider-slide-{{ ai_gen_id }}.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    position: relative;
+  }
+
+  .ai-slider-slide-content-{{ ai_gen_id }} {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: {{ block.settings.text_alignment }};
+    justify-content: center;
+    padding-bottom: 3rem;
+  }
+
+  .ai-slider-slide-heading-{{ ai_gen_id }} {
+    color: {{ block.settings.heading_color }};
+    margin: 0 0 1rem;
+    text-align: {{ block.settings.text_alignment }};
+    width: 100%;
+  }
+
+  .ai-slider-slide-text-{{ ai_gen_id }} {
+    color: {{ block.settings.text_color }};
+    text-align: {{ block.settings.text_alignment }};
+    margin: 0;
+    width: 100%;
+  }
+
+  .ai-slider-dots-{{ ai_gen_id }} {
+    display: flex;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    padding: 0;
+    list-style: none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    margin: 0;
+  }
+
+  .ai-slider-dot-{{ ai_gen_id }} {
+    cursor: pointer;
+    border: 0;
+    background: {{ block.settings.dot_background }};
+    width: {{ block.settings.dot_width }}rem;
+    height: {{ block.settings.dot_height }}rem;
+    border-radius: {{ block.settings.dot_border_radius }}rem;
+    transition: background 0.3s ease;
+    padding: 0;
+  }
+
+  .ai-slider-dot-{{ ai_gen_id }}.active {
+    background: {{ block.settings.dot_active_background }};
+  }
+
+  .ai-slider-dot-{{ ai_gen_id }}:hover {
+    opacity: 0.8;
+  }
+{% endstyle %}
+
+<slider-block-{{ ai_gen_id }} class="ai-slider-container-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-slider-wrapper-{{ ai_gen_id }}">
+    <div class="ai-slider-slides-{{ ai_gen_id }}">
+      {% assign enabled_slides = '' %}
+      {% for i in (1..5) %}
+        {% liquid
+          assign slide_enabled_key = 'slide_' | append: i | append: '_enabled'
+          assign slide_enabled = block.settings[slide_enabled_key]
+          
+          if slide_enabled
+            assign enabled_slides = enabled_slides | append: i | append: ','
+          endif
+        %}
+      {% endfor %}
+      
+      {% assign enabled_slides_array = enabled_slides | split: ',' %}
+      
+      {% for slide_num in enabled_slides_array %}
+        {% if slide_num != blank %}
+          {% liquid
+            assign slide_heading_key = 'slide_' | append: slide_num | append: '_heading'
+            assign slide_text_key = 'slide_' | append: slide_num | append: '_text'
+
+            assign slide_heading = block.settings[slide_heading_key]
+            assign slide_text = block.settings[slide_text_key]
+          %}
+
+          <div class="ai-slider-slide-{{ ai_gen_id }} {% if forloop.first %}active{% endif %}" data-slide-index="{{ forloop.index0 }}">
+            <div class="ai-slider-slide-content-{{ ai_gen_id }}">
+              {% if slide_heading != blank %}
+                <h3 class="ai-slider-slide-heading-{{ ai_gen_id }}">{{ slide_heading }}</h3>
+              {% endif %}
+
+              {% if slide_text != blank %}
+                <div class="ai-slider-slide-text-{{ ai_gen_id }}">{{ slide_text }}</div>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <div class="ai-slider-dots-{{ ai_gen_id }}">
+      {% for slide_num in enabled_slides_array %}
+        {% if slide_num != blank %}
+          <button
+            class="ai-slider-dot-{{ ai_gen_id }} {% if forloop.first %}active{% endif %}"
+            data-dot-index="{{ forloop.index0 }}"
+            aria-label="Go to slide {{ forloop.index }}"
+          ></button>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</slider-block-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class SliderBlock{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.currentSlide = 0;
+        this.slides = [];
+        this.dots = [];
+        this.touchStartX = 0;
+        this.touchEndX = 0;
+        this.autoplayInterval = null;
+      }
+
+      connectedCallback() {
+        this.slides = Array.from(this.querySelectorAll('.ai-slider-slide-{{ ai_gen_id }}'));
+        this.dots = Array.from(this.querySelectorAll('.ai-slider-dot-{{ ai_gen_id }}'));
+        
+        if (this.slides.length === 0) return;
+
+        this.adjustContainerHeight();
+        this.setupEventListeners();
+        
+        {% if block.settings.autoplay %}
+          this.startAutoplay();
+        {% endif %}
+      }
+
+      disconnectedCallback() {
+        this.stopAutoplay();
+      }
+
+      adjustContainerHeight() {
+        const activeSlide = this.slides[this.currentSlide];
+        if (activeSlide) {
+          const container = this.querySelector('.ai-slider-slides-{{ ai_gen_id }}');
+          const height = activeSlide.offsetHeight;
+          container.style.minHeight = height + 'px';
+        }
+      }
+
+      setupEventListeners() {
+        this.dots.forEach((dot, index) => {
+          dot.addEventListener('click', () => {
+            this.goToSlide(index);
+            this.stopAutoplay();
+          });
+        });
+
+        this.addEventListener('touchstart', (e) => {
+          this.touchStartX = e.changedTouches[0].screenX;
+        });
+
+        this.addEventListener('touchend', (e) => {
+          this.touchEndX = e.changedTouches[0].screenX;
+          this.handleSwipe();
+        });
+
+        this.addEventListener('mousedown', (e) => {
+          this.touchStartX = e.screenX;
+          this.isDragging = true;
+        });
+
+        this.addEventListener('mouseup', (e) => {
+          if (this.isDragging) {
+            this.touchEndX = e.screenX;
+            this.handleSwipe();
+            this.isDragging = false;
+          }
+        });
+
+        this.addEventListener('mouseleave', () => {
+          this.isDragging = false;
+        });
+      }
+
+      handleSwipe() {
+        const swipeThreshold = 50;
+        const diff = this.touchStartX - this.touchEndX;
+
+        if (Math.abs(diff) > swipeThreshold) {
+          if (diff > 0) {
+            this.nextSlide();
+          } else {
+            this.prevSlide();
+          }
+          this.stopAutoplay();
+        }
+      }
+
+      goToSlide(index) {
+        this.slides[this.currentSlide].classList.remove('active');
+        this.dots[this.currentSlide].classList.remove('active');
+
+        this.currentSlide = index;
+
+        this.slides[this.currentSlide].classList.add('active');
+        this.dots[this.currentSlide].classList.add('active');
+        
+        this.adjustContainerHeight();
+      }
+
+      nextSlide() {
+        const nextIndex = (this.currentSlide + 1) % this.slides.length;
+        this.goToSlide(nextIndex);
+      }
+
+      prevSlide() {
+        const prevIndex = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+        this.goToSlide(prevIndex);
+      }
+
+      startAutoplay() {
+        this.autoplayInterval = setInterval(() => {
+          this.nextSlide();
+        }, {{ block.settings.autoplay_duration }} * 1000);
+      }
+
+      stopAutoplay() {
+        if (this.autoplayInterval) {
+          clearInterval(this.autoplayInterval);
+          this.autoplayInterval = null;
+        }
+      }
+    }
+
+    customElements.define('slider-block-{{ ai_gen_id }}', SliderBlock{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Content slider",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Slider settings"
+    },
+    {
+      "type": "range",
+      "id": "transition_duration",
+      "label": "Transition duration",
+      "min": 0,
+      "max": 2,
+      "step": 0.1,
+      "unit": "s",
+      "default": 0.5
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Enable autoplay",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_duration",
+      "label": "Autoplay duration",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "Text style"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 1,
+      "max": 3,
+      "step": 0.1,
+      "unit": "rem",
+      "default": 2
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Text size",
+      "min": 0.5,
+      "max": 1.5,
+      "step": 0.1,
+      "unit": "rem",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#666666"
+    },
+    {
+      "type": "header",
+      "content": "Dot navigation"
+    },
+    {
+      "type": "range",
+      "id": "dot_width",
+      "label": "Dot width",
+      "min": 1,
+      "max": 6,
+      "step": 0.5,
+      "unit": "rem",
+      "default": 3.5
+    },
+    {
+      "type": "range",
+      "id": "dot_height",
+      "label": "Dot height",
+      "min": 0.2,
+      "max": 1,
+      "step": 0.1,
+      "unit": "rem",
+      "default": 0.4
+    },
+    {
+      "type": "range",
+      "id": "dot_border_radius",
+      "label": "Dot border radius",
+      "min": 0,
+      "max": 2,
+      "step": 0.1,
+      "unit": "rem",
+      "default": 1.2
+    },
+    {
+      "type": "color",
+      "id": "dot_background",
+      "label": "Dot background",
+      "default": "#EEF8FE"
+    },
+    {
+      "type": "color",
+      "id": "dot_active_background",
+      "label": "Active dot background",
+      "default": "#22beff"
+    },
+    {
+      "type": "header",
+      "content": "Slide 1"
+    },
+    {
+      "type": "checkbox",
+      "id": "slide_1_enabled",
+      "label": "Enable slide 1",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "slide_1_heading",
+      "label": "Heading",
+      "default": "Slide 1"
+    },
+    {
+      "type": "richtext",
+      "id": "slide_1_text",
+      "label": "Content",
+      "default": "<p>This is the first slide</p>"
+    },
+    {
+      "type": "header",
+      "content": "Slide 2"
+    },
+    {
+      "type": "checkbox",
+      "id": "slide_2_enabled",
+      "label": "Enable slide 2",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "slide_2_heading",
+      "label": "Heading",
+      "default": "Slide 2"
+    },
+    {
+      "type": "richtext",
+      "id": "slide_2_text",
+      "label": "Content",
+      "default": "<p>This is the second slide</p>"
+    },
+    {
+      "type": "header",
+      "content": "Slide 3"
+    },
+    {
+      "type": "checkbox",
+      "id": "slide_3_enabled",
+      "label": "Enable slide 3",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "slide_3_heading",
+      "label": "Heading",
+      "default": "Slide 3"
+    },
+    {
+      "type": "richtext",
+      "id": "slide_3_text",
+      "label": "Content",
+      "default": "<p>This is the third slide</p>"
+    },
+    {
+      "type": "header",
+      "content": "Slide 4"
+    },
+    {
+      "type": "checkbox",
+      "id": "slide_4_enabled",
+      "label": "Enable slide 4",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "slide_4_heading",
+      "label": "Heading",
+      "default": "Slide 4"
+    },
+    {
+      "type": "richtext",
+      "id": "slide_4_text",
+      "label": "Content",
+      "default": "<p>This is the fourth slide</p>"
+    },
+    {
+      "type": "header",
+      "content": "Slide 5"
+    },
+    {
+      "type": "checkbox",
+      "id": "slide_5_enabled",
+      "label": "Enable slide 5",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "slide_5_heading",
+      "label": "Heading",
+      "default": "Slide 5"
+    },
+    {
+      "type": "richtext",
+      "id": "slide_5_text",
+      "label": "Content",
+      "default": "<p>This is the fifth slide</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Content slider"
+    }
+  ]
+}
+{% endschema %}

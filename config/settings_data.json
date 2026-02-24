@@ -159,7 +159,7 @@
       },
       "scheme-2": {
         "settings": {
-          "background": "#e7ecf1",
+          "background": "#fafafa",
           "foreground_heading": "#121212",
           "foreground": "#121212",
           "primary": "#121212",
@@ -435,7 +435,7 @@
           "background": "#eef4f9",
           "foreground_heading": "#333333",
           "foreground": "#333333",
-          "primary": "#333333",
+          "primary": "{{ shop.brand.colors.primary[0].background }}",
           "primary_hover": "#333333",
           "border": "#e5e7eb",
           "shadow": "#121212",
