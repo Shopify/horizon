@@ -236,6 +236,14 @@
     "gallery_Ur6nbz": {
       "type": "gallery",
       "blocks": {
+        "image_PaeXwC": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/PHOTO-2024-10-14-13-30-42_2.jpg",
+            "alt_text": "",
+            "link": ""
+          }
+        },
         "image_Jy7rwg": {
           "type": "image",
           "settings": {
@@ -249,6 +257,14 @@
           "settings": {
             "image": "shopify://shop_images/IMG_0368.jpg",
             "alt_text": "Figure Skater",
+            "link": ""
+          }
+        },
+        "image_RrtpeR": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/PHOTO-2024-10-14-13-30-42_1.jpg",
+            "alt_text": "",
             "link": ""
           }
         },
@@ -270,8 +286,10 @@
         }
       },
       "block_order": [
+        "image_PaeXwC",
         "image_Jy7rwg",
         "image_aNVWXj",
+        "image_RrtpeR",
         "image_QYi6EN",
         "image_TTWKqc"
       ],
