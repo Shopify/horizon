@@ -1,0 +1,395 @@
+{% liquid
+  assign block_settings = block.settings
+  assign ratio = 1
+
+  case block_settings.image_ratio
+    when 'landscape'
+      assign ratio = '16 / 9'
+    when 'portrait'
+      assign ratio = '4 / 5'
+    when 'adapt'
+      assign ratio = block_settings.image.aspect_ratio
+  endcase
+
+  if ratio == 0 or ratio == null
+    assign ratio = 1
+  endif
+%}
+
+<div class="timeline-item" data-timeline="{{ block_settings.timeline_year }}" {{ block.shopify_attributes }}>
+  {% if block_settings.timeline_year != blank %}
+    <span class="h2 year-label hidden--desktop">{{ block_settings.timeline_year }}</span>
+  {% endif %}
+
+  {% if block_settings.media_type == 'image' %}
+    {% capture class %}
+      image-block image-block--{{ block.id }} image-block--height-{{ block_settings.height }} spacing-style size-style
+    {% endcapture %}
+
+    {% capture style %}
+      --ratio: {{ ratio }};
+      {% render 'size-style', settings: block_settings %}
+      {% render 'spacing-style', settings: block_settings %}
+    {% endcapture %}
+
+    {% capture image_border_style %}
+      --ratio: {{ ratio }};
+      {% render 'border-override', settings: block_settings %}
+    {% endcapture %}
+
+    {% liquid
+      assign media_width_desktop = '100vw'
+      assign media_width_mobile = '100vw'
+      assign sizes = 'auto, (min-width: 750px) ' | append: media_width_desktop | append: ', ' | append: media_width_mobile
+      assign widths = '240, 352, 832, 1200, 1600, 1920, 2560, 3840'
+    %}
+
+    {% capture image %}
+      {%- if block_settings.image -%}
+        {{
+          block_settings.image
+          | image_url: width: 3840
+          | image_tag:
+            width: block_settings.image.width,
+            widths: widths,
+            height: block_settings.image.height,
+            class: 'image-block__image border-style',
+            style: image_border_style,
+            sizes: sizes
+        }}
+      {%- else -%}
+        <div class="placeholder-image border-style size-style" style="{{ image_border_style }}">
+          {{ 'detailed-apparel-1' | placeholder_svg_tag: 'hero__media' }}
+        </div>
+      {%- endif -%}
+    {% endcapture %}
+
+    <div
+      class="{{ class }}"
+      style="{{ style }}"
+      {{ block.shopify_attributes }}
+    >
+      {{ image }}
+    </div>
+  {% elsif block_settings.media_type == 'video' %}
+    {% capture video_style %}
+      {%  render 'spacing-style', settings: block_settings %}
+      {% render 'border-override', settings: block_settings %}
+      --size-style-width: {{ block_settings.custom_width }}%; --size-style-width-mobile: {{ block_settings.custom_width_mobile }}%;
+      --size-style-aspect-ratio: {% if block_settings.source == 'uploaded' %}{{ block_settings.video.aspect_ratio | default: 'auto' }}{% elsif block_settings.cover_image == blank %}{{ block_settings.aspect_ratio }}{% else %}auto{% endif %};
+    {% endcapture %}
+
+    {% if block_settings.source == 'uploaded' %}
+      {% render 'video',
+        video: block_settings.video,
+        video_class: 'spacing-style size-style border-style',
+        video_loop: block_settings.video_loop,
+        video_style: video_style,
+        video_preview_image: block_settings.video.preview_image,
+        additional_attributes: block.shopify_attributes,
+        section_id: section.id
+      %}
+    {% else %}
+      {% render 'video',
+        video_from_url: true,
+        video: block_settings.video_url.id,
+        video_class: 'spacing-style size-style border-style',
+        video_type: block_settings.video_url.type,
+        video_style: video_style,
+        video_alt: block_settings.alt,
+        video_preview_image: block_settings.cover_image,
+        additional_attributes: block.shopify_attributes,
+        section_id: section.id
+      %}
+    {% endif %}
+  {% endif %}
+
+  {% if block_settings.heading != blank %}
+    <h3 class="h3">{{ block_settings.heading }}</h3>
+  {% endif %}
+  {% if block_settings.text != blank %}
+    <div class="rte">{{ block_settings.text }}</div>
+  {% endif %}
+</div>
+<!--@list/split-->
+
+{% schema %}
+{
+  "name": "Timeline event",
+  "tag": null,
+  "settings": [
+    {
+      "type": "metaobject",
+      "id": "timeline_year",
+      "label": "Year",
+      "metaobject_type": "timeline_year"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "media_type",
+      "label": "t:settings.media_type",
+      "options": [
+        {
+          "value": "image",
+          "label": "t:options.image"
+        },
+        {
+          "value": "video",
+          "label": "t:options.video"
+        }
+      ],
+      "default": "image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image",
+      "visible_if": "{{ block.settings.media_type == 'image' }}"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "t:settings.aspect_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:options.auto"
+        },
+        {
+          "value": "portrait",
+          "label": "t:options.portrait"
+        },
+        {
+          "value": "square",
+          "label": "t:options.square"
+        },
+        {
+          "value": "landscape",
+          "label": "t:options.landscape"
+        }
+      ],
+      "default": "adapt",
+      "visible_if": "{{ block.settings.media_type == 'image' }}"
+    },
+    {
+      "type": "select",
+      "id": "source",
+      "label": "t:settings.video_source",
+      "visible_if": "{{ block.settings.media_type == 'video' }}",
+      "options": [
+        {
+          "value": "uploaded",
+          "label": "t:options.video_uploaded"
+        },
+        {
+          "value": "url",
+          "label": "t:options.video_external_url"
+        }
+      ],
+      "default": "uploaded"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "t:settings.video",
+      "visible_if": "{{ block.settings.media_type == 'video' and block.settings.source == 'uploaded' }}"
+    },
+    {
+      "type": "video_url",
+      "id": "video_url",
+      "label": "t:settings.video_external_url",
+      "info": "t:info.video_external",
+      "accept": ["youtube", "vimeo"],
+      "visible_if": "{{ block.settings.media_type == 'video' and block.settings.source == 'url' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "video_autoplay",
+      "label": "t:settings.video_autoplay",
+      "info": "t:info.video_autoplay",
+      "default": false,
+      "visible_if": "{{ block.settings.media_type == 'video' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "video_loop",
+      "label": "t:settings.video_loop",
+      "default": true,
+      "visible_if": "{{ block.settings.media_type == 'video' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "cover_image",
+      "label": "t:settings.cover_image",
+      "visible_if": "{{ block.settings.media_type == 'video' and block.settings.source == 'url' and block.settings.video_autoplay == false }}"
+    },
+    {
+      "type": "text",
+      "id": "alt",
+      "label": "t:settings.video_alt_text",
+      "info": "t:info.video_alt_text",
+      "visible_if": "{{ block.settings.media_type == 'video' and block.settings.source == 'url' }}"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:settings.text"
+    },
+        {
+      "type": "header",
+      "content": "t:content.size"
+    },
+    {
+      "type": "range",
+      "id": "custom_width",
+      "label": "t:settings.width",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "custom_width_mobile",
+      "label": "t:settings.width_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "label": "t:settings.aspect_ratio",
+      "visible_if": "{{ block.settings.media_type == 'video' and block.settings.source == 'url' and block.settings.cover_image == blank }}",
+      "options": [
+        {
+          "value": "auto",
+          "label": "t:options.auto"
+        },
+        {
+          "value": "9/16",
+          "label": "t:options.portrait"
+        },
+        {
+          "value": "1/1",
+          "label": "t:options.square"
+        },
+        {
+          "value": "16/9",
+          "label": "t:options.landscape"
+        }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "header",
+      "content": "t:content.borders"
+    },
+    {
+      "type": "select",
+      "id": "border",
+      "label": "t:settings.style",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "solid",
+          "label": "t:options.solid"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "t:settings.thickness",
+      "default": 1,
+      "visible_if": "{{ block.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "t:settings.opacity",
+      "default": 100,
+      "visible_if": "{{ block.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Timeline event"
+    }
+  ]
+}
+{% endschema %}

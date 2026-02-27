@@ -1,0 +1,1098 @@
+<script
+  src="{{ 'timeline.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+
+{% liquid
+    assign block_settings = block.settings
+
+    if block_settings.layout_type == 'carousel'
+        assign max_items = block_settings.columns | plus: 2
+    elsif block_settings.layout_type == 'grid'
+        assign max_items = block_settings.columns
+    endif
+
+    case block_settings.layout_type
+        when 'grid'
+        assign classes = 'resource-list--grid'
+        capture styles
+            echo '--resource-list-column-gap-desktop: ' | append: block_settings.columns_gap | append: 'px;'
+            echo '--resource-list-row-gap-desktop: ' | append: block_settings.rows_gap | append: 'px;'
+            echo '--resource-list-columns: repeat(' | append: block_settings.columns | append: ', 1fr);'
+            echo '--resource-list-columns-mobile: repeat(' | append: block_settings.mobile_columns | append: ', 1fr);'
+            echo '--column-count-mobile: ' | append: block_settings.mobile_columns | append: ';'
+        endcapture
+        when 'carousel'
+        assign classes = 'resource-list__carousel'
+        capture styles
+            echo '--resource-list-column-gap-desktop: ' | append: block_settings.columns_gap | append: 'px;'
+            echo '--column-count: ' | append: block_settings.columns | append: ';'
+            echo '--column-count-mobile: 1;'
+            echo '--mobile-card-size: ' | append: block_settings.mobile_card_size | append: ';'
+        endcapture
+    endcase
+%}
+
+<div
+  class="
+    group-block
+    group-block--height-{{ block_settings.height }}
+    group-block--width-{{ block_settings.width }}
+    border-style
+    spacing-style
+    size-style
+    {% if block_settings.reverse_on_mobile == true %}mobile-group-column-reverse{% endif %}
+    {% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %}
+    {{ block_settings.css_class }}
+  "
+  style="
+    {% render 'border-override', settings: block_settings %}
+    {% render 'spacing-style', settings: block_settings %}
+    {% render 'size-style', settings: block_settings %}
+  "
+  {{ block.shopify_attributes }}
+  data-testid="group-block"
+>
+
+  <div
+    class="
+      timeline-row
+      group-block-content
+      {% if request.design_mode %}group-block-content--design-mode{% endif %}
+      layout-panel-flex
+      layout-panel-flex--{{ block_settings.content_direction | default: 'column' }}
+      {% if block_settings.vertical_on_mobile %} mobile-column{% endif %}
+    "
+    style="{% render 'layout-panel-style', settings: block_settings %}"
+  >
+    <div>
+        <div class="year-sticky">
+            <ul class="list-unstyled year--display">
+                {% for item in shop.metaobjects['timeline_year'].values %}
+                    <li data-year="{{ item.year }}" {% if forloop.first %}class="active"{% endif %}>
+                        <span class="h3 year-label hidden--mobile">{{ item.year }}</span>
+                        <span class="dot-year"></span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div>
+        {% capture list_items %}
+            {% content_for 'blocks' %}
+        {% endcapture %}
+
+        {% liquid
+            # Create an array from the list items to be used for different layout types
+            assign list_items_array = list_items | strip | remove_last: '<!--@list/split-->' | split: '<!--@list/split-->'
+        %}
+
+        <div
+        class="
+            resource-list
+            timeline-list
+            {% if block_settings.carousel_on_mobile and block_settings.layout_type != 'carousel' %}
+            hidden--mobile
+            {% endif %}
+            {{ classes }}
+        "
+        style="{{ styles }}"
+        {% if block_settings.layout_type == 'grid' %}
+            data-testid="timeline-list-grid"
+        {% endif %}
+        >
+            {% case block_settings.layout_type %}
+                {% when 'grid' %}
+                {{ list_items }}
+                {% when 'carousel' %}
+                {% render 'resource-list-carousel',
+                    ref: 'Carousel',
+                    slides: list_items_array,
+                    slide_count: max_items,
+                    settings: block_settings,
+                    slide_width_max: '450px'
+                %}
+            {% endcase %}
+        </div>
+
+        {% if block_settings.layout_type != 'carousel' and block_settings.carousel_on_mobile %}
+            {% liquid
+                assign mobile_carousel_gap = block_settings.columns_gap
+            %}
+            <div
+                class="
+                resource-list
+                hidden--desktop
+                resource-list__carousel
+                force-full-width
+                "
+                style="
+                --resource-list-column-gap-desktop: {{ mobile_carousel_gap }}px;
+                --column-count: {{ block_settings.columns }};
+                --column-count-mobile: 1;
+                --mobile-card-size: {{ block_settings.mobile_card_size }};
+                "
+            >
+                {% render 'resource-list-carousel',
+                ref: 'CarouselMobile',
+                slides: list_items_array,
+                slide_count: max_items,
+                settings: block_settings,
+                slide_width_max: '450px'
+                %}
+            </div>
+        {% endif %}
+    </div>
+  </div>
+</div>
+
+
+{% stylesheet %}
+    .section-resource-list .section-timeline-list-list__header {
+        grid-column: 2;
+    }
+
+    .one-item slideshow-controls.carousel-controls {
+        display: none;
+    }
+
+    .one-item slideshow-arrows {
+        display: none;
+    }
+
+    .year-sticky {
+        position: sticky;
+        top: 0;
+    }
+    .year--display {
+        position: relative;
+    }
+    .dot-year {
+        width: 18px;
+        height: 18px;
+        background: var(--color-primary);
+        display: block;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: -9px;
+        z-index: 2;
+    }
+
+    .year--display:after {
+        content: "";
+        background: rgba(var(--color-primary-rgb) / .2);
+        height: calc(100% - 40px);
+        width: 3px;
+        display: block;
+        position: absolute;
+        right: -1.5px;
+        top: 20px;
+    }
+
+    li[data-year].active .dot-year:after {
+        content: "";
+        background: rgba(71, 245, 163, .3);
+        width: 40px;
+        height: 40px;
+        display: block;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: -11px;
+        border-radius: 50%;
+        transition: all ease .3s;
+    }
+
+    li[data-year].active .dot-year {
+        background-color: rgba(71, 245, 163, 1);
+    }
+
+    .year--display .year-label {
+        opacity: .3;
+        transition: all ease .3s;
+    }
+
+    li[data-year].active .year-label {
+        opacity: 1;
+        font-size: var(--font-h2--size) !important;
+    }
+
+    .timeline-item .year-label {
+        margin-bottom: var(--gap-sm);
+        display: block;
+        line-height: 1em;
+    }
+
+    .year--display li {
+        display: block;
+        position: relative;
+        margin-bottom: 2rem;
+        padding-right: 3rem;
+        text-align: right;
+    }
+
+    li[data-year] {
+        cursor: pointer;
+    }
+
+    [data-testid="timeline-list-grid"], .timeline-list {
+        --peek-next-slide-size: 0rem !important;
+    }
+
+    .timeline-row > div:first-child {
+        width: calc(20% - var(--gap) * 1 / 2);
+    }
+
+    .timeline-row > div:last-child {
+        width: calc(80% - var(--gap) * 1 / 2);
+    }
+
+    .year--display li:last-child {
+        margin-bottom: 0 !important;
+    }
+
+    @media (max-width: 749px) {
+        .year--display li {
+            padding-right: 0;
+            padding-bottom: 2rem;
+        }
+        .timeline-row > div:first-child {
+            width: calc(12% - var(--mobile-gap) * 1 / 2);
+        }
+
+        .timeline-row > div:last-child {
+            width: calc(88% - var(--mobile-gap) * 1 / 2);
+        }
+        .dot-year {
+            width: 13px;
+            height: 13px;
+            left: 50%;
+            transform: translateX(-50%);
+            right: unset !important;
+        }
+
+        li[data-year].active .dot-year:after {
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            right: unset !important;
+        }
+
+        .year--display:after {
+            right: unset;
+            left: 50%;
+            transform: translate(-50%);
+            height: calc(100% - 32px);
+            top: 24px;
+        }
+    }
+
+    .timeline-item .deferred-media__poster-button {
+        border-radius: var(--border-radius);
+        position: relative;
+    }
+
+  .timeline-list {
+
+    &.carousel--peek {
+      grid-column: 1 / -1;
+    }
+
+    @media (max-width: 989px) {
+      & {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (min-width: 990px) {
+      .slideshow-control--next {
+        margin-inline-start: auto;
+        margin-inline-end: calc(-1 * calc(var(--gutter-slide-width, 0) * 2  + var(--gap-sm))) !important;
+      }
+      slideshow-slides[gutters*=start] {
+        padding-inline: 0;
+        scroll-padding-inline-start: 0;
+      }
+      .slideshow-control--previous {
+        margin-inline-end: auto !important;
+        margin-inline-start: calc(-1 * calc(var(--gutter-slide-width, 0) * 2  + var(--gap-sm))) !important;
+      }
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Timeline",
+  "tag": null,
+  "blocks": [
+    {
+        "type": "_timeline-event"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.cards_layout"
+    },
+    {
+      "type": "select",
+      "id": "layout_type",
+      "label": "t:settings.layout_type",
+      "options": [
+        {
+          "value": "grid",
+          "label": "t:options.grid"
+        },
+        {
+          "value": "carousel",
+          "label": "t:options.carousel"
+        }
+      ],
+      "default": "grid"
+    },
+    {
+      "type": "checkbox",
+      "id": "carousel_on_mobile",
+      "label": "t:settings.carousel_on_mobile",
+      "default": false,
+      "visible_if": "{{ block.settings.layout_type != 'carousel' }}"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "t:settings.columns",
+      "min": 1,
+      "max": 8,
+      "step": 1,
+      "default": 4,
+      "visible_if": "{{ block.settings.layout_type == 'grid' or block.settings.layout_type == 'carousel' }}"
+    },
+    {
+      "type": "select",
+      "id": "mobile_columns",
+      "label": "t:settings.mobile_columns",
+      "options": [
+        {
+          "value": "1",
+          "label": "t:options.one_number"
+        },
+        {
+          "value": "2",
+          "label": "t:options.two_number"
+        }
+      ],
+      "default": "2",
+      "visible_if": "{{ block.settings.layout_type == 'grid' and block.settings.carousel_on_mobile == false }}"
+    },
+    {
+      "type": "select",
+      "id": "mobile_card_size",
+      "label": "t:settings.mobile_columns",
+      "options": [
+        {
+          "value": "100%",
+          "label": "Full"
+        },
+        {
+          "value": "80%",
+          "label": "80%"
+        },
+        {
+          "value": "60cqw",
+          "label": "t:options.one_number"
+        },
+        {
+          "value": "44cqw",
+          "label": "t:options.two_number"
+        }
+      ],
+      "default": "60cqw",
+      "visible_if": "{{ block.settings.layout_type == 'carousel' or block.settings.carousel_on_mobile == true }}"
+    },
+    {
+      "type": "range",
+      "id": "columns_gap",
+      "label": "t:settings.horizontal_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 8,
+      "visible_if": "{{ block.settings.layout_type == 'grid' or block.settings.layout_type == 'carousel' }}"
+    },
+    {
+      "type": "range",
+      "id": "rows_gap",
+      "label": "t:settings.vertical_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 8,
+      "visible_if": "{{ block.settings.layout_type == 'grid'}}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.carousel_navigation",
+      "visible_if": "{{ block.settings.layout_type == 'carousel' or block.settings.carousel_on_mobile == true }}"
+    },
+    {
+      "type": "select",
+      "id": "icons_style",
+      "label": "t:settings.icon",
+      "options": [
+        {
+          "value": "arrow",
+          "label": "t:options.arrows"
+        },
+        {
+          "value": "chevron",
+          "label": "t:options.chevrons"
+        },
+        {
+          "value": "arrows_large",
+          "label": "t:options.arrows_large"
+        },
+        {
+          "value": "chevron_large",
+          "label": "t:options.chevron_large"
+        },
+        {
+          "value": "none",
+          "label": "t:options.none"
+        }
+      ],
+      "default": "arrow",
+      "visible_if": "{{ block.settings.layout_type == 'carousel' or block.settings.carousel_on_mobile == true }}"
+    },
+    {
+      "type": "select",
+      "id": "icons_shape",
+      "label": "t:settings.icon_background",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "circle",
+          "label": "t:options.circle"
+        },
+        {
+          "value": "square",
+          "label": "t:options.square"
+        }
+      ],
+      "default": "none",
+      "visible_if": "{{ block.settings.icons_style != 'none' and block.settings.layout_type == 'carousel' or block.settings.carousel_on_mobile == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_dots",
+      "label": "Enable dots",
+      "default": false,
+      "visible_if": "{{ block.settings.layout_type == 'carousel' or block.settings.carousel_on_mobile == true }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "select",
+      "id": "content_direction",
+      "label": "t:settings.direction",
+      "options": [
+        {
+          "value": "column",
+          "label": "t:options.vertical"
+        },
+        {
+          "value": "row",
+          "label": "t:options.horizontal"
+        }
+      ],
+      "default": "column"
+    },
+    {
+      "type": "checkbox",
+      "id": "vertical_on_mobile",
+      "label": "t:settings.vertical_on_mobile",
+      "default": true,
+      "visible_if": "{{ block.settings.content_direction == 'row' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "reverse_on_mobile",
+      "label": "Reverse order on mobile",
+      "info": "only works for vertical mobile",
+      "default": false,
+      "visible_if": "{{ block.settings.vertical_on_mobile == true or block.settings.content_direction == 'column' }}"
+    },
+    {
+      "type": "select",
+      "id": "horizontal_alignment",
+      "label": "t:settings.alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "t:options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "flex-end",
+          "label": "t:options.right"
+        },
+        {
+          "value": "space-between",
+          "label": "t:options.space_between"
+        }
+      ],
+      "default": "flex-start",
+      "visible_if": "{{ block.settings.content_direction == 'row' }}"
+    },
+    {
+      "type": "select",
+      "id": "vertical_alignment",
+      "label": "t:settings.position",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "t:options.top"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "flex-end",
+          "label": "t:options.bottom"
+        }
+      ],
+      "default": "center",
+      "visible_if": "{{ block.settings.content_direction == 'row' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "align_baseline",
+      "label": "t:settings.align_baseline",
+      "default": false,
+      "visible_if": "{{ block.settings.vertical_alignment == 'flex-end' }}"
+    },
+    {
+      "type": "select",
+      "id": "horizontal_alignment_flex_direction_column",
+      "label": "t:settings.alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "t:options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "flex-end",
+          "label": "t:options.right"
+        }
+      ],
+      "default": "flex-start",
+      "visible_if": "{{ block.settings.content_direction != 'row' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_mobile_alignment",
+      "label": "Enable custom mobile alignment",
+      "visible_if": "{{ block.settings.vertical_on_mobile == true or block.settings.content_direction == 'column' }}"
+    },
+    {
+      "type": "select",
+      "id": "mobile_vertical_alignment",
+      "label": "Mobile alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "t:options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "flex-end",
+          "label": "t:options.right"
+        },
+        {
+          "value": "space-between",
+          "label": "t:options.space_between"
+        }
+      ],
+      "default": "flex-start",
+      "visible_if": "{{ block.settings.custom_mobile_alignment == true and block.settings.vertical_on_mobile == true or block.settings.content_direction == 'column' }}"
+    },
+    {
+      "type": "select",
+      "id": "vertical_alignment_flex_direction_column",
+      "label": "t:settings.position",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "t:options.top"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "flex-end",
+          "label": "t:options.bottom"
+        },
+        {
+          "value": "space-between",
+          "label": "t:options.space_between"
+        }
+      ],
+      "default": "center",
+      "visible_if": "{{ block.settings.content_direction == 'column' }}"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "t:settings.gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_mobile_gap",
+      "label": "Custom mobile gap",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "mobile_gap",
+      "label": "Mobile gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 12,
+      "visible_if": "{{ block.settings.enable_mobile_gap == true }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.size"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:settings.width",
+      "options": [
+        {
+          "value": "fit-content",
+          "label": "t:options.fit_content"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "fill"
+    },
+    {
+      "type": "range",
+      "id": "custom_width",
+      "label": "t:settings.custom_width",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.width == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "width_mobile",
+      "label": "t:settings.width_mobile",
+      "options": [
+        {
+          "value": "fit-content",
+          "label": "t:options.fit_content"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "fill"
+    },
+    {
+      "type": "range",
+      "id": "custom_width_mobile",
+      "label": "t:settings.custom_width",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.width_mobile == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "t:settings.height",
+      "options": [
+        {
+          "value": "fit",
+          "label": "t:options.fit_content"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "fit"
+    },
+    {
+      "type": "range",
+      "id": "custom_height",
+      "label": "t:settings.custom_height",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.height == 'custom' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "checkbox",
+      "id": "inherit_color_scheme",
+      "label": "t:settings.inherit_color_scheme",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1",
+      "visible_if": "{{ block.settings.inherit_color_scheme == false }}"
+    },
+    {
+      "type": "select",
+      "id": "background_media",
+      "label": "t:settings.background_media",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "image",
+          "label": "t:options.image"
+        },
+        {
+          "value": "video",
+          "label": "t:options.video"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "t:settings.video",
+      "visible_if": "{{ block.settings.background_media == 'video' }}"
+    },
+    {
+      "type": "select",
+      "id": "video_position",
+      "label": "t:settings.video_position",
+      "options": [
+        {
+          "value": "cover",
+          "label": "t:options.cover"
+        },
+        {
+          "value": "contain",
+          "label": "t:options.contain"
+        }
+      ],
+      "default": "cover",
+      "visible_if": "{{ block.settings.background_media == 'video' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "t:settings.image",
+      "visible_if": "{{ block.settings.background_media == 'image' }}"
+    },
+    {
+      "type": "select",
+      "id": "background_image_position",
+      "label": "t:settings.image_position",
+      "options": [
+        {
+          "value": "cover",
+          "label": "t:options.cover"
+        },
+        {
+          "value": "fit",
+          "label": "t:options.fit"
+        }
+      ],
+      "default": "cover",
+      "visible_if": "{{ block.settings.background_media == 'image' }}"
+    },
+    {
+      "type": "select",
+      "id": "border",
+      "label": "t:settings.borders",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "solid",
+          "label": "t:options.solid"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "unit": "px",
+      "label": "t:settings.border_width",
+      "default": 1,
+      "visible_if": "{{ block.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "t:settings.border_opacity",
+      "default": 100,
+      "visible_if": "{{ block.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_mobile_radius",
+      "label": "Custom mobile radius",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "mobile_border_radius",
+      "label": "Mobile corner radius",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.enable_mobile_radius == true }}"
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "t:settings.image",
+      "visible_if": "{{ false }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "toggle_overlay",
+      "label": "t:settings.background_overlay"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "t:settings.overlay_color",
+      "alpha": true,
+      "default": "#00000026",
+      "visible_if": "{{ block.settings.toggle_overlay }}"
+    },
+    {
+      "type": "select",
+      "id": "overlay_style",
+      "label": "t:settings.overlay_style",
+      "options": [
+        {
+          "value": "solid",
+          "label": "t:options.solid"
+        },
+        {
+          "value": "gradient",
+          "label": "t:options.gradient"
+        }
+      ],
+      "default": "solid",
+      "visible_if": "{{ block.settings.toggle_overlay }}"
+    },
+    {
+      "type": "select",
+      "id": "gradient_direction",
+      "label": "t:settings.gradient_direction",
+      "options": [
+        {
+          "value": "to top",
+          "label": "t:options.up"
+        },
+        {
+          "value": "to bottom",
+          "label": "t:options.down"
+        }
+      ],
+      "default": "to top",
+      "visible_if": "{{ block.settings.toggle_overlay and block.settings.overlay_style == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_mobile_padding",
+      "label": "Custom Mobile Padding",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "mobile-padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.custom_mobile_padding == true }}"
+    },
+    {
+      "type": "range",
+      "id": "mobile-padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.custom_mobile_padding == true }}"
+    },
+    {
+      "type": "range",
+      "id": "mobile-padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.custom_mobile_padding == true }}"
+    },
+    {
+      "type": "range",
+      "id": "mobile-padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.custom_mobile_padding == true }}"
+    },
+    {
+      "type": "text",
+      "id": "css_class",
+      "label": "CSS class",
+      "info": "optional"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Timeline",
+      "category": "t:categories.layout"
+    }
+  ]
+}
+{% endschema %}
