@@ -21,6 +21,8 @@
                 break
             endif
         endfor
+    elsif collection.metafields.custom.lock_collection == true
+        assign unlock_page = false
     endif
 
     echo unlock_page
