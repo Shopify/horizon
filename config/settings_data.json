@@ -115,6 +115,11 @@
         "settings": {
           "show_preview_data": true
         }
+      },
+      "12198985164985445843": {
+        "type": "shopify://apps/nova-gdpr-cookie-consent/blocks/app-embed/6667ecbd-70cf-4527-84a9-e6037e6ca706",
+        "disabled": true,
+        "settings": {}
       }
     },
     "color_schemes": {
@@ -133,7 +138,7 @@
           "primary_button_hover_background": "{{ shop.brand.colors.primary[0].background }}",
           "primary_button_hover_text": "#ffffff",
           "primary_button_hover_border": "{{ shop.brand.colors.primary[0].background }}",
-          "secondary_button_background": "rgba(0,0,0,0)",
+          "secondary_button_background": "#ffffff",
           "secondary_button_text": "{{ shop.brand.colors.primary[0].background }}",
           "secondary_button_border": "{{ shop.brand.colors.primary[0].background }}",
           "secondary_button_hover_background": "rgba(0,0,0,0)",

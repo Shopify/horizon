@@ -334,6 +334,10 @@ back-to-top svg {
     .media-gallery--carousel slideshow-container, .media-gallery--grid .product-media>* {
         border: 1px solid var(--color-border);
     }
+    .okeConnect .c-questionsForm-back, .okeConnect .c-questionsForm-next {
+        min-width: 8rem;
+        justify-content: center;
+    }
 }
 
 @media (max-width: 749px) {
@@ -418,5 +422,13 @@ back-to-top svg {
     back-to-top {
         bottom: 5rem !important;
         right: 0.5rem !important;
+    }
+
+    .full-width-mobile {
+        width: 100%;
+    }
+
+    div:has(.okeQuizModalButton), .okeQuizModalButton {
+        width: 100%;
     }
 }
