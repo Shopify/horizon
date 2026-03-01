@@ -596,7 +596,7 @@
                   "type": "text",
                   "name": "t:names.heading",
                   "settings": {
-                    "text": "<h2>Installers in Australia</h2>",
+                    "text": "<h2>Installers in {{ closest.metaobject.countries.country_name.value }}</h2>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "center",
