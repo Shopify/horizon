@@ -741,7 +741,10 @@ class FacetStatusComponent extends Component {
     facetStatus.innerHTML = Array.from(checkedInputElements)
       .map((inputElement) => {
         const swatch = inputElement.parentElement?.querySelector('span.swatch');
-        return swatch?.outerHTML ?? '';
+        const span = document.createElement('span');
+        span.className = 'visually-hidden';
+        span.textContent = inputElement.getAttribute('aria-label') ?? '';
+        return (swatch?.outerHTML ?? '') + span.outerHTML;
       })
       .join('');
   }
@@ -763,7 +766,7 @@ class FacetStatusComponent extends Component {
     }
 
     if (filterStyle === 'horizontal' && checkedInputElementsCount === 1) {
-      facetStatus.innerHTML = checkedInputElements[0]?.dataset.label ?? '';
+      facetStatus.textContent = checkedInputElements[0]?.dataset.label ?? '';
       return;
     }
 

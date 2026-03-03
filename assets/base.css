@@ -156,9 +156,6 @@ select {
   cursor: pointer;
 }
 
-.product-card__content slideshow-component {
-  --cursor: pointer;
-}
 
 .predictive-search-results__card .product-card,
 .predictive-search-results__card .collection-card,
@@ -378,6 +375,12 @@ p:empty {
 /* Layout */
 .content-for-layout {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.content-for-layout > .shopify-section {
+  flex-grow: 1;
 }
 
 /* Set up page widths & margins */
@@ -766,9 +769,6 @@ p:empty {
   cursor: default;
 }
 
-slideshow-component [data-placeholder='true'] * {
-  cursor: grab;
-}
 
 /* Base text and heading styles */
 body,
@@ -1093,20 +1093,6 @@ body:has(.header[transparent]) #header-group > *:not(.header-section) {
 
 ul[product-grid-view='zoom-out'] .product-grid__card > * {
   display: none;
-}
-
-ul[product-grid-view='zoom-out'] .product-grid__card .card-gallery {
-  display: block;
-}
-
-[product-grid-view='zoom-out']
-  .card-gallery
-  > :is(quick-add-component, .product-badges, slideshow-component > slideshow-controls) {
-  display: none;
-}
-
-ul[product-grid-view='zoom-out'] .card-gallery > img {
-  display: block;
 }
 
 [product-grid-view='zoom-out'] {
@@ -1598,11 +1584,6 @@ media-gallery {
   }
 }
 
-.product-media-gallery__slideshow--single-media slideshow-container {
-  @media screen and (max-width: 749px) {
-    grid-area: unset;
-  }
-}
 
 :not(.dialog-zoomed-gallery) > .product-media-container {
   --slide-width: 100%;
@@ -1632,15 +1613,6 @@ media-gallery {
   }
 }
 
-media-gallery:where(.media-gallery--grid) .media-gallery__grid {
-  display: none;
-}
-
-media-gallery.media-gallery--grid .media-gallery__grid .product-media-container {
-  /* Needed for safari to stretch to full grid height */
-  height: 100%;
-}
-
 .product-media :is(deferred-media, product-model) {
   position: absolute;
 }
@@ -1661,23 +1633,10 @@ media-gallery.media-gallery--grid .media-gallery__grid .product-media-container 
     --viewport-offset: 0px;
   }
 
-  .media-gallery--two-column .media-gallery__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   .media-gallery--large-first-image .product-media-container:first-child,
   .media-gallery--two-column .product-media-container:only-child {
     /* First child spans 2 columns */
     grid-column: span 2;
-  }
-
-  /* Display grid view as a carousel on mobile, grid on desktop */
-  media-gallery:is(.media-gallery--grid) slideshow-component {
-    display: none;
-  }
-
-  media-gallery:where(.media-gallery--grid) .media-gallery__grid {
-    display: grid;
   }
 }
 
@@ -1704,20 +1663,6 @@ media-gallery.media-gallery--grid .media-gallery__grid .product-media-container 
 
   img {
     object-fit: var(--product-media-fit);
-  }
-}
-
-/* Media gallery zoom dialog */
-.product-media-container__zoom-button {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: var(--layer-flat);
-  cursor: zoom-in;
-  background-color: transparent;
-
-  &:hover {
-    background-color: transparent;
   }
 }
 
@@ -1791,103 +1736,6 @@ zoom-dialog dialog {
   animation: elementSlideOutBottom calc(var(--animation-speed) * 0.5) var(--animation-easing) forwards;
 }
 
-.dialog-thumbnails-list-container {
-  position: fixed;
-  width: 100%;
-  bottom: 0;
-  display: flex;
-  z-index: var(--layer-raised);
-}
-
-.dialog-thumbnails-list {
-  --active-thumbnail-border-color: rgb(var(--color-border-rgb) / var(--media-border-opacity));
-
-  position: relative;
-  display: inline-flex;
-  flex-direction: row;
-  gap: 8px;
-  bottom: 0;
-  overflow-x: auto;
-  opacity: 0;
-  padding: var(--padding-lg);
-  margin-inline: auto;
-  scrollbar-width: none;
-  animation: thumbnailsSlideInBottom calc(var(--animation-speed) * 0.75) var(--animation-easing) forwards;
-  animation-delay: calc(var(--animation-speed) * 1.5);
-}
-
-.dialog--closed .dialog-thumbnails-list {
-  animation: thumbnailsSlideOutBottom var(--animation-speed) var(--animation-easing) forwards;
-}
-
-@media screen and (min-width: 750px) {
-  .dialog-thumbnails-list {
-    position: fixed;
-    flex-direction: column;
-    inset: 50% var(--margin-lg) auto auto;
-    right: 0;
-    max-height: calc(100vh - 200px);
-    overflow-y: auto;
-    animation: thumbnailsSlideInTop var(--spring-d220-b0-duration) var(--spring-d220-b0-easing) forwards;
-    animation-delay: calc(var(--spring-d220-b0-duration) * 0.5);
-  }
-
-  .dialog--closed .dialog-thumbnails-list {
-    animation: thumbnailsSlideOutTop var(--animation-speed) var(--animation-easing) forwards;
-  }
-}
-
-.dialog-thumbnails-list__thumbnail {
-  width: var(--thumbnail-width);
-  height: auto;
-  transition: transform var(--animation-speed) var(--animation-easing);
-  flex-shrink: 0;
-  border-radius: var(--media-radius);
-
-  img {
-    height: 100%;
-    object-fit: cover;
-    border-radius: var(--media-radius);
-    aspect-ratio: var(--aspect-ratio);
-  }
-
-  &:is([aria-selected='true']) {
-    outline: var(--focus-outline-width) solid currentcolor;
-    outline-offset: calc(var(--focus-outline-offset) / 2);
-    border: var(--style-border-width) solid var(--active-thumbnail-border-color);
-  }
-}
-
-@supports (anchor-name: --test) {
-  .dialog-thumbnails-list:has(.dialog-thumbnails-list__thumbnail:is([aria-selected='true']))::after {
-    --inset-offset: calc(var(--focus-outline-offset) / 2);
-
-    content: '';
-    position: absolute;
-    inset: anchor(top) anchor(right) anchor(bottom) anchor(left);
-    position-anchor: --selected-thumbnail;
-    outline: var(--focus-outline-width) solid currentcolor;
-    outline-offset: calc(var(--focus-outline-offset) / 2);
-    border: var(--style-border-width) solid var(--active-thumbnail-border-color);
-    border-radius: var(--media-radius);
-    z-index: var(--layer-raised);
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .dialog-thumbnails-list:has(.dialog-thumbnails-list__thumbnail:is([aria-selected='true']))::after {
-      transition-property: inset;
-      transition-duration: var(--spring-d180-b0-duration);
-      transition-timing-function: var(--spring-d180-b0-easing);
-    }
-  }
-
-  .dialog-thumbnails-list__thumbnail:is([aria-selected='true']) {
-    outline: none;
-    border: none;
-    anchor-name: --selected-thumbnail;
-  }
-}
-
 .close-button:hover {
   background-color: transparent;
   opacity: 0.8;
@@ -1939,40 +1787,7 @@ Otherwise, it should be a block to rely on its own size */
   padding: inherit;
 }
 
-slideshow-slide .shopify-model-viewer-ui__controls-area.shopify-model-viewer-ui__controls-area {
-  bottom: var(--padding-sm);
-  right: var(--padding-sm);
-}
 
-.dialog-zoomed-gallery .shopify-model-viewer-ui__controls-area.shopify-model-viewer-ui__controls-area {
-  /* Move the controls above the thumbnails. Need to calculate the height of the thumbnails list */
-  bottom: calc(var(--thumbnail-width) / var(--media-preview-ratio) + var(--padding-lg) * 2);
-  right: var(--padding-lg);
-}
-
-@media screen and (max-width: 749px) {
-  slideshow-component:has(:not(.mobile\:hidden) :is(.slideshow-controls__dots, .slideshow-controls__counter))
-    .shopify-model-viewer-ui__controls-area {
-    /* Position the controls just above the counter */
-    bottom: calc(var(--minimum-touch-target) + var(--padding-sm));
-  }
-}
-
-@media screen and (min-width: 750px) {
-  slideshow-component:has(:not(.desktop\:hidden) :is(.slideshow-controls__dots, .slideshow-controls__counter))
-    .shopify-model-viewer-ui__controls-area {
-    /* Position the controls just above the counter */
-    bottom: calc(var(--minimum-touch-target) + var(--padding-sm));
-  }
-
-  .dialog-zoomed-gallery .shopify-model-viewer-ui__controls-area.shopify-model-viewer-ui__controls-area {
-    /* Move the controls up to match the padding on the thumbnails */
-    bottom: var(--padding-lg);
-
-    /* Move the controls to the left of the thumbnails list on the right */
-    right: calc(var(--thumbnail-width) + var(--padding-lg) * 2);
-  }
-}
 
 :is(deferred-media, .video-placeholder-wrapper).border-style {
   /* Apply the border radius to the video */
@@ -2614,6 +2429,14 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
   text-decoration-thickness: 1.5px;
 }
 
+.price-item--sale {
+  white-space: nowrap;
+}
+
+.price__hidden {
+  display: none;
+}
+
 .card-gallery {
   position: relative;
 }
@@ -3211,47 +3034,6 @@ label:has(input[type='checkbox']:disabled) {
   height: 100%;
   display: flex;
   flex-direction: column;
-}
-
-/* Cart bubble */
-.cart-bubble {
-  --cart-padding: 0.2em;
-
-  position: relative;
-  width: 20px;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  border-width: 0;
-  display: flex;
-  line-height: normal;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-primary-button-text);
-  padding-inline: var(--cart-padding);
-}
-
-.cart-bubble[data-maintain-ratio] {
-  aspect-ratio: 1;
-}
-
-.cart-bubble[data-maintain-ratio] .cart-bubble__background {
-  border-radius: var(--style-border-radius-50);
-}
-
-.cart-bubble__background {
-  position: absolute;
-  inset: 0;
-  background-color: var(--color-primary-button-background);
-  border-radius: var(--style-border-radius-lg);
-}
-
-.cart-bubble__text {
-  font-size: var(--font-size--3xs);
-  z-index: var(--layer-flat);
-  line-height: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 /* Cart typography */
@@ -3905,344 +3687,17 @@ fly-to-cart.fly-to-cart--sticky {
   object-position: center;
 }
 
-/*
- * Slideshow Component
- */
-slideshow-component {
-  --cursor: grab;
-  --slide-offset: 6px;
 
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  timeline-scope: var(--slideshow-timeline);
-}
 
-slideshow-component.slideshow--content-below-media slideshow-slide {
-  display: grid;
-}
 
-.slideshow--content-below-media slideshow-slide :is(.slide__image-container, .slide__content) {
-  position: static;
-}
 
-.slideshow--content-below-media slideshow-slide {
-  grid-template-rows: var(--grid-template-rows);
 
-  @media screen and (min-width: 750px) {
-    grid-template-rows: var(--grid-template-rows-desktop);
-  }
-}
 
-.slide__content {
-  @supports (animation-timeline: auto) {
-    opacity: 0;
-    animation: slide-reveal both linear;
-    animation-timeline: var(--slideshow-timeline);
-  }
 
-  @media (prefers-reduced-motion) {
-    opacity: 1;
-    animation: none;
-  }
-}
 
-/*
- * Force Safari to recalculate the timeline state on timeline refresh (after loop)
-*/
-slideshow-component[refreshing-timeline] .slide__content {
-  animation: none;
-}
+/* Slideshow Arrow Hover Animation - must stay in base.css for proper CSS cascade */
 
-.slideshow--single-media {
-  --cursor: default;
-}
 
-a slideshow-component {
-  --cursor: pointer;
-}
-
-/*
- * Slideshow Slides
- */
-slideshow-slides {
-  width: 100%;
-  position: relative;
-  display: flex;
-  overflow-x: scroll;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  scrollbar-color: transparent transparent;
-  scrollbar-width: none;
-  gap: var(--slideshow-gap, 0);
-  cursor: var(--cursor);
-  min-height: var(--slide-min-height);
-
-  @media (prefers-reduced-motion) {
-    scroll-behavior: auto;
-  }
-
-  &::-webkit-scrollbar {
-    width: 0;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: transparent;
-    border: none;
-  }
-
-  @media screen and (min-width: 750px) {
-    min-height: var(--slide-min-height-desktop);
-  }
-}
-
-slideshow-component[disabled='true'] slideshow-slides {
-  overflow: hidden;
-}
-
-/**
- * By default, slideshows have overflow: hidden (no compositor layer).
- * When the slideshow enters the viewport, JavaScript adds [in-viewport] which enables scrolling.
- */
-slideshow-component:not([in-viewport]) slideshow-slides {
-  overflow: hidden;
-}
-
-slideshow-component[mobile-disabled] slideshow-slides {
-  @media screen and (max-width: 749px) {
-    overflow: hidden;
-  }
-}
-
-slideshow-slide {
-  position: relative;
-  scroll-snap-align: center;
-  width: var(--slide-width, 100%);
-  max-height: 100%;
-  flex-shrink: 0;
-  view-timeline-name: var(--slideshow-timeline);
-  view-timeline-axis: inline;
-  content-visibility: auto;
-  contain-intrinsic-size: auto none;
-  border-radius: var(--corner-radius, 0);
-  overflow: hidden;
-
-  slideshow-component[actioned] &,
-  &[aria-hidden='false'] {
-    content-visibility: visible;
-  }
-
-  slideshow-component slideshow-slide:not([aria-hidden='false']) {
-    content-visibility: hidden;
-  }
-
-  &[hidden]:not([reveal]) {
-    display: none;
-  }
-
-  /* Make inactive slides appear clickable */
-  &[aria-hidden='true'] {
-    cursor: pointer;
-  }
-}
-
-slideshow-slide .slide__image-container--rounded {
-  border-radius: var(--corner-radius, 0);
-}
-
-slideshow-slide.product-media-container--tallest {
-  content-visibility: visible;
-}
-
-@media screen and (max-width: 749px) {
-  /* Media gallery has a peeking slide on the right side always, and on the left side when the current slide is the last one */
-  .media-gallery--hint
-    :is(
-      slideshow-slide:has(+ slideshow-slide[aria-hidden='false']:last-of-type),
-      slideshow-slide[aria-hidden='false'] + slideshow-slide
-    ) {
-    content-visibility: auto;
-
-    slideshow-component[actioned] & {
-      content-visibility: visible;
-    }
-  }
-}
-
-/*
- * Collection and Resource list carousels have peeking slides on both sides.
- * Card galleries preview the next or previous images on 'pointerenter', so we
- * try to kick load them beforehand (they are lazy loaded otherwise).
- */
-:is(.resource-list__carousel, .card-gallery)
-  :is(
-    slideshow-slide:has(+ slideshow-slide[aria-hidden='false']),
-    slideshow-slide[aria-hidden='false'] + slideshow-slide
-  ) {
-  content-visibility: auto;
-
-  slideshow-component[actioned] & {
-    content-visibility: visible;
-  }
-}
-
-/*
- * Be specific about HTML children structure to avoid targeting nested slideshows.
- * Ensure that the content is 'visible' while scrolling instead of 'auto' to avoid issues in Safari.
- */
-slideshow-component:is([dragging], [transitioning], :hover) > slideshow-container > slideshow-slides > slideshow-slide {
-  content-visibility: visible;
-}
-
-slideshow-slides[gutters*='start'] {
-  padding-inline-start: var(--gutter-slide-width, 0);
-  scroll-padding-inline-start: var(--gutter-slide-width, 0);
-}
-
-slideshow-slides[gutters*='end'] {
-  padding-inline-end: var(--gutter-slide-width, 0);
-}
-
-slideshow-component[dragging] {
-  --cursor: grabbing;
-
-  * {
-    pointer-events: none;
-  }
-}
-
-slideshow-component[dragging] slideshow-arrows {
-  display: none;
-}
-
-slideshow-container {
-  width: 100%;
-  display: block;
-  position: relative;
-  grid-area: container;
-  container-type: inline-size;
-  background-color: var(--color-background);
-}
-
-@media screen and (min-width: 750px) {
-  .media-gallery--carousel slideshow-component:has(slideshow-controls[thumbnails]) {
-    &:has(slideshow-controls[pagination-position='right']) {
-      display: grid;
-      grid-template:
-        'container controls' auto
-        'arrows controls' min-content
-        / 1fr auto;
-    }
-
-    &:has(slideshow-controls[pagination-position='left']) {
-      display: grid;
-      grid-template:
-        'controls container' auto
-        'controls arrows' min-content
-        / auto 1fr;
-    }
-
-    slideshow-controls[pagination-position='left'] {
-      order: -1;
-    }
-  }
-}
-
-/* Slideshow Play/Pause */
-.slideshow-control:is(.icon-pause, .icon-play) {
-  color: var(--color-active);
-
-  &:hover {
-    color: var(--color-hover);
-  }
-
-  svg {
-    display: none;
-  }
-}
-
-slideshow-component:is([autoplay]) {
-  &:is([paused]) {
-    .icon-play > svg {
-      display: block;
-    }
-  }
-
-  &:not([paused]) {
-    .icon-pause > svg {
-      display: block;
-    }
-  }
-}
-
-/* Slideshow Arrows */
-slideshow-arrows {
-  --cursor-previous: w-resize;
-  --cursor-next: e-resize;
-
-  position: absolute;
-  inset: 0;
-  display: flex;
-  z-index: var(--layer-heightened);
-  pointer-events: none;
-  mix-blend-mode: difference;
-  align-items: flex-end;
-
-  &[position='left'] {
-    justify-content: flex-start;
-    padding-inline: var(--padding-xs);
-  }
-
-  &[position='right'] {
-    justify-content: flex-end;
-    padding-inline: var(--padding-xs);
-  }
-
-  &[position='center'] {
-    justify-content: space-between;
-    align-items: center;
-  }
-}
-
-slideshow-arrows:has(.slideshow-control--shape-square),
-slideshow-arrows:has(.slideshow-control--shape-circle) {
-  mix-blend-mode: normal;
-}
-
-slideshow-component[disabled='true'] slideshow-arrows {
-  display: none;
-}
-
-slideshow-arrows .slideshow-control {
-  pointer-events: auto;
-  opacity: 0;
-  min-height: var(--minimum-touch-target);
-  min-width: var(--minimum-touch-target);
-  padding: 0 var(--padding-xs);
-  color: var(--color-white);
-}
-
-slideshow-arrows .slideshow-control.slideshow-control--style-none {
-  display: none;
-}
-
-.media-gallery--carousel slideshow-arrows .slideshow-control {
-  padding-inline: 0 var(--padding-md);
-  opacity: 1;
-}
-
-.card-gallery slideshow-arrows .slideshow-control {
-  /* Align icons with quick-add button */
-  padding-inline: var(--padding-xl);
-
-  @container (max-width: 249px) {
-    padding-inline: 0 var(--padding-sm);
-  }
-}
 
 :not(.media-gallery--carousel)
   > :is(slideshow-component:hover, slideshow-component:focus-within):not(:has(slideshow-controls:hover))
@@ -4263,21 +3718,6 @@ slideshow-arrows .slideshow-control.slideshow-control--style-none {
   }
 }
 
-@keyframes slide-reveal {
-  0% {
-    translate: calc(var(--slideshow-slide-offset, 6) * 1rem) 0;
-    opacity: 0;
-  }
-
-  50% {
-    opacity: 1;
-  }
-
-  100% {
-    translate: calc(var(--slideshow-slide-offset, 6) * -1rem) 0;
-    opacity: 0;
-  }
-}
 
 .section-resource-list,
 .section-carousel {
@@ -4396,64 +3836,7 @@ slideshow-arrows .slideshow-control.slideshow-control--style-none {
   text-decoration: none;
 }
 
-.resource-list__carousel {
-  --slide-width: 60vw;
 
-  width: 100%;
-  position: relative;
-  container-type: inline-size;
-  container-name: resource-list-carousel;
-
-  .slideshow-control[disabled] {
-    display: none;
-  }
-
-  .slideshow-control--next {
-    margin-inline-start: auto;
-  }
-}
-
-@container resource-list-carousel (max-width: 749px) {
-  .resource-list__carousel .resource-list__slide {
-    --slide-width: clamp(150px, var(--mobile-card-size, 60cqw), var(--slide-width-max));
-  }
-}
-
-@container resource-list-carousel (min-width: 750px) {
-  .resource-list__carousel .resource-list__slide {
-    --section-slide-width: calc(
-      (100% - (var(--resource-list-column-gap) * (var(--column-count) - 1)) - var(--peek-next-slide-size)) /
-        var(--column-count)
-    );
-    --fallback-slide-width: clamp(150px, var(--mobile-card-size, 60cqw), var(--slide-width-max));
-    --slide-width: var(--section-slide-width, var(--fallback-slide-width));
-  }
-}
-
-.resource-list__carousel slideshow-slides {
-  gap: var(--resource-list-column-gap);
-
-  /* Add padding to prevent hover animations from being clipped in slideshow
-     15px accommodates:
-     - Scale effect (9px on each side from 1.03 scale)
-     - Lift effect (4px upward movement)
-     - Shadow (15px spread with -5px offset)
-     Using 16px for better alignment with our spacing scale */
-
-  margin-block: -16px;
-  padding-block: 16px;
-}
-
-.resource-list__carousel slideshow-arrows {
-  padding-inline: var(--util-page-margin-offset);
-}
-
-.resource-list__carousel .resource-list__slide {
-  width: var(--slide-width);
-  flex: 0 0 auto;
-  scroll-snap-align: start;
-  min-width: 0;
-}
 
 /* Base styles */
 .group-block,
@@ -4510,65 +3893,6 @@ slideshow-arrows .slideshow-control.slideshow-control--style-none {
 
 .layout-panel-flex--column > .group-block--height-custom {
   flex-basis: var(--size-style-height);
-}
-
-accordion-custom {
-  details {
-    &::details-content,
-    .details-content {
-      block-size: 0;
-      overflow-y: clip;
-      opacity: 0;
-      interpolate-size: allow-keywords;
-      transition: content-visibility var(--animation-speed-slow) allow-discrete,
-        padding-block var(--animation-speed-slow) var(--animation-easing),
-        opacity var(--animation-speed-slow) var(--animation-easing),
-        block-size var(--animation-speed-slow) var(--animation-easing);
-    }
-
-    /* Disable transitions when the content toggle is not caused by the direct user interaction, e.g. opening the filters on mobile. */
-    &:not(:focus-within)::details-content,
-    &:not(:focus-within) .details-content {
-      transition: none;
-    }
-
-    &:not([open]) {
-      &::details-content,
-      .details-content {
-        padding-block: 0;
-      }
-    }
-
-    &[open] {
-      &::details-content,
-      .details-content {
-        opacity: 1;
-        block-size: auto;
-
-        @starting-style {
-          block-size: 0;
-          opacity: 0;
-          overflow-y: clip;
-        }
-
-        &:focus-within {
-          overflow-y: visible;
-        }
-      }
-    }
-  }
-}
-
-accordion-custom[data-disable-on-mobile='true'] summary {
-  @media screen and (max-width: 749px) {
-    cursor: auto;
-  }
-}
-
-accordion-custom[data-disable-on-desktop='true'] summary {
-  @media screen and (min-width: 750px) {
-    cursor: auto;
-  }
 }
 
 text-component {

@@ -86,7 +86,7 @@
         class="products-count-wrapper"
         data-testid="products-count"
       >
-        <span title="{{ 'content.product_count' | t }}">
+        <span role="status">
           {% if products_count > 25000 %}
             {{- 'content.item_count_cutoff' | t: count: 25000 -}}
           {% else %}
@@ -179,7 +179,7 @@
                           assign should_render_clear = false
                         endif
 
-                        render 'price-filter', filter: filter, filter_style: block_settings.filter_style, should_render_clear: should_render_clear
+                        render 'price-filter', filter: filter, filter_style: block_settings.filter_style, should_render_clear: should_render_clear, id_prefix: 'horizontal'
                       -%}
                     {% else %}
                       {% liquid
@@ -212,6 +212,7 @@
                     class: 'facets__overflow-list',
                     children: rendered_filters,
                     more-attributes: more_attributes,
+                    more-button-attributes: 'aria-haspopup="dialog"',
                     minimum-items: 2,
                     data-testid: 'horizontal-filters-overflow-list'
                   %}
@@ -243,7 +244,7 @@
                 class="products-count-wrapper"
                 data-testid="products-count"
               >
-                <span title="{{ 'content.product_count' | t }}">
+                <span role="status">
                   {% if products_count > 25000 %}
                     {{- 'content.item_count_cutoff' | t: count: 25000 -}}
                   {% else %}
@@ -287,6 +288,7 @@
           class="button facets-toggle__button button-unstyled button-unstyled--with-icon"
           on:click="#filters-drawer/showDialog"
           type="button"
+          aria-haspopup="dialog"
         >
           <span class="svg-wrapper">
             {{ 'icon-filter.svg' | inline_asset_content }}
@@ -340,6 +342,7 @@
               results: results,
               sort_by: sort_by,
               filter_style: block_settings.filter_style,
+              suffix: 'mobile',
               sort_position: 'mobile',
               should_use_select_on_mobile: should_use_select_on_mobile,
               section_id: section.id
@@ -403,14 +406,13 @@
               {% endif %}
             </h2>
             <button
-              class="button facets-drawer__close button-unstyled close-button"
+              class="facets-drawer__close button-unstyled close-button"
               on:click="dialog-component/closeDialog"
               type="button"
+              aria-label="{{ 'actions.close' | t }}"
+              autofocus
             >
-              <span
-                class="svg-wrapper svg-wrapper--small"
-                title="{{ 'actions.close' | t }}"
-              >
+              <span class="svg-wrapper svg-wrapper--small">
                 {{ 'icon-close.svg' | inline_asset_content }}
               </span>
             </button>
@@ -440,7 +442,7 @@
                           assign is_active = true
                         endif
 
-                        render 'price-filter', filter: filter, filter_style: 'vertical', should_render_clear: false
+                        render 'price-filter', filter: filter, filter_style: 'vertical', should_render_clear: false, id_prefix: 'dialog'
                       -%}
                     {% else %}
                       {% liquid

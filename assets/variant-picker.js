@@ -1,11 +1,13 @@
 import { Component } from '@theme/component';
 import { VariantSelectedEvent, VariantUpdateEvent } from '@theme/events';
 import { morph, MORPH_OPTIONS } from '@theme/morph';
+import { OverflowList } from '@theme/overflow-list';
 import { yieldToMainThread, getViewParameterValue, ResizeNotifier } from '@theme/utilities';
 
 /**
  * @typedef {object} VariantPickerRefs
- * @property {HTMLFieldSetElement[]} fieldsets – The fieldset elements.
+ * @property {HTMLFieldSetElement[]} fieldsets - The fieldset elements.
+ * @property {HTMLElement} [overflowList] - The overflow list element.
  */
 
 /**
@@ -326,7 +328,18 @@ export default class VariantPicker extends Component {
         } else if (morphElementSelector) {
           this.updateElement(html, morphElementSelector);
         } else {
+          const { overflowList } = this.refs;
+          const wasSwatchesExpanded =
+            overflowList instanceof OverflowList && overflowList.getAttribute('disabled') === 'true';
+
           newProduct = this.updateVariantPicker(html);
+
+          if (wasSwatchesExpanded) {
+            const overflowListAfterMorph = overflowList;
+            if (overflowListAfterMorph instanceof OverflowList) {
+              overflowListAfterMorph.showAll();
+            }
+          }
         }
 
         // Dispatch for all paths so product-form-component can reset #variantChangeInProgress

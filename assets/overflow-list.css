@@ -48,6 +48,7 @@ slot[name='more'] .button {
   text-transform: var(--text-transform);
   color: currentcolor;
   text-align: start;
+  -webkit-font-smoothing: antialiased;
 }
 
 [part='overflow'] {

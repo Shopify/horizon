@@ -47,13 +47,7 @@
         ></script>
 
         <cart-note style="display: flex;">
-          <accordion-custom
-            class="cart-note"
-            {% if settings.cart_note_open_by_default %}
-              open-by-default-on-desktop
-              open-by-default-on-mobile
-            {% endif %}
-          >
+          {% capture cart_note_accordion_children %}
             <details
               class="details"
               {% if settings.cart_note_open_by_default %}
@@ -86,7 +80,13 @@
                 >{{ cart.note }}</textarea>
               </div>
             </details>
-          </accordion-custom>
+          {% endcapture %}
+          {% render 'accordion-custom-component',
+            children: cart_note_accordion_children,
+            class: 'cart-note',
+            open_by_default_on_desktop: settings.cart_note_open_by_default,
+            open_by_default_on_mobile: settings.cart_note_open_by_default
+          %}
         </cart-note>
       {% endif %}
       {% if settings.show_cart_note and settings.show_add_discount_code %}
@@ -113,7 +113,7 @@
           endif
         %}
 
-        <accordion-custom class="cart-discount">
+        {% capture cart_discount_accordion_children %}
           <details
             class="details"
             {% if disclosure_expanded %}
@@ -210,7 +210,11 @@
               </div>
             </div>
           </details>
-        </accordion-custom>
+        {% endcapture %}
+        {% render 'accordion-custom-component',
+          children: cart_discount_accordion_children,
+          class: 'cart-discount'
+        %}
       {% endif %}
     </div>
   {% endif %}

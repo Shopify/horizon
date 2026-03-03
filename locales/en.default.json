@@ -10,6 +10,7 @@
 {
   "accessibility": {
     "account": "Account",
+    "active_filters": "Active filters:",
     "cart": "Cart",
     "cart_count": "Total items in cart",
     "close_dialog": "Close dialog",
@@ -24,6 +25,7 @@
       "one": "{{ count }} filter applied",
       "other": "{{ count }} filters applied"
     },
+    "home": "Home",
     "increase_quantity": "Increase quantity",
     "inventory_status": "Inventory status",
     "localization_region_and_language": "Region and language selector",
@@ -56,7 +58,9 @@
     "slideshow_previous": "Previous slide",
     "unit_price": "Unit price",
     "find_country": "Find country",
-    "view_pricing_info": "View pricing information"
+    "view_pricing_info": "View pricing information",
+    "price_filter_low": "Low price",
+    "price_filter_high": "High price"
   },
   "actions": {
     // Quick add button on product cards, shortened version of add to cart
@@ -67,6 +71,7 @@
     // Button to apply discount code to cart
     "apply": "Apply",
     "back": "Back",
+    "back_to": "Back to {{ title }}",
     "choose": "Choose",
     // Button to reset current selection or input
     "clear": "Clear",
@@ -101,6 +106,7 @@
     "view_all": "View all",
     "more": "More",
     "zoom": "Zoom",
+    "zoom_media": "Zoom media {{ index }}",
     "close_dialog": "Close dialog",
     // Button to clear search filter and restore default view
     "reset": "Reset",
@@ -206,7 +212,7 @@
     "page_placeholder_title": "Page title",
     "page_placeholder_content": "Select a page to display its content.",
     "pagination": {
-      "nav_label": "Pagination navigation",
+      "nav_label": "Pagination",
       "previous": "Previous",
       "next": "Next",
       "page": "Page {{ page }}"
@@ -232,6 +238,7 @@
     "placeholder_image": "Placeholder image",
     "quantity": "Quantity",
     "quantity_per_item": "/ea",
+    "quick_order_list": "Quick order list",
     "recently_viewed_products": "Recently viewed",
     "remove_all": "Remove all",
     "remove_all_items_confirmation": "Remove all {{ count }} items from your cart?",

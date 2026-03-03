@@ -12,6 +12,11 @@
     assign search_style = 'modal'
   endif
 
+  if section.settings.show_search
+    render 'predictive-search-styles'
+    render 'slideshow-styles'
+  endif
+
   if section.settings.enable_transparent_header_home and template.name == 'index'
     assign transparent = 'always'
     assign transparent_color_scheme = section.settings.home_color_scheme

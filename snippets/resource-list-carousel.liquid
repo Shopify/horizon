@@ -38,10 +38,7 @@
   {% endfor %}
 {% endcapture %}
 
-<div
-  class="resource-list__carousel"
-  style="{{ gutter_style }} --slide-width-max: {{ slide_width_max | default: '300px' }};"
->
+<div style="{{ gutter_style }} --slide-width-max: {{ slide_width_max | default: '300px' }};">
   {% render 'slideshow',
     ref: slideshow_ref,
     class: 'resource-list__carousel',
@@ -56,3 +53,78 @@
     slideshow_gutters: slideshow_gutters
   %}
 </div>
+
+{% stylesheet %}
+  .resource-list__carousel {
+    --slide-width: 60vw;
+    width: 100%;
+    position: relative;
+    container-type: inline-size;
+    container-name: resource-list-carousel;
+
+    .slideshow-control[disabled] {
+      display: none;
+    }
+
+    .slideshow-control--next {
+      margin-inline-start: auto;
+    }
+  }
+
+  @container resource-list-carousel (max-width: 749px) {
+    .resource-list__carousel .resource-list__slide {
+      --slide-width: clamp(150px, var(--mobile-card-size, 60cqw), var(--slide-width-max));
+    }
+  }
+
+  @container resource-list-carousel (min-width: 750px) {
+    .resource-list__carousel .resource-list__slide {
+      --section-slide-width: calc(
+        (100% - (var(--resource-list-column-gap) * (var(--column-count) - 1)) - var(--peek-next-slide-size)) /
+          var(--column-count)
+      );
+      --fallback-slide-width: clamp(150px, var(--mobile-card-size, 60cqw), var(--slide-width-max));
+      --slide-width: var(--section-slide-width, var(--fallback-slide-width));
+    }
+  }
+
+  .resource-list__carousel slideshow-slides {
+    gap: var(--resource-list-column-gap);
+
+    /* Add padding to prevent hover animations from being clipped in slideshow
+     15px accommodates:
+     - Scale effect (9px on each side from 1.03 scale)
+     - Lift effect (4px upward movement)
+     - Shadow (15px spread with -5px offset)
+     Using 16px for better alignment with our spacing scale */
+    margin-block: -16px;
+    padding-block: 16px;
+  }
+
+  .resource-list__carousel slideshow-arrows {
+    padding-inline: var(--util-page-margin-offset);
+  }
+
+  .resource-list__carousel .resource-list__slide {
+    width: var(--slide-width);
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    min-width: 0;
+  }
+
+  /*
+   * Resource list carousels have peeking slides on both sides.
+   * We try to kick load them beforehand (they are lazy loaded otherwise).
+   */
+  .resource-list__carousel
+    :is(
+      slideshow-slide:has(+ slideshow-slide[aria-hidden='false']),
+      slideshow-slide[aria-hidden='false'] + slideshow-slide
+    ) {
+    content-visibility: auto;
+
+    slideshow-component[actioned] & {
+      content-visibility: visible;
+    }
+  }
+{% endstylesheet %}

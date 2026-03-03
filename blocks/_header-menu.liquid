@@ -286,6 +286,20 @@
     height: 100%;
     margin-block: 0;
 
+    &::after {
+      content: '';
+      position: absolute;
+      display: none;
+      top: var(--header-padding);
+      height: var(--box-height);
+      left: 0;
+      right: 0;
+    }
+
+    &[data-safety-box='true']::after {
+      display: block;
+    }
+
     &:hover,
     &:focus {
       color: var(--menu-top-level-font-color);

@@ -112,13 +112,13 @@
                     Accordion for links with children, in menus with fewer than 3 levels of links
                   {%- endcomment -%}
                   {% liquid
-                    assign accordion_state = ''
+                    assign should_open_first = false
                     if first_accordion_open == false and block_settings.drawer_accordion_expand_first
                       assign first_accordion_open = true
-                      assign accordion_state = 'open-by-default-on-mobile'
+                      assign should_open_first = true
                     endif
                   %}
-                  <accordion-custom {{ accordion_state }}>
+                  {% capture accordion_children %}
                     <details
                       id="Details-menu-drawer-{{ link.handle }}"
                     >
@@ -173,7 +173,11 @@
                         {%- endfor -%}
                       </ul>
                     </details>
-                  </accordion-custom>
+                  {% endcapture %}
+                  {% render 'accordion-custom-component',
+                    children: accordion_children,
+                    open_by_default_on_mobile: should_open_first
+                  %}
                 {% elsif block_settings.drawer_accordion == false and link.links != blank %}
                   {%- comment -%}
                     Flat menus for links with children, in menus with fewer than 3 levels of links
@@ -284,9 +288,8 @@
                         <div class="menu-drawer__nav-buttons">
                           <button
                             class="button menu-drawer__back-button focus-inset"
-                            aria-expanded="true"
                             on:click="header-drawer/back"
-                            aria-label="{{ 'actions.back' | t }}"
+                            aria-label="{{ 'actions.back_to' | t: title: link.title }}"
                           >
                             <span class="svg-wrapper icon-caret icon-caret--backward">
                               {{- 'icon-caret.svg' | inline_asset_content -}}
@@ -357,17 +360,17 @@
                                 </a>
                               {%- else -%}
                                 {% liquid
-                                  assign accordion_state = ''
+                                  assign should_open_first_nested = false
                                   if first_accordion_open == false and block_settings.drawer_accordion and block_settings.drawer_accordion_expand_first
                                     assign first_accordion_open = true
-                                    assign accordion_state = 'open-by-default-on-mobile'
+                                    assign should_open_first_nested = true
                                   endif
                                 %}
                                 {% if block_settings.drawer_accordion %}
                                   {%- comment -%}
                                     Accordion for links with children, in menus with 3 levels of links
                                   {%- endcomment -%}
-                                  <accordion-custom {{ accordion_state }}>
+                                  {% capture accordion_children_nested %}
                                     <details
                                       id="Details-menu-drawer-{{ link.handle }}-{{ childlink.handle }}"
                                     >
@@ -426,7 +429,11 @@
                                         {%- endfor -%}
                                       </ul>
                                     </details>
-                                  </accordion-custom>
+                                  {% endcapture %}
+                                  {% render 'accordion-custom-component',
+                                    children: accordion_children_nested,
+                                    open_by_default_on_mobile: should_open_first_nested
+                                  %}
                                 {% else %}
                                   {%- comment -%}
                                     Flat menus for links with children, in menus with 3 levels of links
@@ -663,7 +670,6 @@
                   >
                     <button
                       class="button menu-drawer__back-button link focus-inset"
-                      aria-expanded="true"
                       on:click="header-drawer/back"
                     >
                       <span class="svg-wrapper icon-caret icon-caret--backward">

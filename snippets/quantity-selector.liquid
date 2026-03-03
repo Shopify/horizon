@@ -68,6 +68,7 @@
       on:blur="/setQuantity"
       on:focus="/selectInputValue"
       ref="quantityInput"
+      aria-live="polite"
       aria-label="{{ 'accessibility.quantity' | t }}"
       {% if line_index %}
         data-cart-line="{{ line_index | plus: 1 }}"

@@ -35,6 +35,16 @@
     }
   }
 
+  swatches-variant-picker-component overflow-list[disabled='true'] {
+    --overflow-list-padding-block: 0px;
+    margin-block-start: calc(
+      var(--product-swatches-padding-block-start) + var(--focus-outline-offset) + var(--focus-outline-width)
+    );
+    margin-block-end: calc(
+      var(--product-swatches-padding-block-end) + var(--focus-outline-offset) + var(--focus-outline-width)
+    );
+  }
+
   .hidden-swatches__count {
     display: flex;
     align-self: center;

@@ -6,6 +6,11 @@
   assign product = section.settings.product
   assign gallery_aspect_ratio = product.featured_media.preview_image.aspect_ratio | default: 1
 -%}
+{% render 'quick-add-styles' %}
+{% render 'quick-add-modal-styles' %}
+{% render 'buy-buttons-styles' %}
+{% render 'product-badges-styles' %}
+
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div
   class="
