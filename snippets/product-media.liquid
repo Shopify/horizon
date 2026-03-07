@@ -17,7 +17,12 @@
 {%- enddoc -%}
 
 {% liquid
-  assign widths = widths | default: '240, 352, 832, 1200, 1600, 1920, 2560, 3840'
+  comment 
+    Replaced:
+    Added 450 and 600 for tighter mobile optimization
+  endcomment
+
+  assign widths = widths | default: '240, 352, 450, 533, 600, 720, 832, 1200, 1600, 1920, 2560, 3840'
 %}
 
 <div
