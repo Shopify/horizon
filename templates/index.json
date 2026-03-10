@@ -8935,7 +8935,8 @@
       "custom_css": [
         ".image-block__image {object-fit: contain;}",
         ".background-image-fit img {object-position: bottom;}",
-        ".tes-shadow {box-shadow: 7px 2px 9.8px #56bcf940;}"
+        ".tes-shadow {box-shadow: 7px 2px 9.8px #56bcf940;}",
+        "@media (min-width: 750px) {.resource-list__carousel .resource-list__slide {width: 50rem; }}"
       ],
       "name": "Grid Section",
       "settings": {
