@@ -13,16 +13,16 @@
 {% if review_count > 0 %}
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
+  "@context": "https:\/\/schema.org",
   "@type": "AggregateRating",
-  "@id": "{{ closest.product.url }}#rating",
+  "@id": "\/products\/{{ closest.product.handle }}#rating",
   "itemReviewed": {
     "@type": "Product",
-    "@id": "{{ closest.product.url }}#product"
+    "@id": "\/products\/{{ closest.product.handle }}#product"
   },
-  "ratingCount": {{ review_count | json }},
-  "reviewCount": {{ review_count | json }},
-  "ratingValue": {{ review_value | json }},
+  "ratingCount": {{ review_count }},
+  "reviewCount": {{ review_count }},
+  "ratingValue": "{{ review_value }}",
   "bestRating": 5,
   "worstRating": 1
 }
