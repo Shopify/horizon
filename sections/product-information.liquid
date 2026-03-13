@@ -2,6 +2,33 @@
   {{ closest.product | structured_data }}
 </script>
 
+{% if closest.product.metafields.okendo.summaryData.reviewCount > 0 %}
+  {% assign review_count = closest.product.metafields.okendo.summaryData.reviewCount %}
+  {% assign review_value = closest.product.metafields.okendo.summaryData.reviewAverageValue %}
+{% elsif closest.product.metafields.okendo.ReviewCount > 0 %}
+  {% assign review_count = closest.product.metafields.okendo.ReviewCount %}
+  {% assign review_value = closest.product.metafields.okendo.ReviewAverageValue %}
+{% endif %}
+
+{% if review_count > 0 %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AggregateRating",
+  "@id": "{{ closest.product.url }}#rating",
+  "itemReviewed": {
+    "@type": "Product",
+    "@id": "{{ closest.product.url }}#product"
+  },
+  "ratingCount": {{ review_count | json }},
+  "reviewCount": {{ review_count | json }},
+  "ratingValue": {{ review_value | json }},
+  "bestRating": 5,
+  "worstRating": 1
+}
+</script>
+{% endif %}
+
 {% capture media_gallery %}
   {%- content_for 'block',
     type: '_product-media-gallery',
