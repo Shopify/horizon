@@ -1016,14 +1016,18 @@
     }
 
     .facets--drawer .variant-option__button-label--has-swatch:has(:checked) {
+      --focus-outline: none !important;
       border-color: transparent !important;
       background-color: transparent !important;
+      outline: none !important;
+      outline-offset: 0 !important;
       box-shadow: none !important;
     }
 
     .facets--drawer .variant-option__button-label--has-swatch:has(:checked) .swatch {
-      outline: var(--focus-outline-width) solid rgb(var(--color-foreground-rgb) / var(--opacity-35-55)) !important;
-      outline-offset: var(--focus-outline-offset);
+      outline: none !important;
+      outline-offset: 0 !important;
+      box-shadow: inset 0 0 0 var(--variant-picker-border-width) rgb(var(--color-foreground-rgb) / var(--variant-picker-border-opacity)) !important;
     }
 
     .facets--drawer .variant-option__button-label--has-swatch:has(:checked)::after {
