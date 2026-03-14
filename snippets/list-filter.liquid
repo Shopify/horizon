@@ -976,6 +976,26 @@
     }
   }
 
+  /*
+    Drawer swatches on touch devices: suppress hover visuals from shared swatch styles.
+    This keeps scrolling stable while preserving selected (:checked) outlines.
+  */
+  @media (hover: none) and (pointer: coarse) {
+    .facets--drawer .variant-option__button-label--has-swatch,
+    .facets--drawer .variant-option__button-label--has-swatch .swatch {
+      transition: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .facets--drawer .variant-option__button-label--has-swatch:hover,
+    .facets--drawer .variant-option__button-label--has-swatch:hover .swatch,
+    .facets--drawer .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover,
+    .facets--drawer .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover .swatch {
+      outline: none !important;
+      box-shadow: none !important;
+    }
+  }
+
   /* Keep swatch labels visible for selected values on touch/mobile/tablet layouts. */
   @media screen and (max-width: 989px), (hover: none) and (pointer: coarse) {
     .facets__inputs-list--swatches .variant-option__button-label:has(:checked) .facets__swatch-label,
