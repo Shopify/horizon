@@ -996,12 +996,21 @@
     }
 
     .facets--drawer .variant-option__button-label--has-swatch:hover:not(:has(:checked)),
-    .facets--drawer .variant-option__button-label--has-swatch:active:not(:has(:checked)),
     .facets--drawer .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover:not(:has(:checked)),
-    .facets--drawer .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:active:not(:has(:checked)) {
+    .facets--drawer .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:not(:has(:checked)) {
       background-color: transparent !important;
       border-color: transparent !important;
       color: inherit !important;
+    }
+
+    .facets--drawer .variant-option__button-label--has-swatch:has(:checked) {
+      border-color: rgb(var(--color-foreground-rgb) / var(--opacity-30)) !important;
+      background-color: rgb(var(--color-background-rgb)) !important;
+    }
+
+    .facets--drawer .variant-option__button-label--has-swatch:has(:checked) .swatch {
+      outline: var(--focus-outline-width) solid rgb(var(--color-foreground-rgb) / var(--opacity-35-55)) !important;
+      outline-offset: var(--focus-outline-offset);
     }
   }
 
