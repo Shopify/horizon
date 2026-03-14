@@ -994,6 +994,15 @@
       outline: none !important;
       box-shadow: none !important;
     }
+
+    .facets--drawer .variant-option__button-label--has-swatch:hover:not(:has(:checked)),
+    .facets--drawer .variant-option__button-label--has-swatch:active:not(:has(:checked)),
+    .facets--drawer .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover:not(:has(:checked)),
+    .facets--drawer .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:active:not(:has(:checked)) {
+      background-color: transparent !important;
+      border-color: transparent !important;
+      color: inherit !important;
+    }
   }
 
   /* Keep swatch labels visible for selected values on touch/mobile/tablet layouts. */
