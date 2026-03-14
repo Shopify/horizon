@@ -1032,6 +1032,12 @@
     .facets--drawer .variant-option__button-label--has-swatch:has(:checked)::after {
       display: none !important;
     }
+
+    .facets--drawer .facets__inputs-list--swatches-grid .variant-option__button-label:has(:checked),
+    .facets--drawer .variant-option__button-label:has(:checked) {
+      font-weight: inherit !important;
+      transition: none !important;
+    }
   }
 
   /* Keep swatch labels visible for selected values on touch/mobile/tablet layouts. */
