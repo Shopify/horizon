@@ -656,14 +656,14 @@
     cursor: not-allowed;
   }
 
-  @media (hover: hover) and (pointer: fine) {
+  @media (hover: hover) and (pointer: fine) and (min-width: 990px) {
     .facets__inputs-list-item:not(.facets__inputs-list-item--disabled) .facets__image-label:hover {
       font-weight: 500;
     }
   }
 
   /* Filter-specific variant-option styles */
-  @media (hover: hover) and (pointer: fine) {
+  @media (hover: hover) and (pointer: fine) and (min-width: 990px) {
     .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover .swatch {
       --focus-outline: var(--focus-outline-width) solid rgb(var(--color-foreground-rgb) / var(--opacity-35-55));
 
@@ -683,7 +683,7 @@
     outline: none;
   }
 
-  @media (hover: hover) and (pointer: fine) {
+  @media (hover: hover) and (pointer: fine) and (min-width: 990px) {
     .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover {
       outline: none;
     }
@@ -775,7 +775,7 @@
     width: auto;
   }
 
-  @media (hover: hover) and (pointer: fine) {
+  @media (hover: hover) and (pointer: fine) and (min-width: 990px) {
     .facets__inputs-list-item:not(.facets__inputs-list-item--disabled) .variant-option__button-label:hover {
       font-weight: 500;
     }
@@ -980,7 +980,7 @@
     Drawer swatches on touch devices: suppress hover visuals from shared swatch styles.
     This keeps scrolling stable while preserving selected (:checked) outlines.
   */
-  @media (hover: none) and (pointer: coarse) {
+  @media screen and (max-width: 989px), (hover: none) and (pointer: coarse) {
     .facets--drawer .variant-option__button-label--has-swatch,
     .facets--drawer .variant-option__button-label--has-swatch .swatch {
       transition: none;
@@ -988,15 +988,27 @@
     }
 
     .facets--drawer .variant-option__button-label--has-swatch:hover,
+    .facets--drawer .variant-option__button-label--has-swatch:active,
+    .facets--drawer .variant-option__button-label--has-swatch:has(:focus-visible),
     .facets--drawer .variant-option__button-label--has-swatch:hover .swatch,
+    .facets--drawer .variant-option__button-label--has-swatch:active .swatch,
+    .facets--drawer .variant-option__button-label--has-swatch:has(:focus-visible) .swatch,
     .facets--drawer .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover,
-    .facets--drawer .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover .swatch {
+    .facets--drawer .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:active,
+    .facets--drawer .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:has(:focus-visible),
+    .facets--drawer .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover .swatch,
+    .facets--drawer .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:active .swatch,
+    .facets--drawer .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:has(:focus-visible) .swatch {
       outline: none !important;
       box-shadow: none !important;
     }
 
     .facets--drawer .variant-option__button-label--has-swatch:hover:not(:has(:checked)),
+    .facets--drawer .variant-option__button-label--has-swatch:active:not(:has(:checked)),
+    .facets--drawer .variant-option__button-label--has-swatch:has(:focus-visible):not(:has(:checked)),
     .facets--drawer .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover:not(:has(:checked)),
+    .facets--drawer .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:active:not(:has(:checked)),
+    .facets--drawer .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:has(:focus-visible):not(:has(:checked)),
     .facets--drawer .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:not(:has(:checked)) {
       background-color: transparent !important;
       border-color: transparent !important;
@@ -1004,14 +1016,24 @@
     }
 
     .facets--drawer .variant-option__button-label--has-swatch:has(:checked) {
+      --focus-outline: none !important;
       border-color: transparent !important;
       background-color: transparent !important;
+      outline: none !important;
+      outline-offset: 0 !important;
       box-shadow: none !important;
     }
 
     .facets--drawer .variant-option__button-label--has-swatch:has(:checked) .swatch {
-      outline: var(--focus-outline-width) solid rgb(var(--color-foreground-rgb) / var(--opacity-35-55)) !important;
-      outline-offset: var(--focus-outline-offset);
+      outline: none !important;
+      outline-offset: 0 !important;
+      box-shadow: none !important;
+    }
+
+    .facets--drawer .variant-option__button-label--has-swatch:has(:checked)::after,
+    .facets--drawer .variant-option__button-label--has-swatch:has(:checked) .swatch::after {
+      display: none !important;
+      border: none !important;
     }
   }
 
