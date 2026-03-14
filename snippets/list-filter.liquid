@@ -966,20 +966,47 @@
     Selection feedback is still provided by the existing :checked styles.
   */
   @media (hover: none) and (pointer: coarse) {
+    .facets__inputs-list--swatches .variant-option__button-label,
+    .facets__inputs-list--swatches .variant-option__button-label--has-swatch,
+    .facets__inputs-list--swatches .variant-option__button-label--has-swatch .swatch {
+      transition: none !important;
+    }
+
     .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover .swatch {
       --focus-outline: none;
 
-      outline: none;
+      outline: none !important;
       outline-offset: 0;
     }
 
     .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover {
-      outline: none;
+      outline: none !important;
+      border-color: inherit !important;
+      background-color: inherit !important;
+      color: inherit !important;
+    }
+
+    .facets__inputs-list--swatches .variant-option__button-label:hover,
+    .facets__inputs-list--swatches .variant-option__button-label--has-swatch:hover,
+    .facets__inputs-list--swatches .variant-option__button-label--has-swatch:hover .swatch,
+    .facets__inputs-list--swatches .variant-option__button-label--has-swatch:hover::after,
+    .facets__inputs-list--swatches .variant-option__button-label--has-swatch:hover::before {
+      outline: none !important;
+      box-shadow: none !important;
+      border-color: inherit !important;
+      background-color: inherit !important;
     }
 
     .facets__inputs-list-item:not(.facets__inputs-list-item--disabled) .variant-option__button-label:hover,
     .facets__inputs-list-item:not(.facets__inputs-list-item--disabled) .facets__image-label:hover {
       font-weight: inherit;
+    }
+
+    .facets__inputs-list--swatches .variant-option__button-label:has(:checked) .facets__swatch-label,
+    .facets__inputs-list--swatches .variant-option__button-label:has(:checked) .facets__swatch-label--mobile-only {
+      display: block;
+      color: rgb(var(--color-foreground-rgb));
+      opacity: 1;
     }
   }
 
