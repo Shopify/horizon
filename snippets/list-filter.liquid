@@ -318,13 +318,12 @@
                           </svg>
                         {% endif %}
                       </div>
-                      <label
-                        class="{% if show_swatch_label %}facets__swatch-label{% else %}hidden{% endif %}"
-                        for="{{ input_id }}"
-                        tabindex="-1"
+                      <span
+                        class="facets__swatch-label{% unless show_swatch_label %} facets__swatch-label--mobile-only{% endunless %}"
+                        aria-hidden="true"
                       >
                         {{- value.label }}
-                      </label>
+                      </span>
                     </label>
                   </fieldset>
                 {% else %}
@@ -869,6 +868,97 @@
   .facets__inputs-list-item,
   .variant-option--images {
     min-width: 0;
+  }
+
+  /*
+    Swatch label visibility override for filters when theme setting `show_swatch_label` is OFF.
+
+    Markup behavior:
+    - The label gets class `facets__swatch-label--mobile-only` only when `show_swatch_label` is false.
+    - If `show_swatch_label` is true, this class is not used and labels follow default theme behavior.
+
+    CSS behavior:
+    - Base rule (desktop/default): hide this special class.
+    - Responsive/touch rules below: show it and place text under the swatch icon.
+  */
+  .facets__swatch-label--mobile-only {
+    display: none;
+  }
+
+  /*
+    Enable "label under icon" layout for small/medium screens and touch tablets.
+    Applies when:
+    - viewport <= 989px, OR
+    - touch/coarse-pointer tablet devices (even when width is larger than 989px).
+
+    This block:
+    - turns swatch lists into grid rows,
+    - forces per-item full width,
+    - reveals the mobile-only label and allows wrapping,
+    - stacks swatch icon + text vertically for both list and drawer/grid variants.
+  */
+  @media screen and (max-width: 989px), (hover: none) and (pointer: coarse) and (min-width: 750px) {
+    .facets__inputs-wrapper .facets__inputs-list--swatches {
+      display: grid;
+      gap: var(--gap-sm);
+    }
+
+    .facets__inputs-wrapper .facets__inputs-list--swatches .variant-option--swatches {
+      width: 100%;
+    }
+
+    .facets__inputs-wrapper .facets__inputs-list--swatches .variant-option__button-label--has-swatch {
+      width: 100%;
+    }
+
+    .facets__swatch-label--mobile-only {
+      display: block;
+      font-size: 0.65rem;
+      text-align: center;
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+      max-width: 100%;
+      width: 100%;
+      word-break: break-word;
+      line-height: 1.3;
+      margin-top: 3px;
+    }
+
+    /* Non-grid swatch list: icon first, label second (vertical stack). */
+    .facets__inputs-list--swatches:not(.facets__inputs-list--swatches-grid)
+      .variant-option__button-label--has-swatch {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      overflow: visible;
+      gap: 2px;
+    }
+
+    /* Drawer/grid swatch list: same vertical stack so label sits below icon. */
+    .facets__inputs-wrapper .facets__inputs-list--swatches-grid
+      .variant-option__button-label--has-swatch:has(input[type='checkbox']) {
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      overflow: visible;
+      gap: 2px;
+    }
+  }
+
+  /* Phone layout: 3 swatch columns. */
+  @media screen and (max-width: 749px) {
+    .facets__inputs-wrapper .facets__inputs-list--swatches {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  /* Tablet/touch-tablet layout: 4 swatch columns. */
+  @media screen and (min-width: 750px) and (max-width: 989px), (hover: none) and (pointer: coarse) and (min-width: 750px) {
+    .facets__inputs-wrapper .facets__inputs-list--swatches {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
   }
 
   /* Safari < 16.4 outline border-radius workaround - filter-specific */
