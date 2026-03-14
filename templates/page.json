@@ -16,7 +16,7 @@
           "type": "text",
           "name": "Title",
           "settings": {
-            "text": "<h1>Made with our products</h1>",
+            "text": "<h1>Our Clients' Creations</h1>",
             "width": "100%",
             "max_width": "normal",
             "alignment": "center",
@@ -37,37 +37,10 @@
             "padding-inline-end": 0
           },
           "blocks": {}
-        },
-        "text_KPGMzh": {
-          "type": "text",
-          "name": "t:names.heading",
-          "settings": {
-            "text": "<h4>We do create costumes, contact us for more information!</h4>",
-            "width": "100%",
-            "max_width": "normal",
-            "alignment": "center",
-            "type_preset": "rte",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
         }
       },
       "block_order": [
-        "heading",
-        "text_KPGMzh"
+        "heading"
       ],
       "settings": {
         "content_direction": "column",
@@ -263,6 +236,14 @@
     "gallery_Ur6nbz": {
       "type": "gallery",
       "blocks": {
+        "image_PaeXwC": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/PHOTO-2024-10-14-13-30-42_2.jpg",
+            "alt_text": "",
+            "link": ""
+          }
+        },
         "image_Jy7rwg": {
           "type": "image",
           "settings": {
@@ -276,6 +257,14 @@
           "settings": {
             "image": "shopify://shop_images/IMG_0368.jpg",
             "alt_text": "Figure Skater",
+            "link": ""
+          }
+        },
+        "image_RrtpeR": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/PHOTO-2024-10-14-13-30-42_1.jpg",
+            "alt_text": "",
             "link": ""
           }
         },
@@ -297,8 +286,10 @@
         }
       },
       "block_order": [
+        "image_PaeXwC",
         "image_Jy7rwg",
         "image_aNVWXj",
+        "image_RrtpeR",
         "image_QYi6EN",
         "image_TTWKqc"
       ],

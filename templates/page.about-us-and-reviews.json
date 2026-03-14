@@ -43,6 +43,29 @@
           "settings": {},
           "blocks": {}
         },
+        "image_9iRdqH": {
+          "type": "image",
+          "name": "t:names.image",
+          "settings": {
+            "image": "shopify://shop_images/moms_profile.png",
+            "link": "",
+            "image_ratio": "adapt",
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 35,
+            "padding-inline-end": 35
+          },
+          "blocks": {}
+        },
         "testimonials_D38gLT": {
           "type": "testimonials",
           "name": "Testimonials",
@@ -113,6 +136,7 @@
       "block_order": [
         "heading",
         "page-content",
+        "image_9iRdqH",
         "testimonials_D38gLT"
       ],
       "settings": {
