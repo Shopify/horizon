@@ -225,8 +225,10 @@
     text-align: center;
   }
 
-  .ase-color-grid__card:hover {
-    border-color: var(--color-border, rgba(0, 0, 0, 0.12));
+  @media (hover: hover) and (pointer: fine) {
+    .ase-color-grid__card:hover {
+      border-color: var(--color-border, rgba(0, 0, 0, 0.12));
+    }
   }
 
   .ase-color-grid__card--active {
@@ -318,7 +320,8 @@
     }
 
     function getFacetsForm() {
-      return document.querySelector('facets-form-component');
+      const scopeRoot = section.closest('main') || section.parentElement || document;
+      return scopeRoot.querySelector('facets-form-component') || document.querySelector('facets-form-component');
     }
 
     function buildFilterURL(paramName, paramValue, toggle) {
@@ -411,10 +414,18 @@
     });
 
     // Sync active states when the built-in filter changes
-    document.addEventListener('filter:update', () => {
-      // Small delay to let the URL update from the facets component
+    const onFilterUpdate = () => {
       requestAnimationFrame(() => updateActiveStates());
-    });
+    };
+    document.addEventListener('filter:update', onFilterUpdate);
+
+    section.addEventListener(
+      'shopify:section:unload',
+      () => {
+        document.removeEventListener('filter:update', onFilterUpdate);
+      },
+      { once: true }
+    );
   })();
 </script>
 

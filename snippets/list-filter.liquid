@@ -656,16 +656,20 @@
     cursor: not-allowed;
   }
 
-  .facets__inputs-list-item:not(.facets__inputs-list-item--disabled) .facets__image-label:hover {
-    font-weight: 500;
+  @media (hover: hover) and (pointer: fine) {
+    .facets__inputs-list-item:not(.facets__inputs-list-item--disabled) .facets__image-label:hover {
+      font-weight: 500;
+    }
   }
 
   /* Filter-specific variant-option styles */
-  .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover .swatch {
-    --focus-outline: var(--focus-outline-width) solid rgb(var(--color-foreground-rgb) / var(--opacity-35-55));
+  @media (hover: hover) and (pointer: fine) {
+    .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover .swatch {
+      --focus-outline: var(--focus-outline-width) solid rgb(var(--color-foreground-rgb) / var(--opacity-35-55));
 
-    outline: var(--focus-outline);
-    outline-offset: var(--focus-outline-offset);
+      outline: var(--focus-outline);
+      outline-offset: var(--focus-outline-offset);
+    }
   }
 
   .facets__inputs-list--swatches-grid .variant-option__button-label:has(:focus-visible) .swatch {
@@ -679,8 +683,10 @@
     outline: none;
   }
 
-  .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover {
-    outline: none;
+  @media (hover: hover) and (pointer: fine) {
+    .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover {
+      outline: none;
+    }
   }
 
   .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:has(:checked) {
@@ -769,8 +775,10 @@
     width: auto;
   }
 
-  .facets__inputs-list-item:not(.facets__inputs-list-item--disabled) .variant-option__button-label:hover {
-    font-weight: 500;
+  @media (hover: hover) and (pointer: fine) {
+    .facets__inputs-list-item:not(.facets__inputs-list-item--disabled) .variant-option__button-label:hover {
+      font-weight: 500;
+    }
   }
 
   /* Variant option images (filters) */
@@ -897,7 +905,7 @@
     - reveals the mobile-only label and allows wrapping,
     - stacks swatch icon + text vertically for both list and drawer/grid variants.
   */
-  @media screen and (max-width: 989px), (hover: none) and (pointer: coarse) and (min-width: 750px) {
+  @media screen and (max-width: 989px), (hover: none) and (pointer: coarse) {
     .facets__inputs-wrapper .facets__inputs-list--swatches {
       display: grid;
       gap: var(--gap-sm);
@@ -954,49 +962,22 @@
     }
   }
 
-  /* Tablet/touch-tablet layout: 4 swatch columns. */
-  @media screen and (min-width: 750px) and (max-width: 989px), (hover: none) and (pointer: coarse) and (min-width: 750px) {
+  /* Tablet layout: 4 swatch columns. */
+  @media screen and (min-width: 750px) and (max-width: 989px) {
     .facets__inputs-wrapper .facets__inputs-list--swatches {
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
 
-  /*
-    Touch devices: disable hover-driven visual changes that can flicker while scrolling.
-    Selection feedback is still provided by the existing :checked styles.
-  */
-  @media (hover: none) and (pointer: coarse) {
-    .facets__inputs-list--swatches .variant-option__button-label,
-    .facets__inputs-list--swatches .variant-option__button-label--has-swatch,
-    .facets__inputs-list--swatches .variant-option__button-label--has-swatch .swatch {
-      transition: none !important;
+  /* Touch tablets (including larger widths): 4 swatch columns. */
+  @media (hover: none) and (pointer: coarse) and (min-width: 750px) {
+    .facets__inputs-wrapper .facets__inputs-list--swatches {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
+  }
 
-    .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover .swatch {
-      --focus-outline: none;
-
-      outline: none !important;
-      outline-offset: 0;
-    }
-
-    .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover {
-      outline: none !important;
-    }
-
-    .facets__inputs-list--swatches .variant-option__button-label:hover,
-    .facets__inputs-list--swatches .variant-option__button-label--has-swatch:hover,
-    .facets__inputs-list--swatches .variant-option__button-label--has-swatch:hover .swatch,
-    .facets__inputs-list--swatches .variant-option__button-label--has-swatch:hover::after,
-    .facets__inputs-list--swatches .variant-option__button-label--has-swatch:hover::before {
-      outline: none !important;
-      box-shadow: none !important;
-    }
-
-    .facets__inputs-list-item:not(.facets__inputs-list-item--disabled) .variant-option__button-label:hover,
-    .facets__inputs-list-item:not(.facets__inputs-list-item--disabled) .facets__image-label:hover {
-      font-weight: inherit;
-    }
-
+  /* Keep swatch labels visible for selected values on touch/mobile/tablet layouts. */
+  @media screen and (max-width: 989px), (hover: none) and (pointer: coarse) {
     .facets__inputs-list--swatches .variant-option__button-label:has(:checked) .facets__swatch-label,
     .facets__inputs-list--swatches .variant-option__button-label:has(:checked) .facets__swatch-label--mobile-only {
       display: block;
@@ -1006,21 +987,23 @@
   }
 
   /* Safari < 16.4 outline border-radius workaround - filter-specific */
-  @supports not (background-color: rgb(from red 150 g b / alpha)) {
-    .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover .swatch {
-      outline: none;
-      position: relative;
-      overflow: visible;
-    }
+  @media (hover: hover) and (pointer: fine) {
+    @supports not (background-color: rgb(from red 150 g b / alpha)) {
+      .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover .swatch {
+        outline: none;
+        position: relative;
+        overflow: visible;
+      }
 
-    .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover .swatch::after {
-      content: '';
-      position: absolute;
-      inset: calc(-1 * var(--focus-outline-offset));
-      border: var(--focus-outline);
-      border-radius: var(--focus-outline-radius, 50%);
-      background-color: transparent;
-      display: inherit;
+      .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover .swatch::after {
+        content: '';
+        position: absolute;
+        inset: calc(-1 * var(--focus-outline-offset));
+        border: var(--focus-outline);
+        border-radius: var(--focus-outline-radius, 50%);
+        background-color: transparent;
+        display: inherit;
+      }
     }
   }
 {% endstylesheet %}
