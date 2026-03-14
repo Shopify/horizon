@@ -1025,8 +1025,8 @@
     }
 
     .facets--drawer .variant-option__button-label--has-swatch:has(:checked) .swatch {
-      outline: none !important;
-      outline-offset: 0 !important;
+      outline: var(--focus-outline-width) solid rgb(var(--color-foreground-rgb) / var(--variant-picker-border-opacity)) !important;
+      outline-offset: var(--focus-outline-offset);
     }
 
     .facets--drawer .variant-option__button-label--has-swatch:has(:checked)::after {
