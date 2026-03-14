@@ -1016,24 +1016,18 @@
     }
 
     .facets--drawer .variant-option__button-label--has-swatch:has(:checked) {
-      --focus-outline: none !important;
       border-color: transparent !important;
       background-color: transparent !important;
-      outline: none !important;
-      outline-offset: 0 !important;
       box-shadow: none !important;
     }
 
     .facets--drawer .variant-option__button-label--has-swatch:has(:checked) .swatch {
-      outline: none !important;
-      outline-offset: 0 !important;
-      box-shadow: none !important;
+      outline: var(--focus-outline-width) solid rgb(var(--color-foreground-rgb) / var(--opacity-35-55)) !important;
+      outline-offset: var(--focus-outline-offset);
     }
 
-    .facets--drawer .variant-option__button-label--has-swatch:has(:checked)::after,
-    .facets--drawer .variant-option__button-label--has-swatch:has(:checked) .swatch::after {
+    .facets--drawer .variant-option__button-label--has-swatch:has(:checked)::after {
       display: none !important;
-      border: none !important;
     }
   }
 
