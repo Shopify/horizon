@@ -961,6 +961,28 @@
     }
   }
 
+  /*
+    Touch devices: disable hover-driven visual changes that can flicker while scrolling.
+    Selection feedback is still provided by the existing :checked styles.
+  */
+  @media (hover: none) and (pointer: coarse) {
+    .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover .swatch {
+      --focus-outline: none;
+
+      outline: none;
+      outline-offset: 0;
+    }
+
+    .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover {
+      outline: none;
+    }
+
+    .facets__inputs-list-item:not(.facets__inputs-list-item--disabled) .variant-option__button-label:hover,
+    .facets__inputs-list-item:not(.facets__inputs-list-item--disabled) .facets__image-label:hover {
+      font-weight: inherit;
+    }
+  }
+
   /* Safari < 16.4 outline border-radius workaround - filter-specific */
   @supports not (background-color: rgb(from red 150 g b / alpha)) {
     .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover .swatch {
