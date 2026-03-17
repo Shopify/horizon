@@ -92,11 +92,6 @@
     "button_font_weight_secondary": "default",
     "content_for_index": [],
     "blocks": {
-      "855628211100114053": {
-        "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/klaviyo-onsite-embed/2632fe16-c075-4321-a88b-50b567f42507",
-        "disabled": false,
-        "settings": {}
-      },
       "12102000267677336833": {
         "type": "shopify://apps/kopa-ai/blocks/preorders-embed/620872b9-a462-4846-ac89-03680b41edb8",
         "disabled": true,
@@ -131,6 +126,16 @@
           "mobile_side_margin": 16,
           "mobile_bottom_margin": 46
         }
+      },
+      "855628211100114053": {
+        "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/klaviyo-onsite-embed/2632fe16-c075-4321-a88b-50b567f42507",
+        "disabled": true,
+        "settings": {}
+      },
+      "13768625480086291342": {
+        "type": "shopify://apps/forms/blocks/forms/8744a304-fcb1-4347-b211-bb6b4759a76a",
+        "disabled": false,
+        "settings": {}
       }
     },
     "color_schemes": {
