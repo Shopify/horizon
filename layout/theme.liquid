@@ -35,7 +35,15 @@
       {%- render 'theme-editor' -%}
     {% endif %}
 
-    {{ content_for_header }}
+    {%- capture cfh -%}{{ content_for_header }}{%- endcapture -%}
+    {%- if cart.item_count == 0 -%}
+      {% comment %} 
+        Conditionally disable UpsellPlus scripts when the cart is empty to improve performance. 
+        Using 'upsell' and 'Upsell' as substrings based on the implementation plan. 
+      {% endcomment %}
+      {%- assign cfh = cfh | replace: 'upsell', 'disabled-upsell' | replace: 'Upsell', 'disabled-Upsell' -%}
+    {%- endif -%}
+    {{ cfh }}
   </head>
 
   <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}{% if settings.disable_animations_mobile %} animations-disabled-mobile{% endif %}">
