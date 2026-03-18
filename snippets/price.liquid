@@ -37,7 +37,7 @@
   assign price = selected_variant.price
   assign compare_at_price = selected_variant.compare_at_price
 
-  if discount
+  if discount != blank
     assign discount_percentage = discount | plus: 0
     assign discount_multiplier = 100 | minus: discount_percentage
 
