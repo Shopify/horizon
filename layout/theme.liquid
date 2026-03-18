@@ -25,6 +25,20 @@
     {% endif %}
 
     {%- render 'meta-tags' -%}
+
+    <style>
+      /* Critical CSS for Mobile LCP and CLS */
+      body { margin: 0; }
+      #header-group { min-height: var(--header-height, 60px); }
+      @media screen and (max-width: 749px) {
+        .header__columns { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .header__row--top { padding: 8px 16px; }
+      }
+      /* Prevent main content layout shift before CSS loads */
+      .content-for-layout { opacity: 0; animation: fadeIn 0.5s forwards 0.3s; }
+      @keyframes fadeIn { to { opacity: 1; } }
+    </style>
+
     {%- render 'stylesheets' -%}
     {%- render 'fonts' -%}
     {%- render 'scripts' -%}
@@ -35,10 +49,18 @@
       {%- render 'theme-editor' -%}
     {% endif %}
 
-    {{ content_for_header }}
+    {%- capture cfh -%}{{ content_for_header }}{%- endcapture -%}
+    {%- if cart.item_count == 0 -%}
+      {% comment %} 
+        Conditionally disable UpsellPlus scripts when the cart is empty to improve performance. 
+        Using 'upsell' and 'Upsell' as substrings based on the implementation plan. 
+      {% endcomment %}
+      {%- assign cfh = cfh | replace: 'upsell', 'disabled-upsell' | replace: 'Upsell', 'disabled-Upsell' -%}
+    {%- endif -%}
+    {{ cfh }}
   </head>
 
-  <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
+  <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}{% if settings.disable_animations_mobile %} animations-disabled-mobile{% endif %}">
     {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
     <div id="header-group">
       {% sections 'header-group' %}
