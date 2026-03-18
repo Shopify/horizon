@@ -3,11 +3,24 @@
   type="module"
 ></script>
 
-<script
-  src="{{ 'predictive-search.js' | asset_url }}"
-  type="module"
-  fetchpriority="low"
-></script>
+<script type="module">
+  let predictiveSearchLoaded = false;
+  const loadPredictiveSearch = () => {
+    if (predictiveSearchLoaded) return;
+    predictiveSearchLoaded = true;
+    const script = document.createElement('script');
+    script.src = "{{ 'predictive-search.js' | asset_url }}";
+    script.type = 'module';
+    document.head.appendChild(script);
+  };
+  
+  const modal = document.querySelector('#search-modal');
+  if (modal) {
+    modal.addEventListener('dialog:open', loadPredictiveSearch, { once: true });
+    modal.addEventListener('focusin', loadPredictiveSearch, { once: true });
+    modal.addEventListener('mouseenter', loadPredictiveSearch, { once: true });
+  }
+</script>
 
 <dialog-component
   id="search-modal"
