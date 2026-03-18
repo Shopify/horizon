@@ -6,14 +6,15 @@
         for tag in customer.tags
             assign found_tag = customer_tag_shop | where: 'customer_tag' , tag
             assign applies_to = found_tag[0].applies_to.value.products | where: 'id', product.id
+            assign product_type = found_tag[0].show_discount_label_based_on_product_type.value
 
             if under_product_page == true
-                if applies_to.size > 0 and found_tag.size > 0
+                if applies_to.size > 0 and found_tag.size > 0 and product_type == product.type
                     assign discount_label = found_tag[0].pdp_discount_price_label
                     break
                 endif
             else
-                if applies_to.size > 0 and found_tag.size > 0
+                if applies_to.size > 0 and found_tag.size > 0 and product_type == product.type
                     assign discount_label = found_tag[0].discount_label
                     break
                 endif
@@ -25,7 +26,7 @@
 
             if item.customer_tag == blank
                 assign applies_to = item.applies_to.value.products | where: 'id', product.id
-              
+
                 if under_product_page == true
                     if applies_to.size > 0
                         assign discount_label = item.pdp_discount_price_label
