@@ -25,6 +25,20 @@
     {% endif %}
 
     {%- render 'meta-tags' -%}
+
+    <style>
+      /* Critical CSS for Mobile LCP and CLS */
+      body { margin: 0; }
+      #header-group { min-height: var(--header-height, 60px); }
+      @media screen and (max-width: 749px) {
+        .header__columns { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .header__row--top { padding: 8px 16px; }
+      }
+      /* Prevent main content layout shift before CSS loads */
+      .content-for-layout { opacity: 0; animation: fadeIn 0.5s forwards 0.3s; }
+      @keyframes fadeIn { to { opacity: 1; } }
+    </style>
+
     {%- render 'stylesheets' -%}
     {%- render 'fonts' -%}
     {%- render 'scripts' -%}
