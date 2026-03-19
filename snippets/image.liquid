@@ -24,8 +24,13 @@
     assign loading = loading | default: 'lazy'
     assign fetchpriority = fetchpriority | default: 'auto'
     
+    assign decoding = 'async'
+    if loading == 'eager'
+      assign decoding = 'sync'
+    endif
+    
     # Modern responsive widths for better DPR coverage
-    assign default_widths = '165, 360, 535, 750, 1070, 1500, 1780, 2000, 3000, 3840'
+    assign default_widths = '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
     assign widths_list = widths | default: default_widths
     
     assign style_value = style | default: ''
@@ -41,6 +46,7 @@
     sizes: sizes, 
     loading: loading, 
     fetchpriority: fetchpriority,
+    decoding: decoding,
     style: style_value 
   }}
 {% elsif text_fallback %}
