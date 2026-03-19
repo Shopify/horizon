@@ -100,17 +100,19 @@
   endif
 
   assign sizes = '(min-width: 750px) ' | append: media_width_desktop | append: ', ' | append: media_width_mobile
-  assign widths = '832, 1200, 1600, 1920, 2560, 3840'
+  assign widths = '375, 450, 660, 900, 1320, 1800, 2136, 2400, 3000, 3600, 3840'
   assign sizes_mobile = media_width_mobile
-  assign mobile_widths = '165, 360, 535, 750, 1070, 1500'
+  assign mobile_widths = '375, 450, 660, 900, 1320, 1800'
   assign mobile_widths_array = mobile_widths | split: ', '
 
   assign fetch_priority = 'auto'
+  assign loading_strategy = 'lazy'
 
   if section.index == 1
     assign fetch_priority = 'high'
+    assign loading_strategy = 'eager'
   endif
-%}
+-%}
 
 {% capture media_slot_1 %}
   {%- if media_1 == 'image' and media_1_mobile == 'image' -%}
@@ -141,6 +143,7 @@
           class: 'hero__media',
           sizes: sizes,
           fetchpriority: fetch_priority,
+          loading: loading_strategy,
           data-testid: 'hero-desktop-image-1'
       }}
     </picture>
@@ -157,6 +160,7 @@
           class: 'hero__media',
           sizes: sizes,
           fetchpriority: fetch_priority,
+          loading: loading_strategy,
           data-testid: 'hero-desktop-image-1'
       }}
     </div>
@@ -184,7 +188,7 @@
       <div class="{{ media_wrapper_mobile_class }}">
         {{
           section.settings.image_1_mobile
-          | image_url: width: 1600
+          | image_url: width: 1800
           | image_tag:
             width: section.settings.image_1_mobile.width,
             widths: mobile_widths,
@@ -193,6 +197,7 @@
             class: 'hero__media',
             sizes: sizes_mobile,
             fetchpriority: fetch_priority,
+            loading: loading_strategy,
             data-testid: 'hero-mobile-image-1'
         }}
       </div>
@@ -245,6 +250,7 @@
           class: 'hero__media',
           sizes: sizes,
           fetchpriority: fetch_priority,
+          loading: loading_strategy,
           data-testid: 'hero-desktop-image-2'
       }}
     </picture>
@@ -261,6 +267,7 @@
           class: 'hero__media',
           sizes: sizes,
           fetchpriority: fetch_priority,
+          loading: loading_strategy,
           data-testid: 'hero-desktop-image-2'
       }}
     </div>
@@ -288,7 +295,7 @@
       <div class="{{ media_wrapper_mobile_class }}">
         {{
           section.settings.image_2_mobile
-          | image_url: width: 1600
+          | image_url: width: 1800
           | image_tag:
             width: section.settings.image_2_mobile.width,
             widths: mobile_widths,
@@ -297,6 +304,7 @@
             class: 'hero__media',
             sizes: sizes_mobile,
             fetchpriority: fetch_priority,
+            loading: loading_strategy,
             data-testid: 'hero-mobile-image-2'
         }}
       </div>
@@ -340,7 +348,8 @@
         height: section.settings.image_1.height,
         alt: '',
         class: 'hero__media',
-        sizes: sizes
+        sizes: sizes,
+        loading: 'lazy'
     }}
   {% endif %}
   {% if media_2 == 'image' %}
@@ -353,7 +362,8 @@
         height: section.settings.image_2.height,
         alt: '',
         class: 'hero__media',
-        sizes: sizes
+        sizes: sizes,
+        loading: 'lazy'
     }}
   {% endif %}
   {% if media_count == 0 %}
