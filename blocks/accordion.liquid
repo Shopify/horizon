@@ -13,7 +13,11 @@
   "
   {{ block.shopify_attributes }}
 >
-  {% content_for 'blocks' %}
+  <deferred-hydration data-mobile-only="true">
+    <template>
+      {% content_for 'blocks' %}
+    </template>
+  </deferred-hydration>
 </div>
 
 {% stylesheet %}

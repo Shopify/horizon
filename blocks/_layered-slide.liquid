@@ -28,15 +28,21 @@
       {%- liquid
         assign height = preview_image.width | divided_by: preview_image.aspect_ratio | round
         assign sizes = '100vw'
-        assign widths = '832, 1200, 1600, 1920, 2560, 3840'
+        assign widths = '375, 450, 660, 900, 1320, 1800, 2136, 2400, 3000, 3600, 3840'
         assign loading = 'lazy'
+        assign fetchpriority = 'auto'
+
+        if section.index == 1 and block_index == 0
+          assign loading = 'eager'
+          assign fetchpriority = 'high'
+        endif
       -%}
 
       {%- if block.settings.media_type_1 == 'image' -%}
         {{
           block.settings.image_1
           | image_url: width: 3840
-          | image_tag: height: height, sizes: sizes, widths: widths, class: 'layered-slideshow__image', loading: loading
+          | image_tag: height: height, sizes: sizes, widths: widths, class: 'layered-slideshow__image', loading: loading, fetchpriority: fetchpriority
         }}
       {%- else -%}
         {%- if block.settings.video_1.preview_image -%}
@@ -48,6 +54,7 @@
               sizes: sizes,
               widths: widths,
               loading: loading,
+              fetchpriority: fetchpriority,
               class: 'layered-slideshow__video-poster'
           }}
         {%- endif -%}

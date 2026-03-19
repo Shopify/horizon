@@ -1404,6 +1404,13 @@
         "default": true
       },
       {
+        "type": "checkbox",
+        "id": "disable_animations_mobile",
+        "label": "Disable animations on mobile",
+        "info": "Improves performance by disabling scroll reveals and page transitions on small screens.",
+        "default": true
+      },
+      {
         "type": "select",
         "id": "card_hover_effect",
         "label": "t:settings.card_hover_effect",
