@@ -25,6 +25,12 @@
     {% endif %}
 
     {%- render 'meta-tags' -%}
+
+    {% comment %} Preload LCP image if applicable {% endcomment %}
+    {% if template == 'index' %}
+      <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+    {% endif %}
+
     {%- render 'stylesheets' -%}
     {%- render 'fonts' -%}
     {%- render 'scripts' -%}
