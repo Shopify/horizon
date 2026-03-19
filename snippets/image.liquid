@@ -3,30 +3,52 @@
 
   @param {object} image - image object
   @param {number} [height] - custom image height
+  @param {number} [width] - custom image width
+  @param {string} [widths] - list of widths for srcset
+  @param {string} [sizes] - sizes attribute
   @param {string} [class] - additional classes
   @param {string} [text_fallback] - text to display if image is blank
   @param {boolean} [unset_image_tag] - if true, ignores the image focal point
   @param {string} [style] - additional styles
+  @param {string} [loading] - loading attribute (lazy|eager)
+  @param {string} [fetchpriority] - fetchpriority attribute (high|low|auto)
 
   @example
   {% render 'image', image: product.featured_image, height: 300, class: 'product-image' %}
 {%- enddoc -%}
 {% if image != blank %}
-  {% assign image_height = height | default: image.height %}
-  {% assign image_height_2x = height | default: image_height | times: 2 %}
-  {% assign image_height_3x = height | default: image_height | times: 3 %}
+  {%- liquid
+    assign image_width = width | default: image.width
+    assign image_height = height | default: image.height
+    
+    assign loading = loading | default: 'lazy'
+    assign fetchpriority = fetchpriority | default: 'auto'
+    
+    assign decoding = 'async'
+    if loading == 'eager'
+      assign decoding = 'sync'
+    endif
+    
+    # Modern responsive widths for better DPR coverage
+    assign default_widths = '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
+    assign widths_list = widths | default: default_widths
+    
+    assign style_value = style | default: ''
 
-  {% capture image_srcset -%}
-    {{ image | image_url: height: image_height }} 1x, {{ image | image_url: height: image_height_2x }} 2x, {{ image | image_url: height: image_height_3x }} 3x
-  {%- endcapture %}
+    if unset_image_tag
+      assign style_value = style_value | append: 'object-position: inherit;'
+    endif
+  -%}
 
-  {% assign style_value = style | default: '' %}
-
-  {% if unset_image_tag %}
-    {% assign style_value = style_value | append: 'object-position: inherit;' %}
-  {% endif %}
-
-  {{ image | image_url: height: image_height | image_tag: class: class, srcset: image_srcset, style: style_value }}
+  {{ image | image_url: width: image_width, height: image_height | image_tag: 
+    class: class, 
+    widths: widths_list, 
+    sizes: sizes, 
+    loading: loading, 
+    fetchpriority: fetchpriority,
+    decoding: decoding,
+    style: style_value 
+  }}
 {% elsif text_fallback %}
   {{ text_fallback }}
 {% endif %}

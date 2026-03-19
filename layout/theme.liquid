@@ -25,6 +25,11 @@
     {% endif %}
 
     {%- render 'meta-tags' -%}
+
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+
+
     {%- render 'stylesheets' -%}
     {%- render 'fonts' -%}
     {%- render 'scripts' -%}
@@ -38,7 +43,7 @@
     {{ content_for_header }}
   </head>
 
-  <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
+  <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}{% if settings.disable_animations_mobile %} animations-disabled-mobile{% endif %}">
     {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
     <div id="header-group">
       {% sections 'header-group' %}
