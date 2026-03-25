@@ -11,42 +11,6 @@
   "type": "header",
   "name": "t:names.header",
   "sections": {
-    "hero_BzLcdE": {
-      "type": "hero",
-      "name": "Promotional Banner",
-      "settings": {
-        "media_type_1": "image",
-        "image_1": "shopify://shop_images/Spring_Sale_2026_-_Banner.jpg",
-        "media_type_2": "image",
-        "stack_media_on_mobile": false,
-        "custom_mobile_media": true,
-        "media_type_1_mobile": "image",
-        "image_1_mobile": "shopify://shop_images/Spring_Sale_2026_-_Banner_Mobile_2.jpg",
-        "media_type_2_mobile": "image",
-        "link": "shopify://collections/shop-now",
-        "open_in_new_tab": false,
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 0,
-        "section_width": "page-width",
-        "section_height": "auto",
-        "section_height_custom": 50,
-        "color_scheme": "scheme-5",
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "gradient",
-        "gradient_direction": "to top",
-        "blurred_reflection": false,
-        "reflection_opacity": 75,
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      }
-    },
     "header_announcements_9jGBFp": {
       "type": "header-announcements",
       "blocks": {
@@ -110,6 +74,42 @@
         "divider_width": 1,
         "padding-block-start": 12,
         "padding-block-end": 12
+      }
+    },
+    "hero_BzLcdE": {
+      "type": "hero",
+      "name": "Promotional Banner",
+      "settings": {
+        "media_type_1": "image",
+        "image_1": "shopify://shop_images/Spring_Sale_2026_-_Banner.jpg",
+        "media_type_2": "image",
+        "stack_media_on_mobile": false,
+        "custom_mobile_media": true,
+        "media_type_1_mobile": "image",
+        "image_1_mobile": "shopify://shop_images/Spring_Sale_2026_-_Banner_Mobile_2.jpg",
+        "media_type_2_mobile": "image",
+        "link": "shopify://collections/shop-now",
+        "open_in_new_tab": false,
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 0,
+        "section_width": "page-width",
+        "section_height": "auto",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-5",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "gradient",
+        "gradient_direction": "to top",
+        "blurred_reflection": false,
+        "reflection_opacity": 75,
+        "padding-block-start": 0,
+        "padding-block-end": 0
       }
     },
     "header_section": {
@@ -206,7 +206,7 @@
   },
   "order": [
     "header_announcements_9jGBFp",
-    "header_section",
-    "hero_BzLcdE"
+    "hero_BzLcdE",
+    "header_section"
   ]
 }
