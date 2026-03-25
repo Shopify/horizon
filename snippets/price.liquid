@@ -16,13 +16,15 @@
     render 'discount-label'
   endcapture
 
-  if customer_tag_shop.size > 0 and discount_label == blank
+  assign discount_label = discount_label | strip
+
+  if customer_tag_shop.size > 0 and customer == blank
       for item in customer_tag_shop
           assign applies_to = item.applies_to.value.products | where: 'id', product.id
 
           if item.customer_tag == blank
               assign applies_to = item.applies_to.value.products | where: 'id', product.id
-            
+
               if applies_to.size > 0 and item.discount != blank
                   assign discount = item.discount
                   break
