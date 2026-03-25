@@ -23,7 +23,7 @@
   endcapture
   assign customer_tag = customer_tag | strip
 
-  if customer_tag_shop.size > 0 and
+  if customer_tag_shop.size > 0
       for item in customer_tag_shop
           assign applies_to = item.applies_to.value.products | where: 'id', product.id
 
