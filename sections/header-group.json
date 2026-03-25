@@ -13,7 +13,6 @@
   "sections": {
     "hero_BzLcdE": {
       "type": "hero",
-      "disabled": true,
       "name": "Promotional Banner",
       "settings": {
         "media_type_1": "image",
@@ -22,7 +21,7 @@
         "stack_media_on_mobile": false,
         "custom_mobile_media": true,
         "media_type_1_mobile": "image",
-        "image_1_mobile": "shopify://shop_images/Spring_Sale_2026_-_Banner_Mobile.jpg",
+        "image_1_mobile": "shopify://shop_images/Spring_Sale_2026_-_Banner_Mobile_2.jpg",
         "media_type_2_mobile": "image",
         "link": "shopify://collections/shop-now",
         "open_in_new_tab": false,
@@ -206,8 +205,8 @@
     }
   },
   "order": [
-    "hero_BzLcdE",
     "header_announcements_9jGBFp",
-    "header_section"
+    "header_section",
+    "hero_BzLcdE"
   ]
 }
