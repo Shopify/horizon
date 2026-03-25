@@ -18,11 +18,16 @@
 
   assign discount_label = discount_label | strip
 
-  if customer_tag_shop.size > 0 and customer == blank
+  capture customer_tag
+    render 'customer-tag'
+  endcapture
+  assign customer_tag = customer_tag | strip
+
+  if customer_tag_shop.size > 0 and
       for item in customer_tag_shop
           assign applies_to = item.applies_to.value.products | where: 'id', product.id
 
-          if item.customer_tag == blank
+          if item.customer_tag == blank and customer_tag == 'false'
               assign applies_to = item.applies_to.value.products | where: 'id', product.id
 
               if applies_to.size > 0 and item.discount != blank
