@@ -66,7 +66,7 @@
       {% endif %}
     {% endif %}
     {% if block_settings.font_size_mobile != blank %}
-      --font-size-mobile: {{ block_settings.font_size_mobile }};
+      --font-size-mobile: {{ block_settings.font_size_mobile }}px;
     {% endif %}
     {% if block_settings.background %}
       --text-background-color: {{ block_settings.background_color | default: 'rgb(255 255 255 / 1.0)' }};
