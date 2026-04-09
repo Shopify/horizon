@@ -22,7 +22,10 @@
     {{ block_settings.style_class }}
     {{ block_settings.style_class }}--{{ block.id }}
   "
-  style="{% render 'size-style', settings: block_settings %}"
+  style="{% render 'size-style', settings: block_settings %}
+    {%- if block_settings.font_size != blank -%}--font-size: {{ block_settings.font_size }};{%- endif -%}
+    {%- if block_settings.font_size_mobile != blank -%}--font-size-mobile: {{ block_settings.font_size_mobile }};{%- endif -%}
+  "
   {%- if block_settings.open_in_new_tab -%}
     target="_blank"
     rel="noopener noreferrer"
@@ -40,6 +43,20 @@
     &:hover {
       color: var(--color-primary-hover);
       text-decoration-color: transparent;
+    }
+  }
+
+  .button,
+  .button-secondary,
+  .link {
+    font-size: var(--font-size, inherit);
+  }
+
+  @media screen and (max-width: 749px) {
+    .button,
+    .button-secondary,
+    .link {
+      font-size: var(--font-size-mobile, var(--font-size, inherit));
     }
   }
 {% endstylesheet %}
