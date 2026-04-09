@@ -215,6 +215,7 @@
         "static-header": {
           "type": "_product-list-content",
           "name": "t:names.header",
+          "disabled": true,
           "static": true,
           "settings": {
             "content_direction": "row",
