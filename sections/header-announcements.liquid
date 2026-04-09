@@ -115,6 +115,15 @@
     margin: 0;
   }
 
+  /* Override italic to behave as border underline since Shopify inline_richtext lacks a native underline button */
+  .announcement-bar__text em,
+  .announcement-bar__text i {
+    font-style: normal;
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 1px;
+  }
+
   .announcement-bar__link {
     position: absolute;
     inset: 0;

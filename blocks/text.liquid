@@ -58,6 +58,13 @@
       "visible_if": "{{ block.settings.width == '100%' }}"
     },
     {
+      "type": "text_alignment",
+      "id": "alignment_mobile",
+      "label": "Mobile alignment",
+      "default": "left",
+      "visible_if": "{{ block.settings.width == '100%' }}"
+    },
+    {
       "type": "header",
       "content": "t:content.typography"
     },
@@ -206,6 +213,12 @@
         }
       ],
       "default": "1rem",
+      "visible_if": "{{ block.settings.type_preset == 'custom' }}"
+    },
+    {
+      "type": "number",
+      "id": "font_size_mobile",
+      "label": "Mobile size (px)",
       "visible_if": "{{ block.settings.type_preset == 'custom' }}"
     },
     {

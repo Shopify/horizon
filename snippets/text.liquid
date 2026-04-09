@@ -61,6 +61,12 @@
     --max-width: var(--max-width--{{ type }}-{{ block_settings.max_width }});
     {% if text_width == "100%" %}
       --text-align: {{ block_settings.alignment }};
+      {% if block_settings.alignment_mobile != blank %}
+        --text-align-mobile: {{ block_settings.alignment_mobile }};
+      {% endif %}
+    {% endif %}
+    {% if block_settings.font_size_mobile != blank %}
+      --font-size-mobile: {{ block_settings.font_size_mobile }}px;
     {% endif %}
     {% if block_settings.background %}
       --text-background-color: {{ block_settings.background_color | default: 'rgb(255 255 255 / 1.0)' }};
@@ -216,5 +222,15 @@
   .custom-color,
   .custom-color > :is(h1, h2, h3, h4, h5, h6, p, *) {
     color: var(--color);
+  }
+
+  @media screen and (max-width: 749px) {
+    .text-block.custom-font-size {
+      --font-size: var(--font-size-mobile, var(--font-size));
+    }
+
+    .text-block > * {
+      text-align: var(--text-align-mobile, var(--text-align, var(--text-align-default)));
+    }
   }
 {% endstylesheet %}

@@ -89,7 +89,7 @@ export class Scroller {
     this.#onScrollEnd = options.onScrollEnd;
 
     this.element = element;
-    this.element.addEventListener('scroll', this.#handleScroll);
+    this.element.addEventListener('scroll', this.#handleScroll, { passive: true });
   }
 
   /**
@@ -342,25 +342,25 @@ export function scrollIntoView(element, { ancestor, behavior = 'smooth', block =
   const scrollTop =
     ancestor.scrollHeight > ancestor.clientHeight
       ? calculateScrollOffset(
-          block,
-          ancestorRect.top,
-          ancestor.clientHeight,
-          elemRect.top,
-          elemRect.height,
-          ancestor.scrollTop
-        )
+        block,
+        ancestorRect.top,
+        ancestor.clientHeight,
+        elemRect.top,
+        elemRect.height,
+        ancestor.scrollTop
+      )
       : ancestor.scrollTop;
 
   const scrollLeft =
     ancestor.scrollWidth > ancestor.clientWidth
       ? calculateScrollOffset(
-          inline,
-          ancestorRect.left,
-          ancestor.clientWidth,
-          elemRect.left,
-          elemRect.width,
-          ancestor.scrollLeft
-        )
+        inline,
+        ancestorRect.left,
+        ancestor.clientWidth,
+        elemRect.left,
+        elemRect.width,
+        ancestor.scrollLeft
+      )
       : ancestor.scrollLeft;
 
   ancestor.scrollTo({ top: scrollTop, left: scrollLeft, behavior });
@@ -372,7 +372,7 @@ class ScrollHint extends HTMLElement {
   #rafId = null;
 
   connectedCallback() {
-    this.addEventListener('scroll', this.#handleScroll);
+    this.addEventListener('scroll', this.#handleScroll, { passive: true });
     this.#resizeObserver.observe(this);
   }
 
