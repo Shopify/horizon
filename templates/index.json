@@ -51,23 +51,10 @@
             "padding-inline-end": 40
           },
           "blocks": {
-            "spacer_jDrECQ": {
-              "type": "spacer",
-              "settings": {
-                "size": "pixel",
-                "percent_size": 100,
-                "pixel_size": 16,
-                "custom_mobile_size": false,
-                "size_mobile": "percent",
-                "percent_size_mobile": 100,
-                "pixel_size_mobile": 120
-              },
-              "blocks": {}
-            },
             "text_KccT9h": {
               "type": "text",
               "settings": {
-                "text": "<h3>New arrivals</h3>",
+                "text": "<p>LIGHTWEIGHT</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "center",
@@ -88,26 +75,10 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
-            },
-            "button_nnh89f": {
-              "type": "button",
-              "settings": {
-                "label": "Shop now",
-                "link": "shopify://collections/all",
-                "open_in_new_tab": false,
-                "style_class": "link",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
             }
           },
           "block_order": [
-            "spacer_jDrECQ",
-            "text_KccT9h",
-            "button_nnh89f"
+            "text_KccT9h"
           ]
         },
         "group_DXJ6dy": {
