@@ -54,7 +54,7 @@
             "text_KccT9h": {
               "type": "text",
               "settings": {
-                "text": "<p>LIGHTWEIGHT</p>",
+                "text": "<p><strong>LIGHTWEIGHT<br/>CARGO PANTS</strong></p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "center",
@@ -81,12 +81,12 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<p>CARGO PANTS</p>",
+                "text": "<p>UPF 50+ SUN PROTECTION + 14 POCKETS</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
                 "alignment_mobile": "left",
-                "type_preset": "h1",
+                "type_preset": "h4",
                 "font": "var(--font-body--family)",
                 "font_size": "1rem",
                 "line_height": "normal",
