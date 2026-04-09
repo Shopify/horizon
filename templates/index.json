@@ -101,11 +101,27 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
+            },
+            "button_BznYrL": {
+              "type": "button",
+              "name": "t:names.button",
+              "settings": {
+                "label": "SHOP NOW",
+                "link": "shopify://collections/all",
+                "open_in_new_tab": false,
+                "style_class": "button",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
             }
           },
           "block_order": [
             "text_KccT9h",
-            "text_q7ifpX"
+            "text_q7ifpX",
+            "button_BznYrL"
           ]
         },
         "group_DXJ6dy": {
