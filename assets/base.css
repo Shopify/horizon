@@ -53,6 +53,12 @@ body {
 }
 
 :root {
+  --font-body--family: 'Metroflex', sans-serif !important;
+  --font-heading--family: 'Metroflex', sans-serif !important;
+  --font-subheading--family: 'Metroflex', sans-serif !important;
+  --font-accent--family: 'Metroflex', sans-serif !important;
+  --font-paragraph--family: 'Metroflex', sans-serif !important;
+
   --hover-lift-amount: 4px;
   --hover-scale-amount: 1.03;
   --hover-subtle-zoom-amount: 1.015;
