@@ -74,7 +74,7 @@
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0,
-                "video_embed": "<style>\np{    line-height: 64px;}\n</style>"
+                "video_embed": "<style>\n.group-block-content p{    \nline-height: 64px;\n}\n</style>"
               },
               "blocks": {}
             },
