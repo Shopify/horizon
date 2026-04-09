@@ -28,7 +28,7 @@ export class ZoomDialog extends Component {
 
   connectedCallback() {
     super.connectedCallback();
-    this.refs.dialog.addEventListener('scroll', this.handleScroll);
+    this.refs.dialog.addEventListener('scroll', this.handleScroll, { passive: true });
   }
 
   disconnectedCallback() {
@@ -275,7 +275,7 @@ function getMostVisibleElement(elements) {
           current.intersectionRatio > prev.intersectionRatio ? current : prev
         );
         observer.disconnect();
-        resolve(/** @type {HTMLElement} */ (mostVisible.target));
+        resolve(/** @type {HTMLElement} */(mostVisible.target));
       },
       {
         threshold: Array.from({ length: 100 }, (_, i) => i / 100),
