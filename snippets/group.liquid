@@ -12,7 +12,7 @@
 {%- enddoc -%}
 
 <div
-  class="
+  class="{% for block in section.blocks %}class="{{block.id}}"{% endfor %}
     group-block
     group-block--height-{{ settings.height }}
     group-block--width-{{ settings.width }}
