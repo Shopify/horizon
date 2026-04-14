@@ -12,7 +12,7 @@
 {%- enddoc -%}
 
 <div
-  class="{% for block in section.blocks %}class="{{block.id}}"{% endfor %}
+  class=" {{ shopify_attributes.id }}
     group-block
     group-block--height-{{ settings.height }}
     group-block--width-{{ settings.width }}
