@@ -11,6 +11,34 @@
   {%- assign hide_badge = true -%}
 {%- endif -%}
 
+{%- assign pos_styles = "" -%}
+{%- if block_settings.position_absolute -%}
+  {%- assign pos_styles = pos_styles | append: "position: absolute; z-index: 3;" -%}
+  {%- if block_settings.vertical_alignment == 'top' -%}
+    {%- assign pos_styles = pos_styles | append: "top: 1rem;" -%}
+  {%- elsif block_settings.vertical_alignment == 'center' -%}
+    {%- assign pos_styles = pos_styles | append: "top: 50%;" -%}
+  {%- elsif block_settings.vertical_alignment == 'bottom' -%}
+    {%- assign pos_styles = pos_styles | append: "bottom: 1rem;" -%}
+  {%- endif -%}
+
+  {%- if block_settings.horizontal_alignment == 'left' -%}
+    {%- assign pos_styles = pos_styles | append: "left: 1rem;" -%}
+  {%- elsif block_settings.horizontal_alignment == 'center' -%}
+    {%- assign pos_styles = pos_styles | append: "left: 50%;" -%}
+  {%- elsif block_settings.horizontal_alignment == 'right' -%}
+    {%- assign pos_styles = pos_styles | append: "right: 1rem;" -%}
+  {%- endif -%}
+
+  {%- if block_settings.vertical_alignment == 'center' and block_settings.horizontal_alignment == 'center' -%}
+    {%- assign pos_styles = pos_styles | append: "transform: translate(-50%, -50%);" -%}
+  {%- elsif block_settings.vertical_alignment == 'center' -%}
+    {%- assign pos_styles = pos_styles | append: "transform: translateY(-50%);" -%}
+  {%- elsif block_settings.horizontal_alignment == 'center' -%}
+    {%- assign pos_styles = pos_styles | append: "transform: translateX(-50%);" -%}
+  {%- endif -%}
+{%- endif -%}
+
 {%- unless hide_badge -%}
   <{% if link != blank %}a href="{{ link }}"{% else %}div{% endif %}
     class="
@@ -20,6 +48,7 @@
       badge-block--{{ block.id }}
     "
     style="
+      {{ pos_styles }}
       {% render 'size-style', settings: block_settings %}
       {%- if block_settings.padding-block-start != blank -%}padding-top: {{ block_settings.padding-block-start }}px;{%- endif -%}
       {%- if block_settings.padding-block-end != blank -%}padding-bottom: {{ block_settings.padding-block-end }}px;{%- endif -%}

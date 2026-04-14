@@ -76,6 +76,40 @@
     },
     {
       "type": "header",
+      "content": "Positioning"
+    },
+    {
+      "type": "checkbox",
+      "id": "position_absolute",
+      "label": "Use absolute positioning",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "vertical_alignment",
+      "label": "Vertical position",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "center", "label": "Center" },
+        { "value": "bottom", "label": "Bottom" }
+      ],
+      "default": "top",
+      "visible_if": "{{ block.settings.position_absolute }}"
+    },
+    {
+      "type": "select",
+      "id": "horizontal_alignment",
+      "label": "Horizontal position",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "right",
+      "visible_if": "{{ block.settings.position_absolute }}"
+    },
+    {
+      "type": "header",
       "content": "t:content.padding"
     },
     {
