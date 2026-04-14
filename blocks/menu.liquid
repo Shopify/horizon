@@ -11,6 +11,7 @@
 
 {% if menu != blank or heading != blank %}
   <accordion-custom
+    id="{{ block.id }}"
     class="
       menu
       {% if show_as_accordion == true %} menu--accordion menu--{{ block_settings.accordion_icon }}{% endif %}
