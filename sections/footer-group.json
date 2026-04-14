@@ -330,7 +330,7 @@
                       "type": "group",
                       "name": "t:names.group",
                       "settings": {
-                        "footer_id": "ID",
+                        "footer_id": "footer_social",
                         "content_direction": "column",
                         "vertical_on_mobile": true,
                         "horizontal_alignment": "flex-start",
@@ -676,7 +676,9 @@
       "custom_css": [
         ".email-signup__input-group:not(.email-signup__input-group--integrated):not( .email-signup__input-group--underline ) {gap: 65px;}",
         ".group-email_pop {transform: translateY(-50px);}",
-        ".group-footer_menu {padding: 0 60px;}"
+        ".group-footer_menu {padding: 0 60px;}",
+        ".group-footer_menu .layout-panel-flex {justify-content: space-between;}",
+        ".group-footer_menu {}"
       ],
       "name": "t:names.footer",
       "settings": {
