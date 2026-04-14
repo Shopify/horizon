@@ -3,12 +3,6 @@
   type="module"
 ></script>
 
-<script
-  src="{{ 'predictive-search.js' | asset_url }}"
-  type="module"
-  fetchpriority="low"
-></script>
-
 <dialog-component
   id="search-modal"
   class="search-modal"
@@ -126,9 +120,54 @@
           </div>
         </div>
       </form>
-    </predictive-search-component>
-  </dialog>
 </dialog-component>
+
+<script>
+  (function() {
+    let predictiveSearchLoaded = false;
+    const url = "{{ 'predictive-search.js' | asset_url }}";
+
+    function loadPredictiveSearch() {
+      if (predictiveSearchLoaded) return;
+      predictiveSearchLoaded = true;
+      const script = document.createElement('script');
+      script.src = url;
+      script.type = 'module';
+      document.body.appendChild(script);
+
+      // Clean up listeners
+      removeListeners();
+    }
+
+    function addListeners() {
+      const triggers = document.querySelectorAll('.search-action, #search-modal, .search-input, .predictive-search__search-button');
+      triggers.forEach(trigger => {
+        trigger.addEventListener('mouseover', loadPredictiveSearch, { once: true });
+        trigger.addEventListener('focus', loadPredictiveSearch, { once: true });
+        trigger.addEventListener('touchstart', loadPredictiveSearch, { once: true, passive: true });
+        trigger.addEventListener('click', loadPredictiveSearch, { once: true });
+      });
+    }
+
+    function removeListeners() {
+      const triggers = document.querySelectorAll('.search-action, #search-modal, .search-input, .predictive-search__search-button');
+      triggers.forEach(trigger => {
+        trigger.removeEventListener('mouseover', loadPredictiveSearch);
+        trigger.removeEventListener('focus', loadPredictiveSearch);
+        trigger.removeEventListener('touchstart', loadPredictiveSearch);
+        trigger.removeEventListener('click', loadPredictiveSearch);
+      });
+    }
+
+    addListeners();
+    // Also bind to any new search actions that might be injected (like cart drawers or predictive search triggers)
+    document.addEventListener('mouseover', function(e) {
+      if (!predictiveSearchLoaded && e.target.closest && (e.target.closest('.search-action') || e.target.closest('.search-input') || e.target.closest('#search-modal'))) {
+        loadPredictiveSearch();
+      }
+    });
+  })();
+</script>
 
 {% stylesheet %}
   /* Search modal style */

@@ -2,7 +2,7 @@
   {% content_for 'blocks' %}
 {% endcapture %}
 
-{% render 'group', children: children, settings: block.settings, shopify_attributes: block.shopify_attributes %}
+{% render 'group', children: children, settings: block.settings, shopify_attributes: block.shopify_attributes, id: block.id %}
 
 {% schema %}
 {
@@ -23,6 +23,12 @@
     {
       "type": "header",
       "content": "t:content.layout"
+    },
+    {
+      "type": "text",
+      "id": "footer_id",
+      "label": "ID",
+      "default": "ID"
     },
     {
       "type": "select",
