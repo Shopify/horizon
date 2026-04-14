@@ -375,7 +375,7 @@
                   "type": "badge",
                   "name": "Badge",
                   "settings": {
-                    "label": "Badge Category",
+                    "label": "{{ closest.product.metafields.custom.product_badget.value }}",
                     "link": "",
                     "open_in_new_tab": false,
                     "inherit_color_scheme": true,
