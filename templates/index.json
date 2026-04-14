@@ -685,7 +685,7 @@
           "name": "t:names.product_card",
           "static": true,
           "settings": {
-            "product_card_gap": 4,
+            "product_card_gap": 10,
             "inherit_color_scheme": true,
             "color_scheme": "",
             "border": "none",
@@ -719,9 +719,9 @@
               "name": "t:names.product_title",
               "settings": {
                 "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
+                "max_width": "narrow",
+                "alignment": "center",
+                "type_preset": "h4",
                 "font": "var(--font-body--family)",
                 "font_size": "1rem",
                 "line_height": "normal",
