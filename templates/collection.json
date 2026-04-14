@@ -6,7 +6,7 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */ {
   "sections": {
     "section": {
       "type": "section",
@@ -64,10 +64,7 @@
           "blocks": {}
         }
       },
-      "block_order": [
-        "text_tqQTNE",
-        "text_twGGkJ"
-      ],
+      "block_order": ["text_tqQTNE", "text_twGGkJ"],
       "name": "Collection heading",
       "settings": {
         "content_direction": "column",
@@ -101,7 +98,7 @@
       "type": "main-collection",
       "blocks": {
         "filters": {
-          "type": "filters",
+          "type": "twp-filters",
           "static": true,
           "settings": {
             "enable_filtering": true,
@@ -226,8 +223,5 @@
       }
     }
   },
-  "order": [
-    "section",
-    "main"
-  ]
+  "order": ["section", "main"]
 }
