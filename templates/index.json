@@ -888,9 +888,10 @@
                   "type": "image",
                   "name": "t:names.image",
                   "settings": {
+                    "image": "shopify://shop_images/DTW-ByForWith-_5x_600x600_5f92fe08-9a59-4f77-8d62-1813513ba529.webp",
                     "link": "",
                     "image_ratio": "adapt",
-                    "width": "fill",
+                    "width": "fit-content",
                     "custom_width": 100,
                     "width_mobile": "fill",
                     "custom_width_mobile": 100,
