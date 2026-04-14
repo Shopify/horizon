@@ -471,7 +471,7 @@
                 "background_color": "#00000026",
                 "corner_radius": 0,
                 "padding-block-start": 0,
-                "padding-block-end": 16,
+                "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0,
                 "video_embed": ""
@@ -565,12 +565,12 @@
         "mobile_card_size": "60cqw",
         "columns_gap": 20,
         "bento_gap": 8,
-        "rows_gap": 8,
+        "rows_gap": 0,
         "max_collections": 4,
         "icons_style": "arrow",
         "icons_shape": "none",
         "section_width": "page-width",
-        "gap": 12,
+        "gap": 30,
         "color_scheme": "scheme-1",
         "padding-block-start": 48,
         "padding-block-end": 48
