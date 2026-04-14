@@ -232,7 +232,7 @@
                     "horizontal_alignment": "flex-start",
                     "vertical_alignment": "center",
                     "align_baseline": false,
-                    "horizontal_alignment_flex_direction_column": "flex-start",
+                    "horizontal_alignment_flex_direction_column": "center",
                     "vertical_alignment_flex_direction_column": "center",
                     "gap": 12,
                     "width": "fill",
@@ -263,6 +263,49 @@
                     "padding-inline-end": 0
                   },
                   "blocks": {
+                    "social_links_APALPx": {
+                      "type": "social-links",
+                      "name": "t:names.social_media_links",
+                      "settings": {
+                        "facebook_url": "shopify://collections",
+                        "instagram_url": "shopify://collections/gardening-essentials",
+                        "youtube_url": "shopify://collections",
+                        "tiktok_url": "shopify://collections",
+                        "twitter_url": "",
+                        "threads_url": "",
+                        "linkedin_url": "",
+                        "bluesky_url": "",
+                        "snapchat_url": "",
+                        "pinterest_url": "shopify://collections",
+                        "tumblr_url": "",
+                        "vimeo_url": "",
+                        "custom_url": ""
+                      },
+                      "blocks": {}
+                    },
+                    "image_qhPFyd": {
+                      "type": "image",
+                      "name": "t:names.image",
+                      "settings": {
+                        "image": "shopify://shop_images/Dovetail_Logo_Dovetail-Blue_733x_6fec2b4b-9ba6-4886-85ea-93afcc60c5d0.avif",
+                        "link": "",
+                        "image_ratio": "adapt",
+                        "width": "fit-content",
+                        "custom_width": 100,
+                        "width_mobile": "fill",
+                        "custom_width_mobile": 100,
+                        "height": "fit",
+                        "border": "none",
+                        "border_width": 1,
+                        "border_opacity": 100,
+                        "border_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    },
                     "text_i8LpDJ": {
                       "type": "text",
                       "name": "t:names.text",
@@ -288,29 +331,6 @@
                         "padding-inline-start": 0,
                         "padding-inline-end": 0,
                         "video_embed": ""
-                      },
-                      "blocks": {}
-                    },
-                    "image_qhPFyd": {
-                      "type": "image",
-                      "name": "t:names.image",
-                      "settings": {
-                        "image": "shopify://shop_images/Dovetail_Logo_Dovetail-Blue_733x_6fec2b4b-9ba6-4886-85ea-93afcc60c5d0.avif",
-                        "link": "",
-                        "image_ratio": "adapt",
-                        "width": "fit-content",
-                        "custom_width": 100,
-                        "width_mobile": "fill",
-                        "custom_width_mobile": 100,
-                        "height": "fit",
-                        "border": "none",
-                        "border_width": 1,
-                        "border_opacity": 100,
-                        "border_radius": 0,
-                        "padding-block-start": 0,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0
                       },
                       "blocks": {}
                     },
@@ -344,8 +364,9 @@
                     }
                   },
                   "block_order": [
-                    "text_i8LpDJ",
+                    "social_links_APALPx",
                     "image_qhPFyd",
+                    "text_i8LpDJ",
                     "text_GdqFw4"
                   ]
                 },
@@ -456,7 +477,7 @@
       "settings": {
         "section_width": "page-width",
         "gap": 20,
-        "color_scheme": "scheme-5",
+        "color_scheme": "scheme-fa2df66f-d094-4d01-ad02-3c74a35b36f1",
         "padding-block-start": 36,
         "padding-block-end": 36
       }
