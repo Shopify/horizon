@@ -520,6 +520,9 @@
       "block_order": [
         "group_KiKpmM"
       ],
+      "custom_css": [
+        ".email-signup__input-group:not(.email-signup__input-group--integrated):not( .email-signup__input-group--underline ) {gap: 65px;}"
+      ],
       "name": "t:names.footer",
       "settings": {
         "section_width": "page-width",
