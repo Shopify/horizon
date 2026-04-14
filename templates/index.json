@@ -505,8 +505,8 @@
               "name": "t:names.collection_title",
               "settings": {
                 "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
+                "max_width": "narrow",
+                "alignment": "center",
                 "type_preset": "h2",
                 "font": "var(--font-body--family)",
                 "font_size": "1rem",
