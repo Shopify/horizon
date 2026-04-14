@@ -571,7 +571,7 @@
               "type": "group",
               "name": "t:names.group",
               "settings": {
-                "content_direction": "column",
+                "content_direction": "row",
                 "vertical_on_mobile": true,
                 "horizontal_alignment": "flex-start",
                 "vertical_alignment": "center",
@@ -634,10 +634,24 @@
                     "video_embed": ""
                   },
                   "blocks": {}
+                },
+                "payment_icons_rnk9ww": {
+                  "type": "payment-icons",
+                  "name": "t:names.payment_icons",
+                  "settings": {
+                    "horizontal_alignment": "flex-end",
+                    "gap": 10,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
                 }
               },
               "block_order": [
-                "text_LaDVqf"
+                "text_LaDVqf",
+                "payment_icons_rnk9ww"
               ]
             }
           },
