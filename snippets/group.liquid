@@ -8,11 +8,12 @@
   @param {string} [style] - Custom inline styles for the group block.
 
   @example
-  {% render 'group', children: children, settings: block.settings, shopify_attributes: block.shopify_attributes %}
+  {% render 'group', children: children, settings: block.settings, shopify_attributes: block.shopify_attributes, block_id: block.id %}
 {%- enddoc -%}
 
 <div
-  class="
+  {% if id != blank %}id="{{ id }}"{% endif %}
+  class=" group-{{ settings.footer_id }}
     group-block
     group-block--height-{{ settings.height }}
     group-block--width-{{ settings.width }}

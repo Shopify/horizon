@@ -24,7 +24,7 @@ class LocalizationFormComponent extends Component {
 
     this.refs.search && this.refs.search.addEventListener('keydown', this.#onSearchKeyDown);
     this.refs.countryList && this.refs.countryList.addEventListener('keydown', this.#onContainerKeyDown);
-    this.refs.countryList && this.refs.countryList.addEventListener('scroll', this.#onCountryListScroll);
+    this.refs.countryList && this.refs.countryList.addEventListener('scroll', this.#onCountryListScroll, { passive: true });
 
     // Resizing the language input can be expensive for browsers that don't support field-sizing: content.
     // Spliting it into separate tasks at least helps when there are multiple localization forms on the page.
@@ -515,7 +515,7 @@ class DrawerLocalizationComponent extends Component {
     const countryList = localizationForm.querySelector('.country-selector-form__wrapper');
 
     if (target.open) {
-      if (countryList) countryList.addEventListener('scroll', this.#onCountryListScroll);
+      if (countryList) countryList.addEventListener('scroll', this.#onCountryListScroll, { passive: true });
       onAnimationEnd(target, localizationForm.focusSearchInput);
     } else {
       countryList?.removeEventListener('scroll', this.#onCountryListScroll);

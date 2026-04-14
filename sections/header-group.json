@@ -17,13 +17,13 @@
         "announcement_BxgCk9": {
           "type": "_announcement",
           "settings": {
-            "text": "Welcome to our store",
+            "text": "BEST-SELLING WOMEN’S WORKWEAR <em><strong>SHOP NOW</strong></em>",
             "link": "",
             "font": "var(--font-subheading--family)",
-            "font_size": "0.75rem",
-            "weight": "",
+            "font_size": "1.125rem",
+            "weight": "300",
             "letter_spacing": "normal",
-            "case": "none"
+            "case": "uppercase"
           },
           "blocks": {}
         }
@@ -35,9 +35,9 @@
       "settings": {
         "speed": 5,
         "section_width": "page-width",
-        "color_scheme": "scheme-1",
-        "divider_width": 1,
-        "padding-block-start": 15,
+        "color_scheme": "scheme-5",
+        "divider_width": 0,
+        "padding-block-start": 16,
         "padding-block-end": 15
       }
     },
@@ -62,16 +62,16 @@
           "settings": {
             "menu": "main-menu",
             "color_scheme": "",
-            "type_font_primary_size": "0.875rem",
-            "menu_font_style": "inverse",
-            "type_font_primary_link": "body",
-            "type_case_primary_link": "none",
-            "menu_style": "featured_products",
+            "type_font_primary_size": "1rem",
+            "menu_font_style": "regular",
+            "type_font_primary_link": "heading",
+            "type_case_primary_link": "uppercase",
+            "menu_style": "text",
             "featured_products_aspect_ratio": "4 / 5",
             "featured_collections_aspect_ratio": "16 / 9",
             "image_border_radius": 0,
             "navigation_bar": false,
-            "color_scheme_navigation_bar": "",
+            "color_scheme_navigation_bar": "scheme-cef83bbf-2633-4cee-9b3a-9d8125a1172a",
             "drawer_accordion": false,
             "drawer_accordion_expand_first": false,
             "drawer_dividers": false
@@ -79,10 +79,14 @@
           "blocks": {}
         }
       },
+      "custom_css": [
+        ".menu-list__link-title {color: white;}"
+      ],
       "settings": {
-        "logo_position": "left",
+        "logo_position": "center",
         "menu_position": "left",
         "menu_row": "top",
+        "customer_account_menu": "customer-account-main-menu",
         "show_search": true,
         "search_position": "right",
         "search_row": "top",
@@ -93,13 +97,17 @@
         "localization_font_size": "0.875rem",
         "localization_position": "right",
         "localization_row": "top",
-        "section_width": "page-width",
+        "section_width": "full-width",
         "section_height": "standard",
         "enable_sticky_header": "always",
         "divider_width": 0,
         "divider_size": "page-width",
         "border_width": 0,
-        "color_scheme_top": "scheme-1",
+        "actions_display_style": "icon",
+        "actions_font_size": "0.875rem",
+        "actions_font": "body",
+        "actions_text_case": "uppercase",
+        "color_scheme_top": "scheme-6",
         "color_scheme_bottom": "",
         "color_scheme_transparent": "scheme-6",
         "enable_transparent_header_home": false,
@@ -109,10 +117,22 @@
         "enable_transparent_header_collection": false,
         "collection_color_scheme": "default"
       }
+    },
+    "custom_liquid_rydHG4": {
+      "type": "custom-liquid",
+      "name": "t:names.custom_liquid",
+      "settings": {
+        "custom_liquid": "",
+        "color_scheme": "",
+        "section_width": "page-width",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
     }
   },
   "order": [
     "header_announcements_9jGBFp",
-    "header_section"
+    "header_section",
+    "custom_liquid_rydHG4"
   ]
 }

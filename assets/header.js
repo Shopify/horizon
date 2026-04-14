@@ -192,7 +192,7 @@ class HeaderComponent extends Component {
       this.#observeStickyPosition(stickyMode === 'always');
 
       if (stickyMode === 'scroll-up' || stickyMode === 'always') {
-        document.addEventListener('scroll', this.#handleWindowScroll);
+        document.addEventListener('scroll', this.#handleWindowScroll, { passive: true });
       }
     }
   }

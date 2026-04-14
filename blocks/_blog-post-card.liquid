@@ -4,17 +4,36 @@
   class="blog-post-card"
   style="--text-align: {{ block_settings.alignment }}"
 >
-  {% if article.image %}
-    {% content_for 'block', id: 'image', type: '_blog-post-image', article: article %}
-  {% endif %}
+  <div class="blog-post-card__image-wrapper">
+    {% if article.image %}
+      {% content_for 'block', id: 'image', type: '_blog-post-image', article: article %}
+    {% endif %}
+
+    <div class="blog-post-card__badge-wrapper">
+      {%- content_for 'block', id: 'badge', type: 'badge' -%}
+    </div>
+
+    {% if block_settings.title_overlay %}
+      <div class="blog-post-card__title-overlay blog-post-card__title-overlay--{{ block_settings.title_position }}">
+        <a
+          href="{{ article.url }}"
+          data-testid="blog-post-link"
+        >
+          {%- content_for 'block', id: 'heading', type: '_heading', text: article.title -%}
+        </a>
+      </div>
+    {% endif %}
+  </div>
 
   <div class="blog-post-card__content">
-    <a
-      href="{{ article.url }}"
-      data-testid="blog-post-link"
-    >
-      {%- content_for 'block', id: 'heading', type: '_heading', text: article.title -%}
-    </a>
+    {% if block_settings.title_overlay == false %}
+      <a
+        href="{{ article.url }}"
+        data-testid="blog-post-link"
+      >
+        {%- content_for 'block', id: 'heading', type: '_heading', text: article.title -%}
+      </a>
+    {% endif %}
 
     {% content_for 'block',
       id: 'blog-post-details',
@@ -44,6 +63,42 @@
       flex-basis: 30%;
     }
   }
+
+  .blog-post-card__image-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  .blog-post-card__badge-wrapper {
+    z-index: 3;
+    pointer-events: none;
+  }
+  
+  .blog-post-card__badge-wrapper > * {
+    pointer-events: auto;
+  }
+
+  .blog-post-card__title-overlay {
+    position: absolute;
+    z-index: 2;
+    padding: 1.5rem;
+    pointer-events: none;
+    width: 100%;
+  }
+
+  .blog-post-card__title-overlay a {
+    pointer-events: auto;
+  }
+
+  .blog-post-card__title-overlay--top-left { top: 0; left: 0; text-align: left; }
+  .blog-post-card__title-overlay--top-center { top: 0; left: 50%; transform: translateX(-50%); text-align: center; }
+  .blog-post-card__title-overlay--top-right { top: 0; right: 0; text-align: right; }
+  .blog-post-card__title-overlay--center-left { top: 50%; left: 0; transform: translateY(-50%); text-align: left; }
+  .blog-post-card__title-overlay--center { top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
+  .blog-post-card__title-overlay--center-right { top: 50%; right: 0; transform: translateY(-50%); text-align: right; }
+  .blog-post-card__title-overlay--bottom-left { bottom: 0; left: 0; text-align: left; }
+  .blog-post-card__title-overlay--bottom-center { bottom: 0; left: 50%; transform: translateX(-50%); text-align: center; }
+  .blog-post-card__title-overlay--bottom-right { bottom: 0; right: 0; text-align: right; }
 
   .blog-post-card__content {
     padding-block-start: 0.4rem;
@@ -99,6 +154,34 @@
       "id": "alignment",
       "label": "t:settings.alignment",
       "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Title Overlay Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "title_overlay",
+      "label": "Overlay title on image",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "title_position",
+      "label": "Title overlay position",
+      "options": [
+        { "value": "top-left", "label": "Top left" },
+        { "value": "top-center", "label": "Top center" },
+        { "value": "top-right", "label": "Top right" },
+        { "value": "center-left", "label": "Center left" },
+        { "value": "center", "label": "Center" },
+        { "value": "center-right", "label": "Center right" },
+        { "value": "bottom-left", "label": "Bottom left" },
+        { "value": "bottom-center", "label": "Bottom center" },
+        { "value": "bottom-right", "label": "Bottom right" }
+      ],
+      "default": "bottom-left",
+      "visible_if": "{{ block.settings.title_overlay }}"
     }
   ]
 }

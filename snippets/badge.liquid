@@ -1,0 +1,105 @@
+{%- doc -%}
+  Intended for use in a block similar to the button block, but acting as a badge with a background image.
+
+  @param {string} link - link to render
+  @param {object} [block] - The block
+{%- enddoc -%}
+
+{% assign block_settings = block.settings %}
+
+{%- if block_settings.label == blank -%}
+  {%- assign hide_badge = true -%}
+{%- endif -%}
+
+{%- assign pos_styles = "" -%}
+{%- if block_settings.position_absolute -%}
+  {%- assign pos_styles = pos_styles | append: "position: absolute; z-index: 3;" -%}
+  {%- if block_settings.vertical_alignment == 'top' -%}
+    {%- assign pos_styles = pos_styles | append: "top: 1rem;" -%}
+  {%- elsif block_settings.vertical_alignment == 'center' -%}
+    {%- assign pos_styles = pos_styles | append: "top: 50%;" -%}
+  {%- elsif block_settings.vertical_alignment == 'bottom' -%}
+    {%- assign pos_styles = pos_styles | append: "bottom: 1rem;" -%}
+  {%- endif -%}
+
+  {%- if block_settings.horizontal_alignment == 'left' -%}
+    {%- assign pos_styles = pos_styles | append: "left: 1rem;" -%}
+  {%- elsif block_settings.horizontal_alignment == 'center' -%}
+    {%- assign pos_styles = pos_styles | append: "left: 50%;" -%}
+  {%- elsif block_settings.horizontal_alignment == 'right' -%}
+    {%- assign pos_styles = pos_styles | append: "right: 1rem;" -%}
+  {%- endif -%}
+
+  {%- if block_settings.vertical_alignment == 'center' and block_settings.horizontal_alignment == 'center' -%}
+    {%- assign pos_styles = pos_styles | append: "transform: translate(-50%, -50%);" -%}
+  {%- elsif block_settings.vertical_alignment == 'center' -%}
+    {%- assign pos_styles = pos_styles | append: "transform: translateY(-50%);" -%}
+  {%- elsif block_settings.horizontal_alignment == 'center' -%}
+    {%- assign pos_styles = pos_styles | append: "transform: translateX(-50%);" -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- unless hide_badge -%}
+  <{% if link != blank %}a href="{{ link }}"{% else %}div{% endif %}
+    class="
+      badge-block
+      size-style
+      {% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %}
+      badge-block--{{ block.id }}
+    "
+    style="
+      {{ pos_styles }}
+      {% render 'size-style', settings: block_settings %}
+      {%- if block_settings.padding-block-start != blank -%}padding-top: {{ block_settings.padding-block-start }}px;{%- endif -%}
+      {%- if block_settings.padding-block-end != blank -%}padding-bottom: {{ block_settings.padding-block-end }}px;{%- endif -%}
+      {%- if block_settings.padding-inline-start != blank -%}padding-left: {{ block_settings.padding-inline-start }}px;{%- endif -%}
+      {%- if block_settings.padding-inline-end != blank -%}padding-right: {{ block_settings.padding-inline-end }}px;{%- endif -%}
+      {%- if block_settings.font_size != blank -%}--font-size: {{ block_settings.font_size }}px;{%- endif -%}
+      {%- if block_settings.font_size_mobile != blank -%}--font-size-mobile: {{ block_settings.font_size_mobile }}px;{%- endif -%}
+      {%- if block_settings.corner_radius != blank -%}border-radius: {{ block_settings.corner_radius }}px;{%- endif -%}
+      {%- if block_settings.border_color != blank and block_settings.border_color != 'rgba(0,0,0,0)' -%}border: 1px solid {{ block_settings.border_color }};{%- endif -%}
+    "
+    {%- if link != blank and block_settings.open_in_new_tab -%}
+      target="_blank"
+      rel="noopener noreferrer"
+    {%- endif -%}
+    {{ block.shopify_attributes }}
+  >
+    {% if block_settings.background_image %}
+      <img src="{{ block_settings.background_image | image_url: width: 400 }}" class="badge-block__bg-image" loading="lazy" alt="">
+    {% endif %}
+    <span class="badge-block__text">{{ block_settings.label | escape }}</span>
+  </{% if link != blank %}a{% else %}div{% endif %}>
+{%- endunless -%}
+
+{% stylesheet %}
+  .badge-block {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    font-size: var(--font-size, inherit);
+  }
+
+  @media screen and (max-width: 749px) {
+    .badge-block {
+      font-size: var(--font-size-mobile, var(--font-size, inherit));
+    }
+  }
+
+  .badge-block__bg-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  .badge-block__text {
+    position: relative;
+    z-index: 1;
+  }
+{% endstylesheet %}

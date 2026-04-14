@@ -87,12 +87,26 @@
   </a>
 
   <div class="featured-blog-posts-card__inner">
-    {% if onboarding or article.image %}
-      {{ image }}
-    {% endif %}
+    <div class="featured-blog-posts-card__image-wrapper">
+      {% if onboarding or article.image %}
+        {{ image }}
+      {% endif %}
+
+      <div class="featured-blog-posts-card__badge-wrapper">
+        {%- content_for 'block', id: 'badge', type: 'badge' -%}
+      </div>
+
+      {% if block_settings.title_overlay %}
+        <div class="featured-blog-posts-card__title-overlay featured-blog-posts-card__title-overlay--{{ block_settings.title_position }}">
+          <h4>{{ title }}</h4>
+        </div>
+      {% endif %}
+    </div>
 
     <div class="featured-blog-posts-card__content layout-panel-flex--column">
-      <h4>{{ title }}</h4>
+      {% if block_settings.title_overlay == false %}
+        <h4>{{ title }}</h4>
+      {% endif %}
       {{ details }}
       {{ description }}
     </div>
@@ -145,6 +159,46 @@
   .featured-blog-posts-card__content h4 {
     margin: 0;
   }
+
+  .featured-blog-posts-card__image-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  .featured-blog-posts-card__badge-wrapper {
+    z-index: 3;
+    pointer-events: none;
+  }
+  
+  .featured-blog-posts-card__badge-wrapper > * {
+    pointer-events: auto;
+  }
+
+  .featured-blog-posts-card__title-overlay {
+    position: absolute;
+    z-index: 2;
+    padding: 1.5rem;
+    pointer-events: none;
+    width: 100%;
+  }
+
+  .featured-blog-posts-card__title-overlay * {
+    margin: 0;
+  }
+
+  .featured-blog-posts-card__title-overlay h4 {
+    pointer-events: auto;
+  }
+
+  .featured-blog-posts-card__title-overlay--top-left { top: 0; left: 0; text-align: left; }
+  .featured-blog-posts-card__title-overlay--top-center { top: 0; left: 50%; transform: translateX(-50%); text-align: center; }
+  .featured-blog-posts-card__title-overlay--top-right { top: 0; right: 0; text-align: right; }
+  .featured-blog-posts-card__title-overlay--center-left { top: 50%; left: 0; transform: translateY(-50%); text-align: left; }
+  .featured-blog-posts-card__title-overlay--center { top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
+  .featured-blog-posts-card__title-overlay--center-right { top: 50%; right: 0; transform: translateY(-50%); text-align: right; }
+  .featured-blog-posts-card__title-overlay--bottom-left { bottom: 0; left: 0; text-align: left; }
+  .featured-blog-posts-card__title-overlay--bottom-center { bottom: 0; left: 50%; transform: translateX(-50%); text-align: center; }
+  .featured-blog-posts-card__title-overlay--bottom-right { bottom: 0; right: 0; text-align: right; }
 {% endstylesheet %}
 
 {% schema %}
@@ -175,6 +229,34 @@
         }
       ],
       "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Title Overlay Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "title_overlay",
+      "label": "Overlay title on image",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "title_position",
+      "label": "Title overlay position",
+      "options": [
+        { "value": "top-left", "label": "Top left" },
+        { "value": "top-center", "label": "Top center" },
+        { "value": "top-right", "label": "Top right" },
+        { "value": "center-left", "label": "Center left" },
+        { "value": "center", "label": "Center" },
+        { "value": "center-right", "label": "Center right" },
+        { "value": "bottom-left", "label": "Bottom left" },
+        { "value": "bottom-center", "label": "Bottom center" },
+        { "value": "bottom-right", "label": "Bottom right" }
+      ],
+      "default": "bottom-left",
+      "visible_if": "{{ block.settings.title_overlay }}"
     },
     {
       "type": "range",

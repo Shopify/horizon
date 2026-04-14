@@ -58,6 +58,13 @@
       "visible_if": "{{ block.settings.width == '100%' }}"
     },
     {
+      "type": "text_alignment",
+      "id": "alignment_mobile",
+      "label": "Mobile alignment",
+      "default": "left",
+      "visible_if": "{{ block.settings.width == '100%' }}"
+    },
+    {
       "type": "header",
       "content": "t:content.typography"
     },
@@ -190,7 +197,7 @@
         },
         {
           "value": "5.5rem",
-          "label": "88px"
+          "label": "90px"
         },
         {
           "value": "7.5rem",
@@ -209,12 +216,18 @@
       "visible_if": "{{ block.settings.type_preset == 'custom' }}"
     },
     {
+      "type": "number",
+      "id": "font_size_mobile",
+      "label": "Mobile size (px)",
+      "visible_if": "{{ block.settings.type_preset == 'custom' }}"
+    },
+    {
       "type": "select",
       "id": "line_height",
       "label": "t:settings.line_height",
       "options": [
         {
-          "value": "tight",
+          "value": "0.76",
           "label": "t:options.tight"
         },
         {
@@ -379,6 +392,11 @@
       "step": 1,
       "unit": "px",
       "default": 0
+    },
+    {
+      "type": "html",
+      "id": "video_embed",
+      "label": "Video embed"
     }
   ],
   "presets": [
