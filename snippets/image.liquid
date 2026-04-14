@@ -34,7 +34,10 @@
       assign style_value = style_value | append: 'object-position: inherit;'
     endif
   -%}
-test
+
+  {{ image_width }}
+  {{ image_height }}
+
   {{ image | image_url: width: image_width, height: image_height | image_tag: 
     class: class, 
     widths: widths_list, 
