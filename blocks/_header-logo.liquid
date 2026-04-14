@@ -49,6 +49,7 @@
 
   <span
     class="header-logo__image-container header-logo__image-container--original"
+    style="line-height: 0; font-size: 0;"
     data-testid="header-logo"
   >
     {% render 'image',
@@ -63,6 +64,7 @@
   {% if use_inverse_logo %}
     <span
       class="header-logo__image-container header-logo__image-container--inverse"
+      style="line-height: 0; font-size: 0;"
       data-testid="header-logo-inverse"
     >
       {% render 'image',
@@ -119,12 +121,14 @@
 
   .header-logo__image {
     object-fit: contain;
-    height: var(--header-logo-image-height-mobile);
-    width: var(--header-logo-image-width-mobile);
+    max-height: var(--header-logo-image-height-mobile);
+    width: auto;
+    height: auto;
 
     @media screen and (min-width: 750px) {
-      height: var(--header-logo-image-height);
-      width: var(--header-logo-image-width);
+      max-height: var(--header-logo-image-height);
+      width: auto;
+      height: auto;
     }
   }
 
