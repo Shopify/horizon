@@ -373,136 +373,6 @@
                 "group_TBaHVQ"
               ]
             },
-            "group_tB4d4P": {
-              "type": "group",
-              "name": "Contact",
-              "settings": {
-                "content_direction": "column",
-                "vertical_on_mobile": true,
-                "horizontal_alignment": "flex-start",
-                "vertical_alignment": "center",
-                "align_baseline": false,
-                "horizontal_alignment_flex_direction_column": "center",
-                "vertical_alignment_flex_direction_column": "center",
-                "gap": 16,
-                "width": "fill",
-                "custom_width": 100,
-                "width_mobile": "fill",
-                "custom_width_mobile": 100,
-                "height": "fit",
-                "custom_height": 100,
-                "inherit_color_scheme": true,
-                "color_scheme": "",
-                "background_media": "image",
-                "video_position": "cover",
-                "background_image": "shopify://shop_images/Schmutz_Horiz-W-100-Repeatable-Pattern_copy.png",
-                "background_image_position": "cover",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "toggle_overlay": false,
-                "overlay_color": "#42515e",
-                "overlay_style": "solid",
-                "gradient_direction": "to top",
-                "link": "",
-                "open_in_new_tab": false,
-                "placeholder": "",
-                "padding-block-start": 15,
-                "padding-block-end": 15,
-                "padding-inline-start": 15,
-                "padding-inline-end": 15
-              },
-              "blocks": {
-                "text_remU4F": {
-                  "type": "text",
-                  "name": "t:names.heading",
-                  "settings": {
-                    "text": "<p><strong>GET $10 OFF</strong></p>",
-                    "width": "fit-content",
-                    "max_width": "normal",
-                    "alignment": "left",
-                    "alignment_mobile": "left",
-                    "type_preset": "custom",
-                    "font": "var(--font-body--family)",
-                    "font_size": "3rem",
-                    "line_height": "0.76",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "color": "var(--color-foreground-heading)",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0,
-                    "video_embed": ""
-                  },
-                  "blocks": {}
-                },
-                "text_qCh9JA": {
-                  "type": "text",
-                  "name": "t:names.text",
-                  "settings": {
-                    "text": "<p>You're number 1, so find out about new products and exciting stuff before everyone else.</p>",
-                    "width": "100%",
-                    "max_width": "none",
-                    "alignment": "center",
-                    "alignment_mobile": "center",
-                    "type_preset": "custom",
-                    "font": "var(--font-subheading--family)",
-                    "font_size": "1rem",
-                    "line_height": "0.76",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "color": "var(--color-foreground-heading)",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 10,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0,
-                    "video_embed": ""
-                  },
-                  "blocks": {}
-                },
-                "email_signup_bixLjC": {
-                  "type": "email-signup",
-                  "name": "t:names.email_signup",
-                  "settings": {
-                    "width": "custom",
-                    "custom_width": 50,
-                    "inherit_color_scheme": true,
-                    "color_scheme": "",
-                    "heading": "",
-                    "heading_preset": "h3",
-                    "border_style": "all",
-                    "border_width": 1,
-                    "border_radius": 0,
-                    "input_type_preset": "paragraph",
-                    "style_class": "button",
-                    "display_type": "text",
-                    "label": "SING ME UP",
-                    "integrated_button": false,
-                    "button_type_preset": "paragraph",
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "text_remU4F",
-                "text_qCh9JA",
-                "email_signup_bixLjC"
-              ]
-            },
             "group_Ggdk4g": {
               "type": "group",
               "name": "Menu",
@@ -695,7 +565,7 @@
                   "name": "t:names.menu",
                   "settings": {
                     "menu": "shop",
-                    "heading": "Shop",
+                    "heading": "SHOP",
                     "menu_spacing": 0,
                     "show_as_accordion": false,
                     "accordion_icon": "caret",
@@ -716,7 +586,7 @@
                   "name": "t:names.menu",
                   "settings": {
                     "menu": "main-menu",
-                    "heading": "Customer Service",
+                    "heading": "CUSTOMER SERVICE",
                     "menu_spacing": 0,
                     "show_as_accordion": false,
                     "accordion_icon": "caret",
@@ -737,7 +607,7 @@
                   "name": "t:names.menu",
                   "settings": {
                     "menu": "main-menu",
-                    "heading": "About Our Brand",
+                    "heading": "ABOUT OUR BRAND",
                     "menu_spacing": 0,
                     "show_as_accordion": false,
                     "accordion_icon": "caret",
@@ -758,7 +628,7 @@
                   "name": "t:names.menu",
                   "settings": {
                     "menu": "main-menu",
-                    "heading": "Contact",
+                    "heading": "CONTACT",
                     "menu_spacing": 0,
                     "show_as_accordion": false,
                     "accordion_icon": "caret",
@@ -787,7 +657,6 @@
           "block_order": [
             "divider_GQKezT",
             "group_xx8tJb",
-            "group_tB4d4P",
             "group_Ggdk4g"
           ]
         }
