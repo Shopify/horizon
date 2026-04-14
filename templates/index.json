@@ -1630,10 +1630,11 @@
                 "background_image": "{{ closest.article.metafields.custom.badget_background.value }}",
                 "border_color": "rgba(0,0,0,0)",
                 "corner_radius": 0,
-                "padding-block-start": 4,
-                "padding-block-end": 4,
-                "padding-inline-start": 8,
-                "padding-inline-end": 8
+                "font_size": 13,
+                "padding-block-start": 3,
+                "padding-block-end": 2,
+                "padding-inline-start": 13,
+                "padding-inline-end": 13
               },
               "blocks": {}
             }
