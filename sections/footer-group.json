@@ -675,7 +675,8 @@
       ],
       "custom_css": [
         ".email-signup__input-group:not(.email-signup__input-group--integrated):not( .email-signup__input-group--underline ) {gap: 65px;}",
-        ".group-email_pop {transform: translateY(-50px);}"
+        ".group-email_pop {transform: translateY(-50px);}",
+        ".footer_menu accordion-custom{max-width: fit-content;}"
       ],
       "name": "t:names.footer",
       "settings": {
