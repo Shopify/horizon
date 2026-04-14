@@ -371,6 +371,27 @@
                 "padding-inline-end": 0
               },
               "blocks": {
+                "badge_DfX9aA": {
+                  "type": "badge",
+                  "name": "Badge",
+                  "settings": {
+                    "label": "Badge Category",
+                    "link": "",
+                    "open_in_new_tab": false,
+                    "inherit_color_scheme": true,
+                    "color_scheme": "",
+                    "border_color": "rgba(0,0,0,0)",
+                    "corner_radius": 4,
+                    "position_absolute": false,
+                    "vertical_alignment": "top",
+                    "horizontal_alignment": "right",
+                    "padding-block-start": 4,
+                    "padding-block-end": 4,
+                    "padding-inline-start": 8,
+                    "padding-inline-end": 8
+                  },
+                  "blocks": {}
+                },
                 "text_eUXG9B": {
                   "type": "text",
                   "name": "t:names.heading",
@@ -424,6 +445,7 @@
                 }
               },
               "block_order": [
+                "badge_DfX9aA",
                 "text_eUXG9B",
                 "price_Nk6F7Q"
               ]
@@ -1631,6 +1653,9 @@
                 "border_color": "rgba(0,0,0,0)",
                 "corner_radius": 0,
                 "font_size": 13,
+                "position_absolute": false,
+                "vertical_alignment": "top",
+                "horizontal_alignment": "right",
                 "padding-block-start": 3,
                 "padding-block-end": 2,
                 "padding-inline-start": 13,
