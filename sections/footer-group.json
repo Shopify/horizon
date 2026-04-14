@@ -674,11 +674,12 @@
         "group_KiKpmM"
       ],
       "custom_css": [
-        ".email-signup__input-group:not(.email-signup__input-group--integrated):not( .email-signup__input-group--underline ) {gap: 65px;}",
+        "max-width: fit-content; width: fit-content;.email-signup__input-group:not(.email-signup__input-group--integrated):not( .email-signup__input-group--underline ) {gap: 65px;}",
         ".group-email_pop {transform: translateY(-50px);}",
         ".group-footer_menu {padding: 0 60px;}",
         ".group-footer_menu .layout-panel-flex {justify-content: space-between;}",
-        ".group-footer_menu .footer_social,.group-footer_menu accordion-custom{max-width: fit-content;}"
+        ".group-footer_menu .footer_social,.group-footer_menu accordion-custom {max-width: fit-content;}",
+        ".group-footer_social {max-width: fit-content; width: fit-content;}"
       ],
       "name": "t:names.footer",
       "settings": {
