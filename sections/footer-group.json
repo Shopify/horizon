@@ -76,12 +76,13 @@
                 "color_scheme": "",
                 "background_media": "image",
                 "video_position": "cover",
+                "background_image": "shopify://shop_images/Schmutz_Horiz-W-100-Repeatable-Pattern_copy.png",
                 "background_image_position": "cover",
                 "border": "none",
                 "border_width": 1,
                 "border_opacity": 100,
                 "border_radius": 0,
-                "toggle_overlay": true,
+                "toggle_overlay": false,
                 "overlay_color": "#42515e",
                 "overlay_style": "solid",
                 "gradient_direction": "to top",
@@ -114,15 +115,16 @@
                     "custom_height": 100,
                     "inherit_color_scheme": true,
                     "color_scheme": "",
-                    "background_media": "none",
+                    "background_media": "image",
                     "video_position": "cover",
+                    "background_image": "shopify://shop_images/Schmutz_Horiz-W-100-Repeatable-Pattern_copy.png",
                     "background_image_position": "cover",
                     "border": "none",
                     "border_width": 1,
                     "border_opacity": 100,
                     "border_radius": 0,
                     "toggle_overlay": false,
-                    "overlay_color": "#00000026",
+                    "overlay_color": "#42515e",
                     "overlay_style": "solid",
                     "gradient_direction": "to top",
                     "link": "",
@@ -133,7 +135,39 @@
                     "padding-inline-start": 0,
                     "padding-inline-end": 0
                   },
-                  "blocks": {}
+                  "blocks": {
+                    "text_remU4F": {
+                      "type": "text",
+                      "name": "t:names.heading",
+                      "settings": {
+                        "text": "<h2>New arrivals</h2>",
+                        "width": "fit-content",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "alignment_mobile": "left",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_size": "1rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "video_embed": ""
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_remU4F"
+                  ]
                 },
                 "text_HwGTVe": {
                   "type": "text",
