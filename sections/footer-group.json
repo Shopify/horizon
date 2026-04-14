@@ -58,9 +58,9 @@
               "type": "_divider",
               "name": "t:names.divider",
               "settings": {
-                "thickness": 1,
+                "thickness": 0.5,
                 "corner_radius": "square",
-                "width_percent": 100,
+                "width_percent": 5,
                 "padding-block-start": 100,
                 "padding-block-end": 0
               },
