@@ -285,7 +285,7 @@
                   "type": "group",
                   "name": "Menu",
                   "settings": {
-                    "content_direction": "column",
+                    "content_direction": "row",
                     "vertical_on_mobile": true,
                     "horizontal_alignment": "flex-start",
                     "vertical_alignment": "center",
@@ -330,7 +330,7 @@
                         "horizontal_alignment": "flex-start",
                         "vertical_alignment": "center",
                         "align_baseline": false,
-                        "horizontal_alignment_flex_direction_column": "flex-start",
+                        "horizontal_alignment_flex_direction_column": "center",
                         "vertical_alignment_flex_direction_column": "center",
                         "gap": 12,
                         "width": "fill",
@@ -360,11 +360,205 @@
                         "padding-inline-start": 0,
                         "padding-inline-end": 0
                       },
+                      "blocks": {
+                        "image_Aidb37": {
+                          "type": "image",
+                          "name": "t:names.image",
+                          "settings": {
+                            "image": "shopify://shop_images/Dovetail_Logo_Dovetail-Blue_733x_6fec2b4b-9ba6-4886-85ea-93afcc60c5d0.avif",
+                            "link": "",
+                            "image_ratio": "adapt",
+                            "width": "fit-content",
+                            "custom_width": 100,
+                            "width_mobile": "fill",
+                            "custom_width_mobile": 100,
+                            "height": "fit",
+                            "border": "none",
+                            "border_width": 1,
+                            "border_opacity": 100,
+                            "border_radius": 0,
+                            "padding-block-start": 0,
+                            "padding-block-end": 16,
+                            "padding-inline-start": 0,
+                            "padding-inline-end": 0
+                          },
+                          "blocks": {}
+                        },
+                        "text_KtXg4H": {
+                          "type": "text",
+                          "name": "t:names.text",
+                          "settings": {
+                            "text": "<p><a href=\"https://dovetailworkwear.com/#\">Need help? Chat with us</a></p>",
+                            "width": "fit-content",
+                            "max_width": "normal",
+                            "alignment": "left",
+                            "alignment_mobile": "left",
+                            "type_preset": "custom",
+                            "font": "var(--font-subheading--family)",
+                            "font_size": "1rem",
+                            "line_height": "0.76",
+                            "letter_spacing": "normal",
+                            "case": "none",
+                            "wrap": "pretty",
+                            "color": "var(--color-primary)",
+                            "background": false,
+                            "background_color": "#00000026",
+                            "corner_radius": 0,
+                            "padding-block-start": 0,
+                            "padding-block-end": 0,
+                            "padding-inline-start": 0,
+                            "padding-inline-end": 0,
+                            "video_embed": ""
+                          },
+                          "blocks": {}
+                        },
+                        "text_bFMYPQ": {
+                          "type": "text",
+                          "name": "t:names.text",
+                          "settings": {
+                            "text": "<p>Email: <a href=\"mailto:cs@dovetailworkwear.com\">cs@dovetailworkwear.com</a></p>",
+                            "width": "fit-content",
+                            "max_width": "normal",
+                            "alignment": "left",
+                            "alignment_mobile": "left",
+                            "type_preset": "custom",
+                            "font": "var(--font-subheading--family)",
+                            "font_size": "1rem",
+                            "line_height": "0.76",
+                            "letter_spacing": "normal",
+                            "case": "none",
+                            "wrap": "pretty",
+                            "color": "var(--color-primary)",
+                            "background": false,
+                            "background_color": "#00000026",
+                            "corner_radius": 0,
+                            "padding-block-start": 0,
+                            "padding-block-end": 0,
+                            "padding-inline-start": 0,
+                            "padding-inline-end": 0,
+                            "video_embed": ""
+                          },
+                          "blocks": {}
+                        },
+                        "social_links_bNha3c": {
+                          "type": "social-links",
+                          "name": "t:names.social_media_links",
+                          "settings": {
+                            "facebook_url": "shopify://collections/gardening-essentials",
+                            "instagram_url": "shopify://collections",
+                            "youtube_url": "shopify://collections/gardening-essentials",
+                            "tiktok_url": "shopify://collections",
+                            "twitter_url": "",
+                            "threads_url": "",
+                            "linkedin_url": "",
+                            "bluesky_url": "",
+                            "snapchat_url": "",
+                            "pinterest_url": "shopify://collections",
+                            "tumblr_url": "",
+                            "vimeo_url": "",
+                            "custom_url": ""
+                          },
+                          "blocks": {}
+                        }
+                      },
+                      "block_order": [
+                        "image_Aidb37",
+                        "text_KtXg4H",
+                        "text_bFMYPQ",
+                        "social_links_bNha3c"
+                      ]
+                    },
+                    "menu_3T7hEg": {
+                      "type": "menu",
+                      "name": "t:names.menu",
+                      "settings": {
+                        "menu": "shop",
+                        "heading": "SHOP",
+                        "menu_spacing": 0,
+                        "show_as_accordion": false,
+                        "accordion_icon": "caret",
+                        "accordion_dividers": false,
+                        "inherit_color_scheme": true,
+                        "color_scheme": "",
+                        "heading_preset": "h4",
+                        "link_preset": "paragraph",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    },
+                    "menu_bxGCE6": {
+                      "type": "menu",
+                      "name": "t:names.menu",
+                      "settings": {
+                        "menu": "main-menu",
+                        "heading": "CUSTOMER SERVICE",
+                        "menu_spacing": 0,
+                        "show_as_accordion": false,
+                        "accordion_icon": "caret",
+                        "accordion_dividers": false,
+                        "inherit_color_scheme": true,
+                        "color_scheme": "",
+                        "heading_preset": "h4",
+                        "link_preset": "paragraph",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    },
+                    "menu_NHHWwW": {
+                      "type": "menu",
+                      "name": "t:names.menu",
+                      "settings": {
+                        "menu": "main-menu",
+                        "heading": "ABOUT OUR BRAND",
+                        "menu_spacing": 0,
+                        "show_as_accordion": false,
+                        "accordion_icon": "caret",
+                        "accordion_dividers": false,
+                        "inherit_color_scheme": true,
+                        "color_scheme": "",
+                        "heading_preset": "h4",
+                        "link_preset": "paragraph",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    },
+                    "menu_6faHmy": {
+                      "type": "menu",
+                      "name": "t:names.menu",
+                      "settings": {
+                        "menu": "main-menu",
+                        "heading": "CONTACT",
+                        "menu_spacing": 0,
+                        "show_as_accordion": false,
+                        "accordion_icon": "caret",
+                        "accordion_dividers": false,
+                        "inherit_color_scheme": true,
+                        "color_scheme": "",
+                        "heading_preset": "h4",
+                        "link_preset": "paragraph",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
                       "blocks": {}
                     }
                   },
                   "block_order": [
-                    "group_HXx3ec"
+                    "group_HXx3ec",
+                    "menu_3T7hEg",
+                    "menu_bxGCE6",
+                    "menu_NHHWwW",
+                    "menu_6faHmy"
                   ]
                 }
               },
