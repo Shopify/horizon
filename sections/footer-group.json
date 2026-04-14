@@ -54,6 +54,18 @@
             "padding-inline-end": 0
           },
           "blocks": {
+            "divider_GQKezT": {
+              "type": "_divider",
+              "name": "t:names.divider",
+              "settings": {
+                "thickness": 1,
+                "corner_radius": "square",
+                "width_percent": 100,
+                "padding-block-start": 100,
+                "padding-block-end": 0
+              },
+              "blocks": {}
+            },
             "group_k3cdx3": {
               "type": "group",
               "name": "Join our email list",
@@ -512,6 +524,7 @@
             }
           },
           "block_order": [
+            "divider_GQKezT",
             "group_k3cdx3",
             "group_Ggdk4g"
           ]
