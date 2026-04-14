@@ -676,7 +676,7 @@
       "custom_css": [
         ".email-signup__input-group:not(.email-signup__input-group--integrated):not( .email-signup__input-group--underline ) {gap: 65px;}",
         ".group-email_pop {transform: translateY(-50px);}",
-        ".footer_menu .menu__details {max-width: fit-content !important;}"
+        ".footer_menu {padding: 0 60px;}"
       ],
       "name": "t:names.footer",
       "settings": {
