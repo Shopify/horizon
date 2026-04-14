@@ -1449,16 +1449,16 @@
           "name": "t:names.title",
           "static": true,
           "settings": {
-            "text": "<h3>{{ closest.blog.title }}</h3>",
+            "text": "<h3><strong>THE DIRT BLOG</strong></h3>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
-            "type_preset": "rte",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
+            "type_preset": "custom",
+            "font": "var(--font-heading--family)",
+            "font_size": "2rem",
             "line_height": "normal",
             "letter_spacing": "normal",
-            "case": "none",
+            "case": "uppercase",
             "wrap": "pretty",
             "color": "var(--color-foreground)",
             "background": false,
@@ -1476,10 +1476,10 @@
           "name": "t:names.blog_card",
           "static": true,
           "settings": {
-            "alignment": "left",
-            "gap": 8,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
+            "alignment": "center",
+            "gap": 0,
+            "inherit_color_scheme": false,
+            "color_scheme": "scheme-1",
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
@@ -1494,7 +1494,7 @@
               "type": "_featured-blog-posts-image",
               "static": true,
               "settings": {
-                "image_ratio": "square",
+                "image_ratio": "portrait",
                 "border": "none",
                 "border_width": 1,
                 "border_opacity": 100,
@@ -1529,6 +1529,7 @@
             "blog-post-info-text": {
               "type": "_blog-post-info-text",
               "name": "t:names.details",
+              "disabled": true,
               "static": true,
               "settings": {
                 "show_date": true,
@@ -1544,6 +1545,7 @@
             "blog-post-description": {
               "type": "_blog-post-description",
               "name": "t:names.excerpt",
+              "disabled": true,
               "static": true,
               "settings": {
                 "type_preset": "rte",
@@ -1577,7 +1579,7 @@
         "icons_style": "arrow",
         "icons_shape": "none",
         "section_width": "page-width",
-        "gap": 12,
+        "gap": 44,
         "color_scheme": "",
         "padding-block-start": 48,
         "padding-block-end": 48
