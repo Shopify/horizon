@@ -939,18 +939,20 @@
                   "type": "button",
                   "name": "t:names.button",
                   "settings": {
-                    "label": "Shop now",
+                    "label": "ABOUT US",
                     "link": "shopify://collections/all",
                     "open_in_new_tab": false,
                     "style_class": "button",
+                    "font_size": 20,
+                    "font_size_mobile": 16,
                     "width": "fit-content",
                     "custom_width": 100,
                     "width_mobile": "fit-content",
                     "custom_width_mobile": 100,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
+                    "padding-block-start": 16,
+                    "padding-block-end": 16,
+                    "padding-inline-start": 32,
+                    "padding-inline-end": 32
                   },
                   "blocks": {}
                 }
