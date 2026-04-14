@@ -310,26 +310,6 @@
                     "padding-inline-end": 0
                   },
                   "blocks": {
-                    "social_links_APALPx": {
-                      "type": "social-links",
-                      "name": "t:names.social_media_links",
-                      "settings": {
-                        "facebook_url": "shopify://collections",
-                        "instagram_url": "shopify://collections/gardening-essentials",
-                        "youtube_url": "shopify://collections",
-                        "tiktok_url": "shopify://collections",
-                        "twitter_url": "",
-                        "threads_url": "",
-                        "linkedin_url": "",
-                        "bluesky_url": "",
-                        "snapchat_url": "",
-                        "pinterest_url": "shopify://collections",
-                        "tumblr_url": "",
-                        "vimeo_url": "",
-                        "custom_url": ""
-                      },
-                      "blocks": {}
-                    },
                     "image_qhPFyd": {
                       "type": "image",
                       "name": "t:names.image",
@@ -347,7 +327,7 @@
                         "border_opacity": 100,
                         "border_radius": 0,
                         "padding-block-start": 0,
-                        "padding-block-end": 0,
+                        "padding-block-end": 30,
                         "padding-inline-start": 0,
                         "padding-inline-end": 0
                       },
@@ -362,10 +342,10 @@
                         "max_width": "normal",
                         "alignment": "left",
                         "alignment_mobile": "left",
-                        "type_preset": "rte",
+                        "type_preset": "custom",
                         "font": "var(--font-body--family)",
                         "font_size": "1rem",
-                        "line_height": "normal",
+                        "line_height": "0.76",
                         "letter_spacing": "normal",
                         "case": "none",
                         "wrap": "pretty",
@@ -408,13 +388,33 @@
                         "video_embed": ""
                       },
                       "blocks": {}
+                    },
+                    "social_links_8M3Yp9": {
+                      "type": "social-links",
+                      "name": "t:names.social_media_links",
+                      "settings": {
+                        "facebook_url": "shopify://collections",
+                        "instagram_url": "shopify://collections/gardening-essentials",
+                        "youtube_url": "shopify://collections",
+                        "tiktok_url": "shopify://collections",
+                        "twitter_url": "",
+                        "threads_url": "",
+                        "linkedin_url": "",
+                        "bluesky_url": "",
+                        "snapchat_url": "",
+                        "pinterest_url": "shopify://collections",
+                        "tumblr_url": "",
+                        "vimeo_url": "",
+                        "custom_url": ""
+                      },
+                      "blocks": {}
                     }
                   },
                   "block_order": [
-                    "social_links_APALPx",
                     "image_qhPFyd",
                     "text_i8LpDJ",
-                    "text_GdqFw4"
+                    "text_GdqFw4",
+                    "social_links_8M3Yp9"
                   ]
                 },
                 "menu_kqMEFE": {
