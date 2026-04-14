@@ -678,7 +678,7 @@
         ".group-email_pop {transform: translateY(-50px);}",
         ".group-footer_menu {padding: 0 60px;}",
         ".group-footer_menu .layout-panel-flex {justify-content: space-between;}",
-        ".group-footer_menu {}"
+        ".group-footer_menu .footer_social,.group-footer_menu accordion-custom{max-width: fit-content;}"
       ],
       "name": "t:names.footer",
       "settings": {
