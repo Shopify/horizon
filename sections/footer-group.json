@@ -104,7 +104,7 @@
                     "horizontal_alignment": "flex-start",
                     "vertical_alignment": "center",
                     "align_baseline": false,
-                    "horizontal_alignment_flex_direction_column": "flex-start",
+                    "horizontal_alignment_flex_direction_column": "center",
                     "vertical_alignment_flex_direction_column": "center",
                     "gap": 12,
                     "width": "fill",
@@ -140,13 +140,41 @@
                       "type": "text",
                       "name": "t:names.heading",
                       "settings": {
-                        "text": "<h2>New arrivals</h2>",
+                        "text": "<p><strong>GET $10 OFF</strong></p>",
                         "width": "fit-content",
                         "max_width": "normal",
                         "alignment": "left",
                         "alignment_mobile": "left",
-                        "type_preset": "rte",
+                        "type_preset": "custom",
                         "font": "var(--font-body--family)",
+                        "font_size": "3rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "video_embed": ""
+                      },
+                      "blocks": {}
+                    },
+                    "text_qCh9JA": {
+                      "type": "text",
+                      "name": "t:names.text",
+                      "settings": {
+                        "text": "<p>You're number 1, so find out about new products and exciting stuff before everyone else.</p>",
+                        "width": "fit-content",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "alignment_mobile": "left",
+                        "type_preset": "custom",
+                        "font": "var(--font-subheading--family)",
                         "font_size": "1rem",
                         "line_height": "normal",
                         "letter_spacing": "normal",
@@ -163,100 +191,43 @@
                         "video_embed": ""
                       },
                       "blocks": {}
+                    },
+                    "email_signup_bixLjC": {
+                      "type": "email-signup",
+                      "name": "t:names.email_signup",
+                      "settings": {
+                        "width": "custom",
+                        "custom_width": 50,
+                        "inherit_color_scheme": true,
+                        "color_scheme": "",
+                        "heading": "",
+                        "heading_preset": "h3",
+                        "border_style": "all",
+                        "border_width": 1,
+                        "border_radius": 0,
+                        "input_type_preset": "paragraph",
+                        "style_class": "button",
+                        "display_type": "text",
+                        "label": "SING ME UP",
+                        "integrated_button": false,
+                        "button_type_preset": "paragraph",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
                     }
                   },
                   "block_order": [
-                    "text_remU4F"
+                    "text_remU4F",
+                    "text_qCh9JA",
+                    "email_signup_bixLjC"
                   ]
-                },
-                "text_HwGTVe": {
-                  "type": "text",
-                  "name": "t:names.heading",
-                  "settings": {
-                    "text": "<p><strong>GET $10 OFF</strong></p>",
-                    "width": "fit-content",
-                    "max_width": "normal",
-                    "alignment": "left",
-                    "alignment_mobile": "left",
-                    "type_preset": "custom",
-                    "font": "var(--font-body--family)",
-                    "font_size": "3rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "color": "var(--color-foreground)",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0,
-                    "video_embed": ""
-                  },
-                  "blocks": {}
-                },
-                "text_kWhkdT": {
-                  "type": "text",
-                  "name": "t:names.text",
-                  "settings": {
-                    "text": "<p>You're number 1, so find out about new products and exciting stuff before everyone else.</p>",
-                    "width": "fit-content",
-                    "max_width": "normal",
-                    "alignment": "left",
-                    "alignment_mobile": "left",
-                    "type_preset": "custom",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "color": "var(--color-foreground)",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0,
-                    "video_embed": ""
-                  },
-                  "blocks": {}
-                },
-                "email_signup_WWc3L8": {
-                  "type": "email-signup",
-                  "name": "t:names.email_signup",
-                  "settings": {
-                    "width": "fill",
-                    "custom_width": 100,
-                    "inherit_color_scheme": true,
-                    "color_scheme": "",
-                    "heading": "",
-                    "heading_preset": "h3",
-                    "border_style": "all",
-                    "border_width": 1,
-                    "border_radius": 100,
-                    "input_type_preset": "paragraph",
-                    "style_class": "button",
-                    "display_type": "text",
-                    "label": "Sign up",
-                    "integrated_button": false,
-                    "button_type_preset": "paragraph",
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
                 }
               },
               "block_order": [
-                "group_rjQtK7",
-                "text_HwGTVe",
-                "text_kWhkdT",
-                "email_signup_WWc3L8"
+                "group_rjQtK7"
               ]
             },
             "group_Ggdk4g": {
