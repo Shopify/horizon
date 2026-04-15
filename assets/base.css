@@ -986,7 +986,7 @@ body:has(.header[transparent]) #header-group > *:not(.header-section) {
 
 .product-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(var(--mobile-columns, 2), 1fr);
   gap: var(--product-grid-gap);
   margin: auto;
   padding: 0;

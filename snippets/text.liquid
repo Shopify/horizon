@@ -20,7 +20,7 @@
   else
     assign type = 'body'
   endif
-  if block_settings.type_preset == 'rte' or block_settings.type_preset == 'paragraph'
+  if block_settings.type_preset == 'rte' or block_settings.type_preset == 'paragraph' or block_settings.type_preset == 'paragraph-small'
     assign is_rte = true
   endif
 
@@ -134,7 +134,8 @@
   }
 
   .text-block:not(.text-block--full-width).rte,
-  .text-block:not(.text-block--full-width).paragraph {
+  .text-block:not(.text-block--full-width).paragraph,
+  .text-block:not(.text-block--full-width).paragraph-small {
     /* Safari doesn't support pretty, so fallback to balance */
     text-wrap: balance;
     text-wrap: pretty;
@@ -177,6 +178,18 @@
   .text-block h6,
   .text-block.h6 > * {
     margin-block: var(--font-h6--spacing);
+  }
+
+  .paragraph-small:not(.button),
+  .paragraph-small > *,
+  .text-block.paragraph-small :is(h1, h2, h3, h4, h5, h6) {
+    font-family: var(--font-paragraph_small--family);
+    font-style: var(--font-paragraph_small--style);
+    font-weight: var(--font-paragraph_small--weight);
+    font-size: var(--font-paragraph_small--size);
+    line-height: var(--font-paragraph_small--line-height);
+    text-transform: var(--font-paragraph_small--case);
+    color: var(--color, var(--color-foreground));
   }
 
   .text-block p,

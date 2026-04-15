@@ -1,4 +1,3 @@
-
 {%- doc -%}
   Renders the facet filtering component
 
@@ -12,12 +11,13 @@
   type="module"
   fetchpriority="low"
 ></script>
-
-<script
-  src="{{ 'scrolling.js' | asset_url }}"
-  type="module"
-  fetchpriority="low"
-></script>
+{% comment %}
+  <script
+    src="{{ 'sticky-drawer-filters.js' | asset_url }}"
+    type="module"
+    fetchpriority="low"
+  ></script>
+{% endcomment %}
 
 {%- liquid
   assign block_settings = block.settings
@@ -64,11 +64,20 @@
   assign should_show_pane = true
   if block_settings.filter_style == 'vertical'
     assign should_show_pane = block_settings.enable_filtering
+  elsif block_settings.filter_style == 'drawer'
+    assign should_show_pane = false
   endif
 
   assign should_use_select_on_mobile = true
   if block_settings.enable_filtering == false and block_settings.enable_sorting
     assign should_use_select_on_mobile = false
+  endif
+
+  assign should_show_vertical_clear_all = true
+  if block_settings.filter_style == 'vertical'
+    assign should_show_vertical_clear_all = false
+  elsif block_settings.filter_style == 'drawer'
+    assign should_show_vertical_clear_all = true
   endif
 -%}
 
@@ -76,23 +85,16 @@
   {% if block_settings.filter_style == 'vertical' %}
     {% # These elements are always rendered in the horizontal bar that's why we apply the .facets--horizontal class %}
     <div
-      class="facets facets--horizontal facets-controls-wrapper spacing-style"
+      class="facets facets--horizontal facets-controls-wrapper spacing-style "
       style="{% render 'spacing-style', settings: block_settings %}{% if block_settings.text_label_case == 'uppercase' %} --facet-label-transform: uppercase;{% endif %}"
     >
       {% if block_settings.enable_filtering %}
         <h4 class="facets--filters-title">{{ 'content.filters' | t }}</h4>
       {% endif %}
 
-      <div
-        class="products-count-wrapper"
-        data-testid="products-count"
-      >
-        <span role="status">
-          {% if products_count > 25000 %}
-            {{- 'content.item_count_cutoff' | t: count: 25000 -}}
-          {% else %}
-            {{- 'content.item_count' | t: count: products_count -}}
-          {% endif %}
+      <div class="products-count-wrapper">
+        <span title="{{ 'content.product_count' | t }}">
+          {{- 'content.item_count' | t: count: products_count -}}
         </span>
       </div>
 
@@ -128,12 +130,14 @@
       --grid-column--desktop:
         {%- if block_settings.filter_style == 'horizontal' -%}
           var(--{{ block_settings.filter_width }})
+        {%- elsif block_settings.filter_style == 'drawer' -%}
+          var(--full-width)
         {%- else -%}
           2 / var(--facets-vertical-col-width)
         {%- endif -%};
       {{ facets_margin_style }}
       --facets-inner-padding-block: {{ block_settings.padding-block-start }}px {{ block_settings.padding-block-end }}px;
-      --facets-inner-padding-inline: var(--padding-lg);
+      --facets-inner-padding-inline: var(--padding-xl);
     "
     {{ block.shopify_attributes }}
   >
@@ -151,6 +155,9 @@
           action="{{ results_url }}"
           id="FacetFiltersForm--{{ section.id }}-desktop"
           class="facets__form"
+          {% if block_settings.single_open_filters %}
+            data-single-open="true"
+          {% endif %}
           ref="facetsForm"
         >
           {% if should_show_pane %}
@@ -180,7 +187,7 @@
                           assign should_render_clear = false
                         endif
 
-                        render 'price-filter', filter: filter, filter_style: block_settings.filter_style, should_render_clear: should_render_clear, id_prefix: 'horizontal'
+                        render 'price-filter', filter: filter, filter_style: block_settings.filter_style, should_render_clear: should_render_clear, is_first_filter: forloop.first, show_filter_status: block_settings.show_filter_status
                       -%}
                     {% else %}
                       {% liquid
@@ -195,7 +202,7 @@
                         else
                           assign should_render_clear = false
                         endif
-                        render 'list-filter', filter: filter, filter_style: block_settings.filter_style, active_value_count: active_value_count, should_render_clear: should_render_clear, show_swatch_label: block_settings.show_swatch_label, sectionId: section.id
+                        render 'list-filter', filter: filter, filter_style: block_settings.filter_style, active_value_count: active_value_count, should_render_clear: should_render_clear, show_swatch_label: block_settings.show_swatch_label, sectionId: section.id, is_first_filter: forloop.first, show_filter_status: block_settings.show_filter_status
                       %}
                   {% endcase %}
                 {%- endfor -%}
@@ -213,44 +220,24 @@
                     class: 'facets__overflow-list',
                     children: rendered_filters,
                     more-attributes: more_attributes,
-                    more-button-attributes: 'aria-haspopup="dialog"',
-                    minimum-items: 2,
-                    data-testid: 'horizontal-filters-overflow-list'
+                    minimum-items: 2
                   %}
                 {% else %}
                   {{ rendered_filters }}
                 {% endif %}
               </div>
 
-              {% if block_settings.filter_style == 'horizontal' %}
-                <facet-remove-component
-                  class="facets-horizontal-remove {% if is_active %}facets-horizontal-remove--active{% endif %}"
-                  active-class="facets__clear-all-link--active"
-                  data-url="{{ results_url }}"
-                >
-                  <button
-                    type="button"
-                    class="button-unstyled facets__clear-all-link facets__clear-all-link--horizontal {% if is_active %}facets__clear-all-link--active{% endif %}"
-                    ref="clearButton"
-                    on:click="/removeFilter?form="
-                    on:keydown="/removeFilter?form="
-                  >
-                    {{- 'actions.clear_all' | t -}}
-                  </button>
-                </facet-remove-component>
-              {% endif %}
+              {% render 'facets-actions',
+                results_url: results_url,
+                is_active: is_active,
+                products_count: products_count,
+                should_show_clear_all: should_show_vertical_clear_all
+              %}
             {% endif %}
             {% if block_settings.filter_style == 'horizontal' %}
-              <div
-                class="products-count-wrapper"
-                data-testid="products-count"
-              >
-                <span role="status">
-                  {% if products_count > 25000 %}
-                    {{- 'content.item_count_cutoff' | t: count: 25000 -}}
-                  {% else %}
-                    {{- 'content.item_count' | t: count: products_count -}}
-                  {% endif %}
+              <div class="products-count-wrapper">
+                <span title="{{ 'content.product_count' | t }}">
+                  {{- 'content.item_count' | t: count: products_count -}}
                 </span>
               </div>
 
@@ -276,10 +263,28 @@
     </div>
   </div>
 
+  {% if block_settings.filter_style == 'drawer' %}
+    <sticky-drawer-filters data-filter-style="{{ block_settings.filter_style }}">
+      <!-- Sentinel element for intersection observer - tracks original position for sticky behavior -->
+      <div
+        data-sticky-sentinel="true"
+        style="height: 1px !important; width: 100% !important; position: relative !important; top: 0px !important; left: 0px !important; right: auto !important; bottom: auto !important; margin: 0px !important; padding: 0px !important; pointer-events: none !important; visibility: hidden !important; z-index: -1 !important; opacity: 0 !important; background: transparent !important; border: none !important; outline: none !important; box-shadow: none !important; transform: none !important;"
+      ></div>
+      <div
+        ref="drawerWrapper"
+        class="facets-block-wrapper facets-block-wrapper--drawer"
+        style="{% render 'spacing-style', settings: block_settings %}{% if block_settings.text_label_case == 'uppercase' %} --facet-label-transform: uppercase;{% endif %}"
+      >
+  {% else %}
+    <div
+      class="facets-block-wrapper facets-block-wrapper--drawer"
+      style="{% render 'spacing-style', settings: block_settings %}{% if block_settings.text_label_case == 'uppercase' %} --facet-label-transform: uppercase;{% endif %}"
+    >
+  {% endif %}
   <div
-    class="facets-toggle{% if block_settings.enable_filtering == false %} facets-toggle--no-filters{% endif %}{% if block_settings.filter_style == 'horizontal' and block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %}"
+    class="facets-toggle{% if block_settings.enable_filtering == false %} facets-toggle--no-filters{% endif %}{% if block_settings.filter_style == 'horizontal' and block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %} facets-toggle--drawer"
     style="
-      --facets-inner-padding-block: {{ block_settings.padding-block-start }}px {{ block_settings.padding-block-end }}px; --facets-inner-padding-inline: var(--padding-lg);
+      --facets-inner-padding-block: {{ block_settings.padding-block-start }}px {{ block_settings.padding-block-end }}px; --facets-inner-padding-inline: var(--padding-xl);
       {{ facets_margin_style }}
     "
   >
@@ -289,10 +294,9 @@
           class="button facets-toggle__button button-unstyled button-unstyled--with-icon"
           on:click="#filters-drawer/showDialog"
           type="button"
-          aria-haspopup="dialog"
         >
           <span class="svg-wrapper">
-            {{ 'icon-filter.svg' | inline_asset_content }}
+            {{ 'icon-filter-new.svg' | inline_asset_content }}
           </span>
 
           {{ 'actions.show_filters' | t }}
@@ -318,44 +322,44 @@
       </div>
     {% endif %}
 
-    {% liquid
-      assign child_count = 0
-      if block_settings.enable_filtering == false and block_settings.enable_sorting
-        assign child_count = child_count | plus: 1
-      endif
-      if block_settings.enable_grid_density
-        assign child_count = child_count | plus: 1
-      endif
-    %}
+    <facets-form-component
+      class="facets__form-wrapper"
+      section-id="{{ section.id }}"
+      form-style="{{ block_settings.filter_style }}"
+    >
+      <form
+        action="{{ results_url }}"
+        id="FacetFiltersForm--{{ section.id }}-desktop"
+        class="facets__form horizontal-filters-form"
+        ref="facetsForm"
+      >
+        <div class="products-count-wrapper">
+          <span class="products-count-wrapper__text" title="{{ 'content.product_count' | t }}">
+            {{- 'content.item_count' | t: count: products_count -}}
+          </span>
+        </div>
+      </form>
+    </facets-form-component>
 
-    <div class="facets-mobile-wrapper facets-controls-wrapper{% if child_count > 1 %} facets-mobile-wrapper--multiple-controls{% endif %}">
-      {% if block_settings.enable_filtering == false and block_settings.enable_sorting %}
-        <facets-form-component
-          section-id="{{ section.id }}"
-          id="FacetFiltersForm--{{ section.id }}-mobile-sorting-only"
-        >
-          <form
-            action="{{ results_url }}"
-            id="FacetFiltersForm--{{ section.id }}-mobile-sorting-only"
-            ref="facetsForm"
-          >
-            {% render 'sorting',
-              results: results,
-              sort_by: sort_by,
-              filter_style: block_settings.filter_style,
-              suffix: 'mobile',
-              sort_position: 'mobile',
-              should_use_select_on_mobile: should_use_select_on_mobile,
-              section_id: section.id
-            %}
-          </form>
-        </facets-form-component>
-      {% endif %}
-      {% if block_settings.enable_grid_density %}
-        {% render 'grid-density-controls', viewport: 'mobile' %}
-      {% endif %}
-    </div>
+    {% if block_settings.enable_sorting %}
+      {% render 'sorting',
+        results: results,
+        sort_by: sort_by,
+        filter_style: 'horizontal',
+        suffix: 'desktop',
+        sort_position: 'desktop',
+        should_use_select_on_mobile: false,
+        section_id: section.id
+      %}
+    {% endif %}
   </div>
+  {% if block_settings.filter_style == 'drawer' %}
+    </div>
+    </sticky-drawer-filters>
+  {% else %}
+    </div>
+  {% endif %}
+
 {% else %}
   <div></div>
 {% endif %}
@@ -363,18 +367,18 @@
 {% if block_settings.enable_filtering %}
   <dialog-component
     id="filters-drawer"
-    class="facets-block-wrapper facets-block-wrapper--vertical color-{{ settings.drawer_color_scheme }}"
+    class="facets-block-wrapper facets-block-wrapper--vertical facets-block-wrapper--drawer color-{{ settings.drawer_color_scheme }}"
   >
     <dialog
       ref="dialog"
       class="facets facets--drawer dialog-modal drawer dialog-drawer dialog-drawer--right spacing-style"
       style="{% render 'spacing-style', settings: block_settings %}"
       scroll-lock
-      aria-labelledby="filters-drawer-heading"
     >
       {% assign form_component = 'FacetFiltersFormComponent--' | append: section.id | append: '-overflow' %}
+
       <facets-form-component
-        class="facets__form-wrapper facets-drawer__form-wrapper"
+        class="facets__form-wrapper"
         section-id="{{ section.id }}"
         id="{{ form_component }}"
       >
@@ -382,16 +386,16 @@
           action="{{ results_url }}"
           id="FacetFiltersForm--{{ section.id }}-overflow"
           class="facets__form"
+          {% if block_settings.single_open_filters %}
+            data-single-open="true"
+          {% endif %}
           ref="facetsForm"
         >
           <div
             class="facets__title-wrapper"
             style="--color-shadow: rgb(var(--color-foreground-rgb) / var(--opacity-10-25));"
           >
-            <h2
-              id="filters-drawer-heading"
-              class="facets-drawer__title h3"
-            >
+            <h2 class="facets-drawer__title h3">
               {{ 'blocks.filter' | t }}
 
               {% if total_active_values > 0 %}
@@ -407,111 +411,108 @@
               {% endif %}
             </h2>
             <button
-              class="facets-drawer__close button-unstyled close-button"
+              class="button facets-drawer__close button-unstyled close-button"
               on:click="dialog-component/closeDialog"
               type="button"
-              aria-label="{{ 'actions.close' | t }}"
-              autofocus
             >
-              <span class="svg-wrapper svg-wrapper--small">
+              <span
+                class="svg-wrapper svg-wrapper--small"
+                title="{{ 'actions.close' | t }}"
+              >
                 {{ 'icon-close.svg' | inline_asset_content }}
               </span>
             </button>
           </div>
 
-          <scroll-hint
-            class="facets-drawer__filters"
-          >
-            {% if block_settings.enable_filtering %}
-              {% render 'filter-remove-buttons',
-                filters: filters,
-                results_url: results_url,
-                show_filter_label: block_settings.show_filter_label,
-                should_show_clear_all: false
-              %}
+          {% if block_settings.enable_filtering %}
+            {% render 'filter-remove-buttons',
+              filters: filters,
+              results_url: results_url,
+              show_filter_label: block_settings.show_filter_label,
+              should_show_clear_all: false
+            %}
 
-              <div class="facets__filters-wrapper">
-                {% assign total_active_values = 0 %}
-                {% assign is_active = false %}
+            <div class="facets__filters-wrapper">
+              {% assign total_active_values = 0 %}
+              {% assign is_active = false %}
 
-                {%- for filter in filters -%}
-                  {% case filter.type %}
-                    {% when 'price_range' %}
-                      {%- liquid
-                        if filter.min_value.value != null or filter.max_value.value != null
-                          assign total_active_values = total_active_values | plus: 1
-                          assign is_active = true
-                        endif
+              {%- for filter in filters -%}
+                {%- liquid
+                  assign should_autofocus = false
+                  if forloop.first and total_active_values == 0
+                    assign should_autofocus = true
+                  endif
+                %}
+                {% case filter.type %}
+                  {% when 'price_range' %}
+                    {%- liquid
+                      if filter.min_value.value != null or filter.max_value.value != null
+                        assign total_active_values = total_active_values | plus: 1
+                        assign is_active = true
+                      endif
 
-                        render 'price-filter', filter: filter, filter_style: 'vertical', should_render_clear: false, id_prefix: 'dialog'
-                      -%}
-                    {% else %}
-                      {% liquid
-                        if filter.active_values.size > 0
-                          assign is_active = true
-                        endif
+                      render 'price-filter', filter: filter, filter_style: 'vertical', should_render_clear: false, autofocus: should_autofocus, is_first_filter: forloop.first, show_filter_status: block_settings.show_filter_status
+                    -%}
+                  {% else %}
+                    {% liquid
+                      if filter.active_values.size > 0
+                        assign is_active = true
+                      endif
 
-                        assign active_value_count = filter.active_values | size
-                        assign total_active_values = total_active_values | plus: active_value_count
-                        render 'list-filter', filter: filter, filter_style: 'vertical', active_value_count: active_value_count, should_render_clear: false, in_drawer: true, sectionId: section.id
-                      %}
-                  {% endcase %}
-                {%- endfor -%}
-              </div>
-            {% endif %}
+                      assign active_value_count = filter.active_values | size
+                      assign total_active_values = total_active_values | plus: active_value_count
+                      render 'list-filter', filter: filter, filter_style: 'vertical', active_value_count: active_value_count, should_render_clear: false, autofocus: should_autofocus, in_drawer: true, sectionId: section.id, is_first_filter: forloop.first, show_filter_status: block_settings.show_filter_status
+                    %}
+                {% endcase %}
+              {%- endfor -%}
+            </div>
+          {% endif %}
 
-            {% if block_settings.enable_sorting %}
-              {% render 'sorting',
-                results: results,
-                sort_by: sort_by,
-                filter_style: block_settings.filter_style,
-                suffix: 'overflow',
-                should_use_select_on_mobile: should_use_select_on_mobile,
-                section_id: section.id
-              %}
-            {% endif %}
-          </scroll-hint>
+          {% if block_settings.enable_sorting %}
+            {% render 'sorting',
+              results: results,
+              sort_by: sort_by,
+              filter_style: block_settings.filter_style,
+              suffix: 'overflow',
+              should_use_select_on_mobile: should_use_select_on_mobile,
+              section_id: section.id
+            %}
+          {% endif %}
         </form>
       </facets-form-component>
 
-      <div
-        class="facets__drawer-actions"
-      >
-        <facet-remove-component
-          data-url="{{ results_url }}"
-          active-class="facets__clear-all--active"
-        >
-          <button
-            type="button"
-            class="button-secondary facets__clear-all{% if is_active %} facets__clear-all--active{% endif %}"
-            ref="clearButton"
-            on:click="/removeFilter?form={{ form_component }}"
-            on:keydown="/removeFilter?form={{ form_component }}"
-          >
-            {{- 'actions.clear_all' | t -}}
-          </button>
-        </facet-remove-component>
-
-        {% if products_count > 0 %}
-          <button
-            class="button facets__see-results"
-            type="button"
-            on:click="dialog-component/closeDialog"
-          >
-            {{- 'actions.see_items' | t: count: products_count -}}
-          </button>
-        {% endif %}
-      </div>
+      {% render 'facets-actions',
+        results_url: results_url,
+        is_active: is_active,
+        products_count: products_count,
+        form_component: form_component,
+        should_show_clear_all: true,
+        is_drawer: true
+      %}
     </dialog>
   </dialog-component>
 {% endif %}
 
 {% stylesheet %}
+  .collection-wrapper {
+    @media screen and (min-width: 750px) {
+      --facets-vertical-col-width: 6;
+    }
+
+    @media screen and (min-width: 990px) {
+      --facets-vertical-col-width: 5;
+    }
+  }
+
   .facets-block-wrapper {
     @media screen and (min-width: 750px) {
       margin: var(--facets-margin);
       grid-column: var(--grid-column--desktop);
     }
+  }
+
+  .facets-block-wrapper--horizontal {
+    display: none;
   }
 
   .facets-block-wrapper--vertical {
@@ -520,89 +521,39 @@
     }
   }
 
-  .facets-toggle {
-    --icon-offset: -3px;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: var(--minimum-touch-target);
-    margin: var(--facets-margin);
-    padding-block: var(--facets-inner-padding-block);
-    padding-inline: var(--facets-inner-padding-inline);
-
-    @media screen and (min-width: 750px) {
-      display: none;
-    }
-  }
-
-  .facets-toggle__wrapper {
-    margin-left: var(--icon-offset);
-  }
-
-  .facets-toggle__button {
-    box-shadow: none;
-
-    @media screen and (min-width: 750px) {
-      display: none;
-    }
-  }
-
-  .filter-count-bubble {
-    position: relative;
-    width: 20px;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    display: grid;
-    line-height: normal;
-    place-content: center;
-    color: var(--color-foreground);
-    border: var(--icon-stroke-width) solid var(--color-background);
-  }
-
-  .facets-mobile__title-wrapper .h3 {
-    margin-block-end: 0;
-    display: inline-flex;
-    align-items: center;
-    gap: var(--gap-xs);
-  }
-
-  .facets-mobile__title-wrapper .filter-count-bubble {
-    width: 22px;
-    height: 22px;
-  }
-
-  .facets-mobile__title-wrapper .filter-count-bubble__text {
-    font-size: var(--font-size--xs);
-  }
-
-  .filter-count-bubble__background {
-    position: absolute;
-    inset: 0;
-    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-10-25));
-    border-radius: var(--style-border-radius-50);
-  }
-
-  .filter-count-bubble__text {
-    font-size: 11px;
-    font-weight: var(--font-paragraph--weight);
-    aspect-ratio: 1 / 1;
-  }
-
-  .facets-toggle--no-filters {
-    @media screen and (max-width: 749px) {
-      /* stylelint-disable-next-line declaration-no-important */
-      justify-content: unset !important;
-
-      & > .facets-mobile-wrapper {
-        width: 100%;
-      }
-    }
-  }
-
   .facets-block-wrapper--vertical + .facets-toggle {
     @media screen and (max-width: 749px) {
       margin: 0;
+    }
+  }
+
+  .facets-block-wrapper--drawer {
+    grid-column: 1 / -1;
+    width: 100%;
+    z-index: 2;
+  }
+
+  /* Sticky drawer filters */
+  sticky-drawer-filters {
+    grid-column: 1 / -1;
+    position: relative;
+    z-index: 3;
+  }
+
+  /* Sticky drawer filters with proper fixed positioning */
+  .facets-block-wrapper--drawer.facets-block-wrapper--sticky {
+    position: fixed;
+    top: 0px;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    margin: 0;
+  }
+
+  .facets-toggle--drawer {
+    /* Show drawer toggle on desktop when drawer style is selected */
+    @media screen and (min-width: 750px) {
+      display: block;
     }
   }
 
@@ -613,16 +564,18 @@
     justify-content: flex-end;
   }
 
-  .facets-mobile-wrapper--multiple-controls {
+  .facets-mobile-wrapper:has(> :nth-child(2)) {
     justify-content: space-between;
   }
 
-  @media screen and (min-width: 750px) {
-    dialog-component.facets-block-wrapper {
-      position: absolute;
-      width: 0;
-      height: 0;
-    }
+  .variant-option__swatch-wrapper {
+    position: relative;
+    overflow: visible;
+    border-radius: var(--options-border-radius);
+  }
+
+  .variant-option--swatches-disabled .variant-option__swatch-wrapper {
+    overflow: hidden;
   }
 
   .facets {
@@ -663,21 +616,6 @@
 
   .facets--horizontal {
     display: none;
-
-    @media screen and (min-width: 750px) {
-      padding-block: var(--padding-block-start) var(--padding-block-end);
-      display: flex;
-      align-items: center;
-      position: relative;
-      z-index: var(--facets-upper-z-index);
-      border: none;
-      height: auto;
-      top: initial;
-      bottom: initial;
-      max-height: none;
-      width: auto;
-      overflow: visible;
-    }
   }
 
   .facets--vertical {
@@ -697,47 +635,43 @@
   }
 
   .facets--drawer {
-    border-radius: 0;
-    border-right: var(--style-border-drawer);
+    /* Always use drawer/mobile behavior even on desktop */
+    display: none;
+  }
+
+  .collection-wrapper:has(.collection-wrapper--full-width) .facets--vertical:not(.facets--drawer) {
+    @media screen and (min-width: 750px) {
+      padding-inline-start: max(var(--padding-sm), var(--padding-inline-start));
+    }
+  }
+
+  .facets--drawer {
+    border-radius: var(--custom-style-border-radius-sm);
+    border-right: none;
     box-shadow: var(--shadow-drawer);
     padding-inline: 0;
+    background: var(--color-white);
+    bottom: var(--custom-spacing-sm);
+    top: var(--custom-spacing-sm);
+    height: calc(100dvh - var(--custom-spacing-lg));
+    margin-left: var(--custom-spacing-sm);
+    width: calc(100% - var(--custom-spacing-lg));
+    max-width: 400px;
+  }
+
+  .facets--drawer .facets__title-wrapper {
+    background-color: var(--color-white);
+    padding: var(--custom-spacing-lg) var(--custom-spacing-lg) var(--custom-spacing-sm);
+
+    @media screen and (min-width: 750px) {
+      padding: var(--custom-spacing-xl) var(--custom-spacing-xl) var(--custom-spacing-sm);
+    }
   }
 
   .facets--drawer[open] {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    overflow: hidden;
-  }
-
-  .facets-drawer__form-wrapper {
-    flex: 1 1 auto;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-
-  .facets-drawer__form-wrapper .facets__form {
-    flex: 1 1 auto;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-
-  .facets-drawer__filters {
-    flex: 1 1 auto;
-    min-height: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
-    position: relative;
-  }
-
-  .facets-drawer__filters .facets__filters-wrapper,
-  .facets-drawer__filters .filter-remove-buttons,
-  .facets-drawer__filters .sorting-filter-component {
-    overflow: visible;
+    justify-content: space-between;
   }
 
   .facets.facets-controls-wrapper {
@@ -746,6 +680,12 @@
       color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
       gap: 0 var(--facets-form-horizontal-gap);
       padding-bottom: var(--padding-xs);
+    }
+  }
+
+  .collection-wrapper:has(.product-grid-mobile--large) .facets-mobile-wrapper.facets-controls-wrapper {
+    @media screen and (max-width: 749px) {
+      display: none;
     }
   }
 
@@ -782,6 +722,19 @@
     height: 100%;
   }
 
+  .facets-block-wrapper--drawer .facets__form {
+    flex-flow: column;
+  }
+
+  .facets-block-wrapper--drawer .facets__form.horizontal-filters-form {
+    flex-flow: row nowrap;
+    align-items: center;
+
+    @media screen and (max-width: 749px) {
+      justify-content: flex-end;
+    }
+  }
+
   .facets--horizontal .facets__form {
     @media screen and (min-width: 750px) {
       flex-flow: row nowrap;
@@ -816,18 +769,27 @@
       --variant-picker-swatch-height: 26px;
     }
 
-    font-size: var(--font-h5--size);
+    font-size: var(--font-h4--size);
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
 
     &:hover {
       --icon-opacity: 1;
     }
+    padding-bottom: 8px;
+    padding-top: 8px;
   }
 
-  .facets__filters-wrapper:hover .facets__summary,
+  .facets__summary--has-status {
+    justify-content: space-between;
+  }
+
+  .facets__filters-wrapper:hover .facets__summary {
+    opacity: 1;
+  }
+
   .facets__filters-wrapper:has(.facets__panel[open]) .facets__summary {
-    opacity: var(--facets-hover-opacity);
+    opacity: 1;
   }
 
   .facets__filters-wrapper .facets__summary:hover,
@@ -844,10 +806,10 @@
   }
 
   .facets__summary .icon-caret {
-    height: var(--icon-size-xs);
-    width: var(--icon-size-xs);
+    height: var(--custom-spacing-lg);
+    width: var(--custom-spacing-lg);
     color: rgb(var(--color-foreground-rgb) / var(--icon-opacity));
-    margin-block: var(--margin-2xs);
+    margin-block: 0;
     transition: color var(--animation-speed) var(--animation-easing);
   }
 
@@ -861,11 +823,6 @@
     font-family: var(--font-paragraph--family);
     font-weight: var(--font-paragraph--weight);
     aspect-ratio: 1 / 1;
-  }
-
-  /* Facets - Inputs */
-  .facets__inputs-wrapper {
-    margin-block: var(--padding-xs) var(--padding-xs);
   }
 
   .facets__inputs .show-more {
@@ -917,12 +874,8 @@
   .facets__inputs-wrapper:not(:has(.facets__inputs-list)),
   .facets__inputs-wrapper .facets__inputs-list {
     display: flex;
-    gap: var(--facets-mobile-gap);
+    gap: var(--custom-spacing-lg);
     flex-direction: column;
-
-    @media screen and (min-width: 750px) {
-      gap: var(--gap-sm);
-    }
   }
 
   @media screen and (min-width: 750px) {
@@ -1016,7 +969,8 @@
     --facets-panel-height: 300px;
   }
 
-  .facets--horizontal .facets__panel-content {
+  .facets--horizontal .facets__panel-content,
+  .sorting-filter__options {
     @media screen and (min-width: 750px) {
       border-radius: var(--style-border-radius-popover);
       position: absolute;
@@ -1041,6 +995,7 @@
     width: calc(100% - var(--drawer-padding) * 2);
     border-top: var(--style-border-width) solid var(--color-border);
     margin: 0 auto;
+    display: none;
   }
 
   @media screen and (min-width: 750px) {
@@ -1063,38 +1018,12 @@
 
   /* Facets - Text */
   .facets__label,
-  .facets__clear-all-link,
+  .facets__clear-all,
   .clear-filter {
     text-decoration-color: transparent;
     text-decoration-thickness: 0.075em;
     text-underline-offset: 0.125em;
     transition: text-decoration-color var(--animation-speed) var(--animation-easing);
-  }
-
-  .facets__clear-all-link {
-    display: none;
-    cursor: pointer;
-    padding: var(--padding-xs);
-    color: var(--button-color);
-    transition: text-decoration-color var(--animation-speed) var(--animation-easing),
-      color var(--animation-speed) var(--animation-easing);
-  }
-
-  .facets__clear-all-link:hover {
-    --button-color: var(--color-primary-hover);
-
-    text-decoration: underline;
-    text-decoration-color: var(--button-color);
-  }
-
-  .facets__clear-all-link--horizontal {
-    height: var(--minimum-touch-target);
-    padding-inline: var(--facets-form-horizontal-gap);
-    min-width: var(--facets-clear-all-min-width);
-  }
-
-  .facets__clear-all-link--active {
-    display: block;
   }
 
   .facets__label,
@@ -1108,35 +1037,10 @@
     padding: 0;
   }
 
-  .clear-filter:hover {
-    text-decoration: underline;
-  }
-
-  /* Clear button */
-  .facets__clear {
-    display: none;
-  }
-
-  .facets--horizontal .facets__clear {
-    @media screen and (min-width: 750px) {
-      width: 100%;
-      justify-content: flex-end;
-      padding: 0 var(--facets-clear-padding) var(--facets-clear-padding) 0;
-      cursor: pointer;
-    }
-  }
-
-  .facets__clear--active {
-    @media screen and (min-width: 750px) {
-      display: flex;
-    }
-  }
-
   /* Facets - Label */
   .facets__label {
     color: var(--color-foreground);
     cursor: pointer;
-    white-space: nowrap;
 
     @media screen and (min-width: 750px) {
       margin-inline-end: var(--margin-2xs);
@@ -1146,6 +1050,15 @@
   /* Products count */
   .products-count-wrapper {
     display: none;
+  }
+
+  .facets-toggle--drawer .products-count-wrapper {
+    display: flex;
+    margin-left: 0;
+    align-items: center;
+    height: var(--minimum-touch-target);
+    flex-shrink: 0;
+    padding-left: 4px;
   }
 
   .facets--horizontal .products-count-wrapper {
@@ -1195,11 +1108,25 @@
   }
 
   .facets-drawer__close {
+    @media screen and (max-width: 749px) {
+      background-color: var(--color-header-hover);
+      width: 20px;
+      height: 20px;
+      top: -12px;
+      right: -10px;
+    }
     position: relative;
-    top: 0;
-    right: 0;
+    top: -16px;
+    right: -16px;
     padding: 0;
     cursor: pointer;
+    width: var(--custom-spacing-xl);
+    height: var(--custom-spacing-xl);
+    border-radius: var(--custom-style-border-radius-sm);
+  }
+
+  .facets-drawer__close:hover {
+    background-color: var(--color-header-hover);
   }
 
   /* Status */
@@ -1240,79 +1167,471 @@
     }
   }
 
-  /* Facets - Actions */
-  .facets__drawer-actions {
-    --to-top-gradient-background: linear-gradient(
-      to top,
-      rgb(var(--color-background-rgb) / var(--opacity-90)),
-      rgb(var(--color-background-rgb) / var(--opacity-80)),
-      rgb(var(--color-background-rgb) / var(--opacity-40)),
-      transparent
-    );
-
-    position: sticky;
-    bottom: 0;
-    z-index: var(--facets-sticky-z-index);
-    order: 1;
-    display: flex;
-    flex-shrink: 0;
-    justify-content: space-between;
-    align-items: stretch;
-    gap: var(--gap-sm);
-    padding-block-start: var(--padding-xs);
-    padding-block-end: var(--padding-md);
-    padding-inline: var(--padding-lg);
-    margin-top: auto;
-    background-image: var(--to-top-gradient-background);
-    background-color: var(--color-background);
-  }
-
-  /* Clear all button */
-  .facets__clear-all {
-    display: none;
-    cursor: pointer;
-    min-width: var(--facets-clear-all-min-width);
-    flex-grow: 1;
-    padding-block: var(--padding-lg);
-    color: var(--button-color, inherit);
-  }
-
-  .facets__clear-all--active {
-    display: block;
-    opacity: 1;
-    transform: translateY(0);
-    transition: transform var(--animation-values), opacity var(--animation-values);
-  }
-
-  @starting-style {
-    .facets__clear-all--active {
-      opacity: 0;
-      transform: translateY(100%);
+  .collection-wrapper:has(> .facets--horizontal) .facets__panel[open] {
+    @media screen and (min-width: 750px) {
+      z-index: var(--facets-open-z-index);
     }
   }
 
-  .facets__see-results {
-    min-width: var(--facets-see-results-min-width);
-    flex-grow: 1;
-    padding-block: var(--padding-lg);
+  /* Make sorting in facets-block-wrapper--drawer behave like facets--horizontal */
+  .facets-block-wrapper--drawer:has(.sorting-filter) {
+    @media screen and (min-width: 750px) {
+      display: flex;
+      align-items: center;
+      gap: var(--gap-lg);
+    }
   }
 
-  .facets-horizontal-remove {
+  .facets-block-wrapper--drawer .sorting-filter {
+    @media screen and (min-width: 750px) {
+      margin-left: auto;
+    }
+  }
+
+  .facets-block-wrapper--drawer .sorting-filter::before {
+    @media screen and (min-width: 750px) {
+      content: none;
+    }
+  }
+
+  .facets-block-wrapper--drawer .sorting-filter .facets__summary {
+    @media screen and (min-width: 750px) {
+      font-size: var(--font-paragraph--size);
+      justify-content: flex-start;
+      padding: var(--custom-spacing-sm);
+      border-radius: var(--custom-style-border-radius-sm);
+      background: var(--color-header-hover);
+      line-height: normal;
+      font-weight: 400;
+    }
+  }
+
+  .facets-block-wrapper--drawer .sorting-filter .facets__panel {
+    @media screen and (min-width: 750px) {
+      position: relative;
+      padding: 0;
+    }
+  }
+
+  .facets-block-wrapper--drawer .sorting-filter__options {
+    @media screen and (min-width: 750px) {
+      border-radius: var(--style-border-radius-popover);
+      position: absolute;
+      top: 100%;
+      left: auto !important;
+      right: 0 !important;
+      min-width: var(--facets-panel-min-width);
+      max-height: var(--facets-panel-height);
+      overflow-y: auto;
+      border: none;
+      box-shadow: var(--style-elevation-popover);
+      background: #e1dfd6;
+      z-index: var(--facets-upper-z-index);
+    }
+  }
+
+  .facets-toggle.facets-toggle--drawer {
+    width: 100%;
+    height: auto;
+    margin: 0;
+
+    @media screen and (max-width: 749px) {
+      padding: var(--custom-spacing-xs) var(--custom-spacing-md) !important;
+    }
+
+    @media screen and (min-width: 750px) {
+      display: flex;
+    }
+
+    .facets-toggle__button {
+      padding: var(--custom-spacing-sm);
+      border-radius: var(--custom-style-border-radius-sm);
+      background: var(--color-header-hover);
+      line-height: normal;
+      font-weight: 400;
+
+      @media screen and (min-width: 750px) {
+        display: flex;
+      }
+    }
+
+    .facets-toggle__button .svg-wrapper {
+      width: var(--custom-spacing-lg);
+      height: var(--custom-spacing-lg);
+    }
+  }
+
+  .products-count-wrapper__text {
+    padding: var(--custom-spacing-sm);
+    border-radius: var(--custom-style-border-radius-sm);
+    background: var(--color-header-hover);
+    line-height: normal;
+    color: var(--color-foreground);
+  }
+
+  .checkbox__label {
+    line-height: 20px;
+    color: var(--color-black);
+  }
+
+  .checkbox .icon-checkmark {
+    border: 1.2px solid #cfcfcf;
+    background-color: transparent;
+    height: 20px;
+    width: 20px;
+    border-radius: var(--custom-style-border-radius-sm);
+  }
+
+  .checkbox .icon-checkmark path {
+    stroke: var(--color-black);
+    stroke-width: 1.2px;
+  }
+
+  .checkbox__input {
+    &:checked + .checkbox__label .icon-checkmark {
+      background-color: var(--color-header-secondary);
+    }
+  }
+
+  .facets input:checked + label {
+    font-weight: 400 !important;
+  }
+
+  .facets__inputs-wrapper {
+    background-color: var(--color-header-secondary);
+    padding: var(--custom-spacing-lg);
+    border-radius: var(--custom-style-border-radius-sm);
+    margin: 4px 0 0;
+  }
+
+  :is(.facets--drawer) :is(.facets__item):before {
+    display: none;
+  }
+
+  .facets .facets__inputs-wrapper.price-facet__inputs-wrapper {
+    margin: 0;
+  }
+
+  .sorting-filter__select,
+  .facets .sorting-filter__container .facets__label,
+  .facets__item .facets__summary {
+    font-size: 14px;
+  }
+
+  .facets__item .svg-wrapper {
+    width: 20px;
+    height: 20px;
+    border-radius: var(--custom-style-border-radius-sm);
+    background-color: var(--color-header-hover);
+    position: relative;
+  }
+
+  .facets__item .svg-wrapper svg {
+    width: 10px;
+    height: 10px;
+    color: var(--color-black);
+  }
+
+  .facets__item .svg-wrapper .svg-close {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+  }
+
+  .facets__item .svg-wrapper .svg-open {
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  accordion-custom {
+    & details {
+      &[open] {
+        .svg-open {
+          opacity: 0 !important;
+        }
+      }
+    }
+  }
+
+  .dialog-drawer[open] {
+    animation: var(--dialog-drawer-opening-animation) 0.3s var(--animation-easing) forwards;
+  }
+
+  .dialog-drawer.dialog-closing {
+    animation: var(--dialog-drawer-closing-animation) 0.3s var(--animation-easing) forwards;
+  }
+
+  .facets__inputs-wrapper .facets__inputs-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .facets__inputs-wrapper .facets__inputs-list-image-grid {
+    @media screen and (max-width: 749px) {
+      gap: var(--custom-spacing-md);
+    }
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .facets__see-results {
+    text-transform: uppercase;
+  }
+
+  .facets__bubble {
+    width: 20px;
+    height: 20px;
+    border-radius: var(--custom-style-border-radius-sm);
+    background-color: var(--color-header-hover);
+  }
+
+  .facets .checkbox:has(.checkbox__input:checked):not(:has(.checkbox__input:disabled)):hover .icon-checkmark {
+    background-color: transparent !important;
+    border-color: var(--color-black);
+  }
+
+  .facets .checkbox__input:disabled + .checkbox__label .icon-checkmark {
+    background-color: transparent !important;
+  }
+
+  .facets-block-wrapper--drawer .filter-count-bubble {
+    width: var(--custom-spacing-lg);
+    height: var(--custom-spacing-lg);
+    border-radius: var(--custom-style-border-radius-sm);
+    background-color: var(--color-white);
+    border: none;
+  }
+
+  .facets-block-wrapper--drawer .filter-count-bubble__background {
+    background-color: transparent;
+  }
+
+  .facets-block-wrapper--drawer .facets__actions {
+    flex-direction: column;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: center;
+    padding: 48px var(--custom-spacing-lg) var(--custom-spacing-lg);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 20%);
+
+    @media screen and (min-width: 750px) {
+      padding: 48px var(--custom-spacing-xl) var(--custom-spacing-xl);
+    }
+  }
+
+  .filter-drawer-clear-all {
+    background-color: transparent;
+    appearance: none;
+    border: none;
+    padding: var(--custom-spacing-xs);
+    margin: 0;
+    font-size: 14px;
+    font-weight: 400;
+    color: black;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--custom-spacing-xs);
+    font-family: var(--font-body-family);
+    transition: background-color 0.3s ease-in-out;
+    cursor: pointer;
+    border-radius: var(--custom-style-border-radius-sm);
+
+    &:hover {
+      background-color: var(--color-header-hover);
+    }
+  }
+
+  .filter-drawer-clear-all .svg-wrapper {
+    width: var(--custom-spacing-lg);
+    height: var(--custom-spacing-lg);
+  }
+
+  .facets__status:not(:empty) {
+    font-weight: 400;
+  }
+
+  .facets__status-wrapper span {
+    margin-left: var(--custom-spacing-sm);
+  }
+
+  .facets .facets__see-results {
+    padding: 11px var(--custom-spacing-md);
+    line-height: normal;
+    width: 100%;
+  }
+
+  .facets-drawer__close .svg-wrapper {
+    width: 20px;
+    height: 20px;
+    border-radius: var(--custom-style-border-radius-sm);
+  }
+
+  .facets-drawer__close .svg-wrapper svg {
+    @media screen and (max-width: 749px) {
+      width: 10px;
+      height: 10px;
+    }
+
+    width: var(--custom-spacing-md);
+    height: var(--custom-spacing-md);
+  }
+
+  .facets__summary .svg-wrapper {
+    margin-left: var(--custom-spacing-sm);
+  }
+
+  .facets__title-wrapper {
+    padding-right: var(--custom-spacing-xs);
+  }
+
+  .sorting-filter__checkmark svg {
+    visibility: hidden;
+  }
+
+  *:checked ~ .sorting-filter__checkmark svg {
+    visibility: visible;
+  }
+
+  .sorting-filter__checkmark {
+    visibility: visible !important;
+    border-radius: var(--custom-style-border-radius-sm);
+    border: 1.2px solid var(--color-black);
+    width: var(--custom-spacing-lg);
+    height: var(--custom-spacing-lg);
+    align-self: center;
+  }
+
+  .sorting-filter__input:checked + .sorting-filter__checkmark + .sorting-filter__label {
+    font-weight: 400 !important;
+  }
+
+  .sorting-filter .sorting-filter__container {
+    display: block;
+  }
+
+  .sorting-filter .sorting-filter__container label {
+    padding-block-end: var(--padding-sm);
+    display: block;
+  }
+
+  .sorting-filter .sorting-filter__select-wrapper {
+    background-color: var(--color-header-secondary);
+  }
+
+  .sorting-filter .sorting-filter__container .sorting-filter__select {
+    text-align: left;
+    text-align-last: left;
+  }
+
+  .sorting-filter .sorting-filter__select-wrapper:has(:focus-visible),
+  .sorting-filter .sorting-filter__select:focus-visible,
+  .sorting-filter .sorting-filter__select-wrapper:focus-visible {
+    outline: none;
+    outline-offset: 0;
+  }
+
+  .pills__pill {
+    background: var(--color-header-hover);
+  }
+
+  .facets .variant-option__swatch-wrapper {
+    width: 20px;
+    height: 20px;
+    border: 1.2px solid #cfcfcf;
+    display: flex;
+    justify-content: center;
     align-items: center;
   }
 
-  .facets-horizontal-remove--active::before {
-    content: '';
-    border-inline-start: var(--style-border-width) solid var(--color-border);
-    height: var(--font-paragraph--size);
-    position: absolute;
+  .facets .swatch.swatch--filter {
+    width: 10px;
+    height: 10px;
+    border: none;
+    border-radius: 2px;
+  }
+
+  .facets .variant-option__button-label:has(:checked) {
+    background: transparent;
+  }
+
+  .facets .variant-option__button-label:has(:checked) .variant-option__swatch-wrapper {
+    border-color: #000000;
+  }
+
+  .facets .variant-option__button-label--has-swatch:has(:checked) {
+    outline: none;
+    background: transparent;
+  }
+
+  .facets .variant-option__button-label:has(:checked):hover {
+    background: transparent;
+  }
+
+  .facets .variant-option__button-label--has-swatch:hover {
+    outline: none;
+    background: transparent;
+  }
+  .facets .variant-option__button-label--has-swatch {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .facets .facets__swatch-label {
+    padding-inline-start: var(--custom-spacing-xs);
+    letter-spacing: 0.02px;
+  }
+
+  .facets .variant-option__button-label--has-swatch:has(:checked) .variant-option__swatch-wrapper,
+  .facets .facets__inputs-list--swatches .variant-option__button-label:hover:not(:has(input:disabled)) {
+    font-weight: 400;
+  }
+  .facets .variant-option__button-label:has(:checked):hover,
+  .facets .variant-option__button-label:has(:checked) {
+    color: var(--color-black);
+  }
+
+  .facets-remove__pill.pills__pill {
+    color: var(--color-black);
+  }
+
+  .facets-remove__pill.pills__pill > .svg-wrapper {
+    --close-icon-opacity: 1;
+  }
+
+  .facets .facets-remove,
+  .facets .facets__panel {
+    padding: 0 var(--custom-spacing-lg);
+
+    @media screen and (min-width: 750px) {
+      padding: 0 var(--custom-spacing-xl);
+    }
+  }
+
+  .details-content {
+    display: block;
+    padding-bottom: var(--padding-sm);
+  }
+
+  .variant-option--swatches-disabled .variant-option__button-label {
+    color: var(--input-disabled-text-color);
+  }
+
+  .sorting-filter__select {
+    @media screen and (max-width: 749px) {
+      color: var(--color-black);
+    }
+  }
+
+  .checkbox__input &:focus-visible + .checkbox__label .icon-checkmark {
+    outline: none !important;
   }
 {% endstylesheet %}
 
 {% schema %}
 {
-  "name": "t:names.filters",
+  "name": "Filtering - Custom",
   "tag": null,
   "settings": [
     {
@@ -1323,20 +1642,23 @@
       "default": false
     },
     {
+      "type": "checkbox",
+      "id": "single_open_filters",
+      "label": "Allow only one filter open at a time",
+      "default": false,
+      "visible_if": "{{ block.settings.enable_filtering }}"
+    },
+    {
       "type": "select",
       "id": "filter_style",
       "label": "t:settings.direction",
       "options": [
         {
-          "value": "horizontal",
-          "label": "t:options.horizontal"
-        },
-        {
-          "value": "vertical",
-          "label": "t:options.vertical"
+          "value": "drawer",
+          "label": "Drawer"
         }
       ],
-      "default": "horizontal",
+      "default": "drawer",
       "visible_if": "{{ block.settings.enable_filtering == true }}"
     },
     {
@@ -1389,14 +1711,15 @@
     },
     {
       "type": "checkbox",
-      "id": "enable_sorting",
-      "label": "t:settings.enable_sorting",
-      "default": true
+      "id": "show_filter_status",
+      "label": "Show filter status indicators",
+      "default": true,
+      "visible_if": "{{ block.settings.enable_filtering == true }}"
     },
     {
       "type": "checkbox",
-      "id": "enable_grid_density",
-      "label": "t:settings.enable_grid_density",
+      "id": "enable_sorting",
+      "label": "t:settings.enable_sorting",
       "default": true
     },
     {

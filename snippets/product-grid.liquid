@@ -94,7 +94,7 @@
   <div
     style="
       grid-column: var(--full-width);
-      --product-grid-gap-mobile: {{ section.settings.columns_gap_vertical | at_most: 12 }}px {{ section.settings.columns_gap_horizontal | at_most: 12 }}px;
+      --product-grid-gap-mobile: {{ section.settings.columns_gap_vertical }}px {{ section.settings.columns_gap_horizontal }}px;
       --product-grid-gap-desktop: {{ section.settings.columns_gap_vertical }}px {{ section.settings.columns_gap_horizontal }}px;
       container-type: inline-size;
       container-name: product-grid;
@@ -200,6 +200,7 @@
   .main-collection-grid {
     grid-column: var(--grid-column--mobile);
     padding: var(--grid--margin--mobile);
+    padding-inline: var(--padding-inline-start) var(--padding-inline-end);
 
     @media screen and (min-width: 750px) {
       grid-column: var(--grid-column--desktop);

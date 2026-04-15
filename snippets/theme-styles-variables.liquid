@@ -241,13 +241,13 @@
     --line-height--heading-normal: 1.25;
     --line-height--heading-loose: 1.35;
 
-    --line-height--body-tight: 1.2;
-    --line-height--body-normal: 1.4;
-    --line-height--body-loose: 1.6;
+    --line-height--body-tight: 1;
+    --line-height--body-normal: 1.1;
+    --line-height--body-loose: 1.2;
 
     /* Typography presets */
     {% liquid
-      assign font_sizes = "paragraph, h1, h2, h3, h4, h5, h6" | split: ", "
+      assign font_sizes = "paragraph_small, paragraph, h1, h2, h3, h4, h5, h6" | split: ", "
       assign fluid_size_cutoff = 48
       assign absolute_font_size_min = 10
 
@@ -323,13 +323,13 @@
         endif
       endfor
 
-      assign type_presets = "paragraph, h1, h2, h3, h4, h5, h6" | split: ", "
+      assign type_presets = "paragraph_small, paragraph, h1, h2, h3, h4, h5, h6" | split: ", "
 
       for preset_name in type_presets
         assign preset_size = '--font-size--[preset_name]' | replace: '[preset_name]', preset_name
         assign preset_line_height = 'type_line_height_[preset_name]' | replace: '[preset_name]', preset_name
 
-        if preset_name == 'paragraph'
+        if preset_name == 'paragraph' or preset_name == 'paragraph_small'
           assign preset_font = '--font-body--family'
           assign preset_style = '--font-body--style'
           assign preset_weight = '400'
@@ -546,13 +546,13 @@
     /* Badges */
     --badge-blob-padding-block: 1px;
     --badge-blob-padding-inline: 12px 8px;
-    --badge-rectangle-padding-block: 1px;
-    --badge-rectangle-padding-inline: 6px;
+    --badge-rectangle-padding-block: 8px;
+    --badge-rectangle-padding-inline: 12px;
     @media screen and (min-width: 750px) {
       --badge-blob-padding-block: 4px;
       --badge-blob-padding-inline: 16px 12px;
-      --badge-rectangle-padding-block: 4px;
-      --badge-rectangle-padding-inline: 10px;
+      --badge-rectangle-padding-block: 12px;
+      --badge-rectangle-padding-inline: 12px;
     }
 
     /* Icons */
@@ -697,6 +697,10 @@
     --navigation-font-weight: 500;
     --navigation-base: 14px;
 
+    --font-paragraph-line-height: 18px;
+
+    --paragraph-small: var(--font-size--paragraph_small);
+
     --subheading-small: 20px;
     --subheading-medium: 32px;
     --subheading-weight: 500;
@@ -711,6 +715,13 @@
     --button-spaced: 24px;
 
     --component-margin: 16px;
+
+    --section-margin: 24px;
+    --section-radius: 12px;
+
+    --badge-margin: 12px;
+    --badge-small: 24px;
+    --badge-large: 32px;
 
       /* Additional [Brand Specific] vars not extracted via Figma integration */
     {% if settings.brand == 'linen-house' %}

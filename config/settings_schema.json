@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "Linen House",
-    "theme_version": "1.0.1-horizon-3.5.1",
+    "theme_version": "1.0.2-horizon-3.5.1",
     "theme_author": "The Working Party",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://support.shopify.com/"
@@ -382,6 +382,58 @@
       {
         "type": "paragraph",
         "content": "t:content.responsive_font_sizes"
+      },
+      {
+        "type": "header",
+        "content": "Paragraph Small"
+      },
+      {
+        "type": "select",
+        "id": "type_size_paragraph_small",
+        "label": "t:settings.size",
+        "options": [
+          {
+            "value": "10",
+            "label": "10px"
+          },
+          {
+            "value": "12",
+            "label": "12px"
+          },
+          {
+            "value": "14",
+            "label": "14px"
+          },
+          {
+            "value": "16",
+            "label": "16px"
+          },
+          {
+            "value": "18",
+            "label": "18px"
+          }
+        ],
+        "default": "12"
+      },
+      {
+        "type": "select",
+        "id": "type_line_height_paragraph_small",
+        "label": "t:settings.line_height",
+        "options": [
+          {
+            "value": "body-tight",
+            "label": "t:options.tight"
+          },
+          {
+            "value": "body-normal",
+            "label": "t:options.normal"
+          },
+          {
+            "value": "body-loose",
+            "label": "t:options.loose"
+          }
+        ],
+        "default": "body-normal"
       },
       {
         "type": "header",
