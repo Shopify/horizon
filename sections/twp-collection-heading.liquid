@@ -4,14 +4,16 @@
 
 {% render 'section', section: section, children: children %}
 
-{% if closest.collection %}
+{% if section.settings.show_breadcrumb and closest.collection %}
   <nav class="twp-collection-breadcrumb" aria-label="{{ 'accessibility.breadcrumb' | t }}">
     <ol class="twp-collection-breadcrumb__list">
       <li class="twp-collection-breadcrumb__item">
         <a href="/" class="twp-collection-breadcrumb__link">{{ 'accessibility.home' | t }}</a>
       </li>
       <li class="twp-collection-breadcrumb__item">
-        <span class="twp-collection-breadcrumb__separator" aria-hidden="true">{{ 'icon-chevron-right.svg' | inline_asset_content }}</span>
+        <span class="twp-collection-breadcrumb__separator" aria-hidden="true">
+          {{- 'icon-chevron-right.svg' | inline_asset_content -}}
+        </span>
         <span aria-current="page">{{ closest.collection.title }}</span>
       </li>
     </ol>
@@ -70,6 +72,24 @@
 
     .twp-collection-heading .section-content-wrapper {
       --padding-block-start: 0px;
+      height: fit-content;
+    }
+
+    /* Text group: fit content height on mobile */
+    .twp-collection-heading > .section > .custom-section-content > .mobile-column > .group-block:first-child {
+      height: fit-content;
+    }
+
+    /* Image group: 3/2 aspect ratio on mobile */
+    .twp-collection-heading > .section > .custom-section-content > .mobile-column > .group-block:last-child {
+      aspect-ratio: 3 / 2;
+      overflow: hidden;
+    }
+
+    .twp-collection-heading > .section > .custom-section-content > .mobile-column > .group-block:last-child img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .twp-collection-breadcrumb {
@@ -97,6 +117,12 @@
     "groups": ["header"]
   },
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumb",
+      "label": "Show breadcrumb",
+      "default": true
+    },
     {
       "type": "header",
       "content": "t:content.layout"

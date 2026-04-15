@@ -22,6 +22,9 @@
   {% liquid
     assign default_sort_by = results.default_sort_by
     for option in results.sort_options
+      if option.value == 'manual'
+        continue
+      endif
       if option.value == sort_by
         assign status = option.name
       endif
@@ -45,6 +48,7 @@
         {% endif %}
       >
         {% for option in results.sort_options %}
+          {% if option.value == 'manual' %}{% continue %}{% endif %}
           <option
             value="{{ option.value }}"
             {% if option.value == sort_by %}
@@ -91,7 +95,7 @@
           {{- 'actions.sort' | t -}}
         </span>
         <span
-          class="facets__status h6 desktop:hidden"
+          class="facets__status h6 hidden"
         >
           {{- status -}}
         </span>
@@ -108,6 +112,7 @@
       >
         <div class="sorting-filter__options-inner">
           {% for option in results.sort_options %}
+            {% if option.value == 'manual' %}{% continue %}{% endif %}
             <label
               for="sort-option-{{ option.value }}-{{ section_id }}"
             >
@@ -218,6 +223,10 @@
     }
   }
 
+  .sorting-filter .icon-caret svg {
+    transition: none;
+  }
+
   .sorting-filter__options {
     display: grid;
     grid-template-rows: 0fr;
@@ -229,7 +238,7 @@
     z-index: var(--facets-upper-z-index);
     box-shadow: var(--shadow-popover);
     border: var(--style-border-popover);
-    background-color: var(--color-background);
+    background-color: var(--background-default);
     border-radius: var(--style-border-radius-popover);
     width: max-content;
     min-width: var(--facets-panel-min-width);
@@ -293,6 +302,13 @@
   }
 
   .sorting-filter__checkmark {
+    width: var(--icon-size-sm);
+    height: var(--icon-size-sm);
+    border: 1.5px solid var(--color-foreground);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     visibility: hidden;
   }
 
@@ -303,6 +319,7 @@
   .sorting-filter__label {
     cursor: pointer;
     pointer-events: none;
+    font-weight: var(--navigation-base-weight);
   }
 
   .facets-toggle--no-filters .sorting-filter__select-wrapper {
@@ -326,7 +343,6 @@
   }
 
   .facets-mobile-wrapper .sorting-filter .facets__label {
-    margin-inline-end: var(--margin-2xs);
     font-size: var(--font-paragraph--size);
     color: var(--color-foreground-muted);
   }

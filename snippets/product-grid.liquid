@@ -6,7 +6,7 @@
   @param {object} products - Array of product objects
   @param {string} [title] - Header of the collection or search results
   @param {string} children - List or grid of product cards
-  @param {boolean} [enable_infinite_scroll] - Whether to enable infinite scroll (default: true)
+  @param {string} [pagination_type] - Pagination type: 'infinite_scroll' or 'load_more' (default: 'infinite_scroll')
 {%- enddoc -%}
 
 {% capture product_card_size %}
@@ -14,12 +14,27 @@
 {% endcapture %}
 {% assign product_card_size = product_card_size | strip %}
 
+{% liquid
+  case section.settings.product_card_size
+    when 'small'
+      assign desktop_columns = 6
+    when 'medium'
+      assign desktop_columns = 5
+    when 'large'
+      assign desktop_columns = 4
+    when 'extra-large'
+      assign desktop_columns = 3
+    else
+      assign desktop_columns = 4
+  endcase
+%}
+
 {% style %}
   @media screen and (min-width: 750px) {
     {% case section.settings.layout_type %}
       {% when 'grid' %}
         .product-grid--{{ section.id }}:is(.product-grid--grid) {
-          --product-grid-columns-desktop: repeat(4, 1fr);
+          --product-grid-columns-desktop: repeat({{ desktop_columns }}, 1fr);
         }
 
 
@@ -100,7 +115,7 @@
         </p>
       </div>
     {% else %}
-      {% if enable_infinite_scroll %}
+      {% if pagination_type == 'infinite_scroll' %}
         <span ref="viewMorePrevious"></span>
       {% endif %}
 
@@ -149,8 +164,21 @@
 
         {{ children }}
       </ul>
-      {% if enable_infinite_scroll != false %}
+      {% if pagination_type == 'infinite_scroll' %}
         <span ref="viewMoreNext"></span>
+      {% elsif pagination_type == 'load_more' %}
+        <span ref="viewMoreNext" class="load-more-sentinel"></span>
+        {% if paginate.next %}
+          <div class="load-more-wrapper">
+            <button
+              type="button"
+              class="load-more-button button"
+              data-load-more
+            >
+              {{ 'actions.load_more' | t }}
+            </button>
+          </div>
+        {% endif %}
       {% else %}
         {% render 'pagination-controls', paginate: paginate %}
       {% endif %}
@@ -198,6 +226,35 @@
     }
   }
 
+  .load-more-sentinel {
+    position: fixed;
+    top: -9999px;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    pointer-events: none;
+    visibility: hidden;
+  }
+
+  .load-more-sentinel--visible {
+    position: static;
+    width: auto;
+    height: auto;
+    visibility: visible;
+  }
+
+  .load-more-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: var(--padding-xl) var(--padding-sm);
+    margin-top: var(--padding-xl);
+  }
+
+  .load-more-button {
+    min-width: 200px;
+    text-align: center;
+  }
+
   .main-collection-grid__empty {
     padding-block: var(--padding-6xl);
     padding-inline: var(--page-margin);
@@ -212,3 +269,46 @@
     margin: 0;
   }
 {% endstylesheet %}
+
+{% javascript %}
+  document.addEventListener('click', (e) => {
+    const button = e.target.closest('[data-load-more]');
+    if (!button) return;
+
+    e.preventDefault();
+
+    const resultsList = button.closest('results-list');
+    if (!resultsList) return;
+
+    const sentinel = resultsList.querySelector('.load-more-sentinel');
+    const grid = resultsList.querySelector('[ref="grid"]');
+    if (!sentinel || !grid) return;
+
+    const lastPage = Number(grid.dataset.lastPage) || 1;
+
+    const observer = new MutationObserver(() => {
+      observer.disconnect();
+      sentinel.classList.remove('load-more-sentinel--visible');
+
+      const updatedCards = resultsList.querySelectorAll('[ref="cards[]"]');
+      const updatedLastCard = updatedCards[updatedCards.length - 1];
+      const newPage = updatedLastCard ? Number(updatedLastCard.dataset.page) : 0;
+
+      if (newPage >= lastPage) {
+        const wrapper = button.closest('.load-more-wrapper');
+        if (wrapper) wrapper.style.display = 'none';
+      }
+    });
+
+    observer.observe(grid, { childList: true });
+
+    requestAnimationFrame(() => {
+      sentinel.classList.add('load-more-sentinel--visible');
+    });
+
+    setTimeout(() => {
+      sentinel.classList.remove('load-more-sentinel--visible');
+      observer.disconnect();
+    }, 5000);
+  });
+{% endjavascript %}

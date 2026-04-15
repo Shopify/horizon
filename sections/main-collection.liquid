@@ -26,7 +26,7 @@
   class="section product-grid-container color-{{ section.settings.color_scheme }}"
   style="--padding-block-start: {{ section.settings.padding-block-start }}px; --padding-block-end: {{ section.settings.padding-block-end }}px;"
   section-id="{{ section.id }}"
-  infinite-scroll="{{ section.settings.enable_infinite_scroll }}"
+  infinite-scroll="{% if section.settings.pagination_type == 'infinite_scroll' %}true{% else %}false{% endif %}"
 >
   {% render 'skip-to-content-link', href: '#ResultsList', text: 'accessibility.skip_to_results_list' %}
 
@@ -40,11 +40,7 @@
       results_size: collection.products_count
     %}
 
-    {% assign products_per_page = 24 %}
-
-    {% if section.settings.enable_infinite_scroll == false %}
-      {% assign products_per_page = section.settings.products_per_page %}
-    {% endif %}
+    {% assign products_per_page = section.settings.products_per_page %}
 
     {% paginate collection.products by products_per_page %}
       {% capture children %}
@@ -68,7 +64,7 @@
         children: children,
         products: collection.products,
         paginate: paginate,
-        enable_infinite_scroll: section.settings.enable_infinite_scroll
+        pagination_type: section.settings.pagination_type
       %}
     {% endpaginate %}
   </div>
@@ -119,7 +115,7 @@
           "label": "t:options.extra_large"
         }
       ],
-      "default": "medium",
+      "default": "large",
       "visible_if": "{{ section.settings.layout_type == 'grid' }}"
     },
     {
@@ -139,10 +135,20 @@
       "default": "small"
     },
     {
-      "type": "checkbox",
-      "id": "enable_infinite_scroll",
-      "label": "t:settings.auto_load_products",
-      "default": true
+      "type": "select",
+      "id": "pagination_type",
+      "label": "t:settings.pagination_type",
+      "options": [
+        {
+          "value": "infinite_scroll",
+          "label": "t:options.auto_load"
+        },
+        {
+          "value": "load_more",
+          "label": "t:options.load_more"
+        }
+      ],
+      "default": "load_more"
     },
     {
       "type": "range",
@@ -151,8 +157,7 @@
       "min": 8,
       "max": 36,
       "step": 4,
-      "default": 24,
-      "visible_if": "{{ section.settings.enable_infinite_scroll == false }}"
+      "default": 24
     },
     {
       "type": "header",
