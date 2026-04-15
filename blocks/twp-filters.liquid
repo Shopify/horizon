@@ -296,7 +296,7 @@
           type="button"
         >
           <span class="svg-wrapper">
-            {{ 'icon-filter-new.svg' | inline_asset_content }}
+            {{ 'icon-filter.svg' | inline_asset_content }}
           </span>
 
           {{ 'actions.show_filters' | t }}
@@ -553,7 +553,7 @@
   .facets-toggle--drawer {
     /* Show drawer toggle on desktop when drawer style is selected */
     @media screen and (min-width: 750px) {
-      display: block;
+      display: flex;
     }
   }
 
@@ -943,7 +943,7 @@
 
   /* Facets - Panel */
   .facets__panel {
-    padding: 0 var(--drawer-padding);
+    padding: 0;
   }
 
   .facets:not(.facets--drawer) .facets__panel,
@@ -1052,13 +1052,17 @@
     display: none;
   }
 
+  .facets-toggle--drawer .facets__form-wrapper {
+    margin-left: auto;
+    width: auto;
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
+
   .facets-toggle--drawer .products-count-wrapper {
     display: flex;
-    margin-left: 0;
     align-items: center;
-    height: var(--minimum-touch-target);
     flex-shrink: 0;
-    padding-left: 4px;
   }
 
   .facets--horizontal .products-count-wrapper {
@@ -1182,16 +1186,22 @@
     }
   }
 
-  .facets-block-wrapper--drawer .sorting-filter {
-    @media screen and (min-width: 750px) {
-      margin-left: auto;
-    }
-  }
-
   .facets-block-wrapper--drawer .sorting-filter::before {
     @media screen and (min-width: 750px) {
       content: none;
     }
+  }
+
+  .facets-toggle--drawer .sorting-filter .facets__summary {
+    font-size: var(--navigation-base);
+  }
+
+  .facets-toggle--drawer .sorting-filter .facets__status {
+    display: none;
+  }
+
+  .facets-toggle--drawer .sorting-filter details[open] .facets__status {
+    display: inline;
   }
 
   .facets-block-wrapper--drawer .sorting-filter .facets__summary {
@@ -1231,16 +1241,15 @@
   }
 
   .facets-toggle.facets-toggle--drawer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
     width: 100%;
     height: auto;
     margin: 0;
 
     @media screen and (max-width: 749px) {
-      padding: var(--custom-spacing-xs) var(--custom-spacing-md) !important;
-    }
-
-    @media screen and (min-width: 750px) {
-      display: flex;
+      padding: 16px 24px !important;
     }
 
     .facets-toggle__button {
@@ -1266,7 +1275,7 @@
     border-radius: var(--custom-style-border-radius-sm);
     background: var(--color-header-hover);
     line-height: normal;
-    color: var(--color-foreground);
+    color: var(--text-tertiary);
   }
 
   .checkbox__label {
@@ -1404,6 +1413,10 @@
 
   .facets-block-wrapper--drawer .filter-count-bubble__background {
     background-color: transparent;
+  }
+
+  .filter-count-bubble__text {
+    color: var(--text-tertiary);
   }
 
   .facets-block-wrapper--drawer .facets__actions {

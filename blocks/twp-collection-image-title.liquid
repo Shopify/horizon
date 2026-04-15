@@ -1,0 +1,261 @@
+{% doc %}
+  Renders a collection title image from the custom.title_image metafield.
+  Falls back to the collection title as text if no image is available.
+
+  @example
+  {% content_for 'block', type: 'twp-collection-image-title', id: 'collection-image-title' %}
+{% enddoc %}
+
+{% liquid
+  assign title_image = closest.collection.metafields.custom.title_image
+  assign collection_title = closest.collection.title
+%}
+
+{% if title_image %}
+  {% liquid
+    assign block_settings = block.settings
+    assign ratio = 1
+
+    case block_settings.image_ratio
+      when 'landscape'
+        assign ratio = '16 / 9'
+      when 'portrait'
+        assign ratio = '4 / 5'
+      when 'adapt'
+        assign ratio = title_image.aspect_ratio
+    endcase
+
+    if ratio == 0 or ratio == null
+      assign ratio = 1
+    endif
+
+    assign sizes = 'auto, (min-width: 750px) 50vw, 100vw'
+    assign widths = '240, 352, 832, 1200, 1600, 1920'
+  %}
+
+  <div
+    class="twp-collection-image-title"
+    {{ block.shopify_attributes }}
+  >
+    {{
+      title_image
+      | image_url: width: 400
+      | image_tag:
+        width: title_image.width,
+        widths: '200, 400',
+        height: title_image.height,
+        class: 'twp-collection-image-title__image',
+        sizes: '200px',
+        alt: collection_title
+    }}
+  </div>
+{% else %}
+  <div
+    class="twp-collection-image-title twp-collection-image-title--text spacing-style size-style {{ block_settings.type_preset }}"
+    style="
+      {% render 'size-style', settings: block.settings %}
+      {% render 'spacing-style', settings: block.settings %}
+    "
+    {{ block.shopify_attributes }}
+  >
+    <h1 class="twp-collection-image-title__heading {{ block.settings.type_preset }}">
+      {{ collection_title }}
+    </h1>
+  </div>
+{% endif %}
+
+{% stylesheet %}
+  .twp-collection-image-title {
+    display: flex;
+    justify-content: var(--horizontal-alignment, flex-start);
+    line-height: 0;
+  }
+
+  .twp-collection-image-title__image {
+    display: block;
+    max-width: 200px;
+    height: auto;
+  }
+
+  .twp-collection-image-title__heading {
+    margin: 0;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Collection image title",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.size"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image aspect ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:options.auto"
+        },
+        {
+          "value": "portrait",
+          "label": "t:options.portrait"
+        },
+        {
+          "value": "square",
+          "label": "t:options.square"
+        },
+        {
+          "value": "landscape",
+          "label": "t:options.landscape"
+        }
+      ],
+      "default": "adapt"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:settings.width_desktop",
+      "options": [
+        {
+          "value": "fit-content",
+          "label": "t:options.fit_content"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "fit-content"
+    },
+    {
+      "type": "range",
+      "id": "custom_width",
+      "label": "t:settings.custom_width",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.width == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "width_mobile",
+      "label": "t:settings.width_mobile",
+      "options": [
+        {
+          "value": "fit-content",
+          "label": "t:options.fit_content"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "fill"
+    },
+    {
+      "type": "range",
+      "id": "custom_width_mobile",
+      "label": "t:settings.custom_width",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.width_mobile == 'custom' }}"
+    },
+    {
+      "type": "header",
+      "content": "Fallback title"
+    },
+    {
+      "type": "select",
+      "id": "type_preset",
+      "label": "Typography preset",
+      "options": [
+        {
+          "value": "h1",
+          "label": "Heading 1"
+        },
+        {
+          "value": "h2",
+          "label": "Heading 2"
+        },
+        {
+          "value": "h3",
+          "label": "Heading 3"
+        },
+        {
+          "value": "h4",
+          "label": "Heading 4"
+        }
+      ],
+      "default": "h2",
+      "info": "Applied when no title image is set"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection image title",
+      "category": "t:categories.basic"
+    }
+  ]
+}
+{% endschema %}

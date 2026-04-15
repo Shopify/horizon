@@ -28,7 +28,9 @@
       "one": "{{ count }} filter applied",
       "other": "{{ count }} filters applied"
     },
+    "home": "Home",
     "home_logo_alt": "{{ store_name }} - Home",
+    "breadcrumb": "Breadcrumb",
     "increase_quantity": "Increase quantity",
     "inventory_status": "Inventory status",
     "localization_region_and_language": "Region and language selector",
@@ -205,8 +207,8 @@
     "inventory_in_stock": "In stock",
     "inventory_out_of_stock": "Out of stock",
     "item_count": {
-      "one": "{{ count }} item",
-      "other": "{{ count }} items"
+      "one": "{{ count }} product",
+      "other": "{{ count }} products"
     },
     "item_count_cutoff": "More than {{ count }} items",
     "language": "Language",
