@@ -5,7 +5,7 @@
 {% render 'section', section: section, children: children %}
 
 {% if section.settings.show_breadcrumb and closest.collection %}
-  <nav class="twp-collection-breadcrumb" aria-label="{{ 'accessibility.breadcrumb' | t }}">
+  <nav class="twp-collection-breadcrumb" style="--breadcrumb-color: var({{ section.settings.breadcrumb_color }})" aria-label="{{ 'accessibility.breadcrumb' | t }}">
     <ol class="twp-collection-breadcrumb__list">
       <li class="twp-collection-breadcrumb__item">
         <a href="/" class="twp-collection-breadcrumb__link">{{ 'accessibility.home' | t }}</a>
@@ -31,7 +31,7 @@
     left: 0;
     z-index: 2;
     padding: 16px 24px;
-    color: var(--button-dark-content-default);
+    color: var(--breadcrumb-color);
   }
 
   .twp-collection-breadcrumb__list {
@@ -124,6 +124,23 @@
       "default": true
     },
     {
+      "type": "select",
+      "id": "breadcrumb_color",
+      "label": "Breadcrumb color",
+      "options": [
+        {
+          "value": "--text-default",
+          "label": "Text"
+        },
+        {
+          "value": "--text-inverse",
+          "label": "Text inverse"
+        }
+      ],
+      "default": "--text-default",
+      "visible_if": "{{ section.settings.show_breadcrumb }}"
+    },
+    {
       "type": "header",
       "content": "t:content.layout"
     },
@@ -138,7 +155,7 @@
         },
         {
           "value": "row",
-          "label": "t:options.horizontal"
+          "label": "Split"
         }
       ],
       "default": "row"

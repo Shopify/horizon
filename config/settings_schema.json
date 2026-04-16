@@ -2134,6 +2134,24 @@
         "visible_if": "{{ settings.quick_add == true }}"
       },
       {
+        "type": "color",
+        "id": "price_color",
+        "label": "Price color",
+        "default": "#666666"
+      },
+      {
+        "type": "color",
+        "id": "sale_price_color",
+        "label": "Sale price color",
+        "default": "#FF5858"
+      },
+      {
+        "type": "color",
+        "id": "compare_at_price_color",
+        "label": "Compare at price color",
+        "default": "#999999"
+      },
+      {
         "type": "color_scheme",
         "id": "quick_add_color_scheme",
         "label": "t:settings.quick_add_colors",

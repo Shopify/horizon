@@ -2417,6 +2417,10 @@ deferred-media[class]
   white-space: nowrap;
 }
 
+.price__regular {
+  color: var(--price-color);
+}
+
 .unit-price {
   display: block;
   font-size: min(0.85em, var(--font-paragraph--size));
@@ -2454,6 +2458,7 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) .volume-pricing-note {
   opacity: 0.4;
   text-decoration-line: line-through;
   text-decoration-thickness: 1.5px;
+  color: var(--compare-at-price-color);
 }
 
 .price-item__group {
@@ -2462,6 +2467,7 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) .volume-pricing-note {
 
 .price-item--sale {
   white-space: nowrap;
+  color: var(--sale-price-color);
 }
 
 .price__hidden {
