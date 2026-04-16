@@ -59,8 +59,9 @@
           {%- endif -%}
         </span>
       </facet-status-component>
-      <span class="svg-wrapper icon-caret icon-animated">
-        {{- 'icon-caret.svg' | inline_asset_content -}}
+      <span class="svg-wrapper facets__icon-toggle">
+        <span class="facets__icon-open">{{- 'icon-plus.svg' | inline_asset_content -}}</span>
+        <span class="facets__icon-close">{{- 'icon-minus.svg' | inline_asset_content -}}</span>
       </span>
     </summary>
     <floating-panel-component
@@ -216,10 +217,11 @@
     width: 100%;
     text-align: right;
     padding-left: calc(2.5 * var(--input-padding-x));
+    color: var(--field-content-default);
   }
 
   .price-facet__input::placeholder {
-    color: var(--facets-input-label-color);
+    color: var(--field-content-default);
   }
 
   .price-facet__separator {
@@ -231,6 +233,7 @@
 
   .price-facet__highest-price {
     padding: var(--padding-xs) 0 var(--padding-sm);
+    color: var(--text-secondary);
   }
 
   .price-facet__highest-price--horizontal {
@@ -240,7 +243,7 @@
   .price-facet__label {
     top: 0;
     left: 0;
-    color: var(--facets-input-label-color);
+    color: var(--field-content-default);
     padding: var(--input-padding-y) var(--input-padding-x);
     transform: none;
   }

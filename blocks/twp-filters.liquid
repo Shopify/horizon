@@ -411,7 +411,7 @@
               {% endif %}
             </h2>
             <button
-              class="button facets-drawer__close button-unstyled close-button"
+              class="button facets-drawer__close button-unstyled"
               on:click="dialog-component/closeDialog"
               type="button"
             >
@@ -461,7 +461,7 @@
 
                       assign active_value_count = filter.active_values | size
                       assign total_active_values = total_active_values | plus: active_value_count
-                      render 'list-filter', filter: filter, filter_style: 'vertical', active_value_count: active_value_count, should_render_clear: false, autofocus: should_autofocus, in_drawer: true, sectionId: section.id, is_first_filter: forloop.first, show_filter_status: block_settings.show_filter_status
+                      render 'list-filter', filter: filter, filter_style: 'vertical', active_value_count: active_value_count, should_render_clear: false, autofocus: should_autofocus, in_drawer: true, sectionId: section.id, is_first_filter: forloop.first, show_filter_status: block_settings.show_filter_status, show_swatch_label: true
                     %}
                 {% endcase %}
               {%- endfor -%}
@@ -656,7 +656,7 @@
     height: calc(100dvh - var(--custom-spacing-lg));
     margin-left: var(--custom-spacing-sm);
     width: calc(100% - var(--custom-spacing-lg));
-    max-width: 600px;
+    max-width: 452px;
   }
 
   .facets--drawer .facets__title-wrapper {
@@ -775,13 +775,14 @@
 
     font-size: var(--font-h4--size);
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 
     &:hover {
       --icon-opacity: 1;
     }
-    padding-bottom: 8px;
-    padding-top: 8px;
+    padding-block: var(--button-margin);
   }
 
   .facets__summary--has-status {
@@ -809,16 +810,31 @@
     }
   }
 
-  .facets__summary .icon-caret {
-    height: var(--custom-spacing-lg);
-    width: var(--custom-spacing-lg);
+  .facets__icon-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: var(--button-dark-content-inverse);
-    margin-block: 0;
-    transition: color var(--animation-speed) var(--animation-easing);
+    margin-inline-start: auto;
   }
 
-  .facets--drawer .facets__summary .icon-caret {
-    margin-inline-start: var(--margin-2xs);
+  .facets__icon-open,
+  .facets__icon-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .facets__icon-close {
+    display: none;
+  }
+
+  details[open] > summary .facets__icon-open {
+    display: none;
+  }
+
+  details[open] > summary .facets__icon-close {
+    display: flex;
   }
 
   /* Facets - Bubble */
@@ -878,7 +894,7 @@
   .facets__inputs-wrapper:not(:has(.facets__inputs-list)),
   .facets__inputs-wrapper .facets__inputs-list {
     display: flex;
-    gap: var(--custom-spacing-lg);
+    gap: var(--component-spacing);
     flex-direction: column;
   }
 
@@ -948,6 +964,10 @@
   /* Facets - Panel */
   .facets__panel {
     padding: 0;
+  }
+
+  .facets--drawer .facets__panel {
+    border-bottom: 1px solid var(--stroke-secondary);
   }
 
   .facets:not(.facets--drawer) .facets__panel,
@@ -1045,6 +1065,9 @@
   .facets__label {
     color: var(--button-dark-content-inverse);
     cursor: pointer;
+    font-size: var(--navigation-base);
+    font-weight: var(--navigation-base-weight);
+    letter-spacing: var(--navigation-letter-spacing);
   }
 
   /* Products count */
@@ -1335,40 +1358,10 @@
     font-size: 14px;
   }
 
-  .facets__item .svg-wrapper {
-    width: 20px;
-    height: 20px;
-    border-radius: var(--custom-style-border-radius-sm);
-    background-color: var(--color-header-hover);
-    position: relative;
-  }
-
-  .facets__item .svg-wrapper svg {
-    width: 10px;
-    height: 10px;
-    color: var(--color-black);
-  }
-
-  .facets__item .svg-wrapper .svg-close {
-    position: absolute;
-    top: 50%;
-    right: 50%;
-    transform: translate(50%, -50%);
-  }
-
-  .facets__item .svg-wrapper .svg-open {
-    opacity: 1;
-    transition: opacity 0.3s ease-in-out;
-  }
-
-  accordion-custom {
-    & details {
-      &[open] {
-        .svg-open {
-          opacity: 0 !important;
-        }
-      }
-    }
+  .facets__item .facets__icon-toggle svg {
+    width: 14px;
+    height: 14px;
+    color: var(--button-dark-content-inverse);
   }
 
   .dialog-drawer[open] {
@@ -1381,7 +1374,8 @@
 
   .facets__inputs-wrapper .facets__inputs-list {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
+    gap: var(--component-spacing);
   }
 
   .facets__inputs-wrapper .facets__inputs-list-image-grid {
@@ -1433,8 +1427,7 @@
   }
 
   .facets-block-wrapper--drawer .facets__actions {
-    flex-direction: column;
-    flex-direction: column-reverse;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     padding: 48px var(--custom-spacing-lg) var(--custom-spacing-lg);
@@ -1443,34 +1436,6 @@
     @media screen and (min-width: 750px) {
       padding: 48px var(--custom-spacing-xl) var(--custom-spacing-xl);
     }
-  }
-
-  .filter-drawer-clear-all {
-    background-color: transparent;
-    appearance: none;
-    border: none;
-    padding: var(--custom-spacing-xs);
-    margin: 0;
-    font-size: 14px;
-    font-weight: 400;
-    color: black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--custom-spacing-xs);
-    font-family: var(--font-body-family);
-    transition: background-color 0.3s ease-in-out;
-    cursor: pointer;
-    border-radius: var(--custom-style-border-radius-sm);
-
-    &:hover {
-      background-color: var(--color-header-hover);
-    }
-  }
-
-  .filter-drawer-clear-all .svg-wrapper {
-    width: var(--custom-spacing-lg);
-    height: var(--custom-spacing-lg);
   }
 
   .facets__status:not(:empty) {
@@ -1482,7 +1447,6 @@
   }
 
   .facets .facets__see-results {
-    padding: 11px var(--custom-spacing-md);
     line-height: normal;
     width: 100%;
   }
@@ -1503,7 +1467,7 @@
     height: var(--custom-spacing-md);
   }
 
-  .facets__summary .svg-wrapper {
+  .facets__summary .facets__icon-toggle {
     margin-left: var(--custom-spacing-sm);
   }
 
@@ -1574,7 +1538,7 @@
     width: 10px;
     height: 10px;
     border: none;
-    border-radius: 2px;
+    border-radius: var(--variant-inner-radius);
   }
 
   .facets .variant-option__button-label:has(:checked) {
@@ -1590,10 +1554,6 @@
     background: transparent;
   }
 
-  .facets .variant-option__button-label:has(:checked):hover {
-    background: transparent;
-  }
-
   .facets .variant-option__button-label--has-swatch:hover {
     outline: none;
     background: transparent;
@@ -1606,14 +1566,15 @@
 
   .facets .facets__swatch-label {
     padding-inline-start: var(--custom-spacing-xs);
-    letter-spacing: 0.02px;
+    font-size: var(--navigation-base);
+    font-weight: var(--navigation-base-weight);
+    letter-spacing: var(--navigation-letter-spacing);
   }
 
-  .facets .variant-option__button-label--has-swatch:has(:checked) .variant-option__swatch-wrapper,
-  .facets .facets__inputs-list--swatches .variant-option__button-label:hover:not(:has(input:disabled)) {
+  .facets .variant-option__button-label--has-swatch:has(:checked) .variant-option__swatch-wrapper {
     font-weight: 400;
   }
-  .facets .variant-option__button-label:has(:checked):hover,
+
   .facets .variant-option__button-label:has(:checked) {
     color: var(--color-black);
   }

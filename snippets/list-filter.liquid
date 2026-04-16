@@ -100,8 +100,9 @@
             </span>
           </facet-status-component>
         {% endif %}
-        <span class="svg-wrapper icon-caret icon-animated">
-          {{- 'icon-caret.svg' | inline_asset_content -}}
+        <span class="svg-wrapper facets__icon-toggle">
+          <span class="facets__icon-open">{{- 'icon-plus.svg' | inline_asset_content -}}</span>
+          <span class="facets__icon-close">{{- 'icon-minus.svg' | inline_asset_content -}}</span>
         </span>
       </div>
     </summary>
@@ -440,25 +441,14 @@
   }
 
   .facets .checkbox .icon-checkmark {
-    transition: border-color 0.2s ease, background-color 0.2s ease;
-  }
-
-  .facets .checkbox:not(.checkbox--disabled):hover .icon-checkmark {
-    border-color: rgb(var(--color-foreground-rgb) / var(--opacity-40-60));
-    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-5));
-  }
-
-  /* Hover state for checked checkboxes - targeting via adjacent sibling */
-  .facets .checkbox:not(.checkbox--disabled):hover .checkbox__input:checked + .checkbox__label .icon-checkmark {
-    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-85));
-  }
-
-  .facets .checkbox:not(.checkbox--disabled):hover .checkbox__label-text {
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-90));
+    border-radius: 50%;
+    border: var(--button-stroke, 1px) solid var(--button-dark-stroke-default);
   }
 
   .facets .checkbox .checkbox__label-text {
-    transition: color 0.2s ease, font-weight 0.2s ease;
+    font-size: var(--navigation-base);
+    font-weight: var(--navigation-base-weight);
+    letter-spacing: var(--navigation-letter-spacing);
   }
 
   /* Pill style */
@@ -668,12 +658,6 @@
   }
 
   /* Filter-specific variant-option styles */
-  .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover .swatch {
-    --focus-outline: var(--focus-outline-width) solid rgb(var(--color-foreground-rgb) / var(--opacity-35-55));
-
-    outline: var(--focus-outline);
-    outline-offset: var(--focus-outline-offset);
-  }
 
   .facets__inputs-list--swatches-grid .variant-option__button-label:has(:focus-visible) .swatch {
     --focus-outline: var(--focus-outline-width) solid currentcolor;
@@ -688,6 +672,7 @@
 
   .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover {
     outline: none;
+    font-weight: inherit;
   }
 
   .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:has(:checked) {
@@ -704,13 +689,9 @@
   }
 
   .facets__inputs-list--swatches {
-    --variant-picker-swatch-width: 32px;
-    --variant-picker-swatch-height: 32px;
-
-    @media screen and (min-width: 750px) {
-      --variant-picker-swatch-width: 26px;
-      --variant-picker-swatch-height: 26px;
-    }
+    --variant-picker-swatch-width: 20px;
+    --variant-picker-swatch-height: 20px;
+    --variant-picker-swatch-radius: var(--variant-inner-radius);
   }
 
   .facets--vertical .facets__inputs-wrapper .facets__inputs-list--swatches-grid {
@@ -722,10 +703,8 @@
   }
 
   .facets__inputs-wrapper .facets__inputs-list--swatches-grid {
-    --columns: 2;
-
     display: grid;
-    grid-template-columns: repeat(var(--columns), 1fr);
+    grid-template-columns: 1fr;
   }
 
   .facets__inputs-wrapper .facets__inputs-list--swatches-grid .variant-option--swatches {
@@ -877,22 +856,5 @@
     min-width: 0;
   }
 
-  /* Safari < 16.4 outline border-radius workaround - filter-specific */
-  @supports not (background-color: rgb(from red 150 g b / alpha)) {
-    .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover .swatch {
-      outline: none;
-      position: relative;
-      overflow: visible;
-    }
-
-    .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover .swatch::after {
-      content: '';
-      position: absolute;
-      inset: calc(-1 * var(--focus-outline-offset));
-      border: var(--focus-outline);
-      border-radius: var(--focus-outline-radius, 50%);
-      background-color: transparent;
-      display: inherit;
-    }
-  }
+  
 {% endstylesheet %}

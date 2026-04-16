@@ -20,7 +20,7 @@
     >
       <button
         type="button"
-        class="{% if is_drawer == true %}filter-drawer-clear-all{% else %}button button-secondary facets__clear-all{% endif %}{% if is_active %} active{% endif %}"
+        class="button-secondary facets__clear-all{% if is_active %} active{% endif %}"
         ref="clearButton"
         {% if form_component != blank %}
           on:click="/removeFilter?form={{ form_component }}"
@@ -30,11 +30,6 @@
           on:keydown="/removeFilter?form="
         {% endif %}
       >
-        {% if is_drawer == true %}
-        <span class="svg-wrapper">
-            {{ 'icon-clear-all.svg' | inline_asset_content }}
-          </span>
-        {% endif %}
         {{- 'actions.clear_all' | t -}}
       </button>
     </facet-remove-component>
@@ -42,7 +37,7 @@
 
   {% if products_count > 0 %}
     <button
-      class="button button-primary facets__see-results"
+      class="button facets__see-results"
       type="button"
       on:click="dialog-component/closeDialog"
     >
@@ -68,7 +63,7 @@
     display: flex;
     justify-content: space-between;
     align-items: stretch;
-    gap: var(--gap-sm);
+    gap: var(--component-spacing);
     background-image: var(--to-top-gradient-background);
     z-index: var(--facets-sticky-z-index);
     padding-block-start: var(--padding-xs);
@@ -136,16 +131,29 @@
     background-color: transparent;
   }
 
+  .facets__actions > facet-remove-component {
+    flex: 1 1 50%;
+    min-width: 0;
+    display: none;
+  }
+
+  .facets__actions--active > facet-remove-component {
+    display: block;
+  }
+
+  .facets__actions .button {
+    text-transform: none;
+  }
+
   /* Clear all button */
   .facets__clear-all {
     display: none;
     cursor: pointer;
-    min-width: var(--facets-clear-all-min-width);
+    min-width: 0;
+    width: 100%;
     transition: transform var(--animation-values), opacity var(--animation-values);
     opacity: 0;
     transform: translateY(100%);
-    flex-grow: 1;
-    padding-block: var(--padding-lg);
   }
 
   .facets:not(.facets--drawer) .facets__clear-all {
@@ -185,7 +193,8 @@
   .facets__clear-all.active {
     transform: translateY(0);
     opacity: 1;
-    display: grid;
+    display: flex;
+    justify-content: center;
   }
 
   .facets--horizontal .facets__clear-all.active {
@@ -213,9 +222,12 @@
   }
 
   .facets__see-results {
-    min-width: var(--facets-see-results-min-width);
-    flex-grow: 1;
-    padding-block: var(--padding-lg);
+    min-width: 0;
+    flex: 1 1 50%;
+  }
+
+  .facets__actions:not(.facets__actions--active) .facets__see-results {
+    flex: 1 1 100%;
   }
 
   .facets:not(.facets--drawer) .facets__see-results {
