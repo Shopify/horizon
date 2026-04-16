@@ -395,7 +395,7 @@
             class="facets__title-wrapper"
             style="--color-shadow: rgb(var(--color-foreground-rgb) / var(--opacity-10-25));"
           >
-            <h2 class="facets-drawer__title h3">
+            <h2 class="facets-drawer__title">
               {{ 'blocks.filter' | t }}
 
               {% if total_active_values > 0 %}
@@ -649,14 +649,14 @@
     border-radius: var(--custom-style-border-radius-sm);
     border-right: none;
     box-shadow: var(--shadow-drawer);
-    padding-inline: 0;
+    padding: var(--section-margin);
     background: var(--color-white);
     bottom: var(--custom-spacing-sm);
     top: var(--custom-spacing-sm);
     height: calc(100dvh - var(--custom-spacing-lg));
     margin-left: var(--custom-spacing-sm);
     width: calc(100% - var(--custom-spacing-lg));
-    max-width: 400px;
+    max-width: 600px;
   }
 
   .facets--drawer .facets__title-wrapper {
@@ -740,6 +740,10 @@
       flex-flow: row nowrap;
       height: auto;
     }
+  }
+
+  .facets__filters-wrapper {
+    margin-top: 32px;
   }
 
   .facets:not(.facets--drawer) .facets__filters-wrapper {
@@ -1096,6 +1100,9 @@
     --variant-picker-swatch-width: 32px;
     --variant-picker-swatch-height: 32px;
 
+    font-size: var(--paragraph-large);
+    font-weight: var(--paragraph-weight);
+    letter-spacing: var(--paragraph-spacing);
     margin: 0;
     display: flex;
     align-items: center;
@@ -1108,7 +1115,7 @@
   }
 
   .facets-drawer__close {
-    @media screen and (max-width: 749px) {
+    /* @media screen and (max-width: 749px) {
       background-color: var(--color-header-hover);
       width: 20px;
       height: 20px;
@@ -1123,6 +1130,7 @@
     width: var(--custom-spacing-xl);
     height: var(--custom-spacing-xl);
     border-radius: var(--custom-style-border-radius-sm);
+    color: var(--icon-default); */
   }
 
   .facets-drawer__close:hover {
@@ -1388,10 +1396,15 @@
   }
 
   .facets__bubble {
-    width: 20px;
-    height: 20px;
-    border-radius: var(--custom-style-border-radius-sm);
-    background-color: var(--color-header-hover);
+    display: flex;
+    width: var(--button-small);
+    height: var(--button-small);
+    padding: var(--button-margin);
+    justify-content: center;
+    align-items: center;
+    gap: var(--button-spaced);
+    border-radius: var(--button-radius);
+    background: var(--button-light-background-hover);
   }
 
   .facets .checkbox:has(.checkbox__input:checked):not(:has(.checkbox__input:disabled)):hover .icon-checkmark {

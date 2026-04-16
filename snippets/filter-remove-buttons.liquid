@@ -123,8 +123,7 @@
 
   .facets-remove:has(facet-remove-component) {
     display: flex;
-    margin-block-start: var(--margin-2xs);
-    margin-block-end: var(--margin-md);
+    margin-block-start: var(--section-margin);
   }
 
   .facets:not(.facets--drawer) .facets-remove--mobile-and-vertical {
@@ -140,6 +139,15 @@
   }
 
   .facets-remove__pill {
+    display: flex;
+    height: var(--badge-large, 32px);
+    padding: var(--badge-margin, 12px);
+    justify-content: center;
+    align-items: center;
+    gap: var(--badge-spacing, 8px);
+    border-radius: var(--badge-radius, 64px);
+    background: var(--background-secondary, #f9f8f5);
+
     .svg-wrapper,
     .swatch {
       flex-shrink: 0;

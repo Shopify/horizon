@@ -693,6 +693,8 @@
 
       /* Additional vars not extracted via Figma integration */
     --text-tertiary: #999;
+    --background-default: #FFF;
+    --background-secondary: #F9F8F5;
 
     --navigation-font-weight: 500;
     --navigation-base: 14px;
@@ -700,6 +702,9 @@
     --font-paragraph-line-height: 18px;
 
     --paragraph-small: var(--font-size--paragraph_small);
+    --paragraph-large: 16px;
+    --paragraph-weight: 400;
+    --paragraph-spacing: 0.2px;
 
     --subheading-small: 20px;
     --subheading-medium: 32px;
@@ -722,17 +727,23 @@
     --badge-margin: 12px;
     --badge-small: 24px;
     --badge-large: 32px;
+    --badge-spacing: 8px;
+    --badge-radius: 64px;
+
+    --button-small: 32px;
+    --button-radius: 64px;
 
       /* Additional [Brand Specific] vars not extracted via Figma integration */
     {% if settings.brand == 'linen-house' %}
       --text-default: #0E0E0E;
       --text-inverse: #F9F8F5;
-      --background-default: #FFF;
       --heading-default: #0E0E0E;
       --heading-inverse: #F9F8F5;
       --navigation-base-weight: 500;
       --navigation-letter-spacing: 0.2px;
       --navigation-extra-small: 10px;
+
+      --icon-default: #0E0E0E;
 
       --button-radius-default: 64px;
 
