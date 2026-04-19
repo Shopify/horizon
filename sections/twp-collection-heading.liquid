@@ -1,11 +1,70 @@
+{%- liquid
+  assign title_image = closest.collection.metafields.custom.title_image
+  assign collection_title = closest.collection.title
+  assign pre_title = closest.collection.metafields.custom.pre_title.value
+  assign description = closest.collection.description
+  assign collection_image = closest.collection.image
+
+  assign has_collection_image = false
+  if section.settings.show_image and collection_image
+    assign has_collection_image = true
+  endif
+-%}
+
 {% capture children %}
-  {% content_for 'blocks' %}
+  <div class="twp-collection-heading__content{% unless has_collection_image %} twp-collection-heading__content--no-media{% endunless %}">
+    {% if section.settings.show_pre_title and pre_title != blank %}
+      <p class="twp-collection-heading__pre-title">{{ pre_title }}</p>
+    {% endif %}
+
+    {% if title_image %}
+      <div class="twp-collection-heading__title">
+        {{
+          title_image
+          | image_url: width: 400
+          | image_tag:
+            width: title_image.width,
+            widths: '200, 400',
+            height: title_image.height,
+            class: 'twp-collection-heading__title-image',
+            sizes: '200px',
+            alt: collection_title
+        }}
+      </div>
+    {% elsif collection_title %}
+      <div class="twp-collection-heading__title">
+        <h5 class="twp-collection-heading__title-text">{{ collection_title }}</h5>
+      </div>
+    {% endif %}
+
+    {% if section.settings.show_description and description != blank %}
+      <div class="twp-collection-heading__description">{{ description }}</div>
+    {% endif %}
+  </div>
+
+  {% if has_collection_image %}
+    <div class="twp-collection-heading__media" style="--image-border-radius: {{ section.settings.image_border_radius }}px">
+      {{
+        collection_image
+        | image_url: width: 1600
+        | image_tag:
+          widths: '400, 600, 800, 1000, 1200, 1600',
+          sizes: '(min-width: 750px) 50vw, 100vw',
+          alt: collection_title,
+          loading: 'eager',
+          class: 'twp-collection-heading__image'
+      }}
+    </div>
+  {% endif %}
 {% endcapture %}
 
 {% render 'section', section: section, children: children %}
 
 {% if section.settings.show_breadcrumb and closest.collection %}
-  <nav class="twp-collection-breadcrumb" style="--breadcrumb-color: var({{ section.settings.breadcrumb_color }})" aria-label="{{ 'accessibility.breadcrumb' | t }}">
+  <nav
+    class="twp-collection-breadcrumb color-{{ section.settings.color_scheme }}{% if has_collection_image %} twp-collection-breadcrumb--has-media{% endif %}{% if section.settings.content_direction == 'row' %} twp-collection-breadcrumb--split{% endif %}"
+    aria-label="{{ 'accessibility.breadcrumb' | t }}"
+  >
     <ol class="twp-collection-breadcrumb__list">
       <li class="twp-collection-breadcrumb__item">
         <a href="/" class="twp-collection-breadcrumb__link">{{ 'accessibility.home' | t }}</a>
@@ -25,13 +84,59 @@
     position: relative;
   }
 
+  .twp-collection-heading__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+    flex: 1;
+  }
+
+  .twp-collection-heading__pre-title {
+    margin: 0;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .twp-collection-heading__title {
+    line-height: 0;
+  }
+
+  .twp-collection-heading__title-image {
+    display: block;
+    max-width: 200px;
+    height: auto;
+  }
+
+  .twp-collection-heading__title-text {
+    margin: 0;
+  }
+
+  .twp-collection-heading__description {
+    max-width: 60ch;
+  }
+
+  .twp-collection-heading__media {
+    flex: 1;
+    overflow: hidden;
+    border-radius: var(--image-border-radius);
+  }
+
+  .twp-collection-heading__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
   .twp-collection-breadcrumb {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: var(--section-margin);
+    left: var(--section-margin);
     z-index: 2;
-    padding: 16px 24px;
-    color: var(--breadcrumb-color);
+    background: transparent;
+    color: var(--color-foreground);
   }
 
   .twp-collection-breadcrumb__list {
@@ -56,13 +161,51 @@
     height: auto;
   }
 
-  .twp-collection-breadcrumb__link {
-    color: inherit;
+  .twp-collection-breadcrumb .twp-collection-breadcrumb__link {
+    --button-color: var(--color-foreground);
+    color: var(--color-foreground);
     text-decoration: none;
   }
 
   .twp-collection-breadcrumb__link:hover {
     text-decoration: underline;
+  }
+
+  .twp-collection-breadcrumb--has-media {
+    top: 0;
+    left: 0;
+    padding: 36px;
+    color: var(--text-inverse);
+  }
+
+  @media screen and (min-width: 750px) {
+    .twp-collection-breadcrumb--has-media.twp-collection-breadcrumb--split {
+      color: var(--color-foreground);
+      padding: 24px;
+    }
+  }
+
+  .twp-collection-heading > .section > .custom-section-content > .layout-panel-flex--column {
+    flex-direction: column-reverse;
+  }
+
+  .layout-panel-flex--column .twp-collection-heading__content--no-media {
+    padding-block-start: 32px;
+  }
+
+  .layout-panel-flex--row .twp-collection-heading__content--no-media {
+    padding-block-start: 36px;
+  }
+
+  .twp-collection-heading > .section > .custom-section-content > .layout-panel-flex--column {
+    height: fit-content;
+  }
+
+  @media screen and (min-width: 750px) {
+    .layout-panel-flex--column .twp-collection-heading__media {
+      width: 100%;
+      max-height: 300px;
+    }
   }
 
   @media screen and (max-width: 749px) {
@@ -72,28 +215,22 @@
 
     .twp-collection-heading .section-content-wrapper {
       --padding-block-start: 0px;
+      padding: 24px;
       height: fit-content;
     }
 
-    /* Text group: fit content height on mobile */
-    .twp-collection-heading > .section > .custom-section-content > .mobile-column > .group-block:first-child {
+    .twp-collection-heading__content {
       height: fit-content;
     }
 
-    /* Image group: 3/2 aspect ratio on mobile */
-    .twp-collection-heading > .section > .custom-section-content > .mobile-column > .group-block:last-child {
+    .twp-collection-heading__media {
       aspect-ratio: 3 / 2;
       overflow: hidden;
-    }
-
-    .twp-collection-heading > .section > .custom-section-content > .mobile-column > .group-block:last-child img {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
     }
 
-    .twp-collection-breadcrumb {
-      padding: 36px 36px;
+    .twp-collection-breadcrumb--has-media {
+      padding: 36px;
     }
   }
 {% endstylesheet %}
@@ -102,21 +239,14 @@
 {
   "name": "Collection heading",
   "class": "section-wrapper twp-collection-heading",
-  "blocks": [
-    {
-      "type": "@theme"
-    },
-    {
-      "type": "@app"
-    },
-    {
-      "type": "_divider"
-    }
-  ],
   "disabled_on": {
     "groups": ["header"]
   },
   "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
     {
       "type": "checkbox",
       "id": "show_breadcrumb",
@@ -124,21 +254,34 @@
       "default": true
     },
     {
-      "type": "select",
-      "id": "breadcrumb_color",
-      "label": "Breadcrumb color",
-      "options": [
-        {
-          "value": "--text-default",
-          "label": "Text"
-        },
-        {
-          "value": "--text-inverse",
-          "label": "Text inverse"
-        }
-      ],
-      "default": "--text-default",
-      "visible_if": "{{ section.settings.show_breadcrumb }}"
+      "type": "checkbox",
+      "id": "show_pre_title",
+      "label": "Show pre-title",
+      "info": "Displays the collection pre-title metafield",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show description",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "Show collection image",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "label": "Image border radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 12,
+      "visible_if": "{{ section.settings.show_image }}"
     },
     {
       "type": "header",
@@ -559,78 +702,25 @@
     {
       "name": "Collection heading",
       "category": "t:categories.text",
-      "blocks": {
-        "text_group": {
-          "type": "group",
-          "name": "Text",
-          "settings": {
-            "content_direction": "column",
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 8,
-            "width": "fill",
-            "height": "fit",
-            "inherit_color_scheme": true
-          },
-          "blocks": {
-            "heading": {
-              "type": "text",
-              "name": "t:names.heading",
-              "settings": {
-                "text": "<h2>Collection title</h2>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "type_preset": "h2"
-              }
-            },
-            "description": {
-              "type": "text",
-              "name": "t:names.description",
-              "settings": {
-                "text": "<p>Add a short description for this collection.</p>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "type_preset": "rte"
-              }
-            }
-          },
-          "block_order": ["heading", "description"]
-        },
-        "image_group": {
-          "type": "group",
-          "name": "Image",
-          "settings": {
-            "content_direction": "column",
-            "horizontal_alignment_flex_direction_column": "flex-end",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 0,
-            "width": "fit-content",
-            "height": "fit",
-            "inherit_color_scheme": true
-          },
-          "blocks": {
-            "image": {
-              "type": "image",
-              "name": "t:names.image",
-              "settings": {
-                "image_ratio": "adapt"
-              }
-            }
-          },
-          "block_order": ["image"]
-        }
-      },
-      "block_order": ["text_group", "image_group"],
       "settings": {
+        "show_breadcrumb": true,
+        "show_pre_title": true,
+        "show_description": true,
+        "show_image": true,
+        "image_border_radius": 12,
         "content_direction": "row",
         "vertical_on_mobile": true,
         "horizontal_alignment": "space-between",
-        "vertical_alignment": "center",
+        "vertical_alignment": "flex-end",
+        "align_baseline": true,
         "gap": 16,
-        "section_width": "page-width",
+        "section_width": "full-width",
         "section_height": "",
+        "color_scheme": "scheme-9",
         "padding-block-start": 24,
-        "padding-block-end": 24
+        "padding-block-end": 24,
+        "padding-inline-start": 24,
+        "padding-inline-end": 24
       }
     }
   ]
