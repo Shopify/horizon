@@ -46,6 +46,10 @@
     endif
   endif
 
+  if section.settings.transition_style == 'fade'
+    assign slideshow_class = slideshow_class | append: ' slideshow--fade-transition'
+  endif
+
   assign show_arrows = true
   if section.settings.icons_style == 'none' or section.blocks.size <= 1
     assign show_arrows = false
@@ -79,6 +83,21 @@
 </div>
 
 {% stylesheet %}
+  .slideshow--fade-transition slideshow-slides {
+    overflow: hidden;
+  }
+
+  .slideshow--fade-transition slideshow-slide {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+
+  .slideshow--fade-transition slideshow-slide[aria-hidden='false'] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
   .slideshow-section {
     slideshow-arrows .slideshow-control:first-of-type {
       margin-inline-start: var(--padding-xs);
@@ -262,7 +281,7 @@
           "label": "t:options.large"
         }
       ],
-      "default": "medium",
+      "default": "auto",
       "label": "t:settings.media_height"
     },
     {
@@ -359,6 +378,22 @@
         }
       ],
       "default": "dots"
+    },
+    {
+      "type": "select",
+      "id": "transition_style",
+      "label": "Transição",
+      "options": [
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "slide",
+          "label": "Slide"
+        }
+      ],
+      "default": "fade"
     },
     {
       "type": "checkbox",

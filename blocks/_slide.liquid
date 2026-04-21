@@ -14,22 +14,12 @@
       assign rounded_image_corners = true
     endif
   %}
-  {% if section.settings.slide_height == 'adapt_image' and block_index == 0 and preview_image != blank %}
-    {%
-      # Great example of why it can be helpful for a section to be able to read the settings of its direct child blocks.
-      # In this case, we want the section to be able to read the image aspect ratio of the first slide and apply it to the slideshow slides and slides.
-    %}
-    {% style %}
-      .shopify-section-{{ section.id }} slideshow-slides,
-      .shopify-section-{{ section.id }} slideshow-slide {
-        min-height: {{ 1 | divided_by: preview_image.aspect_ratio | times: 100 }}vw;
-      }
-    {% endstyle %}
-  {% endif %}
-
   <div class="slide__image-container{% if rounded_image_corners %} slide__image-container--rounded{% endif %}">
     {%- if block_settings.toggle_overlay -%}
       {% render 'overlay', settings: block_settings %}
+    {%- endif -%}
+    {%- if block_settings.link != blank -%}
+      <a href="{{ block_settings.link }}" class="slide__link" aria-hidden="true" tabindex="-1"></a>
     {%- endif -%}
     {%- if preview_image -%}
       {%- liquid
@@ -56,11 +46,37 @@
       -%}
 
       {%- if block_settings.media_type_1 == 'image' -%}
-        {{
-          block_settings.image_1
-          | image_url: width: 3840
-          | image_tag: height: height, sizes: sizes, widths: widths, class: 'slide__image', loading: loading, fetchpriority: fetchpriority
-        }}
+        {%- if block_settings.image_mobile -%}
+          {%- liquid
+            assign mobile_widths = '416, 600, 800, 1200, 1600'
+            assign mobile_widths_array = mobile_widths | split: ', '
+            assign sizes_mobile = '100vw'
+          -%}
+          <picture>
+            <source
+              media="(max-width: 749px)"
+              srcset="
+                {%- for mobile_width in mobile_widths_array -%}
+                  {{ block_settings.image_mobile | image_url: width: mobile_width }} {{ mobile_width }}w{% unless forloop.last %},{% endunless %}
+                {%- endfor -%}
+              "
+              sizes="{{ sizes_mobile }}"
+              width="{{ block_settings.image_mobile.width }}"
+              height="{{ block_settings.image_mobile.height }}"
+            >
+            {{
+              block_settings.image_1
+              | image_url: width: 3840
+              | image_tag: height: height, sizes: sizes, widths: widths, class: 'slide__image', loading: loading, fetchpriority: fetchpriority
+            }}
+          </picture>
+        {%- else -%}
+          {{
+            block_settings.image_1
+            | image_url: width: 3840
+            | image_tag: height: height, sizes: sizes, widths: widths, class: 'slide__image', loading: loading, fetchpriority: fetchpriority
+          }}
+        {%- endif -%}
       {%- else -%}
         {%- if block_settings.video_1.preview_image -%}
 
@@ -106,6 +122,28 @@
     </div>
   </div>
 {% endcapture %}
+
+{%- if section.settings.slide_height == 'auto' and block_index == 0 -%}
+  {%- if preview_image != blank -%}
+    {% style %}
+      @media screen and (min-width: 750px) {
+        .shopify-section-{{ section.id }} slideshow-slide {
+          aspect-ratio: {{ preview_image.width }} / {{ preview_image.height }};
+        }
+      }
+    {% endstyle %}
+  {%- endif -%}
+  {%- assign mobile_adapt_image = block_settings.image_mobile | default: preview_image -%}
+  {%- if mobile_adapt_image != blank -%}
+    {% style %}
+      @media screen and (max-width: 749px) {
+        .shopify-section-{{ section.id }} slideshow-slide {
+          aspect-ratio: {{ mobile_adapt_image.width }} / {{ mobile_adapt_image.height }};
+        }
+      }
+    {% endstyle %}
+  {%- endif -%}
+{%- endif -%}
 
 {%- capture class -%}
   {%- if block_settings.inherit_color_scheme == false -%}
@@ -155,8 +193,37 @@
     object-position: center center;
   }
 
+  .slide__image-container > picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .slide__image-container > picture > .slide__image {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+
   .slide__image-container > .slide__video-poster {
     position: absolute;
+  }
+
+  .slide__link {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  slideshow-slide:has(.slide__link) .slide__content {
+    pointer-events: none;
+  }
+
+  slideshow-slide:has(.slide__link) .slide__content a,
+  slideshow-slide:has(.slide__link) .slide__content button {
+    pointer-events: auto;
   }
 {% endstylesheet %}
 
@@ -218,6 +285,18 @@
       "id": "image_1",
       "label": "t:settings.image",
       "visible_if": "{{ block.settings.media_type_1 == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Imagem para mobile",
+      "info": "Exibida em telas menores que 750px. Se não definida, a imagem principal será usada.",
+      "visible_if": "{{ block.settings.media_type_1 == 'image' }}"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link"
     },
     {
       "type": "video",
