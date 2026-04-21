@@ -160,31 +160,37 @@ function mapLinenHouseTokens(tokenMap) {
 
   // H1 — Figma heading/large: 72px
   settings.type_font_h1        = 'heading';
+  settings.type_weight_h1      = '600';
   settings.type_size_h1        = '72';
   settings.type_line_height_h1 = 'display-tight';
 
   // H2 — Figma heading/medium: 56px
   settings.type_font_h2        = 'heading';
+  settings.type_weight_h2      = '600';
   settings.type_size_h2        = '56';
   settings.type_line_height_h2 = 'display-tight';
 
   // H3 — Figma heading/small: 48px
   settings.type_font_h3        = 'heading';
+  settings.type_weight_h3      = '600';
   settings.type_size_h3        = '48';
   settings.type_line_height_h3 = 'display-tight';
 
   // H4 — Figma subheading/large: 40px
   settings.type_font_h4        = 'heading';
+  settings.type_weight_h4      = '500';
   settings.type_size_h4        = '40';
   settings.type_line_height_h4 = 'display-normal';
 
   // H5 — Figma subheading/medium: 32px
   settings.type_font_h5        = 'heading';
+  settings.type_weight_h5      = '500';
   settings.type_size_h5        = '32';
   settings.type_line_height_h5 = 'display-normal';
 
   // H6 — Figma subheading/small: 20px
   settings.type_font_h6        = 'subheading';
+  settings.type_weight_h6      = '500';
   settings.type_size_h6        = '20';
   settings.type_line_height_h6 = 'display-normal';
 
@@ -274,31 +280,37 @@ function mapAuraHomeTokens(tokenMap) {
 
   // H1 — Figma heading/large: 64px
   settings.type_font_h1        = 'heading';
+  settings.type_weight_h1      = '500';
   settings.type_size_h1        = '64';
   settings.type_line_height_h1 = 'display-tight';
 
   // H2 — Figma heading/medium: 48px
   settings.type_font_h2        = 'heading';
+  settings.type_weight_h2      = '500';
   settings.type_size_h2        = '48';
   settings.type_line_height_h2 = 'display-tight';
 
   // H3 — Figma heading/small: 40px
   settings.type_font_h3        = 'heading';
+  settings.type_weight_h3      = '500';
   settings.type_size_h3        = '40';
   settings.type_line_height_h3 = 'display-normal';
 
   // H4 — Figma subheading/large: 32px
   settings.type_font_h4        = 'heading';
+  settings.type_weight_h4      = '400';
   settings.type_size_h4        = '32';
   settings.type_line_height_h4 = 'display-normal';
 
   // H5 — Figma subheading/medium: 24px
   settings.type_font_h5        = 'heading';
+  settings.type_weight_h5      = '400';
   settings.type_size_h5        = '24';
   settings.type_line_height_h5 = 'display-normal';
 
   // H6 — Figma subheading/small: 20px
   settings.type_font_h6        = 'subheading';
+  settings.type_weight_h6      = '400';
   settings.type_size_h6        = '20';
   settings.type_line_height_h6 = 'display-normal';
 

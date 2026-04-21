@@ -1,6 +1,8 @@
 {%- doc -%}
   Loads custom brand fonts that aren't available in Shopify's built-in font library.
-  Outputs @font-face declarations (or external stylesheet links) and overrides
+  Outputs
+
+  @font-face declarations (or external stylesheet links) and overrides
   the theme's root font-family CSS variables to use the custom fonts.
 
   Relies on settings.brand being set by the token sync script.
@@ -12,37 +14,36 @@
 {%- if settings.brand == 'linen-house' -%}
   <style>
     @font-face {
-      font-family: "TT Commons Pro";
-      src: url({{ 'tt_commons_pro_regular-webfont.woff2' | asset_url }}) format('woff2');
+      font-family: 'TT Commons Pro';
+      src: url({{'tt_commons_pro_regular-webfont.woff2'|asset_url}}) format('woff2');
       font-weight: 400;
       font-style: normal;
       font-display: swap;
     }
 
     @font-face {
-      font-family: "TT Commons Pro";
-      src: url({{ 'tt_commons_pro_medium-webfont.woff2' | asset_url }}) format('woff2');
+      font-family: 'TT Commons Pro';
+      src: url({{'tt_commons_pro_medium-webfont.woff2'|asset_url}}) format('woff2');
       font-weight: 500;
       font-style: normal;
       font-display: swap;
     }
 
     @font-face {
-      font-family: "TT Commons Pro";
-      src: url({{ 'tt_commons_pro_bold-webfont.woff2' | asset_url }}) format('woff2');
+      font-family: 'TT Commons Pro';
+      src: url({{'tt_commons_pro_bold-webfont.woff2'|asset_url}}) format('woff2');
       font-weight: 600;
       font-style: normal;
       font-display: swap;
     }
 
     :root {
-      --font-body--family: "TT Commons Pro", sans-serif;
+      --font-body--family: 'TT Commons Pro', sans-serif;
       --font-body--weight: 400;
-      --font-subheading--family: "TT Commons Pro", sans-serif;
+      --font-subheading--family: 'TT Commons Pro', sans-serif;
       --font-subheading--weight: 500;
-      --font-heading--family: "TT Commons Pro", sans-serif;
-      --font-heading--weight: 500;
-      --font-accent--family: "TT Commons Pro", sans-serif;
+      --font-heading--family: 'TT Commons Pro', sans-serif;
+      --font-accent--family: 'TT Commons Pro', sans-serif;
       --font-accent--weight: 600;
     }
   </style>
@@ -50,13 +51,12 @@
   <link rel="stylesheet" href="https://use.typekit.net/nro0rdh.css">
   <style>
     :root {
-      --font-body--family: "futura-pt", sans-serif;
+      --font-body--family: 'futura-pt', sans-serif;
       --font-body--weight: 400;
-      --font-subheading--family: "futura-pt", sans-serif;
+      --font-subheading--family: 'futura-pt', sans-serif;
       --font-subheading--weight: 400;
-      --font-heading--family: "futura-pt", sans-serif;
-      --font-heading--weight: 500;
-      --font-accent--family: "futura-pt", sans-serif;
+      --font-heading--family: 'futura-pt', sans-serif;
+      --font-accent--family: 'futura-pt', sans-serif;
       --font-accent--weight: 500;
     }
   </style>

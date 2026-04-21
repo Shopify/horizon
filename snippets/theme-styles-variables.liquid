@@ -220,7 +220,6 @@
     /* Letter-spacing / Tracking */
     --letter-spacing--display-tight: -0.03em;
     --letter-spacing--display-normal: 0em;
-    --letter-spacing--display-loose: 0.03em;
 
     --letter-spacing--heading-tight: -0.03em;
     --letter-spacing--heading-normal: 0em;
@@ -773,6 +772,11 @@
       --button-dark-background-hover: #333333;
       --button-dark-content-inverse: #0E0E0E;
 
+      --letter-spacing--display-loose: 0.03em;
+
+      --heading-strong: 600;
+      --heading-weight: 500;
+      --subheading-weight: 500;
 
     {% else %}
       --text-default: #333333;
@@ -798,6 +802,14 @@
       --button-dark-background-default: #333333;
       --button-dark-background-hover: #666666;
       --button-dark-content-inverse: #333333;
+
+      --letter-spacing--heading-loose: 0.125em;
+
+      --heading-strong: 500;
+      --heading-weight: 500;
+      --subheading-weight: 500;
+
+
     {% endif %}
   }
 {% endstyle %}

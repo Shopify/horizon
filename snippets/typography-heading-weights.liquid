@@ -1,0 +1,26 @@
+{%- comment -%}
+  Must render after {{ content_for_header }} so theme weight / letter-spacing settings
+  override Horizon’s font-picker-derived --font-h*--* values.
+{%- endcomment -%}
+{%- capture ls_h1 -%}{% render 'letter-spacing-setting-to-css', setting_value: settings.type_letter_spacing_h1 %}{%- endcapture -%}
+{%- capture ls_h2 -%}{% render 'letter-spacing-setting-to-css', setting_value: settings.type_letter_spacing_h2 %}{%- endcapture -%}
+{%- capture ls_h3 -%}{% render 'letter-spacing-setting-to-css', setting_value: settings.type_letter_spacing_h3 %}{%- endcapture -%}
+{%- capture ls_h4 -%}{% render 'letter-spacing-setting-to-css', setting_value: settings.type_letter_spacing_h4 %}{%- endcapture -%}
+{%- capture ls_h5 -%}{% render 'letter-spacing-setting-to-css', setting_value: settings.type_letter_spacing_h5 %}{%- endcapture -%}
+{%- capture ls_h6 -%}{% render 'letter-spacing-setting-to-css', setting_value: settings.type_letter_spacing_h6 %}{%- endcapture -%}
+{% style %}
+  :root {
+    --font-h1--weight: {{ settings.type_weight_h1 | default: '600' }};
+    --font-h2--weight: {{ settings.type_weight_h2 | default: '600' }};
+    --font-h3--weight: {{ settings.type_weight_h3 | default: '600' }};
+    --font-h4--weight: {{ settings.type_weight_h4 | default: '500' }};
+    --font-h5--weight: {{ settings.type_weight_h5 | default: '500' }};
+    --font-h6--weight: {{ settings.type_weight_h6 | default: '500' }};
+    --font-h1--letter-spacing: {{ ls_h1 | strip }};
+    --font-h2--letter-spacing: {{ ls_h2 | strip }};
+    --font-h3--letter-spacing: {{ ls_h3 | strip }};
+    --font-h4--letter-spacing: {{ ls_h4 | strip }};
+    --font-h5--letter-spacing: {{ ls_h5 | strip }};
+    --font-h6--letter-spacing: {{ ls_h6 | strip }};
+  }
+{% endstyle %}

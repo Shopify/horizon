@@ -178,10 +178,20 @@
     color: var(--text-inverse);
   }
 
+  .twp-collection-breadcrumb--has-media .twp-collection-breadcrumb__link {
+    --button-color: var(--text-inverse);
+    color: var(--text-inverse);
+  }
+
   @media screen and (min-width: 750px) {
     .twp-collection-breadcrumb--has-media.twp-collection-breadcrumb--split {
       color: var(--color-foreground);
       padding: 24px;
+    }
+
+    .twp-collection-breadcrumb--has-media.twp-collection-breadcrumb--split .twp-collection-breadcrumb__link {
+      --button-color: var(--color-foreground);
+      color: var(--color-foreground);
     }
   }
 

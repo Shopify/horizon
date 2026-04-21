@@ -509,6 +509,26 @@
       },
       {
         "type": "select",
+        "id": "type_weight_h1",
+        "label": "t:settings.weight",
+        "options": [
+          {
+            "value": "400",
+            "label": "400"
+          },
+          {
+            "value": "500",
+            "label": "500"
+          },
+          {
+            "value": "600",
+            "label": "600"
+          }
+        ],
+        "default": "600"
+      },
+      {
+        "type": "select",
         "id": "type_size_h1",
         "label": "t:settings.size",
         "options": [
@@ -605,19 +625,35 @@
         "label": "t:settings.letter_spacing",
         "options": [
           {
-            "value": "heading-tight",
-            "label": "t:options.tight"
+            "value": "-1px",
+            "label": "-1px"
           },
           {
-            "value": "heading-normal",
-            "label": "t:options.normal"
+            "value": "0px",
+            "label": "0px"
           },
           {
-            "value": "heading-loose",
-            "label": "t:options.loose"
+            "value": "0.2px",
+            "label": "0.2px"
+          },
+          {
+            "value": "0.5px",
+            "label": "0.5px"
+          },
+          {
+            "value": "2px",
+            "label": "2px"
+          },
+          {
+            "value": "4px",
+            "label": "4px"
+          },
+          {
+            "value": "8px",
+            "label": "8px"
           }
         ],
-        "default": "heading-normal"
+        "default": "0px"
       },
       {
         "type": "select",
@@ -654,6 +690,26 @@
           }
         ],
         "default": "heading"
+      },
+      {
+        "type": "select",
+        "id": "type_weight_h2",
+        "label": "t:settings.weight",
+        "options": [
+          {
+            "value": "400",
+            "label": "400"
+          },
+          {
+            "value": "500",
+            "label": "500"
+          },
+          {
+            "value": "600",
+            "label": "600"
+          }
+        ],
+        "default": "600"
       },
       {
         "type": "select",
@@ -753,19 +809,35 @@
         "label": "t:settings.letter_spacing",
         "options": [
           {
-            "value": "heading-tight",
-            "label": "t:options.tight"
+            "value": "-1px",
+            "label": "-1px"
           },
           {
-            "value": "heading-normal",
-            "label": "t:options.normal"
+            "value": "0px",
+            "label": "0px"
           },
           {
-            "value": "heading-loose",
-            "label": "t:options.loose"
+            "value": "0.2px",
+            "label": "0.2px"
+          },
+          {
+            "value": "0.5px",
+            "label": "0.5px"
+          },
+          {
+            "value": "2px",
+            "label": "2px"
+          },
+          {
+            "value": "4px",
+            "label": "4px"
+          },
+          {
+            "value": "8px",
+            "label": "8px"
           }
         ],
-        "default": "heading-normal"
+        "default": "0px"
       },
       {
         "type": "select",
@@ -810,6 +882,26 @@
           }
         ],
         "default": "heading"
+      },
+      {
+        "type": "select",
+        "id": "type_weight_h3",
+        "label": "t:settings.weight",
+        "options": [
+          {
+            "value": "400",
+            "label": "400"
+          },
+          {
+            "value": "500",
+            "label": "500"
+          },
+          {
+            "value": "600",
+            "label": "600"
+          }
+        ],
+        "default": "600"
       },
       {
         "type": "select",
@@ -909,19 +1001,35 @@
         "label": "t:settings.letter_spacing",
         "options": [
           {
-            "value": "heading-tight",
-            "label": "t:options.tight"
+            "value": "-1px",
+            "label": "-1px"
           },
           {
-            "value": "heading-normal",
-            "label": "t:options.normal"
+            "value": "0px",
+            "label": "0px"
           },
           {
-            "value": "heading-loose",
-            "label": "t:options.loose"
+            "value": "0.2px",
+            "label": "0.2px"
+          },
+          {
+            "value": "0.5px",
+            "label": "0.5px"
+          },
+          {
+            "value": "2px",
+            "label": "2px"
+          },
+          {
+            "value": "4px",
+            "label": "4px"
+          },
+          {
+            "value": "8px",
+            "label": "8px"
           }
         ],
-        "default": "heading-normal"
+        "default": "0px"
       },
       {
         "type": "select",
@@ -966,6 +1074,26 @@
           }
         ],
         "default": "subheading"
+      },
+      {
+        "type": "select",
+        "id": "type_weight_h4",
+        "label": "t:settings.weight",
+        "options": [
+          {
+            "value": "400",
+            "label": "400"
+          },
+          {
+            "value": "500",
+            "label": "500"
+          },
+          {
+            "value": "600",
+            "label": "600"
+          }
+        ],
+        "default": "500"
       },
       {
         "type": "select",
@@ -1065,19 +1193,35 @@
         "label": "t:settings.letter_spacing",
         "options": [
           {
-            "value": "heading-tight",
-            "label": "t:options.tight"
+            "value": "-1px",
+            "label": "-1px"
           },
           {
-            "value": "heading-normal",
-            "label": "t:options.normal"
+            "value": "0px",
+            "label": "0px"
           },
           {
-            "value": "heading-loose",
-            "label": "t:options.loose"
+            "value": "0.2px",
+            "label": "0.2px"
+          },
+          {
+            "value": "0.5px",
+            "label": "0.5px"
+          },
+          {
+            "value": "2px",
+            "label": "2px"
+          },
+          {
+            "value": "4px",
+            "label": "4px"
+          },
+          {
+            "value": "8px",
+            "label": "8px"
           }
         ],
-        "default": "heading-normal"
+        "default": "0px"
       },
       {
         "type": "select",
@@ -1122,6 +1266,26 @@
           }
         ],
         "default": "subheading"
+      },
+      {
+        "type": "select",
+        "id": "type_weight_h5",
+        "label": "t:settings.weight",
+        "options": [
+          {
+            "value": "400",
+            "label": "400"
+          },
+          {
+            "value": "500",
+            "label": "500"
+          },
+          {
+            "value": "600",
+            "label": "600"
+          }
+        ],
+        "default": "500"
       },
       {
         "type": "select",
@@ -1221,19 +1385,35 @@
         "label": "t:settings.letter_spacing",
         "options": [
           {
-            "value": "heading-tight",
-            "label": "t:options.tight"
+            "value": "-1px",
+            "label": "-1px"
           },
           {
-            "value": "heading-normal",
-            "label": "t:options.normal"
+            "value": "0px",
+            "label": "0px"
           },
           {
-            "value": "heading-loose",
-            "label": "t:options.loose"
+            "value": "0.2px",
+            "label": "0.2px"
+          },
+          {
+            "value": "0.5px",
+            "label": "0.5px"
+          },
+          {
+            "value": "2px",
+            "label": "2px"
+          },
+          {
+            "value": "4px",
+            "label": "4px"
+          },
+          {
+            "value": "8px",
+            "label": "8px"
           }
         ],
-        "default": "heading-normal"
+        "default": "0px"
       },
       {
         "type": "select",
@@ -1278,6 +1458,26 @@
           }
         ],
         "default": "subheading"
+      },
+      {
+        "type": "select",
+        "id": "type_weight_h6",
+        "label": "t:settings.weight",
+        "options": [
+          {
+            "value": "400",
+            "label": "400"
+          },
+          {
+            "value": "500",
+            "label": "500"
+          },
+          {
+            "value": "600",
+            "label": "600"
+          }
+        ],
+        "default": "500"
       },
       {
         "type": "select",
@@ -1377,19 +1577,35 @@
         "label": "t:settings.letter_spacing",
         "options": [
           {
-            "value": "heading-tight",
-            "label": "t:options.tight"
+            "value": "-1px",
+            "label": "-1px"
           },
           {
-            "value": "heading-normal",
-            "label": "t:options.normal"
+            "value": "0px",
+            "label": "0px"
           },
           {
-            "value": "heading-loose",
-            "label": "t:options.loose"
+            "value": "0.2px",
+            "label": "0.2px"
+          },
+          {
+            "value": "0.5px",
+            "label": "0.5px"
+          },
+          {
+            "value": "2px",
+            "label": "2px"
+          },
+          {
+            "value": "4px",
+            "label": "4px"
+          },
+          {
+            "value": "8px",
+            "label": "8px"
           }
         ],
-        "default": "heading-normal"
+        "default": "0px"
       },
       {
         "type": "select",

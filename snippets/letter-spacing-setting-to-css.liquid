@@ -1,0 +1,19 @@
+{%- doc -%}
+  Maps theme typography letter-spacing setting values to a CSS length.
+  Supports legacy heading-tight / heading-normal / heading-loose tokens.
+  @param {string} setting_value - settings.type_letter_spacing_h1 (etc.)
+{%- enddoc -%}
+{%- liquid
+  assign v = setting_value | default: '0px'
+  case v
+    when 'heading-tight'
+      assign out = '-1px'
+    when 'heading-normal'
+      assign out = '0px'
+    when 'heading-loose'
+      assign out = '2px'
+    else
+      assign out = v
+  endcase
+-%}
+{{- out -}}
