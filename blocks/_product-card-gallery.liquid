@@ -32,7 +32,11 @@
           {%- if product.available == false -%}
             {{ 'content.product_badge_sold_out' | t }}
           {%- elsif product.compare_at_price > product.price -%}
-            {{ 'content.product_badge_sale' | t }}
+            {% if customer.b2b? %}
+              {{ 'content.product_badge_b2b' | t }}
+            {% else %}
+              {{ 'content.product_badge_sale' | t }}
+            {% endif %}
           {%- endif -%}
         </div>
       {% endif %}
