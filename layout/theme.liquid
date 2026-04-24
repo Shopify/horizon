@@ -122,14 +122,7 @@
       data-product-transition="{{ settings.transition_to_main_product }}"
       data-template="{{ template }}"
     >
-      {% capture unlock_page %}{% render 'lock-page', product: product %}{% endcapture %}
-      {% assign unlock_page = unlock_page | strip %}
-
-      {% if unlock_page == 'false' %}
-        {% render 'lock-content' %} 
-      {% else %}
-        {{ content_for_layout }}
-      {% endif %}
+      {{ content_for_layout }}
     </main>
 
     <footer>

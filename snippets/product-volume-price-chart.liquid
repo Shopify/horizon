@@ -1,0 +1,274 @@
+{% doc %}
+  PDP table chart from Shopify quantity price breaks (native volume pricing).
+  Replaces metafield price_tiers. First data columns use `content.retail_price` and `content.partner_price`, then volume tier columns.
+
+  @param {object} product - Product object (pass `product` from the template)
+{% enddoc %}
+
+{%- liquid
+  assign header_variant = blank
+  for v in product.variants
+    if v.quantity_price_breaks.size > 0
+      assign header_variant = v
+      break
+    endif
+  endfor
+-%}
+
+{%- if product.quantity_price_breaks_configured? and header_variant != blank -%}
+  {% style %}
+    .product-details:has(.table-price-chart) .volume-pricing {
+      display: none;
+    }
+    .table-price-chart .product-badges {
+      position: relative !important;
+      top: unset;
+      left: unset;
+      right: unset;
+      bottom: unset;
+    }
+    .chart-subtitle {
+      display: block;
+      font-size: var(--font-size--2xs);
+      line-height: 1em;
+      margin-top: var(--gap-2xs);
+    }
+    .table-price-chart .product-badges {
+      width: fit-content !important;
+      margin-inline: auto;
+      display: block;
+      margin-top: var(--gap-2xs);
+    }
+    .table-price-chart {
+      text-align: center;
+    }
+    .table-price-chart th,
+    .table-price-chart td {
+      padding: var(--padding-xs);
+      line-height: 1em;
+      border-left: 1px solid rgb(189 189 189);
+      border-right: 1px solid rgb(189 189 189);
+    }
+    .table-price-chart th:first-child,
+    .table-price-chart td:first-child {
+      border-left: none;
+    }
+    .table-price-chart th:last-child,
+    .table-price-chart td:last-child {
+      border-right: none;
+    }
+    .table-price-chart table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .price.partner--price {
+      color: var(--color-primary);
+      font-weight: 600;
+    }
+    .table-price-chart th {
+      background: var(--color-border);
+      font-family: var(--font-paragraph--family);
+      font-style: var(--font-paragraph--style);
+      font-weight: var(--font-paragraph--weight);
+      font-size: var(--font-paragraph--size);
+      line-height: 1em;
+    }
+    .table-price-chart table {
+      background: #f9f9f9;
+    }
+    .align-tbl-top {
+      vertical-align: top;
+    }
+    .flex-table-volume {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .flex-table-volume .chart-subtitle {
+      margin: 0;
+    }
+
+    @media (max-width: 749px) {
+      .table-price-chart {
+        overflow-x: auto;
+        width: 100%;
+        -webkit-overflow-scrolling: touch;
+      }
+      .table-price-chart th {
+        font-size: var(--font-size--xs);
+        min-width: 8rem;
+      }
+    }
+  {% endstyle %}
+
+  {%- if product.has_only_default_variant -%}
+    {%- assign variant = product.selected_or_first_available_variant -%}
+    {%- if variant.quantity_price_breaks.size > 0 -%}
+      {%- assign saved_base_price = variant.compare_at_price | default: variant.price -%}
+      <div class="table-price-chart center">
+        <table>
+          <tbody>
+            <tr>
+              <th>{{ 'content.retail_price' | t }}</th>
+              <th>{{ 'content.partner_price' | t }}</th>
+              {%- for price_break in variant.quantity_price_breaks -%}
+                <th>
+                  {{- 'content.volume_pricing' | t -}}
+                  <small class="chart-subtitle">{{ 'content.pieces' | t: qty: price_break.minimum_quantity }}</small>
+                </th>
+              {%- endfor -%}
+            </tr>
+            <tr>
+              <td class="align-tbl-top">
+                <span class="price table--price">{{ saved_base_price | money_without_trailing_zeros }}</span>
+              </td>
+              <td>
+                <span class="price partner--price">{{ variant.price | money_without_trailing_zeros }}</span>
+                {%- if saved_base_price > variant.price -%}
+                  <span
+                    class="product-badges product-badges--{{ settings.badge_position }}"
+                    style="
+                      --badge-border-radius: {{ settings.badge_corner_radius }}px;
+                      --badge-font-family: var(--font-{{ settings.badge_font_family }}--family); --badge-font-weight: var(--font-{{ settings.badge_font_family }}--weight); --badge-text-transform: {{ settings.badge_text_transform }};
+                    "
+                  >
+                    <div
+                      class="
+                        product-badges__badge product-badges__badge--rectangle
+                        color-{{ settings.badge_sale_color_scheme }}
+                      "
+                    >
+                      {%- assign partner_savings = saved_base_price | minus: variant.price | times: 100 | divided_by: saved_base_price -%}
+                      {{ 'content.save' | t: save: partner_savings }}
+                    </div>
+                  </span>
+                {%- endif -%}
+              </td>
+              {%- for price_break in variant.quantity_price_breaks -%}
+                <td>
+                  <div class="flex-table-volume">
+                    <span class="price table--price">{{ price_break.price | money_without_trailing_zeros }}</span>
+                    <small class="chart-subtitle"
+                      >/{{ 'content.each_abbreviation' | t -}}
+                    </small>
+                  </div>
+
+                  {%- if saved_base_price > price_break.price -%}
+                    <span
+                      class="product-badges product-badges--{{ settings.badge_position }}"
+                      style="
+                        --badge-border-radius: {{ settings.badge_corner_radius }}px;
+                        --badge-font-family: var(--font-{{ settings.badge_font_family }}--family); --badge-font-weight: var(--font-{{ settings.badge_font_family }}--weight); --badge-text-transform: {{ settings.badge_text_transform }};
+                      "
+                    >
+                      <div
+                        class="
+                          product-badges__badge product-badges__badge--rectangle
+                          color-{{ settings.badge_sale_color_scheme }}
+                        "
+                      >
+                        {%- assign savings = saved_base_price | minus: price_break.price | times: 100 | divided_by: saved_base_price | round -%}
+                        {{ 'content.save' | t: save: savings }}
+                      </div>
+                    </span>
+                  {%- endif -%}
+                </td>
+              {%- endfor -%}
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    {%- endif -%}
+  {%- else -%}
+    <div class="variant-price-table">
+      <div class="table-price-chart center">
+        <table>
+          <tbody>
+            <tr>
+              <th>&nbsp;</th>
+              <th>{{ 'content.retail_price' | t }}</th>
+              <th>{{ 'content.partner_price' | t }}</th>
+              {%- for price_break in header_variant.quantity_price_breaks -%}
+                <th>
+                  {{- 'content.volume_pricing' | t -}}
+                  <small class="chart-subtitle">{{ 'content.pieces' | t: qty: price_break.minimum_quantity }}</small>
+                </th>
+              {%- endfor -%}
+            </tr>
+
+            {%- for variant in product.variants -%}
+              {%- if variant.quantity_price_breaks.size > 0 -%}
+                {%- assign saved_base_price = variant.compare_at_price | default: variant.price -%}
+                <tr>
+                  <td>{{ variant.title }}</td>
+                  <td class="align-tbl-top">
+                    <span class="price table--price">{{ saved_base_price | money_without_trailing_zeros }}</span>
+                  </td>
+                  <td>
+                    <span class="price partner--price">{{ variant.price | money_without_trailing_zeros }}</span>
+                    {%- if saved_base_price > variant.price -%}
+                      <span
+                        class="product-badges product-badges--{{ settings.badge_position }}"
+                        style="
+                          --badge-border-radius: {{ settings.badge_corner_radius }}px;
+                          --badge-font-family: var(--font-{{ settings.badge_font_family }}--family); --badge-font-weight: var(--font-{{ settings.badge_font_family }}--weight); --badge-text-transform: {{ settings.badge_text_transform }};
+                        "
+                      >
+                        <div
+                          class="
+                            product-badges__badge product-badges__badge--rectangle
+                            color-{{ settings.badge_sale_color_scheme }}
+                          "
+                        >
+                          {%- assign partner_savings = saved_base_price | minus: variant.price | times: 100 | divided_by: saved_base_price -%}
+                          {{ 'content.save' | t: save: partner_savings }}
+                        </div>
+                      </span>
+                    {%- endif -%}
+                  </td>
+                  {%- for header_break in header_variant.quantity_price_breaks -%}
+                    {%- assign cell_price = blank -%}
+                    {%- for vb in variant.quantity_price_breaks -%}
+                      {%- if vb.minimum_quantity == header_break.minimum_quantity -%}
+                        {%- assign cell_price = vb.price -%}
+                        {%- break -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+                    <td>
+                      {%- if cell_price != blank -%}
+                        <span class="price table--price">{{ cell_price | money_without_trailing_zeros }}</span>
+                        <small class="chart-subtitle"
+                          >/{{ 'content.each_abbreviation' | t -}}
+                        </small>
+                        {%- if saved_base_price > cell_price -%}
+                          <span
+                            class="product-badges product-badges--{{ settings.badge_position }}"
+                            style="
+                              --badge-border-radius: {{ settings.badge_corner_radius }}px;
+                              --badge-font-family: var(--font-{{ settings.badge_font_family }}--family); --badge-font-weight: var(--font-{{ settings.badge_font_family }}--weight); --badge-text-transform: {{ settings.badge_text_transform }};
+                            "
+                          >
+                            <div
+                              class="
+                                product-badges__badge product-badges__badge--rectangle
+                                color-{{ settings.badge_sale_color_scheme }}
+                              "
+                            >
+                              {%- assign savings = saved_base_price | minus: cell_price | times: 100 | divided_by: saved_base_price | round -%}
+                              {{ 'content.save' | t: save: savings }}
+                            </div>
+                          </span>
+                        {%- endif -%}
+                      {%- endif -%}
+                    </td>
+                  {%- endfor -%}
+                </tr>
+              {%- endif -%}
+            {%- endfor -%}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  {%- endif -%}
+{%- endif -%}

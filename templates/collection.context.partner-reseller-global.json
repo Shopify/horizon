@@ -1,0 +1,270 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "context": {
+    "market": "partner-reseller-global"
+  },
+  "parent": "collection.json",
+  "sections": {
+    "section_yB76YL": {
+      "type": "section",
+      "disabled": false,
+      "custom_css": [
+        ".divider {--divider-justify-content: flex-start !important; margin-left: 0 !important; --color-border: var(--color-primary-button-background) !important;}",
+        "@media (min-width: 750px) {.custom-section-background {display: none; }}",
+        "@media (max-width: 749px) {.image-block {display: none; } .background-image-fit img {object-position: right center; } .text-block {--max-width--body-normal: 15.5em; }}"
+      ],
+      "settings": {
+        "header-ac960cc3cff362cd6783afc6be66bdb7": null,
+        "content_direction": "row",
+        "vertical_on_mobile": false,
+        "reverse_on_mobile": false,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 42,
+        "enable_mobile_gap": false,
+        "mobile_gap": 12,
+        "header-934f921e778338a7a83c53a800ecd261": null,
+        "section_width": "full-width",
+        "full_width_on_mobile": false,
+        "section_height": "",
+        "section_height_custom": 50,
+        "header-1814acaba56682bf52cf565c8652c0ef": null,
+        "color_scheme": "scheme-bbc83d4c-338a-47eb-baca-3eaa1eabc62f",
+        "background_media": "image",
+        "video": null,
+        "video_position": "cover",
+        "background_image": "shopify://shop_images/Mask_group_25_ba5b0f95-6270-4f88-b9aa-304762d2adee.png",
+        "background_image_position": "fit",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "header-f3688c907f6b406dce9b0f6e41afeb00": null,
+        "padding-block-start": 0,
+        "padding-block-end": 0,
+        "custom_mobile_padding": false,
+        "mobile-padding-block-start": 0,
+        "mobile-padding-block-end": 0,
+        "mobile-padding-inline-start": 0,
+        "mobile-padding-inline-end": 0,
+        "css_class": "",
+        "add_section_id": true,
+        "section_id": "partner-banner"
+      },
+      "blocks": {
+        "group_DPQUxG": {
+          "type": "group",
+          "name": "t:names.group",
+          "disabled": false,
+          "blocks": {
+            "text_N7jdDw": {
+              "type": "text",
+              "name": "Title",
+              "disabled": false,
+              "settings": {
+                "text": "<h1>Hello, <br/>Partner!</h1>",
+                "header-9506351c9b9fb29dee1c33d2e0f66b18": null,
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "header-1a304c3f4e00a1bdfaa356b1b6ffeb26": null,
+                "type_preset": "h1",
+                "font": "var(--font-primary--family)",
+                "font_size": "",
+                "enable_mobile_size": true,
+                "mobile_font_size": "1.5rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "",
+                "header-27a71f374628a374bbaaac8b3187d502": null,
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "header-82ef244c00001eae487dd028624c0767": null,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "custom_mobile_padding": false,
+                "mobile-padding-block-start": 0,
+                "mobile-padding-block-end": 0,
+                "mobile-padding-inline-start": 0,
+                "mobile-padding-inline-end": 0
+              }
+            },
+            "text_cbPzHH": {
+              "type": "text",
+              "name": "Description",
+              "disabled": false,
+              "settings": {
+                "text": "<p>Here you can shop the exclusive partner pricing and the rest of the catalog.</p>",
+                "header-0a9c9ea95d98febf710bf04f96109741": null,
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "header-00312bce342128392491fd5a07197cde": null,
+                "type_preset": "rte",
+                "font": "var(--font-primary--family)",
+                "font_size": "",
+                "enable_mobile_size": true,
+                "mobile_font_size": "0.875rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "",
+                "header-ccddb84ba1323e725931f50227b46377": null,
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "header-01f451622611bc62d19e202adc3a4501": null,
+                "padding-block-start": 0,
+                "padding-block-end": 24,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "custom_mobile_padding": true,
+                "mobile-padding-block-start": 0,
+                "mobile-padding-block-end": 8,
+                "mobile-padding-inline-start": 0,
+                "mobile-padding-inline-end": 0
+              }
+            },
+            "divider_FGgDp7": {
+              "type": "_divider",
+              "name": "t:names.divider",
+              "disabled": false,
+              "settings": {
+                "thickness": 5,
+                "corner_radius": "square",
+                "width_percent": 13,
+                "header-7b2aaa4c31fd9ff9fd3ff093bf486c21": null,
+                "padding-block-start": 0,
+                "padding-block-end": 0
+              }
+            }
+          },
+          "block_order": [
+            "text_N7jdDw",
+            "text_cbPzHH",
+            "divider_FGgDp7"
+          ],
+          "settings": {
+            "link": "",
+            "open_in_new_tab": false,
+            "header-fafdf110b8eeb48f4d55d28ad7ebbc45": null,
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "reverse_on_mobile": false,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "custom_mobile_alignment": false,
+            "mobile_vertical_alignment": "center",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "enable_mobile_gap": true,
+            "mobile_gap": 4,
+            "header-77a1d54688721186973b95662522cf66": null,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 28,
+            "height": "fit",
+            "custom_height": 100,
+            "header-f2ffd2fbec53f007de2eca410179ad0b": null,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video": null,
+            "video_position": "cover",
+            "background_image": null,
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "enable_mobile_radius": false,
+            "mobile_border_radius": 0,
+            "placeholder": "",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "header-2489c1200d3ec4ebdf215028b80d859f": null,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 100,
+            "padding-inline-end": 0,
+            "custom_mobile_padding": true,
+            "mobile-padding-block-start": 32,
+            "mobile-padding-block-end": 32,
+            "mobile-padding-inline-start": 16,
+            "mobile-padding-inline-end": 16,
+            "css_class": "banner-head"
+          }
+        },
+        "image_NNLkbk": {
+          "type": "image",
+          "name": "t:names.image",
+          "disabled": false,
+          "settings": {
+            "image": "shopify://shop_images/Mask_group_25.png",
+            "link": "",
+            "open_in_new_tab": false,
+            "header-a6aab6f5c5b9a1831632d5c3564623db": null,
+            "image_ratio": "adapt",
+            "width": "custom",
+            "custom_width": 62,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "header-af71b9fd87a515e973f3cbc9a66ec6d8": null,
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "header-e9ac22884e1b61d955c6f31c652eb316": null,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          }
+        }
+      },
+      "block_order": [
+        "group_DPQUxG",
+        "image_NNLkbk"
+      ],
+      "name": "Partners Banner"
+    },
+    "hero_BxTY4Q": {
+      "disabled": true,
+      "settings": {},
+      "blocks": {}
+    }
+  },
+  "order": [
+    "section",
+    "section_yB76YL",
+    "hero_BxTY4Q",
+    "main"
+  ]
+}
