@@ -1,0 +1,14 @@
+{
+  "name": "wagner-horizon",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Wagner Skis Shopify theme (forked from Shopify/horizon).",
+  "scripts": {
+    "dev": "shopify theme dev --store=wagner-skis.myshopify.com",
+    "check": "shopify theme check",
+    "check:fix": "shopify theme check --auto-correct",
+    "pull": "shopify theme pull --store=wagner-skis.myshopify.com",
+    "push:unpublished": "shopify theme push --store=wagner-skis.myshopify.com --unpublished",
+    "list": "shopify theme list --store=wagner-skis.myshopify.com"
+  }
+}
