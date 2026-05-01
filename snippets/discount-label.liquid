@@ -6,19 +6,17 @@
         for item in customer_tag_shop
             assign applies_to = item.applies_to.value.products | where: 'id', product.id
 
-            if item.customer_tag == blank
-                assign applies_to = item.applies_to.value.products | where: 'id', product.id
+            assign applies_to = item.applies_to.value.products | where: 'id', product.id
 
-                if under_product_page == true
-                    if applies_to.size > 0
-                        assign discount_label = item.pdp_discount_price_label
-                        break
-                    endif
-                else
-                    if applies_to.size > 0
-                        assign discount_label = item.discount_label
-                        break
-                    endif
+            if under_product_page == true
+                if applies_to.size > 0
+                    assign discount_label = item.pdp_discount_price_label
+                    break
+                endif
+            else
+                if applies_to.size > 0
+                    assign discount_label = item.discount_label
+                    break
                 endif
             endif
         endfor
