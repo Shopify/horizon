@@ -254,43 +254,11 @@
     const sendBtn = document.getElementById('aero-hero-send');
 
     function handleHeroSend() {
-  const message = input.value.trim();
-  if (!message) return;
-  if (typeof window.openAero === 'function') {
-    window.openAero({ initialMessage: message });
-  }
-  input.value = '';
-  input.placeholder = 'Continuing in the chat panel →';
-  sendBtn.textContent = 'Sent ✓';
-  sendBtn.disabled = true;
-}
-
-      /* Store the message so the floating widget can pick it up */
-      window.__aeroHeroMessage = message;
-
-      /* Try to open the floating Aero widget and send the message */
-      const trigger = document.getElementById('aero-trigger');
-      const panel = document.getElementById('aero-panel');
-
-      if (trigger && panel) {
-        /* Open the widget panel */
-        if (!panel.classList.contains('is-open')) {
-          trigger.click();
-        }
-
-        /* Find the widget's input and populate + send */
-        setTimeout(function() {
-          const widgetInput = document.getElementById('aero-input');
-          const widgetSend = document.getElementById('aero-send');
-          if (widgetInput && widgetSend) {
-            widgetInput.value = message;
-            widgetInput.dispatchEvent(new Event('input', { bubbles: true }));
-            widgetSend.click();
-          }
-        }, 300);
+      const message = input.value.trim();
+      if (!message) return;
+      if (typeof window.openAero === 'function') {
+        window.openAero({ initialMessage: message });
       }
-
-      /* Clear hero input and show feedback */
       input.value = '';
       input.placeholder = 'Continuing in the chat panel →';
       sendBtn.textContent = 'Sent ✓';
