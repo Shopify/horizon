@@ -254,8 +254,16 @@
     const sendBtn = document.getElementById('aero-hero-send');
 
     function handleHeroSend() {
-      const message = input.value.trim();
-      if (!message) return;
+  const message = input.value.trim();
+  if (!message) return;
+  if (typeof window.openAero === 'function') {
+    window.openAero({ initialMessage: message });
+  }
+  input.value = '';
+  input.placeholder = 'Continuing in the chat panel →';
+  sendBtn.textContent = 'Sent ✓';
+  sendBtn.disabled = true;
+}
 
       /* Store the message so the floating widget can pick it up */
       window.__aeroHeroMessage = message;
