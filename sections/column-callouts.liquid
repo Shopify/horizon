@@ -3,6 +3,10 @@
   if section.settings.background_image != blank
     assign has_background_image = true
   endif
+  assign column_count = section.blocks.size
+  if column_count < 1
+    assign column_count = 1
+  endif
 %}
 
 <section
@@ -11,22 +15,34 @@
     {% render 'spacing-style', settings: section.settings %}
     --column-callouts-min-height: {{ section.settings.section_height }};
     --column-callouts-overlay-max-width: {{ section.settings.content_width | plus: 80 }}px;
+    --column-callouts-columns: {{ column_count }};
   "
   data-testid="column-callouts"
 >
-  {% if has_background_image %}
-    {{
-      section.settings.background_image
-      | image_url: width: 3840
-      | image_tag:
-        widths: '750, 1100, 1500, 2000, 2500, 3000, 3840',
-        sizes: '100vw',
-        class: 'column-callouts__background-image',
-        alt: ''
-    }}
-  {% else %}
-    <div class="column-callouts__background-placeholder" aria-hidden="true"></div>
-  {% endif %}
+  <div class="column-callouts__backgrounds" aria-hidden="true">
+    {% if has_background_image %}
+      {{
+        section.settings.background_image
+        | image_url: width: 3840
+        | image_tag:
+          widths: '750, 1100, 1500, 2000, 2500, 3000, 3840',
+          sizes: '100vw',
+          class: 'column-callouts__background-image column-callouts__background-image--default',
+          alt: ''
+      }}
+    {% else %}
+      <div class="column-callouts__background-placeholder column-callouts__background-image--default"></div>
+    {% endif %}
+
+    {% for block in section.blocks %}
+      {% if block.settings.background_image != blank %}
+        <div
+          class="column-callouts__background-image column-callouts__background-image--hover column-callouts__background-image--{{ block.id }}"
+          style="background-image: url('{{ block.settings.background_image | image_url: width: 2000 }}');"
+        ></div>
+      {% endif %}
+    {% endfor %}
+  </div>
 
   <div class="column-callouts__overlay">
     {% if section.settings.heading != blank %}
@@ -35,7 +51,15 @@
 
     <div class="column-callouts__grid" role="list">
       {% for block in section.blocks %}
-        <article class="column-callouts__item" role="listitem" {{ block.shopify_attributes }}>
+        <article
+          class="column-callouts__item"
+          role="listitem"
+          data-callout-id="{{ block.id }}"
+          {% if block.settings.background_image != blank %}
+            tabindex="0"
+          {% endif %}
+          {{ block.shopify_attributes }}
+        >
           {% if block.settings.icon != blank %}
             {{
               block.settings.icon
@@ -63,6 +87,19 @@
   </div>
 </section>
 
+{% style %}
+  {% for block in section.blocks %}
+    {% if block.settings.background_image != blank %}
+      @media (hover: hover) {
+        .column-callouts:has([data-callout-id="{{ block.id }}"]:hover) .column-callouts__background-image--{{ block.id }},
+        .column-callouts:has([data-callout-id="{{ block.id }}"]:focus-within) .column-callouts__background-image--{{ block.id }} {
+          opacity: 1;
+        }
+      }
+    {% endif %}
+  {% endfor %}
+{% endstyle %}
+
 {% stylesheet %}
   .column-callouts {
     position: relative;
@@ -73,6 +110,13 @@
     isolation: isolate;
   }
 
+  .column-callouts__backgrounds {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
   .column-callouts__background-image,
   .column-callouts__background-placeholder {
     position: absolute;
@@ -80,7 +124,25 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    z-index: -1;
+  }
+
+  .column-callouts__background-image--default {
+    z-index: 0;
+  }
+
+  .column-callouts__background-image--hover {
+    z-index: 1;
+    opacity: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: opacity 0.45s ease;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .column-callouts__background-image--hover {
+      transition: none;
+    }
   }
 
   .column-callouts__background-placeholder {
@@ -88,6 +150,8 @@
   }
 
   .column-callouts__overlay {
+    position: relative;
+    z-index: 1;
     width: min(calc(100% - (2 * var(--page-margin))), var(--column-callouts-overlay-max-width));
     margin-inline: auto;
     margin-bottom: var(--page-margin);
@@ -115,6 +179,16 @@
     justify-items: center;
     gap: var(--padding-lg);
     padding-inline: clamp(1rem, 2vw, 1.75rem);
+  }
+
+  .column-callouts__item:focus {
+    outline: none;
+  }
+
+  .column-callouts__item:focus-visible {
+    outline: 2px solid rgb(var(--color-foreground-rgb));
+    outline-offset: 4px;
+    border-radius: 4px;
   }
 
   .column-callouts__item + .column-callouts__item {
@@ -188,7 +262,8 @@
     {
       "type": "image_picker",
       "id": "background_image",
-      "label": "Background image"
+      "label": "Background image",
+      "info": "Shown by default. Each column can show a different image on hover."
     },
     {
       "type": "text",
@@ -252,6 +327,11 @@
       "type": "callout",
       "name": "Callout",
       "settings": [
+        {
+          "type": "image_picker",
+          "id": "background_image",
+          "label": "Hover background image"
+        },
         {
           "type": "image_picker",
           "id": "icon",
