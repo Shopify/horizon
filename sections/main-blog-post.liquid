@@ -2,7 +2,7 @@
 <div class="section color-{{ section.settings.color_scheme }}">
   <div class="blog-post-layout{% if section.settings.show_social_share %} blog-post-layout--has-share{% endif %}">
     <div
-      class=" blog-post-layout__main spacing-style layout-panel-flex layout-panel-flex--column section-content-wrapper mobile-column"
+      class="blog-post-layout__main spacing-style layout-panel-flex layout-panel-flex--column section-content-wrapper mobile-column"
       style="
         {% render 'layout-panel-style', settings: section.settings %}
         {% render 'spacing-style', settings: section.settings %}
@@ -20,6 +20,10 @@
 
     {% comment %} Dynamic area for @app blocks only, at the bottom {% endcomment %}
     {% content_for 'blocks' %}
+
+    {% if section.settings.show_social_share %}
+      {% render 'blog-article-share', article: article %}
+    {% endif %}
 
     {% if blog.comments_enabled? %}
       <div class="blog-post-comments-container">
@@ -50,10 +54,6 @@
       </div>
     {% endif %}
     </div>
-
-    {% if section.settings.show_social_share %}
-      {% render 'blog-article-share', article: article %}
-    {% endif %}
   </div>
 </div>
 
@@ -74,11 +74,16 @@
     }
 
     .blog-post-layout--has-share .blog-post-layout__main {
+      display: contents;
+    }
+
+    .blog-post-layout--has-share .blog-post-layout__main > *:not(.blog-article-share) {
       grid-column: 2;
     }
 
     .blog-post-layout--has-share .blog-article-share {
       grid-column: 3;
+      grid-row: 1;
     }
   }
 

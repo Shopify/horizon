@@ -5114,3 +5114,15 @@ product-recommendations:has([data-has-recommendations='false']) {
 
 }
 }
+
+.blog-post-content rte-formatter > * + * {
+  margin-top: 1rem;
+}
+
+.blog-post-content rte-formatter ul{
+  list-style: disc;
+}
+
+.blog-post-content rte-formatter ol{
+  list-style: decimal;
+}

@@ -119,64 +119,79 @@
 
 {% stylesheet %}
   .blog-article-share {
-    display: none;
+    width: 100%;
+    max-width: var(--normal-content-width);
+    margin-block-start: var(--gap-2xl);
+    margin-inline: auto;
+    padding-block-start: var(--gap-xl);
+  }
+
+  .blog-article-share__list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--gap-sm);
+    margin: 0;
+    padding: 0;
+  }
+
+  .blog-article-share__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 4px;
+    border: none;
+    border-radius: 100%;
+    background-color: #f9d8af;
+    color: #31331d;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+  }
+
+  .blog-article-share__button:hover {
+    transform: scale(1.05);
+    background-color: #f4c077;
+  }
+
+  .blog-article-share__button:focus-visible {
+    outline: 2px solid #31331d;
+    outline-offset: 2px;
+  }
+
+  .blog-article-share__button--copied {
+    background-color: #d2a087;
+  }
+
+  .blog-article-share__icon {
+    display: block;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  .blog-article-share__icon path {
+    fill: currentColor;
   }
 
   @media screen and (min-width: 990px) {
     .blog-article-share {
-      display: block;
+      width: auto;
+      max-width: none;
+      margin-block-start: 0;
+      margin-inline: 0;
+      padding-block-start: var(--padding-4xl);
       position: sticky;
       top: calc(var(--header-height, 0px) + var(--gap-xl));
-      padding-block-start: var(--padding-4xl);
+      align-self: start;
     }
 
     .blog-article-share__list {
-      display: flex;
       flex-direction: column;
-      gap: var(--gap-sm);
-      margin: 0;
-      padding: 0;
-    }
-
-    .blog-article-share__button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      padding: 4px;
-      border: none;
-      border-radius: 100%;
-      background-color: #f9d8af;
-      color: #31331d;
-      cursor: pointer;
-      text-decoration: none;
-      transition: transform 0.2s ease, background-color 0.2s ease;
-    }
-
-    .blog-article-share__button:hover {
-      transform: scale(1.05);
-      background-color: #f4c077;
-    }
-
-    .blog-article-share__button:focus-visible {
-      outline: 2px solid #31331d;
-      outline-offset: 2px;
-    }
-
-    .blog-article-share__button--copied {
-      background-color: #d2a087;
-    }
-
-    .blog-article-share__icon {
-      display: block;
-      width: 20px;
-      height: 20px;
-      flex-shrink: 0;
-    }
-
-    .blog-article-share__icon path {
-      fill: currentColor;
+      justify-content: flex-start;
     }
   }
 
