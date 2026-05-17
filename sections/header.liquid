@@ -436,11 +436,19 @@
     background: var(--color-scheme-top-row);
 
     a,
-    .button,
     .button-secondary,
     .header-actions__action {
       /* reset style from base.css */
       transition: color var(--header-content-transition-timing), border-color var(--header-content-transition-timing);
+    }
+
+    .button:not(.button-secondary, .button-unstyled),
+    .button:not(.button-secondary, .button-unstyled)::before {
+      transition:
+        color var(--header-content-transition-timing),
+        border-color var(--header-content-transition-timing),
+        box-shadow var(--header-content-transition-timing),
+        transform var(--button-hover-fill-duration, 0.4s) var(--animation-easing);
     }
   }
 

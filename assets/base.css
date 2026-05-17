@@ -1387,23 +1387,38 @@ button.shopify-payment-button__button--unbranded {
 button.shopify-payment-button__button--unbranded {
   --button-hover-fill-duration: 0.4s;
 
+  position: relative;
   overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--gap-2xs);
   background-color: var(--color-primary-button-background);
-  background-image: linear-gradient(
-    var(--color-primary-button-hover-background),
-    var(--color-primary-button-hover-background)
-  );
-  background-repeat: no-repeat;
-  background-position: bottom center;
-  background-size: 100% 0%;
   transition:
     color var(--animation-speed) var(--animation-easing),
-    box-shadow var(--animation-speed) var(--animation-easing),
-    background-size var(--button-hover-fill-duration) var(--animation-easing);
+    box-shadow var(--animation-speed) var(--animation-easing);
+}
+
+.button:not(.button-secondary, .button-unstyled)::before,
+button.shopify-payment-button__button--unbranded::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background-color: var(--color-primary-button-hover-background);
+  transform: scaleY(0);
+  transform-origin: bottom center;
+  transition: transform var(--button-hover-fill-duration) var(--animation-easing);
+  pointer-events: none;
+}
+
+.button:not(.button-secondary, .button-unstyled) > *,
+.button:not(.button-secondary, .button-unstyled)::after,
+button.shopify-payment-button__button--unbranded > *,
+button.shopify-payment-button__button--unbranded::after {
+  position: relative;
+  z-index: 1;
 }
 
 .button:not(.button-secondary, .button-unstyled):not(:has(.svg-wrapper, svg))::after,
@@ -1412,7 +1427,7 @@ button.shopify-payment-button__button--unbranded:not(:has(.svg-wrapper, svg))::a
   display: inline-block;
   width: 12px;
   height: 8px;
-  background-repeat: no-repeat;
+  background-repeat: round;
   background-size: 12px 8px;
   background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11.3536 4.03556C11.5488 3.8403 11.5488 3.52372 11.3536 3.32845L8.17157 0.146473C7.97631 -0.0487893 7.65973 -0.0487893 7.46447 0.146473C7.2692 0.341735 7.2692 0.658318 7.46447 0.85358L10.2929 3.68201L7.46447 6.51043C7.2692 6.7057 7.2692 7.02228 7.46447 7.21754C7.65973 7.4128 7.97631 7.4128 8.17157 7.21754L11.3536 4.03556ZM0 3.68201V4.18201H11V3.68201V3.18201H0V3.68201Z' fill='currentColor'/%3E%3C/svg%3E");
 }
@@ -1471,11 +1486,11 @@ button.shopify-payment-button__button--unbranded:hover:not([disabled]) {
 }
 
 @media (hover: hover) {
-  .button:not(.button-secondary, .button-unstyled):hover,
-  .button:not(.button-secondary, .button-unstyled):focus-visible,
-  button.shopify-payment-button__button--unbranded:hover:not([disabled]),
-  button.shopify-payment-button__button--unbranded:focus-visible:not([disabled]) {
-    background-size: 100% 100%;
+  .button:not(.button-secondary, .button-unstyled):hover::before,
+  .button:not(.button-secondary, .button-unstyled):focus-visible::before,
+  button.shopify-payment-button__button--unbranded:hover:not([disabled])::before,
+  button.shopify-payment-button__button--unbranded:focus-visible:not([disabled])::before {
+    transform: scaleY(1);
   }
 }
 
@@ -1503,21 +1518,20 @@ button.shopify-payment-button__button--unbranded:hover:not([disabled]) {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .button:not(.button-secondary, .button-unstyled),
-  button.shopify-payment-button__button--unbranded {
-    background-image: none;
-    transition:
-      color var(--animation-speed) var(--animation-easing),
-      box-shadow var(--animation-speed) var(--animation-easing),
-      background-color var(--animation-speed) var(--animation-easing);
+  .button:not(.button-secondary, .button-unstyled)::before,
+  button.shopify-payment-button__button--unbranded::before {
+    display: none;
   }
 
   .button:not(.button-secondary, .button-unstyled):hover,
   .button:not(.button-secondary, .button-unstyled):focus-visible,
   button.shopify-payment-button__button--unbranded:hover:not([disabled]),
   button.shopify-payment-button__button--unbranded:focus-visible:not([disabled]) {
-    --button-background-color: var(--color-primary-button-hover-background);
-    background-size: auto;
+    background-color: var(--color-primary-button-hover-background);
+    transition:
+      color var(--animation-speed) var(--animation-easing),
+      box-shadow var(--animation-speed) var(--animation-easing),
+      background-color var(--animation-speed) var(--animation-easing);
   }
 }
 

@@ -18,9 +18,14 @@ class HeaderMenu extends Component {
   requiredRefs = [];
 
   /**
-   * @type {MutationObserver | null}
+   * @type {ResizeObserver | null}
    */
-  #submenuMutationObserver = null;
+  #submenuResizeObserver = null;
+
+  /**
+   * @type {{ submenu: HTMLElement; isDefaultSlot: boolean; hasSubmenu: boolean } | null}
+   */
+  #submenuMeasurementContext = null;
 
   /**
    * @type {number | null}
@@ -39,7 +44,7 @@ class HeaderMenu extends Component {
     super.disconnectedCallback();
     window.removeEventListener('resize', this.#resizeListener);
     this.overflowMenu?.removeEventListener('pointerleave', this.#overflowSubmenuListener);
-    this.#cleanupMutationObserver();
+    this.#stopSubmenuHeightTracking();
     this.#clearDeactivateTimeout();
   }
 
@@ -48,6 +53,7 @@ class HeaderMenu extends Component {
    */
   #resizeListener = debounce(() => {
     setHeaderMenuStyle();
+    this.#measureAndApplySubmenuHeight();
   }, 100);
 
 
@@ -119,52 +125,12 @@ class HeaderMenu extends Component {
     if (submenu) {
       // Mark submenu as active for content-visibility optimization
       submenu.dataset.active = '';
-
-      // Cleanup any existing mutation observer from previous menu activations
-      this.#cleanupMutationObserver();
-
-      // Monitor DOM mutations to catch deferred content injection (from section hydration)
-      this.#submenuMutationObserver = new MutationObserver(() => {
-        requestAnimationFrame(() => {
-          // Double requestAnimationFrame to ensure the height is properly calculated and not defaulting to the contain-intrinsic-size
-          requestAnimationFrame(() => {
-            if (submenu.offsetHeight > 0) {
-              this.headerComponent?.style.setProperty('--submenu-height', `${submenu.offsetHeight}px`);
-              this.#cleanupMutationObserver();
-            }
-          });
-        });
-      });
-      this.#submenuMutationObserver.observe(submenu, {childList: true, subtree: true});
-
-      // Auto-disconnect after 500ms to prevent memory leaks
-      setTimeout(() => {
-        this.#cleanupMutationObserver();
-      }, 500);
+      this.#startSubmenuHeightTracking(submenu, { isDefaultSlot, hasSubmenu });
+    } else {
+      this.#stopSubmenuHeightTracking();
+      this.#applySubmenuHeight(0);
     }
 
-    let finalHeight = submenu?.offsetHeight || 0;
-
-    // For overflow menu, the height needs to be either content of the submenu or the total height of the menu list links
-    if (!isDefaultSlot) {
-      const overflowListHeight = this.#getOverflowListLinksHeight();
-      if (hasSubmenu) {
-        /* Note: When the submenu is inside the overflow menu, its offsetHeight is not valid due to the lack of padding
-         * we could add the padding variables to the submenu.offsetHeight, but measuring the overflowMenu.offsetHeight is just easier */
-        const overflowHeight = this.overflowMenu?.offsetHeight || 0;
-        finalHeight = Math.max(overflowHeight, overflowListHeight);
-      } else {
-        finalHeight = overflowListHeight;
-      }
-    }
-
-    if (!submenu) {
-      // If there is no content to open, don't try to open it
-      finalHeight = 0;
-    }
-
-    this.headerComponent.style.setProperty('--submenu-height', `${finalHeight}px`);
-    this.#setFullOpenHeaderHeight(finalHeight);
     this.style.setProperty('--submenu-opacity', '1');
   };
 
@@ -210,8 +176,8 @@ class HeaderMenu extends Component {
     // Don't deactivate if the overflow menu or overflow list is still being hovered
     if (this.overflowListHovered || this.overflowMenu?.matches(':hover')) return;
 
-    this.headerComponent?.style.setProperty('--submenu-height', '0px');
-    this.#setFullOpenHeaderHeight(0);
+    this.#stopSubmenuHeightTracking();
+    this.#applySubmenuHeight(0);
     this.style.setProperty('--submenu-opacity', '0');
     this.dataset.overflowExpanded = 'false';
 
@@ -284,9 +250,98 @@ class HeaderMenu extends Component {
     images?.forEach((image) => image.removeAttribute('loading'));
   };
 
-  #cleanupMutationObserver() {
-    this.#submenuMutationObserver?.disconnect();
-    this.#submenuMutationObserver = null;
+  /**
+   * @param {HTMLElement} submenu
+   * @param {{ isDefaultSlot: boolean; hasSubmenu: boolean }} context
+   */
+  #startSubmenuHeightTracking(submenu, context) {
+    this.#stopSubmenuHeightTracking();
+    this.#submenuMeasurementContext = { submenu, ...context };
+
+    const scheduleMeasure = () => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => this.#measureAndApplySubmenuHeight());
+      });
+    };
+
+    this.#submenuResizeObserver = new ResizeObserver(scheduleMeasure);
+    this.#submenuResizeObserver.observe(submenu);
+
+    const submenuInner = submenu.querySelector('.menu-list__submenu-inner');
+    if (submenuInner instanceof HTMLElement) {
+      this.#submenuResizeObserver.observe(submenuInner);
+    }
+
+    this.#watchSubmenuImages(submenu, scheduleMeasure);
+    document.fonts?.ready?.then(() => {
+      if (this.#submenuMeasurementContext?.submenu === submenu) {
+        scheduleMeasure();
+      }
+    });
+
+    scheduleMeasure();
+  }
+
+  #stopSubmenuHeightTracking() {
+    this.#submenuResizeObserver?.disconnect();
+    this.#submenuResizeObserver = null;
+    this.#submenuMeasurementContext = null;
+  }
+
+  #measureAndApplySubmenuHeight() {
+    const context = this.#submenuMeasurementContext;
+    if (!context || !this.headerComponent) return;
+
+    const finalHeight = this.#calculateSubmenuHeight(context.submenu, context);
+    this.#applySubmenuHeight(finalHeight);
+  }
+
+  /**
+   * @param {number} submenuHeight
+   */
+  #applySubmenuHeight(submenuHeight) {
+    if (!this.headerComponent) return;
+
+    this.headerComponent.style.setProperty('--submenu-height', `${submenuHeight}px`);
+    this.#setFullOpenHeaderHeight(submenuHeight);
+  }
+
+  /**
+   * @param {HTMLElement} submenu
+   * @param {{ isDefaultSlot: boolean; hasSubmenu: boolean }} context
+   */
+  #calculateSubmenuHeight(submenu, { isDefaultSlot, hasSubmenu }) {
+    if (!isDefaultSlot) {
+      const overflowListHeight = this.#getOverflowListLinksHeight();
+
+      if (hasSubmenu) {
+        /* Note: When the submenu is inside the overflow menu, its offsetHeight is not valid due to the lack of padding
+         * we could add the padding variables to the submenu.offsetHeight, but measuring the overflowMenu.offsetHeight is just easier */
+        const overflowHeight = this.overflowMenu?.offsetHeight || 0;
+        return Math.max(overflowHeight, overflowListHeight);
+      }
+
+      return overflowListHeight;
+    }
+
+    const submenuInner = submenu.querySelector('.menu-list__submenu-inner');
+    const measuredElement = submenuInner instanceof HTMLElement ? submenuInner : submenu;
+    const contentHeight = Math.ceil(measuredElement.getBoundingClientRect().height);
+
+    return Math.max(contentHeight, submenu.offsetHeight);
+  }
+
+  /**
+   * @param {HTMLElement} submenu
+   * @param {() => void} callback
+   */
+  #watchSubmenuImages(submenu, callback) {
+    submenu.querySelectorAll('img').forEach((image) => {
+      if (image.complete) return;
+
+      image.addEventListener('load', callback, { once: true });
+      image.addEventListener('error', callback, { once: true });
+    });
   }
 
   #clearDeactivateTimeout() {
