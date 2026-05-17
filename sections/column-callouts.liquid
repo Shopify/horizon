@@ -61,15 +61,9 @@
           {{ block.shopify_attributes }}
         >
           {% if block.settings.icon != blank %}
-            {{
-              block.settings.icon
-              | image_url: width: 64
-              | image_tag:
-                widths: '32, 48, 64',
-                sizes: '32px',
-                class: 'column-callouts__icon',
-                alt: ''
-            }}
+            <div class="column-callouts__icon" aria-hidden="true">
+              {{ block.settings.icon }}
+            </div>
           {% endif %}
 
           {% if block.settings.title != blank %}
@@ -200,9 +194,18 @@
   }
 
   .column-callouts__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+  }
+
+  .column-callouts__icon :is(svg, img) {
     width: auto;
     height: 16px;
+    max-width: 100%;
     object-fit: contain;
+    display: block;
   }
 
   .column-callouts__item-heading {
@@ -353,9 +356,10 @@
           "label": "Hover background image"
         },
         {
-          "type": "image_picker",
+          "type": "html",
           "id": "icon",
-          "label": "Icon"
+          "label": "Icon (SVG or HTML)",
+          "info": "Paste an SVG or other HTML markup. Decorative icons should use aria-hidden on the SVG element."
         },
         {
           "type": "text",

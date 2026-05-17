@@ -13,4 +13,4 @@
 ## Pitfalls
 
 - Do not replace the section image on load—only reveal hover layers on interaction.
-- `icon` and `background_image` on blocks are separate settings.
+- Block `icon` is type `html` (paste SVG/HTML); rendered inside `.column-callouts__icon` with `aria-hidden="true"`. Block `background_image` is the hover background image picker.
