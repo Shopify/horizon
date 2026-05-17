@@ -5,3 +5,7 @@ Under 750px, `vertical_on_mobile` adds `mobile-column` so `layout-panel-flex--ro
 **Pitfall:** Row rules still give `.group-block--width-fill` `flex: 1`. In a column flex container the main axis is vertical, so each column gets equal flex growth, `height: 100%` on the panel clips the flow, and content can overflow over the next section.
 
 **Fix:** In `assets/base.css` (max-width 749px), for `.layout-panel-flex--row.mobile-column`: set `height: auto` on the panel; reset width-fill/custom direct children to `flex: 0 1 auto; width: 100%`; set nested `.group-block-content` to `height: auto; min-height: 0`.
+
+## Image block hover (multicolumn columns)
+
+- `blocks/image.liquid` setting **Image on hover** (`image_on_hover`): cross-fades over the main image on `:hover` / `:focus-within` (pointer devices via `@media (hover: hover)`). Requires both images. Decorative hover `alt=""`.
