@@ -138,7 +138,14 @@
         "one": "{{ count }} comment",
         "other": "{{ count }} comments"
       },
-      "comment_author_separator": "•"
+      "comment_author_separator": "•",
+      "share": "Share this article",
+      "share_on_facebook": "Share on Facebook",
+      "share_on_linkedin": "Share on LinkedIn",
+      "share_on_x": "Share on X",
+      "share_on_tiktok": "Copy link to share on TikTok",
+      "share_by_email": "Share by email",
+      "link_copied": "Link copied"
     },
     "comment_form": {
       "email": "Email",

@@ -1,18 +1,20 @@
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div class="section color-{{ section.settings.color_scheme }}">
-  <div
-    class="
-      spacing-style
-      layout-panel-flex
-      layout-panel-flex--column
-      section-content-wrapper
-      mobile-column
-    "
-    style="
-      {% render 'layout-panel-style', settings: section.settings %}
-      {% render 'spacing-style', settings: section.settings %}
-    "
-  >
+  <div class="blog-post-layout{% if section.settings.show_social_share %} blog-post-layout--has-share{% endif %}">
+    <div
+      class="
+        blog-post-layout__main
+        spacing-style
+        layout-panel-flex
+        layout-panel-flex--column
+        section-content-wrapper
+        mobile-column
+      "
+      style="
+        {% render 'layout-panel-style', settings: section.settings %}
+        {% render 'spacing-style', settings: section.settings %}
+      "
+    >
     <header>
       {%- content_for 'block', id: 'blog-post-title', type: 'text' %}
       {%- content_for 'block', id: 'blog-post-details', type: '_blog-post-info-text' %}
@@ -54,6 +56,11 @@
         {% render 'blog-comment-form', article: article, section_id: section.id %}
       </div>
     {% endif %}
+    </div>
+
+    {% if section.settings.show_social_share %}
+      {% render 'blog-article-share', article: article %}
+    {% endif %}
   </div>
 </div>
 
@@ -62,6 +69,26 @@
 </script>
 
 {% stylesheet %}
+  @media screen and (min-width: 990px) {
+    .blog-post-layout--has-share {
+      display: grid;
+      grid-template-columns: 1fr minmax(0, var(--normal-content-width)) auto;
+      column-gap: var(--gap-2xl);
+      align-items: start;
+      width: 100%;
+      max-width: calc(var(--normal-content-width) + var(--icon-size-lg) + var(--gap-2xl) * 3);
+      margin-inline: auto;
+    }
+
+    .blog-post-layout--has-share .blog-post-layout__main {
+      grid-column: 2;
+    }
+
+    .blog-post-layout--has-share .blog-article-share {
+      grid-column: 3;
+    }
+  }
+
   .blog-post-comments-container {
     width: 100%;
     max-width: var(--normal-content-width);
@@ -151,6 +178,16 @@
       "id": "color_scheme",
       "label": "t:settings.color_scheme",
       "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.social_sharing"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_share",
+      "label": "t:settings.show_social_share",
+      "default": true
     },
     {
       "type": "header",
