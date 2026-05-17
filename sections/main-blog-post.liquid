@@ -2,14 +2,7 @@
 <div class="section color-{{ section.settings.color_scheme }}">
   <div class="blog-post-layout{% if section.settings.show_social_share %} blog-post-layout--has-share{% endif %}">
     <div
-      class="
-        blog-post-layout__main
-        spacing-style
-        layout-panel-flex
-        layout-panel-flex--column
-        section-content-wrapper
-        mobile-column
-      "
+      class=" blog-post-layout__main spacing-style layout-panel-flex layout-panel-flex--column section-content-wrapper mobile-column"
       style="
         {% render 'layout-panel-style', settings: section.settings %}
         {% render 'spacing-style', settings: section.settings %}
@@ -72,11 +65,11 @@
   @media screen and (min-width: 990px) {
     .blog-post-layout--has-share {
       display: grid;
-      grid-template-columns: 1fr minmax(0, var(--normal-content-width)) auto;
+      grid-template-columns: 1fr minmax(0, var(--narrow-page-width)) auto;
       column-gap: var(--gap-2xl);
       align-items: start;
       width: 100%;
-      max-width: calc(var(--normal-content-width) + var(--icon-size-lg) + var(--gap-2xl) * 3);
+      max-width: calc(var(--narrow-page-width) + var(--icon-size-lg) + var(--gap-2xl) * 3);
       margin-inline: auto;
     }
 
