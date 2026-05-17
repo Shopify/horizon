@@ -8,4 +8,4 @@ Under 750px, `vertical_on_mobile` adds `mobile-column` so `layout-panel-flex--ro
 
 ## Image block hover (multicolumn columns)
 
-- `blocks/image.liquid` setting **Image on hover** (`image_on_hover`): cross-fades on hover. **Pitfall:** do not set `--image-block-hover-image-opacity` on `.image-block__media--has-hover` and also on parent hover—the child definition shadows the parent. Use direct `opacity` on `.image-block__image--hover` / `--primary` instead.
+- `blocks/image.liquid` setting **Image on hover** (`image_on_hover`): cross-fades on hover (`--image-block-hover-duration: 0.6s` on `.image-block__media--has-hover`). **Pitfall:** do not set `--image-block-hover-image-opacity` on `.image-block__media--has-hover` and also on parent hover—the child definition shadows the parent. Use direct `opacity` on `.image-block__image--hover` / `--primary` instead.
