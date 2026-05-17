@@ -51,8 +51,11 @@
 
     <div class="column-callouts__grid" role="list">
       {% for block in section.blocks %}
+        {% liquid
+          assign icon_color_index = forloop.index0 | modulo: 3 | plus: 1
+        %}
         <article
-          class="column-callouts__item"
+          class="column-callouts__item column-callouts__item--icon-color-{{ icon_color_index }}"
           role="listitem"
           data-callout-id="{{ block.id }}"
           {% if block.settings.background_image != blank %}
@@ -99,6 +102,9 @@
     --column-callouts-hover-duration: 0.45s;
     --column-callouts-hover-easing: ease;
     --column-callouts-text-lift: -0.65rem;
+    --column-callouts-icon-color-1: #f4c077;
+    --column-callouts-icon-color-2: #b87c69;
+    --column-callouts-icon-color-3: #d2a087;
 
     position: relative;
     min-height: var(--column-callouts-min-height);
@@ -206,6 +212,39 @@
     max-width: 100%;
     object-fit: contain;
     display: block;
+  }
+
+  .column-callouts__item--icon-color-1 {
+    --column-callouts-icon-hover-fill: var(--column-callouts-icon-color-1);
+  }
+
+  .column-callouts__item--icon-color-2 {
+    --column-callouts-icon-hover-fill: var(--column-callouts-icon-color-2);
+  }
+
+  .column-callouts__item--icon-color-3 {
+    --column-callouts-icon-hover-fill: var(--column-callouts-icon-color-3);
+  }
+
+  .column-callouts__icon svg,
+  .column-callouts__icon svg :is(path, circle, rect, polygon, ellipse, line) {
+    transition: fill var(--column-callouts-hover-duration) var(--column-callouts-hover-easing);
+  }
+
+  @media (hover: hover) {
+    .column-callouts__item:hover .column-callouts__icon svg,
+    .column-callouts__item:focus-within .column-callouts__icon svg,
+    .column-callouts__item:hover .column-callouts__icon svg :is(path, circle, rect, polygon, ellipse, line),
+    .column-callouts__item:focus-within .column-callouts__icon svg :is(path, circle, rect, polygon, ellipse, line) {
+      fill: var(--column-callouts-icon-hover-fill) !important;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .column-callouts__icon svg,
+    .column-callouts__icon svg :is(path, circle, rect, polygon, ellipse, line) {
+      transition: none;
+    }
   }
 
   .column-callouts__item-heading {

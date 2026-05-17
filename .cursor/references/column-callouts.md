@@ -14,3 +14,4 @@
 
 - Do not replace the section image on load—only reveal hover layers on interaction.
 - Block `icon` is type `html` (paste SVG/HTML); rendered inside `.column-callouts__icon` with `aria-hidden="true"`. Block `background_image` is the hover background image picker.
+- Icon hover fill cycles per column: `column-callouts__item--icon-color-1|2|3` (`#F4C077`, `#B87C69`, `#D2A087`) via `forloop.index0 | modulo: 3`. SVG shapes use `fill`/`stroke` on item `:hover` / `:focus-within` (0.45s, same as background).

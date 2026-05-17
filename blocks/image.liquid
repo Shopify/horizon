@@ -14,10 +14,15 @@
   if ratio == 0 or ratio == null
     assign ratio = 1
   endif
+
+  assign has_hover_image = false
+  if block_settings.image != blank and block_settings.image_on_hover != blank
+    assign has_hover_image = true
+  endif
 %}
 
 {% capture class %}
-  image-block image-block--{{ block.id }} image-block--height-{{ block_settings.height }} spacing-style size-style
+  image-block image-block--{{ block.id }} image-block--height-{{ block_settings.height }}{% if has_hover_image %} image-block--has-hover-image{% endif %} spacing-style size-style
 {% endcapture %}
 
 {% capture style %}
@@ -36,10 +41,6 @@
   assign sizes = 'auto, (min-width: 750px) ' | append: media_width_desktop | append: ', ' | append: media_width_mobile
   assign widths = '240, 352, 832, 1200, 1600, 1920, 2560, 3840'
   assign image_alt = block_settings.image.alt | default: block_settings.image_on_hover.alt | default: ''
-  assign has_hover_image = false
-  if block_settings.image != blank and block_settings.image_on_hover != blank
-    assign has_hover_image = true
-  endif
 %}
 
 {% capture image %}
@@ -130,8 +131,6 @@
   }
 
   .image-block__media--has-hover {
-    --image-block-hover-image-opacity: 0;
-    --image-block-primary-image-opacity: calc(1 - var(--image-block-hover-image-opacity));
     overflow: hidden;
     border-radius: 16px;
   }
@@ -146,16 +145,18 @@
   }
 
   .image-block__media--has-hover .image-block__image--primary {
-    opacity: var(--image-block-primary-image-opacity);
+    position: relative;
+    z-index: 0;
     transition: opacity 0.35s ease;
   }
 
   .image-block__image--hover {
     position: absolute;
     inset: 0;
+    z-index: 1;
     width: 100%;
     height: 100%;
-    opacity: var(--image-block-hover-image-opacity);
+    opacity: 0;
     transition: opacity 0.35s ease;
   }
 
@@ -167,9 +168,16 @@
   }
 
   @media (hover: hover) {
-    .image-block:has(.image-block__image--hover):hover,
-    .image-block:has(.image-block__image--hover):focus-within {
-      --image-block-hover-image-opacity: 1;
+    .image-block--has-hover-image:hover .image-block__image--hover,
+    .image-block--has-hover-image:focus-within .image-block__image--hover,
+    .image-block__media--has-hover:hover .image-block__image--hover {
+      opacity: 1;
+    }
+
+    .image-block--has-hover-image:hover .image-block__image--primary,
+    .image-block--has-hover-image:focus-within .image-block__image--primary,
+    .image-block__media--has-hover:hover .image-block__image--primary {
+      opacity: 0;
     }
   }
 
