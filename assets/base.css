@@ -1385,10 +1385,25 @@ button.shopify-payment-button__button--unbranded {
 
 .button:not(.button-secondary, .button-unstyled),
 button.shopify-payment-button__button--unbranded {
+  --button-hover-fill-duration: 0.4s;
+
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--gap-2xs);
+  background-color: var(--color-primary-button-background);
+  background-image: linear-gradient(
+    var(--color-primary-button-hover-background),
+    var(--color-primary-button-hover-background)
+  );
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  background-size: 100% 0%;
+  transition:
+    color var(--animation-speed) var(--animation-easing),
+    box-shadow var(--animation-speed) var(--animation-easing),
+    background-size var(--button-hover-fill-duration) var(--animation-easing);
 }
 
 .button:not(.button-secondary, .button-unstyled):not(:has(.svg-wrapper, svg))::after,
@@ -1452,8 +1467,16 @@ button.shopify-payment-button__button--unbranded {
 .button:hover,
 button.shopify-payment-button__button--unbranded:hover:not([disabled]) {
   --button-color: var(--color-primary-button-hover-text);
-  --button-background-color: var(--color-primary-button-hover-background);
   --button-border-color: var(--color-primary-button-hover-border);
+}
+
+@media (hover: hover) {
+  .button:not(.button-secondary, .button-unstyled):hover,
+  .button:not(.button-secondary, .button-unstyled):focus-visible,
+  button.shopify-payment-button__button--unbranded:hover:not([disabled]),
+  button.shopify-payment-button__button--unbranded:focus-visible:not([disabled]) {
+    background-size: 100% 100%;
+  }
 }
 
 .button:not(.button-secondary, .button-unstyled):hover:not(:has(.svg-wrapper, svg))::after,
@@ -1476,7 +1499,26 @@ button.shopify-payment-button__button--unbranded:hover:not([disabled]):not(:has(
 
 /* Needed to override the default Shopify styles */
 button.shopify-payment-button__button--unbranded:hover:not([disabled]) {
-  background-color: var(--button-background-color);
+  background-color: var(--color-primary-button-background);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button:not(.button-secondary, .button-unstyled),
+  button.shopify-payment-button__button--unbranded {
+    background-image: none;
+    transition:
+      color var(--animation-speed) var(--animation-easing),
+      box-shadow var(--animation-speed) var(--animation-easing),
+      background-color var(--animation-speed) var(--animation-easing);
+  }
+
+  .button:not(.button-secondary, .button-unstyled):hover,
+  .button:not(.button-secondary, .button-unstyled):focus-visible,
+  button.shopify-payment-button__button--unbranded:hover:not([disabled]),
+  button.shopify-payment-button__button--unbranded:focus-visible:not([disabled]) {
+    --button-background-color: var(--color-primary-button-hover-background);
+    background-size: auto;
+  }
 }
 
 .button-unstyled {
