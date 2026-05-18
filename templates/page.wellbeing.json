@@ -66,11 +66,11 @@
             "image": "shopify://shop_images/Cala_Formentor_2.png",
             "link": "",
             "image_ratio": "adapt",
-            "width": "fill",
+            "width": "custom",
             "custom_width": 100,
-            "width_mobile": "fill",
+            "width_mobile": "custom",
             "custom_width_mobile": 100,
-            "height": "fit",
+            "height": "fill",
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
@@ -139,7 +139,7 @@
                 "padding-block-start": 0,
                 "padding-block-end": 12,
                 "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "padding-inline-end": 59
               },
               "blocks": {}
             },
@@ -149,7 +149,7 @@
               "settings": {
                 "text": "<h4>Made from botanicals picked by hand in harmony with natural cycles.</h4>",
                 "width": "fit-content",
-                "max_width": "normal",
+                "max_width": "narrow",
                 "alignment": "left",
                 "type_preset": "rte",
                 "font": "var(--font-body--family)",
@@ -165,7 +165,7 @@
                 "padding-block-start": 0,
                 "padding-block-end": 12,
                 "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "padding-inline-end": 40
               },
               "blocks": {}
             },
