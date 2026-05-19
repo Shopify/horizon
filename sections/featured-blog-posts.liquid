@@ -136,31 +136,63 @@
     height: 0.95rem;
   }
 
-  .featured-blog-posts-section--carousel .resource-list__carousel slideshow-container {
-    display: flex;
-    flex-direction: column;
-    gap: var(--padding-sm);
+  .featured-blog-posts-section--carousel .resource-list__carousel.resource-list__carousel--no-peek {
+    max-width: min(100%, var(--page-content-width, 100%));
   }
 
-  .featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows {
+  .featured-blog-posts-section--carousel
+    .resource-list__carousel--no-peek
+    > slideshow-component.resource-list__carousel {
+    padding-inline: 0;
+  }
+
+  .featured-blog-posts-section--carousel .resource-list__carousel--no-peek slideshow-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--padding-sm);
+    position: relative;
+    overflow: visible;
+  }
+
+  .featured-blog-posts-section--carousel .resource-list__carousel--no-peek slideshow-slides {
+    order: 1;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .featured-blog-posts-section--carousel .resource-list__carousel--no-peek slideshow-slides[gutters*='start'] {
+    padding-inline-start: 0;
+    scroll-padding-inline-start: 0;
+  }
+
+  .featured-blog-posts-section--carousel .resource-list__carousel--no-peek slideshow-arrows {
     position: static;
     inset: auto;
     order: 2;
+    display: flex;
+    flex-direction: row;
     justify-content: flex-start;
-    align-items: start;
+    align-items: center;
     gap: var(--padding-2xs);
+    width: fit-content;
+    height: auto;
+    margin-block-start: var(--padding-sm);
     mix-blend-mode: normal;
     pointer-events: auto;
-    width: fit-content;
   }
 
-  .featured-blog-posts-section--carousel .resource-list__carousel slideshow-slides {
-    order: 1;
+  .featured-blog-posts-section--carousel .resource-list__carousel--no-peek slideshow-arrows .slideshow-control {
+    position: static;
+    top: auto;
+    left: auto;
+    right: auto;
+    transform: none;
   }
 
-  .featured-blog-posts-section--carousel .resource-list__carousel slideshow-slides[gutters*='start'] {
-    padding-inline-start: 0;
-    scroll-padding-inline-start: 0;
+  .featured-blog-posts-section--carousel .resource-list__carousel--no-peek slideshow-arrows .slideshow-control--previous,
+  .featured-blog-posts-section--carousel .resource-list__carousel--no-peek slideshow-arrows .slideshow-control--next {
+    margin-inline-start: 0;
   }
 
   .featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control {
