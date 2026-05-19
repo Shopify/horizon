@@ -117,7 +117,13 @@
               {{ menu }}
             {% when 'menu_left' %}
               {{ menu_left }}
+              {% if split_menu_enabled %}
+                <div class="header__logo-line" aria-hidden="true"></div>
+              {% endif %}
             {% when 'menu_right' %}
+              {% if split_menu_enabled %}
+                <div class="header__logo-line" aria-hidden="true"></div>
+              {% endif %}
               {{ menu_right }}
             {% when 'localization' %}
               {{ localization }}

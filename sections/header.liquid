@@ -678,6 +678,7 @@
   .header__column--center {
     justify-content: center;
     grid-area: center;
+    margin: 0 25px;
 
     header-menu:only-child .overflow-menu::part(list) {
       justify-content: center;
@@ -754,26 +755,56 @@
     }
 
     #header-component[data-menu-position='split'][data-logo-position='center'] :is(.header-menu--split-left, .header-menu--split-right) {
-      --split-line-width: clamp(3rem, 10vw, 10rem);
       position: relative;
       display: flex;
       align-items: center;
     }
 
-    /* #header-component[data-menu-position='split'][data-logo-position='center'] .header-menu--split-left::after,
-    #header-component[data-menu-position='split'][data-logo-position='center'] .header-menu--split-right::before {
-      content: '';
-      flex: 0 0 var(--split-line-width);
-      border-top: 1px solid #F4C077;
-      pointer-events: none;
-    } */
-
-    #header-component[data-menu-position='split'][data-logo-position='center'] .header-menu--split-left::after {
-      margin-inline-start: var(--padding-6xl);
+    #header-component[data-menu-position='split'][data-logo-position='center']
+      .header__column--left:has(.header__logo-line) {
+      flex: 1 1 auto;
+      min-width: 0;
+      width: 100%;
     }
 
-    #header-component[data-menu-position='split'][data-logo-position='center'] .header-menu--split-right::before {
-      margin-inline-end: var(--padding-6xl);
+    #header-component[data-menu-position='split'][data-logo-position='center']
+      .header__column--left
+      .header-menu--split-left {
+      flex: 0 0 auto;
+    }
+
+    #header-component[data-menu-position='split'][data-logo-position='center']
+      .header__column--right:has(.header__logo-line) {
+      flex: 1 1 auto;
+      min-width: 0;
+      width: 100%;
+    }
+
+    #header-component[data-menu-position='split'][data-logo-position='center']
+      .header__column--right
+      .header-menu--split-right {
+      flex: 0 0 auto;
+      margin-inline-start: auto;
+    }
+
+    #header-component[data-menu-position='split'][data-logo-position='center'] .header__logo-line {
+      display: block;
+      flex: 1 1 auto;
+      align-self: center;
+      min-width: 0;
+      height: 1px;
+      background-color: #f4c077;
+      pointer-events: none;
+    }
+  }
+
+  .header__logo-line {
+    display: none;
+  }
+
+  @media screen and (min-width: 990px) {
+    #header-component[data-menu-position='split'][data-logo-position='center'] .header__logo-line {
+      display: block;
     }
   }
 

@@ -474,6 +474,7 @@
     data-blur-shadow="true"
   {% endif %}
 >
+
   {% if section.settings.blurred_reflection %}
     {% unless has_only_video %}
       <div
@@ -511,6 +512,7 @@
         {% endif %}
       ></a>
     {%- endif -%}
+      <div class="hero-border">
     <div
       class="hero__media-grid"
       style="--hero-media-count: {{ media_count }};--hero-media-count-mobile: {{ media_count_mobile }};{%- if section.settings.image_1 != blank -%} --hero-media-aspect-ratio: {{ section.settings.image_1.aspect_ratio }};{% endif %}"
@@ -545,7 +547,7 @@
     {% endif %}
   </div>
 </div>
-
+</div>
 {% stylesheet %}
   .hero-wrapper {
     --hero-height-offset: 0px;
