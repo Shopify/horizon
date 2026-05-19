@@ -35,7 +35,7 @@
     </ul>
     {% if cta_label != blank and cta_link != blank %}
       <a href="{{ cta_link }}" class="button mega-menu-featured-collections__cta">
-        {{ cta_label | escape }}
+        <span class="button__label">{{ cta_label | escape }}</span>
       </a>
     {% endif %}
   </div>
