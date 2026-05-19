@@ -512,7 +512,6 @@
         {% endif %}
       ></a>
     {%- endif -%}
-      <div class="hero-border">
     <div
       class="hero__media-grid"
       style="--hero-media-count: {{ media_count }};--hero-media-count-mobile: {{ media_count_mobile }};{%- if section.settings.image_1 != blank -%} --hero-media-aspect-ratio: {{ section.settings.image_1.aspect_ratio }};{% endif %}"
@@ -546,7 +545,6 @@
       </div>
     {% endif %}
   </div>
-</div>
 </div>
 {% stylesheet %}
   .hero-wrapper {
