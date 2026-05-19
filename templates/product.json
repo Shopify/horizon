@@ -713,7 +713,7 @@
           "name": "t:names.product_card",
           "static": true,
           "settings": {
-            "product_card_gap": 8,
+            "product_card_gap": 12,
             "show_primary_button": true,
             "primary_button_label": "Discover",
             "inherit_color_scheme": true,
@@ -763,7 +763,7 @@
                 "background_color": "#00000026",
                 "corner_radius": 0,
                 "padding-block-start": 8,
-                "padding-block-end": 8,
+                "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
               },
