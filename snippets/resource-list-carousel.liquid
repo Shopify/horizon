@@ -14,18 +14,20 @@
 {% liquid
   assign slideshow_ref = ref | default: 'resourceListCarousel'
 
-  if settings.section_width == 'page-width'
-    assign slideshow_gutters = 'start end'
-    assign gutter_style = '--gutter-slide-width: var(--util-page-margin-offset);'
-  else
-    assign slideshow_gutters = null
-    assign gutter_style = '--gutter-slide-width: 0px;'
-  endif
+  assign slideshow_gutters = null
+  assign gutter_style = '--gutter-slide-width: 0px;'
 
   assign show_arrows = false
   if settings.icons_style != 'none'
     assign show_arrows = true
   endif
+
+  assign column_count = settings.columns | default: 3
+  assign columns_gap = settings.columns_gap | default: 16
+  assign carousel_vars = '--peek-next-slide-size: 0px; --column-count: '
+  assign carousel_vars = carousel_vars | append: column_count | append: '; --resource-list-column-gap-desktop: '
+  assign carousel_vars = carousel_vars | append: columns_gap | append: 'px; --resource-list-column-gap: '
+  assign carousel_vars = carousel_vars | append: columns_gap | append: 'px;'
 %}
 
 {% capture slides %}
@@ -39,8 +41,8 @@
 {% endcapture %}
 
 <div
-  class="resource-list__carousel"
-  style="{{ gutter_style }} --slide-width-max: {{ slide_width_max | default: '300px' }};"
+  class="resource-list__carousel resource-list__carousel--no-peek"
+  style="{{ gutter_style }} {{ carousel_vars }} --slide-width-max: {{ slide_width_max | default: '100%' }};"
 >
   {% render 'slideshow',
     ref: slideshow_ref,
@@ -50,7 +52,7 @@
     icon_style: settings.icons_style,
     icon_shape: settings.icons_shape,
     auto_hide_controls: false,
-    infinite: false,
+    infinite: true,
     initial_slide: 0,
     slide_count: slide_count,
     slideshow_gutters: slideshow_gutters

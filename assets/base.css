@@ -4378,11 +4378,21 @@ slideshow-arrows .slideshow-control.slideshow-control--style-none {
 }
 
 :not(.media-gallery--carousel)
-  > :is(slideshow-component:hover, slideshow-component:focus-within):not(:has(slideshow-controls:hover))
+  > :is(slideshow-component:hover, slideshow-component:focus-within):not(:has(slideshow-controls:hover)):not(
+    .resource-list__carousel
+  )
   > slideshow-container
   > slideshow-arrows
   .slideshow-control {
   animation: arrowsSlideIn var(--animation-speed) var(--animation-easing) forwards;
+}
+
+slideshow-component.resource-list__carousel
+  > slideshow-container
+  > slideshow-arrows
+  .slideshow-control {
+  opacity: 1;
+  animation: none;
 }
 
 @keyframes arrowsSlideIn {
@@ -4531,8 +4541,11 @@ slideshow-arrows .slideshow-control.slideshow-control--style-none {
 
 .resource-list__carousel {
   --slide-width: 60vw;
+  --carousel-arrow-gutter: clamp(2.5rem, 4vw, 4rem);
 
   width: 100%;
+  max-width: min(100%, var(--page-content-width, 100%));
+  margin-inline: auto;
   position: relative;
   container-type: inline-size;
   container-name: resource-list-carousel;
@@ -4546,9 +4559,92 @@ slideshow-arrows .slideshow-control.slideshow-control--style-none {
   }
 }
 
-.resource-list__carousel slideshow-arrows{
-  left:2% !important;
-  right: 2% !important;
+.resource-list__carousel.resource-list__carousel--no-peek {
+  --resource-list-carousel-arrow-total: calc(var(--carousel-arrow-gutter) * 2);
+
+  max-width: calc(min(100%, var(--page-content-width, 100%)) + var(--resource-list-carousel-arrow-total));
+  container-type: normal;
+  container-name: unset;
+}
+
+.resource-list__carousel--no-peek > slideshow-component.resource-list__carousel {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  padding-inline: var(--carousel-arrow-gutter);
+  container-type: inline-size;
+  container-name: resource-list-carousel;
+}
+
+.resource-list__carousel--no-peek slideshow-container {
+  position: static;
+}
+
+.resource-list__carousel--no-peek slideshow-arrows {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  mix-blend-mode: normal;
+  padding-inline: 0;
+}
+
+.resource-list__carousel--no-peek slideshow-arrows .slideshow-control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: auto;
+  margin: 0;
+}
+
+.resource-list__carousel--no-peek slideshow-arrows .slideshow-control--previous {
+  left: 0;
+  right: auto;
+}
+
+.resource-list__carousel--no-peek slideshow-arrows .slideshow-control--next {
+  right: 0;
+  left: auto;
+  margin-inline-start: 0;
+}
+
+.resource-list__carousel--no-peek .slideshow-control[disabled] {
+  display: flex;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.resource-list__carousel:not(.resource-list__carousel--no-peek) slideshow-arrows {
+  inset: 0;
+  align-items: center;
+  justify-content: space-between;
+  mix-blend-mode: normal;
+  padding-inline: 0;
+}
+
+.resource-list__carousel slideshow-arrows .slideshow-control {
+  opacity: 1;
+  animation: none;
+  color: var(--color-foreground);
+}
+
+.resource-list__carousel slideshow-arrows .slideshow-control--shape-none {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  background-color: var(--color-primary-button-background);
+  color: var(--color-primary-button-text);
+  border-radius: 50%;
+}
+
+.resource-list__carousel slideshow-arrows .slideshow-control--shape-none .svg-wrapper,
+.resource-list__carousel slideshow-arrows .slideshow-control--shape-none svg {
+  width: var(--icon-size-sm);
+  height: var(--icon-size-sm);
 }
 
 @container resource-list-carousel (max-width: 749px) {
@@ -4559,12 +4655,47 @@ slideshow-arrows .slideshow-control.slideshow-control--style-none {
 
 @container resource-list-carousel (min-width: 750px) {
   .resource-list__carousel .resource-list__slide {
+    --resource-list-carousel-gap: var(--resource-list-column-gap, var(--resource-list-column-gap-desktop, 16px));
+    --resource-list-carousel-gutter-total: calc(var(--gutter-slide-width, 0px) * 2);
     --section-slide-width: calc(
-      (100% - (var(--resource-list-column-gap) * (var(--column-count) - 1)) - var(--peek-next-slide-size)) /
-        var(--column-count)
+      (
+          100% - (var(--resource-list-carousel-gap) * (var(--column-count) - 1)) -
+            var(--peek-next-slide-size, 0px) - var(--resource-list-carousel-gutter-total)
+        ) / var(--column-count)
     );
-    --fallback-slide-width: clamp(150px, var(--mobile-card-size, 60cqw), var(--slide-width-max));
+    --fallback-slide-width: clamp(150px, var(--mobile-card-size, 60cqw), var(--slide-width-max, 100%));
     --slide-width: var(--section-slide-width, var(--fallback-slide-width));
+  }
+
+  .resource-list__carousel--no-peek .resource-list__slide {
+    --slide-width: var(--section-slide-width);
+    flex: 0 0 var(--slide-width);
+    width: var(--slide-width);
+    max-width: var(--slide-width);
+    min-width: var(--slide-width);
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .resource-list__carousel--no-peek slideshow-container,
+  .resource-list__carousel--no-peek slideshow-slides {
+    overflow: hidden;
+  }
+
+  .resource-list__carousel--no-peek .resource-list__slide {
+    --resource-list-carousel-gap: var(--resource-list-column-gap, var(--resource-list-column-gap-desktop, 16px));
+    --resource-list-carousel-gutter-total: calc(var(--gutter-slide-width, 0px) * 2);
+    --section-slide-width: calc(
+      (
+          100% - (var(--resource-list-carousel-gap) * (var(--column-count) - 1)) -
+            var(--resource-list-carousel-gutter-total)
+        ) / var(--column-count)
+    );
+    --slide-width: var(--section-slide-width);
+    flex: 0 0 var(--slide-width);
+    width: var(--slide-width);
+    max-width: var(--slide-width);
+    min-width: var(--slide-width);
   }
 }
 
@@ -4586,7 +4717,7 @@ slideshow-arrows .slideshow-control.slideshow-control--style-none {
 
 .resource-list__carousel .resource-list__slide {
   width: var(--slide-width);
-  flex: 0 0 auto;
+  flex: 0 0 var(--slide-width, auto);
   scroll-snap-align: start;
   min-width: 0;
 }

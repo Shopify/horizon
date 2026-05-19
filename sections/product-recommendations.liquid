@@ -9,7 +9,7 @@
     when 'grid'
       assign classes = 'resource-list--grid'
     when 'carousel'
-      assign classes = 'resource-list__carousel'
+      assign classes = ''
   endcase
 
   capture styles
@@ -103,14 +103,14 @@
       <div
         class="
           resource-list
-          {% if section.settings.layout_type == 'carousel' %}
-            force-full-width
-          {% endif %}
           {% if section.settings.carousel_on_mobile and section.settings.layout_type != 'carousel' %}
             hidden--mobile
           {% endif %}
           {{ classes }}
         "
+        {% if section.settings.layout_type == 'carousel' %}
+          style="--column-count: {{ section.settings.columns }}; --resource-list-column-gap-desktop: {{ section.settings.columns_gap }}px; --peek-next-slide-size: 0px;"
+        {% endif %}
         {% if section.settings.layout_type == 'grid' %}
           data-testid="resource-list-grid"
         {% endif %}
@@ -175,6 +175,16 @@
 
   .section-resource-list .section-resource-list__content :is(h1, h2, h3, h4, h5, h6, p) {
     text-align: center;
+  }
+
+  @media screen and (min-width: 750px) {
+    .product-recommendations .resource-list__carousel--no-peek slideshow-container {
+      overflow: hidden;
+    }
+
+    .product-recommendations .resource-list__carousel--no-peek slideshow-slides {
+      scroll-snap-type: x mandatory;
+    }
   }
 {% endstylesheet %}
 

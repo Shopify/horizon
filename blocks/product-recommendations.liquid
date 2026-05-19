@@ -16,7 +16,7 @@
     when 'grid'
       assign classes = 'resource-list--grid'
     when 'carousel'
-      assign classes = 'resource-list--carousel'
+      assign classes = ''
   endcase
 %}
 
@@ -50,6 +50,8 @@
       {%  render 'gap-style', value: block_settings.gap %}
       --resource-list-column-gap-desktop: {{ block_settings.columns_gap }}px;
       --resource-list-row-gap-desktop: {{ block_settings.rows_gap }}px;
+      --column-count: {{ block_settings.columns | default: 4 }};
+      --peek-next-slide-size: 0px;
       --resource-list-columns-mobile: repeat(auto-fill, minmax(9.25rem, 1fr));
       --border-radius: {{ block_settings.border_radius }}px;
     "
@@ -196,6 +198,16 @@
   .block-resource-list .section-resource-list__content :is(h1, h2, h3, h4, h5, h6, p) {
     text-align: center;
   }
+
+  @media screen and (min-width: 750px) {
+    .product-recommendations .resource-list__carousel--no-peek slideshow-container {
+      overflow: hidden;
+    }
+
+    .product-recommendations .resource-list__carousel--no-peek slideshow-slides {
+      scroll-snap-type: x mandatory;
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -270,6 +282,16 @@
       "max": 10,
       "step": 1,
       "default": 4
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "t:settings.columns",
+      "min": 1,
+      "max": 8,
+      "step": 1,
+      "default": 4,
+      "visible_if": "{{ block.settings.layout_type == 'carousel' or block.settings.carousel_on_mobile == true }}"
     },
     {
       "type": "range",
