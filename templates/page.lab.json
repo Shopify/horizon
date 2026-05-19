@@ -614,12 +614,74 @@
         "padding-block-start": 40,
         "padding-block-end": 40
       }
+    },
+    "content_cards_xNGbMx": {
+      "type": "content-cards",
+      "blocks": {
+        "card_VFqyzh": {
+          "type": "card",
+          "settings": {
+            "show_number": true,
+            "number": "The Organ",
+            "show_icon": true,
+            "icon": "shopify://shop_images/Vector_28.png",
+            "show_text": true,
+            "text": "<p>The organ is where creation begins. It is the workspace of our perfumer, where all raw materials (essential oils, absolutes, and natural extracts) are carefully arranged. Here, compositions are tested, refined, and brought to life through balance and intuition.</p>"
+          }
+        },
+        "card_DiTx4R": {
+          "type": "card",
+          "settings": {
+            "show_number": true,
+            "number": "02.",
+            "show_icon": true,
+            "show_text": true,
+            "text": "<p>Steam-distilled hydrosols and cold-pressed oils shape the aromatic profile.</p>"
+          }
+        },
+        "card_BnTncR": {
+          "type": "card",
+          "settings": {
+            "show_number": true,
+            "number": "03.",
+            "show_icon": true,
+            "show_text": true,
+            "text": "<p>Mineral-rich sea salt is filtered and blended for balanced depth.</p>"
+          }
+        },
+        "card_KCKJBf": {
+          "type": "card",
+          "settings": {
+            "show_number": true,
+            "number": "04.",
+            "show_icon": true,
+            "show_text": true,
+            "text": "<p>A vibrant hue from mastic berries crowns the blend with stability.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "card_VFqyzh",
+        "card_DiTx4R",
+        "card_BnTncR",
+        "card_KCKJBf"
+      ],
+      "name": "Content cards",
+      "settings": {
+        "heading": "Extracting the essentials",
+        "description": "<p>In The Lab our Scent Scientists go to great lengths to harvest and preserve the precious botanicals from our farm.</p>",
+        "section_width": "page-width",
+        "color_scheme": "",
+        "padding-block-start": 56,
+        "padding-block-end": 56
+      }
     }
   },
   "order": [
     "main",
     "section_t9PBLt",
     "section_z9UUCR",
-    "section_gfTj8k"
+    "section_gfTj8k",
+    "content_cards_xNGbMx"
   ]
 }
