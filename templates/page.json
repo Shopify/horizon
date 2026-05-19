@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -6,6 +15,7 @@
         "heading": {
           "type": "text",
           "name": "Title",
+          "disabled": true,
           "settings": {
             "text": "<h1>{{ closest.page.title }}</h1>",
             "width": "100%",
@@ -35,15 +45,220 @@
           "blocks": {}
         }
       },
-      "block_order": ["heading", "page-content"],
+      "block_order": [
+        "heading",
+        "page-content"
+      ],
       "settings": {
         "content_direction": "column",
-        "gap": 32,
+        "gap": 0,
         "color_scheme": "",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "section_N9Epcj": {
+      "type": "section",
+      "blocks": {
+        "image_kytRmn": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Cala_Formentor_2.png",
+            "link": "",
+            "image_ratio": "adapt",
+            "width": "custom",
+            "custom_width": 100,
+            "width_mobile": "custom",
+            "custom_width_mobile": 100,
+            "height": "fill",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "group_3njpYt": {
+          "type": "group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "custom",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "text_TzGAjT": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>The Land</p>",
+                "width": "fit-content",
+                "max_width": "narrow",
+                "alignment": "left",
+                "type_preset": "h2",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 12,
+                "padding-inline-start": 0,
+                "padding-inline-end": 59
+              },
+              "blocks": {}
+            },
+            "text_CdqbV7": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>Cala Falcó is a family owned 42.5-hectare estate on the dramatic coastline of Mallorca.  </p>",
+                "width": "fit-content",
+                "max_width": "narrow",
+                "alignment": "left",
+                "type_preset": "h5",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 12,
+                "padding-inline-start": 0,
+                "padding-inline-end": 40
+              },
+              "blocks": {}
+            },
+            "text_8EbTVX": {
+              "type": "text",
+              "settings": {
+                "text": "<p>With a commitment to reversing the biodiversity loss caused by decades of agricultural intensification, Cala Falcó actively regenerates the soil through sustainable farming practices of botanicals. More than a place, it is a living example of how humans can enrich, rather than deplete, the earth.<br/><br/>Cala Falcó and it’s wild botanical farm nurtures and feeds the products that use its powerful natural ingredients. Whether it is our restorative botanical aperitivo ‘Cala Falcó at Spring’ or our Collection of natural holistic wellness products, we harness the power of nature, botanicals and aromacology into each and every one of our Cala Falcó offering.<br/></p>",
+                "width": "100%",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "button_FBdamP": {
+              "type": "button",
+              "settings": {
+                "label": "Shop Our Products",
+                "link": "shopify://collections/all",
+                "open_in_new_tab": false,
+                "style_class": "button",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_TzGAjT",
+            "text_CdqbV7",
+            "text_8EbTVX",
+            "button_FBdamP"
+          ]
+        }
+      },
+      "block_order": [
+        "image_kytRmn",
+        "group_3njpYt"
+      ],
+      "name": "t:names.image_with_text",
+      "settings": {
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 64,
+        "show_intro": false,
+        "intro_heading": "",
+        "intro_description": "",
+        "show_image_border": true,
+        "image_border_color": "#e6e6e6",
+        "image_border_position": "outside",
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
         "padding-block-start": 40,
-        "padding-block-end": 80
+        "padding-block-end": 40
       }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main",
+    "section_N9Epcj"
+  ]
 }
