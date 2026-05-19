@@ -58,7 +58,6 @@
             class="variant-option"
             data-testid="variant-option-single"
           >
-            {{- product_option.name | escape -}}
             <span
               class="variant-option__swatch-value"
               data-testid="variant-option-single-value"
@@ -75,7 +74,6 @@
             {{ option_id_attribute }}
           >
             <legend>
-              {{ product_option.name | escape -}}
               {%- if variant_style == 'swatch' -%}
                 <span class="variant-option__swatch-value">{{ product_option.selected_value }}</span>
               {%- endif %}
