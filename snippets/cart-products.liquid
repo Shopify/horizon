@@ -334,7 +334,7 @@
                   </div>
                 </td>
                 <td
-                  class="cart-items__error hidden"
+                  class="hidden cart-items__error"
                   role="cell"
                   ref="cartItemErrorContainer-{{ item.index | plus: 1 }}"
                   headers="quantity"
@@ -552,6 +552,7 @@
     text-transform: var(--product-title-case);
     display: block;
     margin-block-start: calc((var(--font-size--md) - 1lh) / 2);
+    text-wrap: wrap;
   }
 
   .cart-items__variants {
