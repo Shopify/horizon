@@ -775,11 +775,11 @@
           "name": "t:names.title",
           "static": true,
           "settings": {
-            "text": "<h3>The Journal</h3>",
+            "text": "<h2>The Journal</h2>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
-            "type_preset": "rte",
+            "type_preset": "h2",
             "font": "var(--font-body--family)",
             "font_size": "1rem",
             "line_height": "normal",
