@@ -922,7 +922,7 @@ h6,
   font-weight: var(--font-h6--weight);
   font-size: var(--font-h6--size);
   line-height: var(--font-h6--line-height);
-  letter-spacing: var(--font-h6--letter-spacing);
+  letter-spacing: 0.2rem;
   text-transform: var(--font-h6--case);
   color: var(--color, var(--font-h6-color));
 }
@@ -2708,7 +2708,6 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
 .product-type{
   text-transform: uppercase;
   font-size: 16px;
-  letter-spacing: 0.1rem;
 }
 
 @container (max-width: 70px) {
