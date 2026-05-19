@@ -114,7 +114,7 @@
           <a
             href="{{ link.url }}"
             data-skip-node-update="true"
-            class="menu-list__link{% if link.active %} menu-list__link--active{% endif %}"
+            class="menu-list__link{% if link.active %} menu-list__link--active{% endif %}{% if link.links != blank %} menu-list__link--has-dropdown{% endif %}"
             {%- if link.links != blank -%}
               aria-controls="{{ submenu_id }}"
               aria-haspopup="true"
@@ -125,7 +125,16 @@
             {% endif %}
             ref="menuitem"
           >
-            <span class="menu-list__link-title">{{- link.title -}}</span>
+            <span class="menu-list__link-inner">
+              <span class="menu-list__link-title">{{- link.title -}}</span>
+              {%- if link.links != blank -%}
+                <span class="menu-list__link-dropdown-icon" aria-hidden="true">
+                  <svg width="10" height="5" viewBox="0 0 10 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0.5 0.555939L4.75 3.63489L9 0.500031" stroke="currentColor" stroke-linecap="round"/>
+                  </svg>
+                </span>
+              {%- endif -%}
+            </span>
           </a>
           {%- if link.links != blank -%}
             <div class="menu-list__submenu{{ color_scheme_classes }}" ref="submenu[]">
@@ -316,11 +325,38 @@
     }
   }
 
-  .menu-list__link-title {
-    padding-inline: calc(var(--gap-xl) / 2);
+  .menu-list__link-inner {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding-inline: var(--gap-xl)
   }
-  [slot='overflow'] .menu-list__link-title {
+
+  [slot='overflow'] .menu-list__link-inner {
     padding-inline: 0;
+  }
+
+  .menu-list__link-title {
+    padding-inline: 0;
+  }
+
+  .menu-list__link-dropdown-icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    line-height: 0;
+    color: inherit;
+  }
+
+  .menu-list__link-dropdown-icon svg {
+    display: block;
+  }
+
+  .menu-list__link[aria-expanded='true'] .menu-list__link-dropdown-icon svg {
+    transform: rotate(180deg);
+  }
+
+  .menu-list__link-dropdown-icon svg {
+    transition: transform var(--animation-speed) var(--animation-easing);
   }
 
   .menu-list__list-item:not([slot='overflow']) {
