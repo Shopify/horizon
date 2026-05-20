@@ -499,7 +499,7 @@
             "text_TDJbiB": {
               "type": "text",
               "settings": {
-                "text": "<p>At Cala Falcó we lead by example, to regenerate the land and protect ecosystems through our unwavering commitment to agro-ecology and pioneering regenerative farming techniques.</p><p>Our Approach To Regenerative Agriculture</p>",
+                "text": "<p>At Cala Falcó we lead by example, to regenerate the land and protect ecosystems through our unwavering commitment to agro-ecology and pioneering regenerative farming techniques.</p>",
                 "width": "fit-content",
                 "max_width": "none",
                 "alignment": "left",
@@ -520,11 +520,27 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
+            },
+            "button_NL3UXd": {
+              "type": "button",
+              "name": "t:names.button",
+              "settings": {
+                "label": "Our Approach To Regenerative Agriculture",
+                "link": "shopify://pages/regenerative-agriculture",
+                "open_in_new_tab": false,
+                "style_class": "button",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
             }
           },
           "block_order": [
             "text_4UVgXW",
-            "text_TDJbiB"
+            "text_TDJbiB",
+            "button_NL3UXd"
           ]
         },
         "image_JgjXkT": {
@@ -598,7 +614,7 @@
             "align_baseline": false,
             "horizontal_alignment_flex_direction_column": "flex-start",
             "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
+            "gap": 24,
             "width": "custom",
             "custom_width": 100,
             "width_mobile": "fill",
