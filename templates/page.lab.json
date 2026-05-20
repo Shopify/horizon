@@ -633,38 +633,29 @@
           "type": "card",
           "settings": {
             "show_number": true,
-            "number": "02.",
+            "number": "Extraction",
             "show_icon": true,
+            "icon": "shopify://shop_images/Vector_31.png",
             "show_text": true,
-            "text": "<p>Steam-distilled hydrosols and cold-pressed oils shape the aromatic profile.</p>"
+            "text": "<p>Once harvested, our plants are placed into an alembic for steam distillation. Water is heated at the base until it reaches boiling point, creating steam that rises through the plant material, capturing its aromatic compounds. This vapor is then cooled and condensed back into liquid, which separates into two parts: the essential oil and the hydrolat.</p>"
           }
         },
         "card_BnTncR": {
           "type": "card",
           "settings": {
             "show_number": true,
-            "number": "03.",
+            "number": "Purification",
             "show_icon": true,
+            "icon": "shopify://shop_images/Vector_25.png",
             "show_text": true,
-            "text": "<p>Mineral-rich sea salt is filtered and blended for balanced depth.</p>"
-          }
-        },
-        "card_KCKJBf": {
-          "type": "card",
-          "settings": {
-            "show_number": true,
-            "number": "04.",
-            "show_icon": true,
-            "show_text": true,
-            "text": "<p>A vibrant hue from mastic berries crowns the blend with stability.</p>"
+            "text": "<p>Once extracted, the essence is refined to isolate its most precise and expressive components, ensuring clarity, balance, and quality in every note.</p>"
           }
         }
       },
       "block_order": [
         "card_VFqyzh",
         "card_DiTx4R",
-        "card_BnTncR",
-        "card_KCKJBf"
+        "card_BnTncR"
       ],
       "name": "Content cards",
       "settings": {
@@ -673,6 +664,46 @@
         "section_width": "page-width",
         "color_scheme": "",
         "padding-block-start": 56,
+        "padding-block-end": 56
+      }
+    },
+    "content_cards_magaLR": {
+      "type": "content-cards",
+      "blocks": {
+        "card_Xx7Wfz": {
+          "type": "card",
+          "settings": {
+            "show_number": true,
+            "number": "Blending",
+            "show_icon": true,
+            "icon": "shopify://shop_images/Vector_26.png",
+            "show_text": true,
+            "text": "<p>Our perfumer composes each fragrance following the olfactory pyramid balancing top, heart, and base notes to create depth, evolution, and harmony on the skin.</p>"
+          }
+        },
+        "card_UCXgWE": {
+          "type": "card",
+          "settings": {
+            "show_number": true,
+            "number": "Bottling",
+            "show_icon": true,
+            "icon": "shopify://shop_images/Vector_29.png",
+            "show_text": true,
+            "text": "<p>Once the perfumer has created the final essence, it is taken to our laboratory where our chemists develop the full formulation. After the necessary resting time, the fragrance is carefully bottled and labelled, ready for its final use.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "card_Xx7Wfz",
+        "card_UCXgWE"
+      ],
+      "name": "Content cards",
+      "settings": {
+        "heading": "",
+        "description": "",
+        "section_width": "page-width",
+        "color_scheme": "",
+        "padding-block-start": 0,
         "padding-block-end": 56
       }
     },
@@ -843,6 +874,7 @@
     "section_z9UUCR",
     "section_gfTj8k",
     "content_cards_xNGbMx",
+    "content_cards_magaLR",
     "hero_HhRmch",
     "column_callouts_cqDQpa"
   ]
