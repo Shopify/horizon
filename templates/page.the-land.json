@@ -259,24 +259,6 @@
     "section_fcpiL9": {
       "type": "section",
       "blocks": {
-        "image_A986wi": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/Cala_Formentor_2.png",
-            "link": "",
-            "image_ratio": "adapt",
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
         "group_jLnCyr": {
           "type": "group",
           "settings": {
@@ -387,11 +369,29 @@
             "text_3yy6Gy",
             "button_cHyCrK"
           ]
+        },
+        "image_9FUmXK": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Cala_Formentor_2.png",
+            "link": "",
+            "image_ratio": "adapt",
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
         }
       },
       "block_order": [
-        "image_A986wi",
-        "group_jLnCyr"
+        "group_jLnCyr",
+        "image_9FUmXK"
       ],
       "name": "t:names.image_with_text",
       "settings": {
