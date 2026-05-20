@@ -5259,3 +5259,10 @@ product-recommendations:has([data-has-recommendations='false']) {
 .blog-post-content rte-formatter ol{
   list-style: decimal;
 }
+
+.page-width-content rte-formatter ul{
+  list-style: disc;
+}
+.page-width-content rte-formatter ol{
+  list-style: decimal;
+}
