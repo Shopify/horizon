@@ -5314,6 +5314,12 @@ product-recommendations:has([data-has-recommendations='false']) {
   list-style: decimal;
 }
 
+.blog-post-content rte-formatter a {
+text-decoration: underline;
+    font-weight: 700;
+
+}
+
 .page-width-content rte-formatter ul{
   list-style: disc;
 }
