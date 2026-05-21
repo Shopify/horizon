@@ -2,17 +2,29 @@
   Renders featured collections mega menu layout with left links and right collection cards.
 
   @param {object} parent_link - Parent navigation link containing submenu links.
-  @param {object} block_settings - Header menu block settings.
+  @param {object} block_settings - Header menu block settings (defaults).
+  @param {object} [mega_menu_block] - Optional per-dropdown block overriding featured collections.
   @param {number} [image_border_radius] - Border radius for collection card images.
   @param {object} [section] - Section object used for image loading behavior.
 {%- enddoc -%}
 
 {% liquid
-  assign featured_collection_1 = block_settings.featured_collection_1
-  assign featured_collection_2 = block_settings.featured_collection_2
-  assign featured_collection_3 = block_settings.featured_collection_3
-  assign cta_label = block_settings.featured_collections_cta_label
-  assign cta_link = block_settings.featured_collections_cta_link
+  assign menu_settings = block_settings
+
+  if mega_menu_block != blank
+    assign menu_settings = mega_menu_block.settings
+  endif
+
+  assign featured_collection_1 = menu_settings.featured_collection_1 | default: block_settings.featured_collection_1
+  assign featured_collection_2 = menu_settings.featured_collection_2 | default: block_settings.featured_collection_2
+  assign featured_collection_3 = menu_settings.featured_collection_3 | default: block_settings.featured_collection_3
+  assign cta_label = menu_settings.featured_collections_cta_label | default: block_settings.featured_collections_cta_label
+  assign cta_link = menu_settings.featured_collections_cta_link | default: block_settings.featured_collections_cta_link
+
+  assign card_aspect_ratio = block_settings.featured_collections_aspect_ratio | default: '16 / 9'
+  if mega_menu_block != blank and mega_menu_block.settings.featured_collections_aspect_ratio != blank
+    assign card_aspect_ratio = mega_menu_block.settings.featured_collections_aspect_ratio
+  endif
 %}
 
 {%- capture image_sizes -%}
@@ -49,7 +61,7 @@
         {% render 'resource-card',
           resource: featured_collection_1,
           resource_type: 'collection',
-          image_aspect_ratio: '4 / 5',
+          image_aspect_ratio: card_aspect_ratio,
           image_sizes: image_sizes
         %}
       </li>
@@ -59,7 +71,7 @@
         {% render 'resource-card',
           resource: featured_collection_2,
           resource_type: 'collection',
-          image_aspect_ratio: '4 / 5',
+          image_aspect_ratio: card_aspect_ratio,
           image_sizes: image_sizes
         %}
       </li>
@@ -69,7 +81,7 @@
         {% render 'resource-card',
           resource: featured_collection_3,
           resource_type: 'collection',
-          image_aspect_ratio: '4 / 5',
+          image_aspect_ratio: card_aspect_ratio,
           image_sizes: image_sizes
         %}
       </li>

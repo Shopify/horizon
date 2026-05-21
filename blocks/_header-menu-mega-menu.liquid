@@ -1,0 +1,91 @@
+{%- doc -%}
+  Settings-only block for per-dropdown mega menu featured collections.
+  Matched to a top-level menu item by handle or title in `blocks/_header-menu.liquid`.
+{%- enddoc -%}
+
+{% schema %}
+{
+  "name": "Mega menu dropdown",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Connect this block to a top-level menu item that has a dropdown. Match by handle (from the menu item URL) or by exact menu title."
+    },
+    {
+      "type": "text",
+      "id": "menu_link_handle",
+      "label": "Menu item handle"
+    },
+    {
+      "type": "text",
+      "id": "menu_link_title",
+      "label": "Menu item title",
+      "info": "Optional. Use if handle matching does not work — must match the menu label exactly."
+    },
+    {
+      "type": "header",
+      "content": "Featured collections"
+    },
+    {
+      "type": "collection",
+      "id": "featured_collection_1",
+      "label": "Featured collection 1"
+    },
+    {
+      "type": "collection",
+      "id": "featured_collection_2",
+      "label": "Featured collection 2"
+    },
+    {
+      "type": "collection",
+      "id": "featured_collection_3",
+      "label": "Featured collection 3"
+    },
+    {
+      "type": "text",
+      "id": "featured_collections_cta_label",
+      "label": "CTA label",
+      "default": "View all"
+    },
+    {
+      "type": "url",
+      "id": "featured_collections_cta_link",
+      "label": "CTA link"
+    },
+    {
+      "type": "select",
+      "id": "featured_collections_aspect_ratio",
+      "label": "t:settings.image_ratio",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.default"
+        },
+        {
+          "value": "adapt",
+          "label": "t:options.auto"
+        },
+        {
+          "value": "16 / 9",
+          "label": "t:options.landscape"
+        },
+        {
+          "value": "1 / 1",
+          "label": "t:options.square"
+        },
+        {
+          "value": "4 / 5",
+          "label": "t:options.portrait"
+        }
+      ],
+      "default": ""
+    }
+  ],
+  "presets": [
+    {
+      "name": "Mega menu dropdown"
+    }
+  ]
+}
+{% endschema %}

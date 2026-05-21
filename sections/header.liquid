@@ -755,13 +755,7 @@
       justify-content: flex-end;
     }
 
-    #header-component[data-menu-position='split'][data-logo-position='center'] .header-menu--split-left {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-
-    #header-component[data-menu-position='split'][data-logo-position='center'] .header-menu--split-right {
+    #header-component[data-menu-position='split'][data-logo-position='center'] :is(.header-menu--split-left, .header-menu--split-right) {
       position: static;
       display: flex;
       align-items: center;
