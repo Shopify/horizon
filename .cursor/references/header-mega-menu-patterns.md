@@ -7,6 +7,16 @@
 - Keep cards merchant-configurable using block-level collection pickers (`featured_collection_1` through `featured_collection_3`) and CTA settings.
 - Route layout selection from `blocks/_header-menu.liquid` using `menu_style` so existing submenu modes (`text`, `collection_images`, `featured_products`) remain unchanged.
 
+## Split menu (right column) mega menu position
+
+- **Symptom:** Mega menus opened from `header-menu--split-right` extend off the right edge of the viewport.
+- **Cause:** `position: relative` on `.header-menu--split-right` and/or `.header__column--right` makes `.menu-list__submenu` (`width: 90vw; margin-inline: auto`) center within the narrow right link group.
+- **Fix:**
+  - `header-menu--split-right` and split right `.header__column--right` use `position: static` so the submenu’s containing block is `.header__row` (which is `position: relative`).
+  - Override submenu width for split right: `width: 100%; max-width: 100%; margin-inline: 0; left: 0; right: 0` (matches full-bleed behavior of left-side dropdowns).
+  - Keep `position: relative` only on `header-menu--split-left`.
+- Files: `sections/header.liquid`, `blocks/_header-menu.liquid`.
+
 ## Submenu height / first-open clipping
 
 - Open height is driven by JS (`assets/header-menu.js`): `--submenu-height` and `--full-open-header-height` feed `clip-path` on `.menu-list__submenu`.

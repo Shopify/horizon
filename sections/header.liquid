@@ -702,7 +702,8 @@
 
     #header-component[data-menu-position='split'][data-logo-position='center']
       .header__column--right:has(.header-menu--split-right):has(header-actions) {
-      position: relative;
+      /* static so mega menus position against .header__row (full width), not this column */
+      position: static;
       align-items: flex-end;
       justify-content: end;
     }
@@ -754,8 +755,14 @@
       justify-content: flex-end;
     }
 
-    #header-component[data-menu-position='split'][data-logo-position='center'] :is(.header-menu--split-left, .header-menu--split-right) {
+    #header-component[data-menu-position='split'][data-logo-position='center'] .header-menu--split-left {
       position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    #header-component[data-menu-position='split'][data-logo-position='center'] .header-menu--split-right {
+      position: static;
       display: flex;
       align-items: center;
     }

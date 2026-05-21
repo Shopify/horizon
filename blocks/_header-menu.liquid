@@ -445,6 +445,24 @@
     transition: clip-path var(--submenu-animation-speed) var(--ease-out-cubic); /* stylelint-disable-line */
   }
 
+  /* Right split menu: anchor mega menu to header row (full width), not the narrow right link group */
+  @media screen and (min-width: 990px) {
+    #header-component[data-menu-position='split'] .header-menu--split-right {
+      position: static;
+    }
+
+    #header-component[data-menu-position='split']
+      .header-menu--split-right
+      .menu-list__list-item:where(:not([slot='overflow']))
+      > .menu-list__submenu {
+      left: 0;
+      right: 0;
+      width: 100%;
+      max-width: 100%;
+      margin-inline: 0;
+    }
+  }
+
   [data-submenu-overlap-bottom-row] {
     .menu-list__list-item:where(:not([slot='overflow'])) > .menu-list__submenu,
     .overflow-menu::part(overflow) {
