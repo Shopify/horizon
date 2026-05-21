@@ -124,6 +124,10 @@
               {% if split_menu_enabled %}
                 <div class="header__logo-line" aria-hidden="true"></div>
               {% endif %}
+              {% if render_grouped_utilities %}
+                <div class="header__split-right-end">
+                {% assign split_right_cluster_open = true %}
+              {% endif %}
               {{ menu_right }}
             {% when 'localization' %}
               {{ localization }}
@@ -140,6 +144,9 @@
       {% if render_grouped_utilities and grouped_utilities_markup != blank %}
         <div class="header__utilities-group">
           {{ grouped_utilities_markup }}
+        </div>
+      {% endif %}
+      {% if split_right_cluster_open %}
         </div>
       {% endif %}
     </div>
