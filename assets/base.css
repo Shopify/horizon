@@ -160,6 +160,14 @@ select {
   --cursor: pointer;
 }
 
+.product-type{
+  padding-top: var(--product-card-gap);
+}
+
+.product-title-container .h5{
+  min-height: 60px;
+}
+
 .predictive-search-results__card .product-card,
 .predictive-search-results__card .collection-card,
 .predictive-search-results__card .resource-card {
@@ -4627,7 +4635,7 @@ slideshow-component.resource-list__carousel
 
 .resource-list__carousel--no-peek slideshow-arrows .slideshow-control {
   position: absolute;
-  top: 50%;
+  top: 40%;
   transform: translateY(-50%);
   pointer-events: auto;
   margin: 0;

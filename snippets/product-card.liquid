@@ -107,10 +107,12 @@
       {% if block_settings.padding-block-end > 0 %}--zoom-out-padding-block-end: min(var(--padding-xs), {{ block_settings.padding-block-end | times: 0.7}}px);{% endif %}
     "
   >
-    {{ children }}
-      <h6 class="product-type">
-    {{ product.type }}
-  </h6>
+    <div class="product-title-container">
+      {{ children }}
+        <h6 class="product-type">
+          {{ product.type }}
+        </h6>
+    </div>
     {% if block_settings.show_primary_button and onboarding == false %}
       <a href="{{ variant_to_link.url }}" class="button product-card__primary-button">
         <span class="button__label">{{ block_settings.primary_button_label | default: 'Discover' }}</span>
