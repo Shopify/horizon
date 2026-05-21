@@ -38,46 +38,52 @@
       </nav>
     {% endif %}
 
-    <div
-      ref="grid"
-      class="blog-posts-container"
-    >
-      {% for article in blog.articles %}
-        {% liquid
-          assign col_span = 6
-          assign scale = 1
-          assign card_variant = 'list'
+    {% paginate blog.articles by 12 %}
+      <div
+        ref="grid"
+        class="blog-posts-container"
+        data-last-page="{{ paginate.pages }}"
+      >
+        {% for article in blog.articles %}
+          {% liquid
+            assign col_span = 6
+            assign scale = 1
+            assign card_variant = 'list'
 
-          if forloop.index == 1
-            assign card_variant = 'hero'
-          elsif forloop.index <= 3
-            assign col_span = 3
-            assign scale = 0.8
-            assign card_variant = 'grid'
-          endif
-        %}
-        {% style %}
-          [data-blog-index="{{ section.id }}-{{ forloop.index }}"] {
-            --col-span: {{ col_span }};
-            --blog-post-card-scale: {{ scale }};
-          }
-
-          @media screen and (max-width: 749px) {
+            if forloop.index == 1
+              assign card_variant = 'hero'
+            elsif forloop.index <= 3
+              assign col_span = 3
+              assign scale = 0.8
+              assign card_variant = 'grid'
+            endif
+          %}
+          {% style %}
             [data-blog-index="{{ section.id }}-{{ forloop.index }}"] {
-              --col-span: 6;
-              --blog-post-card-scale: 0.5;
+              --col-span: {{ col_span }};
+              --blog-post-card-scale: {{ scale }};
             }
-          }
-        {% endstyle %}
-        <div
-          class="blog-post-item blog-post-item--{{ card_variant }}"
-          data-testid="blog-post-item"
-          data-blog-index="{{ section.id }}-{{ forloop.index }}"
-        >
-          {% content_for 'block', id: 'static-blog-post-card', type: '_blog-post-card', article: article %}
-        </div>
-      {% endfor %}
-    </div>
+
+            @media screen and (max-width: 749px) {
+              [data-blog-index="{{ section.id }}-{{ forloop.index }}"] {
+                --col-span: 6;
+                --blog-post-card-scale: 0.5;
+              }
+            }
+          {% endstyle %}
+          <div
+            class="blog-post-item blog-post-item--{{ card_variant }}"
+            data-testid="blog-post-item"
+            data-blog-index="{{ section.id }}-{{ forloop.index }}"
+            data-page="{{ paginate.current_page }}"
+          >
+            {% content_for 'block', id: 'static-blog-post-card', type: '_blog-post-card', article: article %}
+          </div>
+        {% endfor %}
+      </div>
+
+      {% render 'blog-pagination', paginate: paginate %}
+    {% endpaginate %}
   </div>
 </blog-posts-list>
 

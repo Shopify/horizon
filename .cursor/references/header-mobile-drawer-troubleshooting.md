@@ -17,7 +17,7 @@
   - `.search-action` -> `leftB` (beside hamburger)
   - `header-actions` -> `rightB` with `justify-self: end`
 - When split menu + center logo groups search/actions in `.header__utilities-group`, that wrapper is **not** a grid child target. On mobile set `.header__utilities-group { display: contents; }` so `search-action` and `header-actions` participate in the 5-column grid. Without this, the whole group auto-places into `leftB` and cart/account sit left of center.
-- On desktop split layout, wrap right menu + utilities in `.header__split-right-end` (`position: relative`) so utilities anchor to the menu cluster. Do not absolutely position utilities with `right: 0` while `.header__column--right` is `position: static` (mega menu requirement)—that anchors to `.header__row` and pushes icons past the right nav.
+- On desktop split layout, `.header__column--right` stays `position: static` for mega menus, so `.header__utilities-group` anchors to `.header__row`. Use `inset-inline-end: var(--page-margin)` (not `right: 0`) so icons line up with the padded nav row; keep `top: 35%` + `translateY` so icons sit above the menu without moving the nav baseline.
 
 ## Desktop Overflow Removal
 - If desktop navigation should never collapse into a "More" item:

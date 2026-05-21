@@ -1,0 +1,258 @@
+{%- doc -%}
+  Blog pagination with circular arrow controls matching featured collection carousels.
+
+  @param {object} paginate - The paginate object from {% paginate blog.articles by N %}
+{%- enddoc -%}
+
+{%- if paginate.pages > 1 -%}
+  <nav
+    class="blog-pagination"
+    aria-label="{{ 'content.pagination.nav_label' | t }}"
+  >
+    <ul
+      class="blog-pagination__list"
+      role="list"
+    >
+      <li class="blog-pagination__item blog-pagination__item--arrow">
+        {%- if paginate.previous -%}
+          <a
+            href="{{ paginate.previous.url }}"
+            aria-label="{{ 'content.pagination.previous' | t }}"
+            class="blog-pagination__arrow blog-pagination__arrow--previous"
+          >
+            <span class="visually-hidden">{{ 'content.pagination.previous' | t }}</span>
+          </a>
+        {%- else -%}
+          <span
+            class="blog-pagination__arrow blog-pagination__arrow--previous blog-pagination__arrow--disabled"
+            aria-disabled="true"
+          >
+            <span class="visually-hidden">{{ 'content.pagination.previous' | t }}</span>
+          </span>
+        {%- endif -%}
+      </li>
+
+      {%- assign current_page = paginate.current_page -%}
+      {%- assign last_visible_page = 0 -%}
+      {%- assign just_saw_ellipsis = false -%}
+
+      {%- for part in paginate.parts -%}
+        {% liquid
+          assign should_hide_on_mobile = false
+          assign is_page_number = false
+          assign page_number = 0
+
+          if part.is_link
+            assign page_number = part.title | plus: 0
+            if page_number > 0
+              assign is_page_number = true
+              assign distance_from_current = page_number | minus: current_page | abs
+              if page_number != 1 and page_number != paginate.pages and distance_from_current > 1
+                assign should_hide_on_mobile = true
+              endif
+            endif
+          elsif part.is_link == false and part.title != '&hellip;'
+            assign is_page_number = true
+            assign page_number = current_page
+          endif
+
+          if part.title == '&hellip;'
+            assign just_saw_ellipsis = true
+          else
+            if is_page_number and should_hide_on_mobile == false
+              assign last_visible_plus_one = last_visible_page | plus: 1
+              if last_visible_page > 0 and page_number > last_visible_plus_one and just_saw_ellipsis == false
+                echo '<li class="blog-pagination__item blog-pagination__item--gap blog-pagination__item--mobile-only">'
+                echo '<span class="blog-pagination__gap" aria-hidden="true">&hellip;</span>'
+                echo '</li>'
+              endif
+              assign last_visible_page = page_number
+              assign just_saw_ellipsis = false
+            endif
+          endif
+        %}
+
+        {% liquid
+          assign li_classes = 'blog-pagination__item blog-pagination__item--page'
+          if should_hide_on_mobile
+            assign li_classes = li_classes | append: ' blog-pagination__item--mobile-hide'
+          endif
+          if part.title == '&hellip;'
+            assign li_classes = li_classes | append: ' blog-pagination__item--gap'
+          endif
+        %}
+        <li class="{{ li_classes }}">
+          {%- if part.is_link -%}
+            <a
+              href="{{ part.url }}"
+              aria-label="{{ 'content.pagination.page' | t: page: part.title }}"
+              class="blog-pagination__page"
+            >
+              {{ part.title }}
+            </a>
+          {%- else -%}
+            {%- if part.title == '&hellip;' -%}
+              <span
+                class="blog-pagination__gap"
+                aria-hidden="true"
+                >&hellip;</span
+              >
+            {%- else -%}
+              <span
+                class="blog-pagination__page blog-pagination__page--current"
+                aria-current="page"
+              >
+                {{- part.title -}}
+              </span>
+            {%- endif -%}
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+
+      <li class="blog-pagination__item blog-pagination__item--arrow">
+        {%- if paginate.next -%}
+          <a
+            href="{{ paginate.next.url }}"
+            aria-label="{{ 'content.pagination.next' | t }}"
+            class="blog-pagination__arrow blog-pagination__arrow--next"
+          >
+            <span class="visually-hidden">{{ 'content.pagination.next' | t }}</span>
+          </a>
+        {%- else -%}
+          <span
+            class="blog-pagination__arrow blog-pagination__arrow--next blog-pagination__arrow--disabled"
+            aria-disabled="true"
+          >
+            <span class="visually-hidden">{{ 'content.pagination.next' | t }}</span>
+          </span>
+        {%- endif -%}
+      </li>
+    </ul>
+  </nav>
+{%- endif -%}
+
+{% stylesheet %}
+  .blog-pagination {
+    display: flex;
+    justify-content: center;
+    padding-block: clamp(2rem, 5vw, 3.5rem);
+    margin-block-start: clamp(1rem, 3vw, 2rem);
+  }
+
+  .blog-pagination__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(1.25rem, 4vw, 2.5rem);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .blog-pagination__item--arrow {
+    flex-shrink: 0;
+  }
+
+  .blog-pagination__arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--slideshow-controls-size);
+    height: var(--slideshow-controls-size);
+    min-width: var(--slideshow-controls-size);
+    min-height: var(--slideshow-controls-size);
+    padding: 0;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--color-primary-button-background);
+    color: var(--color-primary-button-text);
+    text-decoration: none;
+    transition: opacity var(--hover-transition-duration) var(--hover-transition-timing);
+  }
+
+  .blog-pagination__arrow::after {
+    content: '';
+    width: 0.75rem;
+    height: 0.5rem;
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11.3536 4.03568C11.5488 3.84042 11.5488 3.52384 11.3536 3.32858L8.17157 0.146595C7.97631 -0.0486672 7.65973 -0.0486672 7.46447 0.146595C7.2692 0.341857 7.2692 0.65844 7.46447 0.853702L10.2929 3.68213L7.46447 6.51056C7.2692 6.70582 7.2692 7.0224 7.46447 7.21766C7.65973 7.41293 7.97631 7.41293 8.17157 7.21766L11.3536 4.03568ZM0 3.68213V4.18213H11V3.68213V3.18213H0V3.68213Z' fill='%2331331D'/%3E%3C/svg%3E");
+  }
+
+  .blog-pagination__arrow--previous::after {
+    transform: scaleX(-1);
+  }
+
+  .blog-pagination__arrow:focus-visible {
+    outline: 2px solid var(--color-foreground);
+    outline-offset: 3px;
+  }
+
+  .blog-pagination__arrow--disabled {
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  .blog-pagination__item--page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .blog-pagination__page {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.5rem;
+    padding: 0.25rem 0.35rem;
+    font-family: var(--font-body--family);
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-weight: var(--font-weight-normal);
+    line-height: 1;
+    color: var(--color-foreground);
+    text-decoration: none;
+    transition: color var(--hover-transition-duration) var(--hover-transition-timing);
+  }
+
+  .blog-pagination__page:hover {
+    color: rgb(var(--color-foreground-rgb) / 70%);
+  }
+
+  .blog-pagination__page--current {
+    font-weight: var(--font-weight-medium);
+    cursor: default;
+  }
+
+  .blog-pagination__gap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1rem;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--color-foreground);
+    pointer-events: none;
+  }
+
+  .blog-pagination__item--mobile-only {
+    display: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    .blog-pagination__list {
+      gap: 1rem;
+    }
+
+    .blog-pagination__item--mobile-hide {
+      display: none;
+    }
+
+    .blog-pagination__item--mobile-only {
+      display: flex;
+    }
+  }
+{% endstylesheet %}

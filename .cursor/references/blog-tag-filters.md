@@ -31,3 +31,10 @@ For editorial blog pages in `sections/main-blog.liquid`, use a deterministic car
 
 Implementation note:
 - Add a card variant class by index (`blog-post-item--hero`, `--grid`, `--list`) and style each variant in section-level CSS.
+
+## Pagination
+
+- Wrap the posts grid in `{% paginate blog.articles by 12 %} … {% endpaginate %}`.
+- Render `{% render 'blog-pagination', paginate: paginate %}` below the grid.
+- `snippets/blog-pagination.liquid` uses the same circular arrow controls as featured collection carousels (`--color-primary-button-background`, arrow `::after` SVG).
+- Card layout index (`forloop.index == 1` hero, etc.) resets per page — first post on each page is the hero.
