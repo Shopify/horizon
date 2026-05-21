@@ -374,7 +374,7 @@
       height: calc(var(--size) * 2);
       margin: calc(var(--size) / -2);
       font-size: 0;
-      border-radius: calc(var(--size));
+      border-radius: 50%;
 
       &::after {
         content: '';
@@ -382,7 +382,7 @@
         background-color: var(--color);
         height: var(--size);
         width: var(--size);
-        border-radius: calc(var(--size) / 2);
+        border-radius: 50%;
         box-shadow: inset 0 0 0 1.5px hsl(0 0% 0% / 0.15);
 
         @supports not (view-timeline-axis: inline) {

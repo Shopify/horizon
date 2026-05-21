@@ -12,10 +12,11 @@
   - Desktop menu: `header-menu`
   - Mobile drawer: `header-menu-mobile`
   - Navigation bar: `header-menu-navigation`
-- Explicitly map mobile grid areas:
+- Explicitly map mobile grid areas (in both the `@media (max-width: 749px)` block and the `[data-menu-style='drawer']` duplicate):
   - `.header__drawer` -> `leftA`
-  - `.search-action` -> `rightA`
-  - `header-actions` -> `rightB`
+  - `.search-action` -> `leftB` (beside hamburger)
+  - `header-actions` -> `rightB` with `justify-self: end`
+- When split menu + center logo groups search/actions in `.header__utilities-group`, that wrapper is **not** a grid child target. On mobile set `.header__utilities-group { display: contents; }` so `search-action` and `header-actions` participate in the 5-column grid. Without this, the whole group auto-places into `leftB` and cart/account sit left of center.
 
 ## Desktop Overflow Removal
 - If desktop navigation should never collapse into a "More" item:

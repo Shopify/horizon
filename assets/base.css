@@ -4362,6 +4362,21 @@ slideshow-arrows .slideshow-control {
   color: var(--color-white);
 }
 
+slideshow-arrows .slideshow-control--shape-circle,
+slideshow-arrows .slideshow-control--shape-square {
+  width: var(--slideshow-controls-size);
+  height: var(--slideshow-controls-size);
+  min-width: var(--slideshow-controls-size);
+  min-height: var(--slideshow-controls-size);
+  padding: 0;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+slideshow-arrows .slideshow-control--shape-circle {
+  border-radius: 50%;
+}
+
 slideshow-arrows .slideshow-control.slideshow-control--style-none {
   display: none;
 }
@@ -4371,6 +4386,11 @@ slideshow-arrows .slideshow-control.slideshow-control--style-none {
   opacity: 1;
 }
 
+.media-gallery--carousel slideshow-arrows .slideshow-control--shape-circle,
+.media-gallery--carousel slideshow-arrows .slideshow-control--shape-square {
+  padding: 0;
+}
+
 .card-gallery slideshow-arrows .slideshow-control {
   /* Align icons with quick-add button */
   padding-inline: var(--padding-xl);
@@ -4378,6 +4398,11 @@ slideshow-arrows .slideshow-control.slideshow-control--style-none {
   @container (max-width: 249px) {
     padding-inline: 0 var(--padding-sm);
   }
+}
+
+.card-gallery slideshow-arrows .slideshow-control--shape-circle,
+.card-gallery slideshow-arrows .slideshow-control--shape-square {
+  padding: 0;
 }
 
 :not(.media-gallery--carousel)
@@ -4638,6 +4663,13 @@ slideshow-component.resource-list__carousel
   display: flex;
   align-items: center;
   justify-content: center;
+  width: var(--slideshow-controls-size);
+  height: var(--slideshow-controls-size);
+  min-width: var(--slideshow-controls-size);
+  min-height: var(--slideshow-controls-size);
+  padding: 0;
+  box-sizing: border-box;
+  flex-shrink: 0;
   aspect-ratio: 1;
   background-color: var(--color-primary-button-background);
   color: var(--color-primary-button-text);

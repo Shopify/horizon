@@ -201,11 +201,13 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    min-height: 2.5rem;
+    width: var(--slideshow-controls-size);
+    height: var(--slideshow-controls-size);
+    min-width: var(--slideshow-controls-size);
+    min-height: var(--slideshow-controls-size);
     padding: 0;
-    border-radius: 999px;
+    box-sizing: border-box;
+    border-radius: 50%;
     background: var(--color-primary-button-background);
     color: var(--color-primary-button-text);
   }
