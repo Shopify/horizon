@@ -4595,6 +4595,10 @@ slideshow-component.resource-list__carousel
   container-name: unset;
 }
 
+.resource-list__carousel .resource-list__slide .card-gallery > :is(a, slideshow-component) {
+  anchor-name: --resource-list-card-gallery;
+}
+
 .resource-list__carousel--no-peek > slideshow-component.resource-list__carousel {
   position: relative;
   box-sizing: border-box;
@@ -4603,6 +4607,7 @@ slideshow-component.resource-list__carousel
   padding-inline: var(--carousel-arrow-gutter);
   container-type: inline-size;
   container-name: resource-list-carousel;
+  anchor-scope: --resource-list-card-gallery;
 }
 
 .resource-list__carousel--no-peek slideshow-container {
@@ -4626,6 +4631,14 @@ slideshow-component.resource-list__carousel
   transform: translateY(-50%);
   pointer-events: auto;
   margin: 0;
+}
+
+@supports (top: anchor(top)) and (height: anchor-size(height)) {
+  .resource-list__carousel--no-peek slideshow-arrows {
+    top: anchor(--resource-list-card-gallery top);
+    height: anchor-size(height);
+    bottom: auto;
+  }
 }
 
 .resource-list__carousel--no-peek slideshow-arrows .slideshow-control--previous {

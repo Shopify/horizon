@@ -14,3 +14,13 @@
   - `sections/product-recommendations.liquid`
   - `blocks/product-recommendations.liquid`
 - This ensures consistent output when recommendations are rendered as either a standalone section or an embedded product-details block.
+
+## Carousel Arrow Vertical Alignment
+
+- Featured collection (`sections/product-list.liquid`) and product recommendations use `snippets/resource-list-carousel.liquid` with `.resource-list__carousel--no-peek`.
+- Arrows must sit at the vertical center of the **product image**, not the full card (title/price/button below the image).
+- In `assets/base.css`:
+  - Set `anchor-name: --resource-list-card-gallery` on `.card-gallery > :is(a, slideshow-component)` inside `.resource-list__slide` (image wrapper only, not the full gallery that includes badges/quick-add).
+  - Use `anchor-scope` on `slideshow-component.resource-list__carousel`.
+  - With `@supports (top: anchor(top))`, size `slideshow-arrows` to `top: anchor(--resource-list-card-gallery top)` and `height: anchor-size(height)` so `.slideshow-control { top: 50% }` centers on the image.
+- `--gallery-aspect-ratio-value` on `snippets/card-gallery.liquid` is for future calc fallbacks; anchor positioning is the primary approach.

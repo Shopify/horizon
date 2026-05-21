@@ -44,15 +44,20 @@
   endif
 
   assign ratio = '1'
+  assign ratio_value = 1
   case block_settings.image_ratio
     when 'landscape'
       assign ratio = '16 / 9'
+      assign ratio_value = 1.778
     when 'portrait'
       assign ratio = '4 / 5'
+      assign ratio_value = 0.8
     when 'square'
       assign ratio = '1'
+      assign ratio_value = 1
     when 'adapt'
       assign ratio = product.featured_media.preview_image.aspect_ratio | default: '1'
+      assign ratio_value = ratio
   endcase
 
   if block_settings.image_ratio == 'adapt' and block_settings.constrain_to_viewport
@@ -70,6 +75,7 @@
     {% render 'border-override', settings: block_settings %}
     {% render 'spacing-style', settings: block_settings %}
     --gallery-aspect-ratio: {{ ratio }};
+    --gallery-aspect-ratio-value: {{ ratio_value }};
   "
   data-product-id="{{ product.id }}"
   {% if settings.show_second_image_on_hover %}
