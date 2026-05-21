@@ -97,29 +97,11 @@
         {% liquid
           assign submenu_id = 'submenu-' | append: forloop.index
           assign list_id = 'MegaMenuList-' | append: forloop.index
-          assign mega_menu_block = blank
 
           if split_part != blank
             assign submenu_id = submenu_id | append: '-' | append: split_part
             assign list_id = list_id | append: '-' | append: split_part
           endif
-
-          for mega_menu_child in block.blocks
-            if mega_menu_child.type == '_header-menu-mega-menu'
-              assign child_handle = mega_menu_child.settings.menu_link_handle | handleize
-              assign link_handle = link.handle | handleize
-
-              if child_handle != blank and child_handle == link_handle
-                assign mega_menu_block = mega_menu_child
-                break
-              endif
-
-              if mega_menu_child.settings.menu_link_title != blank and mega_menu_child.settings.menu_link_title == link.title
-                assign mega_menu_block = mega_menu_child
-                break
-              endif
-            endif
-          endfor
         %}
         <li
           role="presentation"
@@ -170,7 +152,6 @@
                       {% render 'mega-menu-featured-collections',
                         parent_link: link,
                         block_settings: block_settings,
-                        mega_menu_block: mega_menu_block,
                         section: section,
                         image_border_radius: image_border_radius
                       %}
@@ -464,14 +445,14 @@
     transition: clip-path var(--submenu-animation-speed) var(--ease-out-cubic); /* stylelint-disable-line */
   }
 
-  /* Split menus: full-width mega menus aligned to header row (left and right) */
+  /* Right split menu: anchor mega menu to header row (full width), not the narrow right link group */
   @media screen and (min-width: 990px) {
-    #header-component[data-menu-position='split'] :is(.header-menu--split-left, .header-menu--split-right) {
+    #header-component[data-menu-position='split'] .header-menu--split-right {
       position: static;
     }
 
     #header-component[data-menu-position='split']
-      :is(.header-menu--split-left, .header-menu--split-right)
+      .header-menu--split-right
       .menu-list__list-item:where(:not([slot='overflow']))
       > .menu-list__submenu {
       left: 0;
@@ -933,11 +914,6 @@
 {
   "name": "t:names.menu",
   "tag": null,
-  "blocks": [
-    {
-      "type": "_header-menu-mega-menu"
-    }
-  ],
   "settings": [
     {
       "type": "link_list",
@@ -1048,10 +1024,6 @@
       "content": "t:content.submenu_feature"
     },
     {
-      "type": "paragraph",
-      "content": "Add a “Mega menu dropdown” block for each top-level item with a dropdown to choose its featured collections. Settings below are defaults when no matching block exists."
-    },
-    {
       "type": "select",
       "id": "menu_style",
       "label": "t:settings.media_type",
@@ -1121,20 +1093,17 @@
     {
       "type": "collection",
       "id": "featured_collection_1",
-      "label": "Default featured collection 1",
-      "visible_if": "{{ block.settings.menu_style == 'featured_collections' }}"
+      "label": "Featured collection 1"
     },
     {
       "type": "collection",
       "id": "featured_collection_2",
-      "label": "Default featured collection 2",
-      "visible_if": "{{ block.settings.menu_style == 'featured_collections' }}"
+      "label": "Featured collection 2"
     },
     {
       "type": "collection",
       "id": "featured_collection_3",
-      "label": "Default featured collection 3",
-      "visible_if": "{{ block.settings.menu_style == 'featured_collections' }}"
+      "label": "Featured collection 3"
     },
     {
       "type": "text",
