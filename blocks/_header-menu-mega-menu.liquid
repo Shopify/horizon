@@ -1,31 +1,33 @@
-{%- doc -%}
-  Settings-only block for per-dropdown mega menu featured collections.
-  Matched to a top-level menu item by handle or title in `blocks/_header-menu.liquid`.
-{%- enddoc -%}
-
+{%- comment -%}
+  Deprecated: use `_header-menu-dropdown`. Kept so existing theme data referencing this block type still loads.
+{%- endcomment -%}
 {% schema %}
 {
-  "name": "Mega menu dropdown",
+  "name": "Menu dropdown (legacy)",
   "tag": null,
   "settings": [
     {
       "type": "paragraph",
-      "content": "Connect this block to a top-level menu item that has a dropdown. Match by handle (from the menu item URL) or by exact menu title."
+      "content": "This block type is deprecated. Add a new “Menu dropdown” block instead."
+    },
+    {
+      "type": "range",
+      "id": "menu_link_position",
+      "label": "Menu item position",
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "default": 1
     },
     {
       "type": "text",
       "id": "menu_link_handle",
-      "label": "Menu item handle"
+      "label": "Menu item handle (optional)"
     },
     {
       "type": "text",
       "id": "menu_link_title",
-      "label": "Menu item title",
-      "info": "Optional. Use if handle matching does not work — must match the menu label exactly."
-    },
-    {
-      "type": "header",
-      "content": "Featured collections"
+      "label": "Menu item title (optional)"
     },
     {
       "type": "collection",
@@ -80,11 +82,6 @@
         }
       ],
       "default": ""
-    }
-  ],
-  "presets": [
-    {
-      "name": "Mega menu dropdown"
     }
   ]
 }

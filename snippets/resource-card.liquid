@@ -135,6 +135,27 @@
           {% endfor %}
         </div>
       {%- endif -%}
+    {%- elsif resource_type == 'page' -%}
+      {% assign featured_image = resource.image | default: resource.featured_image %}
+      {%- if featured_image != blank -%}
+        {{
+          featured_image
+          | image_url: width: image_width
+          | image_tag:
+            loading: 'lazy',
+            class: 'resource-card__image',
+            widths: widths,
+            sizes: image_sizes,
+            alt: featured_image.alt | default: resource.title
+        }}
+      {%- else -%}
+        <div
+          aria-hidden="true"
+          class="resource-card__image-placeholder"
+        >
+          {{- resource.title | truncate: 60 -}}
+        </div>
+      {%- endif -%}
     {%- endif -%}
   </div>
 

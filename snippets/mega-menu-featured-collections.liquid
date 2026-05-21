@@ -1,9 +1,9 @@
 {%- doc -%}
-  Renders featured collections mega menu layout with left links and right collection cards.
+  Renders featured mega menu layout with left links and right featured cards (collections or pages).
 
   @param {object} parent_link - Parent navigation link containing submenu links.
   @param {object} block_settings - Header menu block settings (defaults).
-  @param {object} [mega_menu_block] - Optional per-dropdown block overriding featured collections.
+  @param {object} [dropdown_block] - Optional per-dropdown block overriding featured cards.
   @param {number} [image_border_radius] - Border radius for collection card images.
   @param {object} [section] - Section object used for image loading behavior.
 {%- enddoc -%}
@@ -11,19 +11,16 @@
 {% liquid
   assign menu_settings = block_settings
 
-  if mega_menu_block != blank
-    assign menu_settings = mega_menu_block.settings
+  if dropdown_block != blank
+    assign menu_settings = dropdown_block.settings
   endif
 
-  assign featured_collection_1 = menu_settings.featured_collection_1 | default: block_settings.featured_collection_1
-  assign featured_collection_2 = menu_settings.featured_collection_2 | default: block_settings.featured_collection_2
-  assign featured_collection_3 = menu_settings.featured_collection_3 | default: block_settings.featured_collection_3
   assign cta_label = menu_settings.featured_collections_cta_label | default: block_settings.featured_collections_cta_label
   assign cta_link = menu_settings.featured_collections_cta_link | default: block_settings.featured_collections_cta_link
 
   assign card_aspect_ratio = block_settings.featured_collections_aspect_ratio | default: '16 / 9'
-  if mega_menu_block != blank and mega_menu_block.settings.featured_collections_aspect_ratio != blank
-    assign card_aspect_ratio = mega_menu_block.settings.featured_collections_aspect_ratio
+  if dropdown_block != blank and dropdown_block.settings.featured_collections_aspect_ratio != blank
+    assign card_aspect_ratio = dropdown_block.settings.featured_collections_aspect_ratio
   endif
 %}
 
@@ -56,35 +53,26 @@
     class="mega-menu-featured-collections__cards list-unstyled"
     style="--resource-card-corner-radius: {{ image_border_radius }}px;"
   >
-    {% if featured_collection_1 %}
-      <li class="mega-menu-featured-collections__card">
-        {% render 'resource-card',
-          resource: featured_collection_1,
-          resource_type: 'collection',
-          image_aspect_ratio: card_aspect_ratio,
-          image_sizes: image_sizes
-        %}
-      </li>
-    {% endif %}
-    {% if featured_collection_2 %}
-      <li class="mega-menu-featured-collections__card">
-        {% render 'resource-card',
-          resource: featured_collection_2,
-          resource_type: 'collection',
-          image_aspect_ratio: card_aspect_ratio,
-          image_sizes: image_sizes
-        %}
-      </li>
-    {% endif %}
-    {% if featured_collection_3 %}
-      <li class="mega-menu-featured-collections__card">
-        {% render 'resource-card',
-          resource: featured_collection_3,
-          resource_type: 'collection',
-          image_aspect_ratio: card_aspect_ratio,
-          image_sizes: image_sizes
-        %}
-      </li>
-    {% endif %}
+    {% render 'mega-menu-featured-card',
+      slot: 1,
+      menu_settings: menu_settings,
+      block_settings: block_settings,
+      image_aspect_ratio: card_aspect_ratio,
+      image_sizes: image_sizes
+    %}
+    {% render 'mega-menu-featured-card',
+      slot: 2,
+      menu_settings: menu_settings,
+      block_settings: block_settings,
+      image_aspect_ratio: card_aspect_ratio,
+      image_sizes: image_sizes
+    %}
+    {% render 'mega-menu-featured-card',
+      slot: 3,
+      menu_settings: menu_settings,
+      block_settings: block_settings,
+      image_aspect_ratio: card_aspect_ratio,
+      image_sizes: image_sizes
+    %}
   </ul>
 </div>

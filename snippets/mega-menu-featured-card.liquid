@@ -1,0 +1,58 @@
+{%- doc -%}
+  Renders one featured card in the mega menu (collection or page).
+
+  @param {number} slot - Card slot index (1, 2, or 3)
+  @param {object} menu_settings - Active menu or dropdown block settings
+  @param {object} block_settings - Parent header menu defaults
+  @param {string} image_aspect_ratio - Card image aspect ratio
+  @param {string} image_sizes - Responsive image sizes attribute
+{%- enddoc -%}
+
+{% liquid
+  case slot
+    when 1
+      assign item_type = menu_settings.featured_item_1_type | default: 'collection'
+      assign featured_collection = menu_settings.featured_collection_1 | default: block_settings.featured_collection_1
+      assign featured_page = menu_settings.featured_page_1
+    when 2
+      assign item_type = menu_settings.featured_item_2_type | default: 'collection'
+      assign featured_collection = menu_settings.featured_collection_2 | default: block_settings.featured_collection_2
+      assign featured_page = menu_settings.featured_page_2
+    when 3
+      assign item_type = menu_settings.featured_item_3_type | default: 'collection'
+      assign featured_collection = menu_settings.featured_collection_3 | default: block_settings.featured_collection_3
+      assign featured_page = menu_settings.featured_page_3
+    else
+      assign item_type = 'collection'
+      assign featured_collection = blank
+      assign featured_page = blank
+  endcase
+
+  assign resource = blank
+  assign resource_type = 'collection'
+
+  if item_type == 'page' and featured_page != blank
+    assign resource = featured_page
+    assign resource_type = 'page'
+  elsif item_type == 'collection' and featured_collection != blank
+    assign resource = featured_collection
+    assign resource_type = 'collection'
+  elsif featured_page != blank
+    assign resource = featured_page
+    assign resource_type = 'page'
+  elsif featured_collection != blank
+    assign resource = featured_collection
+    assign resource_type = 'collection'
+  endif
+%}
+
+{% if resource != blank %}
+  <li class="mega-menu-featured-collections__card">
+    {% render 'resource-card',
+      resource: resource,
+      resource_type: resource_type,
+      image_aspect_ratio: image_aspect_ratio,
+      image_sizes: image_sizes
+    %}
+  </li>
+{% endif %}

@@ -1,0 +1,182 @@
+{%- doc -%}
+  Settings-only block: one mega menu dropdown per top-level item in this header menu (left or right).
+  Matched by menu position, handle, or title in `blocks/_header-menu.liquid`.
+{%- enddoc -%}
+
+{% schema %}
+{
+  "name": "Menu dropdown",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Assign this block to one top-level item in this menu (Menu left or Menu right). Count only the links shown in that half of the header — position 1 is the first link, 2 the second, and so on."
+    },
+    {
+      "type": "range",
+      "id": "menu_link_position",
+      "label": "Menu item position",
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "text",
+      "id": "menu_link_handle",
+      "label": "Menu item handle (optional)",
+      "info": "Override position matching using the item handle from Navigation."
+    },
+    {
+      "type": "text",
+      "id": "menu_link_title",
+      "label": "Menu item title (optional)",
+      "info": "Override position matching — must match the menu label exactly."
+    },
+    {
+      "type": "header",
+      "content": "Featured card 1"
+    },
+    {
+      "type": "select",
+      "id": "featured_item_1_type",
+      "label": "Type",
+      "options": [
+        {
+          "value": "collection",
+          "label": "Collection"
+        },
+        {
+          "value": "page",
+          "label": "Page"
+        }
+      ],
+      "default": "collection"
+    },
+    {
+      "type": "collection",
+      "id": "featured_collection_1",
+      "label": "Collection",
+      "visible_if": "{{ block.settings.featured_item_1_type == 'collection' }}"
+    },
+    {
+      "type": "page",
+      "id": "featured_page_1",
+      "label": "Page",
+      "visible_if": "{{ block.settings.featured_item_1_type == 'page' }}"
+    },
+    {
+      "type": "header",
+      "content": "Featured card 2"
+    },
+    {
+      "type": "select",
+      "id": "featured_item_2_type",
+      "label": "Type",
+      "options": [
+        {
+          "value": "collection",
+          "label": "Collection"
+        },
+        {
+          "value": "page",
+          "label": "Page"
+        }
+      ],
+      "default": "collection"
+    },
+    {
+      "type": "collection",
+      "id": "featured_collection_2",
+      "label": "Collection",
+      "visible_if": "{{ block.settings.featured_item_2_type == 'collection' }}"
+    },
+    {
+      "type": "page",
+      "id": "featured_page_2",
+      "label": "Page",
+      "visible_if": "{{ block.settings.featured_item_2_type == 'page' }}"
+    },
+    {
+      "type": "header",
+      "content": "Featured card 3"
+    },
+    {
+      "type": "select",
+      "id": "featured_item_3_type",
+      "label": "Type",
+      "options": [
+        {
+          "value": "collection",
+          "label": "Collection"
+        },
+        {
+          "value": "page",
+          "label": "Page"
+        }
+      ],
+      "default": "collection"
+    },
+    {
+      "type": "collection",
+      "id": "featured_collection_3",
+      "label": "Collection",
+      "visible_if": "{{ block.settings.featured_item_3_type == 'collection' }}"
+    },
+    {
+      "type": "page",
+      "id": "featured_page_3",
+      "label": "Page",
+      "visible_if": "{{ block.settings.featured_item_3_type == 'page' }}"
+    },
+    {
+      "type": "header",
+      "content": "Call to action"
+    },
+    {
+      "type": "text",
+      "id": "featured_collections_cta_label",
+      "label": "CTA label",
+      "default": "View all"
+    },
+    {
+      "type": "url",
+      "id": "featured_collections_cta_link",
+      "label": "CTA link"
+    },
+    {
+      "type": "select",
+      "id": "featured_collections_aspect_ratio",
+      "label": "t:settings.image_ratio",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.default"
+        },
+        {
+          "value": "adapt",
+          "label": "t:options.auto"
+        },
+        {
+          "value": "16 / 9",
+          "label": "t:options.landscape"
+        },
+        {
+          "value": "1 / 1",
+          "label": "t:options.square"
+        },
+        {
+          "value": "4 / 5",
+          "label": "t:options.portrait"
+        }
+      ],
+      "default": ""
+    }
+  ],
+  "presets": [
+    {
+      "name": "Menu dropdown"
+    }
+  ]
+}
+{% endschema %}
