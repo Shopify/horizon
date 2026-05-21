@@ -4,18 +4,29 @@
 - For a featured-collections mega menu variant, render two columns:
   - left: stacked submenu links (plus optional CTA below)
   - right: fixed featured collection cards chosen from block settings
-- Keep cards merchant-configurable using block-level collection pickers (`featured_collection_1` through `featured_collection_3`) and CTA settings.
 - Route layout selection from `blocks/_header-menu.liquid` using `menu_style` so existing submenu modes (`text`, `collection_images`, `featured_products`) remain unchanged.
 
-## Split menu (right column) mega menu position
+## Per-dropdown featured collections (split or single menu)
 
-- **Symptom:** Mega menus opened from `header-menu--split-right` extend off the right edge of the viewport.
-- **Cause:** `position: relative` on `.header-menu--split-right` and/or `.header__column--right` makes `.menu-list__submenu` (`width: 90vw; margin-inline: auto`) center within the narrow right link group.
-- **Fix:**
-  - `header-menu--split-right` and split right `.header__column--right` use `position: static` so the submenu’s containing block is `.header__row` (which is `position: relative`).
-  - Override submenu width for split right: `width: 100%; max-width: 100%; margin-inline: 0; left: 0; right: 0` (matches full-bleed behavior of left-side dropdowns).
-  - Keep `position: relative` only on `header-menu--split-left`.
-- Files: `sections/header.liquid`, `blocks/_header-menu.liquid`.
+- Add child blocks under each header menu block (`header-menu-left`, `header-menu-right`, or `header-menu`) in the theme editor.
+- Block type: **`_header-menu-mega-menu`** (“Mega menu dropdown”).
+- Match a top-level menu item by **handle** (preferred) or **exact menu title**.
+- Each block sets up to 3 featured collections, optional CTA, and optional image ratio override.
+- Parent menu block **Media type** must be **Featured collections** for all dropdowns in that menu half.
+- Parent “Default featured collection 1–3” settings are fallbacks when no child block matches or a picker is left empty.
+
+## Split menu: left vs right styling
+
+- **Symptom:** Right dropdown looks different (wrong layout, off-screen, or `collection_images` instead of featured collections).
+- **Causes:**
+  1. `header-menu-right` had a different `menu_style` (e.g. `collection_images` vs `featured_collections`).
+  2. Submenu width: left used `90vw` centered in a narrow group; right used `100%` of header row after a partial fix.
+- **Fix (both sides identical):**
+  - Set **both** split menu blocks to `menu_style: featured_collections` and the same `featured_collections_aspect_ratio`.
+  - `position: static` on **both** `.header-menu--split-left` and `.header-menu--split-right`.
+  - Submenus: `width: 100%; max-width: 100%; left: 0; right: 0; margin-inline: 0` (containing block = `.header__row`).
+  - Right `.header__column--right` stays `position: static` so mega menus are not clipped to the right link cluster.
+- Files: `sections/header.liquid`, `blocks/_header-menu.liquid`, `sections/header-group.json`.
 
 ## Submenu height / first-open clipping
 

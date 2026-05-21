@@ -110,7 +110,24 @@
             "drawer_accordion_expand_first": false,
             "drawer_dividers": false
           },
-          "blocks": {}
+          "blocks": {
+            "mega-menu-left-example": {
+              "type": "_header-menu-mega-menu",
+              "settings": {
+                "menu_link_handle": "",
+                "menu_link_title": "",
+                "featured_collection_1": "the-cala-falco-collection",
+                "featured_collection_2": "perfumes",
+                "featured_collection_3": "skincare",
+                "featured_collections_cta_label": "View all",
+                "featured_collections_cta_link": "shopify://collections/shop-all",
+                "featured_collections_aspect_ratio": ""
+              }
+            }
+          },
+          "block_order": [
+            "mega-menu-left-example"
+          ]
         },
         "header-menu-right": {
           "type": "_header-menu",
@@ -122,9 +139,9 @@
             "menu_font_style": "inverse",
             "type_font_primary_link": "heading",
             "type_case_primary_link": "none",
-            "menu_style": "collection_images",
+            "menu_style": "featured_collections",
             "featured_products_aspect_ratio": "4 / 5",
-            "featured_collections_aspect_ratio": "16 / 9",
+            "featured_collections_aspect_ratio": "1 / 1",
             "featured_collection_1": "",
             "featured_collection_2": "",
             "featured_collection_3": "",
@@ -137,7 +154,8 @@
             "drawer_accordion_expand_first": false,
             "drawer_dividers": false
           },
-          "blocks": {}
+          "blocks": {},
+          "block_order": []
         },
         "header-menu-mobile": {
           "type": "_header-menu",
