@@ -796,6 +796,47 @@
         "padding-block-end": 40
       }
     },
+    "ingredients_tnMT9F": {
+      "type": "ingredients",
+      "blocks": {
+        "ingredient_7ikRkn": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Honey",
+            "description": "<p>A natural antibacterial and antioxidant. Acts as a dietary supplement for cardiovascular and immune health.</p>"
+          }
+        },
+        "ingredient_gdtWjj": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Lemon",
+            "description": "<p>Bright citrus notes that add freshness and a clean, aromatic lift to the blend.</p>"
+          }
+        },
+        "ingredient_NH6WaA": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Botanicals",
+            "description": "<p>Carefully selected herbs and botanicals deliver depth, complexity, and structure.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "ingredient_7ikRkn",
+        "ingredient_gdtWjj",
+        "ingredient_NH6WaA"
+      ],
+      "name": "Ingredients",
+      "settings": {
+        "heading": "Nature's notes - the botanicals within",
+        "description": "<p>All ingredients are 100% natural and sourced with care.</p>",
+        "section_width": "page-width",
+        "color_scheme": "",
+        "arrow_size": 52,
+        "padding-block-start": 56,
+        "padding-block-end": 56
+      }
+    },
     "section_hUtqcY": {
       "type": "section",
       "blocks": {
@@ -2231,9 +2272,10 @@
     "collection_list_Jmbyyp",
     "section_fXxtNM",
     "section_Ct3h3w",
-    "section_hUtqcY",
+    "ingredients_tnMT9F",
     "product_list_Ddz9mc",
     "hero_xbJPf6",
+    "section_hUtqcY",
     "section_MMJTd9",
     "section_XrMqJ3",
     "column_callouts_7E8VBP"
