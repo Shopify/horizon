@@ -10,19 +10,22 @@
 %}
 
 {% if menu != blank or heading != blank %}
-  <accordion-custom
-    class="
-      menu
-      {% if show_as_accordion == true %} menu--accordion menu--{{ block_settings.accordion_icon }}{% endif %}
-      {% if dividers_enabled == true %} menu--dividers{% endif %}
-    "
-    data-disable-on-desktop="true"
-    open-by-default-on-desktop
-    {% if show_as_accordion == false %}
-      data-disable-on-mobile="true"
-      open-by-default-on-mobile
-    {% endif %}
-  >
+  {%- liquid
+    assign menu_class = 'menu'
+    if show_as_accordion == true
+      assign menu_class = menu_class | append: ' menu--accordion'
+    endif
+    if dividers_enabled == true
+      assign menu_class = menu_class | append: ' menu--dividers'
+    endif
+    assign should_disable_on_mobile = false
+    assign should_open_by_default_on_mobile = false
+    if show_as_accordion == false
+      assign should_disable_on_mobile = true
+      assign should_open_by_default_on_mobile = true
+    endif
+  -%}
+  {% capture menu_accordion_children %}
     <details
       class="
         menu__details
@@ -39,16 +42,19 @@
       {% endif %}
       {{ block.shopify_attributes }}
     >
-      <summary class="menu__heading{% if heading == blank %} menu__heading--empty{% endif %} {{ block_settings.heading_preset }}">
-        <span class="menu__heading__default">{{ heading }}</span>
+      <summary class="menu__heading{% if heading == blank and menu.title == blank %} menu__heading--empty{% endif %} {{ block_settings.heading_preset }}">
+        <span class="menu__heading__default">{{ heading | default: menu.title }}</span>
         <span class="menu__heading__accordion">
           {{ heading | default: menu.title }}
-          <span class="menu__heading__toggle svg-wrapper icon-caret icon-animated">
-            {{- 'icon-caret.svg' | inline_asset_content -}}
-          </span>
-          <span class="menu__heading__toggle svg-wrapper icon-plus">
-            {{- 'icon-plus.svg' | inline_asset_content -}}
-          </span>
+          {% if block_settings.accordion_icon == 'plus' %}
+            <span class="menu__heading__toggle svg-wrapper icon-plus">
+              {{- 'icon-plus.svg' | inline_asset_content -}}
+            </span>
+          {% else %}
+            <span class="menu__heading__toggle svg-wrapper icon-caret icon-animated">
+              {{- 'icon-caret.svg' | inline_asset_content -}}
+            </span>
+          {% endif %}
         </span>
       </summary>
 
@@ -71,7 +77,15 @@
         {% endif %}
       </nav>
     </details>
-  </accordion-custom>
+  {% endcapture %}
+  {% render 'accordion-custom-component',
+    children: menu_accordion_children,
+    class: menu_class,
+    disable_on_desktop: true,
+    open_by_default_on_desktop: true,
+    disable_on_mobile: should_disable_on_mobile,
+    open_by_default_on_mobile: should_open_by_default_on_mobile
+  %}
 {% endif %}
 
 {% stylesheet %}
@@ -128,11 +142,6 @@
     .menu--dividers .details-content {
       padding-block-end: var(--padding-sm);
     }
-  }
-
-  .menu--caret .icon-plus,
-  .menu--plus .icon-caret {
-    display: none;
   }
 {% endstylesheet %}
 

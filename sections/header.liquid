@@ -12,6 +12,11 @@
     assign search_style = 'modal'
   endif
 
+  if section.settings.show_search
+    render 'predictive-search-styles'
+    render 'slideshow-styles'
+  endif
+
   if section.settings.enable_transparent_header_home and template.name == 'index'
     assign transparent = 'always'
     assign transparent_color_scheme = section.settings.home_color_scheme
@@ -45,6 +50,7 @@
     content_for 'block', type: '_header-logo', id: 'header-logo'
   endcapture
 
+  # theme-check-disable UniqueStaticBlockId
   capture menu
     content_for 'block', type: '_header-menu', id: 'header-menu'
   endcapture
@@ -56,6 +62,7 @@
   capture navigation_bar
     content_for 'block', type: '_header-menu', id: 'header-menu', variant: 'navigation_bar', transparent: transparent
   endcapture
+  # theme-check-enable UniqueStaticBlockId
 
   capture actions
     render 'header-actions', customer_account_menu: section.settings.customer_account_menu, display_style: section.settings.actions_display_style, section: section

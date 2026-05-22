@@ -66,9 +66,16 @@
     "discount_menu": "Nuolaidų kodai",
     "remove": "Pašalinti",
     "view_pricing_info": "Peržiūrėti kainodaros informaciją",
-    "open_hotspot": "Atverti interneto prieigos tašką",
     "slideshow": "Skaidrių demonstracija",
-    "header_navigation_label": "Pagrindinis"
+    "header_navigation_label": "Pagrindinis",
+    "home_logo_alt": "{{ store_name }} – Pradžia",
+    "active_filters": "Aktyvūs filtrai:",
+    "product_details": "Išsami produkto informacija",
+    "show_product_details": "Rodyti išsamią produkto {{ product_name }} informaciją",
+    "featured_product": "Rekomenduojamas produktas",
+    "search_suggestions_available": "Galimi paieškos pasiūlymai pagal „{{ query }}“",
+    "price_filter_low": "Žema kaina",
+    "price_filter_high": "Aukšta kaina"
   },
   "actions": {
     "add_to_cart": "Įdėti į krepšelį",
@@ -110,7 +117,9 @@
     "open_image_in_full_screen": "Atidaryti vaizdą per visą ekraną",
     "sort": "Rūšiuoti",
     "show_all_options": "Rodyti visus variantus",
-    "open": "Atidaryti"
+    "open": "Atidaryti",
+    "back_to": "Grįžti į „{{ title }}“",
+    "zoom_media": "Padidinti mediją {{ index }}"
   },
   "content": {
     "reviews": "apžvalgos (-ų; -a)",
@@ -245,7 +254,7 @@
     "product_custom_property_character_count": "Panaudota {{ used_chars }}/{{ max_chars }} simbolių",
     "terms_and_policies": "Sąlygos ir politika",
     "pagination": {
-      "nav_label": "Skirstymo puslapiais navigacija",
+      "nav_label": "Skirstymas puslapiais",
       "previous": "Ankstesnis",
       "next": "Kitas",
       "page": "{{ page }} puslapis"
@@ -274,7 +283,8 @@
       "few": "{{ count }} prekių pridėta prie krepšelio",
       "many": "{{ count }} prekių pridėta prie krepšelio"
     },
-    "item_count_cutoff": "Daugiau kaip {{ count }} prekės (-ių)"
+    "item_count_cutoff": "Daugiau kaip {{ count }} prekės (-ių)",
+    "quick_order_list": "Greito užsakymo sąrašas"
   },
   "gift_cards": {
     "issued": {

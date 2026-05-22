@@ -137,8 +137,8 @@
                   "type": "price",
                   "settings": {
                     "show_sale_price_first": true,
-                    "show_installments": false,
-                    "show_tax_info": false,
+                    "show_installments": true,
+                    "show_tax_info": true,
                     "type_preset": "paragraph",
                     "width": "100%",
                     "alignment": "left",
@@ -275,7 +275,7 @@
           "type": "text",
           "name": "t:names.header",
           "settings": {
-            "text": "<h3>You may also like </h3>",
+            "text": "<h2>You may also like </h2>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -338,7 +338,7 @@
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",
-                "type_preset": "rte",
+                "type_preset": "paragraph",
                 "font": "var(--font-body--family)",
                 "font_size": "1rem",
                 "line_height": "normal",

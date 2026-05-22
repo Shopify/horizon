@@ -23,7 +23,6 @@
   @example
   {% render 'resource-image',
       content_type: 'collections',
-      image_source: blank,
       parent_block_id: block.id,
       block_settings: block.settings,
       section_settings: section.settings,
@@ -129,7 +128,6 @@
 {% if image_resource != blank %}
   <div
     class="
-      image-block
       resource-image
       {% if content_type == 'articles' %}
         featured-blog-posts-card__image
@@ -152,13 +150,12 @@
     {{
       image_resource
       | image_url: width: 3840
-      | image_tag: widths: widths, class: 'image-block__image', sizes: sizes, loading: loading
+      | image_tag: widths: widths, class: 'resource-image__image', sizes: sizes, loading: loading
     }}
   </div>
 {% else %}
   <div
     class="
-      image-block
       resource-image resource-image--placeholder
       {% if content_type == 'articles' %}
         featured-blog-posts-card__image featured-blog-posts-card__image--placeholder
@@ -178,7 +175,7 @@
       {% render 'overlay', settings: block_settings %}
     {%- endif -%}
 
-    <div class="image-block__image">
+    <div class="resource-image__image">
       {% if content_type == 'articles' %}
         {{ placeholder_name | placeholder_svg_tag: 'blog-placeholder-svg' }}
       {% else %}
@@ -201,8 +198,9 @@
     aspect-ratio: var(--ratio);
   }
 
-  .resource-image .image-block__image {
+  .resource-image__image {
     object-fit: cover;
+    aspect-ratio: var(--ratio);
     width: 100%;
     height: 100%;
   }

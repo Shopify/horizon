@@ -64,9 +64,16 @@
     "nested_product": "{{ parent_title }} için {{ product_title }}",
     "remove": "Kaldır",
     "view_pricing_info": "Fiyatlandırma bilgilerini görüntüle",
-    "open_hotspot": "Etkin noktayı aç",
     "slideshow": "Slayt gösterisi",
-    "header_navigation_label": "Birincil"
+    "header_navigation_label": "Birincil",
+    "home_logo_alt": "{{ store_name }} – Ana Sayfa",
+    "active_filters": "Etkin filtreler:",
+    "featured_product": "Öne çıkan ürün",
+    "product_details": "Ürün ayrıntıları",
+    "show_product_details": "{{ product_name }} için ürün ayrıntılarını göster",
+    "search_suggestions_available": "\"{{ query }}\" için kullanılabilir arama önerileri",
+    "price_filter_low": "Düşük fiyat",
+    "price_filter_high": "Yüksek fiyat"
   },
   "actions": {
     "add_to_cart": "Sepete ekle",
@@ -106,7 +113,9 @@
     "sign_up": "Kaydol",
     "sort": "Sırala",
     "show_all_options": "Tüm seçenekleri göster",
-    "open": "Açık"
+    "open": "Açık",
+    "back_to": "Geri dön: {{ title }}",
+    "zoom_media": "Medyayı yakınlaştır: {{ index }}"
   },
   "content": {
     "reviews": "değerlendirme",
@@ -235,7 +244,7 @@
     "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }} karakter kullanıldı",
     "terms_and_policies": "Şartlar ve Politikalar",
     "pagination": {
-      "nav_label": "Sayfalara ayırma için gezinme",
+      "nav_label": "Sayfalara ayırma",
       "previous": "Önceki",
       "next": "Sonraki",
       "page": "Sayfa {{ page }}"
@@ -262,7 +271,8 @@
       "one": "1 ürün sepete eklendi",
       "other": "{{ count }} ürün sepete eklendi"
     },
-    "item_count_cutoff": "{{ count }} adetten fazla ürün"
+    "item_count_cutoff": "{{ count }} adetten fazla ürün",
+    "quick_order_list": "Hızlı sipariş listesi"
   },
   "gift_cards": {
     "issued": {
