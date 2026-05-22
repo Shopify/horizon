@@ -328,6 +328,7 @@
             "text_FYJi6T": {
               "type": "text",
               "name": "t:names.text",
+              "disabled": true,
               "settings": {
                 "text": "<p>Made from hand-picked botanicals from the wild farm.</p>",
                 "width": "fit-content",
@@ -737,6 +738,7 @@
             },
             "button_98dRTp": {
               "type": "button",
+              "disabled": true,
               "settings": {
                 "label": "Discover Our Land",
                 "link": "shopify://collections/all",
@@ -934,7 +936,7 @@
               "type": "_product-list-text",
               "name": "t:names.collection_title",
               "settings": {
-                "text": "<h3>The Collection</h3>",
+                "text": "<h3>Best sellers</h3>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -960,7 +962,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<p> Some of our favourites made from hand-picked botanicals from the wild farm.</p>",
+                "text": "<p> Some favourites made from hand-picked botanicals from the wild farm.</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
