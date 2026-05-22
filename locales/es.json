@@ -65,14 +65,21 @@
     "nested_product": "{{ product_title }} para {{ parent_title }}",
     "remove": "Eliminar",
     "view_pricing_info": "Ver la información de fijación de precios",
-    "open_hotspot": "Abrir el punto de acceso",
     "slideshow": "Presentación de diapositivas",
-    "header_navigation_label": "Principal"
+    "header_navigation_label": "Principal",
+    "home_logo_alt": "{{ store_name }} – Inicio",
+    "active_filters": "Filtros activos:",
+    "product_details": "Detalles del producto",
+    "show_product_details": "Mostrar detalles del producto para {{ product_name }}",
+    "featured_product": "Producto destacado",
+    "search_suggestions_available": "Buscar sugerencias disponibles de \"{{ query }}\"",
+    "price_filter_low": "Precio bajo",
+    "price_filter_high": "Precio alto"
   },
   "actions": {
     "add_to_cart": "Agregar al carrito",
     "clear_all": "Borrar todo",
-    "remove": "Eliminar",
+    "remove": "Quitar",
     "view_in_your_space": "Ver en tu espacio",
     "show_filters": "Filtro",
     "clear": "Borrar",
@@ -108,7 +115,9 @@
     "sign_up": "Registrarse",
     "sort": "Ordenar",
     "show_all_options": "Mostrar todas las opciones",
-    "open": "Abrir"
+    "open": "Abrir",
+    "back_to": "Volver a {{ title }}",
+    "zoom_media": "Ampliar {{ index }} multimedia"
   },
   "content": {
     "reviews": "reseñas",
@@ -240,7 +249,7 @@
     "product_custom_property_character_count": "{{ used_chars }} de {{ max_chars }} caracteres utilizados",
     "terms_and_policies": "Términos y políticas",
     "pagination": {
-      "nav_label": "Navegación de paginación",
+      "nav_label": "Paginación",
       "previous": "Anterior",
       "next": "Siguiente",
       "page": "Página {{ page }}"
@@ -268,7 +277,8 @@
       "one": "Se agregó un artículo al carrito",
       "other": "Se agregaron {{ count }} artículos al carrito",
       "many": "Se agregaron {{ count }} artículos al carrito"
-    }
+    },
+    "quick_order_list": "Lista de pedidos rápidos"
   },
   "gift_cards": {
     "issued": {

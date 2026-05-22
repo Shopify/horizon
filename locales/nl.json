@@ -64,9 +64,16 @@
     "nested_product": "{{ product_title }} voor {{ parent_title }}",
     "remove": "Verwijderen",
     "view_pricing_info": "Prijsinformatie bekijken",
-    "open_hotspot": "Hotspot openen",
     "slideshow": "Diavoorstelling",
-    "header_navigation_label": "Primair"
+    "header_navigation_label": "Primair",
+    "home_logo_alt": "{{ store_name }} – Home",
+    "active_filters": "Actieve filters:",
+    "product_details": "Productgegevens",
+    "show_product_details": "Productgegevens voor {{ product_name }} weergeven",
+    "featured_product": "Uitgelicht product",
+    "search_suggestions_available": "Zoek naar beschikbare suggesties voor '{{ query }}'",
+    "price_filter_low": "Lage prijs",
+    "price_filter_high": "Hoge prijs"
   },
   "actions": {
     "add_to_cart": "Aan winkelwagen toevoegen",
@@ -106,7 +113,9 @@
     "open_image_in_full_screen": "Afbeelding openen in volledig scherm",
     "sort": "Sorteren",
     "show_all_options": "Alle opties tonen",
-    "open": "Openen"
+    "open": "Openen",
+    "back_to": "Terug naar {{ title }}",
+    "zoom_media": "In-/uitzoomen op media {{ index }}"
   },
   "content": {
     "reviews": "recensies",
@@ -235,7 +244,7 @@
     "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }} tekens gebruikt",
     "terms_and_policies": "Voorwaarden en beleid",
     "pagination": {
-      "nav_label": "Navigatie paginering",
+      "nav_label": "Paginering",
       "previous": "Vorige",
       "next": "Volgende",
       "page": "Pagina {{ page }}"
@@ -262,7 +271,8 @@
       "one": "1 artikel verwijderd uit winkelwagen",
       "other": "{{ count }} artikelen toegevoegd aan winkelwagen"
     },
-    "item_count_cutoff": "Meer dan {{ count }} artikelen"
+    "item_count_cutoff": "Meer dan {{ count }} artikelen",
+    "quick_order_list": "Snelle bestellijst"
   },
   "gift_cards": {
     "issued": {

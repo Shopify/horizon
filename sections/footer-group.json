@@ -27,7 +27,7 @@
             "align_baseline": false,
             "horizontal_alignment_flex_direction_column": "flex-start",
             "vertical_alignment_flex_direction_column": "center",
-            "gap": 6,
+            "gap": 12,
             "width": "fill",
             "custom_width": 100,
             "width_mobile": "fill",
@@ -105,29 +105,67 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
+            },
+            "email-signup_HafH7P": {
+              "type": "email-signup",
+              "name": "Email Signup",
+              "settings": {
+                "width": "fill"
+              }
             }
           },
           "block_order": [
             "text_pF6rVi",
-            "text_HafH7P"
+            "text_HafH7P",
+            "email-signup_HafH7P"
           ]
         },
-        "email-signup_HafH7P": {
-          "type": "email-signup",
-          "name": "Email Signup",
+        "menu_footer": {
+          "type": "menu",
           "settings": {
-            "width": "fill"
+            "menu": "footer",
+            "heading": "",
+            "menu_spacing": 12,
+            "show_as_accordion": false,
+            "accordion_icon": "plus",
+            "accordion_dividers": false,
+            "inherit_color_scheme": true,
+            "heading_preset": "paragraph",
+            "link_preset": "paragraph",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          }
+        },
+        "menu_main": {
+          "type": "menu",
+          "settings": {
+            "menu": "main-menu",
+            "heading": "",
+            "menu_spacing": 12,
+            "show_as_accordion": false,
+            "accordion_icon": "plus",
+            "accordion_dividers": false,
+            "inherit_color_scheme": true,
+            "heading_preset": "paragraph",
+            "link_preset": "paragraph",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
           }
         }
       },
       "block_order": [
         "group_wErUQf",
-        "email-signup_HafH7P"
+        "menu_footer",
+        "menu_main"
       ],
       "name": "t:names.footer",
       "settings": {
         "section_width": "page-width",
-        "gap": 20,
+        "gap": 40,
         "color_scheme": "scheme-5",
         "padding-block-start": 36,
         "padding-block-end": 36

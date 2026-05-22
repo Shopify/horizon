@@ -27,3 +27,55 @@
   {%- render 'slideshow-arrow', action: 'previous', icon_style: icon_style, icon_shape: icon_shape -%}
   {%- render 'slideshow-arrow', action: 'next', icon_style: icon_style, icon_shape: icon_shape -%}
 </slideshow-arrows>
+
+{% stylesheet %}
+  slideshow-arrows {
+    --cursor-previous: w-resize;
+    --cursor-next: e-resize;
+
+    position: absolute;
+    inset: 0;
+    display: flex;
+    z-index: var(--layer-heightened);
+    pointer-events: none;
+    mix-blend-mode: difference;
+    align-items: flex-end;
+
+    &[position='left'] {
+      justify-content: flex-start;
+      padding-inline: var(--padding-xs);
+    }
+
+    &[position='right'] {
+      justify-content: flex-end;
+      padding-inline: var(--padding-xs);
+    }
+
+    &[position='center'] {
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  slideshow-arrows:has(.slideshow-control--shape-square),
+  slideshow-arrows:has(.slideshow-control--shape-circle) {
+    mix-blend-mode: normal;
+  }
+
+  slideshow-component[disabled='true'] slideshow-arrows {
+    display: none;
+  }
+
+  slideshow-arrows .slideshow-control {
+    pointer-events: auto;
+    opacity: 0;
+    min-height: var(--minimum-touch-target);
+    min-width: var(--minimum-touch-target);
+    padding: 0 var(--padding-xs);
+    color: var(--color-white);
+  }
+
+  slideshow-arrows .slideshow-control.slideshow-control--style-none {
+    display: none;
+  }
+{% endstylesheet %}

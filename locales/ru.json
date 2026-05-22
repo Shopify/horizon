@@ -66,9 +66,16 @@
     "discount_menu": "Коды скидок",
     "remove": "Удалить",
     "view_pricing_info": "Посмотреть информацию о ценах",
-    "open_hotspot": "Открыть точку наибольшей активности",
     "slideshow": "Слайд-шоу",
-    "header_navigation_label": "Основная"
+    "header_navigation_label": "Основная",
+    "home_logo_alt": "{{ store_name }} – Главная",
+    "active_filters": "Активные фильтры:",
+    "product_details": "Подробности о товаре",
+    "show_product_details": "Показать подробности о товаре {{ product_name }}",
+    "featured_product": "Рекомендуемый товар",
+    "search_suggestions_available": "Доступны поисковые подсказки для \"{{ query }}\"",
+    "price_filter_low": "Низкая цена",
+    "price_filter_high": "Высокая цена"
   },
   "actions": {
     "add_to_cart": "Добавить в корзину",
@@ -110,7 +117,9 @@
     "open_image_in_full_screen": "Открыть изображение во весь экран",
     "sort": "Сортировать",
     "show_all_options": "Показать все варианты",
-    "open": "Открыть"
+    "open": "Открыть",
+    "back_to": "Вернуться к {{ title }}",
+    "zoom_media": "Увеличить медиафайл {{ index }}"
   },
   "content": {
     "reviews": "отз.",
@@ -274,7 +283,8 @@
       "many": "{{ count }} предмета(-ов) добавлено в корзину"
     },
     "item_count_cutoff": "Более {{ count }} товаров",
-    "price_range": "Ценовой диапазон"
+    "price_range": "Ценовой диапазон",
+    "quick_order_list": "Список быстрых заказов"
   },
   "gift_cards": {
     "issued": {

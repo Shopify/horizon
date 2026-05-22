@@ -64,14 +64,21 @@
     "nested_product": "{{ product_title }}（{{ parent_title }}）",
     "remove": "删除",
     "view_pricing_info": "查看定价信息",
-    "open_hotspot": "打开热点",
     "slideshow": "幻灯片",
-    "header_navigation_label": "主要"
+    "header_navigation_label": "主要",
+    "home_logo_alt": "{{ store_name }} – 主页",
+    "active_filters": "有效筛选条件：",
+    "product_details": "产品详细信息",
+    "show_product_details": "显示 {{ product_name }} 的产品详细信息",
+    "featured_product": "特色产品",
+    "search_suggestions_available": "针对“{{ query }}”的搜索建议",
+    "price_filter_low": "低价",
+    "price_filter_high": "高价"
   },
   "actions": {
     "add_to_cart": "添加到购物车",
     "clear_all": "全部清除",
-    "remove": "删除",
+    "remove": "移除",
     "view_in_your_space": "在您的空间中查看",
     "show_filters": "筛选条件",
     "clear": "清除",
@@ -106,7 +113,9 @@
     "open_image_in_full_screen": "全屏打开图片",
     "sort": "排序",
     "show_all_options": "显示所有选项",
-    "open": "打开"
+    "open": "打开",
+    "back_to": "返回 {{ title }}",
+    "zoom_media": "缩放媒体文件 {{ index }}"
   },
   "content": {
     "reviews": "评价",
@@ -235,7 +244,7 @@
     "product_custom_property_character_count": "已输入 {{ used_chars }} 个字符，最多 {{ max_chars }} 个",
     "terms_and_policies": "条款和政策",
     "pagination": {
-      "nav_label": "分页导航",
+      "nav_label": "分页",
       "previous": "上一页",
       "next": "下一页",
       "page": "第 {{ page }} 页"
@@ -262,7 +271,8 @@
     "items_added_to_cart": {
       "one": "1 件商品已加入购物车",
       "other": "{{ count }} 件商品已加入购物车"
-    }
+    },
+    "quick_order_list": "快速订购列表"
   },
   "gift_cards": {
     "issued": {

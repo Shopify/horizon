@@ -127,6 +127,17 @@
     height: 100%;
     position: relative;
     z-index: var(--layer-flat);
+
+    @supports (animation-timeline: auto) {
+      opacity: 0;
+      animation: slide-reveal both linear;
+      animation-timeline: var(--slideshow-timeline);
+    }
+
+    @media (prefers-reduced-motion) {
+      opacity: 1;
+      animation: none;
+    }
   }
 
   .slide__content > * {
@@ -157,6 +168,17 @@
 
   .slide__image-container > .slide__video-poster {
     position: absolute;
+  }
+
+  /*
+   * Force Safari to recalculate the timeline state on timeline refresh (after loop)
+   */
+  slideshow-component[refreshing-timeline] .slide__content {
+    animation: none;
+  }
+
+  slideshow-slide .slide__image-container--rounded {
+    border-radius: var(--corner-radius, 0);
   }
 {% endstylesheet %}
 
@@ -487,7 +509,7 @@
           "type": "text",
           "name": "t:names.heading",
           "settings": {
-            "text": "t:html_defaults.new_arrivals_h2"
+            "text": "t:html_defaults.new_arrivals_h3"
           }
         },
         "text": {

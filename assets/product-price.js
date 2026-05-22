@@ -66,6 +66,14 @@ class ProductPrice extends Component {
     } else {
       volumePricingNote.replaceWith(newNote);
     }
+
+    // Update installments (SPI banner) variant ID to trigger payment terms re-render
+    const input_selector = `#product-form-installment-${this.dataset.blockId} input[name="id"]`;
+    const installmentsInput = /** @type {HTMLInputElement|null} */ (this.querySelector(input_selector));
+    if (installmentsInput) {
+      installmentsInput.value = event.detail.resource?.id ?? '';
+      installmentsInput.dispatchEvent(new Event('change', { bubbles: true }));
+    }
   };
 }
 

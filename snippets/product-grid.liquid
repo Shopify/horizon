@@ -198,9 +198,11 @@
   }
 
   .main-collection-grid {
+    grid-column: var(--grid-column--mobile);
     padding: var(--grid--margin--mobile);
 
     @media screen and (min-width: 750px) {
+      grid-column: var(--grid-column--desktop);
       padding: var(--padding-block-start) var(--padding-inline-end) var(--padding-block-end) var(--padding-inline-start);
     }
   }

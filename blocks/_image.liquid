@@ -3,11 +3,16 @@
 
   @param {string} [loading] - The html loading attribute
   @param {string} [placeholder] - The placeholder image name to use when no image is provided, defaults to 'hero-apparel-2'
+  @param {boolean} [decorative_image] - When true, image uses empty alt (decorative) to avoid duplicating adjacent link text for screen readers
 {%- enddoc -%}
 
 {% assign block_settings = block.settings %}
 {% assign image = closest.collection.featured_image | default: closest.product.featured_image %}
-{% assign alt = closest.collection.title | default: closest.product.title %}
+{% if decorative_image %}
+  {% assign alt = '' %}
+{% else %}
+  {% assign alt = closest.collection.title | default: closest.product.title %}
+{% endif %}
 
 {% liquid
   assign width = '100%'
@@ -37,11 +42,20 @@
     style="--border-radius: {{ block_settings.border_radius }}px;"
     {{ block.shopify_attributes }}
   >
-    {{ placeholder | default: 'hero-apparel-2' | placeholder_svg_tag: 'hero__media' }}
+    {{ placeholder | default: 'hero-apparel-2' | placeholder_svg_tag: 'image-block__placeholder' }}
   </image-block>
 {% endif %}
 
 {% stylesheet %}
+  .image-block__placeholder {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center center;
+    overflow: hidden;
+    position: relative;
+  }
+
   image-block {
     --image-height-basis: 10rem;
     --image-height-small: calc(var(--image-height-basis) * 2);

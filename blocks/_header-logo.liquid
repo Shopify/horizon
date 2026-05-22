@@ -17,6 +17,8 @@
       assign inverse_logo = settings.logo
     endif
   endif
+
+  assign alt_text_fallback = 'accessibility.home_logo_alt' | t: store_name: shop.name
 %}
 
 {% comment %}
@@ -55,6 +57,7 @@
       image: settings.logo,
       class: 'header-logo__image',
       height: settings.logo_height,
+      alt_text_fallback: alt_text_fallback,
       text_fallback: shop.name,
       style: logo_style
     %}
@@ -69,6 +72,7 @@
         image: inverse_logo,
         class: 'header-logo__image',
         height: settings.logo_height,
+        alt_text_fallback: alt_text_fallback,
         text_fallback: shop.name,
         style: inverse_logo_style
       %}
@@ -88,9 +92,6 @@
     justify-content: center;
     align-items: center;
     text-decoration: none;
-
-    /* Make sure the logo visually hugs the left edge of the column when it is the first item in the left column */
-    margin-inline: calc(-1 * var(--padding-inline-start));
 
     &[data-hidden-on-home-page] {
       display: none;
@@ -175,26 +176,6 @@
       "type": "range",
       "id": "padding-block-end",
       "label": "t:settings.bottom",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "padding-inline-start",
-      "label": "t:settings.left",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "padding-inline-end",
-      "label": "t:settings.right",
       "min": 0,
       "max": 100,
       "step": 1,

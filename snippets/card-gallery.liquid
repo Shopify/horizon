@@ -365,4 +365,43 @@
   [product-grid-view='zoom-out'] .card-gallery .slideshow-control {
     min-width: auto;
   }
+
+  ul[product-grid-view='zoom-out'] .product-grid__card .card-gallery {
+    display: block;
+  }
+
+  [product-grid-view='zoom-out']
+    .card-gallery
+    > :is(quick-add-component, .product-badges, slideshow-component > slideshow-controls) {
+    display: none;
+  }
+
+  ul[product-grid-view='zoom-out'] .card-gallery > img {
+    display: block;
+  }
+
+  .card-gallery slideshow-arrows .slideshow-control {
+    /* Align icons with quick-add button */
+    padding-inline: var(--padding-xl);
+
+    @container (max-width: 249px) {
+      padding-inline: 0 var(--padding-sm);
+    }
+  }
+
+  /*
+   * Card galleries preview the next or previous images on 'pointerenter', so we
+   * try to kick load them beforehand (they are lazy loaded otherwise).
+   */
+  .card-gallery
+    :is(
+      slideshow-slide:has(+ slideshow-slide[aria-hidden='false']),
+      slideshow-slide[aria-hidden='false'] + slideshow-slide
+    ) {
+    content-visibility: auto;
+
+    slideshow-component[actioned] & {
+      content-visibility: visible;
+    }
+  }
 {% endstylesheet %}

@@ -65,9 +65,16 @@
     "nested_product": "{{ product_title }} para {{ parent_title }}",
     "remove": "Remover",
     "view_pricing_info": "Ver informações sobre preços",
-    "open_hotspot": "Hotspot aberto",
     "slideshow": "Apresentação de diapositivos",
-    "header_navigation_label": "Principal"
+    "header_navigation_label": "Principal",
+    "home_logo_alt": "{{ store_name }} – Início",
+    "active_filters": "Filtros ativos:",
+    "featured_product": "Produto em destaque",
+    "product_details": "Detalhes do produto",
+    "show_product_details": "Mostrar detalhes do produto para {{ product_name }}",
+    "search_suggestions_available": "Sugestões de pesquisa disponíveis para \"{{ query }}\"",
+    "price_filter_low": "Preço baixo",
+    "price_filter_high": "Preço elevado"
   },
   "actions": {
     "add_to_cart": "Adicionar ao carrinho",
@@ -108,7 +115,9 @@
     "sign_up": "Registar-se",
     "sort": "Ordenar",
     "show_all_options": "Mostrar todas as opções",
-    "open": "Abrir"
+    "open": "Abrir",
+    "back_to": "Regressar a {{ title }}",
+    "zoom_media": "Ampliar conteúdo multimédia {{ index }}"
   },
   "content": {
     "reviews": "avaliações",
@@ -240,7 +249,7 @@
     "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }} caracteres utilizados",
     "terms_and_policies": "Termos e políticas",
     "pagination": {
-      "nav_label": "Navegação por paginação",
+      "nav_label": "Paginação",
       "previous": "Anterior",
       "next": "Seguinte",
       "page": "Página {{ page }}"
@@ -268,7 +277,8 @@
       "one": "1 item adicionado ao carrinho",
       "other": "{{ count }} itens adicionados ao carrinho",
       "many": "{{ count }} itens adicionados ao carrinho"
-    }
+    },
+    "quick_order_list": "Lista de encomendas rápidas"
   },
   "gift_cards": {
     "issued": {

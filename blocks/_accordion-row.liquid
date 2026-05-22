@@ -1,11 +1,6 @@
 {% assign block_settings = block.settings %}
 
-<accordion-custom
-  {% if block_settings.open_by_default %}
-    open-by-default-on-desktop
-    open-by-default-on-mobile
-  {% endif %}
->
+{% capture accordion_row_children %}
   <details
     class="details"
     data-testid="accordion-details"
@@ -34,7 +29,12 @@
       {% content_for 'blocks' %}
     </div>
   </details>
-</accordion-custom>
+{% endcapture %}
+{% render 'accordion-custom-component',
+  children: accordion_row_children,
+  open_by_default_on_desktop: block_settings.open_by_default,
+  open_by_default_on_mobile: block_settings.open_by_default
+%}
 
 {% stylesheet %}
   .details__icon {

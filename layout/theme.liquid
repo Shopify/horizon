@@ -14,6 +14,7 @@
       >
     {%- endif -%}
 
+    {% # theme-check-disable RemoteAsset %}
     {% comment %} This a way to wait for main content to load when navigating to a new page so that the view transitions can work consistently {% endcomment %}
     {% if settings.transition_to_main_product or settings.page_transition_enabled %}
       <link
@@ -36,6 +37,7 @@
     {% endif %}
 
     {{ content_for_header }}
+    {% # theme-check-enable RemoteAsset %}
   </head>
 
   <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
