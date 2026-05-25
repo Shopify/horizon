@@ -62,7 +62,6 @@
       "blocks": {
         "image_xMkR6a": {
           "type": "image",
-          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/Cala_Formentor_2.png",
             "link": "",
@@ -883,6 +882,7 @@
         "module_frame_border_width": 1,
         "show_scroll_prompt": false,
         "scroll_prompt_text": "Scroll down for more",
+        "scroll_frame_inset": 0,
         "padding-block-start": 40,
         "padding-block-end": 40
       }
