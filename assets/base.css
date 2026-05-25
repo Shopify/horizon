@@ -5281,7 +5281,7 @@ product-recommendations:has([data-has-recommendations='false']) {
   overflow: hidden; 
   padding: 8px !important; 
   margin: 64px auto !important;
-  border-radius: 0 !important;
+  border-radius: 16px !important;
 }
 
 .inner-padding .section-content-wrapper{
