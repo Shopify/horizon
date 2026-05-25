@@ -31,6 +31,15 @@ endfor
 
 **Pitfall:** If the nav item is not a page link, or the metafield is empty, the dropdown shows submenu links only (no cards).
 
+## Split header menu brackets (center logo)
+
+- When `logo_position: center` and `menu_position: split`, render `snippets/header-menu-bracket.liquid` **before** left menu and **after** right menu.
+- Gold frame tokens (`--cala-frame-color`, `--cala-frame-radius` in `assets/base.css`), same as `.header__logo-line` and hero scroll frame. Horizontal stroke aligned with center logo lines (`border-top` + `margin-top: calc(block / -2)`).
+- Outer vertical strokes sit at `--page-margin` (header row `section--full-width-margin`); hero scroll frame uses `--cala-frame-gutter-inline` so lines connect on the homepage.
+- Curve opens **upward**: left uses `border-left` + `border-top` + `border-start-start-radius`; right uses `border-right` + `border-top` + `border-start-end-radius`.
+- **Visible only** on homepage (`data-page-type="index"` on `#header-component`) and when scrolled to top (`data-scroll-direction="none"` from `assets/header.js`).
+- Desktop only (`min-width: 990px`).
+
 ## Split menu: left vs right styling
 
 - **Symptom:** Right dropdown looks different (wrong layout, off-screen, or `collection_images` instead of featured collections).
@@ -47,19 +56,9 @@ endfor
 ## Submenu height / first-open clipping
 
 - Open height is driven by JS (`assets/header-menu.js`): `--submenu-height` and `--full-open-header-height` feed `clip-path` on `.menu-list__submenu`.
-- **Symptom:** First hover clips the megamenu bottom; second hover or delayed remeasure looks correct.
-- **Causes:**
-  1. `--submenu-height` / `--full-open-header-height` still `0` on first paint while `clip-path` animates.
-  2. `content-visibility: auto` on closed submenus under-reports height if measured before `[data-active]`.
-  3. Async remeasure can **shrink** height mid-open before images/layout finish.
-- **Fix:**
-  - On `activate`, set `[data-active]`, **sync** measure + apply height, then start `ResizeObserver`.
-  - Only **grow** height during a single open (`appliedHeight`); use `{ force: true }` when closing or switching items.
-  - `#header-component[data-submenu-open]` before animating `clip-path` (default `transition: clip-path 0s` until set).
-  - `content-visibility: auto` only on submenus **without** `[data-active]`.
-  - Featured collections: measure submenu + inner + panel + cards; temporarily `transform: none` on inner while measuring.
-  - Megamenu card images: `image_loading: 'eager'` in `mega-menu-featured-collections.liquid`.
-  - Remeasure at 0 / 50 / 150 / 300 / 600ms and on image load.
+- Hidden submenus use `content-visibility: auto` without a fixed `contain-intrinsic-size` (a fixed 500px intrinsic size caused first-open clipping).
+- **Fix:** `ResizeObserver` on submenu, inner, and `.mega-menu-featured-collections`; remeasure on image `load`/`error`, `document.fonts.ready`, and delayed passes; measure `scrollHeight` / featured panel height, not stale `offsetHeight`.
+- **Do not** disable `clip-path` for featured collections without replacing the reveal system — dropdowns will not show.
 
 ## Featured collections panel: no scroll, compact cards
 

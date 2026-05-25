@@ -1,0 +1,10 @@
+{%- doc -%}
+  Decorative corner bracket for split header menus (inline with center logo lines).
+
+  @param {string} side - 'left' (before left menu) or 'right' (after right menu)
+{%- enddoc -%}
+
+<span
+  class="header__menu-bracket header__menu-bracket--{{ side | default: 'left' }}"
+  aria-hidden="true"
+></span>

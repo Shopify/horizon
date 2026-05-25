@@ -116,6 +116,9 @@
             {% when 'menu' %}
               {{ menu }}
             {% when 'menu_left' %}
+              {% if split_menu_enabled %}
+                {% render 'header-menu-bracket', side: 'left' %}
+              {% endif %}
               {{ menu_left }}
               {% if split_menu_enabled %}
                 <div class="header__logo-line" aria-hidden="true"></div>
@@ -125,6 +128,9 @@
                 <div class="header__logo-line" aria-hidden="true"></div>
               {% endif %}
               {{ menu_right }}
+              {% if split_menu_enabled %}
+                {% render 'header-menu-bracket', side: 'right' %}
+              {% endif %}
             {% when 'localization' %}
               {{ localization }}
             {% when 'search' %}

@@ -450,7 +450,7 @@
 
 <div
   id="Hero-{{ section.id }}"
-  class="hero color-{{ section.settings.color_scheme }}{% if section.blocks.size == 0 and section.settings.section_height == 'auto' %} hero--no-blocks-auto-height{% endif %}{% if section.settings.stack_media_on_mobile %} hero--stack-mobile{% endif %}{% if section.settings.enable_module_frame %} hero--module-frame{% endif %}{% if section.settings.enable_module_frame and section.settings.section_width == 'page-width' %} hero--module-frame-page{% endif %}"
+  class="hero color-{{ section.settings.color_scheme }}{% if section.blocks.size == 0 and section.settings.section_height == 'auto' %} hero--no-blocks-auto-height{% endif %}{% if section.settings.stack_media_on_mobile %} hero--stack-mobile{% endif %}{% if section.settings.enable_module_frame %} hero--module-frame{% endif %}{% if section.settings.enable_module_frame and section.settings.section_width == 'page-width' %} hero--module-frame-page{% endif %}{% if section.settings.show_scroll_prompt %} hero--scroll-frame{% endif %}"
   style="
     --hero-border-style: {{ section.settings.border }};
     --hero-border-width: {{ section.settings.border_width }}px;
@@ -458,6 +458,9 @@
     --hero-module-padding: {% if section.settings.enable_module_frame %}{{ section.settings.module_frame_padding }}px{% else %}0px{% endif %};
     --hero-module-radius: {{ section.settings.module_frame_radius }}px;
     --hero-module-border-width: {{ section.settings.module_frame_border_width }}px;
+    --hero-scroll-frame-inset-extra: {{ section.settings.scroll_frame_inset }}px;
+    --hero-scroll-frame-inset: calc(var(--cala-frame-gutter-inline) + var(--hero-scroll-frame-inset-extra));
+    --hero-scroll-frame-radius: var(--cala-frame-radius);
     --blur-opacity: {{ section.settings.reflection_opacity | divided_by: 100.0 }};
     {% if section.settings.section_height == 'custom' %}
       --hero-min-height: {{ section.settings.section_height_custom }}svh;
@@ -539,6 +542,7 @@
       {% content_for 'blocks' %}
     </div>
     {% if section.settings.show_scroll_prompt %}
+      <span class="hero__scroll-frame" aria-hidden="true"></span>
       <div class="hero__scroll-prompt" aria-hidden="true">
         <span class="hero__scroll-prompt-label">{{ section.settings.scroll_prompt_text }}</span>
         <span class="hero__scroll-prompt-line"></span>
@@ -610,9 +614,25 @@
   }
 
   @media screen and (min-width: 750px) {
-    .hero--module-frame .hero__container::after {
+    .hero--module-frame:not(.hero--scroll-frame) .hero__container::after {
       display: block;
     }
+  }
+
+  /* U-shaped inner frame when scroll prompt is on (no top border; connects to center line) */
+  .hero__scroll-frame {
+    position: absolute;
+    inset: var(--hero-scroll-frame-inset) var(--page-margin);
+    border: 1px solid var(--cala-frame-color);
+    border-top: none;
+    border-bottom-left-radius: var(--hero-scroll-frame-radius);
+    border-bottom-right-radius: var(--hero-scroll-frame-radius);
+    pointer-events: none;
+    z-index: var(--layer-raised);
+  }
+
+  .hero--scroll-frame.hero--module-frame .hero__container::after {
+    display: none;
   }
 
   .hero__content-wrapper.page-width {
@@ -630,7 +650,7 @@
     left: 50%;
     bottom: max(calc(var(--hero-module-padding) + var(--padding-lg)), var(--padding-lg));
     transform: translateX(-50%);
-    z-index: var(--layer-raised);
+    z-index: calc(var(--layer-raised) + 1);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -638,6 +658,14 @@
     text-align: center;
     color: inherit;
     pointer-events: none;
+  }
+
+  .hero--scroll-frame .hero__scroll-prompt {
+    bottom: 18px;
+  }
+
+  .hero--scroll-frame .hero__scroll-prompt-line {
+    margin-bottom: -1px;
   }
 
   .hero__scroll-prompt-label {
@@ -1366,6 +1394,18 @@
       "id": "scroll_prompt_text",
       "label": "Scroll prompt text",
       "default": "Scroll down for more",
+      "visible_if": "{{ section.settings.show_scroll_prompt }}"
+    },
+    {
+      "type": "range",
+      "id": "scroll_frame_inset",
+      "label": "Inner frame inset adjustment",
+      "info": "Added to the page margin so the frame aligns with header menu brackets.",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
       "visible_if": "{{ section.settings.show_scroll_prompt }}"
     },
     {

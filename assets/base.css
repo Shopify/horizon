@@ -13,6 +13,10 @@ body {
 }
 
 :root {
+  /* Shared gutter for header menu brackets + hero scroll frame (matches --page-margin) */
+  --cala-frame-gutter-inline: var(--page-margin, 16px);
+  --cala-frame-radius: 16px;
+  --cala-frame-color: #f4c077;
   --hover-lift-amount: 4px;
   --hover-scale-amount: 1.03;
   --hover-subtle-zoom-amount: 1.015;
