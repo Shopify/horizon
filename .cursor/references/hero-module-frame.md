@@ -20,6 +20,7 @@ When **Show scroll prompt** is enabled, add class `hero--scroll-frame` (independ
 - **Color:** `#f4c077`, same as scroll line.
 - **Inset:** `calc(var(--cala-frame-gutter-inline) + scroll_frame_inset)` — gutter matches header `section--full-width-margin` / `--page-margin` so vertical strokes align with `.header__menu-bracket` (16px mobile, 40px desktop). Optional `scroll_frame_inset` is an extra adjustment only (default `0`).
 - **Center line:** `.hero__scroll-prompt-line` sits above the bottom border at horizontal center (`z-index` above frame) so it meets the bottom stroke in a T junction.
+- **Mobile:** Frame hidden below `750px`; scroll prompt keeps default bottom spacing.
 - If both toggles are on, scroll frame wins; full `hero--module-frame` `::after` border is hidden.
 
 ## Reusable Footer Variation

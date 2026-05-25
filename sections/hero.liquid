@@ -621,6 +621,7 @@
 
   /* U-shaped inner frame when scroll prompt is on (no top border; connects to center line) */
   .hero__scroll-frame {
+    display: none;
     position: absolute;
     inset: var(--hero-scroll-frame-inset) var(--page-margin);
     border: 1px solid var(--cala-frame-color);
@@ -629,6 +630,12 @@
     border-bottom-right-radius: var(--hero-scroll-frame-radius);
     pointer-events: none;
     z-index: var(--layer-raised);
+  }
+
+  @media screen and (min-width: 750px) {
+    .hero__scroll-frame {
+      display: block;
+    }
   }
 
   .hero--scroll-frame.hero--module-frame .hero__container::after {
@@ -660,12 +667,14 @@
     pointer-events: none;
   }
 
-  .hero--scroll-frame .hero__scroll-prompt {
-    bottom: 18px;
-  }
+  @media screen and (min-width: 750px) {
+    .hero--scroll-frame .hero__scroll-prompt {
+      bottom: var(--hero-scroll-frame-inset);
+    }
 
-  .hero--scroll-frame .hero__scroll-prompt-line {
-    margin-bottom: -1px;
+    .hero--scroll-frame .hero__scroll-prompt-line {
+      margin-bottom: -1px;
+    }
   }
 
   .hero__scroll-prompt-label {
