@@ -48,7 +48,7 @@
 
       <button
         type="button"
-        class="sticky-add-to-cart__button add-to-cart-button button"
+        class="sticky-add-to-cart__button add-to-cart-button"
         ref="addToCartButton"
         on:click="/handleAddToCartClick"
         {% unless current_variant.available %}
@@ -198,6 +198,35 @@
   .sticky-add-to-cart__button {
     height: var(--height-buy-buttons);
     position: relative;
+     height: var(--height-buy-buttons);
+    position: relative;
+     --text-align: center;
+  align-content: center;
+  text-decoration: none;
+  text-align: var(--text-align);
+  color: var(--button-color);
+  appearance: none;
+  background-color: #F9D8AF;
+  border: none;
+  font-family: var(--font-paragraph--family);
+  font-style: var(--font-paragraph--style);
+  font-weight: var(--font-paragraph--weight);
+  font-size: 16px;
+  line-height: var(--font-paragraph--line-height);
+  margin-block: 0;
+  transition: color var(--animation-speed) var(--animation-easing),
+    box-shadow var(--animation-speed) var(--animation-easing),
+    background-color var(--animation-speed) var(--animation-easing);
+  cursor: pointer;
+  width: fit-content;
+  box-shadow: inset 0 0 0 var(--button-border-width) var(--button-border-color);
+  padding-block: var(--button-padding-block);
+  padding-inline: var(--button-padding-inline);
+  }
+
+  .sticky-add-to-cart__button:hover {
+    color: #ffffff !important;
+    background-color: #31331E;
   }
 
   /* Mobile adjustments */
