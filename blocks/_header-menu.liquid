@@ -445,6 +445,11 @@
     margin-inline: auto;
     /* Clip path starts at header height so it doesn't mess with the pointer events in the header */
     clip-path: rect(var(--header-height) 100% var(--full-open-header-height) 0); /* stylelint-disable-line */
+    transition: clip-path 0s; /* stylelint-disable-line */
+  }
+
+  #header-component[data-submenu-open] .menu-list__list-item:where(:not([slot='overflow'])) > .menu-list__submenu,
+  #header-component[data-submenu-open] .overflow-menu::part(overflow) {
     transition: clip-path var(--submenu-animation-speed) var(--ease-out-cubic); /* stylelint-disable-line */
   }
 
@@ -675,7 +680,9 @@
 
     @media screen and (min-width: 990px) {
       grid-template-columns: repeat(var(--menu-columns-desktop), minmax(0, 1fr));
+      padding: 2rem;
     }
+
   }
 
   .mega-menu__column {
@@ -707,12 +714,12 @@
   }
 
   .mega-menu-featured-collections {
-    --mega-featured-links-width: clamp(10rem, 18vw, 13.75rem);
-    --mega-featured-card-size: clamp(6.5rem, 9vw, 8.5rem);
+    --mega-featured-card-aspect-ratio: 4 / 5;
+    --mega-featured-card-title-inset: 12px;
 
     display: grid;
-    grid-template-columns: var(--mega-featured-links-width) minmax(0, 1fr);
-    gap: var(--gap-lg);
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: var(--gap-xl);
     width: 100%;
     align-items: start;
   }
@@ -721,6 +728,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--gap-md);
+    min-width: 0;
   }
 
   .mega-menu-featured-collections__links-list {
@@ -733,7 +741,13 @@
   }
 
   .mega-menu-featured-collections__link {
-    display: block;
+    --mega-menu-link-arrow-size: 21px;
+    --mega-menu-link-hover-duration: 0.5s;
+    --mega-menu-link-hover-easing: cubic-bezier(0.22, 1, 0.36, 1);
+
+    display: flex;
+    align-items: center;
+    gap: 0;
     width: 100%;
     padding: var(--padding-2xs) 0;
     color: var(--menu-child-font-color);
@@ -743,10 +757,54 @@
     font-size: var(--menu-child-font-size);
     line-height: var(--menu-child-font-line-height);
     text-transform: var(--menu-child-font-case);
+    transition: gap var(--mega-menu-link-hover-duration) var(--mega-menu-link-hover-easing);
   }
 
-  .mega-menu-featured-collections__link:hover {
+  .mega-menu-featured-collections__link .wrap-text {
+    min-width: 0;
+  }
+
+  .mega-menu-featured-collections__link-icon {
+    flex: 0 0 0;
+    display: flex;
+    align-items: center;
+    width: 0;
+    max-width: 0;
+    height: 8px;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+    transition:
+      max-width var(--mega-menu-link-hover-duration) var(--mega-menu-link-hover-easing),
+      opacity calc(var(--mega-menu-link-hover-duration) * 0.9) var(--mega-menu-link-hover-easing)
+        calc(var(--mega-menu-link-hover-duration) * 0.12);
+  }
+
+  .mega-menu-featured-collections__link-icon svg {
+    display: block;
+    flex-shrink: 0;
+    width: var(--mega-menu-link-arrow-size);
+    height: 8px;
+  }
+
+  .mega-menu-featured-collections__link:hover,
+  .mega-menu-featured-collections__link:focus-visible {
+    gap: var(--gap-sm);
     font-weight: 700;
+  }
+
+  .mega-menu-featured-collections__link:hover .mega-menu-featured-collections__link-icon,
+  .mega-menu-featured-collections__link:focus-visible .mega-menu-featured-collections__link-icon {
+    flex: 0 0 var(--mega-menu-link-arrow-size);
+    max-width: var(--mega-menu-link-arrow-size);
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mega-menu-featured-collections__link,
+    .mega-menu-featured-collections__link-icon {
+      transition: none;
+    }
   }
 
   .mega-menu-featured-collections__cta {
@@ -755,17 +813,81 @@
 
   .mega-menu-featured-collections__cards {
     display: grid;
-    grid-template-columns: repeat(3, var(--mega-featured-card-size));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--gap-md);
-    justify-content: end;
+    width: 100%;
+    min-width: 0;
   }
 
   .mega-menu-featured-collections__card {
     min-width: 0;
+    height: 100%;
   }
 
-  /* Mega menu resource cards: grid link (no absolute stretch), 16px image radius.
-     Collection cards: title + subtext sit on bottom of image (same grid cell as media). */
+  /* Featured collection cards: full-bleed image with title overlay at bottom */
+  .mega-menu-featured-collections .resource-card[data-resource-type='collection'] {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .mega-menu-featured-collections .resource-card[data-resource-type='collection'] .resource-card__link {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+  }
+
+  .mega-menu-featured-collections .resource-card[data-resource-type='collection'] .resource-card__media {
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    border-radius: 0;
+    overflow: hidden;
+  }
+
+  .mega-menu-featured-collections .resource-card[data-resource-type='collection'] .resource-card__image,
+  .mega-menu-featured-collections .resource-card[data-resource-type='collection'] .resource-card__image-placeholder {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: unset;
+    object-fit: cover;
+    border-radius: 0;
+  }
+
+  .mega-menu-featured-collections .resource-card[data-resource-type='collection'] .resource-card__content {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: end;
+    justify-self: stretch;
+    z-index: 1;
+    padding-inline: var(--mega-featured-card-title-inset);
+    padding-block-end: var(--mega-featured-card-title-inset);
+    padding-block-start: 2rem;
+    background: linear-gradient(to top, rgb(0 0 0 / 55%) 0%, rgb(0 0 0 / 25%) 45%, transparent 100%);
+    border-radius: 0;
+  }
+
+  .mega-menu-featured-collections .resource-card[data-resource-type='collection'] .resource-card__subtext {
+    display: none;
+  }
+
+  .mega-menu-featured-collections .resource-card[data-resource-type='collection'] .resource-card__title {
+    color: var(--color-white);
+    font-family: var(--font-h4--family);
+    font-size: 1vw;
+    line-height: var(--line-height--body-tight);
+    text-transform: uppercase;
+  }
+
+  /* Mega menu resource cards: shared base */
   .mega-menu .resource-card {
     --resource-card-corner-radius: 16px;
 
@@ -775,6 +897,8 @@
     grid-template-rows: auto auto;
     min-width: 0;
     height: auto;
+    opacity: 1;
+    animation: none;
   }
 
   .mega-menu .resource-card[data-resource-type='collection'],
@@ -819,7 +943,7 @@
     grid-row: 1;
     align-self: end;
     justify-self: stretch;
-    padding: var(--padding-2xs) var(--padding-2xs) var(--padding-xs);
+    padding: var(--padding-sm) var(--padding-xs) var(--padding-xs);
     padding-block-start: 1.5rem;
     background: var(--gradient-image-overlay);
     border-radius: 0 0 16px 16px;
@@ -858,24 +982,6 @@
   .mega-menu .resource-card__image--secondary {
     position: absolute;
     inset: 0;
-  }
-
-  .mega-menu-featured-collections .resource-card__media {
-    width: 100%;
-  }
-
-  .mega-menu-featured-collections .resource-card__image,
-  .mega-menu-featured-collections .resource-card__image-placeholder,
-  .mega-menu-featured-collections .resource-card__collection-image {
-    aspect-ratio: var(--resource-card-aspect-ratio, 1 / 1);
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-  }
-
-  .mega-menu-featured-collections .resource-card__title {
-    font-size: var(--font-size--xs);
-    line-height: var(--line-height--body-tight);
   }
 
   .mega-menu__content-list {
@@ -1113,31 +1219,16 @@
           "label": "t:options.auto"
         },
         {
-          "value": "16 / 9",
-          "label": "t:options.landscape"
+          "value": "4 / 5",
+          "label": "t:options.portrait"
         },
         {
           "value": "1 / 1",
           "label": "t:options.square"
         }
       ],
-      "default": "16 / 9",
+      "default": "4 / 5",
       "visible_if": "{{ block.settings.menu_style == 'featured_collections' }}"
-    },
-    {
-      "type": "collection",
-      "id": "featured_collection_1",
-      "label": "Featured collection 1"
-    },
-    {
-      "type": "collection",
-      "id": "featured_collection_2",
-      "label": "Featured collection 2"
-    },
-    {
-      "type": "collection",
-      "id": "featured_collection_3",
-      "label": "Featured collection 3"
     },
     {
       "type": "text",

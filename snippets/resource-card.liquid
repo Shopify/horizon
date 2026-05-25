@@ -9,9 +9,11 @@
   @param {string} [image_aspect_ratio] - The aspect ratio to display the image. Defaults to image's natural ratio
   @param {boolean} [image_hover] - Whether to show a secondary image on hover and focus
   @param {string} [image_sizes] - The sizes attribute for responsive images. Defaults to 'auto'
+  @param {string} [image_loading] - Image loading attribute. Defaults to 'lazy'
 {%- enddoc -%}
 
 {% liquid
+  assign image_loading = image_loading | default: 'lazy'
   if image_aspect_ratio == blank or image_aspect_ratio == 'adapt'
     assign ratio = resource.featured_image.aspect_ratio
   else
@@ -86,7 +88,7 @@
           featured_image
           | image_url: width: image_width
           | image_tag:
-            loading: 'lazy',
+            loading: image_loading,
             class: 'resource-card__image',
             widths: widths,
             sizes: image_sizes,
@@ -142,7 +144,7 @@
           featured_image
           | image_url: width: image_width
           | image_tag:
-            loading: 'lazy',
+            loading: image_loading,
             class: 'resource-card__image',
             widths: widths,
             sizes: image_sizes,

@@ -721,7 +721,7 @@
       .header__utilities-group {
       position: absolute;
       top: 35%;
-      inset-inline-end: var(--page-margin);
+      inset-inline-end: 0;
       transform: translateY(calc(-100% - var(--gap-2xs)));
       display: flex;
       flex-wrap: nowrap;
@@ -731,6 +731,8 @@
       gap: var(--gap-sm);
       z-index: 1;
       pointer-events: auto;
+      margin-right: var(--page-margin);
+      padding-right: var(--gap-xl);
     }
 
     #header-component[data-menu-position='split'][data-logo-position='center']
@@ -1029,17 +1031,17 @@
     }
   }
 
-  /* Optimize layout performance for hidden menus */
-  .header-menu .menu-list__submenu {
+  /* Hidden menus: skip layout until opened (no fixed intrinsic height — it clips megamenus on first open) */
+  .header-menu .menu-list__submenu:not([data-active]) {
     content-visibility: auto;
-    contain-intrinsic-size: 0px 500px;
   }
 
-  /* Force visibility when open/animating and in overflow submenu to prevent layout issues */
+  /* Force full layout while measuring / open so height matches content */
   .header-menu details[open] .menu-list__submenu,
   .header-menu .menu-list__submenu[data-active],
   .header-menu .menu-list__list-item[slot='overflow'] .menu-list__submenu {
     content-visibility: visible;
+    contain-intrinsic-size: unset;
   }
 
   /* Dropdown Localization Styles */

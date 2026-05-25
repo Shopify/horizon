@@ -123,12 +123,16 @@ class HeaderMenu extends Component {
     }
 
     if (submenu) {
-      // Mark submenu as active for content-visibility optimization
+      // Mark submenu active before measuring so content-visibility reports full height
       submenu.dataset.active = '';
-      this.#startSubmenuHeightTracking(submenu, { isDefaultSlot, hasSubmenu });
+      this.#stopSubmenuHeightTracking();
+      this.#flushSubmenuLayout(submenu);
+      const initialHeight = this.#calculateSubmenuHeight(submenu, { isDefaultSlot, hasSubmenu });
+      this.#applySubmenuHeight(initialHeight, { force: true });
+      this.#startSubmenuHeightTracking(submenu, { isDefaultSlot, hasSubmenu }, initialHeight);
     } else {
       this.#stopSubmenuHeightTracking();
-      this.#applySubmenuHeight(0);
+      this.#applySubmenuHeight(0, { force: true });
     }
 
     this.style.setProperty('--submenu-opacity', '1');
@@ -177,7 +181,7 @@ class HeaderMenu extends Component {
     if (this.overflowListHovered || this.overflowMenu?.matches(':hover')) return;
 
     this.#stopSubmenuHeightTracking();
-    this.#applySubmenuHeight(0);
+    this.#applySubmenuHeight(0, { force: true });
     this.style.setProperty('--submenu-opacity', '0');
     this.dataset.overflowExpanded = 'false';
 
@@ -254,11 +258,20 @@ class HeaderMenu extends Component {
    * @param {HTMLElement} submenu
    * @param {{ isDefaultSlot: boolean; hasSubmenu: boolean }} context
    */
-  #startSubmenuHeightTracking(submenu, context) {
-    this.#stopSubmenuHeightTracking();
-    this.#submenuMeasurementContext = { submenu, ...context };
+  /**
+   * @param {HTMLElement} submenu
+   * @param {{ isDefaultSlot: boolean; hasSubmenu: boolean }} context
+   * @param {number} [initialHeight]
+   */
+  #startSubmenuHeightTracking(submenu, context, initialHeight = 0) {
+    this.#submenuMeasurementContext = {
+      submenu,
+      ...context,
+      appliedHeight: Math.max(0, initialHeight),
+    };
 
     const scheduleMeasure = () => {
+      this.#flushSubmenuLayout(submenu);
       requestAnimationFrame(() => {
         requestAnimationFrame(() => this.#measureAndApplySubmenuHeight());
       });
@@ -272,6 +285,16 @@ class HeaderMenu extends Component {
       this.#submenuResizeObserver.observe(submenuInner);
     }
 
+    const featuredCollections = submenu.querySelector('.mega-menu-featured-collections');
+    if (featuredCollections instanceof HTMLElement) {
+      this.#submenuResizeObserver.observe(featuredCollections);
+    }
+
+    const cards = featuredCollections?.querySelector('.mega-menu-featured-collections__cards');
+    if (cards instanceof HTMLElement) {
+      this.#submenuResizeObserver.observe(cards);
+    }
+
     this.#watchSubmenuImages(submenu, scheduleMeasure);
     document.fonts?.ready?.then(() => {
       if (this.#submenuMeasurementContext?.submenu === submenu) {
@@ -280,6 +303,29 @@ class HeaderMenu extends Component {
     });
 
     scheduleMeasure();
+    window.setTimeout(scheduleMeasure, 0);
+    window.setTimeout(scheduleMeasure, 50);
+    window.setTimeout(scheduleMeasure, 150);
+    window.setTimeout(scheduleMeasure, 300);
+    window.setTimeout(scheduleMeasure, 600);
+  }
+
+  /**
+   * Force layout so content-visibility and images report full dimensions before measuring.
+   * @param {HTMLElement} submenu
+   */
+  #flushSubmenuLayout(submenu) {
+    void submenu.offsetHeight;
+    const submenuInner = submenu.querySelector('.menu-list__submenu-inner');
+    if (submenuInner instanceof HTMLElement) {
+      void submenuInner.offsetHeight;
+      void submenuInner.scrollHeight;
+    }
+    const featuredCollections = submenu.querySelector('.mega-menu-featured-collections');
+    if (featuredCollections instanceof HTMLElement) {
+      void featuredCollections.offsetHeight;
+      void featuredCollections.scrollHeight;
+    }
   }
 
   #stopSubmenuHeightTracking() {
@@ -292,18 +338,38 @@ class HeaderMenu extends Component {
     const context = this.#submenuMeasurementContext;
     if (!context || !this.headerComponent) return;
 
-    const finalHeight = this.#calculateSubmenuHeight(context.submenu, context);
-    this.#applySubmenuHeight(finalHeight);
+    const measuredHeight = this.#calculateSubmenuHeight(context.submenu, context);
+    const appliedHeight = context.appliedHeight || 0;
+
+    // Avoid shrinking mid-open when layout is still settling (fixes first-open clip)
+    if (measuredHeight <= appliedHeight - 2) return;
+
+    context.appliedHeight = measuredHeight;
+    this.#applySubmenuHeight(measuredHeight);
   }
 
   /**
    * @param {number} submenuHeight
+   * @param {{ force?: boolean }} [options]
    */
-  #applySubmenuHeight(submenuHeight) {
+  #applySubmenuHeight(submenuHeight, { force = false } = {}) {
     if (!this.headerComponent) return;
+
+    const context = this.#submenuMeasurementContext;
+    if (!force && context && submenuHeight > 0) {
+      submenuHeight = Math.max(context.appliedHeight || 0, submenuHeight);
+      context.appliedHeight = submenuHeight;
+    }
 
     this.headerComponent.style.setProperty('--submenu-height', `${submenuHeight}px`);
     this.#setFullOpenHeaderHeight(submenuHeight);
+
+    if (submenuHeight > 0) {
+      this.headerComponent.dataset.submenuOpen = '';
+    } else {
+      delete this.headerComponent.dataset.submenuOpen;
+      if (context) context.appliedHeight = 0;
+    }
   }
 
   /**
@@ -326,9 +392,48 @@ class HeaderMenu extends Component {
 
     const submenuInner = submenu.querySelector('.menu-list__submenu-inner');
     const measuredElement = submenuInner instanceof HTMLElement ? submenuInner : submenu;
-    const contentHeight = Math.ceil(measuredElement.getBoundingClientRect().height);
 
-    return Math.max(contentHeight, submenu.offsetHeight);
+    const featuredCollections = submenu.querySelector('.mega-menu-featured-collections');
+    if (featuredCollections instanceof HTMLElement) {
+      const savedTransform =
+        measuredElement instanceof HTMLElement ? measuredElement.style.transform : '';
+      if (measuredElement instanceof HTMLElement) {
+        measuredElement.style.transform = 'none';
+      }
+
+      const heights = [
+        submenu.scrollHeight,
+        submenu.offsetHeight,
+        submenu.getBoundingClientRect().height,
+        featuredCollections.scrollHeight,
+        featuredCollections.offsetHeight,
+        featuredCollections.getBoundingClientRect().height,
+        measuredElement.scrollHeight,
+        measuredElement.getBoundingClientRect().height,
+      ];
+
+      const cards = featuredCollections.querySelector('.mega-menu-featured-collections__cards');
+      if (cards instanceof HTMLElement) {
+        heights.push(cards.scrollHeight, cards.offsetHeight, cards.getBoundingClientRect().height);
+      }
+
+      if (measuredElement instanceof HTMLElement) {
+        const submenuStyles = getComputedStyle(measuredElement);
+        const paddingBlock =
+          Number.parseFloat(submenuStyles.paddingBlockStart) + Number.parseFloat(submenuStyles.paddingBlockEnd);
+        if (paddingBlock > 0) {
+          heights.push(measuredElement.scrollHeight + paddingBlock);
+        }
+        measuredElement.style.transform = savedTransform;
+      }
+
+      return Math.ceil(Math.max(...heights.filter((height) => height > 0)));
+    }
+
+    const contentHeight = Math.ceil(measuredElement.getBoundingClientRect().height);
+    const scrollHeight = measuredElement.scrollHeight;
+
+    return Math.max(contentHeight, scrollHeight);
   }
 
   /**

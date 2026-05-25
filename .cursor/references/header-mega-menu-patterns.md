@@ -3,25 +3,33 @@
 - Use a dedicated snippet for complex submenu layouts to avoid branching and regressions in `snippets/mega-menu-list.liquid`.
 - For a featured-collections mega menu variant, render two columns:
   - left: stacked submenu links (plus optional CTA below)
-  - right: fixed featured collection cards chosen from block settings
+  - right: featured collection cards from the **parent link's page metafield**
 - Route layout selection from `blocks/_header-menu.liquid` using `menu_style` so existing submenu modes (`text`, `collection_images`, `featured_products`) remain unchanged.
 
-## Per-dropdown blocks (split or single menu)
+## Featured collection cards (page metafield)
 
-The header has separate menu blocks (e.g. **Menu left**, **Menu right**, mobile). Add child blocks only under the menu half that owns the link.
+When **Media type** is **Featured collections**, cards in `snippets/mega-menu-featured-collections.liquid` come from the top-level menu link's destination page — not header block settings.
 
-- Block type: **`_header-menu-dropdown`** (“Menu dropdown”) — legacy type `_header-menu-mega-menu` still matches.
-- **Menu item position** (1, 2, 3…): counts top-level links in **that** menu block only (left half or right half of split nav). Primary way to assign a dropdown.
-- Optional overrides: **menu item handle** or **exact menu title**.
-- Each dropdown block: up to 3 featured **cards**, each **Collection** or **Page**, plus CTA and optional image ratio.
-- Parent menu **Media type** must be **Featured collections**.
-- Parent “Default featured collection” settings are fallbacks when no matching dropdown block or an empty card slot.
+| Source | Key |
+|--------|-----|
+| Page metafield | `custom.megamenu_featured_collections` (list of collection references) |
 
-### Example (split menu, 3 left + 1 right dropdown)
+```liquid
+assign parent_page = parent_link.object
+assign featured = parent_page.metafields.custom.megamenu_featured_collections.value
+for collection in featured
+  render resource-card ...
+endfor
+```
 
-1. **Menu left** → add 3 “Menu dropdown” blocks with positions 1, 2, 3 and different cards/CTAs.
-2. **Menu right** → add 1 “Menu dropdown” block with position 1.
-3. Set both menus’ media type to **Featured collections**.
+**Setup:**
+
+1. Create page metafield definition: namespace `custom`, key `megamenu_featured_collections`, type **List of collections**.
+2. On each landing page (e.g. The Land), add the collections to show in that page's megamenu dropdown.
+3. The main nav item must link to that page (`page_link` type).
+4. Header menu block → **Media type** = **Featured collections**. CTA label/link still come from the menu block settings.
+
+**Pitfall:** If the nav item is not a page link, or the metafield is empty, the dropdown shows submenu links only (no cards).
 
 ## Split menu: left vs right styling
 
@@ -39,8 +47,19 @@ The header has separate menu blocks (e.g. **Menu left**, **Menu right**, mobile)
 ## Submenu height / first-open clipping
 
 - Open height is driven by JS (`assets/header-menu.js`): `--submenu-height` and `--full-open-header-height` feed `clip-path` on `.menu-list__submenu`.
-- Hidden submenus use `content-visibility: auto` and `contain-intrinsic-size: 0px 500px` (`sections/header.liquid`). **Pitfall:** measuring `offsetHeight` once on first open can lock in ~500px before images/fonts layout; the panel bottom looks clipped until a second hover.
-- **Fix:** `ResizeObserver` on the submenu + `.menu-list__submenu-inner`, remeasure on image `load`/`error` and `document.fonts.ready`. Measure visible height via `getBoundingClientRect().height`, not `scrollHeight` (inner has `max-height: 80vh`).
+- **Symptom:** First hover clips the megamenu bottom; second hover or delayed remeasure looks correct.
+- **Causes:**
+  1. `--submenu-height` / `--full-open-header-height` still `0` on first paint while `clip-path` animates.
+  2. `content-visibility: auto` on closed submenus under-reports height if measured before `[data-active]`.
+  3. Async remeasure can **shrink** height mid-open before images/layout finish.
+- **Fix:**
+  - On `activate`, set `[data-active]`, **sync** measure + apply height, then start `ResizeObserver`.
+  - Only **grow** height during a single open (`appliedHeight`); use `{ force: true }` when closing or switching items.
+  - `#header-component[data-submenu-open]` before animating `clip-path` (default `transition: clip-path 0s` until set).
+  - `content-visibility: auto` only on submenus **without** `[data-active]`.
+  - Featured collections: measure submenu + inner + panel + cards; temporarily `transform: none` on inner while measuring.
+  - Megamenu card images: `image_loading: 'eager'` in `mega-menu-featured-collections.liquid`.
+  - Remeasure at 0 / 50 / 150 / 300 / 600ms and on image load.
 
 ## Featured collections panel: no scroll, compact cards
 
@@ -49,8 +68,8 @@ The header has separate menu blocks (e.g. **Menu left**, **Menu right**, mobile)
 - **Fix:** For featured collections only:
   - `.menu-list__submenu-inner:has(.mega-menu-featured-collections)` → `max-height: none; overflow: visible`
   - Tighter submenu padding (`--padding-lg` instead of `--padding-3xl`)
-  - Cards: `--mega-featured-card-size: clamp(6.5rem, 9vw, 8.5rem)` in a 3-column grid (not `1fr` stretch)
-  - Respect `--resource-card-aspect-ratio` from block settings (remove hardcoded `4 / 5` override)
+- Cards area uses **60%** of megamenu width (`grid-template-columns: 2fr 3fr`); links use **40%**.
+- Cards: full-bleed collection featured image (`collection_thumbnails: 'single'`), title overlaid at bottom with gradient. Aspect ratio from menu block **Image ratio** (default `4 / 5`).
 - Other menu styles (collection images, products) keep the scroll cap.
 
 ## Resource cards in the mega menu
@@ -58,3 +77,10 @@ The header has separate menu blocks (e.g. **Menu left**, **Menu right**, mobile)
 - Collection cards use **default** `resource-card` markup (not `overlay`) so layout stays in the submenu flow and avoids clipping.
 - `blocks/_header-menu.liquid` uses **CSS grid**: full-card hit target without an absolutely positioned link; **16px** image radius; collection grids use `minmax(0, 1fr)`.
 - **Collection titles** sit **on the image** again: `__media` and `__content` share the same grid cell (`[data-resource-type='collection']`), with `__content` `align-self: end`, `var(--gradient-image-overlay)`, and white title/subtext—no `position: absolute` on the card shell.
+- Use `collection_thumbnails: 'multiple'` when rendering cards; set `.mega-menu .resource-card { opacity: 1; animation: none; }` so fade-in does not leave cards at opacity 0.
+
+## Megamenu link hover arrow
+
+- **Default:** Links left-aligned; arrow icon collapsed (`max-width: 0`, `opacity: 0`) in a flex row so labels share one edge.
+- **Hover:** Animate `gap` + arrow `max-width` (~`0.5s`, `cubic-bezier(0.22, 1, 0.36, 1)`); arrow opacity fades in with a short delay so text does not slide over the icon mid-transition.
+- **Avoid:** `padding-inline-start` + absolutely positioned arrow — padding and opacity at the same speed causes overlap and a jolt. Do not transition `font-weight`.
