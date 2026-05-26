@@ -1,0 +1,184 @@
+/*
+ * Ornevo button system
+ * Variants: primary (fill slide), secondary (outline → fill), tertiary (animated underline)
+ * Ref: ADR-0001
+ */
+
+.ornevo-btn {
+  --ornevo-primary: #0d4f4a;
+  --ornevo-secondary-01: #103229;
+  --ornevo-secondary-02: #3e8f87;
+  --ornevo-neutral-01: #ffffff;
+  --ornevo-cream: #f2ede3;
+  --ornevo-btn-radius: 9999px;
+  --ornevo-btn-transition: 360ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  font-family: var(--font-body--family, 'DM Sans', system-ui, sans-serif);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  border: 0;
+  border-radius: var(--ornevo-btn-radius);
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color var(--ornevo-btn-transition), border-color var(--ornevo-btn-transition);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ornevo-btn:focus-visible {
+  outline: 2px solid var(--ornevo-secondary-02);
+  outline-offset: 3px;
+}
+
+.ornevo-btn:disabled,
+.ornevo-btn[aria-disabled='true'] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ---------- Primary: fill slide from bottom (avvign-inspired) ---------- */
+.ornevo-btn--primary {
+  background-color: var(--ornevo-primary);
+  color: var(--ornevo-neutral-01);
+}
+
+.ornevo-btn--primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: var(--ornevo-secondary-01);
+  transform: translateY(100%);
+  transition: transform var(--ornevo-btn-transition);
+  z-index: -1;
+}
+
+.ornevo-btn--primary:hover::before,
+.ornevo-btn--primary:focus-visible::before {
+  transform: translateY(0);
+}
+
+/* ---------- Secondary: outline → fill from left ---------- */
+.ornevo-btn--secondary {
+  background-color: transparent;
+  color: var(--ornevo-primary);
+  border: 2px solid var(--ornevo-primary);
+  padding: calc(0.875rem - 2px) calc(1.75rem - 2px);
+}
+
+.ornevo-btn--secondary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: var(--ornevo-primary);
+  transform: translateX(-100%);
+  transition: transform var(--ornevo-btn-transition);
+  z-index: -1;
+}
+
+.ornevo-btn--secondary:hover,
+.ornevo-btn--secondary:focus-visible {
+  color: var(--ornevo-neutral-01);
+}
+
+.ornevo-btn--secondary:hover::before,
+.ornevo-btn--secondary:focus-visible::before {
+  transform: translateX(0);
+}
+
+/* ---------- Tertiary: text + underline grows from center (davidicus #4) ---------- */
+.ornevo-btn--tertiary {
+  background-color: transparent;
+  color: var(--ornevo-primary);
+  padding: 0.5rem 0.25rem;
+  border-radius: 0;
+  overflow: visible;
+  isolation: auto;
+}
+
+.ornevo-btn--tertiary::after {
+  content: '';
+  position: absolute;
+  left: 0.25rem;
+  right: 0.25rem;
+  bottom: 0.35rem;
+  height: 1.5px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform var(--ornevo-btn-transition);
+}
+
+.ornevo-btn--tertiary:hover::after,
+.ornevo-btn--tertiary:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.ornevo-btn--tertiary:focus-visible {
+  outline-offset: 4px;
+}
+
+/* ---------- On dark backgrounds: flip primary to white-with-green-text ---------- */
+.color-scheme-3 .ornevo-btn--primary,
+.color-scheme-4 .ornevo-btn--primary,
+.color-scheme-6 .ornevo-btn--primary {
+  background-color: var(--ornevo-neutral-01);
+  color: var(--ornevo-primary);
+}
+
+.color-scheme-3 .ornevo-btn--primary::before,
+.color-scheme-4 .ornevo-btn--primary::before,
+.color-scheme-6 .ornevo-btn--primary::before {
+  background-color: var(--ornevo-cream);
+}
+
+.color-scheme-3 .ornevo-btn--primary:hover,
+.color-scheme-4 .ornevo-btn--primary:hover,
+.color-scheme-6 .ornevo-btn--primary:hover,
+.color-scheme-3 .ornevo-btn--primary:focus-visible,
+.color-scheme-4 .ornevo-btn--primary:focus-visible,
+.color-scheme-6 .ornevo-btn--primary:focus-visible {
+  color: var(--ornevo-secondary-01);
+}
+
+.color-scheme-3 .ornevo-btn--secondary,
+.color-scheme-4 .ornevo-btn--secondary,
+.color-scheme-6 .ornevo-btn--secondary {
+  color: var(--ornevo-neutral-01);
+  border-color: var(--ornevo-neutral-01);
+}
+
+.color-scheme-3 .ornevo-btn--secondary::before,
+.color-scheme-4 .ornevo-btn--secondary::before,
+.color-scheme-6 .ornevo-btn--secondary::before {
+  background-color: var(--ornevo-neutral-01);
+}
+
+.color-scheme-3 .ornevo-btn--secondary:hover,
+.color-scheme-4 .ornevo-btn--secondary:hover,
+.color-scheme-6 .ornevo-btn--secondary:hover {
+  color: var(--ornevo-primary);
+}
+
+.color-scheme-3 .ornevo-btn--tertiary,
+.color-scheme-4 .ornevo-btn--tertiary,
+.color-scheme-6 .ornevo-btn--tertiary {
+  color: var(--ornevo-neutral-01);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ornevo-btn,
+  .ornevo-btn::before,
+  .ornevo-btn::after {
+    transition-duration: 0ms;
+  }
+}

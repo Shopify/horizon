@@ -1,0 +1,308 @@
+{%- liquid
+  assign slide_index = block.shopify_attributes | split: 'data-shopify-block-id="' | last | split: '"' | first
+  assign has_video_desktop = false
+  assign has_video_mobile  = false
+  assign has_image_desktop = false
+  assign has_image_mobile  = false
+
+  if block.settings.image_desktop != blank
+    assign has_image_desktop = true
+  endif
+  if block.settings.image_mobile != blank
+    assign has_image_mobile = true
+  endif
+  if block.settings.youtube_desktop != blank
+    assign has_video_desktop = true
+  endif
+  if block.settings.youtube_mobile != blank
+    assign has_video_mobile = true
+  endif
+
+  assign has_title = false
+  if block.settings.title != blank
+    assign has_title = true
+  endif
+  assign has_media = false
+  if has_video_desktop or has_image_desktop
+    assign has_media = true
+  endif
+  assign render_slide = false
+  if has_title and has_media
+    assign render_slide = true
+  endif
+
+  assign yt_desktop_id = ''
+  if has_video_desktop
+    assign yt_desktop_id = block.settings.youtube_desktop | split: 'v=' | last | split: '&' | first | split: '/' | last
+  endif
+  assign yt_mobile_id = ''
+  if has_video_mobile
+    assign yt_mobile_id = block.settings.youtube_mobile | split: 'v=' | last | split: '&' | first | split: '/' | last
+  endif
+
+  assign heading_tag = 'h2'
+  if forloop.first or block.settings.is_first_slide
+    assign heading_tag = 'h1'
+  endif
+
+  assign overlay = block.settings.overlay_opacity | default: 0 | times: 1
+  assign overlay_start = block.settings.overlay_color_start | default: '#0F1720'
+  assign overlay_end   = block.settings.overlay_color_end   | default: '#0D4F4A'
+-%}
+
+{%- if render_slide -%}
+  <div
+    class="orn-hero__slide"
+    :class="{ 'is-active': active === {{ forloop.index0 }} }"
+    data-slide-index="{{ forloop.index0 }}"
+    data-has-video="{% if has_video_desktop %}true{% else %}false{% endif %}"
+    data-yt-desktop="{{ yt_desktop_id }}"
+    data-yt-mobile="{{ yt_mobile_id }}"
+    role="group"
+    aria-roledescription="slide"
+    aria-label="Slide {{ forloop.index }}"
+    {{ block.shopify_attributes }}
+  >
+    <div class="orn-hero__media" aria-hidden="true">
+      {%- if has_video_desktop -%}
+        <div
+          class="orn-hero__video orn-hero__video--desktop"
+          x-show="active === {{ forloop.index0 }}"
+          x-ref="videoDesktop{{ forloop.index0 }}"
+        ></div>
+      {%- endif -%}
+      {%- if has_video_mobile -%}
+        <div
+          class="orn-hero__video orn-hero__video--mobile"
+          x-show="active === {{ forloop.index0 }}"
+          x-ref="videoMobile{{ forloop.index0 }}"
+        ></div>
+      {%- endif -%}
+
+      {%- if has_image_desktop -%}
+        <img
+          class="orn-hero__image orn-hero__image--desktop"
+          src="{{ block.settings.image_desktop | image_url: width: 2400 }}"
+          srcset="
+            {{ block.settings.image_desktop | image_url: width: 800 }} 800w,
+            {{ block.settings.image_desktop | image_url: width: 1200 }} 1200w,
+            {{ block.settings.image_desktop | image_url: width: 1800 }} 1800w,
+            {{ block.settings.image_desktop | image_url: width: 2400 }} 2400w
+          "
+          sizes="100vw"
+          alt=""
+          loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+          width="{{ block.settings.image_desktop.width }}"
+          height="{{ block.settings.image_desktop.height }}"
+        >
+      {%- endif -%}
+
+      {%- if has_image_mobile -%}
+        <img
+          class="orn-hero__image orn-hero__image--mobile"
+          src="{{ block.settings.image_mobile | image_url: width: 1200 }}"
+          srcset="
+            {{ block.settings.image_mobile | image_url: width: 600 }} 600w,
+            {{ block.settings.image_mobile | image_url: width: 900 }} 900w,
+            {{ block.settings.image_mobile | image_url: width: 1200 }} 1200w
+          "
+          sizes="100vw"
+          alt=""
+          loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+          width="{{ block.settings.image_mobile.width }}"
+          height="{{ block.settings.image_mobile.height }}"
+        >
+      {%- endif -%}
+
+      {%- if overlay > 0 -%}
+        <div
+          class="orn-hero__overlay"
+          style="--orn-overlay-opacity: {{ overlay | divided_by: 100.0 }};
+                 --orn-overlay-start: {{ overlay_start }};
+                 --orn-overlay-end: {{ overlay_end }};"
+        ></div>
+      {%- endif -%}
+    </div>
+
+    <div class="orn-hero__content">
+      <{{ heading_tag }} class="orn-hero__title">{{ block.settings.title }}</{{ heading_tag }}>
+      {%- if block.settings.description != blank -%}
+        <div class="orn-hero__description rte">{{ block.settings.description }}</div>
+      {%- endif -%}
+
+      <div class="orn-hero__ctas">
+        {%- render 'orn-hero-cta',
+          text: block.settings.cta1_text,
+          url: block.settings.cta1_url,
+          variant: block.settings.cta1_variant,
+          new_tab: block.settings.cta1_new_tab,
+          icon: block.settings.cta1_icon_svg,
+          extra_class: 'orn-hero__cta orn-hero__cta--1'
+        -%}
+        {%- render 'orn-hero-cta',
+          text: block.settings.cta2_text,
+          url: block.settings.cta2_url,
+          variant: block.settings.cta2_variant,
+          new_tab: block.settings.cta2_new_tab,
+          icon: block.settings.cta2_icon_svg,
+          extra_class: 'orn-hero__cta orn-hero__cta--2'
+        -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Ornevo hero slide",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Contenido"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "label": "Título",
+      "info": "Obligatorio. En el primer slide se renderiza como H1."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Descripción",
+      "info": "Máx. 3 líneas en escritorio, 5 en móvil."
+    },
+    {
+      "type": "header",
+      "content": "Overlay"
+    },
+    {
+      "type": "number",
+      "id": "overlay_opacity",
+      "label": "Opacidad del overlay (0-100)",
+      "info": "Vacío o 0 = sin overlay."
+    },
+    {
+      "type": "color",
+      "id": "overlay_color_start",
+      "label": "Color inicio del gradiente",
+      "default": "#0F1720"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color_end",
+      "label": "Color fin del gradiente",
+      "default": "#0D4F4A"
+    },
+    {
+      "type": "header",
+      "content": "Video YouTube"
+    },
+    {
+      "type": "video_url",
+      "id": "youtube_desktop",
+      "label": "Video escritorio (YouTube 16:9)",
+      "accept": ["youtube"]
+    },
+    {
+      "type": "video_url",
+      "id": "youtube_mobile",
+      "label": "Video móvil (YouTube 4:5)",
+      "accept": ["youtube"]
+    },
+    {
+      "type": "header",
+      "content": "Imagen fallback"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_desktop",
+      "label": "Imagen escritorio (16:9)",
+      "info": "Obligatoria si no hay video de escritorio."
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Imagen móvil (4:3)",
+      "info": "Opcional. Si está vacía se usa la de escritorio recortada."
+    },
+    {
+      "type": "header",
+      "content": "CTA 1"
+    },
+    {
+      "type": "text",
+      "id": "cta1_text",
+      "label": "Texto CTA 1"
+    },
+    {
+      "type": "url",
+      "id": "cta1_url",
+      "label": "URL CTA 1"
+    },
+    {
+      "type": "textarea",
+      "id": "cta1_icon_svg",
+      "label": "Icono SVG (raw)"
+    },
+    {
+      "type": "select",
+      "id": "cta1_variant",
+      "label": "Estilo CTA 1",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "tertiary", "label": "Tertiary" }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "checkbox",
+      "id": "cta1_new_tab",
+      "label": "Abrir en nueva pestaña",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "CTA 2"
+    },
+    {
+      "type": "text",
+      "id": "cta2_text",
+      "label": "Texto CTA 2"
+    },
+    {
+      "type": "url",
+      "id": "cta2_url",
+      "label": "URL CTA 2"
+    },
+    {
+      "type": "textarea",
+      "id": "cta2_icon_svg",
+      "label": "Icono SVG (raw)"
+    },
+    {
+      "type": "select",
+      "id": "cta2_variant",
+      "label": "Estilo CTA 2",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "tertiary", "label": "Tertiary" }
+      ],
+      "default": "secondary"
+    },
+    {
+      "type": "checkbox",
+      "id": "cta2_new_tab",
+      "label": "Abrir en nueva pestaña",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ornevo hero slide"
+    }
+  ]
+}
+{% endschema %}

@@ -278,6 +278,20 @@
   defer="defer"
 ></script>
 
+{%- comment -%} Ornevo — Alpine.js + components. Order matters: register components before Alpine boots. {%- endcomment -%}
+<script
+  src="{{ 'orn-hero.js' | asset_url }}"
+  defer="defer"
+></script>
+<script
+  src="{{ 'orn-services.js' | asset_url }}"
+  defer="defer"
+></script>
+<script
+  src="{{ 'alpine.min.js' | asset_url }}"
+  defer="defer"
+></script>
+
 <script>
   const Theme = {
     translations: {

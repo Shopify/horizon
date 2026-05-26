@@ -1,0 +1,127 @@
+{%- liquid
+  assign valid_blocks_count = 0
+  for block in section.blocks
+    if block.settings.title != blank
+      if block.settings.image_desktop != blank or block.settings.youtube_desktop != blank
+        assign valid_blocks_count = valid_blocks_count | plus: 1
+      endif
+    endif
+  endfor
+
+  assign autoplay_ms = section.settings.autoplay_interval | default: 0 | times: 1
+  assign anchor_id = section.settings.anchor_id | handleize | default: section.id
+  assign color_scheme = section.settings.color_scheme | default: 'scheme-3'
+-%}
+
+{%- if valid_blocks_count > 0 -%}
+  <section
+    id="{{ anchor_id }}"
+    class="orn-hero color-{{ color_scheme }} gradient"
+    data-section-id="{{ section.id }}"
+    aria-roledescription="carousel"
+    aria-label="{{ section.settings.aria_label | default: 'Hero carousel' | escape }}"
+    x-data="ornHero({
+      total: {{ valid_blocks_count }},
+      autoplayMs: {{ autoplay_ms }}
+    })"
+    x-init="init()"
+    @mouseenter="pauseAutoplay()"
+    @mouseleave="resumeAutoplay()"
+  >
+    <div class="orn-hero__slides" aria-live="polite">
+      {% content_for 'blocks' %}
+    </div>
+
+    {%- if valid_blocks_count > 1 -%}
+      <div class="orn-hero__nav" role="tablist" aria-label="Hero slides navigation">
+        {%- for i in (1..valid_blocks_count) -%}
+          {%- assign idx = forloop.index0 -%}
+          <button
+            type="button"
+            class="orn-hero__dot"
+            :class="{ 'is-active': active === {{ idx }} }"
+            :aria-selected="active === {{ idx }}"
+            role="tab"
+            aria-label="Ir a slide {{ forloop.index }}"
+            @click="goTo({{ idx }})"
+          >
+            <span class="orn-hero__dot-track">
+              <span
+                class="orn-hero__dot-fill"
+                :style="active === {{ idx }} && autoplayMs > 0 && playing ? `animation-duration: ${autoplayMs}ms` : ''"
+              ></span>
+            </span>
+          </button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <button
+      type="button"
+      class="orn-hero__play"
+      x-show="hasActiveVideo"
+      @click="togglePlay()"
+      :aria-label="playing ? 'Pausar video' : 'Reproducir video'"
+    >
+      <span class="orn-hero__play-rings" aria-hidden="true">
+        <span class="orn-hero__play-ring"></span>
+        <span class="orn-hero__play-ring"></span>
+        <span class="orn-hero__play-ring"></span>
+      </span>
+      <span class="orn-hero__play-icon" aria-hidden="true">
+        <svg x-show="!playing" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        <svg x-show="playing" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
+      </span>
+    </button>
+  </section>
+{%- endif -%}
+
+{% stylesheet %}
+  /* intentionally empty — see assets/orn-hero.css for full styles */
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Ornevo hero",
+  "class": "orn-hero-section",
+  "tag": "div",
+  "blocks": [
+    { "type": "_orn-hero-slide" }
+  ],
+  "max_blocks": 5,
+  "settings": [
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "ID de ancla",
+      "info": "Se puede añadir a la URL como #id. Ej: ornevo.fr#hero"
+    },
+    {
+      "type": "number",
+      "id": "autoplay_interval",
+      "label": "Temporizador autoplay (ms)",
+      "info": "Vacío o 0 desactiva el cambio automático."
+    },
+    {
+      "type": "text",
+      "id": "aria_label",
+      "label": "ARIA label de la sección",
+      "default": "Hero carousel"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Esquema de color",
+      "default": "scheme-3"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ornevo hero",
+      "blocks": [
+        { "type": "_orn-hero-slide" }
+      ]
+    }
+  ]
+}
+{% endschema %}

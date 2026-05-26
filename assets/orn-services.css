@@ -1,0 +1,456 @@
+/*
+ * Ornevo services tabs styles
+ * Section: orn-services | Block: _orn-services-tab
+ * Ref: ADR-0002
+ */
+
+.orn-services {
+  /* Defaults — overridable via section settings (inline custom props) */
+  --orn-services-nav-bg: transparent;
+  --orn-services-nav-border: color-mix(in srgb, currentColor 20%, transparent);
+  --orn-services-indicator-bg: var(--color-foreground, #0D4F4A);
+  --orn-services-active-tab-color: var(--color-background, #ffffff);
+  --orn-services-inactive-tab-color: inherit;
+  --orn-services-flash-color: rgba(78, 192, 222, 0.55);
+  --orn-services-item-bullet-bg: color-mix(in srgb, currentColor 8%, transparent);
+  --orn-services-item-icon-color: var(--color-foreground, #0D4F4A);
+  --orn-services-progress-active: currentColor;
+  --orn-services-progress-inactive: color-mix(in srgb, currentColor 30%, transparent);
+
+  --orn-services-tab-radius: 999px;
+  --orn-services-transition: 0.35s cubic-bezier(0.65, 0.05, 0.35, 1);
+  --orn-services-pad-y: clamp(3rem, 6vw, 5rem);
+  --orn-services-pad-x: clamp(1rem, 4vw, 2.5rem);
+  --orn-services-content-width: 880px;
+
+  padding-block: var(--orn-services-pad-y);
+  padding-inline: var(--orn-services-pad-x);
+  scroll-margin-top: var(--header-group-height, 80px);
+}
+
+/* ---------- Inner wrapper ---------- */
+.orn-services__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+/* ---------- Header ---------- */
+.orn-services__header {
+  text-align: center;
+  max-width: 60ch;
+}
+
+.orn-services__title {
+  font-family: var(--font-heading--family);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.5rem;
+  color: inherit;
+}
+
+.orn-services__subtitle {
+  font-family: var(--font-body--family);
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
+  line-height: 1.5;
+  margin: 0;
+  color: inherit;
+  opacity: 0.8;
+}
+
+/* ---------- Tab nav (pill container) ---------- */
+.orn-services__nav {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  max-width: var(--orn-services-content-width);
+  background: var(--orn-services-nav-bg);
+  border: 1px solid var(--orn-services-nav-border);
+  border-radius: var(--orn-services-tab-radius);
+  padding: 4px;
+  overflow: hidden;
+}
+
+/* Sliding pill indicator */
+.orn-services__indicator {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 0;
+  width: 0; /* set inline by Alpine */
+  border-radius: var(--orn-services-tab-radius);
+  background: var(--orn-services-indicator-bg);
+  transition: transform var(--orn-services-transition),
+              width var(--orn-services-transition);
+  will-change: transform, width;
+  pointer-events: none;
+}
+
+/* Radial flash on tab destination */
+.orn-services__flash {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    var(--orn-services-flash-color) 0%,
+    color-mix(in srgb, var(--orn-services-flash-color) 50%, transparent) 35%,
+    transparent 70%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.4);
+  will-change: opacity, transform;
+  z-index: 0;
+}
+
+.orn-services__flash.is-flashing {
+  animation: orn-services-flash 0.55s ease-out forwards;
+}
+
+@keyframes orn-services-flash {
+  0%   { opacity: 0;    transform: translate(-50%, -50%) scale(0.4); }
+  30%  { opacity: 1;    transform: translate(-50%, -50%) scale(1);   }
+  100% { opacity: 0;    transform: translate(-50%, -50%) scale(1.5); }
+}
+
+/* ---------- Tab buttons ---------- */
+.orn-services__tab {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 1rem;
+  min-height: 56px;
+  border: 0;
+  border-radius: calc(var(--orn-services-tab-radius) - 4px);
+  background: transparent;
+  cursor: pointer;
+  color: var(--orn-services-inactive-tab-color);
+  transition: color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.orn-services__tab.is-active {
+  color: var(--orn-services-active-tab-color);
+}
+
+.orn-services__tab:focus-visible {
+  outline: 2px solid #4ec0de;
+  outline-offset: 2px;
+}
+
+/* Tab label (text — visible on desktop) */
+.orn-services__tab-label {
+  display: block;
+  font-family: var(--font-body--family);
+  font-weight: 600;
+  font-size: clamp(0.9375rem, 1.2vw, 1.0625rem);
+  line-height: 1;
+  letter-spacing: 0.01em;
+}
+
+/* Tab number (visible only on mobile via media query below) */
+.orn-services__tab-number {
+  display: none;
+  font-family: var(--font-heading--family);
+  font-weight: 700;
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+.orn-services__tab-number img {
+  display: block;
+  width: auto;
+  height: 1.5rem;
+  object-fit: contain;
+}
+
+/* ---------- Panels (stacked grid for smooth transitions) ---------- */
+.orn-services__panels {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 100%;
+  max-width: var(--orn-services-content-width);
+  touch-action: pan-y;
+}
+
+.orn-services__panel {
+  grid-row: 1;
+  grid-column: 1;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.orn-services__panel.is-active {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+/* ---------- Panel inner layout (mobile-first: flex column) ---------- */
+.orn-services__panel-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  padding-top: 0.5rem;
+}
+
+/* Header: title + description (renders first in DOM = first on mobile) */
+.orn-services__panel-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.orn-services__service-title {
+  font-family: var(--font-heading--family);
+  font-weight: 700;
+  font-size: clamp(1.25rem, 2.5vw, 2rem);
+  line-height: 1.15;
+  margin: 0;
+  color: inherit;
+}
+
+.orn-services__service-desc {
+  font-family: var(--font-body--family);
+  font-size: clamp(0.9375rem, 1.2vw, 1.0625rem);
+  line-height: 1.5;
+  margin: 0;
+  color: inherit;
+  opacity: 0.85;
+}
+
+.orn-services__service-desc p { margin: 0; }
+
+/* ---------- Panel image (circle) ---------- */
+.orn-services__panel-image-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.orn-services__panel-image {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Phase 1: dummy circle placeholder */
+.orn-services__panel-image--placeholder {
+  background: linear-gradient(135deg,
+    color-mix(in srgb, currentColor 18%, transparent),
+    color-mix(in srgb, currentColor 6%, transparent));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.orn-services__panel-image-num {
+  font-family: var(--font-heading--family);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 700;
+  color: inherit;
+  opacity: 0.4;
+}
+
+/* ---------- Items grid (1 col mobile) ---------- */
+.orn-services__items-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+/* ---------- Item ---------- */
+.orn-services__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.875rem;
+}
+
+.orn-services__item-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--orn-services-item-bullet-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.orn-services__item-icon img,
+.orn-services__item-icon svg {
+  display: block;
+  width: 24px !important;
+  height: 24px !important;
+  max-width: 24px;
+  max-height: 24px;
+  object-fit: contain;
+  color: var(--orn-services-item-icon-color);
+}
+
+.orn-services__item-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.orn-services__item-text {
+  font-family: var(--font-body--family);
+  font-size: clamp(0.8125rem, 1vw, 0.9375rem);
+  line-height: 1.45;
+  margin: 0;
+  color: inherit;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.orn-services__item-text p { margin: 0; }
+
+.orn-services__item-cta {
+  align-self: flex-start;
+  font-size: 0.8125rem;
+}
+
+/* ---------- Mobile swipe progress (pill bars) ---------- */
+/* Matches the orn-hero dot pattern: 28×3 → 64×3, color-mix track + currentColor fill. */
+.orn-services__progress {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding-top: 0.75rem;
+}
+
+.orn-services__progress-pill {
+  display: block;
+  width: 28px;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--orn-services-progress-inactive);
+  transition: width 400ms cubic-bezier(0.22, 1, 0.36, 1),
+              background-color 0.25s ease;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.orn-services__progress-pill.is-active {
+  width: 64px;
+  background: var(--orn-services-progress-active);
+}
+
+/* ---------- Section CTA ---------- */
+.orn-services__cta-wrap {
+  display: flex;
+  justify-content: center;
+  padding-top: 1rem;
+}
+
+/* ---------- Desktop (≥ 750px) ---------- */
+@media (min-width: 750px) {
+  .orn-services__inner {
+    gap: 3rem;
+  }
+
+  /* Grid layout: image left, content right */
+  .orn-services__panel-inner {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "image header"
+      "image grid";
+    gap: 2rem 3.5rem;
+    padding-top: 0;
+  }
+
+  .orn-services__panel-image-wrap {
+    grid-area: image;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .orn-services__panel-image {
+    max-width: 280px;
+    width: 100%;
+  }
+
+  .orn-services__panel-header {
+    grid-area: header;
+    align-self: end;
+    gap: 0.75rem;
+  }
+
+  .orn-services__items-grid {
+    grid-area: grid;
+    grid-template-columns: 1fr 1fr;
+    align-self: start;
+  }
+
+  /* Clamp description to 1 line on desktop */
+  .orn-services__service-desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+/* ---------- Mobile (< 750px) ---------- */
+@media (max-width: 749px) {
+  .orn-services__tab {
+    padding: 0.625rem 0.5rem;
+    min-height: 48px;
+  }
+
+  /* Toggle: hide text label, show number on mobile */
+  .orn-services__tab-label {
+    display: none;
+  }
+
+  .orn-services__tab-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Show pill progress bar only on mobile (when there's >1 tab) */
+  .orn-services__progress {
+    display: flex;
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .orn-services__indicator,
+  .orn-services__panel,
+  .orn-services__tab {
+    transition-duration: 0ms !important;
+  }
+
+  .orn-services__flash,
+  .orn-services__flash.is-flashing {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+}

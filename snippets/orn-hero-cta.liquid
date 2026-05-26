@@ -1,0 +1,22 @@
+{%- comment -%}
+  Ornevo CTA button renderer. Reusable across sections.
+  Accepts:
+    text    — label
+    url     — href
+    variant — primary | secondary | tertiary
+    new_tab — boolean
+    icon    — raw SVG string (optional)
+    extra_class — string (optional)
+{%- endcomment -%}
+{%- if text != blank and url != blank -%}
+  <a
+    class="ornevo-btn ornevo-btn--{{ variant | default: 'primary' }} {{ extra_class }}"
+    href="{{ url }}"
+    {% if new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+  >
+    <span class="ornevo-btn__label">{{ text }}</span>
+    {%- if icon != blank -%}
+      <span class="ornevo-btn__icon" aria-hidden="true">{{ icon }}</span>
+    {%- endif -%}
+  </a>
+{%- endif -%}

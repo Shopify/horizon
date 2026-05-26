@@ -1,0 +1,717 @@
+{%- liquid
+  assign valid_blocks_count = section.blocks.size
+
+  assign anchor_id = section.settings.anchor_id | handleize
+  if anchor_id == blank
+    assign anchor_id = section.id
+  endif
+
+  assign color_scheme = section.settings.color_scheme | default: 'scheme-1'
+
+  assign enable_swipe = true
+  if section.settings.enable_swipe_mobile == 'no'
+    assign enable_swipe = false
+  endif
+
+  assign cta_resolved_url = section.settings.cta_url
+  if section.settings.cta_target == 'contact_form'
+    assign cta_resolved_url = '#contact'
+  endif
+
+  capture inline_color_vars
+    if section.settings.nav_bg != blank
+      echo '--orn-services-nav-bg:' | append: section.settings.nav_bg | append: ';'
+    endif
+    if section.settings.nav_border != blank
+      echo '--orn-services-nav-border:' | append: section.settings.nav_border | append: ';'
+    endif
+    if section.settings.nav_active_bg != blank
+      echo '--orn-services-indicator-bg:' | append: section.settings.nav_active_bg | append: ';'
+    endif
+    if section.settings.nav_active_text != blank
+      echo '--orn-services-active-tab-color:' | append: section.settings.nav_active_text | append: ';'
+    endif
+    if section.settings.nav_inactive_text != blank
+      echo '--orn-services-inactive-tab-color:' | append: section.settings.nav_inactive_text | append: ';'
+    endif
+    if section.settings.flash_color != blank
+      echo '--orn-services-flash-color:' | append: section.settings.flash_color | append: ';'
+    endif
+    if section.settings.item_bullet_bg != blank
+      echo '--orn-services-item-bullet-bg:' | append: section.settings.item_bullet_bg | append: ';'
+    endif
+    if section.settings.progress_active != blank
+      echo '--orn-services-progress-active:' | append: section.settings.progress_active | append: ';'
+    endif
+    if section.settings.progress_inactive != blank
+      echo '--orn-services-progress-inactive:' | append: section.settings.progress_inactive | append: ';'
+    endif
+  endcapture
+-%}
+
+{%- if valid_blocks_count > 0 -%}
+  <section
+    id="{{ anchor_id }}"
+    class="orn-services color-{{ color_scheme }} gradient"
+    data-section-id="{{ section.id }}"
+    aria-labelledby="{{ anchor_id }}-title"
+    {% if inline_color_vars != blank %}style="{{ inline_color_vars }}"{% endif %}
+    x-data="ornServices({ total: {{ valid_blocks_count }}, swipeMobile: {{ enable_swipe }} })"
+    x-init="init()"
+  >
+    <div class="orn-services__inner page-width">
+
+      {%- if section.settings.section_title != blank or section.settings.section_subtitle != blank -%}
+        <header class="orn-services__header">
+          {%- if section.settings.section_title != blank -%}
+            <h2 id="{{ anchor_id }}-title" class="orn-services__title">
+              {{ section.settings.section_title }}
+            </h2>
+          {%- endif -%}
+          {%- if section.settings.section_subtitle != blank -%}
+            <p class="orn-services__subtitle">{{ section.settings.section_subtitle }}</p>
+          {%- endif -%}
+        </header>
+      {%- endif -%}
+
+      {%- comment -%} Tablist (buttons) — forloop.index0 is the source of truth for indexing {%- endcomment -%}
+      <div
+        class="orn-services__nav"
+        role="tablist"
+        aria-label="{{ 'Navegación de servicios' | escape }}"
+      >
+        <span class="orn-services__indicator" aria-hidden="true"></span>
+        <span class="orn-services__flash" aria-hidden="true"></span>
+
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign idx = forloop.index0
+            assign pos = forloop.index
+            assign num = pos | prepend: '0'
+            assign tab_label = block.settings.tab_label_desktop | default: num
+          -%}
+          <button
+            type="button"
+            role="tab"
+            id="tab-{{ section.id }}-{{ idx }}"
+            aria-controls="panel-{{ section.id }}-{{ idx }}"
+            aria-label="{{ tab_label | escape }}"
+            :aria-selected="active === {{ idx }} ? 'true' : 'false'"
+            :tabindex="active === {{ idx }} ? 0 : -1"
+            class="orn-services__tab"
+            :class="{ 'is-active': active === {{ idx }} }"
+            x-ref="tab{{ idx }}"
+            @click="goTo({{ idx }})"
+            @keydown="onTabKey($event, {{ idx }})"
+          >
+            <span class="orn-services__tab-label">{{ tab_label }}</span>
+            <span class="orn-services__tab-number" aria-hidden="true">
+              {%- if block.settings.tab_icon_number != blank -%}
+                {{
+                  block.settings.tab_icon_number
+                  | image_url: width: 48
+                  | image_tag: alt: '', loading: 'lazy'
+                }}
+              {%- else -%}
+                {{ num }}
+              {%- endif -%}
+            </span>
+          </button>
+        {%- endfor -%}
+      </div>
+
+      {%- comment -%} Panels — same forloop scope, so forloop.index0 matches the buttons {%- endcomment -%}
+      <div
+        class="orn-services__panels"
+        @touchstart.passive="onTouchStart($event)"
+        @touchend.passive="onTouchEnd($event)"
+      >
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign idx = forloop.index0
+            assign pos = forloop.index
+            assign num = pos | prepend: '0'
+
+            assign panel_title = block.settings.panel_title
+            assign panel_description = block.settings.panel_description
+            assign heading_tag = block.settings.panel_heading_level | default: 'h3'
+            assign panel_image = block.settings.panel_image
+          -%}
+          <div
+            role="tabpanel"
+            id="panel-{{ section.id }}-{{ idx }}"
+            aria-labelledby="tab-{{ section.id }}-{{ idx }}"
+            class="orn-services__panel"
+            :class="{ 'is-active': active === {{ idx }} }"
+            :aria-hidden="active !== {{ idx }} ? 'true' : 'false'"
+            :inert="active !== {{ idx }}"
+            {{ block.shopify_attributes }}
+          >
+            <div class="orn-services__panel-inner">
+
+              {%- if panel_title != blank or panel_description != blank -%}
+                <div class="orn-services__panel-header">
+                  {%- if panel_title != blank -%}
+                    <{{ heading_tag }} class="orn-services__service-title">{{ panel_title }}</{{ heading_tag }}>
+                  {%- endif -%}
+                  {%- if panel_description != blank -%}
+                    <div class="orn-services__service-desc rte">{{ panel_description }}</div>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+
+              {%- if panel_image != blank -%}
+                <div class="orn-services__panel-image-wrap">
+                  {{
+                    panel_image
+                    | image_url: width: 600
+                    | image_tag:
+                      class: 'orn-services__panel-image',
+                      alt: panel_title,
+                      loading: 'lazy',
+                      width: panel_image.width,
+                      height: panel_image.height,
+                      widths: '300, 450, 600',
+                      sizes: '(min-width: 750px) 280px, 90vw'
+                  }}
+                </div>
+              {%- endif -%}
+
+              <div class="orn-services__items-grid">
+                {%- for i in (1..8) -%}
+                  {%- liquid
+                    assign txt_key       = 'item_' | append: i | append: '_text'
+                    assign icon_key      = 'item_' | append: i | append: '_icon'
+                    assign cta_text_key  = 'item_' | append: i | append: '_cta_text'
+                    assign cta_url_key   = 'item_' | append: i | append: '_cta_url'
+                    assign cta_tgt_key   = 'item_' | append: i | append: '_cta_target'
+                    assign cta_var_key   = 'item_' | append: i | append: '_cta_variant'
+                    assign cta_icon_key  = 'item_' | append: i | append: '_cta_icon'
+
+                    assign item_text     = block.settings[txt_key]
+                    assign item_icon     = block.settings[icon_key]
+                    assign item_cta_text = block.settings[cta_text_key]
+                    assign item_cta_url  = block.settings[cta_url_key]
+                    assign item_cta_tgt  = block.settings[cta_tgt_key]
+                    assign item_cta_var  = block.settings[cta_var_key] | default: 'tertiary'
+                    assign item_cta_icon = block.settings[cta_icon_key]
+
+                    assign resolved_url = item_cta_url
+                    if item_cta_tgt == 'contact_form'
+                      assign resolved_url = '#contact'
+                    endif
+                  -%}
+
+                  {%- if item_text != blank -%}
+                    <div class="orn-services__item">
+                      {%- if item_icon != blank -%}
+                        <div class="orn-services__item-icon" aria-hidden="true">
+                          <img src="{{ item_icon | image_url: width: 96 }}" alt="" loading="lazy" width="24" height="24" class="orn-services__item-icon-img">
+                        </div>
+                      {%- endif -%}
+                      <div class="orn-services__item-body">
+                        <div class="orn-services__item-text rte">{{ item_text }}</div>
+                        {%- if item_cta_text != blank -%}
+                          <a class="orn-services__item-cta ornevo-btn ornevo-btn--{{ item_cta_var }}" href="{{ resolved_url | default: '#' }}"{% if item_cta_tgt == 'new' %} target="_blank" rel="noopener noreferrer"{% endif %}>{{ item_cta_text }}{%- if item_cta_icon != blank -%}<span class="ornevo-btn__icon" aria-hidden="true">{{ item_cta_icon | image_url: width: 20 | image_tag: alt: '' }}</span>{%- endif -%}</a>
+                        {%- endif -%}
+                      </div>
+                    </div>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      {%- comment -%} Mobile-only swipe progress (pill bars). Hidden on desktop via CSS. {%- endcomment -%}
+      <div class="orn-services__progress" aria-hidden="true">
+        {%- for block in section.blocks -%}
+          <span
+            class="orn-services__progress-pill"
+            :class="{ 'is-active': active === {{ forloop.index0 }} }"
+            @click="goTo({{ forloop.index0 }})"
+          ></span>
+        {%- endfor -%}
+      </div>
+
+      {%- if section.settings.cta_text != blank -%}
+        <div class="orn-services__cta-wrap">
+          <a
+            class="ornevo-btn ornevo-btn--{{ section.settings.cta_variant | default: 'primary' }}"
+            href="{{ cta_resolved_url | default: '#' }}"
+            {%- if section.settings.cta_target == 'new' %} target="_blank" rel="noopener noreferrer"{%- endif -%}
+          >
+            {{- section.settings.cta_text -}}
+            {%- if section.settings.cta_icon_svg != blank -%}
+              <span class="ornevo-btn__icon" aria-hidden="true">
+                {{- section.settings.cta_icon_svg | image_url: width: 24 | image_tag: alt: '' -}}
+              </span>
+            {%- endif -%}
+          </a>
+        </div>
+      {%- endif -%}
+
+    </div>
+  </section>
+{%- endif -%}
+
+{% stylesheet %}
+  /* intentionally empty — see assets/orn-services.css for full styles */
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Ornevo services",
+  "class": "orn-services-section",
+  "tag": "div",
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Ornevo services tab",
+      "settings": [
+        { "type": "header", "content": "Tab (navegación)" },
+        {
+          "type": "text",
+          "id": "tab_label_desktop",
+          "label": "Etiqueta accesible",
+          "info": "Texto leído por lectores de pantalla. Visualmente el tab muestra el número (01, 02…)."
+        },
+        {
+          "type": "image_picker",
+          "id": "tab_icon_number",
+          "label": "Icono SVG del número (opcional)",
+          "info": "SVG con 01/02/03/04. Si está vacío se usa el número de posición."
+        },
+
+        { "type": "header", "content": "Panel — encabezado" },
+        {
+          "type": "inline_richtext",
+          "id": "panel_title",
+          "label": "Título del panel",
+          "info": "Ej: Consultoría y estrategia"
+        },
+        {
+          "type": "select",
+          "id": "panel_heading_level",
+          "label": "Nivel de encabezado",
+          "options": [
+            { "value": "h2", "label": "H2" },
+            { "value": "h3", "label": "H3" },
+            { "value": "h4", "label": "H4" }
+          ],
+          "default": "h3"
+        },
+        {
+          "type": "richtext",
+          "id": "panel_description",
+          "label": "Descripción del panel",
+          "info": "Máx 1 línea desktop / 3 líneas móvil (clamp por CSS)."
+        },
+        {
+          "type": "image_picker",
+          "id": "panel_image",
+          "label": "Imagen circular (ratio 1:1)",
+          "info": "Mín. 600×600 px recomendado."
+        },
+
+        { "type": "header", "content": "Servicio 1" },
+        { "type": "image_picker", "id": "item_1_icon", "label": "Icono SVG (1:1)" },
+        { "type": "richtext", "id": "item_1_text", "label": "Texto", "info": "Máx 2 líneas." },
+        { "type": "text", "id": "item_1_cta_text", "label": "CTA · Texto" },
+        { "type": "url", "id": "item_1_cta_url", "label": "CTA · URL" },
+        {
+          "type": "select",
+          "id": "item_1_cta_target",
+          "label": "CTA · Abrir en",
+          "options": [
+            { "value": "same", "label": "Misma pestaña" },
+            { "value": "new", "label": "Nueva pestaña" },
+            { "value": "contact_form", "label": "Formulario de contacto" }
+          ],
+          "default": "same"
+        },
+        {
+          "type": "select",
+          "id": "item_1_cta_variant",
+          "label": "CTA · Estilo",
+          "options": [
+            { "value": "primary", "label": "Primary" },
+            { "value": "secondary", "label": "Secondary" },
+            { "value": "tertiary", "label": "Tertiary" }
+          ],
+          "default": "tertiary"
+        },
+        { "type": "image_picker", "id": "item_1_cta_icon", "label": "CTA · Icono SVG" },
+
+        { "type": "header", "content": "Servicio 2" },
+        { "type": "image_picker", "id": "item_2_icon", "label": "Icono SVG (1:1)" },
+        { "type": "richtext", "id": "item_2_text", "label": "Texto" },
+        { "type": "text", "id": "item_2_cta_text", "label": "CTA · Texto" },
+        { "type": "url", "id": "item_2_cta_url", "label": "CTA · URL" },
+        {
+          "type": "select",
+          "id": "item_2_cta_target",
+          "label": "CTA · Abrir en",
+          "options": [
+            { "value": "same", "label": "Misma pestaña" },
+            { "value": "new", "label": "Nueva pestaña" },
+            { "value": "contact_form", "label": "Formulario de contacto" }
+          ],
+          "default": "same"
+        },
+        {
+          "type": "select",
+          "id": "item_2_cta_variant",
+          "label": "CTA · Estilo",
+          "options": [
+            { "value": "primary", "label": "Primary" },
+            { "value": "secondary", "label": "Secondary" },
+            { "value": "tertiary", "label": "Tertiary" }
+          ],
+          "default": "tertiary"
+        },
+        { "type": "image_picker", "id": "item_2_cta_icon", "label": "CTA · Icono SVG" },
+
+        { "type": "header", "content": "Servicio 3" },
+        { "type": "image_picker", "id": "item_3_icon", "label": "Icono SVG (1:1)" },
+        { "type": "richtext", "id": "item_3_text", "label": "Texto" },
+        { "type": "text", "id": "item_3_cta_text", "label": "CTA · Texto" },
+        { "type": "url", "id": "item_3_cta_url", "label": "CTA · URL" },
+        {
+          "type": "select",
+          "id": "item_3_cta_target",
+          "label": "CTA · Abrir en",
+          "options": [
+            { "value": "same", "label": "Misma pestaña" },
+            { "value": "new", "label": "Nueva pestaña" },
+            { "value": "contact_form", "label": "Formulario de contacto" }
+          ],
+          "default": "same"
+        },
+        {
+          "type": "select",
+          "id": "item_3_cta_variant",
+          "label": "CTA · Estilo",
+          "options": [
+            { "value": "primary", "label": "Primary" },
+            { "value": "secondary", "label": "Secondary" },
+            { "value": "tertiary", "label": "Tertiary" }
+          ],
+          "default": "tertiary"
+        },
+        { "type": "image_picker", "id": "item_3_cta_icon", "label": "CTA · Icono SVG" },
+
+        { "type": "header", "content": "Servicio 4" },
+        { "type": "image_picker", "id": "item_4_icon", "label": "Icono SVG (1:1)" },
+        { "type": "richtext", "id": "item_4_text", "label": "Texto" },
+        { "type": "text", "id": "item_4_cta_text", "label": "CTA · Texto" },
+        { "type": "url", "id": "item_4_cta_url", "label": "CTA · URL" },
+        {
+          "type": "select",
+          "id": "item_4_cta_target",
+          "label": "CTA · Abrir en",
+          "options": [
+            { "value": "same", "label": "Misma pestaña" },
+            { "value": "new", "label": "Nueva pestaña" },
+            { "value": "contact_form", "label": "Formulario de contacto" }
+          ],
+          "default": "same"
+        },
+        {
+          "type": "select",
+          "id": "item_4_cta_variant",
+          "label": "CTA · Estilo",
+          "options": [
+            { "value": "primary", "label": "Primary" },
+            { "value": "secondary", "label": "Secondary" },
+            { "value": "tertiary", "label": "Tertiary" }
+          ],
+          "default": "tertiary"
+        },
+        { "type": "image_picker", "id": "item_4_cta_icon", "label": "CTA · Icono SVG" },
+
+        { "type": "header", "content": "Servicio 5" },
+        { "type": "image_picker", "id": "item_5_icon", "label": "Icono SVG (1:1)" },
+        { "type": "richtext", "id": "item_5_text", "label": "Texto" },
+        { "type": "text", "id": "item_5_cta_text", "label": "CTA · Texto" },
+        { "type": "url", "id": "item_5_cta_url", "label": "CTA · URL" },
+        {
+          "type": "select",
+          "id": "item_5_cta_target",
+          "label": "CTA · Abrir en",
+          "options": [
+            { "value": "same", "label": "Misma pestaña" },
+            { "value": "new", "label": "Nueva pestaña" },
+            { "value": "contact_form", "label": "Formulario de contacto" }
+          ],
+          "default": "same"
+        },
+        {
+          "type": "select",
+          "id": "item_5_cta_variant",
+          "label": "CTA · Estilo",
+          "options": [
+            { "value": "primary", "label": "Primary" },
+            { "value": "secondary", "label": "Secondary" },
+            { "value": "tertiary", "label": "Tertiary" }
+          ],
+          "default": "tertiary"
+        },
+        { "type": "image_picker", "id": "item_5_cta_icon", "label": "CTA · Icono SVG" },
+
+        { "type": "header", "content": "Servicio 6" },
+        { "type": "image_picker", "id": "item_6_icon", "label": "Icono SVG (1:1)" },
+        { "type": "richtext", "id": "item_6_text", "label": "Texto" },
+        { "type": "text", "id": "item_6_cta_text", "label": "CTA · Texto" },
+        { "type": "url", "id": "item_6_cta_url", "label": "CTA · URL" },
+        {
+          "type": "select",
+          "id": "item_6_cta_target",
+          "label": "CTA · Abrir en",
+          "options": [
+            { "value": "same", "label": "Misma pestaña" },
+            { "value": "new", "label": "Nueva pestaña" },
+            { "value": "contact_form", "label": "Formulario de contacto" }
+          ],
+          "default": "same"
+        },
+        {
+          "type": "select",
+          "id": "item_6_cta_variant",
+          "label": "CTA · Estilo",
+          "options": [
+            { "value": "primary", "label": "Primary" },
+            { "value": "secondary", "label": "Secondary" },
+            { "value": "tertiary", "label": "Tertiary" }
+          ],
+          "default": "tertiary"
+        },
+        { "type": "image_picker", "id": "item_6_cta_icon", "label": "CTA · Icono SVG" },
+
+        { "type": "header", "content": "Servicio 7" },
+        { "type": "image_picker", "id": "item_7_icon", "label": "Icono SVG (1:1)" },
+        { "type": "richtext", "id": "item_7_text", "label": "Texto" },
+        { "type": "text", "id": "item_7_cta_text", "label": "CTA · Texto" },
+        { "type": "url", "id": "item_7_cta_url", "label": "CTA · URL" },
+        {
+          "type": "select",
+          "id": "item_7_cta_target",
+          "label": "CTA · Abrir en",
+          "options": [
+            { "value": "same", "label": "Misma pestaña" },
+            { "value": "new", "label": "Nueva pestaña" },
+            { "value": "contact_form", "label": "Formulario de contacto" }
+          ],
+          "default": "same"
+        },
+        {
+          "type": "select",
+          "id": "item_7_cta_variant",
+          "label": "CTA · Estilo",
+          "options": [
+            { "value": "primary", "label": "Primary" },
+            { "value": "secondary", "label": "Secondary" },
+            { "value": "tertiary", "label": "Tertiary" }
+          ],
+          "default": "tertiary"
+        },
+        { "type": "image_picker", "id": "item_7_cta_icon", "label": "CTA · Icono SVG" },
+
+        { "type": "header", "content": "Servicio 8" },
+        { "type": "image_picker", "id": "item_8_icon", "label": "Icono SVG (1:1)" },
+        { "type": "richtext", "id": "item_8_text", "label": "Texto" },
+        { "type": "text", "id": "item_8_cta_text", "label": "CTA · Texto" },
+        { "type": "url", "id": "item_8_cta_url", "label": "CTA · URL" },
+        {
+          "type": "select",
+          "id": "item_8_cta_target",
+          "label": "CTA · Abrir en",
+          "options": [
+            { "value": "same", "label": "Misma pestaña" },
+            { "value": "new", "label": "Nueva pestaña" },
+            { "value": "contact_form", "label": "Formulario de contacto" }
+          ],
+          "default": "same"
+        },
+        {
+          "type": "select",
+          "id": "item_8_cta_variant",
+          "label": "CTA · Estilo",
+          "options": [
+            { "value": "primary", "label": "Primary" },
+            { "value": "secondary", "label": "Secondary" },
+            { "value": "tertiary", "label": "Tertiary" }
+          ],
+          "default": "tertiary"
+        },
+        { "type": "image_picker", "id": "item_8_cta_icon", "label": "CTA · Icono SVG" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "enabled_on": {
+    "templates": ["index", "page", "product", "collection", "blog", "article"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Ancla y accesibilidad"
+    },
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "ID de ancla",
+      "info": "Se añade a la URL como #id. Ej: servicios → ornevo.fr#servicios"
+    },
+    {
+      "type": "header",
+      "content": "Encabezado"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "section_title",
+      "label": "Título de la sección",
+      "default": "Servicios"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "section_subtitle",
+      "label": "Subtítulo de la sección",
+      "default": "Un acompañamiento de principio a fin"
+    },
+    {
+      "type": "header",
+      "content": "CTA sección"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Texto del CTA",
+      "default": "Hablemos de tu proyecto"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "URL del CTA"
+    },
+    {
+      "type": "select",
+      "id": "cta_target",
+      "label": "Abrir en",
+      "options": [
+        { "value": "same", "label": "Misma pestaña" },
+        { "value": "new", "label": "Nueva pestaña" },
+        { "value": "contact_form", "label": "Formulario de contacto (#contact)" }
+      ],
+      "default": "same"
+    },
+    {
+      "type": "select",
+      "id": "cta_variant",
+      "label": "Estilo del CTA",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "tertiary", "label": "Tertiary" }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "image_picker",
+      "id": "cta_icon_svg",
+      "label": "Icono del CTA (SVG)"
+    },
+    {
+      "type": "header",
+      "content": "Comportamiento"
+    },
+    {
+      "type": "select",
+      "id": "enable_swipe_mobile",
+      "label": "Navegación por swipe en móvil",
+      "options": [
+        { "value": "yes", "label": "Activado" },
+        { "value": "no", "label": "Desactivado" }
+      ],
+      "default": "yes"
+    },
+    {
+      "type": "header",
+      "content": "Apariencia"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Esquema de color",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Colores · Navegación de tabs"
+    },
+    {
+      "type": "color",
+      "id": "nav_bg",
+      "label": "Fondo del nav",
+      "info": "Vacío = transparente."
+    },
+    {
+      "type": "color",
+      "id": "nav_border",
+      "label": "Borde del nav"
+    },
+    {
+      "type": "color",
+      "id": "nav_active_bg",
+      "label": "Fondo de la píldora activa"
+    },
+    {
+      "type": "color",
+      "id": "nav_active_text",
+      "label": "Texto del tab activo"
+    },
+    {
+      "type": "color",
+      "id": "nav_inactive_text",
+      "label": "Texto de los tabs inactivos"
+    },
+    {
+      "type": "color",
+      "id": "flash_color",
+      "label": "Color del destello (flash)"
+    },
+    {
+      "type": "header",
+      "content": "Colores · Items y progress"
+    },
+    {
+      "type": "color",
+      "id": "item_bullet_bg",
+      "label": "Fondo del círculo del icono (items)"
+    },
+    {
+      "type": "color",
+      "id": "progress_active",
+      "label": "Indicador de swipe · activo"
+    },
+    {
+      "type": "color",
+      "id": "progress_inactive",
+      "label": "Indicador de swipe · inactivo"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ornevo services",
+      "blocks": [
+        { "type": "tab", "settings": { "tab_label_desktop": "Consultoría" } },
+        { "type": "tab", "settings": { "tab_label_desktop": "SEO" } },
+        { "type": "tab", "settings": { "tab_label_desktop": "Desarrollo" } },
+        { "type": "tab", "settings": { "tab_label_desktop": "Soporte" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

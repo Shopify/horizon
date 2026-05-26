@@ -1,0 +1,318 @@
+/*
+ * Ornevo hero carousel styles
+ * Section: orn-hero | Block: _orn-hero-slide
+ * Ref: ADR-0001 + hero slice spec
+ */
+
+.orn-hero {
+  --orn-hero-nav-bottom: 2.5rem;
+  --orn-hero-play-offset: 2.5rem;
+  --orn-hero-content-pad-x: clamp(1.25rem, 5vw, 5rem);
+  --orn-hero-content-pad-y: clamp(2rem, 6vh, 5rem);
+
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+  isolation: isolate;
+  scroll-margin-top: var(--header-group-height, 80px);
+}
+
+/* ---------- Slides stack ---------- */
+.orn-hero__slides {
+  position: absolute;
+  inset: 0;
+}
+
+.orn-hero__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 800ms cubic-bezier(0.22, 1, 0.36, 1),
+              visibility 0s linear 800ms;
+  pointer-events: none;
+}
+
+.orn-hero__slide.is-active {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 800ms cubic-bezier(0.22, 1, 0.36, 1),
+              visibility 0s linear 0s;
+  pointer-events: auto;
+}
+
+/* ---------- Media layer ---------- */
+.orn-hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.orn-hero__image,
+.orn-hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.orn-hero__image--mobile,
+.orn-hero__video--mobile { display: none; }
+
+.orn-hero__video iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  pointer-events: none;
+  /* Scale so controls bleed off the edges even if they flicker */
+  transform: scale(1.35);
+  transform-origin: center;
+}
+
+@media (max-width: 749px) {
+  .orn-hero__image--desktop,
+  .orn-hero__video--desktop { display: none; }
+  .orn-hero__image--mobile,
+  .orn-hero__video--mobile { display: block; }
+  /* Fallback: if no mobile-specific media, desktop takes over full cover */
+  .orn-hero__slide:not(:has(.orn-hero__image--mobile, .orn-hero__video--mobile)) .orn-hero__image--desktop,
+  .orn-hero__slide:not(:has(.orn-hero__image--mobile, .orn-hero__video--mobile)) .orn-hero__video--desktop {
+    display: block;
+  }
+}
+
+/* ---------- Overlay (gradient) ---------- */
+.orn-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--orn-overlay-start) calc(var(--orn-overlay-opacity) * 100%), transparent) 0%,
+    color-mix(in srgb, var(--orn-overlay-end)   calc(var(--orn-overlay-opacity) * 100%), transparent) 100%
+  );
+  pointer-events: none;
+}
+
+/* ---------- Content ---------- */
+.orn-hero__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: calc(var(--header-group-height, 80px) + var(--orn-hero-content-pad-y))
+           var(--orn-hero-content-pad-x)
+           calc(var(--orn-hero-content-pad-y) + 5rem)
+           var(--orn-hero-content-pad-x);
+  max-width: min(100%, 1600px);
+  gap: 1.25rem;
+}
+
+.orn-hero__title {
+  font-family: var(--font-heading--family);
+  font-weight: 700;
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin: 0;
+  max-width: 18ch;
+  color: inherit;
+}
+
+.orn-hero__description {
+  font-family: var(--font-body--family);
+  font-size: clamp(1rem, 1.25vw, 1.25rem);
+  line-height: 1.5;
+  max-width: 42ch;
+  color: inherit;
+  opacity: 0.92;
+}
+
+@media (min-width: 750px) {
+  .orn-hero__description {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+.orn-hero__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.orn-hero__cta .ornevo-btn__icon svg {
+  width: 1rem;
+  height: 1rem;
+  display: block;
+}
+
+/* ---------- Dots navigation ---------- */
+.orn-hero__nav {
+  position: absolute;
+  left: 50%;
+  bottom: var(--orn-hero-nav-bottom);
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: transparent;
+}
+
+.orn-hero__dot {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.orn-hero__dot:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 6px;
+  border-radius: 999px;
+}
+
+.orn-hero__dot-track {
+  display: block;
+  position: relative;
+  width: 28px;
+  height: 3px;
+  border-radius: 999px;
+  background: color-mix(in srgb, currentColor 30%, transparent);
+  overflow: hidden;
+  transition: width 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.orn-hero__dot.is-active .orn-hero__dot-track {
+  width: 64px;
+}
+
+.orn-hero__dot-fill {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  transform-origin: left center;
+  background: currentColor;
+  transform: scaleX(0);
+}
+
+.orn-hero__dot.is-active .orn-hero__dot-fill {
+  animation-name: orn-hero-dot-fill;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+@keyframes orn-hero-dot-fill {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* When no autoplay, active dot is just fully filled */
+.orn-hero__dot.is-active .orn-hero__dot-fill:not([style*="animation-duration"]) {
+  transform: scaleX(1);
+  animation: none;
+}
+
+/* ---------- Play / pause button ---------- */
+.orn-hero__play {
+  position: absolute;
+  z-index: 3;
+  right: var(--orn-hero-play-offset);
+  bottom: var(--orn-hero-play-offset);
+  width: 84px;
+  height: 84px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (max-width: 749px) {
+  .orn-hero__play {
+    right: auto;
+    left: var(--orn-hero-content-pad-x);
+    bottom: auto;
+    top: calc(var(--header-group-height, 80px) + 35vh);
+    width: 68px;
+    height: 68px;
+  }
+}
+
+.orn-hero__play-icon {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--ornevo-primary, #0d4f4a);
+  box-shadow: 0 6px 24px rgba(15, 23, 32, 0.18);
+}
+
+.orn-hero__play-rings {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.orn-hero__play-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, currentColor 50%, transparent);
+  opacity: 0.6;
+}
+
+.orn-hero__play-ring:nth-child(1) { inset: -6px; }
+.orn-hero__play-ring:nth-child(2) { inset: -14px; opacity: 0.35; }
+.orn-hero__play-ring:nth-child(3) { inset: -22px; opacity: 0.18; }
+
+.orn-hero__play:hover .orn-hero__play-ring:nth-child(1) { animation: orn-hero-ring 1600ms ease-out infinite; }
+.orn-hero__play:hover .orn-hero__play-ring:nth-child(2) { animation: orn-hero-ring 1600ms ease-out infinite 200ms; }
+.orn-hero__play:hover .orn-hero__play-ring:nth-child(3) { animation: orn-hero-ring 1600ms ease-out infinite 400ms; }
+
+@keyframes orn-hero-ring {
+  0%   { transform: scale(1);   opacity: 0.6; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+/* ---------- Title sizing on mobile (spec: 3 lines desktop / 5+ lines mobile OK) ---------- */
+@media (max-width: 749px) {
+  .orn-hero__title      { font-size: clamp(2rem, 9vw, 3rem); max-width: 100%; }
+  .orn-hero__description{ font-size: 1rem; }
+  .orn-hero__content    { padding-bottom: calc(var(--orn-hero-content-pad-y) + 6rem); }
+  .orn-hero__nav        { bottom: 1.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orn-hero__slide,
+  .orn-hero__dot-track,
+  .orn-hero__dot-fill,
+  .orn-hero__play-ring {
+    transition-duration: 0ms !important;
+    animation: none !important;
+  }
+}

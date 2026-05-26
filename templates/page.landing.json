@@ -1,0 +1,131 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "name": "Title",
+          "settings": {
+            "text": "<h1>{{ closest.page.title }}</h1>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h2",
+            "font": "var(--font-primary--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "page-content": {
+          "type": "page-content",
+          "settings": {},
+          "blocks": {}
+        }
+      },
+      "block_order": ["heading", "page-content"],
+      "settings": {
+        "content_direction": "column",
+        "gap": 32,
+        "color_scheme": "",
+        "padding-block-start": 40,
+        "padding-block-end": 80
+      }
+    },
+    "orn-services": {
+      "type": "orn-services",
+      "blocks": {
+        "tab-1": {
+          "type": "tab",
+          "settings": {
+            "tab_label_desktop": "Consultoría",
+            "panel_title": "Consultoría y estrategia",
+            "panel_heading_level": "h3",
+            "panel_description": "<p>Antes de construir, entendemos tu negocio.</p>",
+            "item_1_text": "<p>Auditoría digital (SEO, UX, rendimiento)</p>",
+            "item_2_text": "<p>Definición del alcance y recomendaciones</p>",
+            "item_3_text": "<p>Definición de objetivos y KPIs</p>",
+            "item_4_text": "<p>Elección de tecnologías (Shopify, WordPress)</p>",
+            "item_5_text": "<p>Formaciones y talleres</p>"
+          }
+        },
+        "tab-2": {
+          "type": "tab",
+          "settings": {
+            "tab_label_desktop": "SEO",
+            "panel_title": "SEO y visibilidad",
+            "panel_heading_level": "h3",
+            "panel_description": "<p>Tu tienda visible donde tus clientes buscan.</p>",
+            "item_1_text": "<p>Auditoría SEO técnica</p>",
+            "item_2_text": "<p>Investigación de palabras clave</p>",
+            "item_3_text": "<p>Optimización on-page</p>",
+            "item_4_text": "<p>SEO local</p>",
+            "item_5_text": "<p>Datos estructurados (Schema.org)</p>",
+            "item_6_text": "<p>Seguimiento y reporting</p>"
+          }
+        },
+        "tab-3": {
+          "type": "tab",
+          "settings": {
+            "tab_label_desktop": "Desarrollo",
+            "panel_title": "Desarrollo a medida",
+            "panel_heading_level": "h3",
+            "panel_description": "<p>Soluciones técnicas que escalan con tu negocio.</p>",
+            "item_1_text": "<p>Temas Shopify a medida</p>",
+            "item_2_text": "<p>Apps embebidas</p>",
+            "item_3_text": "<p>Integraciones API</p>",
+            "item_4_text": "<p>Performance y Core Web Vitals</p>",
+            "item_5_text": "<p>Migración de plataforma</p>"
+          }
+        },
+        "tab-4": {
+          "type": "tab",
+          "settings": {
+            "tab_label_desktop": "Soporte",
+            "panel_title": "Soporte continuo",
+            "panel_heading_level": "h3",
+            "panel_description": "<p>Siempre disponibles para mantener tu tienda al día.</p>",
+            "item_1_text": "<p>Mantenimiento técnico</p>",
+            "item_2_text": "<p>Monitorización de rendimiento</p>",
+            "item_3_text": "<p>Actualizaciones de seguridad</p>",
+            "item_4_text": "<p>Soporte en horario laboral</p>",
+            "item_5_text": "<p>Mejoras iterativas</p>"
+          }
+        }
+      },
+      "block_order": ["tab-1", "tab-2", "tab-3", "tab-4"],
+      "settings": {
+        "anchor_id": "servicios",
+        "section_title": "Servicios",
+        "section_subtitle": "Un acompañamiento de principio a fin",
+        "cta_text": "Hablemos de tu proyecto",
+        "cta_target": "contact_form",
+        "cta_variant": "primary",
+        "enable_swipe_mobile": "yes",
+        "color_scheme": "scheme-1"
+      }
+    }
+  },
+  "order": ["main", "orn-services"]
+}

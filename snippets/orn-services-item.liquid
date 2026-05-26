@@ -1,0 +1,40 @@
+{%- comment -%}
+  Renders one item in the services grid.
+  Params: icon (image), text (richtext), cta_text, cta_url, cta_target, cta_variant, cta_icon (image)
+{%- endcomment -%}
+
+{%- if text != blank -%}
+  {%- liquid
+    assign resolved_url = cta_url
+    if cta_target == 'contact_form'
+      assign resolved_url = '#contact'
+    endif
+  -%}
+
+  <div class="orn-services__item">
+    <div class="orn-services__item-icon" aria-hidden="true">
+      {%- if icon != blank -%}
+        {{- icon | image_url: width: 40 | image_tag: alt: '', loading: 'lazy', width: 40, height: 40 -}}
+      {%- endif -%}
+    </div>
+
+    <div class="orn-services__item-body">
+      <div class="orn-services__item-text rte">{{ text }}</div>
+
+      {%- if cta_text != blank -%}
+        <a
+          class="orn-services__item-cta ornevo-btn ornevo-btn--{{ cta_variant | default: 'tertiary' }}"
+          href="{{ resolved_url | default: '#' }}"
+          {%- if cta_target == 'new' %} target="_blank" rel="noopener noreferrer"{%- endif -%}
+        >
+          {{- cta_text -}}
+          {%- if cta_icon != blank -%}
+            <span class="ornevo-btn__icon" aria-hidden="true">
+              {{- cta_icon | image_url: width: 20 | image_tag: alt: '' -}}
+            </span>
+          {%- endif -%}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
