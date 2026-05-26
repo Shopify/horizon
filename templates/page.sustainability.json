@@ -926,6 +926,47 @@
               "block_order": [
                 "text_qU9aLg"
               ]
+            },
+            "accordion_row_rP79zp": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_row",
+              "settings": {
+                "heading": "7. Supporting Local Ecosystems & Community",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_jnGyB6": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>For us, sustainability extends beyond the environment alone. It also concerns the health of local relationships, knowledge, and communities.<br/></p><p>We value working with local growers, makers, and partners whose practices strengthen the cultural and ecological fabric of the island. We are also committed to collaborations that create social value, including work connected to agriculture, land care, and craft that can support inclusion and meaningful participation. Initiatives such as those developed with organisations like Fundació Estel de Llevant reflect this wider belief: that regeneration can also be social, offering pathways for dignity, connection, and reintegration through work with the land. <br/></p><p>In this sense, sustainability is not only about reducing harm. It is about creating systems that support life more fully: ecologically, materially, and humanly.</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_jnGyB6"
+              ]
             }
           },
           "block_order": [
@@ -934,7 +975,8 @@
             "accordion_row_EreKQW",
             "accordion_row_7gHXEB",
             "accordion_row_aXUQk3",
-            "accordion_row_iCR8Dg"
+            "accordion_row_iCR8Dg",
+            "accordion_row_rP79zp"
           ]
         }
       },
