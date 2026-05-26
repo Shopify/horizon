@@ -461,6 +461,10 @@
     --hero-scroll-frame-inset-extra: {{ section.settings.scroll_frame_inset }}px;
     --hero-scroll-frame-inset: calc(var(--cala-frame-gutter-inline) + var(--hero-scroll-frame-inset-extra));
     --hero-scroll-frame-radius: var(--cala-frame-radius);
+    --hero-content-padding-block-start: {{ section.settings.content_padding_block_start }}px;
+    --hero-content-padding-block-end: {{ section.settings.content_padding_block_end }}px;
+    --hero-content-padding-inline-start: {{ section.settings.content_padding_inline_start }}px;
+    --hero-content-padding-inline-end: {{ section.settings.content_padding_inline_end }}px;
     --blur-opacity: {{ section.settings.reflection_opacity | divided_by: 100.0 }};
     {% if section.settings.section_height == 'custom' %}
       --hero-min-height: {{ section.settings.section_height_custom }}svh;
@@ -650,6 +654,9 @@
     position: relative;
     inset: 0;
     z-index: var(--layer-flat);
+    box-sizing: border-box;
+    padding-block: var(--hero-content-padding-block-start, 0) var(--hero-content-padding-block-end, 0);
+    padding-inline: var(--hero-content-padding-inline-start, 0) var(--hero-content-padding-inline-end, 0);
   }
 
   .hero__scroll-prompt {
@@ -661,7 +668,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
+    gap: 1.25rem;
     text-align: center;
     color: inherit;
     pointer-events: none;
@@ -684,12 +691,46 @@
   }
 
   .hero__scroll-prompt-line {
+    --hero-scroll-line-height: 88px;
+    --hero-scroll-line-pulse-height: 29px;
+    --hero-scroll-line-pulse-width: 3px;
+    --hero-scroll-line-draw-duration: 900ms;
+    --hero-scroll-line-draw-delay: 200ms;
+    --hero-scroll-line-pulse-travel: 0.3s;
+    --hero-scroll-line-pulse-pause: 0.75s;
+    --hero-scroll-line-pulse-duration: calc(var(--hero-scroll-line-pulse-travel) + var(--hero-scroll-line-pulse-pause));
+    --hero-scroll-line-pulse-start: calc(var(--hero-scroll-line-draw-delay) + var(--hero-scroll-line-draw-duration));
+
+    position: relative;
+    display: block;
+    flex-shrink: 0;
     width: 1px;
-    height: 56px;
-    background: #F4C077;
+    height: var(--hero-scroll-line-height);
+  }
+
+  .hero__scroll-prompt-line::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--cala-frame-color, #f4c077);
     opacity: 0.9;
     transform-origin: top;
-    animation: hero-scroll-line-draw 900ms var(--ease-out-cubic) 200ms both;
+    animation: hero-scroll-line-draw var(--hero-scroll-line-draw-duration) var(--ease-out-cubic)
+      var(--hero-scroll-line-draw-delay) both;
+  }
+
+  .hero__scroll-prompt-line::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: var(--hero-scroll-line-pulse-width);
+    height: var(--hero-scroll-line-pulse-height);
+    background: var(--cala-frame-color, #f4c077);
+    opacity: 0;
+    transform: translateX(-50%) translateY(0);
+    animation: hero-scroll-line-pulse var(--hero-scroll-line-pulse-duration) linear
+      var(--hero-scroll-line-pulse-start) infinite;
   }
 
   @keyframes hero-scroll-line-draw {
@@ -702,10 +743,35 @@
     }
   }
 
+  /* 0.3s travel + 0.75s pause at top (bar hidden) — pause ≈ 71.4% of cycle */
+  @keyframes hero-scroll-line-pulse {
+    0%,
+    71.43% {
+      opacity: 0;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    71.43% {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateX(-50%)
+        translateY(calc(var(--hero-scroll-line-height) - var(--hero-scroll-line-pulse-height)));
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .hero__scroll-prompt-line {
+    .hero__scroll-prompt-line::before {
       animation: none;
       transform: none;
+    }
+
+    .hero__scroll-prompt-line::after {
+      animation: none;
+      opacity: 0;
     }
   }
 
@@ -1413,6 +1479,56 @@
       "min": 0,
       "max": 80,
       "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.show_scroll_prompt }}"
+    },
+    {
+      "type": "header",
+      "content": "Content area padding",
+      "info": "Padding on the inner text container, between content and the scroll frame border.",
+      "visible_if": "{{ section.settings.show_scroll_prompt }}"
+    },
+    {
+      "type": "range",
+      "id": "content_padding_block_start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.show_scroll_prompt }}"
+    },
+    {
+      "type": "range",
+      "id": "content_padding_block_end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.show_scroll_prompt }}"
+    },
+    {
+      "type": "range",
+      "id": "content_padding_inline_start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.show_scroll_prompt }}"
+    },
+    {
+      "type": "range",
+      "id": "content_padding_inline_end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 120,
+      "step": 4,
       "unit": "px",
       "default": 0,
       "visible_if": "{{ section.settings.show_scroll_prompt }}"

@@ -21,6 +21,13 @@ When **Show scroll prompt** is enabled, add class `hero--scroll-frame` (independ
 - **Inset:** `calc(var(--cala-frame-gutter-inline) + scroll_frame_inset)` — gutter matches header `section--full-width-margin` / `--page-margin` so vertical strokes align with `.header__menu-bracket` (16px mobile, 40px desktop). Optional `scroll_frame_inset` is an extra adjustment only (default `0`).
 - **Center line:** `.hero__scroll-prompt-line` sits above the bottom border at horizontal center (`z-index` above frame) so it meets the bottom stroke in a T junction.
 - **Mobile:** Frame hidden below `750px`; scroll prompt keeps default bottom spacing.
+- **Content padding:** When scroll prompt is on, section settings `content_padding_*` add padding on `.hero__content-wrapper` (top / bottom / left / right, 0–120px) to space text from the frame.
+
+## Scroll prompt line animation
+
+- **Draw:** `::before` on `.hero__scroll-prompt-line` scales in from top (`900ms`, `200ms` delay).
+- **Pulse:** `::after` is a thicker bar (`3px` × `29px`) on an `88px` track; `0.3s` travel then `0.75s` pause at top with `opacity: 0` (`animation-delay` after draw). Label–line gap `1.25rem`.
+- **Reduced motion:** Static line only; pulse hidden.
 - If both toggles are on, scroll frame wins; full `hero--module-frame` `::after` border is hidden.
 
 ## Reusable Footer Variation
