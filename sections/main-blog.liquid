@@ -119,6 +119,7 @@
     font-size: 20px;
     transition: color 180ms ease;
     font-family: var(--font-h4--family);
+    opacity: 50%;
   }
 
   .blog-posts__filter-link::after {
@@ -138,6 +139,7 @@
   .blog-posts__filter-link:hover,
   .blog-posts__filter-link.is-active {
     color: rgb(var(--color-foreground-rgb) / 100%);
+    opacity: 1;
   }
 
   .blog-posts__filter-link:hover::after,
@@ -237,6 +239,11 @@
 
   .blog-post-item--hero .blog-post-card__content-text {
     margin-top: 0.3rem;
+  }
+
+  .blog-post-item--grid .blog-post-card__image {
+    border: 1px solid #d3d3d3;
+    box-sizing: border-box;
   }
 
   .blog-post-item--list {
