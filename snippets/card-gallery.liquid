@@ -42,6 +42,26 @@
     assign sizes_attribute = '(min-width: 750px) [viewport_width]vw, 100vw' | replace: '[viewport_width]', viewport_width
     assign image_sizes = sizes_attribute | strip
   endif
+  # ----------------------------------------------------------------
+  # OPTIMIZATION: Unified Mobile Image Width Fix
+  # Checks for BOTH 'small/large' (Main Collection) AND '1/2' (Standard Grid)
+  # If either is true, force the mobile image size to 50vw (half width)
+  # to prevent downloading HD images in product card on mobile.
+  # ----------------------------------------------------------------
+  assign force_half_width_mobile = false
+  
+  if section.settings.mobile_product_card_size == 'large' or section.settings.mobile_product_card_size == 'small'
+    assign force_half_width_mobile = true
+  endif
+  
+  if section.settings.mobile_columns == '1' or section.settings.mobile_columns == '2'
+    assign force_half_width_mobile = true
+  endif
+
+  if force_half_width_mobile
+    assign image_sizes = image_sizes | replace: '100vw', '50vw'
+  endif
+  # ----------------------------------------------------------------
 
   assign ratio = '1'
   case block_settings.image_ratio
