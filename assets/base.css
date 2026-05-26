@@ -519,6 +519,14 @@ p:empty {
   }
 }
 
+.header__row .header__columns {
+
+  @media screen and (min-width: 750px) {
+    padding-left:16px !important;
+    padding-right: 16px !important ;
+  }
+}
+
 /* Some section content break out to full width of the page */
 .section > .force-full-width {
   grid-column: 1 / -1;

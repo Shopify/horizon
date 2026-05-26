@@ -570,6 +570,12 @@
     position: relative;
     min-height: calc(var(--hero-min-height) - var(--hero-height-offset));
     padding: 0;
+    border-radius: 0 0 30px 30px;
+  }
+
+  .hero .hero__container{
+        border-radius: 0 0 30px 30px;
+
   }
 
   .hero--module-frame-page {
@@ -629,7 +635,7 @@
   .hero__scroll-frame {
     display: none;
     position: absolute;
-    inset: var(--hero-scroll-frame-inset) var(--page-margin);
+    inset: var(--hero-scroll-frame-inset);
     border: 1px solid var(--cala-frame-color);
     border-top: none;
     border-bottom-left-radius: var(--hero-scroll-frame-radius);
