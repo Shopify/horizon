@@ -578,7 +578,7 @@
   
     @media screen and (min-width: 750px) {
       .hero--module-frame-page {
-    padding: 64px;
+    padding: 90px;
   }
     }
 
@@ -658,10 +658,12 @@
     z-index: var(--layer-flat);
   }
 
-  .hero--module-frame .hero__content-wrapper {
-    box-sizing: border-box;
-    padding-block: var(--hero-content-padding-block-start, 0) var(--hero-content-padding-block-end, 0);
-    padding-inline: var(--hero-content-padding-inline-start, 0) var(--hero-content-padding-inline-end, 0);
+  @media screen and (min-width: 750px) {
+    .hero--module-frame .hero__content-wrapper {
+      box-sizing: border-box;
+      padding-block: var(--hero-content-padding-block-start, 0) var(--hero-content-padding-block-end, 0);
+      padding-inline: var(--hero-content-padding-inline-start, 0) var(--hero-content-padding-inline-end, 0);
+    }
   }
 
   .hero__scroll-prompt {

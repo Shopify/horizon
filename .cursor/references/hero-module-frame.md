@@ -10,7 +10,7 @@
 - Apply inset spacing on the hero root container (`padding`) so the module sits inside the section.
 - Apply border radius and border on `.hero__container` in a modifier class (`.hero--module-frame`) so media and overlays clip correctly.
 - Keep styles variable-driven in the section `style` attribute for per-instance customization.
-- **Content padding:** When `enable_module_frame` is on, `content_padding_*` settings (0–120px) add padding on `.hero__content-wrapper` inside the frame.
+- **Content padding:** When `enable_module_frame` is on, `content_padding_*` settings (0–120px) add padding on `.hero__content-wrapper` inside the frame (desktop only, `min-width: 750px`).
 
 ## Scroll prompt inner frame (`show_scroll_prompt`)
 
