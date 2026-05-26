@@ -646,6 +646,7 @@ class ProductFormComponent extends Component {
 
     const { variantId } = this.refs;
     variantId.value = event.detail.resource?.id ?? '';
+    variantId.dispatchEvent(new Event('change', { bubbles: true }));
 
     this.#variantChangeInProgress = false;
 
