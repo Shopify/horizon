@@ -10,6 +10,7 @@
 - Apply inset spacing on the hero root container (`padding`) so the module sits inside the section.
 - Apply border radius and border on `.hero__container` in a modifier class (`.hero--module-frame`) so media and overlays clip correctly.
 - Keep styles variable-driven in the section `style` attribute for per-instance customization.
+- **Content padding:** When `enable_module_frame` is on, `content_padding_*` settings (0–120px) add padding on `.hero__content-wrapper` inside the frame.
 
 ## Scroll prompt inner frame (`show_scroll_prompt`)
 
@@ -21,7 +22,6 @@ When **Show scroll prompt** is enabled, add class `hero--scroll-frame` (independ
 - **Inset:** `calc(var(--cala-frame-gutter-inline) + scroll_frame_inset)` — gutter matches header `section--full-width-margin` / `--page-margin` so vertical strokes align with `.header__menu-bracket` (16px mobile, 40px desktop). Optional `scroll_frame_inset` is an extra adjustment only (default `0`).
 - **Center line:** `.hero__scroll-prompt-line` sits above the bottom border at horizontal center (`z-index` above frame) so it meets the bottom stroke in a T junction.
 - **Mobile:** Frame hidden below `750px`; scroll prompt keeps default bottom spacing.
-- **Content padding:** When scroll prompt is on, section settings `content_padding_*` add padding on `.hero__content-wrapper` (top / bottom / left / right, 0–120px) to space text from the frame.
 
 ## Scroll prompt line animation
 

@@ -461,10 +461,12 @@
     --hero-scroll-frame-inset-extra: {{ section.settings.scroll_frame_inset }}px;
     --hero-scroll-frame-inset: calc(var(--cala-frame-gutter-inline) + var(--hero-scroll-frame-inset-extra));
     --hero-scroll-frame-radius: var(--cala-frame-radius);
-    --hero-content-padding-block-start: {{ section.settings.content_padding_block_start }}px;
-    --hero-content-padding-block-end: {{ section.settings.content_padding_block_end }}px;
-    --hero-content-padding-inline-start: {{ section.settings.content_padding_inline_start }}px;
-    --hero-content-padding-inline-end: {{ section.settings.content_padding_inline_end }}px;
+    {% if section.settings.enable_module_frame %}
+      --hero-content-padding-block-start: {{ section.settings.content_padding_block_start }}px;
+      --hero-content-padding-block-end: {{ section.settings.content_padding_block_end }}px;
+      --hero-content-padding-inline-start: {{ section.settings.content_padding_inline_start }}px;
+      --hero-content-padding-inline-end: {{ section.settings.content_padding_inline_end }}px;
+    {% endif %}
     --blur-opacity: {{ section.settings.reflection_opacity | divided_by: 100.0 }};
     {% if section.settings.section_height == 'custom' %}
       --hero-min-height: {{ section.settings.section_height_custom }}svh;
@@ -654,6 +656,9 @@
     position: relative;
     inset: 0;
     z-index: var(--layer-flat);
+  }
+
+  .hero--module-frame .hero__content-wrapper {
     box-sizing: border-box;
     padding-block: var(--hero-content-padding-block-start, 0) var(--hero-content-padding-block-end, 0);
     padding-inline: var(--hero-content-padding-inline-start, 0) var(--hero-content-padding-inline-end, 0);
@@ -1456,6 +1461,56 @@
     },
     {
       "type": "header",
+      "content": "Content area padding",
+      "info": "Padding inside the inset border frame, between text and the frame edge.",
+      "visible_if": "{{ section.settings.enable_module_frame }}"
+    },
+    {
+      "type": "range",
+      "id": "content_padding_block_start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.enable_module_frame }}"
+    },
+    {
+      "type": "range",
+      "id": "content_padding_block_end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.enable_module_frame }}"
+    },
+    {
+      "type": "range",
+      "id": "content_padding_inline_start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.enable_module_frame }}"
+    },
+    {
+      "type": "range",
+      "id": "content_padding_inline_end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.enable_module_frame }}"
+    },
+    {
+      "type": "header",
       "content": "Scroll prompt"
     },
     {
@@ -1479,56 +1534,6 @@
       "min": 0,
       "max": 80,
       "step": 1,
-      "unit": "px",
-      "default": 0,
-      "visible_if": "{{ section.settings.show_scroll_prompt }}"
-    },
-    {
-      "type": "header",
-      "content": "Content area padding",
-      "info": "Padding on the inner text container, between content and the scroll frame border.",
-      "visible_if": "{{ section.settings.show_scroll_prompt }}"
-    },
-    {
-      "type": "range",
-      "id": "content_padding_block_start",
-      "label": "t:settings.top",
-      "min": 0,
-      "max": 120,
-      "step": 4,
-      "unit": "px",
-      "default": 0,
-      "visible_if": "{{ section.settings.show_scroll_prompt }}"
-    },
-    {
-      "type": "range",
-      "id": "content_padding_block_end",
-      "label": "t:settings.bottom",
-      "min": 0,
-      "max": 120,
-      "step": 4,
-      "unit": "px",
-      "default": 0,
-      "visible_if": "{{ section.settings.show_scroll_prompt }}"
-    },
-    {
-      "type": "range",
-      "id": "content_padding_inline_start",
-      "label": "t:settings.left",
-      "min": 0,
-      "max": 120,
-      "step": 4,
-      "unit": "px",
-      "default": 0,
-      "visible_if": "{{ section.settings.show_scroll_prompt }}"
-    },
-    {
-      "type": "range",
-      "id": "content_padding_inline_end",
-      "label": "t:settings.right",
-      "min": 0,
-      "max": 120,
-      "step": 4,
       "unit": "px",
       "default": 0,
       "visible_if": "{{ section.settings.show_scroll_prompt }}"
