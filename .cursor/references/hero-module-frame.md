@@ -27,7 +27,7 @@ When **Show scroll prompt** is enabled, add class `hero--scroll-frame` (independ
 ## Scroll prompt line animation
 
 - **Draw:** `::before` on `.hero__scroll-prompt-line` scales in from top (`900ms`, `200ms` delay).
-- **Pulse:** `::after` is a thicker bar (`3px` × `29px`) on an `88px` track; `0.3s` travel then `0.75s` pause at top with `opacity: 0` (`animation-delay` after draw). Label–line gap `1.25rem`.
+- **Pulse:** `::after` is a thicker bar (`3px` × `29px`) on an `88px` track; `0.75s` pause at top (hidden) → `0.3s` travel → `2s` pause at end (hidden, bar gone) → loop (`animation-delay` after draw). Label–line gap `1.25rem`.
 - **Reduced motion:** Static line only; pulse hidden.
 - If both toggles are on, scroll frame wins; full `hero--module-frame` `::after` border is hidden.
 

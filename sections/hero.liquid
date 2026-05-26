@@ -715,8 +715,12 @@
     --hero-scroll-line-draw-duration: 900ms;
     --hero-scroll-line-draw-delay: 200ms;
     --hero-scroll-line-pulse-travel: 0.3s;
-    --hero-scroll-line-pulse-pause: 0.75s;
-    --hero-scroll-line-pulse-duration: calc(var(--hero-scroll-line-pulse-travel) + var(--hero-scroll-line-pulse-pause));
+    --hero-scroll-line-pulse-pause-top: 0.75s;
+    --hero-scroll-line-pulse-pause-end: 2s;
+    --hero-scroll-line-pulse-duration: calc(
+      var(--hero-scroll-line-pulse-pause-top) + var(--hero-scroll-line-pulse-travel) +
+        var(--hero-scroll-line-pulse-pause-end)
+    );
     --hero-scroll-line-pulse-start: calc(var(--hero-scroll-line-draw-delay) + var(--hero-scroll-line-draw-duration));
 
     position: relative;
@@ -761,21 +765,28 @@
     }
   }
 
-  /* 0.3s travel + 0.75s pause at top (bar hidden) — pause ≈ 71.4% of cycle */
+  /* 0.75s pause at top (hidden) → 0.3s travel → 2s pause at end (hidden) */
   @keyframes hero-scroll-line-pulse {
     0%,
-    71.43% {
+    24.59% {
       opacity: 0;
       transform: translateX(-50%) translateY(0);
     }
 
-    71.43% {
+    24.59% {
       opacity: 1;
       transform: translateX(-50%) translateY(0);
     }
 
-    100% {
+    34.43% {
       opacity: 1;
+      transform: translateX(-50%)
+        translateY(calc(var(--hero-scroll-line-height) - var(--hero-scroll-line-pulse-height)));
+    }
+
+    34.44%,
+    100% {
+      opacity: 0;
       transform: translateX(-50%)
         translateY(calc(var(--hero-scroll-line-height) - var(--hero-scroll-line-pulse-height)));
     }
