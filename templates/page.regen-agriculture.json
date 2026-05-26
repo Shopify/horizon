@@ -57,10 +57,33 @@
         "padding-block-end": 80
       }
     },
-    "section_tDeeyW": {
+    "section_eUYPMX": {
       "type": "section",
       "blocks": {
-        "group_Uw3x8m": {
+        "image_jB9rGt": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Cala_Formentor_2.png",
+            "link": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 16,
+            "image_border_padding": 8,
+            "image_ratio": "adapt",
+            "width": "custom",
+            "custom_width": 100,
+            "width_mobile": "custom",
+            "custom_width_mobile": 100,
+            "height": "fill",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "group_ixe7wt": {
           "type": "group",
           "settings": {
             "content_direction": "column",
@@ -99,13 +122,13 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "text_CiKxK4": {
+            "text_iAy8Pk": {
               "type": "text",
               "name": "t:names.heading",
               "settings": {
                 "text": "<p>Our Regenerative Agricultural Approach</p>",
                 "width": "fit-content",
-                "max_width": "normal",
+                "max_width": "narrow",
                 "alignment": "left",
                 "type_preset": "h2",
                 "font": "var(--font-body--family)",
@@ -121,11 +144,11 @@
                 "padding-block-start": 0,
                 "padding-block-end": 12,
                 "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "padding-inline-end": 59
               },
               "blocks": {}
             },
-            "text_Jk9jY9": {
+            "text_wi6q4N": {
               "type": "text",
               "settings": {
                 "text": "<p>We give more than we take.                          We regenerate and heal the soil.</p><p>We respect the natural rhythms of every plant we cultivate. From wildflowers to native grasses, our botanicals are allowed to grow in harmony with the land. Harvesting and distillation are carried out with care, by hand, either from our wild botanical farm at Cala Falcó or through trusted local farm partners.<br/><br/>These raw materials are then transformed by our scent scientists and master perfumers in our atelier in Palma. The essential oils and extracts we obtain are a direct reflection of this relationship with nature: pure, expressive, and deeply rooted in place.</p>",
@@ -152,37 +175,14 @@
             }
           },
           "block_order": [
-            "text_CiKxK4",
-            "text_Jk9jY9"
+            "text_iAy8Pk",
+            "text_wi6q4N"
           ]
-        },
-        "image_rT7iqq": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/Group_1597881106.png",
-            "link": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 16,
-            "image_border_padding": 8,
-            "image_ratio": "adapt",
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
         }
       },
       "block_order": [
-        "group_Uw3x8m",
-        "image_rT7iqq"
+        "image_jB9rGt",
+        "group_ixe7wt"
       ],
       "name": "t:names.image_with_text",
       "settings": {
@@ -197,9 +197,9 @@
         "show_intro": false,
         "intro_heading": "",
         "intro_description": "",
-        "show_image_border": false,
-        "image_border_color": "#ffffff",
-        "image_border_position": "inside",
+        "show_image_border": true,
+        "image_border_color": "#e6e6e6",
+        "image_border_position": "outside",
         "section_width": "page-width",
         "section_height": "",
         "section_height_custom": 50,
@@ -216,7 +216,7 @@
         "overlay_style": "solid",
         "gradient_direction": "to top",
         "padding-block-start": 40,
-        "padding-block-end": 80
+        "padding-block-end": 40
       }
     },
     "section_Y8fE8F": {
@@ -2269,7 +2269,7 @@
   },
   "order": [
     "main",
-    "section_tDeeyW",
+    "section_eUYPMX",
     "section_Y8fE8F",
     "section_xCCyeF",
     "section_6X8pzN",
