@@ -461,12 +461,10 @@
     --hero-scroll-frame-inset-extra: {{ section.settings.scroll_frame_inset }}px;
     --hero-scroll-frame-inset: calc(var(--cala-frame-gutter-inline) + var(--hero-scroll-frame-inset-extra));
     --hero-scroll-frame-radius: var(--cala-frame-radius);
-    {% if section.settings.enable_module_frame %}
-      --hero-content-padding-block-start: {{ section.settings.content_padding_block_start }}px;
-      --hero-content-padding-block-end: {{ section.settings.content_padding_block_end }}px;
-      --hero-content-padding-inline-start: {{ section.settings.content_padding_inline_start }}px;
-      --hero-content-padding-inline-end: {{ section.settings.content_padding_inline_end }}px;
-    {% endif %}
+    --hero-content-padding-block-start: {{ section.settings.content_padding_block_start }}px;
+    --hero-content-padding-block-end: {{ section.settings.content_padding_block_end }}px;
+    --hero-content-padding-inline-start: {{ section.settings.content_padding_inline_start }}px;
+    --hero-content-padding-inline-end: {{ section.settings.content_padding_inline_end }}px;
     --blur-opacity: {{ section.settings.reflection_opacity | divided_by: 100.0 }};
     {% if section.settings.section_height == 'custom' %}
       --hero-min-height: {{ section.settings.section_height_custom }}svh;
@@ -665,7 +663,7 @@
   }
 
   @media screen and (min-width: 750px) {
-    .hero--module-frame .hero__content-wrapper {
+    .hero__content-wrapper {
       box-sizing: border-box;
       padding-block: var(--hero-content-padding-block-start, 0) var(--hero-content-padding-block-end, 0);
       padding-inline: var(--hero-content-padding-inline-start, 0) var(--hero-content-padding-inline-end, 0);
@@ -1469,9 +1467,11 @@
     },
     {
       "type": "header",
-      "content": "Content area padding",
-      "info": "Padding inside the inset border frame, between text and the frame edge.",
-      "visible_if": "{{ section.settings.enable_module_frame }}"
+      "content": "Content area padding"
+    },
+    {
+      "type": "paragraph",
+      "content": "Padding on the inner text container. Desktop only (750px and up). Works with or without the inset border frame."
     },
     {
       "type": "range",
@@ -1481,8 +1481,7 @@
       "max": 120,
       "step": 4,
       "unit": "px",
-      "default": 0,
-      "visible_if": "{{ section.settings.enable_module_frame }}"
+      "default": 0
     },
     {
       "type": "range",
@@ -1492,8 +1491,7 @@
       "max": 120,
       "step": 4,
       "unit": "px",
-      "default": 0,
-      "visible_if": "{{ section.settings.enable_module_frame }}"
+      "default": 0
     },
     {
       "type": "range",
@@ -1503,8 +1501,7 @@
       "max": 120,
       "step": 4,
       "unit": "px",
-      "default": 0,
-      "visible_if": "{{ section.settings.enable_module_frame }}"
+      "default": 0
     },
     {
       "type": "range",
@@ -1514,8 +1511,7 @@
       "max": 120,
       "step": 4,
       "unit": "px",
-      "default": 0,
-      "visible_if": "{{ section.settings.enable_module_frame }}"
+      "default": 0
     },
     {
       "type": "header",
