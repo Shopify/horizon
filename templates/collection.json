@@ -202,36 +202,12 @@
                 "product_swatches_padding_right": 0
               },
               "blocks": {}
-            },
-            "price_ib6iJL": {
-              "type": "price",
-              "name": "t:names.product_price",
-              "settings": {
-                "show_sale_price_first": true,
-                "show_installments": false,
-                "show_tax_info": false,
-                "type_preset": "",
-                "width": "100%",
-                "alignment": "left",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "color": "var(--color-foreground)",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
             }
           },
           "block_order": [
             "card-gallery",
             "product_title_4nY4eT",
-            "swatches",
-            "price_ib6iJL"
+            "swatches"
           ]
         }
       },
