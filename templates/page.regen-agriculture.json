@@ -750,29 +750,6 @@
     "section_6X8pzN": {
       "type": "section",
       "blocks": {
-        "image_RxjptP": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/Group_1597881116.png",
-            "link": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 16,
-            "image_border_padding": 8,
-            "image_ratio": "adapt",
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
         "group_XtVHDc": {
           "type": "group",
           "settings": {
@@ -868,11 +845,34 @@
             "text_nMdacY",
             "text_QAVGXe"
           ]
+        },
+        "image_RxjptP": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Group_1597881116.png",
+            "link": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 16,
+            "image_border_padding": 8,
+            "image_ratio": "adapt",
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
         }
       },
       "block_order": [
-        "image_RxjptP",
-        "group_XtVHDc"
+        "group_XtVHDc",
+        "image_RxjptP"
       ],
       "name": "t:names.image_with_text",
       "settings": {
@@ -1217,29 +1217,6 @@
     "section_ggBQaH": {
       "type": "section",
       "blocks": {
-        "image_dAxc8y": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/Group_1597881106.png",
-            "link": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 16,
-            "image_border_padding": 8,
-            "image_ratio": "adapt",
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
         "group_BHWPMc": {
           "type": "group",
           "settings": {
@@ -1335,11 +1312,34 @@
             "text_tCCb6K",
             "text_TQ8dMx"
           ]
+        },
+        "image_73AKFx": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Group_1597881106.png",
+            "link": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 16,
+            "image_border_padding": 8,
+            "image_ratio": "adapt",
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
         }
       },
       "block_order": [
-        "image_dAxc8y",
-        "group_BHWPMc"
+        "group_BHWPMc",
+        "image_73AKFx"
       ],
       "name": "t:names.image_with_text",
       "settings": {
@@ -1475,10 +1475,10 @@
             "text_LRcrA6"
           ]
         },
-        "image_DxqfwT": {
+        "image_kjmmzG": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/DSCF2324111_3.jpg",
+            "image": "shopify://shop_images/Cala_Formentor_2.png",
             "link": "",
             "border": "none",
             "border_width": 1,
@@ -1486,11 +1486,11 @@
             "border_radius": 16,
             "image_border_padding": 8,
             "image_ratio": "adapt",
-            "width": "fill",
+            "width": "custom",
             "custom_width": 100,
-            "width_mobile": "fill",
+            "width_mobile": "custom",
             "custom_width_mobile": 100,
-            "height": "fit",
+            "height": "fill",
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
@@ -1501,7 +1501,7 @@
       },
       "block_order": [
         "group_cLzDnx",
-        "image_DxqfwT"
+        "image_kjmmzG"
       ],
       "name": "t:names.image_with_text",
       "settings": {
@@ -1541,6 +1541,29 @@
     "section_f8k3Rm": {
       "type": "section",
       "blocks": {
+        "image_K4H4N9": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Group_1597881106.png",
+            "link": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 16,
+            "image_border_padding": 8,
+            "image_ratio": "adapt",
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
         "group_k3KTn8": {
           "type": "group",
           "settings": {
@@ -1636,34 +1659,11 @@
             "text_9VrkYM",
             "text_VWeW6E"
           ]
-        },
-        "image_K4H4N9": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/Group_1597881106.png",
-            "link": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 16,
-            "image_border_padding": 8,
-            "image_ratio": "adapt",
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
         }
       },
       "block_order": [
-        "group_k3KTn8",
-        "image_K4H4N9"
+        "image_K4H4N9",
+        "group_k3KTn8"
       ],
       "name": "t:names.image_with_text",
       "settings": {
@@ -1708,7 +1708,7 @@
           "settings": {
             "text": "<p>Unlocking the Sensory Alchemy of Nature</p>",
             "width": "fit-content",
-            "max_width": "normal",
+            "max_width": "none",
             "alignment": "left",
             "type_preset": "h2",
             "font": "var(--font-body--family)",
@@ -1777,7 +1777,7 @@
         "horizontal_alignment_flex_direction_column": "flex-start",
         "vertical_alignment_flex_direction_column": "center",
         "gap": 0,
-        "section_width": "full-width",
+        "section_width": "page-width",
         "section_height": "medium",
         "section_height_custom": 50,
         "color_scheme": "scheme-f57b5e90-83d9-4547-94b8-aea957d42386",
