@@ -48,6 +48,7 @@
         "heading",
         "page-content"
       ],
+      "disabled": true,
       "settings": {
         "content_direction": "column",
         "gap": 32,
@@ -127,7 +128,7 @@
             "text_Jk9jY9": {
               "type": "text",
               "settings": {
-                "text": "<p>We respect the natural rhythms of every plant we cultivate. From wildflowers to native grasses, our botanicals are allowed to grow in harmony with the land. Harvesting and distillation are carried out with care, by hand, either from our wild botanical farm at Cala Falcó or through trusted local farm partners.<br/><br/>These raw materials are then transformed by our scent scientists and master perfumers in our atelier in Palma. The essential oils and extracts we obtain are a direct reflection of this relationship with nature: pure, expressive, and deeply rooted in place.</p>",
+                "text": "<p>We give more than we take.                          We regenerate and heal the soil.</p><p>We respect the natural rhythms of every plant we cultivate. From wildflowers to native grasses, our botanicals are allowed to grow in harmony with the land. Harvesting and distillation are carried out with care, by hand, either from our wild botanical farm at Cala Falcó or through trusted local farm partners.<br/><br/>These raw materials are then transformed by our scent scientists and master perfumers in our atelier in Palma. The essential oils and extracts we obtain are a direct reflection of this relationship with nature: pure, expressive, and deeply rooted in place.</p>",
                 "width": "100%",
                 "max_width": "none",
                 "alignment": "left",
@@ -148,26 +149,11 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
-            },
-            "button_pgMGzi": {
-              "type": "button",
-              "settings": {
-                "label": "Discover Our Land",
-                "link": "shopify://collections/all",
-                "open_in_new_tab": false,
-                "style_class": "button",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
             }
           },
           "block_order": [
             "text_CiKxK4",
-            "text_Jk9jY9",
-            "button_pgMGzi"
+            "text_Jk9jY9"
           ]
         },
         "image_hr7kKr": {
@@ -232,10 +218,214 @@
         "padding-block-start": 40,
         "padding-block-end": 80
       }
+    },
+    "section_Y8fE8F": {
+      "type": "section",
+      "blocks": {
+        "image_6JfD8z": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/Group_1597881116.png",
+            "link": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 16,
+            "image_border_padding": 8,
+            "image_ratio": "adapt",
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "image_XCefcy": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Cala_Formentor_2.png",
+            "link": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 16,
+            "image_border_padding": 8,
+            "image_ratio": "adapt",
+            "width": "custom",
+            "custom_width": 100,
+            "width_mobile": "custom",
+            "custom_width_mobile": 100,
+            "height": "fill",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "group_mtKgxp": {
+          "type": "group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "custom",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "text_fEkp6y": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>Why Regenerative Agriculture Matters</p>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "h2",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 12,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "text_N9nPif": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Much of conventional agriculture has been built on extraction, asking more and more from the land while giving little back. Over time, this has led to soil degradation, loss of biodiversity, and growing pressure on water resources. In places such as Mallorca, where water is precious and ecosystems are fragile, these challenges become even more urgent.<br/><br/>When soil is depleted, the whole ecosystem suffers. It retains less water, supports less life, and produces plants with less vitality, complexity, and expression. </p><p>For us, this is not only an environmental concern, but a question of quality.<br/><br/>At Cala Falcó, we choose to farm in a way that restores rather than exhausts. By drawing from regenerative, syntropic, biodynamic, and ecological practices, we work to rebuild living soil, encourage biodiversity, strengthen resilience, and improve the land’s ability to capture and retain water.<br/><br/>This care is reflected in everything we create. Healthier ecosystems yield botanicals of greater purity, character, and energetic integrity, allowing us to develop perfumes, fragrances, cosmetics, and botanical beverages rooted in the vitality of the living world.<br/></p><p>For us, regenerative agriculture is a way of healing the land while elevating the quality of what it gives. It is how we cultivate a future in which nature and human creativity can thrive together.</p>",
+                "width": "100%",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "button_9wbcT9": {
+              "type": "button",
+              "disabled": true,
+              "settings": {
+                "label": "Discover Our Land",
+                "link": "shopify://collections/all",
+                "open_in_new_tab": false,
+                "style_class": "button",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_fEkp6y",
+            "text_N9nPif",
+            "button_9wbcT9"
+          ]
+        }
+      },
+      "block_order": [
+        "image_6JfD8z",
+        "image_XCefcy",
+        "group_mtKgxp"
+      ],
+      "name": "t:names.image_with_text",
+      "settings": {
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 64,
+        "show_intro": false,
+        "intro_heading": "",
+        "intro_description": "",
+        "show_image_border": false,
+        "image_border_color": "#ffffff",
+        "image_border_position": "inside",
+        "section_width": "small",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-cfa9c273-456f-45a2-b18d-d73976dc71f5",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      }
     }
   },
   "order": [
     "main",
-    "section_tDeeyW"
+    "section_tDeeyW",
+    "section_Y8fE8F"
   ]
 }
