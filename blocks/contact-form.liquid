@@ -105,6 +105,48 @@
       placeholder="{{ 'blocks.contact_form.phone' | t }}"
     >
 
+    {% liquid
+      assign reason_field_id = form_id | append: '-reason'
+      assign reason_options_string = block.settings.reason_for_enquiry_options | strip
+      if reason_options_string == blank
+        assign reason_options_string = 'General enquiry\nProduct information\nTrade & wholesale\nPress & media\nOther'
+      endif
+      assign reason_options = reason_options_string | newline_to_br | split: '<br />'
+    %}
+
+    <label
+      class="visually-hidden"
+      for="{{ reason_field_id }}"
+    >
+      {{- 'blocks.contact_form.reason_for_enquiry' | t -}}
+    </label>
+    <div class="contact-form__select-wrapper">
+      <select
+        id="{{ reason_field_id }}"
+        class="contact-form__input contact-form__input--select"
+        name="contact[reason_for_enquiry]"
+      >
+        <option
+          value=""
+          disabled
+          selected
+        >
+          {{- 'blocks.contact_form.reason_for_enquiry_placeholder' | t -}}
+        </option>
+        {% for option in reason_options %}
+          {% assign option_label = option | strip %}
+          {% if option_label != blank %}
+            <option value="{{ option_label | escape }}">
+              {{ option_label }}
+            </option>
+          {% endif %}
+        {% endfor %}
+      </select>
+      <span class="contact-form__select-icon" aria-hidden="true">
+        {{- 'icon-caret.svg' | inline_asset_content -}}
+      </span>
+    </div>
+
     <label
       class="visually-hidden"
       for="ContactForm-body"
@@ -158,6 +200,31 @@
   .contact-form__input--textarea {
     resize: vertical;
     min-height: var(--input-textarea-min-height);
+  }
+
+  .contact-form__select-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  .contact-form__input--select {
+    appearance: none;
+    padding-inline-end: calc(var(--padding-xl) + 1.5rem);
+    cursor: pointer;
+  }
+
+  .contact-form__select-icon {
+    position: absolute;
+    top: 50%;
+    right: var(--padding-xl);
+    display: flex;
+    pointer-events: none;
+    transform: translateY(-50%);
+  }
+
+  .contact-form__select-icon .icon {
+    width: 0.65rem;
+    height: auto;
   }
 
   .contact-form__error,
@@ -226,6 +293,17 @@
       "unit": "%",
       "default": 100,
       "visible_if": "{{ block.settings.width_mobile == 'custom' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.reason_for_enquiry"
+    },
+    {
+      "type": "textarea",
+      "id": "reason_for_enquiry_options",
+      "label": "t:settings.reason_for_enquiry_options",
+      "info": "t:info.reason_for_enquiry_options",
+      "default": "General enquiry\nProduct information\nTrade & wholesale\nPress & media\nOther"
     },
     {
       "type": "checkbox",

@@ -14,3 +14,9 @@
   - `padding-inline: var(--page-margin);`
 
 This matches the established small-width behavior used by other list-style sections.
+
+## Header row (title, description, View all)
+
+- `.featured-blog-posts-section__header` is a flex row with `align-items: flex-end` so the **View all** button sits on the same horizontal baseline area as the bottom of the text block (title + additional line).
+- Do not set `align-self: flex-start` on `.featured-blog-posts-section__view-all` — it overrides parent alignment.
+- Mobile (`≤749px`): column layout with `align-items: flex-start`.
