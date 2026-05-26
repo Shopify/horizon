@@ -909,6 +909,209 @@
         "padding-block-end": 60
       }
     },
+    "section_qKke7w": {
+      "type": "section",
+      "blocks": {
+        "image_39MAqq": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/Group_1597881116.png",
+            "link": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 16,
+            "image_border_padding": 8,
+            "image_ratio": "adapt",
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "image_jRecHG": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Cala_Formentor_2.png",
+            "link": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 16,
+            "image_border_padding": 8,
+            "image_ratio": "adapt",
+            "width": "custom",
+            "custom_width": 100,
+            "width_mobile": "custom",
+            "custom_width_mobile": 100,
+            "height": "fill",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "group_YY8qKq": {
+          "type": "group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "custom",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "text_G34yMT": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>A Syntropic, Regenerative Approach</p>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "h2",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 12,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "text_hiTUCP": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Syntropic agriculture is a way of farming that works with nature’s own logic of regeneration. Rather than growing plants in isolation, it brings different species together in systems designed to cooperate, protect the soil, and evolve over time.<br/><br/>One of its core ideas is succession: the natural process through which land moves from simpler to more complex ecosystems. At Cala Falcó, we work with this principle by creating plant communities that help prepare, protect, and enrich the land as it develops.<br/><br/>Dense planting is central to this approach. By growing different species close together, we encourage collaboration between plants while covering the soil, reducing water loss, and increasing biological activity. Pruning also plays an essential role. The biomass generated is returned to the ground, where it becomes nourishment for the soil, helping to build fertility, retain moisture, and accelerate regeneration.<br/><br/>This is how we give more than we take. Through diversity, observation, and the continuous return of organic matter, our agricultural system helps the ecosystem recover more quickly and become more resilient over time.<br/><br/>Our approach is inspired by syntropic agriculture, but adapted to the coastal Mediterranean conditions of Cala Falcó. We apply its principles in a way that responds to this landscape: its dry climate, mineral soils, limited water, and native aromatic plants.<br/><br/>In this way, syntropy becomes more than a method. It becomes a way of restoring balance, working with succession, and allowing the land to heal through cultivation itself.</p>",
+                "width": "100%",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "button_qLqBNp": {
+              "type": "button",
+              "disabled": true,
+              "settings": {
+                "label": "Discover Our Land",
+                "link": "shopify://collections/all",
+                "open_in_new_tab": false,
+                "style_class": "button",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_G34yMT",
+            "text_hiTUCP",
+            "button_qLqBNp"
+          ]
+        }
+      },
+      "block_order": [
+        "image_39MAqq",
+        "image_jRecHG",
+        "group_YY8qKq"
+      ],
+      "name": "t:names.image_with_text",
+      "settings": {
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 64,
+        "show_intro": false,
+        "intro_heading": "",
+        "intro_description": "",
+        "show_image_border": false,
+        "image_border_color": "#ffffff",
+        "image_border_position": "inside",
+        "section_width": "small",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-cfa9c273-456f-45a2-b18d-d73976dc71f5",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      }
+    },
     "hero_HPzUCh": {
       "type": "hero",
       "blocks": {
@@ -1018,6 +1221,7 @@
     "section_Y8fE8F",
     "section_xCCyeF",
     "section_6X8pzN",
+    "section_qKke7w",
     "hero_HPzUCh"
   ]
 }
