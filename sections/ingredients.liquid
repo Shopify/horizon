@@ -41,7 +41,7 @@
             assign next_image_alt = next_block.settings.image.alt | default: next_block.settings.title | default: 'Next ingredient image'
           %}
           <article
-            class="ingredients__slide"
+            class="ingredients__slide{% if forloop.first %} is-active{% endif %}"
             data-slide
             data-index="{{ forloop.index0 }}"
             aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}"
@@ -118,13 +118,16 @@
 
 {% javascript %}
   class IngredientsSwiper extends HTMLElement {
+    #transitionTimeout;
+
     connectedCallback() {
       this.track = this.querySelector('[data-track]');
       this.prevButton = this.querySelector('[data-prev]');
       this.nextButton = this.querySelector('[data-next]');
       this.slides = Array.from(this.querySelectorAll('[data-slide]'));
       this.slideCount = Number(this.dataset.slideCount || this.slides.length);
-      this.currentIndex = 0;
+      this.currentIndex = this.slides.findIndex((slide) => slide.classList.contains('is-active'));
+      if (this.currentIndex < 0) this.currentIndex = 0;
 
       if (!this.track || this.slideCount <= 1) {
         this.#setNavDisabled(true);
@@ -136,6 +139,9 @@
     }
 
     disconnectedCallback() {
+      if (this.#transitionTimeout) {
+        clearTimeout(this.#transitionTimeout);
+      }
       if (this.handleResize) {
         window.removeEventListener('resize', this.handleResize);
       }
@@ -197,13 +203,59 @@
       this.#render(animate);
     }
 
-    #render(animate = true) {
-      this.track.style.transitionDuration = animate ? '420ms' : '0ms';
-      this.track.style.transform = `translate3d(-${this.currentIndex * 100}%, 0, 0)`;
-
+    #setSlideState(activeIndex) {
       for (const [index, slide] of this.slides.entries()) {
-        slide.setAttribute('aria-hidden', index === this.currentIndex ? 'false' : 'true');
+        const isActive = index === activeIndex;
+        slide.classList.toggle('is-active', isActive);
+        slide.classList.remove('is-leaving', 'is-leaving--run', 'is-entering', 'is-entering--run');
+        slide.setAttribute('aria-hidden', isActive ? 'false' : 'true');
       }
+    }
+
+    #render(animate = true) {
+      const nextIndex = this.currentIndex;
+      const previousIndex = this.slides.findIndex((slide) => slide.classList.contains('is-active'));
+
+      if (!animate || previousIndex === -1 || previousIndex === nextIndex) {
+        this.#setSlideState(nextIndex);
+        return;
+      }
+
+      const leavingSlide = this.slides[previousIndex];
+      const enteringSlide = this.slides[nextIndex];
+
+      if (this.#transitionTimeout) {
+        clearTimeout(this.#transitionTimeout);
+      }
+
+      leavingSlide.classList.remove('is-active');
+      leavingSlide.classList.add('is-leaving');
+      enteringSlide.classList.add('is-entering');
+      enteringSlide.setAttribute('aria-hidden', 'false');
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          leavingSlide.classList.add('is-leaving--run');
+          enteringSlide.classList.add('is-entering--run');
+        });
+      });
+
+      const finishTransition = () => {
+        if (this.#transitionTimeout) {
+          clearTimeout(this.#transitionTimeout);
+          this.#transitionTimeout = undefined;
+        }
+        this.#setSlideState(nextIndex);
+      };
+
+      const handleTransitionEnd = (event) => {
+        if (event.target !== enteringSlide) return;
+        if (event.propertyName !== 'opacity') return;
+        finishTransition();
+      };
+
+      enteringSlide.addEventListener('transitionend', handleTransitionEnd, { once: true });
+      this.#transitionTimeout = window.setTimeout(finishTransition, 950);
     }
   }
 
@@ -215,6 +267,7 @@
 {% stylesheet %}
   .ingredients {
     --ingredients-content-max-width: 1200px;
+    --ingredients-fade-duration: 850ms;
   }
 
   .ingredients__header {
@@ -270,17 +323,58 @@
   }
 
   .ingredients__track {
-    display: flex;
-    transition: transform 420ms ease;
-    will-change: transform;
+    display: grid;
+    grid-template: 1fr / 1fr;
+    position: relative;
   }
 
   .ingredients__slide {
+    grid-area: 1 / 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    flex: 0 0 100%;
-    min-width: 100%;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity var(--ingredients-fade-duration) ease;
+  }
+
+  .ingredients__slide.is-active,
+  .ingredients__slide.is-leaving,
+  .ingredients__slide.is-entering {
+    visibility: visible;
+  }
+
+  .ingredients__slide.is-active {
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+  }
+
+  .ingredients__slide.is-leaving {
+    opacity: 1;
+    z-index: 0;
+  }
+
+  .ingredients__slide.is-leaving.is-leaving--run {
+    opacity: 0;
+  }
+
+  .ingredients__slide.is-entering {
+    opacity: 0;
+    z-index: 2;
+    pointer-events: auto;
+  }
+
+  .ingredients__slide.is-entering.is-entering--run {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ingredients__slide {
+      transition-duration: 150ms;
+    }
   }
 
   .ingredients__content {
