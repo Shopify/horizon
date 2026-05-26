@@ -19,16 +19,28 @@
   if block_settings.image != blank and block_settings.image_on_hover != blank
     assign has_hover_image = true
   endif
+
+  assign has_image_border = false
+  if block_settings.border != 'none'
+    assign has_image_border = true
+  endif
 %}
 
 {% capture class %}
-  image-block image-block--{{ block.id }} image-block--height-{{ block_settings.height }}{% if has_hover_image %} image-block--has-hover-image{% endif %} spacing-style size-style
+  image-block image-block--{{ block.id }} image-block--height-{{ block_settings.height }}{% if has_hover_image %} image-block--has-hover-image{% endif %}{% if has_image_border %} image-block--bordered{% endif %} spacing-style size-style
 {% endcapture %}
 
 {% capture style %}
   --ratio: {{ ratio }};
   {% render 'size-style', settings: block_settings %}
   {% render 'spacing-style', settings: block_settings %}
+{% endcapture %}
+
+{% capture image_frame_style %}
+  {% if has_image_border %}
+    {% render 'border-override', settings: block_settings %}
+    --image-block-inner-padding: {{ block_settings.image_border_padding }}px;
+  {% endif %}
 {% endcapture %}
 
 {% capture image_border_style %}
@@ -44,7 +56,11 @@
 %}
 
 {% capture image %}
-  <div class="image-block__media{% if has_hover_image %} image-block__media--has-hover{% endif %}">
+  <div
+    class="image-block__frame{% if has_image_border %} image-block__frame--bordered border-style{% endif %}"
+    style="{{ image_frame_style }}"
+  >
+    <div class="image-block__media{% if has_hover_image %} image-block__media--has-hover{% endif %}">
     {%- if block_settings.image -%}
       {{
         block_settings.image
@@ -77,6 +93,7 @@
         {{ 'detailed-apparel-1' | placeholder_svg_tag: 'hero__media' }}
       </div>
     {%- endif -%}
+    </div>
   </div>
 {% endcapture %}
 
@@ -116,6 +133,7 @@
     justify-content: var(--horizontal-alignment, 'inline-start');
   }
 
+  .image-block--height-fill .image-block__frame,
   .image-block--height-fill .image-block__media {
     height: 100%;
   }
@@ -124,18 +142,42 @@
     height: 100%;
   }
 
+  .image-block__frame {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .image-block__frame--bordered {
+    box-sizing: border-box;
+    padding: var(--image-block-inner-padding, 0);
+    overflow: hidden;
+    --image-block-inner-radius: max(0px, calc(var(--border-radius, 0px) - var(--image-block-inner-padding, 0px)));
+  }
+
   .image-block__media {
     position: relative;
     width: 100%;
     max-width: 100%;
   }
 
+  .image-block--bordered .image-block__media,
+  .image-block--bordered .image-block__media--has-hover {
+    border-radius: var(--image-block-inner-radius, 0);
+    overflow: hidden;
+  }
+
   .image-block__media--has-hover {
-    --image-block-hover-duration: 0.6s;
+    --image-block-hover-duration: 0.5s;
     --image-block-hover-easing: ease;
+    --image-block-hover-zoom: var(--hover-subtle-zoom-amount, 1.015);
+    --image-block-hover-zoom-duration: 0.65s;
 
     overflow: hidden;
     border-radius: 16px;
+  }
+
+  .image-block--bordered .image-block__media--has-hover {
+    border-radius: var(--image-block-inner-radius, 16px);
   }
 
   .image-block__image {
@@ -145,6 +187,11 @@
     display: block;
     width: 100%;
     height: auto;
+  }
+
+  .image-block--bordered .image-block__image,
+  .image-block--bordered .placeholder-image {
+    border-radius: var(--image-block-inner-radius, 0);
   }
 
   .image-block__media--has-hover .image-block__image--primary {
@@ -159,14 +206,22 @@
     z-index: 1;
     width: 100%;
     height: 100%;
+    object-fit: cover;
     opacity: 0;
-    transition: opacity var(--image-block-hover-duration) var(--image-block-hover-easing);
+    transform: scale(1);
+    transition:
+      opacity var(--image-block-hover-duration) var(--image-block-hover-easing),
+      transform var(--image-block-hover-zoom-duration) var(--ease-out-quad);
   }
 
   @media (prefers-reduced-motion: reduce) {
     .image-block__media--has-hover .image-block__image--primary,
     .image-block__image--hover {
       transition: none;
+    }
+
+    .image-block__image--hover {
+      transform: none;
     }
   }
 
@@ -184,10 +239,22 @@
     }
   }
 
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .image-block--has-hover-image:hover .image-block__image--hover,
+    .image-block--has-hover-image:focus-within .image-block__image--hover,
+    .image-block__media--has-hover:hover .image-block__image--hover {
+      transform: scale(var(--image-block-hover-zoom));
+    }
+  }
+
   .image-block:has(.image-block__image--hover):focus-visible {
     outline: 2px solid rgb(var(--color-foreground-rgb));
     outline-offset: 4px;
     border-radius: 16px;
+  }
+
+  .image-block--bordered:has(.image-block__image--hover):focus-visible {
+    border-radius: var(--border-radius, 0);
   }
 {% endstylesheet %}
 
@@ -211,6 +278,70 @@
       "type": "url",
       "id": "link",
       "label": "t:settings.link"
+    },
+    {
+      "type": "header",
+      "content": "t:content.borders"
+    },
+    {
+      "type": "select",
+      "id": "border",
+      "label": "t:settings.style",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "solid",
+          "label": "t:options.solid"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "t:settings.thickness",
+      "default": 1,
+      "visible_if": "{{ block.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "t:settings.opacity",
+      "default": 100,
+      "visible_if": "{{ block.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16,
+      "visible_if": "{{ block.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "image_border_padding",
+      "label": "t:settings.image_border_padding",
+      "min": 0,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 8,
+      "visible_if": "{{ block.settings.border != 'none' }}"
     },
     {
       "type": "header",

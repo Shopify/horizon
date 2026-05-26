@@ -141,4 +141,128 @@
     align-self: flex-start;
     margin-top: var(--padding-xs);
   }
+
+  .product-card .card-gallery slideshow-slide {
+    border-radius: var(--product-corner-radius, 16px);
+    overflow: hidden;
+  }
+
+  .product-card .card-gallery .product-media-container {
+    border-radius: var(--product-corner-radius, 16px);
+    overflow: hidden;
+    --product-media-fit: cover;
+  }
+
+  .product-card .card-gallery .product-media {
+    width: 100%;
+    height: 100%;
+  }
+
+  .product-card .card-gallery .product-media-container img,
+  .product-card .card-gallery .product-media__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    border-radius: var(--product-corner-radius, 16px);
+  }
+
+  /* Hover: fade to second image + zoom; single-image cards zoom the first only */
+  .product-card .card-gallery--hover-fade,
+  .product-card .card-gallery--hover-zoom-only {
+    --card-hover-fade-in: 0.35s;
+    --card-hover-fade-out: 0.15s;
+  }
+
+  .product-card .card-gallery--hover-fade slideshow-slides {
+    display: grid;
+    grid-template: 1fr / 1fr;
+    aspect-ratio: var(--gallery-aspect-ratio, 1);
+    overflow: hidden !important;
+    scroll-snap-type: none !important;
+  }
+
+  .product-card .card-gallery--hover-fade slideshow-slide {
+    grid-area: 1 / 1;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    max-height: none;
+    aspect-ratio: unset;
+    align-self: stretch;
+    content-visibility: visible !important;
+    pointer-events: none;
+  }
+
+  .product-card .card-gallery--hover-fade slideshow-slide .product-media {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    aspect-ratio: var(--gallery-aspect-ratio, 1);
+  }
+
+  .product-card .card-gallery--hover-fade slideshow-slide[hidden] {
+    display: none !important;
+  }
+
+  .product-card .card-gallery--hover-fade slideshow-slide:nth-child(n + 3 of :not([hidden])) {
+    display: none !important;
+  }
+
+  .product-card .card-gallery--hover-fade slideshow-slide:nth-child(1 of :not([hidden])) {
+    opacity: 1;
+    z-index: 1;
+    transition: opacity var(--card-hover-fade-out) ease;
+  }
+
+  .product-card .card-gallery--hover-fade slideshow-slide:nth-child(2 of :not([hidden])) {
+    opacity: 0;
+    z-index: 2;
+    transition: opacity var(--card-hover-fade-out) ease;
+  }
+
+  .product-card .card-gallery--hover-fade .product-media-container img,
+  .product-card .card-gallery--hover-fade .product-media__image,
+  .product-card .card-gallery--hover-zoom-only .product-media-container img,
+  .product-card .card-gallery--hover-zoom-only .product-media__image {
+    transform: scale(1);
+  }
+
+  @media (hover: hover) {
+    .product-card:hover .card-gallery--hover-fade:has(slideshow-slide:nth-child(2 of :not([hidden])))
+      slideshow-slide:nth-child(1 of :not([hidden])) {
+      opacity: 0;
+      transition: opacity var(--card-hover-fade-in) ease;
+    }
+
+    .product-card:hover .card-gallery--hover-fade:has(slideshow-slide:nth-child(2 of :not([hidden])))
+      slideshow-slide:nth-child(2 of :not([hidden])) {
+      opacity: 1;
+      transition: opacity var(--card-hover-fade-in) ease;
+    }
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .product-card .card-gallery--hover-fade,
+    .product-card .card-gallery--hover-zoom-only {
+      overflow: hidden;
+    }
+
+    .product-card .card-gallery--hover-fade .product-media-container img,
+    .product-card .card-gallery--hover-fade .product-media__image,
+    .product-card .card-gallery--hover-zoom-only .product-media-container img,
+    .product-card .card-gallery--hover-zoom-only .product-media__image {
+      transition: transform 0.65s var(--ease-out-quad);
+    }
+
+    .product-card:hover .card-gallery--hover-fade:has(slideshow-slide:nth-child(2 of :not([hidden])))
+      slideshow-slide:nth-child(2 of :not([hidden]))
+      :is(.product-media-container img, .product-media__image),
+    .product-card:hover .card-gallery--hover-fade:not(:has(slideshow-slide:nth-child(2 of :not([hidden]))))
+      slideshow-slide:nth-child(1 of :not([hidden]))
+      :is(.product-media-container img, .product-media__image),
+    .product-card:hover .card-gallery--hover-zoom-only :is(.product-media-container img, .product-media__image) {
+      transform: scale(var(--hover-subtle-zoom-amount, 1.015));
+    }
+  }
 {% endstylesheet %}

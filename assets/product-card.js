@@ -395,6 +395,10 @@ export class ProductCard extends ProductCardLink {
   }
 
   /**
+   * Swaps visible slide with a fade (no slideshow scroll).
+   * @param {number} index - The slide index to show.
+   */
+  /**
    * Previews the next image.
    * @param {PointerEvent} event - The pointer event.
    */
@@ -406,6 +410,12 @@ export class ProductCard extends ProductCardLink {
     if (!slideshow) return;
 
     this.resetVariant.cancel();
+
+    // Standard cards: CSS handles fade + zoom via .card-gallery--hover-fade
+    if (!this.variantPicker) {
+      setTimeout(() => this.#preloadNextPreviewImage());
+      return;
+    }
 
     if (this.#previousSlideIndex != null && this.#previousSlideIndex > 0) {
       slideshow.select(this.#previousSlideIndex, undefined, { animate: false });
@@ -422,14 +432,12 @@ export class ProductCard extends ProductCardLink {
   resetImage(event) {
     if (event.pointerType !== 'mouse') return;
 
-    const { slideshow } = this.refs;
+    if (!this.variantPicker) return;
 
-    if (!this.variantPicker) {
-      if (!slideshow) return;
-      slideshow.previous(undefined, { animate: false });
-    } else {
-      this.#resetVariant();
-    }
+    const { slideshow } = this.refs;
+    if (!slideshow) return;
+
+    this.#resetVariant();
   }
 
   /**

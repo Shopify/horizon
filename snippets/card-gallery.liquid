@@ -66,11 +66,20 @@
       assign media_fit = block_settings.constrain_to_viewport
     endif
   endif
+
+  assign card_hover_class = ''
+  if settings.show_second_image_on_hover and product.media.size > 0
+    if product.media.size > 1
+      assign card_hover_class = ' card-gallery--hover-fade'
+    else
+      assign card_hover_class = ' card-gallery--hover-zoom-only'
+    endif
+  endif
 %}
 
 <div
   ref="cardGallery"
-  class="card-gallery card-gallery-{{ block.id }} spacing-style border-style{% if has_badges %} card-gallery--badge-{{ badge_position }}{% endif %}"
+  class="card-gallery card-gallery-{{ block.id }} spacing-style border-style{% if has_badges %} card-gallery--badge-{{ badge_position }}{% endif %}{{ card_hover_class }}"
   style="
     {% render 'border-override', settings: block_settings %}
     {% render 'spacing-style', settings: block_settings %}
@@ -78,7 +87,7 @@
     --gallery-aspect-ratio-value: {{ ratio_value }};
   "
   data-product-id="{{ product.id }}"
-  {% if settings.show_second_image_on_hover %}
+  {% if settings.show_second_image_on_hover and product.media.size > 1 %}
     on:pointerenter="/previewImage"
     on:pointerleave="/resetImage"
   {% endif %}
