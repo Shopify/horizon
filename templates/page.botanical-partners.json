@@ -48,6 +48,7 @@
         "heading",
         "page-content"
       ],
+      "disabled": true,
       "settings": {
         "content_direction": "column",
         "gap": 32,
@@ -177,7 +178,7 @@
             "link": "",
             "border": "solid",
             "border_width": 1,
-            "border_opacity": 48,
+            "border_opacity": 19,
             "border_radius": 16,
             "image_border_padding": 8,
             "image_ratio": "adapt",
