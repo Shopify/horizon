@@ -1,16 +1,17 @@
 # Hero Module Frame Pattern
 
-## Inset border frame (`enable_module_frame`)
+## Module inset layout (`hero--module-inset`)
 
-- Use a section-level toggle to enable an inset framed hero card:
-  - `enable_module_frame`
-  - `module_frame_padding`
-  - `module_frame_radius`
-  - `module_frame_border_width`
-- Apply inset spacing on the hero root container (`padding`) so the module sits inside the section.
-- Apply border radius and border on `.hero__container` in a modifier class (`.hero--module-frame`) so media and overlays clip correctly.
-- Keep styles variable-driven in the section `style` attribute for per-instance customization.
-- **Content padding:** `content_padding_*` settings (0–120px) add padding on `.hero__content-wrapper` (desktop only, `min-width: 750px`). Available regardless of `enable_module_frame`.
+Class `hero--module-inset` applies when inset padding, corner radius, or the border toggle is used. Settings are always available in the editor:
+
+- `module_frame_padding` — inset on the inner frame (`--hero-module-padding`)
+- `module_frame_radius` — corner radius on `.hero__container`
+- `module_frame_border_width` — border thickness (only when border is shown)
+
+`enable_module_frame` adds `hero--module-frame` and shows the gold `::after` border on desktop. Inset padding and radius apply **with or without** the border.
+
+- `hero--module-frame-page` — outer hero padding when `section_width` is `page-width`
+- **Content padding:** `content_padding_*` on `.hero__content-wrapper` (desktop only)
 
 ## Scroll prompt inner frame (`show_scroll_prompt`)
 

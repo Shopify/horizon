@@ -448,14 +448,21 @@
   {% endif %}
 {% endcapture %}
 
+{% liquid
+  assign hero_module_inset = false
+  if section.settings.enable_module_frame or section.settings.module_frame_padding > 0 or section.settings.module_frame_radius > 0
+    assign hero_module_inset = true
+  endif
+%}
+
 <div
   id="Hero-{{ section.id }}"
-  class="hero color-{{ section.settings.color_scheme }}{% if section.blocks.size == 0 and section.settings.section_height == 'auto' %} hero--no-blocks-auto-height{% endif %}{% if section.settings.stack_media_on_mobile %} hero--stack-mobile{% endif %}{% if section.settings.enable_module_frame %} hero--module-frame{% endif %}{% if section.settings.enable_module_frame and section.settings.section_width == 'page-width' %} hero--module-frame-page{% endif %}{% if section.settings.show_scroll_prompt %} hero--scroll-frame{% endif %}"
+  class="hero color-{{ section.settings.color_scheme }}{% if hero_module_inset %} hero--module-inset{% endif %}{% if section.blocks.size == 0 and section.settings.section_height == 'auto' %} hero--no-blocks-auto-height{% endif %}{% if section.settings.stack_media_on_mobile %} hero--stack-mobile{% endif %}{% if section.settings.enable_module_frame %} hero--module-frame{% endif %}{% if section.settings.section_width == 'page-width' and hero_module_inset %} hero--module-frame-page{% endif %}{% if section.settings.show_scroll_prompt %} hero--scroll-frame{% endif %}"
   style="
     --hero-border-style: {{ section.settings.border }};
     --hero-border-width: {{ section.settings.border_width }}px;
     --hero-border-opacity: {{ section.settings.border_opacity }}%;
-    --hero-module-padding: {% if section.settings.enable_module_frame %}{{ section.settings.module_frame_padding }}px{% else %}0px{% endif %};
+    --hero-module-padding: {{ section.settings.module_frame_padding }}px;
     --hero-module-radius: {{ section.settings.module_frame_radius }}px;
     --hero-module-border-width: {{ section.settings.module_frame_border_width }}px;
     --hero-scroll-frame-inset-extra: {{ section.settings.scroll_frame_inset }}px;
@@ -607,7 +614,7 @@
     }
   }
 
-  .hero--module-frame .hero__container {
+  .hero--module-inset .hero__container {
     border-radius: var(--hero-module-radius);
     border: none;
   }
@@ -1429,7 +1436,8 @@
     {
       "type": "checkbox",
       "id": "enable_module_frame",
-      "label": "Enable inset border frame",
+      "label": "Show inset border frame",
+      "info": "Displays the gold border. Inset padding and corner radius apply with or without the border.",
       "default": false
     },
     {
@@ -1440,8 +1448,7 @@
       "max": 48,
       "step": 1,
       "unit": "px",
-      "default": 16,
-      "visible_if": "{{ section.settings.enable_module_frame }}"
+      "default": 16
     },
     {
       "type": "range",
@@ -1451,8 +1458,7 @@
       "max": 48,
       "step": 1,
       "unit": "px",
-      "default": 20,
-      "visible_if": "{{ section.settings.enable_module_frame }}"
+      "default": 20
     },
     {
       "type": "range",
