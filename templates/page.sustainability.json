@@ -618,7 +618,7 @@
           "type": "text",
           "name": "t:names.heading",
           "settings": {
-            "text": "<p>Our Agricultral Approach</p>",
+            "text": "<p>Sustainability Built Into Every Step</p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -644,7 +644,7 @@
           "type": "text",
           "name": "t:names.text",
           "settings": {
-            "text": "<p>At Cala Falcó, our agricultural system is not based on a single doctrine or fixed method. It has evolved through observation, experimentation, and a deepening relationship with the land itself. Inspired by regenerative, syntropic, biodynamic, and ecological agriculture, we have developed an approach guided by clear principles, yet responsive to the reality of each season, each plant, and each part of the estate.<br/><br/>These are the principles that shape the way we cultivate.</p>",
+            "text": "<p>These are some of the ways in which we make sustainability the baseline of our work: to protect the soil, reduce harm, and begin healing our relationship with the way we take from the land.</p>",
             "width": "fit-content",
             "max_width": "none",
             "alignment": "left",
@@ -688,7 +688,7 @@
             "accordion_row_Ux9WVG": {
               "type": "_accordion-row",
               "settings": {
-                "heading": "1. Soil First",
+                "heading": "1. Responsible Sourcing Beyond the Estate",
                 "open_by_default": true,
                 "icon": "none",
                 "width": 200
@@ -697,7 +697,7 @@
                 "text_KBtRFG": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>Everything begins with the soil. We focus on building fertility, increasing organic matter, improving water retention, and supporting the microbial life that sustains the wider ecosystem.</p>",
+                    "text": "<p>Not every botanical or material we work with can be grown at Cala Falcó. When we source beyond the estate, we do so with great care, prioritising suppliers who work with transparency, ethical practices, and a genuine respect for land, people, and craft.<br/></p><p>We look for partners whose values align with our own: thoughtful cultivation, responsible harvesting, traceability, and a commitment to quality that begins at origin. For us, sourcing is never only about obtaining an ingredient. It is about extending the integrity of our system beyond the boundaries of the estate.</p>",
                     "width": "100%",
                     "max_width": "none",
                     "alignment": "left",
@@ -727,7 +727,7 @@
             "accordion_row_dFcyn9": {
               "type": "_accordion-row",
               "settings": {
-                "heading": "2. Diversity as Strength",
+                "heading": "2. Low-Impact Production",
                 "open_by_default": false,
                 "icon": "none",
                 "width": 20
@@ -736,7 +736,7 @@
                 "text_ELdDBT": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>We design for biodiversity from the outset. By combining aromatic, medicinal, pollinator-supporting, and soil-building species, we create a more balanced and resilient system.</p>",
+                    "text": "<p>The way something is made matters as much as what it is made from.</p><p>Our production approach is guided by care, restraint, and intentionality. We favour small-batch processes over industrial scale, allowing for greater precision, lower waste, and a closer relationship with the materials we work with. This slower and more considered way of producing helps us preserve quality while reducing unnecessary excess.</p><p>Where possible, we seek lower-impact energy systems and more efficient production methods, always looking for ways to reduce waste and improve how resources are used over time.</p>",
                     "width": "100%",
                     "max_width": "none",
                     "alignment": "left",
@@ -767,7 +767,7 @@
               "type": "_accordion-row",
               "name": "t:names.accordion_row",
               "settings": {
-                "heading": "3. Mirror Nature’s Rhythms",
+                "heading": "3. Packaging & Materials",
                 "open_by_default": false,
                 "icon": "none",
                 "width": 20
@@ -777,7 +777,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>Our cultivation follows the rhythms of nature. Seasonal change, plant succession, productive cycles, and lunar phases all help guide planting, pruning, and harvesting.</p>",
+                    "text": "<p>We believe packaging should protect the product without creating unnecessary burden on the planet.<br/></p><p>For this reason, we prioritise materials that can be recycled, reused, composted, or biodegraded whenever possible. We work to reduce plastics, avoid excess, and design packaging that is as minimal and purposeful as it can be. Refillable formats, reusable vessels, and reduced outer packaging all form part of this thinking.<br/></p><p>For us, good design is not only about beauty. It is also about responsibility: choosing materials and formats that minimise waste while preserving the integrity of the object.</p>",
                     "width": "100%",
                     "max_width": "none",
                     "alignment": "left",
@@ -808,7 +808,7 @@
               "type": "_accordion-row",
               "name": "t:names.accordion_row",
               "settings": {
-                "heading": "4. Adaptation Over Rigidity",
+                "heading": "4. Waste & Circular Thinking",
                 "open_by_default": false,
                 "icon": "none",
                 "width": 20
@@ -818,7 +818,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>No two years are the same. Our system continues to evolve with the climate, the plants, and the lessons of the land itself.</p>",
+                    "text": "<p>We try to think in cycles rather than in straight lines.<br/></p><p>Across the estate and in production, we look for ways to ensure that what might otherwise be considered waste can return to the system with new value. Plant matter can be composted and returned to the soil. Biomass from pruning can be used to protect and nourish the land. By-products from distillation or extraction can sometimes be reformulated, repurposed, or transformed into new raw materials and products.<br/></p><p>This circular way of thinking allows us to reduce waste, extend the life of materials, and build systems in which one process can nourish another.</p>",
                     "width": "100%",
                     "max_width": "none",
                     "alignment": "left",
@@ -849,7 +849,7 @@
               "type": "_accordion-row",
               "name": "t:names.accordion_row",
               "settings": {
-                "heading": "5. Observation Before Intervention",
+                "heading": "5. Energy Use & Carbon",
                 "open_by_default": false,
                 "icon": "none",
                 "width": 20
@@ -859,7 +859,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>Sun, wind, terrain, water movement, and plant behaviour guide our decisions. Rather than imposing rigid solutions, we observe carefully and intervene with precision and restraint.</p>",
+                    "text": "<p>We believe carbon responsibility begins with practical choices.<br/></p><p>Where possible, we seek to reduce emissions through local production, thoughtful sourcing, efficient logistics, and lower-impact energy systems. We are interested not only in offsetting impact, but in reducing it at source through the way we design our operations.<br/></p><p>For us, energy and carbon are part of a wider responsibility: to build a system that is lighter, more efficient, and more regenerative over time.</p>",
                     "width": "100%",
                     "max_width": "none",
                     "alignment": "left",
@@ -885,6 +885,47 @@
               "block_order": [
                 "text_E74x3L"
               ]
+            },
+            "accordion_row_iCR8Dg": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_row",
+              "settings": {
+                "heading": "6. Small Batch by Design",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_qU9aLg": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>We do not believe sustainability is compatible with overproduction.<br/></p><p>That is why we work in small batches, prioritising quality over quantity and long-term land health over short-term yield. This allows us to respond more carefully to the rhythms of the estate, the availability of raw materials, and the integrity of each formulation.<br/></p><p>Small-batch production also helps us avoid unnecessary excess, reduce waste, and remain close to every step of the process. It is a slower model, but a more responsible one.</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_qU9aLg"
+              ]
             }
           },
           "block_order": [
@@ -892,7 +933,8 @@
             "accordion_row_dFcyn9",
             "accordion_row_EreKQW",
             "accordion_row_7gHXEB",
-            "accordion_row_aXUQk3"
+            "accordion_row_aXUQk3",
+            "accordion_row_iCR8Dg"
           ]
         }
       },
