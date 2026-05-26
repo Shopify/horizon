@@ -746,12 +746,115 @@
         "padding-block-start": 100,
         "padding-block-end": 60
       }
+    },
+    "hero_HPzUCh": {
+      "type": "hero",
+      "blocks": {
+        "text_GWwbaH": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Designing the Botanical Palette</p>",
+            "width": "fit-content",
+            "max_width": "narrow",
+            "alignment": "left",
+            "type_preset": "h2",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "text_JGcX84": {
+          "type": "text",
+          "settings": {
+            "text": "<p>At Cala Falcó, we choose plants not only for what they produce, but for how they belong. Each species is selected in response to the conditions of this coastal Mediterranean estate: its light, its winds, its mineral soils, its water limitations, and the wider ecological intelligence of the landscape.<br/>We work with a balance of native and carefully adapted species, always seeking plants that can thrive in genuine relationship with the land. Some are chosen for their aromatic or medicinal richness; others for their ability to build soil, attract pollinators, protect the ground, or support the resilience of the wider ecosystem.<br/><br/>Together, they form a living palette in which biodiversity is not left to chance, but designed with intention from the outset.</p>",
+            "width": "fit-content",
+            "max_width": "narrow",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 32,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_GWwbaH",
+        "text_JGcX84"
+      ],
+      "name": "t:names.hero",
+      "settings": {
+        "media_type_1": "image",
+        "image_1": "shopify://shop_images/Mask_group_18.png",
+        "media_type_2": "image",
+        "stack_media_on_mobile": false,
+        "custom_mobile_media": false,
+        "media_type_1_mobile": "image",
+        "media_type_2_mobile": "image",
+        "link": "",
+        "open_in_new_tab": false,
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 16,
+        "section_width": "page-width",
+        "section_height": "medium",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-f57b5e90-83d9-4547-94b8-aea957d42386",
+        "toggle_overlay": true,
+        "overlay_color": "#00000026",
+        "overlay_style": "gradient",
+        "gradient_direction": "to top",
+        "blurred_reflection": false,
+        "reflection_opacity": 75,
+        "enable_module_frame": false,
+        "module_frame_padding": 16,
+        "module_frame_radius": 20,
+        "module_frame_border_width": 1,
+        "content_padding_block_start": 0,
+        "content_padding_block_end": 0,
+        "content_padding_inline_start": 60,
+        "content_padding_inline_end": 60,
+        "show_scroll_prompt": false,
+        "scroll_prompt_text": "Scroll down for more",
+        "scroll_frame_inset": 0,
+        "padding-block-start": 40,
+        "padding-block-end": 40
+      }
     }
   },
   "order": [
     "main",
     "section_tDeeyW",
     "section_Y8fE8F",
-    "section_xCCyeF"
+    "section_xCCyeF",
+    "hero_HPzUCh"
   ]
 }
