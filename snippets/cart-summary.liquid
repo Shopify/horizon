@@ -5,6 +5,20 @@
   @param {string} [section_id] - The section ID for cart discount component.
 {%- enddoc -%}
 
+{% liquid
+  assign is_b2b = false
+  if customer.tags contains 'b2b'
+    assign is_b2b = true
+  endif
+
+  assign b2b_moq = shop.metafields.custom.b2b_moq.value | default: 6 | plus: 0
+  assign moq_not_met = false
+
+  if is_b2b and cart.item_count < b2b_moq
+    assign moq_not_met = true
+  endif
+%}
+
 <div class="cart-totals">
   {% # We need to keep this node in place to allow morphing to work properly # %}
   <div class="cart-totals__original-container cart-primary-typography">
@@ -258,12 +272,21 @@
 </div>
 
 <div class="cart__ctas">
+  {% if moq_not_met %}
+    <div class="cart-error-banner form-message--error" role="alert" style="display: flex; align-items: center; gap: var(--gap-xs); padding: var(--padding-sm); background-color: var(--color-error-background, #fff0f0); border: 1px solid var(--color-error, #d20000); border-radius: var(--border-radius); color: var(--color-error, #d20000); margin-bottom: var(--margin-md);">
+      <span class="svg-wrapper" style="width: var(--icon-size-sm); height: var(--icon-size-sm); flex-shrink: 0;">
+        {{- 'icon-error.svg' | inline_asset_content -}}
+      </span>
+      <p style="margin: 0; font-size: var(--font-size--sm);">B2B customers must purchase at least {{ b2b_moq }} items. You currently have {{ cart.item_count }} item{% if cart.item_count != 1 %}s{% endif %}.</p>
+    </div>
+  {% endif %}
+
   <button
     type="submit"
     id="checkout"
     class="cart__checkout-button button"
     name="checkout"
-    {% if cart == empty %}
+    {% if cart == empty or moq_not_met %}
       disabled
     {% endif %}
     form="cart-form"
@@ -273,7 +296,7 @@
     </span>
   </button>
 
-  {% if additional_checkout_buttons and settings.show_accelerated_checkout_buttons %}
+  {% if additional_checkout_buttons and settings.show_accelerated_checkout_buttons and moq_not_met == false %}
     <div
       class="
         additional-checkout-buttons

@@ -1,3 +1,21 @@
+{% liquid
+  # Code for Detecting B2B Customer
+  assign is_b2b = false
+  if customer and customer.tags contains 'b2b'
+    assign is_b2b = true
+  endif
+
+  # Metafield with fallback
+  assign moq = shop.metafields.custom.b2b_moq.value | default: 6 | plus: 0
+  assign cart_qty = cart.item_count
+  
+  # Logic
+  assign blocks_checkout = false
+  if is_b2b and cart_qty < moq
+    assign blocks_checkout = true
+  endif
+%}
+
 {% capture cart_page_more_blocks_content %}
   <div class="cart-page__more-blocks">
     {%- content_for 'blocks' -%}
@@ -44,6 +62,14 @@
 
       {%- unless cart.empty? -%}
         <div class="cart-page__summary">
+          
+          {%- comment -%} B2B MOQ Error Banner Injected Here {%- endcomment -%}
+          {% if blocks_checkout %}
+            <div class="cart-error-banner" style="color: #721c24; background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 12px; margin-bottom: 15px; border-radius: 4px;">
+              <strong>Minimum Order Requirement:</strong> As a B2B customer, you must purchase at least {{ moq }} items. You currently have {{ cart_qty }}.
+            </div>
+          {% endif %}
+
           {%- content_for 'block', id: 'cart-page-summary', type: '_cart-summary' -%}
         </div>
       {%- endunless -%}
