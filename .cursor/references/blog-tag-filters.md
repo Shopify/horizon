@@ -22,7 +22,7 @@ Use this pattern in `sections/main-blog.liquid` to render tag-based filters abov
 
 For editorial blog pages in `sections/main-blog.liquid`, use a deterministic card sequence:
 
-- **Post 1:** full-width hero (`col-span: 6`) with text overlay anchored bottom-left on top of the image.
+- **Post 1:** full-width hero (`col-span: 6`) with text overlay vertically centered on the image (`top: 50%`, `translateY(-50%)`), padded `clamp(2.5rem, 5vw, 4rem)` block / `clamp(2.5rem, 6vw, 4rem)` inline-start. Inner frame on image via `.blog-post-card__image-container::before`: `inset: 16px`, `border-radius: 16px`, `1px solid rgb(244 192 119 / 0.4)` (`#F4C077` at 40% opacity). Gradient overlay stays on `::after`.
 - **Posts 2-3:** standard two-column grid cards (`col-span: 3` each).
 - **Posts 4+:** one row each (`col-span: 6`) using a compact list row:
   - image first (264px wide, 3:2 aspect ratio)
