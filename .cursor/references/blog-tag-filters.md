@@ -25,7 +25,7 @@ For editorial blog pages in `sections/main-blog.liquid`, use a deterministic car
 - **Post 1:** full-width hero (`col-span: 6`) with text overlay anchored bottom-left on top of the image.
 - **Posts 2-3:** standard two-column grid cards (`col-span: 3` each).
 - **Posts 4+:** one row each (`col-span: 6`) using a compact list row:
-  - image first
+  - image first (264px wide, 3:2 aspect ratio)
   - title in middle column
   - excerpt in right column
 
