@@ -743,8 +743,8 @@
         "overlay_color": "#00000026",
         "overlay_style": "solid",
         "gradient_direction": "to top",
-        "padding-block-start": 100,
-        "padding-block-end": 60
+        "padding-block-start": 80,
+        "padding-block-end": 80
       }
     },
     "section_6X8pzN": {
@@ -1372,8 +1372,8 @@
         "overlay_color": "#00000026",
         "overlay_style": "solid",
         "gradient_direction": "to top",
-        "padding-block-start": 60,
-        "padding-block-end": 60
+        "padding-block-start": 40,
+        "padding-block-end": 40
       }
     },
     "section_HDJMyf": {
@@ -1697,7 +1697,7 @@
         "overlay_style": "solid",
         "gradient_direction": "to top",
         "padding-block-start": 40,
-        "padding-block-end": 80
+        "padding-block-end": 40
       }
     },
     "hero_iKgLqV": {
@@ -1733,7 +1733,7 @@
           "settings": {
             "text": "<p>At Cala Falcó, the final product begins in the field.<br/><br/>Regenerative farming shapes the quality of everything we extract and create. The vitality of the soil, the resilience of the plants, the biodiversity of the ecosystem, and the intelligence of each harvest all influence the richness, active potential, and purity of the raw materials we bring into our atelier.<br/><br/>When botanicals are grown in healthy living systems, they offer more than yield. They carry character, complexity, and vitality. Their essential oils, hydrolates, extracts, and infusions become more expressive of place, and more capable of delivering sensorial and functional depth in perfumes, cosmetics, wellness products, and botanical beverages.<br/><br/>This is why our farming method is inseparable from our formulations. The way we cultivate directly affects what we can create, and what people ultimately experience through it.<br/><br/>Healthier land. More vital plants. More powerful raw materials. More meaningful products.<br/><br/>That is the sensory alchemy of nature, stewarded from soil to soul.</p>",
             "width": "fit-content",
-            "max_width": "none",
+            "max_width": "narrow",
             "alignment": "left",
             "type_preset": "rte",
             "font": "var(--font-body--family)",
