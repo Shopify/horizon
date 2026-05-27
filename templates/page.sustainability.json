@@ -177,7 +177,7 @@
             "text_yyMA9q": {
               "type": "text",
               "settings": {
-                "text": "<p>Sustainability is the foundation of how we work. It is not limited to agriculture, but extends across the full life of what we create. From cultivation and sourcing to formulation, production, packaging and use.</p><p>Yet for us, sustainability alone is not enough. While it asks us to reduce harm and act responsibly, regeneration invites us to go further. To restore soil health, strengthen biodiversity, and create systems that leave the land richer, more resilient, and more alive.</p><p>This belief shapes our entire approach. We see sustainability as a responsibility and regeneration as the deeper ambition.</p><p>Everything is connected, the wellbeing of the ecosystem, the integrity of the materials, the care of the maker, and the experience of the person who receives the final product. To work sustainably is to honour those relationships. To work regeneratively is to help them flourish.</p>",
+                "text": "<p>Sustainability is the foundation of how we work. It is not limited to agriculture, but extends across the full life of what we create. From cultivation and sourcing to formulation, production, packaging and use.</p><p>Yet for us, sustainability alone is not enough. While it asks us to reduce harm and act responsibly, regeneration invites us to go further. To restore soil health, strengthen biodiversity, and create systems that leave the land richer and more alive.</p><p>This belief shapes our entire approach. We see sustainability as a responsibility and regeneration as the deeper ambition.</p><p>Everything is connected, the wellbeing of the ecosystem, the integrity of the materials, and the experience of the person who receives the final product. To work sustainably is to honour those relationships. To work regeneratively is to help them flourish.</p>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",
@@ -1020,82 +1020,6 @@
         "padding-block-end": 27
       }
     },
-    "hero_7UXr3r": {
-      "type": "hero",
-      "blocks": {
-        "text_3W6b69": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Our ambition is to move beyond sustaining what exists and actively restore and enrich it. This means continually rethinking how we work, how we produce, and how we give back more than we take.<br/><br/>Through The Cala Falco Way, we hope to help shift this mindset. By sharing our approach, we aim to inspire a deeper connection to nature and encourage others to walk this path with us toward a more regenerative future.<br/>Together, they form a living palette in which biodiversity is not left to chance, but designed with intention from the outset.</p>",
-            "width": "fit-content",
-            "max_width": "narrow",
-            "alignment": "left",
-            "type_preset": "rte",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 32,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "text_3W6b69"
-      ],
-      "name": "t:names.hero",
-      "settings": {
-        "media_type_1": "image",
-        "image_1": "shopify://shop_images/Mask_group_18.png",
-        "media_type_2": "image",
-        "stack_media_on_mobile": false,
-        "custom_mobile_media": false,
-        "media_type_1_mobile": "image",
-        "media_type_2_mobile": "image",
-        "link": "",
-        "open_in_new_tab": false,
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 0,
-        "section_width": "page-width",
-        "section_height": "small",
-        "section_height_custom": 50,
-        "color_scheme": "scheme-f57b5e90-83d9-4547-94b8-aea957d42386",
-        "toggle_overlay": true,
-        "overlay_color": "#00000026",
-        "overlay_style": "gradient",
-        "gradient_direction": "to top",
-        "blurred_reflection": false,
-        "reflection_opacity": 75,
-        "enable_module_frame": false,
-        "module_frame_padding": 11,
-        "module_frame_radius": 20,
-        "module_frame_border_width": 1,
-        "content_padding_block_start": 60,
-        "content_padding_block_end": 0,
-        "content_padding_inline_start": 60,
-        "content_padding_inline_end": 60,
-        "show_scroll_prompt": false,
-        "scroll_prompt_text": "Scroll down for more",
-        "scroll_frame_inset": 0,
-        "padding-block-start": 1,
-        "padding-block-end": 20
-      }
-    },
     "section_dpheUg": {
       "type": "section",
       "blocks": {
@@ -1759,7 +1683,6 @@
     "section_FCfDxd",
     "section_AwRQGV",
     "section_xb8kUP",
-    "hero_7UXr3r",
     "section_dpheUg",
     "media_with_content_CiwnVg"
   ]
