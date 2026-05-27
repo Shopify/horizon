@@ -938,6 +938,68 @@
         "padding-block-end": 56
       }
     },
+    "ingredients_TQxTYb": {
+      "type": "ingredients",
+      "blocks": {
+        "ingredient_JjjwUN": {
+          "type": "ingredient",
+          "settings": {
+            "title": "1. Rosemary",
+            "description": "<p><strong>Aroma: </strong>fresh, resinous, herbal<br/><strong>Aromachology: </strong>stimulating, enhances memory and focus<br/><strong>Use:</strong> mental fatigue, headaches, circulation</p>",
+            "image": "shopify://shop_images/6886308d49247233db8c1cb0_HONEY_ILLUSTRATION-p-500_1.png"
+          }
+        },
+        "ingredient_yPbTpk": {
+          "type": "ingredient",
+          "settings": {
+            "title": "2. Lavender",
+            "description": "<p><strong>Aroma: </strong>soft floral, clean<br/><strong>Aromachology:</strong> calming, regulates the nervous system<br/><strong>Use: </strong>stress, sleep, emotional balance</p>",
+            "image": "shopify://shop_images/68861fa4192044cdab14729f_MASTIC_ILLUSTRATION.png"
+          }
+        },
+        "ingredient_brLBqD": {
+          "type": "ingredient",
+          "settings": {
+            "title": "3. French lavender",
+            "description": "<p><strong>Aroma:</strong> more herbaceous and wild<br/><strong>Aromachology:</strong> relaxing with a gentle uplifting effect<br/><strong>Use:</strong> clarity, light emotional reset</p>",
+            "image": "shopify://shop_images/68c9b40545040b9db7dee7f2_SEA_POLAROID3.png"
+          }
+        },
+        "ingredient_tcEQcb": {
+          "type": "ingredient",
+          "settings": {
+            "title": "4. Helichrysum",
+            "description": "<p><strong>Aroma: </strong>warm, honeyed, slightly curry-like<br/><strong>Aromachology:</strong> deeply grounding, regenerative<br/><strong>Use: </strong>skin repair, emotional healing, deep stress</p>",
+            "image": "shopify://shop_images/68861fa4ad2c5c0d13872c0c_LEMON_ILLUSTRATION-p-500_1.png"
+          }
+        },
+        "ingredient_zKECPk": {
+          "type": "ingredient",
+          "settings": {
+            "title": "5. santolina",
+            "description": "<p><strong>Aroma: </strong>dry, herbal, slightly bitter<br/><strong>Aromachology:</strong> clarifying, purifying<br/><strong>Use:</strong> mental clarity, environmental cleansing</p>",
+            "image": "shopify://shop_images/68861fa431a371dd91d95772_ROSEMARY_ILLUSTRATION.png"
+          }
+        }
+      },
+      "block_order": [
+        "ingredient_JjjwUN",
+        "ingredient_yPbTpk",
+        "ingredient_brLBqD",
+        "ingredient_tcEQcb",
+        "ingredient_zKECPk"
+      ],
+      "name": "Ingredients",
+      "settings": {
+        "heading": "Top 10 botanicals",
+        "description": "<p>How They Can Impact Your Mood & Senses</p>",
+        "section_width": "page-width",
+        "color_scheme": "",
+        "arrow_size": 52,
+        "padding-block-start": 24,
+        "padding-block-end": 56
+      }
+    },
     "product_list_Ddz9mc": {
       "type": "product-list",
       "blocks": {
@@ -2584,6 +2646,7 @@
     "section_fXxtNM",
     "section_Ct3h3w",
     "ingredients_tnMT9F",
+    "ingredients_TQxTYb",
     "product_list_Ddz9mc",
     "hero_xbJPf6",
     "section_hUtqcY",
