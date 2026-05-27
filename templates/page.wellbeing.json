@@ -152,7 +152,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<h4>Made from botanicals picked by hand in harmony with natural cycles.</h4>",
+                "text": "<h4>Made from botanicals, picked by hand in harmony with natural cycles.</h4>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -177,7 +177,7 @@
             "text_4XDpPd": {
               "type": "text",
               "settings": {
-                "text": "<p>Each product in our collection is distilled by our scent scientists into soulful fragrances and wellness products. We invite you to explore, to re-discover a sense you never knew you’d lost.<br/></p>",
+                "text": "<p>Each natural and botanically infused product in our collection is distilled by our scent scientists into soulful fragrances and wellness products. We invite you to explore, to re-discover a sense you never knew you’d lost.<br/></p>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",
@@ -202,7 +202,7 @@
             "button_RLkDGn": {
               "type": "button",
               "settings": {
-                "label": "Lift Your Mood",
+                "label": "Lift Your Senses",
                 "link": "shopify://collections/all",
                 "open_in_new_tab": false,
                 "style_class": "button",
@@ -304,6 +304,32 @@
             "padding-inline-end": 0
           },
           "blocks": {
+            "text_YF3N3T": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<h2>favourite categories</h2>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
             "text_NRXYyH": {
               "type": "text",
               "name": "t:names.text",
@@ -360,6 +386,7 @@
             }
           },
           "block_order": [
+            "text_YF3N3T",
             "text_NRXYyH",
             "text_FYJi6T"
           ]
@@ -530,7 +557,7 @@
             "text_t9ARVN": {
               "type": "text",
               "settings": {
-                "text": "<p>Cala Falcó Collection is a natural holistic wellness house and aromachologist. The Collection is nourished by botanicals sourced from the wild botanical farm and family home at ‘Cala Falcó’, a coastal sanctuary in Mallorca. The Collection is specifically blended to harness the transformative and potent power of botanicals to awaken your senses and lift your mood.</p><p>We are equal parts natural scent scientists, botanists, bespoke lab ateliers, sensory alchemists and artists.</p><p>We fiercely believe in a connection to nature and a 100% natural and slower approach to sourcing our ingredients.</p>",
+                "text": "<p>Cala Falcó Collection is a natural holistic wellness house and aromachologist. The Collection is nourished by botanicals sourced from the wild botanical farm and family home at ‘Cala Falcó’, a coastal sanctuary in Mallorca. The Collection is specifically blended to harness the transformative and potent power of botanicals to awaken your senses and lift your mood.</p><p>We are equal parts natural scent scientists, botanists, lab ateliers and sensory alchemists.</p><p>We fiercely believe in a connection to nature and a 100% natural and slower approach to sourcing our ingredients.</p>",
                 "width": "100%",
                 "max_width": "none",
                 "alignment": "left",
@@ -730,7 +757,7 @@
             "text_XmrwTY": {
               "type": "text",
               "settings": {
-                "text": "<p>Scent can evoke relaxation or exhilaration, comfort or courage. It can stimulate and it can soothe. All because the sense of smell is a direct channel to the limbic system, the area of the brain where emotions and memories are processed. The study into this connection between aromas and human psychology is known as aromachology.<br/><br/>By mixing traditional artisan perfumery techniques with the latest research into aromachology our scent scientists, led by our founder Victor Alarcon, a scent scientist himself, use fragrances to stimulate chemical reactions in the brain. Reactions in turn trigger feelings, unlock memories and create moods.<br/><br/>Our natural fragrances can also restore biochemical, hormonal and emotional states, and enable us to tune into our consciousness and<br/>elevate our spirit.</p>",
+                "text": "<p>Scent can evoke relaxation or exhilaration, comfort or courage. It can stimulate and it can soothe. All because the sense of smell is a direct channel to the limbic system, the area of the brain where emotions and memories are processed. The study into this connection between aromas and human psychology is known as aromachology.<br/><br/>By mixing traditional artisan perfumery techniques with the latest research into aromachology our scent scientists, led by our founder Victor Alarcon, a scent scientist himself, use fragrances to stimulate chemical reactions in the brain. Reactions in turn trigger feelings, unlock memories and create moods.<br/><br/>Our natural fragrances can also restore biochemical, hormonal and emotional states, and enable us to tune into our consciousness and elevate our spirit.</p>",
                 "width": "100%",
                 "max_width": "none",
                 "alignment": "left",
