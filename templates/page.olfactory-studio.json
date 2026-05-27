@@ -166,7 +166,7 @@
         "image_K8cCJA": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/Cala_Formentor_2.png",
+            "image": "shopify://shop_images/IMG_4362.jpg",
             "link": "",
             "border": "none",
             "border_width": 1,
@@ -229,7 +229,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<p>Olfactory Art Studio</p>",
+                "text": "<p>OLFACTORY ART STUDIO</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -251,15 +251,15 @@
               },
               "blocks": {}
             },
-            "text_Q7rMUE": {
+            "text_te7YED": {
               "type": "text",
-              "name": "t:names.heading",
+              "name": "t:names.text",
               "settings": {
                 "text": "<p>Viti Vinci is an olfactory art studio creating scent art through installations, commissions, and collectible wearable editions.</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
-                "type_preset": "h5",
+                "type_preset": "rte",
                 "font": "var(--font-body--family)",
                 "font_size": "1rem",
                 "line_height": "normal",
@@ -271,9 +271,9 @@
                 "background_color": "#00000026",
                 "corner_radius": 0,
                 "padding-block-start": 0,
-                "padding-block-end": 12,
+                "padding-block-end": 0,
                 "padding-inline-start": 0,
-                "padding-inline-end": 40
+                "padding-inline-end": 0
               },
               "blocks": {}
             },
@@ -303,7 +303,33 @@
               },
               "blocks": {}
             },
-            "button_n4YUUt": {
+            "text_Q7rMUE": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>Viti Vinci is an olfactory art studio creating scent art through installations, commissions, and collectible wearable editions.</p>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "h5",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 12,
+                "padding-inline-start": 0,
+                "padding-inline-end": 40
+              },
+              "blocks": {}
+            },
+            "button_G4Rr3E": {
               "type": "button",
               "settings": {
                 "label": "Visit Viti Vinci",
@@ -320,9 +346,10 @@
           },
           "block_order": [
             "text_4WQi3q",
-            "text_Q7rMUE",
+            "text_te7YED",
             "text_JXemJz",
-            "button_n4YUUt"
+            "text_Q7rMUE",
+            "button_G4Rr3E"
           ]
         }
       },
@@ -411,7 +438,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<p>Viti Vinci - An Olfactory Art Studio and Perfumer</p>",
+                "text": "<p>the Studio</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -436,7 +463,7 @@
             "text_dY6wmH": {
               "type": "text",
               "settings": {
-                "text": "<p>An Olfactory Art Studio - Our purpose is to illustrate the power of scent beyond the limitations of a perfume bottle. </p><p>Viti Vinci is an olfactory art studio creating scent art through installations, commissions, and collectible wearable editions, rooted in regenerative matter and archetypal storytelling, whilst confronting global challenges with beauty, hope, and impact. <br/><br/>The studio exists to translate the tensions of our time into olfactory artworks, connecting us with the world around us in the most direct, pre-linguistic manner. <br/><br/>The studio strives to reconnect to the land, to its soil, to our community, to our memories, to our emotions and to our values.</p>",
+                "text": "<p>The Studio is a space for both artistic and philosophical exploration. Through scent and material, each work reflects on the tensions of our time, proposing a return to connection, memory and a more conscious way of living. </p><p>Viti Vinci exists to expand the language of scent beyond function and into perception. Here, scent becomes a medium for translating emotion, atmosphere, and experience into form. Each work invites a deeper relationship with the natural world, cultural memory, and the inner landscapes we carry within us.</p>",
                 "width": "100%",
                 "max_width": "none",
                 "alignment": "left",
@@ -461,7 +488,7 @@
             "button_je9KCQ": {
               "type": "button",
               "settings": {
-                "label": "Discover perfume art",
+                "label": "Discover the studio",
                 "link": "shopify://collections/all",
                 "open_in_new_tab": false,
                 "style_class": "button",
@@ -611,7 +638,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<p>The studio</p>",
+                "text": "<p>Creative direction</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -636,7 +663,7 @@
             "text_6BTWa9": {
               "type": "text",
               "settings": {
-                "text": "<p>Olfactory artworks, limited edition art perfumes, private commissions.</p><p>Olfactory Artwork is a work where scent is the primary medium, whether it be for an installation, an object, or a private commission.<br/><br/>Perfume art collections are curated bodies of wearable works, released as collectible editions, inspired by art and archetypes. Conceptually rigorous, limited in number, designed to be collected.<br/><br/>The studio of Creative Director, Victor Alarcon is fluid, working all over the world, with multiple partners and artists, but will always be anchored by the botanical farm, and perfume lab in Palma, Mallorca.</p>",
+                "text": "<p>Viti Vinci is led by founder and creative director Victor Alarcón. His work is grounded in belief that perfumery can exist as an artistic discipline - one that engages with culture, ecology and human perception. </p><p>Drawing from both traditional perfumery and contemporary art, his approch combines material knowledge with conceptual thinking, shaping a practice where scent becomes a way of exploring identity, place and transformation.</p>",
                 "width": "100%",
                 "max_width": "none",
                 "alignment": "left",
