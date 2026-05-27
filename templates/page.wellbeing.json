@@ -1004,6 +1004,22 @@
             "description": "<p><strong>Aroma:</strong> fresh, green, slightly sweet<br/><strong>Aromachology: </strong>calming yet uplifting<br/><strong>Use:</strong> respiratory system, emotional balance</p>",
             "image": "shopify://shop_images/68861fa431a371dd91d95772_ROSEMARY_ILLUSTRATION.png"
           }
+        },
+        "ingredient_gzhfPQ": {
+          "type": "ingredient",
+          "settings": {
+            "title": "9. olive leaf",
+            "description": "<p><strong>Aroma: </strong>soft, green, subtle<br/><strong>Aromachology: </strong>grounding, stabilizing<br/><strong>Use: </strong>overall wellbeing, longevity symbolism</p>",
+            "image": "shopify://shop_images/68861fa431a371dd91d95772_ROSEMARY_ILLUSTRATION.png"
+          }
+        },
+        "ingredient_yF6eiX": {
+          "type": "ingredient",
+          "settings": {
+            "title": "10. bitter orange",
+            "description": "<p><strong>Aroma:</strong> fresh citrus (leaf), floral (blossom / neroli)<br/><strong>Aromachology: </strong>uplifting and relaxing at the same time<br/><strong>Use: </strong>anxiety, mood balance</p>",
+            "image": "shopify://shop_images/68861fa431a371dd91d95772_ROSEMARY_ILLUSTRATION.png"
+          }
         }
       },
       "block_order": [
@@ -1014,7 +1030,9 @@
         "ingredient_zKECPk",
         "ingredient_PTYpVy",
         "ingredient_F9twXz",
-        "ingredient_w4BywQ"
+        "ingredient_w4BywQ",
+        "ingredient_gzhfPQ",
+        "ingredient_yF6eiX"
       ],
       "name": "Ingredients",
       "settings": {
