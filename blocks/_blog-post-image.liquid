@@ -7,6 +7,12 @@
 {%- assign image = article.image -%}
 
 {%- assign block_settings = block.settings -%}
+{%- liquid
+  assign image_size = block_settings.height
+  if image_height != blank
+    assign image_size = image_height
+  endif
+-%}
 <div class="blog-post-card__image-container">
   <a href="{{ article.url }}">
     <img
@@ -26,7 +32,7 @@
       class="
         border-style
         blog-post-card__image
-        blog-post-card__image--{{ block_settings.height }}
+        blog-post-card__image--{{ image_size }}
       "
       style="{% render 'border-override', settings: block_settings %}"
     >
@@ -46,11 +52,11 @@
   }
 
   .blog-post-card__image--medium {
-    --blog-post-card-img-height: 340px;
+    --blog-post-card-img-height: 436px;
   }
 
   .blog-post-card__image--large {
-    --blog-post-card-img-height: 400px;
+    --blog-post-card-img-height: 550px;
   }
 {% endstylesheet %}
 
