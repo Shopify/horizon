@@ -223,27 +223,12 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
-            },
-            "button_RLkDGn": {
-              "type": "button",
-              "settings": {
-                "label": "Nourish Your Soul",
-                "link": "shopify://products/cala-falco-at-spring",
-                "open_in_new_tab": false,
-                "style_class": "button",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
             }
           },
           "block_order": [
             "text_QFLNkA",
             "text_wULbDA",
-            "text_4XDpPd",
-            "button_RLkDGn"
+            "text_4XDpPd"
           ]
         }
       },
@@ -252,6 +237,7 @@
         "image_8zJaHi",
         "group_a7b3TP"
       ],
+      "disabled": true,
       "name": "t:names.image_with_text",
       "settings": {
         "content_direction": "row",
@@ -283,6 +269,152 @@
         "overlay_color": "#00000026",
         "overlay_style": "solid",
         "gradient_direction": "to top",
+        "padding-block-start": 100,
+        "padding-block-end": 100
+      }
+    },
+    "hero_4arD4L": {
+      "type": "hero",
+      "blocks": {
+        "text_tH3VUq": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<p>Cala Falcó AT SPRING</p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h1",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground-heading)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "text_w8gQeR": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<h4>A seasonal alcohol-free aperitivo</h4>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "text_hkJhxj": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<p>Crafted from Organic Botanicals of a Mallorcan Spring Harvest. We invite you to reconnect with nature and awaken your senses.</p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "button_wkcqhC": {
+          "type": "button",
+          "settings": {
+            "label": "Nourish Your Soul",
+            "link": "shopify://products/cala-falco-at-spring",
+            "open_in_new_tab": false,
+            "style_class": "button",
+            "width": "fit-content",
+            "custom_width": 100,
+            "width_mobile": "fit-content",
+            "custom_width_mobile": 100
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_tH3VUq",
+        "text_w8gQeR",
+        "text_hkJhxj",
+        "button_wkcqhC"
+      ],
+      "name": "t:names.hero",
+      "settings": {
+        "media_type_1": "video",
+        "video_1": "shopify://files/videos/cala_falco_wine_web_pour_v1 (2160p).mp4",
+        "media_type_2": "image",
+        "stack_media_on_mobile": false,
+        "custom_mobile_media": false,
+        "media_type_1_mobile": "image",
+        "media_type_2_mobile": "image",
+        "link": "",
+        "open_in_new_tab": false,
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "space-between",
+        "vertical_alignment": "flex-end",
+        "align_baseline": true,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 24,
+        "section_width": "full-width",
+        "section_height": "full-screen",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-cfa9c273-456f-45a2-b18d-d73976dc71f5",
+        "toggle_overlay": true,
+        "overlay_color": "#12121266",
+        "overlay_style": "solid",
+        "gradient_direction": "to bottom",
+        "blurred_reflection": false,
+        "reflection_opacity": 75,
+        "enable_module_frame": false,
+        "module_frame_padding": 16,
+        "module_frame_radius": 20,
+        "module_frame_border_width": 1,
+        "content_padding_block_start": 0,
+        "content_padding_block_end": 0,
+        "content_padding_inline_start": 0,
+        "content_padding_inline_end": 0,
+        "show_scroll_prompt": true,
+        "scroll_prompt_text": "",
+        "scroll_frame_inset": 0,
         "padding-block-start": 100,
         "padding-block-end": 100
       }
@@ -904,6 +1036,7 @@
   "order": [
     "main",
     "section_HNtiHk",
+    "hero_4arD4L",
     "testimonials_6rfhgc",
     "section_9jwXwa",
     "ingredients_q6pchk",
