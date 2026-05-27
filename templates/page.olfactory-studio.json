@@ -254,6 +254,7 @@
             "text_te7YED": {
               "type": "text",
               "name": "t:names.text",
+              "disabled": true,
               "settings": {
                 "text": "<p>Viti Vinci is an olfactory art studio creating scent art through installations, commissions, and collectible wearable editions.</p>",
                 "width": "fit-content",
@@ -778,9 +779,9 @@
         "text_V8qzAp": {
           "type": "text",
           "settings": {
-            "text": "<p>Info here......</p>",
+            "text": "<p>Viti Vinci creates limited-edition olfactory artworks, composed by its Scent Artists as expressions of identity and emotion. </p><p>Distilled through scent, each work exists as a wearable piece to be embodied, experienced, or collected. </p>",
             "width": "fit-content",
-            "max_width": "narrow",
+            "max_width": "normal",
             "alignment": "left",
             "type_preset": "rte",
             "font": "var(--font-body--family)",
