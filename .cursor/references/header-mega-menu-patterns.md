@@ -56,6 +56,7 @@ endfor
 ## Submenu height / first-open clipping
 
 - Open height is driven by JS (`assets/header-menu.js`): `--submenu-height` and `--full-open-header-height` feed `clip-path` on `.menu-list__submenu`.
+- **`--submenu-offset`** on `.menu-list` controls the gap between the header bottom and the megamenu panel when open. Keep at **`0px`** for a flush fit; `var(--padding-md)` pushes the dropdown too far down.
 - Hidden submenus use `content-visibility: auto` without a fixed `contain-intrinsic-size` (a fixed 500px intrinsic size caused first-open clipping).
 - **Fix:** `ResizeObserver` on submenu, inner, and `.mega-menu-featured-collections`; remeasure on image `load`/`error`, `document.fonts.ready`, and delayed passes; measure `scrollHeight` / featured panel height, not stale `offsetHeight`.
 - **Do not** disable `clip-path` for featured collections without replacing the reveal system — dropdowns will not show.

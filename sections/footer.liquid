@@ -34,6 +34,16 @@
     endif
   %}
   <div class="footer-shell">
+    <div class="footer-shell__glow" aria-hidden="true">
+      <img
+        src="https://cdn.shopify.com/s/files/1/0956/6116/2824/files/Ellipse_6.png?v=1779876725"
+        alt=""
+        class="footer-shell__glow-image"
+        width="675"
+        height="1011"
+        loading="lazy"
+      >
+    </div>
     {% if section.settings.footer_logo != blank %}
       <div class="footer-shell__floating-logo">
         {{
@@ -129,9 +139,37 @@
   }
 
   .footer-shell__frame {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
     border: 1px solid #F4C077;
     border-radius: 1.2rem;
-    padding: clamp(1.5rem,3vw,2.5rem) clamp(2rem,7vw,8rem)!important}
+    padding: clamp(1.5rem, 3vw, 2.5rem) clamp(2rem, 7vw, 8rem) !important;
+  }
+
+  .footer-shell__glow {
+    position: absolute;
+    left: calc(50% - 50vw);
+    top: 0;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .footer-shell__glow-image {
+    display: block;
+    height: 100%;
+    width: auto;
+    max-width: none;
+    object-fit: contain;
+    object-position: left center;
+  }
+
+  .footer-content,
+  .footer-shell__policy-links-wrap {
+    position: relative;
+    z-index: 1;
+  }
 
   .footer-shell__policy-links-wrap {
     margin-top: clamp(1.2rem, 2.2vw, 2rem);

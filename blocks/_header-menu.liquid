@@ -279,7 +279,7 @@
   .menu-list {
     --menu-horizontal-gap: var(--gap-xl);
     --menu-vertical-gap: var(--gap-xl);
-    --submenu-offset: var(--padding-md);
+    --submenu-offset: 0px;
 
     display: flex;
     height: 100%;
@@ -455,10 +455,15 @@
 
   /* Right split menu: anchor mega menu to header row (full width), not the narrow right link group */
   @media screen and (min-width: 990px) {
+    #header-component[data-menu-position='split'] .header-menu--split-left,
     #header-component[data-menu-position='split'] .header-menu--split-right {
       position: static;
     }
 
+    #header-component[data-menu-position='split']
+      .header-menu--split-left
+      .menu-list__list-item:where(:not([slot='overflow']))
+      > .menu-list__submenu,
     #header-component[data-menu-position='split']
       .header-menu--split-right
       .menu-list__list-item:where(:not([slot='overflow']))
