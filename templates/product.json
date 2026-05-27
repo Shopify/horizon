@@ -18,7 +18,7 @@
           "settings": {
             "media_presentation": "grid",
             "media_columns": "one",
-            "image_gap": 4,
+            "image_gap": 0,
             "large_first_image": false,
             "icons_style": "arrow",
             "slideshow_controls_style": "counter",
@@ -492,7 +492,7 @@
         "gap": 48,
         "enable_sticky_add_to_cart": true,
         "color_scheme": "scheme-1",
-        "padding-block-start": 0,
+        "padding-block-start": 24,
         "padding-block-end": 0
       }
     },
@@ -600,6 +600,11 @@
           "settings": {
             "image": "{{ closest.product.featured_image }}",
             "link": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 16,
+            "image_border_padding": 8,
             "image_ratio": "square",
             "width": "fill",
             "custom_width": 100,
