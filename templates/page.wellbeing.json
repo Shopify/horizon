@@ -980,6 +980,30 @@
             "description": "<p><strong>Aroma: </strong>dry, herbal, slightly bitter<br/><strong>Aromachology:</strong> clarifying, purifying<br/><strong>Use:</strong> mental clarity, environmental cleansing</p>",
             "image": "shopify://shop_images/68861fa431a371dd91d95772_ROSEMARY_ILLUSTRATION.png"
           }
+        },
+        "ingredient_PTYpVy": {
+          "type": "ingredient",
+          "settings": {
+            "title": "6. rockrose",
+            "description": "<p><strong>Aroma: </strong>warm, resinous, amber-like<br/><strong>Aromachology:</strong> deeply grounding, comforting, supports emotional resilience<br/><strong>Use: </strong>stress, emotional balance, skin care</p>",
+            "image": "shopify://shop_images/68861fa431a371dd91d95772_ROSEMARY_ILLUSTRATION.png"
+          }
+        },
+        "ingredient_F9twXz": {
+          "type": "ingredient",
+          "settings": {
+            "title": "7. wildfennel",
+            "description": "<p><strong>Aroma: </strong>sweet, anise-like<br/><strong>Aromachology: </strong>comforting, balancing<br/><strong>Use:</strong> digestion, relaxation</p>",
+            "image": "shopify://shop_images/68861fa431a371dd91d95772_ROSEMARY_ILLUSTRATION.png"
+          }
+        },
+        "ingredient_w4BywQ": {
+          "type": "ingredient",
+          "settings": {
+            "title": "8. myrtle",
+            "description": "<p><strong>Aroma:</strong> fresh, green, slightly sweet<br/><strong>Aromachology: </strong>calming yet uplifting<br/><strong>Use:</strong> respiratory system, emotional balance</p>",
+            "image": "shopify://shop_images/68861fa431a371dd91d95772_ROSEMARY_ILLUSTRATION.png"
+          }
         }
       },
       "block_order": [
@@ -987,7 +1011,10 @@
         "ingredient_yPbTpk",
         "ingredient_brLBqD",
         "ingredient_tcEQcb",
-        "ingredient_zKECPk"
+        "ingredient_zKECPk",
+        "ingredient_PTYpVy",
+        "ingredient_F9twXz",
+        "ingredient_w4BywQ"
       ],
       "name": "Ingredients",
       "settings": {
