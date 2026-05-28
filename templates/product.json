@@ -598,7 +598,7 @@
         "image_hjXWh9": {
           "type": "image",
           "settings": {
-            "image": "{{ closest.product.featured_image }}",
+            "image": "{{ closest.product.metafields.custom.how_to_use_image.value }}",
             "link": "",
             "border": "none",
             "border_width": 1,
