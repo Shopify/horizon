@@ -177,7 +177,7 @@
             "text_CNg9et": {
               "type": "text",
               "settings": {
-                "text": "<p>We call this the The CALA FALCÓ LAB. Here combine science with artistry to create a fragrance identity that awakens the senses, stirs emotions, evokes memories and enhances environments for brands and private clients.<br/></p>",
+                "text": "<p>We call this the The CALA FALCÓ LAB. Here we combine science with artistry to create a fragrance identity that awakens the senses, stirs emotions, evokes memories and enhances environments for brands and private clients.<br/></p>",
                 "width": "100%",
                 "max_width": "none",
                 "alignment": "left",
@@ -254,6 +254,7 @@
         "show_intro": false,
         "intro_heading": "",
         "intro_description": "",
+        "description_min_height": 0,
         "show_image_border": true,
         "image_border_color": "#e6e6e6",
         "image_border_position": "outside",
@@ -431,6 +432,7 @@
         "show_intro": false,
         "intro_heading": "",
         "intro_description": "",
+        "description_min_height": 0,
         "show_image_border": false,
         "image_border_color": "#ffffff",
         "image_border_position": "inside",
@@ -634,6 +636,7 @@
         "show_intro": false,
         "intro_heading": "",
         "intro_description": "",
+        "description_min_height": 0,
         "show_image_border": false,
         "image_border_color": "#ffffff",
         "image_border_position": "inside",
