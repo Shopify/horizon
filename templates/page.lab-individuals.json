@@ -204,7 +204,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<p>Together we will design your own perfume, blending natural materials into a scent that reflects your personal story. Deeply considered, quietly distinctive, and uniquely yours.</p>",
+                "text": "<p>Together we will design your own perfume, blending natural materials into a scent that reflects your personal story. Deeply considered, quietly distinctive and uniquely yours.</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -313,7 +313,7 @@
           "type": "ingredient",
           "settings": {
             "title": "STEP 3: ARTISANAL CREATION",
-            "description": "<p>Our in-house perfumer and scent scientists carefully blend 100% natural botanicals to craft a fragrance that is deeply personal and uniquely yours. Each composition is created with precision, artistry, and an unwavering commitment to authenticity.</p>",
+            "description": "<p>Our in-house perfumer and scent scientists carefully blend 100% natural botanicals to craft a fragrance that is deeply personal and uniquely yours. Each composition is created with precision, artistry and an unwavering commitment to authenticity.</p>",
             "image": "shopify://shop_images/7c50cdcb-3f0e-48e8-8b0a-732c090b03ed.png"
           }
         },
@@ -353,7 +353,7 @@
       "name": "Ingredients",
       "settings": {
         "heading": "The Creation of a Bespoke Perfume",
-        "description": "<p>A scent service for individuals looking to tell their unique scent story</p>",
+        "description": "<p>A scent service for individuals looking to tell their unique scent story. These are the steps we take to creating your unique personal fragrance.</p>",
         "section_width": "page-width",
         "color_scheme": "",
         "arrow_size": 52,
@@ -432,7 +432,7 @@
             "text_Pn9Ee3": {
               "type": "text",
               "settings": {
-                "text": "<p>Scent is the most intimate expression of identity. Unseen, yet deeply felt. It lingers in memory long after presence fades, becoming a quiet signature that is uniquely yours.<br/><br/>In a world of mass-produced fragrances, creating your own scent is an act of individuality. It is a way of capturing something intangible. Your essence, your memories, your story.<br/><br/>A bespoke fragrance is more than something you wear. It becomes part of how you are remembered. A subtle but powerful extension of who you are.</p>",
+                "text": "<p>Scent is the most intimate expression of identity. Unseen, yet deeply felt. It lingers in memory long after presence fades, becoming a quiet signature that is uniquely yours.</p><p>In a world of mass-produced fragrances, creating your own scent is an act of individuality. It is a way of capturing something intangible. Your essence, your memories, your story.</p><p>A bespoke fragrance is more than something you wear. It becomes part of how you are remembered. A subtle but powerful extension of who you are.</p>",
                 "width": "100%",
                 "max_width": "none",
                 "alignment": "left",
@@ -1289,6 +1289,7 @@
         "text_nBRGLe",
         "accordion_ezWVAf"
       ],
+      "disabled": true,
       "name": "t:names.faq_section",
       "settings": {
         "content_direction": "column",
@@ -1304,7 +1305,7 @@
         "intro_description": "",
         "description_min_height": 0,
         "show_image_border": false,
-        "image_border_color": "#FFFFFF",
+        "image_border_color": "#ffffff",
         "image_border_position": "inside",
         "section_width": "page-width",
         "section_height": "",
@@ -1337,6 +1338,15 @@
             "author_title": "Founder of The Trove"
           }
         },
+        "testimonial_xT8cK4": {
+          "type": "testimonial",
+          "settings": {
+            "quote_short": "<p>\"Add a quote in here and some lovely kind words that land the emotion.\" Name name, place</p>",
+            "quote_full": "",
+            "author": "MY PERFUME",
+            "author_title": "Founder of The Trove"
+          }
+        },
         "testimonial_Ct6GHK": {
           "type": "testimonial",
           "settings": {
@@ -1358,6 +1368,7 @@
       },
       "block_order": [
         "testimonial_c9c4Nb",
+        "testimonial_xT8cK4",
         "testimonial_Ct6GHK",
         "testimonial_MHnaLG"
       ],
@@ -1521,7 +1532,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<p>SO FONG is a schooner built in 1937 by the AH KING shipyard in Causeway Bay, Hong Kong. Commissioned by a Stockbroker for the purpose of circumnavigating the world with his son. Since then she has raced, sailed the world, worked as a diving and salvage vessel and acted as a spy ship before being captured by the Vietnamese militia.   Today, So Fong, or \"Beautiful Girl,\" romantically sails the waters of the Balearic Islands. It is here that we were commissioned to translate her incredible travels and tell the olfactory story through scent science for her owner. Following a deep dive into the history of her journeys we created a bespoke fragrance to that reflected her aromatic voyage and story, building a beautifully rich and complex palette.</p>",
+                "text": "<p>SO FONG is a schooner built in 1937 by the AH KING shipyard in Causeway Bay, Hong Kong. Commissioned by a Stockbroker for the purpose of circumnavigating the world with his son. Since then she has raced, sailed the world, worked as a diving and salvage vessel and acted as a spy ship before being captured by the Vietnamese militia. </p><p>  Today, So Fong, translating as \"Beautiful Girl,\" romantically sails the waters of the Balearic Islands. It is here that we were commissioned to translate her incredible travels and tell the olfactory story through scent science for her owner. </p><p>Following a deep dive into the history of her journeys we created a bespoke fragrance to that reflected her aromatic voyage and story, building a beautifully rich and complex palette.</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",

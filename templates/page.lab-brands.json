@@ -326,7 +326,7 @@
       "name": "Ingredients",
       "settings": {
         "heading": "The Creation of an Olfactory Identity",
-        "description": "<p>A scent service for luxury brands, rooted in nature</p>",
+        "description": "<p>A scent service for luxury brands, rooted in nature. These are the steps we take to creating your unique brand fragrance.</p>",
         "section_width": "page-width",
         "color_scheme": "",
         "arrow_size": 52,
@@ -416,7 +416,7 @@
               "type": "_product-list-text",
               "name": "t:names.collection_title",
               "settings": {
-                "text": "<p>{{ closest.collection.title }}Creating a unique brand fragrance and olfactory identity is more that a nice to do. It can be a moment in your brands development that can lead to deeper emotional connection and commercial opportunities alike.e</p>",
+                "text": "<p>{{ closest.collection.title }}Creating a unique brand fragrance and olfactory identity is more that a nice to do. It can be a moment in your brands development that can lead to deeper emotional connection and commercial opportunities alike.</p>",
                 "width": "fit-content",
                 "max_width": "none",
                 "alignment": "left",
@@ -1440,7 +1440,7 @@
         "intro_description": "",
         "description_min_height": 0,
         "show_image_border": false,
-        "image_border_color": "#FFFFFF",
+        "image_border_color": "#ffffff",
         "image_border_position": "inside",
         "section_width": "page-width",
         "section_height": "",
