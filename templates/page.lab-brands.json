@@ -151,21 +151,6 @@
               },
               "blocks": {}
             },
-            "button_ggRJpt": {
-              "type": "button",
-              "name": "t:names.button",
-              "settings": {
-                "label": "Start your sense story",
-                "link": "shopify://collections/all",
-                "open_in_new_tab": false,
-                "style_class": "button",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            },
             "text_LYtjCF": {
               "type": "text",
               "settings": {
@@ -190,19 +175,34 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
+            },
+            "button_ggRJpt": {
+              "type": "button",
+              "name": "t:names.button",
+              "settings": {
+                "label": "Start your sense story",
+                "link": "shopify://collections/all",
+                "open_in_new_tab": false,
+                "style_class": "button",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
             }
           },
           "block_order": [
             "text_HJ4Mrd",
             "text_deegMC",
-            "button_ggRJpt",
-            "text_LYtjCF"
+            "text_LYtjCF",
+            "button_ggRJpt"
           ]
         },
         "image_PNhTaz": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/CalaFalco_25-154.jpg",
+            "image": "shopify://shop_images/CalaFalco_25-181.jpg",
             "link": "",
             "border": "solid",
             "border_width": 1,
@@ -292,57 +292,25 @@
         "ingredient_qmB7Ar": {
           "type": "ingredient",
           "settings": {
-            "title": "4. Helichrysum",
-            "description": "<p><strong>Aroma: </strong>warm, honeyed, slightly curry-like<br/><strong>Aromachology:</strong> deeply grounding, regenerative<br/><strong>Use: </strong>skin repair, emotional healing, deep stress</p>",
+            "title": "STEP 4: REFINEMENT & VALIDATION",
+            "description": "<p>We refine the fragrance to ensure it evokes the intended emotions, enhances your space and captivates your clientele, while adapting to your commercial dynamics.</p>",
             "image": "shopify://shop_images/shutterstock_2720327497-removebg-preview.png"
           }
         },
         "ingredient_YwBjU9": {
           "type": "ingredient",
           "settings": {
-            "title": "5. santolina",
-            "description": "<p><strong>Aroma: </strong>dry, herbal, slightly bitter<br/><strong>Aromachology:</strong> clarifying, purifying<br/><strong>Use:</strong> mental clarity, environmental cleansing</p>",
+            "title": "STEP 05: SCENT PORTFOLIO",
+            "description": "<p>From room diffusers and bath amenities to bespoke perfumes and candles, we build a cohesive scent portfolio. This versatility enhances engagement at every touchpoint of the brand.</p>",
             "image": "shopify://shop_images/shutterstock_2562075187-removebg-preview.png"
           }
         },
         "ingredient_87qcri": {
           "type": "ingredient",
           "settings": {
-            "title": "6. rockrose",
-            "description": "<p><strong>Aroma: </strong>warm, resinous, amber-like<br/><strong>Aromachology:</strong> deeply grounding, comforting, supports emotional resilience<br/><strong>Use: </strong>stress, emotional balance, skin care</p>",
+            "title": "STEP 06: INTEGRATION & TRAINING",
+            "description": "<p>We provide guidance and training through the implementation process, ensuring every interaction is an extension of your brand’s sensory storytelling.</p>",
             "image": "shopify://shop_images/shutterstock_2306521115-removebg-preview.png"
-          }
-        },
-        "ingredient_BRzyj8": {
-          "type": "ingredient",
-          "settings": {
-            "title": "7. wildfennel",
-            "description": "<p><strong>Aroma: </strong>sweet, anise-like<br/><strong>Aromachology: </strong>comforting, balancing<br/><strong>Use:</strong> digestion, relaxation</p>",
-            "image": "shopify://shop_images/shutterstock_2195701359-removebg-preview.png"
-          }
-        },
-        "ingredient_TJzWzQ": {
-          "type": "ingredient",
-          "settings": {
-            "title": "8. myrtle",
-            "description": "<p><strong>Aroma:</strong> fresh, green, slightly sweet<br/><strong>Aromachology: </strong>calming yet uplifting<br/><strong>Use:</strong> respiratory system, emotional balance</p>",
-            "image": "shopify://shop_images/shutterstock_1931743637-removebg-preview.png"
-          }
-        },
-        "ingredient_hzWGgT": {
-          "type": "ingredient",
-          "settings": {
-            "title": "9. olive leaf",
-            "description": "<p><strong>Aroma: </strong>soft, green, subtle<br/><strong>Aromachology: </strong>grounding, stabilizing<br/><strong>Use: </strong>overall wellbeing, longevity symbolism</p>",
-            "image": "shopify://shop_images/shutterstock_2706580203-removebg-preview.png"
-          }
-        },
-        "ingredient_DaMJNa": {
-          "type": "ingredient",
-          "settings": {
-            "title": "10. bitter orange",
-            "description": "<p><strong>Aroma:</strong> fresh citrus (leaf), floral (blossom / neroli)<br/><strong>Aromachology: </strong>uplifting and relaxing at the same time<br/><strong>Use: </strong>anxiety, mood balance</p>",
-            "image": "shopify://shop_images/shutterstock_212952748-removebg-preview.png"
           }
         }
       },
@@ -352,11 +320,7 @@
         "ingredient_zQzNV4",
         "ingredient_qmB7Ar",
         "ingredient_YwBjU9",
-        "ingredient_87qcri",
-        "ingredient_BRzyj8",
-        "ingredient_TJzWzQ",
-        "ingredient_hzWGgT",
-        "ingredient_DaMJNa"
+        "ingredient_87qcri"
       ],
       "name": "Ingredients",
       "settings": {
