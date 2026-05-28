@@ -251,6 +251,7 @@
         "show_intro": false,
         "intro_heading": "",
         "intro_description": "",
+        "description_min_height": 0,
         "show_image_border": true,
         "image_border_color": "#dfdfdf",
         "image_border_position": "outside",
@@ -439,7 +440,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<p>Crafted from Organic Botanicals of a Mallorcan Spring Harvest. We invite you to reconnect with nature and awaken your senses.</p>",
+                "text": "<p>Crafted from organic botanicals of a Mallorcan Spring harvest. We invite you to reconnect with nature and awaken your senses.</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -501,6 +502,7 @@
         "show_intro": false,
         "intro_heading": "",
         "intro_description": "",
+        "description_min_height": 0,
         "show_image_border": true,
         "image_border_color": "#dfdfdf",
         "image_border_position": "outside",
@@ -643,7 +645,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<p>Ways To Savour and Enjoy Cala Falcó at Spring</p>",
+                "text": "<p>Ways To Savour and Enjoy</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -668,7 +670,7 @@
             "text_kcVedw": {
               "type": "text",
               "settings": {
-                "text": "<p>We recommend serving it in a number of ways depending on the moment:<br/><br/></p><ul><li>As a botanical wine in a Josephine wine glass.</li><li>Sipping as an aperitivo from a martini glass.</li><li>Carbonating it for spritz in a tall glass.</li><li>Just make sure it’s chilled and don’t dilute. Please.</li></ul>",
+                "text": "<p>We recommend serving Cala Faló at Spring in a number of ways depending on the moment:<br/></p><ul><li>As a botanical wine in a Josephine wine glass.</li><li>Sipping as an aperitivo from a martini glass.</li><li>Carbonating it for spritz in a tall glass.</li><li>Just make sure it’s chilled and don’t dilute. Please.</li></ul>",
                 "width": "fit-content",
                 "max_width": "none",
                 "alignment": "left",
@@ -729,6 +731,7 @@
         "show_intro": false,
         "intro_heading": "",
         "intro_description": "",
+        "description_min_height": 0,
         "show_image_border": true,
         "image_border_color": "#dfdfdf",
         "image_border_position": "outside",
@@ -774,7 +777,7 @@
           "type": "ingredient",
           "settings": {
             "title": "Mastic Pistacia Lentiscus",
-            "description": "<p>A bioactive resin with antibacterial, antiseptic, and wound-healing  capabilities, it further supports emotional well-being through its  aromachological benefits, acting as a natural stimulant with uplifting  and mood-enhancing effects that promote vitality.</p>",
+            "description": "<p>A bioactive resin with antibacterial, antiseptic, and wound-healing  capabilities. It supports emotional wellbeing through its  aromachological benefits, acting as a natural stimulant and mood enhancer.</p>",
             "image": "shopify://shop_images/68861fa4192044cdab14729f_MASTIC_ILLUSTRATION.png"
           }
         },
@@ -804,8 +807,8 @@
       ],
       "name": "Ingredients",
       "settings": {
-        "heading": "Nature's notes - the botanicals within",
-        "description": "<p>All ingredients are 100% natural, organically grown or harvested directly from the Cala Falcó estate.</p>",
+        "heading": "Nature's notes: the botanicals within",
+        "description": "<p>All ingredients are 100% natural, organically grown or harvested directly from the Cala Falcó estate. Lift your senses and experience natures adaptogenic impact.</p>",
         "section_width": "page-width",
         "color_scheme": "",
         "arrow_size": 52,
@@ -859,7 +862,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<p>Tasting Notes - Where the Botanicals Sing</p>",
+                "text": "<p>Tasting Notes: Where the Botanicals Sing</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -884,7 +887,7 @@
             "text_3xjjgc": {
               "type": "text",
               "settings": {
-                "text": "<p>A revitalising  and aromatic beverage with citrus and herbal nuances, complemented by  mineral-rich marine notes. The sweetness of honey balances the subtle  brininess, while rosemary adds a crisp, woody finish.</p>",
+                "text": "<p>A revitalising  and aromatic natural beverage with citrus and herbal nuances, complemented by  mineral-rich marine notes. The sweetness of honey balances the subtle  brininess, while rosemary adds a crisp, woody finish.</p>",
                 "width": "fit-content",
                 "max_width": "none",
                 "alignment": "left",
@@ -953,6 +956,7 @@
         "show_intro": false,
         "intro_heading": "",
         "intro_description": "",
+        "description_min_height": 0,
         "show_image_border": true,
         "image_border_color": "#767676",
         "image_border_position": "outside",
@@ -982,7 +986,7 @@
           "type": "card",
           "settings": {
             "show_number": true,
-            "number": "01.",
+            "number": "STEP 01.",
             "show_icon": true,
             "icon": "shopify://shop_images/Vector_28.png",
             "show_text": true,
@@ -993,7 +997,7 @@
           "type": "card",
           "settings": {
             "show_number": true,
-            "number": "02.",
+            "number": "STEP 02.",
             "show_icon": true,
             "icon": "shopify://shop_images/Vector_29.png",
             "show_text": true,
@@ -1004,7 +1008,7 @@
           "type": "card",
           "settings": {
             "show_number": true,
-            "number": "03.",
+            "number": "STEP 03.",
             "show_icon": true,
             "icon": "shopify://shop_images/Vector_30.png",
             "show_text": true,
@@ -1015,7 +1019,7 @@
           "type": "card",
           "settings": {
             "show_number": true,
-            "number": "04.",
+            "number": "STEP 04.",
             "show_icon": true,
             "icon": "shopify://shop_images/Vector_31.png",
             "show_text": true,
@@ -1032,7 +1036,7 @@
       "name": "Content cards",
       "settings": {
         "heading": "HARVESTING THE POWER OF NATURE",
-        "description": "<p>All ingredients are 100% natural, organically grown or sourced from the Cala Falcó estate.</p>",
+        "description": "<p>These are steps we take to ensure that the benefits of the 100% natural and organic botanicals are captured in each and every sip of our drinks.</p>",
         "section_width": "page-width",
         "color_scheme": "",
         "padding-block-start": 60,
@@ -1054,7 +1058,7 @@
           "type": "qa_item",
           "settings": {
             "question": "How do you choose the botanicals that go into a Cala Falcó drink?",
-            "answer": "<p>Each botanical is chosen for both its flavour and its natural character. Some bring gentle bitterness, others subtle sweetness or a citrus lift, herbal warmth or floral softness. I spend a lot of time tasting individual extracts and infusions before combining them in small batches. It’s a bit like composing a piece of music every ingredient needs to play its role while leaving space for the others. The result is a balanced profile where nothing dominates but everything contributes.</p>",
+            "answer": "<p>Each botanical is chosen for both its flavour and its natural character. Some bring gentle bitterness, others subtle sweetness or a citrus lift, herbal warmth or floral softness. I spend a lot of time tasting individual extracts and infusions before combining them in small batches. It’s a bit like composing a piece of music every ingredient needs to play its role while leaving space for the others. The result is a balanced profile where nothing dominates but everything contributes. From a mood point of view the adaptogenic properties of the botanicals were carefully considered. Here we layer on the sensory impact of the ingredients to create a drinking experience that will lift your mood and enliven your senses.</p>",
             "open_by_default": false
           }
         },
@@ -1062,7 +1066,7 @@
           "type": "qa_item",
           "settings": {
             "question": "What makes crafting a non-alcoholic aperitivo different?",
-            "answer": "<p>Alcohol naturally carries flavour and gives structure, so without it you have to build that depth in other ways. That means working carefully with extraction methods, infusion times and the balance of botanicals to create texture, length and complexity. It’s a slower, more deliberate process, but it’s also incredibly rewarding. When the balance is right, you get a drink that feels vibrant, layered and alive with the character of the plants themselves.</p>",
+            "answer": "<p>Alcohol naturally carries flavour and gives structure, so without it you have to build that depth in other ways. That means working carefully with extraction methods, infusion times and the balance of botanicals to create texture, length and complexity. It’s a slower, more deliberate process, but it’s also incredibly rewarding. When the balance is right, you get a drink that feels vibrant, layered and alive with the character of the plants themselves. It is here that the adaptogenic properties of the botanicals are felt. As more and more people are choosing to be sober, the botanical mood enhancing properties provide a connected and present alternative ti alcohol. </p>",
             "open_by_default": false
           }
         }
