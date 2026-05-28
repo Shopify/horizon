@@ -336,6 +336,21 @@
     "product_list_9feBaz": {
       "type": "product-list",
       "blocks": {
+        "button_7M9ApB": {
+          "type": "button",
+          "name": "t:names.button",
+          "settings": {
+            "label": "Book A Consultation",
+            "link": "shopify://collections/all",
+            "open_in_new_tab": false,
+            "style_class": "button",
+            "width": "fit-content",
+            "custom_width": 100,
+            "width_mobile": "fit-content",
+            "custom_width_mobile": 100
+          },
+          "blocks": {}
+        },
         "static-header": {
           "type": "_product-list-content",
           "name": "t:names.header",
@@ -538,6 +553,9 @@
           ]
         }
       },
+      "block_order": [
+        "button_7M9ApB"
+      ],
       "name": "t:names.products_carousel",
       "settings": {
         "collection": "",
