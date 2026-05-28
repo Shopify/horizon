@@ -270,8 +270,10 @@
     background-image: url("data:image/svg+xml,%3Csvg width='34' height='34' viewBox='0 0 34 34' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='34' height='34' rx='17' fill='%23F9D8AF'/%3E%3Cpath d='M11.5918 16.2274L15.4554 20.091L22.41 13.9092' stroke='%2331331D' stroke-width='0.772727'/%3E%3C/svg%3E");
   }
 
-  .section-wrapper .section-content-wrapper > .group-block > .group-block-content > .text-block:last-of-type {
-    min-height: var(--multicolumn-description-min-height, 0px);
+  @media screen and (min-width: 750px) {
+    .section-wrapper .section-content-wrapper > .group-block > .group-block-content > .text-block:last-of-type {
+      min-height: var(--multicolumn-description-min-height, 0px);
+    }
   }
 
   @media screen and (max-width: 749px) {
