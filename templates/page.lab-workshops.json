@@ -44,7 +44,10 @@
           "blocks": {}
         }
       },
-      "block_order": ["heading", "page-content"],
+      "block_order": [
+        "heading",
+        "page-content"
+      ],
       "settings": {
         "content_direction": "column",
         "gap": 32,
@@ -52,7 +55,60 @@
         "padding-block-start": 40,
         "padding-block-end": 80
       }
+    },
+    "qa_qFEGan": {
+      "type": "qa",
+      "blocks": {
+        "qa_item_JqJnME": {
+          "type": "qa_item",
+          "settings": {
+            "question": "1. Botanical Drinks Workshop: Blending Adaptogenic Hydrolates",
+            "answer": "<p>Duration: 2–2.5 hours Format: Sensorial workshop. Hands-on creation<br/></p><p>Price:From £600 for a group of 4, £120  per additional person<br/><br/>A journey from Mallorca’s sunlit rosemary, mastic and citrus to Scotland’s Scots pine and bog myrtle. Attendees explore hydrolates, aromatic waters from steam distillation, and learn how to blend their own Botanical Concentrate to later infuse in drinking water.<br/><br/>Guests will: </p><p>• Discover hydrolates & gentle “adaptogenic” aromatics </p><p>• Explore a curated Mediterranean + Scottish hydrolate library </p><p>• Create a personal 30 ml concentrate </p><p>• Practise a smell sip → breathe → ritual</p>",
+            "open_by_default": true
+          }
+        },
+        "qa_item_UWFm9N": {
+          "type": "qa_item",
+          "settings": {
+            "question": "2. Olfactory Tasting",
+            "answer": "<p>Exploring England’s landscapes through scent<br/></p><p>Duration: 1 hour Format: Guided fragrance tasting</p><p><br/>Price: From £600 for a group of 4, £120  per additional person </p><p><br/>An elegant olfactory tasting exploring England’s landscapes through scent, The Garden, The Seaside, The Countryside, Wild Nature. </p><p>A refined exercise in emotional memory, slow perception, and sensory presence.</p>",
+            "open_by_default": false
+          }
+        },
+        "qa_item_CUyNLe": {
+          "type": "qa_item",
+          "settings": {
+            "question": "What makes crafting a non-alcoholic aperitivo different?",
+            "answer": "<p>Alcohol naturally carries flavour and gives structure, so without it you have to build that depth in other ways. That means working carefully with extraction methods, infusion times and the balance of botanicals to create texture, length and complexity. It’s a slower, more deliberate process, but it’s also incredibly rewarding. When the balance is right, you get a drink that feels vibrant, layered and alive with the character of the plants themselves.</p>",
+            "open_by_default": false
+          }
+        }
+      },
+      "block_order": [
+        "qa_item_JqJnME",
+        "qa_item_UWFm9N",
+        "qa_item_CUyNLe"
+      ],
+      "name": "QA",
+      "settings": {
+        "person_image": "shopify://shop_images/CalaFalco_25-114.jpg",
+        "heading": "Cala Falcó Lab Sensory Experiences",
+        "subheading": "",
+        "description": "",
+        "person_name": "Immerse yourself in a Cala Falcó Lab sensory experience.",
+        "person_title": "Sensorial · Holistic · Botanical · Neuroaesthetic                                                 Each experience can be hosted in an intimate format (ideal 8–16 participants) and adapted for members or private groups.",
+        "button_label": "Shop now",
+        "button_link": "shopify://products/cala-falco-at-spring",
+        "section_width": "page-width",
+        "color_scheme": "",
+        "accordion_icon": "caret",
+        "padding-block-start": 60,
+        "padding-block-end": 60
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main",
+    "qa_qFEGan"
+  ]
 }
