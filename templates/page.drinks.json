@@ -275,79 +275,6 @@
     },
     "hero_4arD4L": {
       "type": "hero",
-      "blocks": {
-        "text_tH3VUq": {
-          "type": "text",
-          "name": "t:names.heading",
-          "settings": {
-            "text": "<p>Cala Falcó AT SPRING</p>",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "h1",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground-heading)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "text_w8gQeR": {
-          "type": "text",
-          "name": "t:names.heading",
-          "settings": {
-            "text": "<h4>A seasonal alcohol-free aperitivo</h4>",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "rte",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "button_wkcqhC": {
-          "type": "button",
-          "settings": {
-            "label": "Nourish Your Soul",
-            "link": "shopify://products/cala-falco-at-spring",
-            "open_in_new_tab": false,
-            "style_class": "button",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "text_tH3VUq",
-        "text_w8gQeR",
-        "button_wkcqhC"
-      ],
       "name": "t:names.hero",
       "settings": {
         "media_type_1": "video",
@@ -398,7 +325,7 @@
         "image_WD9GQ9": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/Mask_group_19.png",
+            "image": "shopify://shop_images/IMG_0103.jpg",
             "link": "",
             "border": "none",
             "border_width": 1,
@@ -537,7 +464,7 @@
             "button_YfmekU": {
               "type": "button",
               "settings": {
-                "label": "Pour Your Ritual",
+                "label": "Nourish Your Soul",
                 "link": "shopify://products/cala-falco-at-spring",
                 "open_in_new_tab": false,
                 "style_class": "button",
