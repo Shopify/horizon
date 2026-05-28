@@ -262,6 +262,113 @@
         "padding-block-end": 80
       }
     },
+    "ingredients_nqJcBd": {
+      "type": "ingredients",
+      "blocks": {
+        "ingredient_Cj8UNz": {
+          "type": "ingredient",
+          "settings": {
+            "title": "STEP 1: SCENT EXPLORATION",
+            "description": "<p>Through a collaborative discovery session, we will explore your brand’s emotion, vision and audience, crafting a scent that delivers a lasting emotional impact.</p>",
+            "image": "shopify://shop_images/shutterstock_2307730407-removebg-preview.png"
+          }
+        },
+        "ingredient_L87MMP": {
+          "type": "ingredient",
+          "settings": {
+            "title": "step 2: FROM IDEA TO INSPIRATIONS",
+            "description": "<p>We hand-pick scented notes that embody your story. Creating a scent concept that enhances spaces and evokes deep emotional connections. <br/><br/></p>",
+            "image": "shopify://shop_images/shutterstock_2724753661-removebg-preview.png"
+          }
+        },
+        "ingredient_zQzNV4": {
+          "type": "ingredient",
+          "settings": {
+            "title": "STEP 3: ARTISANAL CREATION",
+            "description": "<p>Our in-house perfumer and scent scientists blend 100% natural ingredients to develop a luxurious and sustainable fragrance that tells your brands story. Crafted with artistry and care, this approach sets us apart in quality and authenticity. </p>",
+            "image": "shopify://shop_images/shutterstock_1299752026-removebg-preview.png"
+          }
+        },
+        "ingredient_qmB7Ar": {
+          "type": "ingredient",
+          "settings": {
+            "title": "4. Helichrysum",
+            "description": "<p><strong>Aroma: </strong>warm, honeyed, slightly curry-like<br/><strong>Aromachology:</strong> deeply grounding, regenerative<br/><strong>Use: </strong>skin repair, emotional healing, deep stress</p>",
+            "image": "shopify://shop_images/shutterstock_2720327497-removebg-preview.png"
+          }
+        },
+        "ingredient_YwBjU9": {
+          "type": "ingredient",
+          "settings": {
+            "title": "5. santolina",
+            "description": "<p><strong>Aroma: </strong>dry, herbal, slightly bitter<br/><strong>Aromachology:</strong> clarifying, purifying<br/><strong>Use:</strong> mental clarity, environmental cleansing</p>",
+            "image": "shopify://shop_images/shutterstock_2562075187-removebg-preview.png"
+          }
+        },
+        "ingredient_87qcri": {
+          "type": "ingredient",
+          "settings": {
+            "title": "6. rockrose",
+            "description": "<p><strong>Aroma: </strong>warm, resinous, amber-like<br/><strong>Aromachology:</strong> deeply grounding, comforting, supports emotional resilience<br/><strong>Use: </strong>stress, emotional balance, skin care</p>",
+            "image": "shopify://shop_images/shutterstock_2306521115-removebg-preview.png"
+          }
+        },
+        "ingredient_BRzyj8": {
+          "type": "ingredient",
+          "settings": {
+            "title": "7. wildfennel",
+            "description": "<p><strong>Aroma: </strong>sweet, anise-like<br/><strong>Aromachology: </strong>comforting, balancing<br/><strong>Use:</strong> digestion, relaxation</p>",
+            "image": "shopify://shop_images/shutterstock_2195701359-removebg-preview.png"
+          }
+        },
+        "ingredient_TJzWzQ": {
+          "type": "ingredient",
+          "settings": {
+            "title": "8. myrtle",
+            "description": "<p><strong>Aroma:</strong> fresh, green, slightly sweet<br/><strong>Aromachology: </strong>calming yet uplifting<br/><strong>Use:</strong> respiratory system, emotional balance</p>",
+            "image": "shopify://shop_images/shutterstock_1931743637-removebg-preview.png"
+          }
+        },
+        "ingredient_hzWGgT": {
+          "type": "ingredient",
+          "settings": {
+            "title": "9. olive leaf",
+            "description": "<p><strong>Aroma: </strong>soft, green, subtle<br/><strong>Aromachology: </strong>grounding, stabilizing<br/><strong>Use: </strong>overall wellbeing, longevity symbolism</p>",
+            "image": "shopify://shop_images/shutterstock_2706580203-removebg-preview.png"
+          }
+        },
+        "ingredient_DaMJNa": {
+          "type": "ingredient",
+          "settings": {
+            "title": "10. bitter orange",
+            "description": "<p><strong>Aroma:</strong> fresh citrus (leaf), floral (blossom / neroli)<br/><strong>Aromachology: </strong>uplifting and relaxing at the same time<br/><strong>Use: </strong>anxiety, mood balance</p>",
+            "image": "shopify://shop_images/shutterstock_212952748-removebg-preview.png"
+          }
+        }
+      },
+      "block_order": [
+        "ingredient_Cj8UNz",
+        "ingredient_L87MMP",
+        "ingredient_zQzNV4",
+        "ingredient_qmB7Ar",
+        "ingredient_YwBjU9",
+        "ingredient_87qcri",
+        "ingredient_BRzyj8",
+        "ingredient_TJzWzQ",
+        "ingredient_hzWGgT",
+        "ingredient_DaMJNa"
+      ],
+      "name": "Ingredients",
+      "settings": {
+        "heading": "The Creation of an Olfactory Identity",
+        "description": "<p>A scent service for luxury brands, rooted in nature</p>",
+        "section_width": "page-width",
+        "color_scheme": "",
+        "arrow_size": 52,
+        "padding-block-start": 24,
+        "padding-block-end": 56
+      }
+    },
     "product_list_9feBaz": {
       "type": "product-list",
       "blocks": {
@@ -493,6 +600,7 @@
   "order": [
     "main",
     "section_L36UFW",
+    "ingredients_nqJcBd",
     "product_list_9feBaz"
   ]
 }
