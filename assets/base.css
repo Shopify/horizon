@@ -4530,7 +4530,7 @@ slideshow-component.resource-list__carousel
   gap: var(--resource-list-row-gap) var(--resource-list-column-gap);
   grid-template-columns: var(--resource-list-columns-mobile);
 
-  @media screen and (min-width: 750px) {
+  @media screen and (min-width: 1120px) {
     grid-template-columns: var(--resource-list-columns);
   }
 
