@@ -577,12 +577,51 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "testimonials_4P3EMV": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial_nwWnmD": {
+          "type": "testimonial",
+          "settings": {
+            "quote_short": "<p>At La Residencia, we managed to create a strong personality that made us memorable.</p>",
+            "quote_full": "<p>Visit The Lab</p>",
+            "author": "La Residencia, A Belmond hotel",
+            "author_title": "Hotel Partnership | Olfactory Identity | Bespoke creation"
+          }
+        },
+        "testimonial_JGwJXh": {
+          "type": "testimonial",
+          "settings": {
+            "quote_short": "<p>Elegant flavor profile and exceptional finish. It feels premium in every way.</p>",
+            "quote_full": "<p>Our guests ask for it by name. The balance, bottle design, and overall experience are all best-in-class.</p>",
+            "author": "Maria Doyle",
+            "author_title": "Beverage Director"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_nwWnmD",
+        "testimonial_JGwJXh"
+      ],
+      "name": "t:names.testimonials",
+      "settings": {
+        "section_width": "full-width",
+        "color_scheme": "",
+        "corner_radius": 24,
+        "slide_gap": 0,
+        "autoplay": false,
+        "autoplay_speed": 4,
+        "padding-block-start": 40,
+        "padding-block-end": 40
+      }
     }
   },
   "order": [
     "main",
     "section_L36UFW",
     "ingredients_nqJcBd",
-    "product_list_9feBaz"
+    "product_list_9feBaz",
+    "testimonials_4P3EMV"
   ]
 }
