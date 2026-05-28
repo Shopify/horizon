@@ -1,12 +1,13 @@
 {%- doc -%}
-  Renders featured mega menu layout with left links and right featured collection cards.
+  Renders featured mega menu layout with left links and right featured cards.
 
-  Featured cards come from the parent menu link's page metafield:
+  Featured cards come from the parent menu link's page metafields:
   `custom.megamenu_featured_collections` (list of collections).
+  `custom.megamenu_featured_pages` (list of pages, optional image at `page.metafields.custom.megamenu_image`).
 
   @param {object} parent_link - Top-level navigation link with submenu children
   @param {object} block_settings - Header menu block settings (CTA, aspect ratio)
-  @param {number} [image_border_radius] - Border radius for collection card images
+  @param {number} [image_border_radius] - Border radius for card images
   @param {object} [section] - Section object used for image loading behavior
 {%- enddoc -%}
 
@@ -24,8 +25,10 @@
   endif
 
   assign megamenu_featured_collections = blank
+  assign megamenu_featured_pages = blank
   if parent_page != blank
     assign megamenu_featured_collections = parent_page.metafields.custom.megamenu_featured_collections.value
+    assign megamenu_featured_pages = parent_page.metafields.custom.megamenu_featured_pages.value
   endif
 %}
 
@@ -61,6 +64,7 @@
     class="mega-menu-featured-collections__cards list-unstyled"
     style="--resource-card-corner-radius: {{ image_border_radius }}px; --mega-featured-card-aspect-ratio: {{ card_aspect_ratio }};"
   >
+    {% assign featured_cards_count = 0 %}
     {%- if megamenu_featured_collections != blank -%}
       {%- for collection in megamenu_featured_collections -%}
         {%- if collection != blank -%}
@@ -74,6 +78,31 @@
               image_loading: 'eager'
             %}
           </li>
+          {% assign featured_cards_count = featured_cards_count | plus: 1 %}
+          {% if featured_cards_count >= 3 %}
+            {% break %}
+          {% endif %}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+
+    {%- if featured_cards_count < 3 and megamenu_featured_pages != blank -%}
+      {%- for featured_page in megamenu_featured_pages -%}
+        {%- if featured_page != blank -%}
+          <li class="mega-menu-featured-collections__card">
+            {% render 'resource-card',
+              resource: featured_page,
+              resource_type: 'page',
+              resource_image: featured_page.metafields.custom.megamenu_image.value,
+              image_aspect_ratio: card_aspect_ratio,
+              image_sizes: image_sizes,
+              image_loading: 'eager'
+            %}
+          </li>
+          {% assign featured_cards_count = featured_cards_count | plus: 1 %}
+          {% if featured_cards_count >= 3 %}
+            {% break %}
+          {% endif %}
         {%- endif -%}
       {%- endfor -%}
     {%- endif -%}

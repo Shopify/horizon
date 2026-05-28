@@ -468,9 +468,10 @@
       .header-menu--split-right
       .menu-list__list-item:where(:not([slot='overflow']))
       > .menu-list__submenu {
-      left: 0;
+      left: 50%;
       right: 0;
-      width: 100%;
+      width: 80%;
+      transform: translateX(-50%);
       max-width: 100%;
       margin-inline: 0;
     }
@@ -754,7 +755,7 @@
     align-items: center;
     gap: 0;
     width: 100%;
-    padding: var(--padding-2xs) 0;
+    padding: var(--padding-xs) 0;
     color: var(--menu-child-font-color);
     text-decoration: none;
     font-style: var(--menu-child-font-style);

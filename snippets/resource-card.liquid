@@ -10,6 +10,7 @@
   @param {boolean} [image_hover] - Whether to show a secondary image on hover and focus
   @param {string} [image_sizes] - The sizes attribute for responsive images. Defaults to 'auto'
   @param {string} [image_loading] - Image loading attribute. Defaults to 'lazy'
+  @param {object} [resource_image] - Optional image override (used for custom page card images)
 {%- enddoc -%}
 
 {% liquid
@@ -138,7 +139,7 @@
         </div>
       {%- endif -%}
     {%- elsif resource_type == 'page' -%}
-      {% assign featured_image = resource.image | default: resource.featured_image %}
+      {% assign featured_image = resource_image | default: resource.image | default: resource.featured_image %}
       {%- if featured_image != blank -%}
         {{
           featured_image
@@ -280,6 +281,7 @@
 
   .resource-card__title.h5{
     font-size: 1vw;
+    text-wrap: initial;
   }
 
   .resource-card--overlay {

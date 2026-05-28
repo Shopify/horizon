@@ -6,30 +6,34 @@
   - right: featured collection cards from the **parent link's page metafield**
 - Route layout selection from `blocks/_header-menu.liquid` using `menu_style` so existing submenu modes (`text`, `collection_images`, `featured_products`) remain unchanged.
 
-## Featured collection cards (page metafield)
+## Featured cards (page metafields)
 
 When **Media type** is **Featured collections**, cards in `snippets/mega-menu-featured-collections.liquid` come from the top-level menu link's destination page — not header block settings.
 
 | Source | Key |
 |--------|-----|
 | Page metafield | `custom.megamenu_featured_collections` (list of collection references) |
+| Page metafield | `custom.megamenu_featured_pages` (list of page references) |
+| Page metafield on each page item | `custom.megamenu_image` (single image, optional override) |
 
 ```liquid
 assign parent_page = parent_link.object
-assign featured = parent_page.metafields.custom.megamenu_featured_collections.value
-for collection in featured
-  render resource-card ...
-endfor
+assign featured_collections = parent_page.metafields.custom.megamenu_featured_collections.value
+assign featured_pages = parent_page.metafields.custom.megamenu_featured_pages.value
+# render up to 3 total cards (collections first, then pages)
 ```
 
 **Setup:**
 
-1. Create page metafield definition: namespace `custom`, key `megamenu_featured_collections`, type **List of collections**.
-2. On each landing page (e.g. The Land), add the collections to show in that page's megamenu dropdown.
-3. The main nav item must link to that page (`page_link` type).
-4. Header menu block → **Media type** = **Featured collections**. CTA label/link still come from the menu block settings.
+1. Create page metafield definitions:
+   - namespace `custom`, key `megamenu_featured_collections`, type **List of collections**
+   - namespace `custom`, key `megamenu_featured_pages`, type **List of pages**
+2. (Optional) On pages referenced by `megamenu_featured_pages`, set `custom.megamenu_image` to control the card image.
+3. On each landing page (e.g. The Land), add the collections/pages to show in that page's megamenu dropdown.
+4. The main nav item must link to that page (`page_link` type).
+5. Header menu block → **Media type** = **Featured collections**. CTA label/link still come from the menu block settings.
 
-**Pitfall:** If the nav item is not a page link, or the metafield is empty, the dropdown shows submenu links only (no cards).
+**Pitfall:** If the nav item is not a page link, or both metafields are empty, the dropdown shows submenu links only (no cards).
 
 ## Split header menu brackets (center logo)
 
