@@ -103,7 +103,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<p>Our Regenerative Agricultural Approach</p>",
+                "text": "<p>Our Regenerative Approach</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -125,10 +125,36 @@
               },
               "blocks": {}
             },
+            "text_mbPKHV": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>We give more than we take.                          We regenerate and heal the soil.</p>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "h4",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
             "text_Jk9jY9": {
               "type": "text",
               "settings": {
-                "text": "<p>We give more than we take.                          We regenerate and heal the soil.</p><p>We respect the natural rhythms of every plant we cultivate. From wildflowers to native grasses, our botanicals are allowed to grow in harmony with the land. Harvesting and distillation are carried out with care, by hand, either from our wild botanical farm at Cala Falcó or through trusted local farm partners.</p><p>These raw materials are then transformed by our scent scientists and master perfumers in our atelier in Palma. The essential oils and extracts we obtain are a direct reflection of this relationship with nature. Pure, expressive and deeply rooted in place.</p>",
+                "text": "<p>We respect the natural rhythms of every plant we cultivate. From wildflowers to native grasses, our botanicals are allowed to grow in harmony with the land. Harvesting and distillation are carried out with care, by hand, either from our wild botanical farm at Cala Falcó or through trusted local farm partners.</p><p>These raw materials are then transformed by our scent scientists and master perfumers in our atelier in Palma. The essential oils and extracts we obtain are a direct reflection of this relationship with nature. Pure, expressive and deeply rooted in place.</p>",
                 "width": "100%",
                 "max_width": "none",
                 "alignment": "left",
@@ -153,6 +179,7 @@
           },
           "block_order": [
             "text_CiKxK4",
+            "text_mbPKHV",
             "text_Jk9jY9"
           ]
         },
@@ -338,7 +365,7 @@
             "text_N9nPif": {
               "type": "text",
               "settings": {
-                "text": "<p>Much of conventional agriculture has been built on extraction, asking more and more from the land while giving little back. Over time, this has led to soil degradation, loss of biodiversity, and growing pressure on water resources. In places such as Mallorca, where water is precious and ecosystems are fragile, these challenges become even more urgent.<br/><br/>When soil is depleted, the whole ecosystem suffers. It retains less water, supports less life, and produces plants with less vitality, complexity and expression. </p><p>At Cala Falcó, we choose to farm in a way that restores rather than exhausts. By drawing from regenerative, syntropic, biodynamic, and ecological practices, we work to rebuild living soil. We encourage biodiversity, strengthen resilience and improve the land’s ability to capture and retain water.</p><p>Healthier ecosystems yield botanicals of greater purity, character, and energetic integrity. This allows us to develop perfumes, fragrances, cosmetics and botanical beverages rooted in the vitality of the living world.</p>",
+                "text": "<p>Much of conventional agriculture has been built on extraction, asking more and more from the land while giving little back. Over time, this has led to soil degradation, loss of biodiversity, and growing pressure on water resources. In places such as Mallorca, where water is precious and ecosystems are fragile, these challenges become even more urgent.</p><p>When soil is depleted, the whole ecosystem suffers. It retains less water, supports less life, and produces plants with less vitality, complexity and expression. </p><p>At Cala Falcó, we choose to farm in a way that restores rather than exhausts. By drawing from regenerative, syntropic, biodynamic, and ecological practices, we work to rebuild living soil. We encourage biodiversity, strengthen resilience and improve the land’s ability to capture and retain water.</p><p>Healthier ecosystems yield botanicals of greater purity, character, and energetic integrity. This allows us to develop perfumes, fragrances, cosmetics and botanical beverages rooted in the vitality of the living world.</p>",
                 "width": "100%",
                 "max_width": "none",
                 "alignment": "left",
