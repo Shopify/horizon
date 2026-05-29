@@ -352,7 +352,7 @@
       ],
       "name": "Ingredients",
       "settings": {
-        "heading": "The Creation of a Bespoke Perfume",
+        "heading": "Creating a Bespoke Perfume",
         "description": "<p>A scent service for individuals looking to tell their unique scent story</p>",
         "section_width": "page-width",
         "color_scheme": "",
@@ -585,7 +585,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<p>costs</p>",
+                "text": "<p>bespoke perfume costs</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -607,10 +607,51 @@
               },
               "blocks": {}
             },
+            "text_JQmpFU": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<h4>priced from £1,000 </h4>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "button_cJdJkz": {
+              "type": "button",
+              "name": "t:names.button",
+              "settings": {
+                "label": "Enquire now",
+                "link": "shopify://collections/all",
+                "open_in_new_tab": false,
+                "style_class": "button",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            },
             "text_CPJEtc": {
               "type": "text",
               "settings": {
-                "text": "<p>£12,000 for the creation of a bespoke perfume</p>",
+                "text": "<p>Our expert team led by Victor Alarcón will guide you through the in depth step by step process to deliver your bespoke perfume and scent story within 1 month.</p>",
                 "width": "100%",
                 "max_width": "none",
                 "alignment": "left",
@@ -650,6 +691,8 @@
           },
           "block_order": [
             "text_ezfXFT",
+            "text_JQmpFU",
+            "button_cJdJkz",
             "text_CPJEtc",
             "button_MctCW8"
           ]
