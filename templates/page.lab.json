@@ -203,7 +203,7 @@
               "type": "button",
               "settings": {
                 "label": "The Lab For Brands",
-                "link": "shopify://collections/all",
+                "link": "shopify://pages/for-luxury-brands",
                 "open_in_new_tab": false,
                 "style_class": "button",
                 "width": "fit-content",
@@ -217,7 +217,7 @@
               "type": "button",
               "settings": {
                 "label": "The Lab For Private Clients",
-                "link": "shopify://collections/all",
+                "link": "shopify://pages/for-individuals",
                 "open_in_new_tab": false,
                 "style_class": "button",
                 "width": "fit-content",
@@ -374,8 +374,8 @@
               "type": "button",
               "settings": {
                 "label": "Find Us",
-                "link": "shopify://collections/all",
-                "open_in_new_tab": false,
+                "link": "https://maps.app.goo.gl/oa4vF1v7wAp4gfK8A",
+                "open_in_new_tab": true,
                 "style_class": "button",
                 "width": "fit-content",
                 "custom_width": 100,
