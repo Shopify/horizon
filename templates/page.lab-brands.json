@@ -904,6 +904,7 @@
           ]
         }
       },
+      "disabled": true,
       "name": "t:names.carousel",
       "settings": {
         "columns": 3,
@@ -1729,7 +1730,7 @@
         "section_width": "page-width",
         "section_height": "",
         "section_height_custom": 50,
-        "color_scheme": "",
+        "color_scheme": "scheme-1",
         "background_media": "none",
         "video_position": "cover",
         "background_image_position": "cover",
@@ -2008,6 +2009,7 @@
         "text_E7ErnW",
         "accordion_Y4h9wc"
       ],
+      "disabled": true,
       "name": "t:names.faq_section",
       "settings": {
         "content_direction": "column",
@@ -2023,7 +2025,7 @@
         "intro_description": "",
         "description_min_height": 0,
         "show_image_border": false,
-        "image_border_color": "#FFFFFF",
+        "image_border_color": "#ffffff",
         "image_border_position": "inside",
         "section_width": "page-width",
         "section_height": "",

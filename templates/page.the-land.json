@@ -308,7 +308,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<p>An Invitation to The Cala Falcó Way</p>",
+                "text": "<p>The Cala Falcó Way</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -357,6 +357,7 @@
             },
             "button_cHyCrK": {
               "type": "button",
+              "disabled": true,
               "settings": {
                 "label": "Join Our Way",
                 "link": "shopify://collections/all",
