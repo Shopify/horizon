@@ -181,7 +181,7 @@
               "name": "t:names.button",
               "settings": {
                 "label": "Start your sense story",
-                "link": "shopify://collections/all",
+                "link": "shopify://pages/contact",
                 "open_in_new_tab": false,
                 "style_class": "button",
                 "width": "fit-content",
@@ -332,6 +332,65 @@
         "arrow_size": 52,
         "padding-block-start": 24,
         "padding-block-end": 56
+      }
+    },
+    "qa_mGGXch": {
+      "type": "qa",
+      "blocks": {
+        "qa_item_QphKAT": {
+          "type": "qa_item",
+          "settings": {
+            "question": "ENHANCING BRAND IDENTITY",
+            "answer": "<p>A signature fragrance deepens brand recognition, subtly reinforcing your unique story.</p>",
+            "open_by_default": true
+          }
+        },
+        "qa_item_DDpKXB": {
+          "type": "qa_item",
+          "settings": {
+            "question": "MERCHANDISE OPPORTUNITIES",
+            "answer": "<p>Ability to offer an olfactory collection through your boutique or spa, providing an additional revenue stream while enhancing brand engagement.</p>",
+            "open_by_default": false
+          }
+        },
+        "qa_item_eJgMKP": {
+          "type": "qa_item",
+          "settings": {
+            "question": "WORKSHOPS AND EXPERIENCES",
+            "answer": "<p>Showcase the bespoke collection with tailor made immersive discovery workshops for clients or press with our scent scientists and perfume noses.</p>",
+            "open_by_default": false
+          }
+        },
+        "qa_item_Bi8y93": {
+          "type": "qa_item",
+          "settings": {
+            "question": "SUSTAINABILITY COMMITMENT",
+            "answer": "<p>Using 100% natural ingredients, refillable packaging and responsible sourcing, honouring both nature and luxury sets a sustainability statement for your brand.</p>",
+            "open_by_default": false
+          }
+        }
+      },
+      "block_order": [
+        "qa_item_QphKAT",
+        "qa_item_DDpKXB",
+        "qa_item_eJgMKP",
+        "qa_item_Bi8y93"
+      ],
+      "name": "QA",
+      "settings": {
+        "person_image": "shopify://shop_images/CalaFalco_25-114.jpg",
+        "heading": "why you need an olfactory identity",
+        "subheading": "",
+        "description": "",
+        "person_name": "",
+        "person_title": "Creating a unique brand fragrance and olfactory identity is more that a nice to do. It can be a moment in your brands development that can lead to deeper emotional connection and commercial opportunities alike.",
+        "button_label": "Book A Consultation",
+        "button_link": "shopify://pages/contact",
+        "section_width": "page-width",
+        "color_scheme": "",
+        "accordion_icon": "caret",
+        "padding-block-start": 60,
+        "padding-block-end": 60
       }
     },
     "carousel_yXky9f": {
@@ -1141,6 +1200,7 @@
       "block_order": [
         "button_7M9ApB"
       ],
+      "disabled": true,
       "name": "t:names.products_carousel",
       "settings": {
         "collection": "",
@@ -2051,6 +2111,7 @@
     "main",
     "section_L36UFW",
     "ingredients_nqJcBd",
+    "qa_mGGXch",
     "carousel_yXky9f",
     "product_list_9feBaz",
     "testimonials_4P3EMV",
