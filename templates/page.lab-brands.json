@@ -1718,29 +1718,28 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
-            },
-            "button_K7XmEa": {
-              "type": "button",
-              "name": "t:names.button",
-              "settings": {
-                "label": "Discover our workshops",
-                "link": "shopify://collections/all",
-                "open_in_new_tab": false,
-                "style_class": "button",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
             }
           },
           "block_order": [
             "text_jq3feB",
             "text_cj64g3",
-            "text_hycGWw",
-            "button_K7XmEa"
+            "text_hycGWw"
           ]
+        },
+        "button_amim44": {
+          "type": "button",
+          "name": "t:names.button",
+          "settings": {
+            "label": "Discover our workshops",
+            "link": "shopify://collections/all",
+            "open_in_new_tab": false,
+            "style_class": "button",
+            "width": "fit-content",
+            "custom_width": 100,
+            "width_mobile": "fit-content",
+            "custom_width_mobile": 100
+          },
+          "blocks": {}
         },
         "image_8mgATz": {
           "type": "image",
@@ -1768,8 +1767,10 @@
       },
       "block_order": [
         "group_MJxBq8",
+        "button_amim44",
         "image_8mgATz"
       ],
+      "disabled": true,
       "name": "t:names.image_with_text",
       "settings": {
         "content_direction": "row",
@@ -1803,6 +1804,209 @@
         "overlay_style": "solid",
         "gradient_direction": "to top",
         "padding-block-start": 40,
+        "padding-block-end": 80
+      }
+    },
+    "section_U3eTci": {
+      "type": "section",
+      "blocks": {
+        "image_pVcPCL": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/Group_1597881116.png",
+            "link": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 16,
+            "image_border_padding": 8,
+            "image_ratio": "adapt",
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "group_TJTwHQ": {
+          "type": "group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "custom",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "text_Fxmb6f": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>Workshops</p>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "h2",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 12,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "text_t4Ya7c": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Explore how scent shapes perception, reveals memory and reconnects us to the landscapes we inhabit.<br/><br/>Our workshops are a fun and immersive exploration into the world of olflactory story telling and natural botanicals.</p>",
+                "width": "100%",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "button_Ei7TQ4": {
+              "type": "button",
+              "settings": {
+                "label": "Discover our workshops",
+                "link": "shopify://pages/the-lab-workshops",
+                "open_in_new_tab": false,
+                "style_class": "button",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            },
+            "image_xik8EU": {
+              "type": "image",
+              "settings": {
+                "image": "shopify://shop_images/CalaFalco_25-181.jpg",
+                "link": "",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 16,
+                "image_border_padding": 8,
+                "image_ratio": "adapt",
+                "width": "custom",
+                "custom_width": 100,
+                "width_mobile": "custom",
+                "custom_width_mobile": 100,
+                "height": "fill",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_Fxmb6f",
+            "text_t4Ya7c",
+            "button_Ei7TQ4",
+            "image_xik8EU"
+          ]
+        }
+      },
+      "block_order": [
+        "image_pVcPCL",
+        "group_TJTwHQ"
+      ],
+      "name": "t:names.image_with_text",
+      "settings": {
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 64,
+        "show_intro": false,
+        "intro_heading": "",
+        "intro_description": "",
+        "description_min_height": 0,
+        "show_image_border": false,
+        "image_border_color": "#ffffff",
+        "image_border_position": "inside",
+        "section_width": "small",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-cfa9c273-456f-45a2-b18d-d73976dc71f5",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 80,
         "padding-block-end": 80
       }
     },
@@ -2119,6 +2323,7 @@
     "section_TBtpYk",
     "section_RR3rW4",
     "section_VmfL7y",
+    "section_U3eTci",
     "section_HigWDT"
   ]
 }
