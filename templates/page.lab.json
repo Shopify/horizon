@@ -152,7 +152,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<p>We create bespoke olfactory identities for brands and individuals using our 100% natural botanicals </p>",
+                "text": "<p>Bespoke olfactory identities for brands and individuals</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -177,7 +177,7 @@
             "text_CNg9et": {
               "type": "text",
               "settings": {
-                "text": "<p>We call this the The CALA FALCÓ LAB. Here we combine science with artistry to create a fragrance identity that awakens the senses, stirs emotions, evokes memories and enhances environments for brands and private clients.<br/></p>",
+                "text": "<p>We call this The Cala Falcó LAB. Here we combine science with artistry, using our 100% natural botanicals, to create  a bespoke fragrance identity that awakens the senses, stirs emotions, evokes memories and enhances environments.<br/></p>",
                 "width": "100%",
                 "max_width": "none",
                 "alignment": "left",
@@ -509,24 +509,10 @@
               },
               "blocks": {}
             },
-            "button_rE8FnK": {
-              "type": "button",
-              "settings": {
-                "label": "Find Us",
-                "link": "https://maps.app.goo.gl/oa4vF1v7wAp4gfK8A",
-                "open_in_new_tab": true,
-                "style_class": "button",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            },
             "text_GaUcbG": {
               "type": "text",
               "settings": {
-                "text": "<p>Our atelier is our portal into the olfactory sciences, a space to create innovative immersive scent experiences. <br/><br/>Set in the heart of the old town of Palma, we converge the old world with new science. In this space, we gather to explore, create, study and experiment in order to unlock natures incredible potency.</p><p>Tel: +34 664539899</p><p>Addresses: Carrer de l'Estudi General, 2, 07001, Palma, Spain</p>",
+                "text": "<p>Our atelier is our portal into the olfactory sciences, a space to create innovative immersive scent experiences. </p><p>Set in the heart of the old town of Palma, we converge the old world with new science. In this space, we gather to explore, create, study and experiment in order to unlock natures incredible potency.</p><p><strong>Tel:</strong> +34 664539899</p><p><strong>Addresses:</strong> Carrer de l'Estudi General, 2, 07001, Palma, Spain</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -547,12 +533,26 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
+            },
+            "button_rE8FnK": {
+              "type": "button",
+              "settings": {
+                "label": "Find Us",
+                "link": "https://maps.app.goo.gl/oa4vF1v7wAp4gfK8A",
+                "open_in_new_tab": true,
+                "style_class": "button",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
             }
           },
           "block_order": [
             "text_wHHieY",
-            "button_rE8FnK",
-            "text_GaUcbG"
+            "text_GaUcbG",
+            "button_rE8FnK"
           ]
         },
         "image_PHtAVf": {
@@ -737,7 +737,7 @@
             "text_YbjFGi": {
               "type": "text",
               "settings": {
-                "text": "<p>Our Scent Scientists are the people that help harness the natural botanicals from our Cala Falco estate and craft them into sensory stories.<br/><br/><strong>Victor Alarcon - Creative Director</strong><br/>With a background in biochemistry and interdisciplinary studies, Victor Alarcón brings a research-driven and creative approach to Cala Falcó as co-founder, creative director, and head of labs. He bridges regenerative agriculture, formulation, and storytelling, leading the creation of natural, high-performance fragrances and sensory systems. Guided by a soil-to-bottle philosophy, his work uses scent to regenerate ecosystems, shape emotion, and redefine contemporary luxury.<br/><br/><strong>Tatsiana Salamanca - Lab Manager</strong><br/>With a PhD in Chemistry and nearly a decade of experience in advanced materials research, Tatsiana brings scientific precision and methodical rigor to Cala Falcó’s laboratory. She oversees the meticulous production of each formula, ensuring<br/>consistency, quality, and fidelity to the original vision.</p>",
+                "text": "<p>Our Scent Scientists are the people that harness the natural botanicals from our Cala Falcó estate and craft them into sensory stories.<br/><br/><strong>Victor Alarcon - Creative Director</strong><br/>With a background in biochemistry and interdisciplinary studies, Victor Alarcón brings a research-driven and creative approach to Cala Falcó as co-founder, creative director, and head of labs. He bridges regenerative agriculture, formulation, and storytelling, leading the creation of natural, high-performance fragrances and sensory systems. Guided by a soil-to-bottle philosophy, his work uses scent to regenerate ecosystems, shape emotion, and redefine contemporary luxury.<br/><br/><strong>Tatsiana Salamanca - Lab Manager</strong><br/>With a PhD in Chemistry and nearly a decade of experience in advanced materials research, Tatsiana brings scientific precision and methodical rigor to Cala Falcó’s laboratory. She oversees the meticulous production of each formula, ensuring<br/>consistency, quality, and fidelity to the original vision.</p>",
                 "width": "100%",
                 "max_width": "none",
                 "alignment": "left",
