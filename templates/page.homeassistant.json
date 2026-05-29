@@ -5754,7 +5754,7 @@
                   "settings": {
                     "text": "<p>myQ stopped working with Home Assistant?</p>",
                     "width": "100%",
-                    "max_width": "none",
+                    "max_width": "normal",
                     "alignment": "center",
                     "type_preset": "h5",
                     "font": "var(--font-body--family)",
@@ -5853,7 +5853,7 @@
                   "type": "image",
                   "name": "t:names.image",
                   "settings": {
-                    "link": "",
+                    "link": "https://konnected.io/pages/how-self-monitoring-works",
                     "open_in_new_tab": false,
                     "image_ratio": "adapt",
                     "width": "fill",
