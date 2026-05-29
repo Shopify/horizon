@@ -325,7 +325,7 @@
       ],
       "name": "Ingredients",
       "settings": {
-        "heading": "The Creation of an Olfactory Identity",
+        "heading": "Creating An Olfactory Identity",
         "description": "<p>A scent service for luxury brands, rooted in nature</p>",
         "section_width": "page-width",
         "color_scheme": "",
@@ -1361,7 +1361,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<p>Bespoke Olfactory Identity Pricing</p>",
+                "text": "<p>Bespoke Pricing</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -1409,11 +1409,37 @@
               },
               "blocks": {}
             },
+            "text_mR3riB": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<h4>guide price £12,000</h4>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
             "text_dcjmNC": {
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<p>Our expert team led by Victor Alarcón will guide you through the in depth step by step process to deliver your olfactory identity and scent story within 6 months.<br/><br/>Guide price: £12,000</p>",
+                "text": "<p>Our expert team led by Victor Alarcón will guide you through the in depth step by step process to deliver your bespoke olfactory identity and scent story within 6 months.</p><p></p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -1453,6 +1479,7 @@
           "block_order": [
             "text_UzJh8C",
             "text_AfXafc",
+            "text_mR3riB",
             "text_dcjmNC",
             "button_HYJryh"
           ]
