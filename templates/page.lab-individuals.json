@@ -230,7 +230,7 @@
               "type": "button",
               "settings": {
                 "label": "Start your sense story",
-                "link": "shopify://products/cala-falco-at-spring",
+                "link": "shopify://pages/contact",
                 "open_in_new_tab": false,
                 "style_class": "button",
                 "width": "fit-content",
@@ -458,7 +458,7 @@
               "type": "button",
               "settings": {
                 "label": "Book A Consultation",
-                "link": "shopify://collections/all",
+                "link": "shopify://pages/contact",
                 "open_in_new_tab": false,
                 "style_class": "button",
                 "width": "fit-content",
@@ -1289,6 +1289,7 @@
         "text_nBRGLe",
         "accordion_ezWVAf"
       ],
+      "disabled": true,
       "name": "t:names.faq_section",
       "settings": {
         "content_direction": "column",
@@ -1304,7 +1305,7 @@
         "intro_description": "",
         "description_min_height": 0,
         "show_image_border": false,
-        "image_border_color": "#FFFFFF",
+        "image_border_color": "#ffffff",
         "image_border_position": "inside",
         "section_width": "page-width",
         "section_height": "",
@@ -1871,6 +1872,7 @@
         "text_H7eamK",
         "accordion_rb6MBm"
       ],
+      "disabled": true,
       "name": "t:names.faq_section",
       "settings": {
         "content_direction": "column",
@@ -1886,7 +1888,7 @@
         "intro_description": "",
         "description_min_height": 0,
         "show_image_border": false,
-        "image_border_color": "#FFFFFF",
+        "image_border_color": "#ffffff",
         "image_border_position": "inside",
         "section_width": "page-width",
         "section_height": "",
