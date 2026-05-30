@@ -47,31 +47,20 @@
                   </div>
                 {% endif %}
 
-                {% if block_settings.quote_full != blank %}
-                  <show-more-component class="testimonials-card__show-more show-more" data-expanded="false">
-                    <button
-                      class="show-more__button button-unstyled button-unstyled--with-icon"
-                      type="button"
-                      ref="showMoreButton"
-                      on:click="/toggle"
-                      aria-expanded="false"
-                      aria-controls="Testimonials-{{ section.id }}-{{ block.id }}-quote-more"
+                {% if block_settings.cta_link != blank %}
+                  <div class="testimonials-card__cta">
+                    <a
+                      href="{{ block_settings.cta_link }}"
+                      class="testimonials-card__cta-link show-more__button button-unstyled button-unstyled--with-icon"
+                      {% if block_settings.open_in_new_tab %}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      {% endif %}
                     >
-                      <span class="show-more__label show-more__label--more">Read full testimonial</span>
-                      <span class="show-more__label show-more__label--less">Read less</span>
+                      <span>{{ block_settings.cta_label | escape }}</span>
                       <span class="svg-wrapper icon-arrow">{{- 'icon-arrow.svg' | inline_asset_content -}}</span>
-                    </button>
-
-                    <div
-                      id="Testimonials-{{ section.id }}-{{ block.id }}-quote-more"
-                      ref="showMoreContent"
-                      class="testimonials-card__expand-content"
-                    >
-                      <div ref="showMoreItems[]" class="hidden testimonials-card__quote-full rte">
-                        {{ block_settings.quote_full }}
-                      </div>
-                    </div>
-                  </show-more-component>
+                    </a>
+                  </div>
                 {% endif %}
 
                 <div class="testimonials-card__author">
@@ -283,31 +272,30 @@
     font-family: var(--font-heading--family);
   }
 
-  .testimonials-card__quote-short p:first-child,
-  .testimonials-card__quote-full p:first-child {
+  .testimonials-card__quote-short p:first-child {
     margin-top: 0;
   }
 
-  .testimonials-card__quote-short p:last-child,
-  .testimonials-card__quote-full p:last-child {
+  .testimonials-card__quote-short p:last-child {
     margin-bottom: 0;
   }
 
-  .testimonials-card__show-more {
+  .testimonials-card__cta {
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
   }
 
-  .testimonials-card__show-more .show-more__button {
+  .testimonials-card__cta-link {
     color: inherit;
     font-size: 0.9rem;
     letter-spacing: 0.02em;
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
+    text-decoration: none;
   }
 
-  .testimonials-card__show-more .svg-wrapper {
+  .testimonials-card__cta-link .svg-wrapper {
     width: 0.95rem;
     height: 0.95rem;
   }
@@ -396,7 +384,7 @@
   }
 
   .testimonials-swiper__nav-button:focus-visible,
-  .testimonials-card__show-more .show-more__button:focus-visible {
+  .testimonials-card__cta-link:focus-visible {
     outline: 2px solid #f4efdf;
     outline-offset: 3px;
   }
@@ -526,9 +514,21 @@
           "label": "Quote"
         },
         {
-          "type": "richtext",
-          "id": "quote_full",
-          "label": "Read more text"
+          "type": "text",
+          "id": "cta_label",
+          "label": "Button label",
+          "default": "Read full testimonial"
+        },
+        {
+          "type": "url",
+          "id": "cta_link",
+          "label": "Button link"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_in_new_tab",
+          "label": "t:settings.open_new_tab",
+          "default": true
         },
         {
           "type": "image_picker",
@@ -560,7 +560,6 @@
           "type": "testimonial",
           "settings": {
             "quote_short": "<p>Cala Falco is a refined, nuanced non-alcoholic aperitivo, crafted with passion and remarkable botanical complexity.</p>",
-            "quote_full": "<p>From first pour to final sip, every detail feels intentional. It's now a staple in our members club.</p>",
             "author": "Theo Hitchcock",
             "author_title": "Founder of The Trove"
           }
@@ -569,7 +568,6 @@
           "type": "testimonial",
           "settings": {
             "quote_short": "<p>Elegant flavor profile and exceptional finish. It feels premium in every way.</p>",
-            "quote_full": "<p>Our guests ask for it by name. The balance, bottle design, and overall experience are all best-in-class.</p>",
             "author": "Maria Doyle",
             "author_title": "Beverage Director"
           }
