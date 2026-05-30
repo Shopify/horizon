@@ -67,7 +67,7 @@
         "
         style="
           {%  render 'spacing-style', settings: section.settings %}
-          --footer-gap: 60px;
+          --footer-gap: 25px;
           --grid-columns: {{ grid_columns }};
           --last-row-count: {{ last_row_count }};
           --tablet-last-row-count: {{ tablet_last_row_count }};
@@ -315,7 +315,7 @@ footer{
 
   @media screen and (min-width: 750px) and (max-width: 989px) {
     .footer-content {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 2;
       grid-auto-flow: row;
       align-items: start;
       row-gap: calc(var(--footer-gap) /2 );
@@ -334,6 +334,7 @@ footer{
     .footer-content > .email-signup-block {
       grid-column: 1;
       grid-row: 2;
+      max-width: 500px;
     }
 
     .footer-content > .footer-utilities__group-copyright {

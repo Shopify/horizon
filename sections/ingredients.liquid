@@ -114,6 +114,14 @@
       </svg>
     </button>
   </ingredients-swiper>
+
+  {% if section.settings.button_label != blank and section.settings.button_link != blank %}
+    <div class="ingredients__cta-wrap">
+      <a href="{{ section.settings.button_link }}" class="button">
+        {{ section.settings.button_label | escape }}
+      </a>
+    </div>
+  {% endif %}
 </section>
 
 {% javascript %}
@@ -469,6 +477,11 @@
     display: block;
   }
 
+  .ingredients__cta-wrap {
+    margin-block-start: clamp(1.5rem, 3vw, 2.5rem);
+    text-align: center;
+  }
+
   @media screen and (max-width: 749px) {
     .ingredients__swiper {
       grid-template-columns: 1fr 1fr;
@@ -571,6 +584,20 @@
       "step": 2,
       "unit": "px",
       "default": 52
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
     },
     {
       "type": "header",
