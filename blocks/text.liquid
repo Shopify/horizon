@@ -1,4 +1,50 @@
-{% render 'text', block: block %}
+{% liquid
+  assign block_settings = block.settings
+  assign has_block_image = false
+  if block_settings.image != blank
+    assign has_block_image = true
+  endif
+%}
+
+{% if has_block_image %}
+  <div class="text-block-with-image" {{ block.shopify_attributes }}>
+    {{
+      block_settings.image
+      | image_url: width: 800
+      | image_tag:
+        class: 'text-block-with-image__image',
+        widths: '120, 240, 360, 480, 600, 800',
+        sizes: 'auto',
+        loading: 'lazy',
+        alt: block_settings.image.alt | default: ''
+    }}
+    {% render 'text', block: block, omit_shopify_attributes: true %}
+  </div>
+{% else %}
+  {% render 'text', block: block %}
+{% endif %}
+
+{% stylesheet %}
+  .text-block-with-image {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .text-block-with-image__image {
+    display: block;
+    width: auto;
+    height: var(--marquee-block-image-height, 2.5rem);
+    max-height: 120px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  .text-block-with-image .text-block {
+    width: auto;
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
@@ -9,6 +55,11 @@
       "type": "richtext",
       "id": "text",
       "label": "t:settings.text"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image"
     },
     {
       "type": "header",

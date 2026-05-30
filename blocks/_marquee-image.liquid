@@ -1,0 +1,85 @@
+{% liquid
+  assign block_settings = block.settings
+  assign image_alt = block_settings.image.alt | default: ''
+%}
+
+{% if block_settings.image != blank %}
+  {% capture image_markup %}
+    {{
+      block_settings.image
+      | image_url: width: 800
+      | image_tag:
+        class: 'marquee-image-block__img',
+        widths: '120, 240, 360, 480, 600, 800',
+        sizes: 'auto',
+        loading: 'lazy',
+        alt: image_alt
+    }}
+  {% endcapture %}
+
+  {%- if block_settings.link != blank -%}
+    <a
+      href="{{ block_settings.link }}"
+      class="marquee-image-block"
+      {{ block.shopify_attributes }}
+    >
+      {{ image_markup }}
+    </a>
+  {%- else -%}
+    <div class="marquee-image-block" {{ block.shopify_attributes }}>
+      {{ image_markup }}
+    </div>
+  {%- endif -%}
+{% else %}
+  <div class="marquee-image-block marquee-image-block--placeholder" {{ block.shopify_attributes }}>
+    {{ 'detailed-apparel-1' | placeholder_svg_tag: 'marquee-image-block__img' }}
+  </div>
+{% endif %}
+
+{% stylesheet %}
+  .marquee-image-block {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .marquee-image-block__img {
+    display: block;
+    width: auto;
+    height: var(--marquee-block-image-height, 3rem);
+    max-height: 120px;
+    object-fit: contain;
+  }
+
+  .marquee-image-block--placeholder .marquee-image-block__img {
+    width: var(--marquee-block-image-height, 3rem);
+    opacity: 0.35;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.image",
+  "tag": null,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "t:settings.link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.image",
+      "category": "t:categories.basic"
+    }
+  ]
+}
+{% endschema %}

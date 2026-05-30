@@ -70,7 +70,9 @@
     {% endif %}
   "
 
-  {{ block.shopify_attributes }}
+  {% unless omit_shopify_attributes %}
+    {{ block.shopify_attributes }}
+  {% endunless %}
 {% endcapture %}
 
 {% liquid

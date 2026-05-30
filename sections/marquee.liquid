@@ -13,6 +13,7 @@
     {%- render 'spacing-style', settings: section.settings %};
     {% render 'gap-style', value: gap_between_elements, name: 'marquee-gap' %}
     --marquee-direction: {{ section.settings.movement_direction }};
+    --marquee-block-image-height: {{ section.settings.block_image_height }}px;
   "
   data-speed-factor="25"
   data-movement-direction="{{ section.settings.movement_direction }}"
@@ -75,6 +76,25 @@
     align-content: center;
   }
 
+  .marquee__repeated-items .image-block {
+    width: fit-content;
+    flex-shrink: 0;
+  }
+
+  .marquee__repeated-items .image-block__frame,
+  .marquee__repeated-items .image-block__media {
+    width: auto;
+  }
+
+  .marquee__repeated-items .image-block__image {
+    width: auto;
+    height: var(--marquee-block-image-height, 3rem);
+    max-height: 120px;
+    aspect-ratio: auto;
+    object-fit: contain;
+    border-radius: 0;
+  }
+
   @media (prefers-reduced-motion: no-preference) {
     marquee-component:not([data-disabled]) .marquee__wrapper {
       animation: marquee-motion var(--marquee-speed) linear infinite var(--marquee-direction);
@@ -103,6 +123,12 @@
     },
     {
       "type": "logo"
+    },
+    {
+      "type": "image"
+    },
+    {
+      "type": "_marquee-image"
     },
     {
       "type": "_divider"
@@ -164,6 +190,16 @@
       "step": 1,
       "unit": "px",
       "default": 24
+    },
+    {
+      "type": "range",
+      "id": "block_image_height",
+      "label": "Block image height",
+      "min": 24,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
     }
   ],
   "presets": [

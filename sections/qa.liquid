@@ -80,7 +80,7 @@
             {% endif %}
             {{ block.shopify_attributes }}
           >
-            <summary class="details__header">
+            <summary class="details__header h5">
               {% render 'icon-or-image',
                 icon: 'none',
                 image_upload: block.settings.image_upload,
@@ -142,6 +142,8 @@
     margin: 0;
     text-transform: uppercase;
     letter-spacing: 0.08em;
+     max-width: 700px;
+    margin-bottom: 20px;
   }
 
   .qa__subheading {
@@ -163,6 +165,7 @@
   .qa__person-title {
     margin: 0.25rem 0 0;
     font-size: 0.95rem;
+    max-width: 500px;
   }
 
   .qa__accordion .details-content .rte {
