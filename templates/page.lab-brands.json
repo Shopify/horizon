@@ -395,6 +395,77 @@
         "padding-block-end": 60
       }
     },
+    "marquee_w8wP9q": {
+      "type": "marquee",
+      "blocks": {
+        "text_aJjaRc": {
+          "type": "text",
+          "settings": {
+            "text": "",
+            "image": "shopify://shop_images/312312_1.png",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "tight",
+            "letter_spacing": "tight",
+            "case": "none",
+            "wrap": "nowrap",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "text_FrQBUz": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "",
+            "image": "shopify://shop_images/Vector_26.png",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_aJjaRc",
+        "text_FrQBUz"
+      ],
+      "name": "t:names.marquee_section",
+      "settings": {
+        "movement_direction": "normal",
+        "color_scheme": "",
+        "padding-block-start": 24,
+        "padding-block-end": 24,
+        "gap_between_elements": 24,
+        "block_image_height": 48
+      }
+    },
     "carousel_yXky9f": {
       "type": "carousel",
       "blocks": {
@@ -2347,6 +2418,7 @@
     "section_L36UFW",
     "ingredients_nqJcBd",
     "qa_mGGXch",
+    "marquee_w8wP9q",
     "carousel_yXky9f",
     "product_list_9feBaz",
     "testimonials_4P3EMV",
