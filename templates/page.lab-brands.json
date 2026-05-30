@@ -1260,6 +1260,7 @@
           "type": "text",
           "settings": {
             "text": "<p>We make things that work better and last longer.</p>",
+            "image": "shopify://shop_images/Vector_27.png",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -1291,7 +1292,8 @@
         "color_scheme": "",
         "padding-block-start": 24,
         "padding-block-end": 24,
-        "gap_between_elements": 24
+        "gap_between_elements": 24,
+        "block_image_height": 48
       }
     },
     "section_TBtpYk": {
