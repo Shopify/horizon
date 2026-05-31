@@ -532,7 +532,9 @@
           "type": "testimonial",
           "settings": {
             "quote_short": "<p>Cala Falcó at spring is a refined, nuanced non-alcoholic aperitivo, crafted with  passion, exclusivity and remarkable botanical complexity.</p>",
-            "quote_full": "",
+            "cta_label": "Read full testimonial",
+            "cta_link": "",
+            "open_in_new_tab": true,
             "image": "shopify://shop_images/IMG_4425.jpg",
             "author": "Theo Hitchcock",
             "author_title": "Founder of The Travelcohol-Free Club"
@@ -542,7 +544,9 @@
           "type": "testimonial",
           "settings": {
             "quote_short": "<p>Beautifully complex and vibrant, Cala Falcó at spring delivers elegant botanical depth as a sophisticated non-alcoholic aperitivo.</p>",
-            "quote_full": "",
+            "cta_label": "Read full testimonial",
+            "cta_link": "",
+            "open_in_new_tab": true,
             "image": "shopify://shop_images/DSC02298.jpg",
             "author": "Claire Warner",
             "author_title": "Global Non-Alcoholic Drinks Industry Thought Leader"
@@ -552,7 +556,9 @@
           "type": "testimonial",
           "settings": {
             "quote_short": "<p>Cala Falcó at spring is light, crisp and wonderfully thirst-quenching, with beautiful notes of rosemary and a subtle sea-water minerality that captures the essence of the Mediterranean. The perfect alcohol free drink.</p>",
-            "quote_full": "",
+            "cta_label": "Read full testimonial",
+            "cta_link": "",
+            "open_in_new_tab": true,
             "image": "shopify://shop_images/IMG_4424.jpg",
             "author": "Emily Horner",
             "author_title": "Non-Alcoholic Drinks Influencer"
@@ -812,6 +818,8 @@
         "section_width": "page-width",
         "color_scheme": "",
         "arrow_size": 52,
+        "button_label": "",
+        "button_link": "",
         "padding-block-start": 24,
         "padding-block-end": 56
       }
@@ -1101,7 +1109,7 @@
           "name": "t:names.title",
           "static": true,
           "settings": {
-            "text": "<h2>{{ closest.blog.title }}RELATED ARTICLES</h2>",
+            "text": "<h2>{{ closest.blog.title }}</h2>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -1217,7 +1225,7 @@
       },
       "name": "t:names.blog_posts_carousel",
       "settings": {
-        "blog": "",
+        "blog": "the-journal",
         "show_view_all_button": true,
         "view_all_label": "View all articles",
         "view_all_url": "",
@@ -1225,14 +1233,14 @@
         "layout_type": "carousel",
         "carousel_on_mobile": true,
         "post_limit": 5,
-        "columns": 3,
+        "columns": 2,
         "mobile_columns": "2",
         "mobile_card_size": "60cqw",
         "columns_gap": 8,
         "rows_gap": 16,
         "icons_style": "arrow",
         "icons_shape": "circle",
-        "section_width": "page-width",
+        "section_width": "small",
         "gap": 12,
         "color_scheme": "",
         "padding-block-start": 48,
