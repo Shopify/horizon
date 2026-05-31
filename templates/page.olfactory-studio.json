@@ -160,6 +160,52 @@
         "padding-block-end": 40
       }
     },
+    "hero_9LFaMQ": {
+      "type": "hero",
+      "name": "t:names.hero",
+      "settings": {
+        "media_type_1": "video",
+        "video_1": "shopify://files/videos/cala_falco_wine_web_pour_v1 (2160p).mp4",
+        "media_type_2": "image",
+        "stack_media_on_mobile": false,
+        "custom_mobile_media": false,
+        "media_type_1_mobile": "image",
+        "media_type_2_mobile": "image",
+        "link": "",
+        "open_in_new_tab": false,
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "space-between",
+        "vertical_alignment": "flex-end",
+        "align_baseline": true,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 24,
+        "section_width": "full-width",
+        "section_height": "full-screen",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-cfa9c273-456f-45a2-b18d-d73976dc71f5",
+        "toggle_overlay": true,
+        "overlay_color": "#12121266",
+        "overlay_style": "solid",
+        "gradient_direction": "to bottom",
+        "blurred_reflection": false,
+        "reflection_opacity": 75,
+        "enable_module_frame": false,
+        "module_frame_padding": 16,
+        "module_frame_radius": 20,
+        "module_frame_border_width": 1,
+        "content_padding_block_start": 0,
+        "content_padding_block_end": 0,
+        "content_padding_inline_start": 0,
+        "content_padding_inline_end": 0,
+        "show_scroll_prompt": true,
+        "scroll_prompt_text": "",
+        "scroll_frame_inset": 0,
+        "padding-block-start": 100,
+        "padding-block-end": 100
+      }
+    },
     "section_JfRDPn": {
       "type": "section",
       "blocks": {
@@ -390,54 +436,8 @@
         "overlay_color": "#00000026",
         "overlay_style": "solid",
         "gradient_direction": "to top",
-        "padding-block-start": 80,
+        "padding-block-start": 60,
         "padding-block-end": 40
-      }
-    },
-    "hero_9LFaMQ": {
-      "type": "hero",
-      "name": "t:names.hero",
-      "settings": {
-        "media_type_1": "video",
-        "video_1": "shopify://files/videos/cala_falco_wine_web_pour_v1 (2160p).mp4",
-        "media_type_2": "image",
-        "stack_media_on_mobile": false,
-        "custom_mobile_media": false,
-        "media_type_1_mobile": "image",
-        "media_type_2_mobile": "image",
-        "link": "",
-        "open_in_new_tab": false,
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "space-between",
-        "vertical_alignment": "flex-end",
-        "align_baseline": true,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 24,
-        "section_width": "full-width",
-        "section_height": "full-screen",
-        "section_height_custom": 50,
-        "color_scheme": "scheme-cfa9c273-456f-45a2-b18d-d73976dc71f5",
-        "toggle_overlay": true,
-        "overlay_color": "#12121266",
-        "overlay_style": "solid",
-        "gradient_direction": "to bottom",
-        "blurred_reflection": false,
-        "reflection_opacity": 75,
-        "enable_module_frame": false,
-        "module_frame_padding": 16,
-        "module_frame_radius": 20,
-        "module_frame_border_width": 1,
-        "content_padding_block_start": 0,
-        "content_padding_block_end": 0,
-        "content_padding_inline_start": 0,
-        "content_padding_inline_end": 0,
-        "show_scroll_prompt": true,
-        "scroll_prompt_text": "",
-        "scroll_frame_inset": 0,
-        "padding-block-start": 100,
-        "padding-block-end": 100
       }
     },
     "section_HQ4htM": {
@@ -615,7 +615,7 @@
         "overlay_style": "solid",
         "gradient_direction": "to top",
         "padding-block-start": 40,
-        "padding-block-end": 40
+        "padding-block-end": 60
       }
     },
     "section_B3XByp": {
@@ -792,7 +792,7 @@
         "overlay_color": "#00000026",
         "overlay_style": "solid",
         "gradient_direction": "to top",
-        "padding-block-start": 40,
+        "padding-block-start": 60,
         "padding-block-end": 40
       }
     },
