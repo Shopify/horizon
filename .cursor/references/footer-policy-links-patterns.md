@@ -29,6 +29,7 @@ Add these settings on the footer section:
 - Place links row after main `.footer-content` and inside `.footer-shell__frame`.
 - Add top divider and spacing (`.footer-shell__policy-links-wrap`).
 - Render links as always-visible inline/wrapping list (no hover popover interaction).
+- Link hover: `opacity: 0.65` with theme transition (policy row, menu column links, copyright links). Replaces underline-only hover.
 
 ## Decorative footer glow (Ellipse 6 image)
 

@@ -72,10 +72,12 @@
     font-size: var(--font-size, 0.75rem);
     text-transform: var(--text-transform, none);
     text-decoration: none;
+    transition: opacity var(--animation-speed) var(--animation-easing);
   }
 
-  .policy_list a:hover {
-    text-decoration: underline;
+  .policy_list a:hover,
+  .policy_list a:focus-visible {
+    opacity: 0.65;
   }
 {% endstylesheet %}
 

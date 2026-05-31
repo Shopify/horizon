@@ -202,10 +202,21 @@ footer{
     text-decoration: none;
     font-size: var(--font-size, 0.75rem);
     text-transform: var(--text-transform, none);
+    transition: opacity var(--animation-speed) var(--animation-easing);
   }
 
-  .footer-shell__policy-links a:hover {
-    text-decoration: underline;
+  .footer-shell__policy-links a:hover,
+  .footer-shell__policy-links a:focus-visible {
+    opacity: 0.65;
+  }
+
+  .footer-content .menu__item a {
+    transition: opacity var(--animation-speed) var(--animation-easing);
+  }
+
+  .footer-content .menu__item a:hover,
+  .footer-content .menu__item a:focus-visible {
+    opacity: 0.65;
   }
 
   .footer-shell__copyright {
@@ -215,6 +226,12 @@ footer{
 
   .footer-shell__copyright a {
     color: inherit;
+    transition: opacity var(--animation-speed) var(--animation-easing);
+  }
+
+  .footer-shell__copyright a:hover,
+  .footer-shell__copyright a:focus-visible {
+    opacity: 0.65;
   }
 
   .footer-shell__floating-logo {
