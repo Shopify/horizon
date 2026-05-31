@@ -20,3 +20,9 @@ This matches the established small-width behavior used by other list-style secti
 - `.featured-blog-posts-section__header` is a flex row with `align-items: flex-end` so the **View all** button sits on the same horizontal baseline area as the bottom of the text block (title + additional line).
 - Do not set `align-self: flex-start` on `.featured-blog-posts-section__view-all` — it overrides parent alignment.
 - Mobile (`≤749px`): column layout with `align-items: flex-start`.
+
+## Carousel arrow hover
+
+- Featured blog carousel arrows use primary button colors (`--color-primary-button-background` / `--color-primary-button-text`) with a custom `::after` arrow SVG (see section `{% stylesheet %}`).
+- Hover/focus fill matches primary CTAs via shared rules in `assets/base.css` (`.featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control`): bottom-up `::before` scale fill, hover text color, and white arrow SVG on hover for the `::after` pseudo.
+- Do not add one-off opacity-only hovers here — keep in sync with `.resource-list__carousel` arrow rules in `base.css`.

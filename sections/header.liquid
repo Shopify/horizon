@@ -537,8 +537,18 @@
   }
 
   .header[transparent][data-transparent-page='home'] {
-    background: linear-gradient(180deg, var(--color-scheme-top-row) 54%, transparent 82%);
-    --transparent-popup-background: linear-gradient(180deg, var(--color-scheme-top-row) 54%, transparent 82%);
+    background: linear-gradient(
+    180deg,
+    var(--color-scheme-top-row) 0%,
+    var(--color-scheme-top-row) 30%,
+    transparent 100%
+  );
+    --transparent-popup-background:linear-gradient(
+    180deg,
+    var(--color-scheme-top-row) 0%,
+    var(--color-scheme-top-row) 30%,
+    transparent 100%
+  );
   }
 
   .header[transparent]:not([data-transparent-page='home']) {

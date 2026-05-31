@@ -742,6 +742,7 @@ p:empty {
   width: var(--icon-size-sm);
   height: var(--icon-size-sm);
   pointer-events: none;
+  z-index: 1;
 }
 
 .svg-wrapper--smaller {
@@ -4609,9 +4610,12 @@ slideshow-component.resource-list__carousel
 
   .slideshow-control--next {
     margin-inline-start: auto;
+
   }
 }
-
+  .blog-section .slideshow-control--next {
+    position: relative !important;
+  }
 .resource-list__carousel.resource-list__carousel--no-peek {
   --resource-list-carousel-arrow-total: calc(var(--carousel-arrow-gutter) * 2);
 
@@ -4718,6 +4722,114 @@ slideshow-component.resource-list__carousel
 .resource-list__carousel slideshow-arrows .slideshow-control--shape-none svg {
   width: var(--icon-size-sm);
   height: var(--icon-size-sm);
+}
+
+/* Primary CTA hover fill — featured collection & featured blog carousel arrows */
+:is(
+    .resource-list__carousel slideshow-arrows .slideshow-control--shape-none,
+    .resource-list__carousel slideshow-arrows .slideshow-control--shape-circle,
+    .resource-list__carousel slideshow-arrows .slideshow-control--shape-square,
+    .featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control
+  ) {
+  isolation: isolate;
+  overflow: hidden;
+  --button-hover-fill-duration: 0.4s;
+  transition: color var(--animation-speed) var(--animation-easing);
+}
+
+:is(
+    .resource-list__carousel slideshow-arrows .slideshow-control--shape-none,
+    .resource-list__carousel slideshow-arrows .slideshow-control--shape-circle,
+    .resource-list__carousel slideshow-arrows .slideshow-control--shape-square,
+    .featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control
+  )::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background-color: var(--color-primary-button-hover-background);
+  transform: scaleY(0);
+  transform-origin: bottom center;
+  transition: transform var(--button-hover-fill-duration) var(--animation-easing);
+  pointer-events: none;
+}
+
+.resource-list__carousel slideshow-arrows .slideshow-control--shape-none .svg-wrapper,
+.resource-list__carousel slideshow-arrows .slideshow-control--shape-none svg,
+.featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control::after {
+  position: relative;
+  z-index: 1;
+}
+
+@media (hover: hover) {
+  :is(
+      .resource-list__carousel slideshow-arrows .slideshow-control--shape-none,
+      .resource-list__carousel slideshow-arrows .slideshow-control--shape-circle,
+      .resource-list__carousel slideshow-arrows .slideshow-control--shape-square,
+      .featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control
+    ):hover:not([disabled]):not([aria-disabled='true'])::before,
+  :is(
+      .resource-list__carousel slideshow-arrows .slideshow-control--shape-none,
+      .resource-list__carousel slideshow-arrows .slideshow-control--shape-circle,
+      .resource-list__carousel slideshow-arrows .slideshow-control--shape-square,
+      .featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control
+    ):focus-visible:not([disabled]):not([aria-disabled='true'])::before {
+    transform: scaleY(1);
+  }
+
+  :is(
+      .resource-list__carousel slideshow-arrows .slideshow-control--shape-none,
+      .resource-list__carousel slideshow-arrows .slideshow-control--shape-circle,
+      .resource-list__carousel slideshow-arrows .slideshow-control--shape-square,
+      .featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control
+    ):hover:not([disabled]):not([aria-disabled='true']),
+  :is(
+      .resource-list__carousel slideshow-arrows .slideshow-control--shape-none,
+      .resource-list__carousel slideshow-arrows .slideshow-control--shape-circle,
+      .resource-list__carousel slideshow-arrows .slideshow-control--shape-square,
+      .featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control
+    ):focus-visible:not([disabled]):not([aria-disabled='true']) {
+    color: var(--color-primary-button-hover-text);
+  }
+
+  .featured-blog-posts-section--carousel
+    .resource-list__carousel
+    slideshow-arrows
+    .slideshow-control:hover:not([disabled]):not([aria-disabled='true'])::after,
+  .featured-blog-posts-section--carousel
+    .resource-list__carousel
+    slideshow-arrows
+    .slideshow-control:focus-visible:not([disabled]):not([aria-disabled='true'])::after {
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11.3536 4.03556C11.5488 3.8403 11.5488 3.52372 11.3536 3.32845L8.17157 0.146473C7.97631 -0.0487893 7.65973 -0.0487893 7.46447 0.146473C7.2692 0.341735 7.2692 0.658318 7.46447 0.85358L10.2929 3.68201L7.46447 6.51043C7.2692 6.7057 7.2692 7.02228 7.46447 7.21754C7.65973 7.4128 7.97631 7.4128 8.17157 7.21754L11.3536 4.03556ZM0 3.68201V4.18201H11V3.68201V3.18201H0V3.68201Z' fill='white'/%3E%3C/svg%3E");
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(
+      .resource-list__carousel slideshow-arrows .slideshow-control--shape-none,
+      .resource-list__carousel slideshow-arrows .slideshow-control--shape-circle,
+      .resource-list__carousel slideshow-arrows .slideshow-control--shape-square,
+      .featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control
+    )::before {
+    display: none;
+  }
+
+  :is(
+      .resource-list__carousel slideshow-arrows .slideshow-control--shape-none,
+      .resource-list__carousel slideshow-arrows .slideshow-control--shape-circle,
+      .resource-list__carousel slideshow-arrows .slideshow-control--shape-square,
+      .featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control
+    ):hover:not([disabled]):not([aria-disabled='true']),
+  :is(
+      .resource-list__carousel slideshow-arrows .slideshow-control--shape-none,
+      .resource-list__carousel slideshow-arrows .slideshow-control--shape-circle,
+      .resource-list__carousel slideshow-arrows .slideshow-control--shape-square,
+      .featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control
+    ):focus-visible:not([disabled]):not([aria-disabled='true']) {
+    background-color: var(--color-primary-button-hover-background);
+    color: var(--color-primary-button-hover-text);
+  }
 }
 
 @container resource-list-carousel (max-width: 749px) {

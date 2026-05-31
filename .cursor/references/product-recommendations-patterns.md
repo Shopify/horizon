@@ -24,3 +24,9 @@
   - Use `anchor-scope` on `slideshow-component.resource-list__carousel`.
   - With `@supports (top: anchor(top))`, size `slideshow-arrows` to `top: anchor(--resource-list-card-gallery top)` and `height: anchor-size(height)` so `.slideshow-control { top: 50% }` centers on the image.
 - `--gallery-aspect-ratio-value` on `snippets/card-gallery.liquid` is for future calc fallbacks; anchor positioning is the primary approach.
+
+## Carousel arrow hover
+
+- Featured collection / product-list carousels style arrows as primary buttons in `assets/base.css` (`.resource-list__carousel slideshow-arrows .slideshow-control--shape-none`).
+- Hover uses the same bottom-up color fill as primary CTAs (`::before` + `--color-primary-button-hover-background` / `--color-primary-button-hover-text`). SVG arrows inherit hover color via `currentColor`.
+- Shared with featured blog arrows — extend the `:is(...)` block in `base.css` rather than duplicating per section.
