@@ -1316,6 +1316,7 @@
       ],
       "name": "t:names.testimonials",
       "settings": {
+        "heading": "Kind Words. Poured Generously",
         "section_width": "full-width",
         "color_scheme": "",
         "corner_radius": 24,
@@ -1916,9 +1917,8 @@
       "blocks": {
         "image_pVcPCL": {
           "type": "image",
-          "disabled": true,
           "settings": {
-            "image": "shopify://shop_images/Group_1597881116.png",
+            "image": "shopify://shop_images/CalaFalco_25-181.jpg",
             "link": "",
             "border": "none",
             "border_width": 1,
@@ -2041,36 +2041,12 @@
                 "custom_width_mobile": 100
               },
               "blocks": {}
-            },
-            "image_xik8EU": {
-              "type": "image",
-              "settings": {
-                "image": "shopify://shop_images/CalaFalco_25-181.jpg",
-                "link": "",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 16,
-                "image_border_padding": 8,
-                "image_ratio": "adapt",
-                "width": "custom",
-                "custom_width": 100,
-                "width_mobile": "custom",
-                "custom_width_mobile": 100,
-                "height": "fill",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
             }
           },
           "block_order": [
             "text_Fxmb6f",
             "text_t4Ya7c",
-            "button_Ei7TQ4",
-            "image_xik8EU"
+            "button_Ei7TQ4"
           ]
         }
       },
