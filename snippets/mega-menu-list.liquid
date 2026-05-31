@@ -111,6 +111,11 @@
         href="{{ link.url }}"
         class="mega-menu__link {% if link.links != blank %}mega-menu__link--parent{% endif %}"
       >
+        {% if menu_content_type != 'collection_images' %}
+          <span class="mega-menu__link-icon mega-menu-featured-collections__link-icon svg-wrapper" aria-hidden="true">
+            {{- 'icon-megamenu-link-arrow.svg' | inline_asset_content -}}
+          </span>
+        {% endif %}
         {% if menu_content_type == 'collection_images' %}
           {%- capture collection_image_sizes -%}
             {%- if parent_link.links.size <= 4 -%}
@@ -153,6 +158,11 @@
                 href="{{ childLink.url }}"
                 class="mega-menu__link"
               >
+                {% if menu_content_type != 'collection_images' %}
+                  <span class="mega-menu__link-icon mega-menu-featured-collections__link-icon svg-wrapper" aria-hidden="true">
+                    {{- 'icon-megamenu-link-arrow.svg' | inline_asset_content -}}
+                  </span>
+                {% endif %}
                 <span class="wrap-text">{{- childLink.title -}}</span>
               </a>
             </li>

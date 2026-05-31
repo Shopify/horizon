@@ -13,12 +13,20 @@
     --testimonials-slide-gap: {{ section.settings.slide_gap }}px;
   "
 >
+
+
   <testimonials-swiper
     class="testimonials-swiper"
     data-slide-count="{{ slide_count }}"
     data-autoplay="{{ section.settings.autoplay }}"
     data-autoplay-speed="{{ section.settings.autoplay_speed | times: 1000 }}"
   >
+    {% if section.settings.heading != blank %}
+      <div class="testimonials-swiper__header">
+        <h3 class="testimonials-swiper__heading">{{ section.settings.heading | escape }}</h3>
+      </div>
+    {% endif %}
+
     <div class="testimonials-swiper__viewport">
       <div class="testimonials-swiper__track" data-track>
         {% for block in section.blocks %}
@@ -222,12 +230,34 @@
   .testimonials-swiper {
     display: block;
     position: relative;
+    width: 100%;
     max-width: 1500px;
     margin: 0 auto;
+    overflow: hidden;
+  }
+
+  .testimonials-swiper__header {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: var(--testimonials-slide-gap, 0px);
+    padding-inline: clamp(1.5rem, 3.2vw, 3rem);
+    margin-block-end: 1.25rem;
+    color: #ffffff;
+  }
+
+  .testimonials-swiper__heading {
+    grid-column: 1;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-family: var(--font-heading--family);
+    font-style: var(--font-heading--style);
+    font-weight: var(--font-heading--weight);
   }
 
   .testimonials-swiper__viewport {
     overflow: hidden;
+    width: 100%;
   }
 
   .testimonials-swiper__track {
@@ -239,7 +269,9 @@
 
   .testimonials-swiper__slide {
     flex: 0 0 100%;
-    min-width: 100%;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
   }
 
   .testimonials-card {
@@ -248,15 +280,19 @@
     gap: var(--testimonials-slide-gap, 0px);
     color: #FFFFFF;
     overflow: hidden;
+    width: 100%;
+    min-width: 0;
     min-height: 520px;
     padding: 3rem;
+    box-sizing: border-box;
   }
 
   .testimonials-card__quote {
-    padding: clamp(1.5rem, 3.2vw, 3rem);
+    padding: 0 clamp(1.5rem, 3.2vw, 3rem);
     position: relative;
     display: flex;
     flex-direction: column;
+    min-width: 0;
   }
 
   .testimonials-card__quote-mark {
@@ -270,6 +306,7 @@
     letter-spacing: 0.05em;
     line-height: 1.6;
     font-family: var(--font-heading--family);
+    overflow-wrap: anywhere;
   }
 
   .testimonials-card__quote-short p:first-child {
@@ -323,10 +360,11 @@
 
   .testimonials-card__media {
     position: relative;
-    min-height: 100%;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    align-self: center;
     border-radius: 24px;
     overflow: hidden;
-    
   }
 
   .testimonials-card__media::after {
@@ -340,11 +378,13 @@
   }
 
   .testimonials-card__image {
-    position: relative;
+    position: absolute;
+    inset: 0;
     z-index: 1;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
     display: block;
     border-radius: 24px;
   }
@@ -390,28 +430,33 @@
   }
 
   @media screen and (max-width: 989px) {
-
-    .testimonials-card{
-      padding: 0;
+    .testimonials-card__quote-short{
+      padding-bottom: 24px;
       
     }
-      .testimonials-swiper__navigation {
-
-    bottom: 15%;
-    right: 10%;
-
-  }
     .testimonials-card {
       grid-template-columns: 1fr;
       min-height: auto;
+      padding: 0;
+    }
+
+    .testimonials-swiper__header {
+      grid-template-columns: 1fr;
     }
 
     .testimonials-card__quote {
       border-right: 0;
+      padding: clamp(1.5rem, 3.2vw, 3rem);
     }
 
     .testimonials-card__media {
-      min-height: 280px;
+      margin-inline: clamp(1.5rem, 3.2vw, 3rem);
+      width: auto;
+    }
+
+    .testimonials-swiper__navigation {
+      bottom: 15%;
+      right: 10%;
     }
   }
 {% endstylesheet %}
@@ -425,6 +470,12 @@
     "groups": ["header", "footer"]
   },
   "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Kind Words. Poured Generously"
+    },
     {
       "type": "select",
       "id": "section_width",
@@ -555,6 +606,9 @@
     {
       "name": "t:names.testimonials",
       "category": "t:categories.storytelling",
+      "settings": {
+        "heading": "Kind Words. Poured Generously"
+      },
       "blocks": {
         "testimonial_1": {
           "type": "testimonial",

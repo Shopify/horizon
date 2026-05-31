@@ -46,16 +46,16 @@ assign featured_pages = parent_page.metafields.custom.megamenu_featured_pages.va
 
 ## Split menu: left vs right styling
 
-- **Symptom:** Right dropdown looks different (wrong layout, off-screen, or `collection_images` instead of featured collections).
-- **Causes:**
-  1. `header-menu-right` had a different `menu_style` (e.g. `collection_images` vs `featured_collections`).
-  2. Submenu width: left used `90vw` centered in a narrow group; right used `100%` of header row after a partial fix.
-- **Fix (both sides identical):**
-  - Set **both** split menu blocks to `menu_style: featured_collections` and the same `featured_collections_aspect_ratio`.
-  - `position: static` on **both** `.header-menu--split-left` and `.header-menu--split-right`.
-  - Submenus: `width: 100%; max-width: 100%; left: 0; right: 0; margin-inline: 0` (containing block = `.header__row`).
-  - Right `.header__column--right` stays `position: static` so mega menus are not clipped to the right link cluster.
-- Files: `sections/header.liquid`, `blocks/_header-menu.liquid`, `sections/header-group.json`.
+- **Symptom:** Right dropdown links look different from left (no arrow-on-hover, no gold dividers).
+- **Cause:** Left often uses `menu_style: featured_collections` (`.mega-menu-featured-collections__link`); right may use `text`, `collection_images`, or `featured_products` (`.mega-menu__column .mega-menu__link` without shared styles).
+- **Fix:** Unified nav link styles in `blocks/_header-menu.liquid` for **both**:
+  - `.mega-menu-featured-collections__link`
+  - `.mega-menu__column .mega-menu__link:not(:has(.mega-menu__link-image))`
+- Markup: arrow icon (`icon-megamenu-link-arrow.svg`) in `snippets/mega-menu-list.liquid` for non–collection-image links; same icon class in `snippets/mega-menu-featured-collections.liquid`.
+- Hover: gap expands, `font-weight: 700`, arrow fades/slides in (`.mega-menu__link-icon`).
+- Dividers: `border-top` on stacked link items — `.mega-menu-featured-collections__links-item + …`, `.mega-menu__list > .mega-menu__column + .mega-menu__column`, and nested child lists inside a column.
+- **Layout:** `.mega-menu__list` uses `flex-direction: column` so column blocks stack vertically (same visual rhythm as featured links). Horizontal subgrid left links in a row without dividers.
+- Set both split menu blocks to `featured_collections` in `sections/header-group.json` for identical left/right panels.
 
 ## Submenu height / first-open clipping
 

@@ -45,7 +45,7 @@
       {% for link in parent_link.links %}
         <li class="mega-menu-featured-collections__links-item">
           <a href="{{ link.url }}" class="mega-menu-featured-collections__link">
-            <span class="mega-menu-featured-collections__link-icon svg-wrapper" aria-hidden="true">
+            <span class="mega-menu__link-icon mega-menu-featured-collections__link-icon svg-wrapper" aria-hidden="true">
               {{- 'icon-megamenu-link-arrow.svg' | inline_asset_content -}}
             </span>
             <span class="wrap-text">{{ link.title }}</span>
