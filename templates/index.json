@@ -305,6 +305,7 @@
         "show_intro": false,
         "intro_heading": "",
         "intro_description": "",
+        "description_min_height": 0,
         "show_image_border": false,
         "image_border_color": "#ffffff",
         "image_border_position": "inside",
@@ -628,6 +629,7 @@
         "show_intro": false,
         "intro_heading": "",
         "intro_description": "",
+        "description_min_height": 0,
         "show_image_border": false,
         "image_border_color": "#ffffff",
         "image_border_position": "inside",
@@ -647,7 +649,7 @@
         "overlay_style": "solid",
         "gradient_direction": "to top",
         "padding-block-start": 0,
-        "padding-block-end": 48
+        "padding-block-end": 40
       }
     },
     "product_list_fa6P9H": {
@@ -831,7 +833,7 @@
         "horizontal_alignment": "flex-start",
         "gap": 28,
         "color_scheme": "scheme-1",
-        "padding-block-start": 48,
+        "padding-block-start": 40,
         "padding-block-end": 48
       }
     },
