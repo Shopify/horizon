@@ -88,3 +88,10 @@ assign featured_pages = parent_page.metafields.custom.megamenu_featured_pages.va
 - **Default:** Links left-aligned; arrow icon collapsed (`max-width: 0`, `opacity: 0`) in a flex row so labels share one edge.
 - **Hover:** Animate `gap` + arrow `max-width` (~`0.5s`, `cubic-bezier(0.22, 1, 0.36, 1)`); arrow opacity fades in with a short delay so text does not slide over the icon mid-transition.
 - **Avoid:** `padding-inline-start` + absolutely positioned arrow — padding and opacity at the same speed causes overlap and a jolt. Do not transition `font-weight`.
+
+## Scroll-up sticky header reveal
+
+- Sticky-on-scroll-up is controlled in `assets/header.js` (`sticky="scroll-up"`): `data-sticky-state` is `inactive` | `active` | `idle`. `#offscreen` (via IntersectionObserver) gates when scroll direction logic runs.
+- **Reveal animation only:** `.header-section` is `position: sticky` only when `[data-sticky-state='active']` (original behaviour — do not stick while scrolling down). On `active`, `#header-component` plays `header-scroll-reveal` (slide from `translateY(-100%)` to `0` over 0.35s, `--ease-out-quad`).
+- **Scroll down:** When state returns to `idle`, sticky is removed immediately — no hide transform/transition on the wrapper (avoids jank when the header naturally leaves the viewport).
+- **Do not** keep the header section sticky via `data-offscreen` with a persistent `translateY(-100%)` — that fights normal scroll-down and causes glitches.

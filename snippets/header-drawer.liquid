@@ -167,7 +167,7 @@
                                   sizes: 'auto, 400px'
                                 %}
                               {% endif %}
-                              <span class="menu-drawer__menu-item-text wrap-text">{{ childlink.title | escape }}</span>
+                              <span class="menu-drawer__menu-item-text wrap-text ">{{ childlink.title | escape }}</span>
                             </a>
                           </li>
                         {%- endfor -%}
@@ -186,7 +186,7 @@
                       aria-current="page"
                     {% endif %}
                   >
-                    <span class="menu-drawer__menu-item-text wrap-text">{{ link.title | escape }}</span>
+                    <span class="menu-drawer__menu-item-text wrap-text main-link h3">{{ link.title | escape }}</span>
                   </a>
                   {% liquid
                     assign render_link_image = false

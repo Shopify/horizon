@@ -95,7 +95,7 @@ class HeaderComponent extends Component {
         this.dataset.stickyState = isIntersecting ? 'inactive' : 'active';
         if (this.dataset.themeColor) changeMetaThemeColor(this.dataset.themeColor);
       } else {
-        this.#offscreen = !isIntersecting || this.dataset.stickyState === 'active';
+        this.#setOffscreen(!isIntersecting || this.dataset.stickyState === 'active');
       }
     }, config);
 
@@ -121,6 +121,14 @@ class HeaderComponent extends Component {
       this.#menuDrawerHiddenWidth = null;
     }
     setHeaderMenuStyle();
+  }
+
+  /**
+   * Tracks whether the header has scrolled offscreen (scroll-up sticky mode)
+   * @param {boolean} value
+   */
+  #setOffscreen(value) {
+    this.#offscreen = value;
   }
 
   #handleWindowScroll = () => {
@@ -162,7 +170,7 @@ class HeaderComponent extends Component {
     if (isScrollingUp) {
       if (isAtTop) {
         // reset sticky state when header is scrolled up to natural position
-        this.#offscreen = false;
+        this.#setOffscreen(false);
         this.dataset.stickyState = 'inactive';
         this.dataset.scrollDirection = 'none';
       } else {
