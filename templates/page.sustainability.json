@@ -541,58 +541,59 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
+            },
+            "text_ciFRdj": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<p>At Cala Falcó, we farm in a way that reduces dependency on external inputs by strengthening the health of the ecosystem itself.</p><p>Our approach begins with the soil. By building fertility, increasing organic matter, and supporting microbial life, we create the conditions for stronger and more resilient plants. </p><p>We avoid synthetic chemicals and instead work with natural processes, allowing growth to emerge in greater balance. Biodiversity is equally essential. By designing layered plant communities, we create ecosystems that are better able to protect the soil, attract beneficial life and respond to stress naturally.</p><p>The result is a form of agriculture that becomes more self-supporting over time. Healthier, more resilient and less reliant on intervention.</p>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "button_K9QGbE": {
+              "type": "button",
+              "name": "t:names.button",
+              "settings": {
+                "label": "Our Approach To Regenerative Agriculture",
+                "link": "shopify://pages/regenerative-agriculture",
+                "open_in_new_tab": false,
+                "style_class": "button",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
             }
           },
           "block_order": [
-            "text_6V7fpB"
+            "text_6V7fpB",
+            "text_ciFRdj",
+            "button_K9QGbE"
           ]
-        },
-        "text_xMWUtR": {
-          "type": "text",
-          "settings": {
-            "text": "<p>At Cala Falcó, we farm in a way that reduces dependency on external inputs by strengthening the health of the ecosystem itself.</p><p>Our approach begins with the soil. By building fertility, increasing organic matter, and supporting microbial life, we create the conditions for stronger and more resilient plants. </p><p>We avoid synthetic chemicals and instead work with natural processes, allowing growth to emerge in greater balance. Biodiversity is equally essential. By designing layered plant communities, we create ecosystems that are better able to protect the soil, attract beneficial life and respond to stress naturally.</p><p>The result is a form of agriculture that becomes more self-supporting over time. Healthier, more resilient and less reliant on intervention.</p>",
-            "width": "100%",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "rte",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "button_mypxBJ": {
-          "type": "button",
-          "name": "t:names.button",
-          "settings": {
-            "label": "Our Approach To Regenerative Agriculture",
-            "link": "shopify://pages/regenerative-agriculture",
-            "open_in_new_tab": false,
-            "style_class": "button",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100
-          },
-          "blocks": {}
         }
       },
       "block_order": [
         "image_hjnYA9",
-        "group_NP8PxG",
-        "text_xMWUtR",
-        "button_mypxBJ"
+        "group_NP8PxG"
       ],
       "name": "t:names.image_with_text",
       "settings": {
