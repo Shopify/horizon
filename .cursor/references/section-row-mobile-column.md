@@ -12,9 +12,10 @@ Under 750px, `vertical_on_mobile` adds `mobile-column` so `layout-panel-flex--ro
 
 - Section settings in `sections/section.liquid` (Multicolumn header): `heading_min_height` and `description_min_height` (0–400px, step 4).
 - CSS variables on `.section-content-wrapper` in `snippets/section.liquid`; min-heights apply at `min-width: 750px` (default) or `min-width: 1002px` when `mobile-column--until-1001` is set:
-  - First `.text-block` in each column group → `--multicolumn-heading-min-height`
-  - Last `.text-block` in each column group → `--multicolumn-description-min-height`
-- Assumes column block order is heading then description (multicolumn preset). Extra text blocks will shift which element gets first/last min-height.
+  - `.text-block:nth-child(2)` → `--multicolumn-heading-min-height` (heading)
+  - `.text-block:nth-child(3)` → `--multicolumn-description-min-height` (description)
+- **Do not** use `:first-of-type` / `:last-of-type` on `.text-block` — headings are often `div`, descriptions use `rte-formatter`, so type-based pseudo-classes target the wrong blocks.
+- Assumes each column’s `group-block-content` child order is: image, heading, description, button.
 
 ## Image block hover (multicolumn columns)
 
