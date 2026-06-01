@@ -531,6 +531,33 @@
             "padding-inline-end": 0
           },
           "blocks": {}
+        },
+        "text_jkiHQG": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "",
+            "image": "shopify://shop_images/Schermata_2024-09-26_alle_17_VQHiEKY_Z3hJ3C1_DEywtOf_dfTrfgz_A7zZphZ_SqiHL1Q_yuL_Qty4RXm-removebg-preview.png",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
         }
       },
       "block_order": [
@@ -538,7 +565,8 @@
         "text_qGUn4L",
         "text_werKXL",
         "text_FrQBUz",
-        "text_hRqtPw"
+        "text_hRqtPw",
+        "text_jkiHQG"
       ],
       "name": "t:names.marquee_section",
       "settings": {
