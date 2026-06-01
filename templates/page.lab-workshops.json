@@ -125,31 +125,6 @@
               },
               "blocks": {}
             },
-            "text_JmPTic": {
-              "type": "text",
-              "settings": {
-                "text": "<h4>A scent service for luxury brands, rooted in nature</h4>",
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
             "text_Nh33wd": {
               "type": "text",
               "name": "t:names.text",
@@ -193,7 +168,6 @@
           },
           "block_order": [
             "text_yPLU8L",
-            "text_JmPTic",
             "text_Nh33wd",
             "button_XDcyWB"
           ]
@@ -201,7 +175,7 @@
         "image_jcUhkb": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/Group_1597881116.png",
+            "image": "shopify://shop_images/IMG_4256.jpg",
             "link": "",
             "border": "solid",
             "border_width": 1,
