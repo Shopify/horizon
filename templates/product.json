@@ -636,6 +636,8 @@
         "show_intro": false,
         "intro_heading": "",
         "intro_description": "",
+        "stack_columns_until_1001": false,
+        "heading_min_height": 0,
         "description_min_height": 0,
         "show_image_border": false,
         "image_border_color": "#ffffff",
@@ -813,7 +815,9 @@
           "type": "testimonial",
           "settings": {
             "quote_short": "<p>Cala Falcó is a refined, nuanced non-alcoholic aperitivo, crafted with  passion, exclusivity and remarkable botanical complexity.</p>",
-            "quote_full": "",
+            "cta_label": "Read full testimonial",
+            "cta_link": "",
+            "open_in_new_tab": true,
             "image": "shopify://shop_images/CalaFalco_25-119_1.jpg",
             "author": "Theo Hitchcock",
             "author_title": "Founder of The Travelcohol-Free Club"
@@ -823,7 +827,9 @@
           "type": "testimonial",
           "settings": {
             "quote_short": "<p>Beautifully complex and vibrant, Cala Falcó delivers elegant botanical depth as a sophisticated non-alcoholic aperitivo.</p>",
-            "quote_full": "",
+            "cta_label": "Read full testimonial",
+            "cta_link": "",
+            "open_in_new_tab": true,
             "image": "shopify://shop_images/693fea74543b5fdcedb311ba_IMG_9683.jpg",
             "author": "Claire Warner",
             "author_title": "Global Non-Alcoholic Drinks Industry Thought Leader"
@@ -833,7 +839,9 @@
           "type": "testimonial",
           "settings": {
             "quote_short": "<p>Cala Falcó is light, crisp and wonderfully thirst-quenching, with beautiful notes of rosemary and a subtle sea-water minerality that captures the essence of the Mediterranean. The perfect alcohol free drink.</p>",
-            "quote_full": "",
+            "cta_label": "Read full testimonial",
+            "cta_link": "",
+            "open_in_new_tab": true,
             "image": "shopify://shop_images/693c2ff85d73eb5105da6d85_IMG_9567.jpg",
             "author": "Emily Horner",
             "author_title": "Non-Alcoholic Drinks Influencer"
@@ -847,13 +855,14 @@
       ],
       "name": "t:names.testimonials",
       "settings": {
+        "heading": "Kind Words. Poured Generously",
         "section_width": "full-width",
         "color_scheme": "scheme-1",
         "corner_radius": 0,
         "slide_gap": 0,
         "autoplay": false,
         "autoplay_speed": 4,
-        "padding-block-start": 0,
+        "padding-block-start": 60,
         "padding-block-end": 0
       }
     },
@@ -1244,6 +1253,8 @@
         "show_intro": false,
         "intro_heading": "",
         "intro_description": "",
+        "stack_columns_until_1001": false,
+        "heading_min_height": 0,
         "description_min_height": 0,
         "show_image_border": false,
         "image_border_color": "#ffffff",
