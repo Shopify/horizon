@@ -165,7 +165,7 @@
       "name": "t:names.hero",
       "settings": {
         "media_type_1": "video",
-        "video_1": "shopify://files/videos/cala_falco_wine_web_pour_v1 (2160p).mp4",
+        "video_1": "shopify://files/videos/0601.mp4",
         "media_type_2": "image",
         "stack_media_on_mobile": false,
         "custom_mobile_media": false,
@@ -358,7 +358,7 @@
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
-                "type_preset": "paragraph",
+                "type_preset": "h5",
                 "font": "var(--font-body--family)",
                 "font_size": "1rem",
                 "line_height": "normal",
@@ -828,7 +828,7 @@
         "text_V8qzAp": {
           "type": "text",
           "settings": {
-            "text": "<p>Viti Vinci creates limited-edition olfactory artworks. Perfume as wearable and collectible pieces of art. Composed by its Scent Artists as expressions of identity and emotion. </p><p>Distilled through scent, each work exists as a wearable piece to be embodied, experienced, or collected. </p>",
+            "text": "<p>Viti Vinci creates limited-edition olfactory artworks, composed by its Scent Artists as expressions of identity and emotion. </p><p>Distilled through scent, each work exists as a wearable piece to be embodied, experienced, or collected. </p>",
             "width": "fit-content",
             "max_width": "narrow",
             "alignment": "left",
@@ -921,8 +921,8 @@
     "hero_akNcE7",
     "hero_9LFaMQ",
     "section_JfRDPn",
-    "hero_8CK8V9",
     "section_HQ4htM",
-    "section_B3XByp"
+    "section_B3XByp",
+    "hero_8CK8V9"
   ]
 }
