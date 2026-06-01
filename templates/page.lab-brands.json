@@ -426,6 +426,58 @@
           },
           "blocks": {}
         },
+        "text_qGUn4L": {
+          "type": "text",
+          "settings": {
+            "text": "",
+            "image": "shopify://shop_images/61efeb1a236cf977bd6ba1bb_ES_RACO_Logo_PNG-removebg-preview.png",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "tight",
+            "letter_spacing": "tight",
+            "case": "none",
+            "wrap": "nowrap",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "text_werKXL": {
+          "type": "text",
+          "settings": {
+            "text": "",
+            "image": "shopify://shop_images/202211241924270.logo_castell.png",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "tight",
+            "letter_spacing": "tight",
+            "case": "none",
+            "wrap": "nowrap",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
         "text_FrQBUz": {
           "type": "text",
           "name": "t:names.text",
@@ -456,6 +508,8 @@
       },
       "block_order": [
         "text_aJjaRc",
+        "text_qGUn4L",
+        "text_werKXL",
         "text_FrQBUz"
       ],
       "name": "t:names.marquee_section",
