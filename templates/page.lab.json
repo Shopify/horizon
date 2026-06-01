@@ -679,7 +679,7 @@
                 "border_opacity": 100,
                 "border_radius": 16,
                 "image_border_padding": 8,
-                "image_ratio": "adapt",
+                "image_ratio": "portrait",
                 "width": "fill",
                 "custom_width": 100,
                 "width_mobile": "fill",
@@ -703,7 +703,7 @@
                 "border_opacity": 100,
                 "border_radius": 16,
                 "image_border_padding": 8,
-                "image_ratio": "adapt",
+                "image_ratio": "portrait",
                 "width": "fill",
                 "custom_width": 100,
                 "width_mobile": "fill",
@@ -721,53 +721,6 @@
             "image_jbYfbB",
             "image_XgPbTn"
           ]
-        },
-        "image_QhyREF": {
-          "type": "image",
-          "name": "t:names.image",
-          "settings": {
-            "image": "shopify://shop_images/VitiVinci_Team_AleFlo-69.jpg",
-            "link": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 16,
-            "image_border_padding": 8,
-            "image_ratio": "portrait",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "image_KNTYJQ": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/VitiVinci_Team_AleFlo-11.jpg",
-            "link": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 16,
-            "image_border_padding": 8,
-            "image_ratio": "portrait",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
         },
         "group_qRUAH7": {
           "type": "group",
@@ -884,8 +837,6 @@
       },
       "block_order": [
         "group_PpxMaU",
-        "image_QhyREF",
-        "image_KNTYJQ",
         "group_qRUAH7"
       ],
       "name": "t:names.image_with_text",
@@ -893,7 +844,7 @@
         "content_direction": "row",
         "vertical_on_mobile": true,
         "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
+        "vertical_alignment": "flex-start",
         "align_baseline": false,
         "horizontal_alignment_flex_direction_column": "flex-start",
         "vertical_alignment_flex_direction_column": "center",
