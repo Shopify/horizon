@@ -63,35 +63,11 @@
             "padding-inline-end": 0
           },
           "blocks": {}
-        },
-        "image_gkJMf8": {
-          "type": "image",
-          "name": "t:names.image",
-          "settings": {
-            "image": "shopify://shop_images/Authorized_Reseller.jpg",
-            "link": "",
-            "image_ratio": "square",
-            "width": "custom",
-            "custom_width": 20,
-            "width_mobile": "custom",
-            "custom_width_mobile": 20,
-            "height": "fit",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
         }
       },
       "block_order": [
         "text_title",
-        "text_desc",
-        "image_gkJMf8"
+        "text_desc"
       ],
       "name": "Collection heading",
       "settings": {
