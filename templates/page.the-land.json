@@ -239,6 +239,8 @@
         "show_intro": false,
         "intro_heading": "",
         "intro_description": "",
+        "stack_columns_until_1001": false,
+        "heading_min_height": 0,
         "description_min_height": 0,
         "show_image_border": true,
         "image_border_color": "#e6e6e6",
@@ -418,6 +420,8 @@
         "show_intro": false,
         "intro_heading": "",
         "intro_description": "",
+        "stack_columns_until_1001": false,
+        "heading_min_height": 0,
         "description_min_height": 0,
         "show_image_border": false,
         "image_border_color": "#ffffff",
@@ -640,6 +644,8 @@
         "show_intro": false,
         "intro_heading": "",
         "intro_description": "",
+        "stack_columns_until_1001": false,
+        "heading_min_height": 0,
         "description_min_height": 0,
         "show_image_border": true,
         "image_border_color": "#767676",
@@ -818,6 +824,8 @@
         "show_intro": false,
         "intro_heading": "",
         "intro_description": "",
+        "stack_columns_until_1001": false,
+        "heading_min_height": 0,
         "description_min_height": 0,
         "show_image_border": false,
         "image_border_color": "#ffffff",
@@ -1474,6 +1482,8 @@
         "show_intro": true,
         "intro_heading": "OUR TEAM",
         "intro_description": "<p>We are one big happy family at Cala Falcó. From our founder to our farmers, from the pickers to the botanical microbiologists, everyone plays a crucial role in delivering our vision to heal the land.</p>",
+        "stack_columns_until_1001": false,
+        "heading_min_height": 0,
         "description_min_height": 0,
         "show_image_border": false,
         "image_border_color": "#ffffff",
@@ -1497,10 +1507,10 @@
         "padding-block-end": 48
       }
     },
-    "section_7JFg6K": {
+    "section_GXXUgn": {
       "type": "section",
       "blocks": {
-        "group_kPMtjM": {
+        "group_p7YPNH": {
           "type": "group",
           "name": "t:names.column",
           "settings": {
@@ -1540,7 +1550,7 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "image_r6p8EX": {
+            "image_GCUPEV": {
               "type": "image",
               "name": "t:names.image",
               "settings": {
@@ -1552,7 +1562,7 @@
                 "border_opacity": 100,
                 "border_radius": 16,
                 "image_border_padding": 8,
-                "image_ratio": "landscape",
+                "image_ratio": "adapt",
                 "width": "fill",
                 "custom_width": 100,
                 "width_mobile": "fill",
@@ -1565,7 +1575,7 @@
               },
               "blocks": {}
             },
-            "text_kTWFtM": {
+            "text_hW7bfY": {
               "type": "text",
               "name": "t:names.heading",
               "settings": {
@@ -1591,7 +1601,7 @@
               },
               "blocks": {}
             },
-            "text_cKfrmp": {
+            "text_TLcw88": {
               "type": "text",
               "name": "t:names.description",
               "settings": {
@@ -1617,7 +1627,7 @@
               },
               "blocks": {}
             },
-            "button_3tffLY": {
+            "button_NWNgtR": {
               "type": "button",
               "name": "t:names.button",
               "settings": {
@@ -1634,13 +1644,13 @@
             }
           },
           "block_order": [
-            "image_r6p8EX",
-            "text_kTWFtM",
-            "text_cKfrmp",
-            "button_3tffLY"
+            "image_GCUPEV",
+            "text_hW7bfY",
+            "text_TLcw88",
+            "button_NWNgtR"
           ]
         },
-        "group_KPLYam": {
+        "group_cFjHbx": {
           "type": "group",
           "name": "t:names.column",
           "settings": {
@@ -1680,7 +1690,7 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "image_Y6eiY7": {
+            "image_g6TF68": {
               "type": "image",
               "name": "t:names.image",
               "settings": {
@@ -1692,7 +1702,7 @@
                 "border_opacity": 100,
                 "border_radius": 16,
                 "image_border_padding": 8,
-                "image_ratio": "landscape",
+                "image_ratio": "adapt",
                 "width": "fill",
                 "custom_width": 100,
                 "width_mobile": "fill",
@@ -1705,7 +1715,7 @@
               },
               "blocks": {}
             },
-            "text_pkri98": {
+            "text_cQWMje": {
               "type": "text",
               "name": "t:names.heading",
               "settings": {
@@ -1731,7 +1741,7 @@
               },
               "blocks": {}
             },
-            "text_FThxyk": {
+            "text_QgBxyp": {
               "type": "text",
               "name": "t:names.description",
               "settings": {
@@ -1757,7 +1767,7 @@
               },
               "blocks": {}
             },
-            "button_RWbCW6": {
+            "button_yt66UA": {
               "type": "button",
               "name": "t:names.button",
               "settings": {
@@ -1774,13 +1784,13 @@
             }
           },
           "block_order": [
-            "image_Y6eiY7",
-            "text_pkri98",
-            "text_FThxyk",
-            "button_RWbCW6"
+            "image_g6TF68",
+            "text_cQWMje",
+            "text_QgBxyp",
+            "button_yt66UA"
           ]
         },
-        "group_BkC36K": {
+        "group_jGWhEw": {
           "type": "group",
           "name": "t:names.column",
           "settings": {
@@ -1820,7 +1830,7 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "image_gKyGfg": {
+            "image_Jn7aDb": {
               "type": "image",
               "name": "t:names.image",
               "settings": {
@@ -1832,7 +1842,7 @@
                 "border_opacity": 100,
                 "border_radius": 16,
                 "image_border_padding": 8,
-                "image_ratio": "landscape",
+                "image_ratio": "adapt",
                 "width": "fill",
                 "custom_width": 100,
                 "width_mobile": "fill",
@@ -1845,11 +1855,11 @@
               },
               "blocks": {}
             },
-            "text_VCYhYP": {
+            "text_DwERBy": {
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<p>Viti Vinci</p>",
+                "text": "<p>VITI VINCI</p>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",
@@ -1865,13 +1875,13 @@
                 "background_color": "#00000026",
                 "corner_radius": 0,
                 "padding-block-start": 12,
-                "padding-block-end": 12,
+                "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
               },
               "blocks": {}
             },
-            "text_hKCaHk": {
+            "text_bcWEWN": {
               "type": "text",
               "name": "t:names.description",
               "settings": {
@@ -1897,13 +1907,13 @@
               },
               "blocks": {}
             },
-            "button_8YdTBj": {
+            "button_68zb8G": {
               "type": "button",
               "name": "t:names.button",
               "settings": {
                 "label": "Discover Olfactory Art",
-                "link": "https://vitivinci.com/",
-                "open_in_new_tab": true,
+                "link": "shopify://pages/olfactory-studio",
+                "open_in_new_tab": false,
                 "style_class": "button",
                 "width": "fit-content",
                 "custom_width": 100,
@@ -1914,17 +1924,17 @@
             }
           },
           "block_order": [
-            "image_gKyGfg",
-            "text_VCYhYP",
-            "text_hKCaHk",
-            "button_8YdTBj"
+            "image_Jn7aDb",
+            "text_DwERBy",
+            "text_bcWEWN",
+            "button_68zb8G"
           ]
         }
       },
       "block_order": [
-        "group_kPMtjM",
-        "group_KPLYam",
-        "group_BkC36K"
+        "group_p7YPNH",
+        "group_cFjHbx",
+        "group_jGWhEw"
       ],
       "name": "t:names.multicolumn",
       "settings": {
@@ -1939,7 +1949,9 @@
         "show_intro": false,
         "intro_heading": "",
         "intro_description": "",
-        "description_min_height": 0,
+        "stack_columns_until_1001": true,
+        "heading_min_height": 84,
+        "description_min_height": 132,
         "show_image_border": false,
         "image_border_color": "#ffffff",
         "image_border_position": "inside",
@@ -1958,7 +1970,7 @@
         "overlay_color": "#00000026",
         "overlay_style": "solid",
         "gradient_direction": "to top",
-        "padding-block-start": 60,
+        "padding-block-start": 0,
         "padding-block-end": 60
       }
     }
@@ -1972,6 +1984,6 @@
     "section_QRTNQa",
     "hero_BX6hyA",
     "section_UQc4pF",
-    "section_7JFg6K"
+    "section_GXXUgn"
   ]
 }
