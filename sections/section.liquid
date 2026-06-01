@@ -186,6 +186,23 @@
       "content": "Multicolumn"
     },
     {
+      "type": "checkbox",
+      "id": "stack_columns_until_1001",
+      "label": "Stack columns at 1001px and below",
+      "info": "Uses the mobile column layout on tablet widths. Requires “Vertical on mobile” to be enabled.",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "heading_min_height",
+      "label": "Heading min height",
+      "min": 0,
+      "max": 400,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
       "type": "range",
       "id": "description_min_height",
       "label": "Description min height",
@@ -1684,6 +1701,7 @@
       "settings": {
         "content_direction": "row",
         "vertical_on_mobile": true,
+        "stack_columns_until_1001": true,
         "horizontal_alignment": "flex-start",
         "vertical_alignment": "flex-start",
         "horizontal_alignment_flex_direction_column": "flex-start",

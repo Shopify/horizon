@@ -77,10 +77,12 @@
         layout-panel-flex--{{ section.settings.content_direction }}
         section-content-wrapper
         {% if section.settings.vertical_on_mobile %} mobile-column{% endif %}
+        {% if section.settings.stack_columns_until_1001 %} mobile-column--until-1001{% endif %}
       "
       style="
         {% render 'layout-panel-style', settings: section.settings %}
         {% render 'spacing-style', settings: section.settings %}
+        --multicolumn-heading-min-height: {{ section.settings.heading_min_height | default: 0 }}px;
         --multicolumn-description-min-height: {{ section.settings.description_min_height | default: 0 }}px;
         {% if section.settings.show_inner_frame %}
           --padding-block-start: var(--inner-frame-inset, 12px);
@@ -269,13 +271,49 @@
   }
 
   @media screen and (min-width: 750px) {
-    .section-wrapper .section-content-wrapper > .group-block > .group-block-content > .text-block:last-of-type {
+    .section-wrapper
+      .section-content-wrapper:not(.mobile-column--until-1001)
+      > .group-block
+      > .group-block-content
+      > .text-block:first-of-type {
+      min-height: var(--multicolumn-heading-min-height, 0px);
+    }
+
+    .section-wrapper
+      .section-content-wrapper:not(.mobile-column--until-1001)
+      > .group-block
+      > .group-block-content
+      > .text-block:last-of-type {
+      min-height: var(--multicolumn-description-min-height, 0px);
+    }
+  }
+
+  @media screen and (min-width: 1002px) {
+    .section-wrapper
+      .section-content-wrapper.mobile-column--until-1001
+      > .group-block
+      > .group-block-content
+      > .text-block:first-of-type {
+      min-height: var(--multicolumn-heading-min-height, 0px);
+    }
+
+    .section-wrapper
+      .section-content-wrapper.mobile-column--until-1001
+      > .group-block
+      > .group-block-content
+      > .text-block:last-of-type {
       min-height: var(--multicolumn-description-min-height, 0px);
     }
   }
 
   @media screen and (max-width: 749px) {
     .section-wrapper .section-content-wrapper {
+      gap: calc(var(--gap) / 2);
+    }
+  }
+
+  @media screen and (max-width: 1001px) {
+    .section-wrapper .section-content-wrapper.mobile-column--until-1001 {
       gap: calc(var(--gap) / 2);
     }
   }
