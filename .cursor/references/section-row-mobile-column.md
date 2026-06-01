@@ -21,12 +21,8 @@ Under 750px, `vertical_on_mobile` adds `mobile-column` so `layout-panel-flex--ro
 
 - `blocks/image.liquid` setting **Image on hover** (`image_on_hover`): cross-fades on hover (`--image-block-hover-duration: 0.6s` on `.image-block__media--has-hover`). **Pitfall:** do not set `--image-block-hover-image-opacity` on `.image-block__media--has-hover` and also on parent hover—the child definition shadows the parent. Use direct `opacity` on `.image-block__image--hover` / `--primary` instead.
 
-## Image with text: multiple images in one column
+## Image with text — multiple images
 
-- **Use case:** Row section (e.g. Image with text preset) with 2+ **image** blocks and a **group** block (text), images contiguous at the start or end of block order.
-- **Auto layout** in `snippets/section.liquid`: CSS `:has()` on row sections where first two children are `.image-block` and last is `.group-block` (or group first, images last). Liquid adds `section-content-wrapper--stacked-images` when `block.id` contains `__image_` / `__group_` (sections with `"type": "@theme"` often report `block.type` as `@theme`, not `image`).
-- **Desktop:** CSS grid `1fr 1fr` at `min-width: 750px`. `mobile-column` only stacks below 750px — do not use `:not(.mobile-column)` on desktop grid rules.
-- **Mobile / stacked breakpoints:** Default `vertical_on_mobile` already stacks blocks in DOM order (images then text, or text then images).
-- **Does not apply:** Mixed order (e.g. image → group → image), or fewer than two images.
-- **Block order examples:** `image, image, group` or `group, image, image` (see `page.wellbeing.json` Scent Scientists section).
-- **Three images** (`image, image, image, group` or `group, image, image, image`): 4-column grid at `min-width: 750px` — top row two images side by side, second row third image spans both image columns; text/group spans the other half (`section-content-wrapper--stacked-images-trio`). Class `section-content-wrapper--stacked-images-trio` when Liquid counts three image blocks.
+**Prefer grouped images** (see `section-image-with-text-grouped.md`): nest images in a **Group** block; section has only **Images** group + **Content** group. Presets: *Image with text (stacked images)* and *Image with text (images in a row)*.
+
+Do not rely on multiple top-level Image blocks in one row section.

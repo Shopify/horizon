@@ -5,79 +5,6 @@
   @param {string} children - The children of the section
 {%- enddoc -%}
 
-{% liquid
-  assign stack_images_in_column = false
-  assign stacked_images_side = ''
-  assign stack_images_trio_layout = false
-
-  if section.settings.content_direction == 'row'
-    assign image_block_count = 0
-    assign group_block_count = 0
-    assign images_at_start = true
-    assign images_at_end = true
-    assign group_seen = false
-
-    for block in section.blocks
-      assign block_is_image = false
-      assign block_is_group = false
-      assign block_is_divider = false
-
-      if block.type == 'image' or block.id contains '__image_'
-        assign block_is_image = true
-      elsif block.type == 'group' or block.id contains '__group_'
-        assign block_is_group = true
-      elsif block.type == '_divider'
-        assign block_is_divider = true
-      endif
-
-      if block_is_image
-        assign image_block_count = image_block_count | plus: 1
-        if group_seen
-          assign images_at_start = false
-        endif
-      elsif block_is_group
-        assign group_block_count = group_block_count | plus: 1
-        assign group_seen = true
-      elsif block_is_divider == false
-        assign images_at_start = false
-        assign images_at_end = false
-      endif
-    endfor
-
-    assign image_seen = false
-    for block in section.blocks
-      assign block_is_image = false
-      assign block_is_group = false
-
-      if block.type == 'image' or block.id contains '__image_'
-        assign block_is_image = true
-      elsif block.type == 'group' or block.id contains '__group_'
-        assign block_is_group = true
-      endif
-
-      if block_is_group and image_seen
-        assign images_at_end = false
-      elsif block_is_image
-        assign image_seen = true
-      endif
-    endfor
-
-    if image_block_count >= 2 and group_block_count >= 1
-      if images_at_start
-        assign stack_images_in_column = true
-        assign stacked_images_side = 'start'
-      elsif images_at_end
-        assign stack_images_in_column = true
-        assign stacked_images_side = 'end'
-      endif
-
-      if image_block_count == 3
-        assign stack_images_trio_layout = true
-      endif
-    endif
-  endif
-%}
-
 <div class="section-background{% if section.settings.section_width == 'page-width' %} section-background--page-white{% else %} color-{{ section.settings.color_scheme }}{% endif %}"></div>
 <div
   class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}{% if section.settings.section_width == 'page-width' %} section--page-shell-white{% endif %}"
@@ -151,8 +78,6 @@
         section-content-wrapper
         {% if section.settings.vertical_on_mobile %} mobile-column{% endif %}
         {% if section.settings.stack_columns_until_1001 %} mobile-column--until-1001{% endif %}
-        {% if stack_images_in_column %} section-content-wrapper--stacked-images section-content-wrapper--stacked-images-{{ stacked_images_side }}{% endif %}
-        {% if stack_images_trio_layout %} section-content-wrapper--stacked-images-trio{% endif %}
       "
       style="
         {% render 'layout-panel-style', settings: section.settings %}
@@ -394,113 +319,11 @@
     }
   }
 
-  /*
-   * Image with text: two+ images stacked in one column, text in the other.
-   * :has() matches DOM order; liquid classes are a fallback for older browsers.
-   * mobile-column only affects layout below 750px — do not exclude it on desktop.
-   */
+  /* Image-with-text: two top-level groups (media + content) share the row evenly on desktop */
   @media screen and (min-width: 750px) {
-    .section-content-wrapper.layout-panel-flex--row:has(> .image-block:first-child + .image-block):has(> .group-block:last-child),
-    .section-content-wrapper.layout-panel-flex--row:has(> .group-block:first-child + .image-block):has(> .image-block:last-child),
-    .section-content-wrapper.layout-panel-flex--row.section-content-wrapper--stacked-images {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      align-items: start;
-      height: auto;
-    }
-
-    .section-content-wrapper.layout-panel-flex--row:has(> .image-block:first-child + .image-block):has(> .group-block:last-child) > .image-block,
-    .section-content-wrapper.layout-panel-flex--row:has(> .image-block:first-child + .image-block):has(> .group-block:last-child) > .group-block,
-    .section-content-wrapper.layout-panel-flex--row:has(> .group-block:first-child + .image-block):has(> .image-block:last-child) > .image-block,
-    .section-content-wrapper.layout-panel-flex--row:has(> .group-block:first-child + .image-block):has(> .image-block:last-child) > .group-block,
-    .section-content-wrapper--stacked-images > .image-block,
-    .section-content-wrapper--stacked-images > .group-block {
-      flex: unset;
-      width: 100%;
-      max-width: 100%;
+    .section-content-wrapper.layout-panel-flex--row:has(> .group-block + .group-block:last-child) > .group-block {
+      flex: 1 1 0;
       min-width: 0;
-    }
-
-    .section-content-wrapper.layout-panel-flex--row:has(> .image-block:first-child + .image-block):has(> .group-block:last-child) > .image-block,
-    .section-content-wrapper--stacked-images-start > .image-block {
-      grid-column: 1;
-    }
-
-    .section-content-wrapper.layout-panel-flex--row:has(> .image-block:first-child + .image-block):has(> .group-block:last-child) > .group-block,
-    .section-content-wrapper--stacked-images-start > .group-block {
-      grid-column: 2;
-      grid-row: 1 / -1;
-      align-self: var(--vertical-alignment, flex-start);
-    }
-
-    .section-content-wrapper.layout-panel-flex--row:has(> .group-block:first-child + .image-block):has(> .image-block:last-child) > .image-block,
-    .section-content-wrapper--stacked-images-end > .image-block {
-      grid-column: 2;
-    }
-
-    .section-content-wrapper.layout-panel-flex--row:has(> .group-block:first-child + .image-block):has(> .image-block:last-child) > .group-block,
-    .section-content-wrapper--stacked-images-end > .group-block {
-      grid-column: 1;
-      grid-row: 1 / -1;
-      align-self: var(--vertical-alignment, flex-start);
-    }
-
-    /* Three images: two on top, third full-width below; text in the other half */
-    .section-content-wrapper.layout-panel-flex--row:has(> .image-block:first-child + .image-block + .image-block):has(> .group-block:last-child),
-    .section-content-wrapper.layout-panel-flex--row:has(> .group-block:first-child + .image-block + .image-block + .image-block):has(> .image-block:last-child),
-    .section-content-wrapper--stacked-images-trio {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      grid-template-rows: auto auto;
-    }
-
-    .section-content-wrapper.layout-panel-flex--row:has(> .image-block:first-child + .image-block + .image-block):has(> .group-block:last-child) > .image-block:nth-child(1),
-    .section-content-wrapper--stacked-images-trio.section-content-wrapper--stacked-images-start > .image-block:nth-child(1) {
-      grid-column: 1;
-      grid-row: 1;
-    }
-
-    .section-content-wrapper.layout-panel-flex--row:has(> .image-block:first-child + .image-block + .image-block):has(> .group-block:last-child) > .image-block:nth-child(2),
-    .section-content-wrapper--stacked-images-trio.section-content-wrapper--stacked-images-start > .image-block:nth-child(2) {
-      grid-column: 2;
-      grid-row: 1;
-    }
-
-    .section-content-wrapper.layout-panel-flex--row:has(> .image-block:first-child + .image-block + .image-block):has(> .group-block:last-child) > .image-block:nth-child(3),
-    .section-content-wrapper--stacked-images-trio.section-content-wrapper--stacked-images-start > .image-block:nth-child(3) {
-      grid-column: 1 / span 2;
-      grid-row: 2;
-    }
-
-    .section-content-wrapper.layout-panel-flex--row:has(> .image-block:first-child + .image-block + .image-block):has(> .group-block:last-child) > .group-block,
-    .section-content-wrapper--stacked-images-trio.section-content-wrapper--stacked-images-start > .group-block {
-      grid-column: 3 / span 2;
-      grid-row: 1 / span 2;
-      align-self: var(--vertical-alignment, flex-start);
-    }
-
-    .section-content-wrapper.layout-panel-flex--row:has(> .group-block:first-child + .image-block + .image-block + .image-block):has(> .image-block:last-child) > .group-block,
-    .section-content-wrapper--stacked-images-trio.section-content-wrapper--stacked-images-end > .group-block {
-      grid-column: 1 / span 2;
-      grid-row: 1 / span 2;
-      align-self: var(--vertical-alignment, flex-start);
-    }
-
-    .section-content-wrapper.layout-panel-flex--row:has(> .group-block:first-child + .image-block + .image-block + .image-block):has(> .image-block:last-child) > .image-block:nth-child(2),
-    .section-content-wrapper--stacked-images-trio.section-content-wrapper--stacked-images-end > .image-block:nth-child(2) {
-      grid-column: 3;
-      grid-row: 1;
-    }
-
-    .section-content-wrapper.layout-panel-flex--row:has(> .group-block:first-child + .image-block + .image-block + .image-block):has(> .image-block:last-child) > .image-block:nth-child(3),
-    .section-content-wrapper--stacked-images-trio.section-content-wrapper--stacked-images-end > .image-block:nth-child(3) {
-      grid-column: 4;
-      grid-row: 1;
-    }
-
-    .section-content-wrapper.layout-panel-flex--row:has(> .group-block:first-child + .image-block + .image-block + .image-block):has(> .image-block:last-child) > .image-block:nth-child(4),
-    .section-content-wrapper--stacked-images-trio.section-content-wrapper--stacked-images-end > .image-block:nth-child(4) {
-      grid-column: 3 / span 2;
-      grid-row: 2;
     }
   }
 {% endstylesheet %}
