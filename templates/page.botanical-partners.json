@@ -212,6 +212,8 @@
         "show_intro": false,
         "intro_heading": "",
         "intro_description": "",
+        "stack_columns_until_1001": false,
+        "heading_min_height": 0,
         "description_min_height": 0,
         "show_image_border": false,
         "image_border_color": "#ffffff",
@@ -545,6 +547,8 @@
         "show_intro": false,
         "intro_heading": "",
         "intro_description": "",
+        "stack_columns_until_1001": false,
+        "heading_min_height": 0,
         "description_min_height": 0,
         "show_image_border": false,
         "image_border_color": "#ffffff",
@@ -646,6 +650,8 @@
         "show_intro": false,
         "intro_heading": "",
         "intro_description": "",
+        "stack_columns_until_1001": false,
+        "heading_min_height": 0,
         "description_min_height": 0,
         "show_image_border": false,
         "image_border_color": "#ffffff",
@@ -669,10 +675,10 @@
         "padding-block-end": 80
       }
     },
-    "section_4hnj49": {
+    "section_XmWymL": {
       "type": "section",
       "blocks": {
-        "group_63zBHL": {
+        "group_iVTxWt": {
           "type": "group",
           "name": "t:names.column",
           "settings": {
@@ -712,7 +718,7 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "image_NEA6xX": {
+            "image_ppDNfR": {
               "type": "image",
               "name": "t:names.image",
               "settings": {
@@ -737,7 +743,7 @@
               },
               "blocks": {}
             },
-            "text_bnWhph": {
+            "text_rcphaw": {
               "type": "text",
               "name": "t:names.heading",
               "settings": {
@@ -763,7 +769,7 @@
               },
               "blocks": {}
             },
-            "text_nth48G": {
+            "text_E6pyDR": {
               "type": "text",
               "name": "t:names.description",
               "settings": {
@@ -789,7 +795,7 @@
               },
               "blocks": {}
             },
-            "button_pcfBbX": {
+            "button_bDRtk4": {
               "type": "button",
               "name": "t:names.button",
               "settings": {
@@ -806,13 +812,13 @@
             }
           },
           "block_order": [
-            "image_NEA6xX",
-            "text_bnWhph",
-            "text_nth48G",
-            "button_pcfBbX"
+            "image_ppDNfR",
+            "text_rcphaw",
+            "text_E6pyDR",
+            "button_bDRtk4"
           ]
         },
-        "group_xKRben": {
+        "group_GGz9ME": {
           "type": "group",
           "name": "t:names.column",
           "settings": {
@@ -852,7 +858,7 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "image_4rjqdE": {
+            "image_AicLwt": {
               "type": "image",
               "name": "t:names.image",
               "settings": {
@@ -877,7 +883,7 @@
               },
               "blocks": {}
             },
-            "text_BtpeGY": {
+            "text_nNQTq6": {
               "type": "text",
               "name": "t:names.heading",
               "settings": {
@@ -903,7 +909,7 @@
               },
               "blocks": {}
             },
-            "text_g8APzD": {
+            "text_fHbUPe": {
               "type": "text",
               "name": "t:names.description",
               "settings": {
@@ -929,7 +935,7 @@
               },
               "blocks": {}
             },
-            "button_eHYAUE": {
+            "button_iPity4": {
               "type": "button",
               "name": "t:names.button",
               "settings": {
@@ -946,13 +952,13 @@
             }
           },
           "block_order": [
-            "image_4rjqdE",
-            "text_BtpeGY",
-            "text_g8APzD",
-            "button_eHYAUE"
+            "image_AicLwt",
+            "text_nNQTq6",
+            "text_fHbUPe",
+            "button_iPity4"
           ]
         },
-        "group_qkpGAn": {
+        "group_XDwqmF": {
           "type": "group",
           "name": "t:names.column",
           "settings": {
@@ -992,7 +998,7 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "image_PKdegb": {
+            "image_Y79gwj": {
               "type": "image",
               "name": "t:names.image",
               "settings": {
@@ -1017,7 +1023,7 @@
               },
               "blocks": {}
             },
-            "text_eXktGT": {
+            "text_nFa6QY": {
               "type": "text",
               "name": "t:names.heading",
               "settings": {
@@ -1043,7 +1049,7 @@
               },
               "blocks": {}
             },
-            "text_hb6gmG": {
+            "text_fE6bjq": {
               "type": "text",
               "name": "t:names.description",
               "settings": {
@@ -1069,12 +1075,12 @@
               },
               "blocks": {}
             },
-            "button_xbaJnU": {
+            "button_rgHGWY": {
               "type": "button",
               "name": "t:names.button",
               "settings": {
                 "label": "Discover Olfactory Art",
-                "link": "https://vitivinci.com/",
+                "link": "shopify://pages/olfactory-studio",
                 "open_in_new_tab": false,
                 "style_class": "button",
                 "width": "fit-content",
@@ -1086,17 +1092,17 @@
             }
           },
           "block_order": [
-            "image_PKdegb",
-            "text_eXktGT",
-            "text_hb6gmG",
-            "button_xbaJnU"
+            "image_Y79gwj",
+            "text_nFa6QY",
+            "text_fE6bjq",
+            "button_rgHGWY"
           ]
         }
       },
       "block_order": [
-        "group_63zBHL",
-        "group_xKRben",
-        "group_qkpGAn"
+        "group_iVTxWt",
+        "group_GGz9ME",
+        "group_XDwqmF"
       ],
       "name": "t:names.multicolumn",
       "settings": {
@@ -1111,7 +1117,9 @@
         "show_intro": false,
         "intro_heading": "",
         "intro_description": "",
-        "description_min_height": 0,
+        "stack_columns_until_1001": true,
+        "heading_min_height": 84,
+        "description_min_height": 132,
         "show_image_border": false,
         "image_border_color": "#ffffff",
         "image_border_position": "inside",
@@ -1131,7 +1139,7 @@
         "overlay_style": "solid",
         "gradient_direction": "to top",
         "padding-block-start": 0,
-        "padding-block-end": 48
+        "padding-block-end": 60
       }
     }
   },
@@ -1140,6 +1148,6 @@
     "section_mqUN8P",
     "section_A8FxBG",
     "section_Aqh4Lh",
-    "section_4hnj49"
+    "section_XmWymL"
   ]
 }
