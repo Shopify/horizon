@@ -114,22 +114,20 @@
   .sticky-add-to-cart__bar {
     position: fixed;
     bottom: 20px;
-    right:0;
+   right:0;
     opacity: 0;
     background-color: transparent;
     transform: translateX(-50%) translateY(calc(100% + 40px));
     z-index: calc(var(--layer-sticky) - 1); /* Below sticky header */
-    display: block;
-    /* Layout styling */
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: var(--gap-md);
 
     @starting-style {
       opacity: 0;
       transform: translateX(-50%) translateY(calc(100% + 40px));
     }
-
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -142,7 +140,6 @@
   }
 
   .sticky-add-to-cart__bar[data-stuck='true'] {
-    transform: translateX(-50%) translateY(0%);
     opacity: 1;
   }
 
@@ -229,21 +226,34 @@
     background-color: #31331E;
   }
 
-  /* Mobile adjustments */
+  /* Mobile: full-width bar — no translateX(-50%) (that shifts a 100% width bar off-screen) */
   @media screen and (max-width: 749px) {
     .sticky-add-to-cart__bar {
+      left: 0;
+      right: 0;
       bottom: 0;
       width: 100%;
       max-width: none;
       border-radius: 0;
+      padding-inline: var(--padding-md);
+      padding-bottom: calc(var(--padding-md) + env(safe-area-inset-bottom, 0px));
+      transform: translateY(calc(100% + 40px));
+
+      @starting-style {
+        transform: translateY(calc(100% + 40px));
+      }
 
       &::before {
         --border: 1px;
       }
     }
 
-    .sticky-add-to-cart__bar .add-to-cart-text__content {
-      display: none;
+    .sticky-add-to-cart__bar[data-stuck='true'] {
+      transform: translateY(0);
+    }
+
+    sticky-add-to-cart:not([data-variant-available='true']) .sticky-add-to-cart__bar {
+      transform: translateY(calc(100% + 40px));
     }
 
     .sticky-add-to-cart__info[data-has-image='false'] {
@@ -262,9 +272,6 @@
       font-size: var(--font-paragraph-small--size);
     }
 
-    .sticky-add-to-cart__button {
-      width: var(--height-buy-buttons);
-    }
 
     sticky-add-to-cart:not([data-variant-available='true']) .add-to-cart-text__content {
       display: initial;
