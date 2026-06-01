@@ -89,6 +89,17 @@ assign featured_pages = parent_page.metafields.custom.megamenu_featured_pages.va
 - **Hover:** Animate `gap` + arrow `max-width` (~`0.5s`, `cubic-bezier(0.22, 1, 0.36, 1)`); arrow opacity fades in with a short delay so text does not slide over the icon mid-transition.
 - **Avoid:** `padding-inline-start` + absolutely positioned arrow — padding and opacity at the same speed causes overlap and a jolt. Do not transition `font-weight`.
 
+## Transparent header with home-style gradient fade
+
+- Controlled in `sections/header.liquid` when **Enable transparent header on homepage** is on (`enable_transparent_header_home` in `sections/header-group.json`).
+- Sets `transparent="always"`, `data-transparent-page="home"`, and `home_color_scheme` on these templates:
+  - `index` (homepage)
+  - `blog`
+  - `page` with suffix `drinks` (`page.drinks.json`)
+  - `page` with suffix `olfactory-studio` (`page.olfactory-studio.json`)
+- **Home fade:** `.header[transparent][data-transparent-page='home']` uses a long `linear-gradient` on the header background; other transparent pages use a solid top-row color.
+- **Content under header:** `--transparent-header-offset-boolean` (in `layout/theme.liquid` / `assets/utilities.js`) pulls the first `main` section up when there is no section immediately after the header group. If a page template puts `main` before a hero, the offset applies to `main-page`, not the hero—reorder sections in the JSON if the hero should sit under the transparent header.
+
 ## Scroll-up sticky header reveal
 
 - Sticky-on-scroll-up is controlled in `assets/header.js` (`sticky="scroll-up"`): `data-sticky-state` is `inactive` | `active` | `idle`. `#offscreen` (via IntersectionObserver) gates when scroll direction logic runs.

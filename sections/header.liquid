@@ -13,7 +13,17 @@
   endif
 
   if section.settings.enable_transparent_header_home
+    assign use_home_header_fade = false
+
     if template.name == 'index' or template.name == 'blog'
+      assign use_home_header_fade = true
+    elsif template.name == 'page'
+      if template.suffix == 'drinks' or template.suffix == 'olfactory-studio'
+        assign use_home_header_fade = true
+      endif
+    endif
+
+    if use_home_header_fade
       assign transparent = 'always'
       assign transparent_color_scheme = section.settings.home_color_scheme
       assign transparent_page = 'home'
