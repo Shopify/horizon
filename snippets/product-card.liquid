@@ -108,10 +108,9 @@
     "
   >
     <div class="product-title-container">
+      
       {{ children }}
-        <h6 class="product-type">
-          {{ product.type }}
-        </h6>
+
     </div>
     {% if block_settings.show_primary_button and onboarding == false %}
       <a href="{{ variant_to_link.url }}" class="button product-card__primary-button">
