@@ -215,6 +215,10 @@
         "stack_columns_until_1001": false,
         "heading_min_height": 0,
         "description_min_height": 0,
+        "show_multicolumn_button": false,
+        "multicolumn_button_label": "Shop now",
+        "multicolumn_button_link": "",
+        "multicolumn_button_open_in_new_tab": false,
         "show_image_border": false,
         "image_border_color": "#ffffff",
         "image_border_position": "inside",
@@ -407,29 +411,13 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
-            },
-            "button_T9CR7U": {
-              "type": "button",
-              "name": "t:names.button",
-              "settings": {
-                "label": "Explore Partnership Opportunities",
-                "link": "shopify://pages/contact",
-                "open_in_new_tab": false,
-                "style_class": "button",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
             }
           },
           "block_order": [
             "image_DQbdEk",
             "text_LrGmjD",
             "text_i3B7cR",
-            "text_ApWbMa",
-            "button_T9CR7U"
+            "text_ApWbMa"
           ]
         },
         "group_fMaXcF": {
@@ -604,6 +592,10 @@
         "stack_columns_until_1001": false,
         "heading_min_height": 0,
         "description_min_height": 0,
+        "show_multicolumn_button": true,
+        "multicolumn_button_label": "Explore Partnership Opportunities",
+        "multicolumn_button_link": "shopify://pages/contact",
+        "multicolumn_button_open_in_new_tab": false,
         "show_image_border": false,
         "image_border_color": "#ffffff",
         "image_border_position": "inside",
@@ -707,6 +699,10 @@
         "stack_columns_until_1001": false,
         "heading_min_height": 0,
         "description_min_height": 0,
+        "show_multicolumn_button": false,
+        "multicolumn_button_label": "Shop now",
+        "multicolumn_button_link": "",
+        "multicolumn_button_open_in_new_tab": false,
         "show_image_border": false,
         "image_border_color": "#ffffff",
         "image_border_position": "inside",
@@ -1174,6 +1170,10 @@
         "stack_columns_until_1001": true,
         "heading_min_height": 84,
         "description_min_height": 132,
+        "show_multicolumn_button": false,
+        "multicolumn_button_label": "Shop now",
+        "multicolumn_button_link": "",
+        "multicolumn_button_open_in_new_tab": false,
         "show_image_border": false,
         "image_border_color": "#ffffff",
         "image_border_position": "inside",
