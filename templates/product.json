@@ -294,9 +294,9 @@
                     "text_PViY9J": {
                       "type": "text",
                       "settings": {
-                        "text": "{{ closest.product.description }}",
+                        "text": "<p>{{ closest.product.description }}</p>",
                         "width": "100%",
-                        "max_width": "normal",
+                        "max_width": "none",
                         "alignment": "left",
                         "type_preset": "rte",
                         "font": "var(--font-body--family)",
@@ -335,7 +335,7 @@
                       "settings": {
                         "text": "{{ closest.product.metafields.custom.olfactory_pyramid | metafield_tag }}",
                         "width": "100%",
-                        "max_width": "normal",
+                        "max_width": "none",
                         "alignment": "left",
                         "type_preset": "rte",
                         "font": "var(--font-body--family)",
@@ -374,7 +374,7 @@
                       "settings": {
                         "text": "{{ closest.product.metafields.custom.mood_programming | metafield_tag }}",
                         "width": "100%",
-                        "max_width": "normal",
+                        "max_width": "none",
                         "alignment": "left",
                         "type_preset": "rte",
                         "font": "var(--font-body--family)",
@@ -413,7 +413,7 @@
                       "settings": {
                         "text": "{{ closest.product.metafields.custom.ingredients | metafield_tag }}",
                         "width": "100%",
-                        "max_width": "normal",
+                        "max_width": "none",
                         "alignment": "left",
                         "type_preset": "rte",
                         "font": "var(--font-body--family)",
