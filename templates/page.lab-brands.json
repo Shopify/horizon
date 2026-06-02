@@ -288,6 +288,13 @@
             "image": "shopify://shop_images/47118989-ddc4-4992-9325-c86df7889e42-removebg-preview.png"
           }
         },
+        "ingredient_Bx9fpP": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Honey",
+            "description": "<p>A natural antibacterial and antioxidant. Supports digestion and overall wellbeing.</p>"
+          }
+        },
         "ingredient_zQzNV4": {
           "type": "ingredient",
           "settings": {
@@ -324,6 +331,7 @@
       "block_order": [
         "ingredient_Cj8UNz",
         "ingredient_L87MMP",
+        "ingredient_Bx9fpP",
         "ingredient_zQzNV4",
         "ingredient_qmB7Ar",
         "ingredient_YwBjU9",
@@ -392,6 +400,58 @@
         "color_scheme": "",
         "padding-block-start": 80,
         "padding-block-end": 0
+      }
+    },
+    "content_cards_EnqUqd": {
+      "type": "content-cards",
+      "blocks": {
+        "card_Ehmcr8": {
+          "type": "card",
+          "settings": {
+            "show_number": true,
+            "number": "Refinement & Validation",
+            "show_icon": true,
+            "icon": "shopify://shop_images/IMG_4510.jpg",
+            "show_text": true,
+            "text": "<p>We refine the fragrance to ensure it evokes the intended emotions, enhances your space and captivates your clientele, while adapting to your commercial dynamics.</p>"
+          }
+        },
+        "card_RcrzEz": {
+          "type": "card",
+          "settings": {
+            "show_number": true,
+            "number": "Scent Portfolio",
+            "show_icon": true,
+            "icon": "shopify://shop_images/IMG_4507.jpg",
+            "show_text": true,
+            "text": "<p>From room diffusers and bath amenities to bespoke perfumes and candles, we build a cohesive scent portfolio. This versatility enhances engagement at every touchpoint of the brand.</p>"
+          }
+        },
+        "card_7fnrFe": {
+          "type": "card",
+          "settings": {
+            "show_number": true,
+            "number": "Integration &",
+            "show_icon": true,
+            "icon": "shopify://shop_images/IMG_4507.jpg",
+            "show_text": true,
+            "text": "<p>From room diffusers and bath amenities to bespoke perfumes and candles, we build a cohesive scent portfolio. This versatility enhances engagement at every touchpoint of the brand.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "card_Ehmcr8",
+        "card_RcrzEz",
+        "card_7fnrFe"
+      ],
+      "name": "Content cards",
+      "settings": {
+        "heading": "",
+        "description": "",
+        "section_width": "page-width",
+        "color_scheme": "",
+        "padding-block-start": 0,
+        "padding-block-end": 80
       }
     },
     "qa_mGGXch": {
@@ -2529,6 +2589,7 @@
     "section_L36UFW",
     "ingredients_nqJcBd",
     "content_cards_LHCdKx",
+    "content_cards_EnqUqd",
     "qa_mGGXch",
     "carousel_yXky9f",
     "product_list_9feBaz",
