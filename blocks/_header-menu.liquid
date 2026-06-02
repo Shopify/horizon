@@ -410,6 +410,9 @@
   }
 
   /** mega menu **/
+   .menu-list__submenu{
+    min-height: 560px;
+   }
   .menu-list__submenu,
   .overflow-menu::part(overflow) {
     --submenu-padding-block-start: var(--padding-3xl);
@@ -494,6 +497,16 @@
     --submenu-content-opacity: 1;
 
     visibility: visible;
+  }
+
+  /* Debug freeze mode: keep submenu visible even when pointer leaves */
+  #header-component[data-mega-menu-debug-freeze]
+    .menu-list__list-item:has([aria-expanded='true'])
+    > .menu-list__submenu,
+  #header-component[data-mega-menu-debug-freeze] .overflow-menu::part(overflow) {
+    visibility: visible;
+    clip-path: rect(0 100% 100% 0); /* stylelint-disable-line */
+    transition: none; /* stylelint-disable-line */
   }
 
   .overflow-menu::part(overflow) {

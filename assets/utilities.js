@@ -763,7 +763,7 @@ function updateTransparentHeaderOffset() {
 /**
  * Initialize and maintain header height CSS variables.
  */
-function updateHeaderHeights() {
+export function updateHeaderHeights() {
   const header = document.querySelector('header-component');
 
   // Early exit if no header - nothing to do

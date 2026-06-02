@@ -60,9 +60,23 @@ assign featured_pages = parent_page.metafields.custom.megamenu_featured_pages.va
 ## Submenu height / first-open clipping
 
 - Open height is driven by JS (`assets/header-menu.js`): `--submenu-height` and `--full-open-header-height` feed `clip-path` on `.menu-list__submenu`.
+- **First hover while the page is still loading:** Usually **not** header height growth. The panel is clipped because `--submenu-height` is measured too small on the first open (submenu still `content-visibility: auto`, images/fonts/layout not settled), then `#header-component[data-submenu-open]` animates `clip-path` to that short height.
+- **Fix (header-menu.js):**
+  - Set `data-active` and measure **before** `aria-expanded` so the first visible frame has height vars set.
+  - On first open from closed: keep `data-submenu-open` off until height is stable (2 matching frames or max 12); only then enable the clip-path transition.
+  - `requestIdleCallback` primes each `.menu-list__submenu` (brief `data-active` + flush) so first hover measures full height sooner.
+  - Preload/decode megamenu images on connect and on open; wait up to 150ms for images before the stable-measure loop.
+  - `ResizeObserver` + image `load`/`error` + `document.fonts.ready` continue to grow height while open (never shrink mid-open).
+  - Apply a **live DOM height floor** (`submenu/inner/featured/cards` max) before setting `--submenu-height` so `clip-path` cannot undershoot and slice through the menu halfway.
+  - Optional hard floor for stubborn cases: enforce desktop minimum submenu height (`370px`) in `#setSubmenuHeightVars` so clip-path never drops below a safe baseline.
+- Temporary debugging tools in `assets/header-menu.js`:
+  - `Option+Shift+D` (mac) / `Alt+Shift+D` toggles a floating debug panel with live values (`--submenu-height`, `--full-open-header-height`, DOM heights).
+  - `Option+Shift+F` (mac) / `Alt+Shift+F` freezes the menu open so you can inspect without losing hover.
+  - Shortcuts match by `event.code` (`KeyD`/`KeyF`) so Option-modified characters on macOS still trigger correctly.
+  - Freeze mode sets `#header-component[data-mega-menu-debug-freeze]` and forces submenu visibility (`clip-path` disabled) in `blocks/_header-menu.liquid`.
+  - Add `?megaMenuDebug=1` to URL to auto-enable debug panel for that page load.
 - **`--submenu-offset`** on `.menu-list` controls the gap between the header bottom and the megamenu panel when open. Keep at **`0px`** for a flush fit; `var(--padding-md)` pushes the dropdown too far down.
 - Hidden submenus use `content-visibility: auto` without a fixed `contain-intrinsic-size` (a fixed 500px intrinsic size caused first-open clipping).
-- **Fix:** `ResizeObserver` on submenu, inner, and `.mega-menu-featured-collections`; remeasure on image `load`/`error`, `document.fonts.ready`, and delayed passes; measure `scrollHeight` / featured panel height, not stale `offsetHeight`.
 - **Do not** disable `clip-path` for featured collections without replacing the reveal system — dropdowns will not show.
 
 ## Featured collections panel: no scroll, compact cards

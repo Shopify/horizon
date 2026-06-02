@@ -18,7 +18,7 @@
           "settings": {
             "media_presentation": "grid",
             "media_columns": "one",
-            "image_gap": 4,
+            "image_gap": 0,
             "large_first_image": false,
             "icons_style": "arrow",
             "slideshow_controls_style": "counter",
@@ -26,8 +26,8 @@
             "thumbnail_position": "right",
             "thumbnail_width": 44,
             "thumbnail_radius": 0,
-            "aspect_ratio": "1",
-            "constrain_to_viewport": true,
+            "aspect_ratio": "1/1.25",
+            "constrain_to_viewport": false,
             "media_fit": "contain",
             "media_radius": 0,
             "extend_media": false,
@@ -51,7 +51,7 @@
             "custom_width_mobile": 100,
             "height": "fit",
             "details_position": "flex-start",
-            "gap": 13,
+            "gap": 24,
             "sticky_details_desktop": true,
             "inherit_color_scheme": true,
             "color_scheme": "scheme-1",
@@ -62,7 +62,7 @@
             "border_width": 1,
             "border_opacity": 100,
             "border_radius": 0,
-            "padding-block-start": 24,
+            "padding-block-start": 16,
             "padding-block-end": 24,
             "padding-inline-start": 0,
             "padding-inline-end": 0
@@ -188,6 +188,32 @@
                 "price_tVjtKg"
               ]
             },
+            "text_XrBnUi": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<p>Tax included. Shipping calculated at checkout.</p>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "custom",
+                "font": "var(--font-body--family)",
+                "font_size": "0.875rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
             "variant_picker_R3rGDr": {
               "type": "variant-picker",
               "settings": {
@@ -268,9 +294,9 @@
                     "text_PViY9J": {
                       "type": "text",
                       "settings": {
-                        "text": "{{ closest.product.description }}",
+                        "text": "<p>{{ closest.product.description }}</p>",
                         "width": "100%",
-                        "max_width": "normal",
+                        "max_width": "none",
                         "alignment": "left",
                         "type_preset": "rte",
                         "font": "var(--font-body--family)",
@@ -309,7 +335,7 @@
                       "settings": {
                         "text": "{{ closest.product.metafields.custom.olfactory_pyramid | metafield_tag }}",
                         "width": "100%",
-                        "max_width": "normal",
+                        "max_width": "none",
                         "alignment": "left",
                         "type_preset": "rte",
                         "font": "var(--font-body--family)",
@@ -348,7 +374,7 @@
                       "settings": {
                         "text": "{{ closest.product.metafields.custom.mood_programming | metafield_tag }}",
                         "width": "100%",
-                        "max_width": "normal",
+                        "max_width": "none",
                         "alignment": "left",
                         "type_preset": "rte",
                         "font": "var(--font-body--family)",
@@ -387,7 +413,7 @@
                       "settings": {
                         "text": "{{ closest.product.metafields.custom.ingredients | metafield_tag }}",
                         "width": "100%",
-                        "max_width": "normal",
+                        "max_width": "none",
                         "alignment": "left",
                         "type_preset": "rte",
                         "font": "var(--font-body--family)",
@@ -425,7 +451,7 @@
               "name": "t:names.product_sustainability_icons",
               "settings": {
                 "padding-block-start": 24,
-                "padding-block-end": 8,
+                "padding-block-end": 24,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
               },
@@ -437,7 +463,7 @@
               "settings": {
                 "image": "shopify://shop_images/312312_1.png",
                 "title": "THE CALA FALCÓ WAY",
-                "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
+                "text": "<p>Our pioneering and rigorous commitment to regenerative farming is captured in La Marca De Cala Falcó. You will find our marque on all Cala Falco and on partner products who have achieved this standard.</p>",
                 "padding-block-start": 16,
                 "padding-block-end": 16,
                 "padding-inline-start": 0,
@@ -449,6 +475,7 @@
           "block_order": [
             "text_WLBac8",
             "group_icgrde",
+            "text_XrBnUi",
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
             "accordion_NMd7pE",
@@ -465,7 +492,7 @@
         "gap": 48,
         "enable_sticky_add_to_cart": true,
         "color_scheme": "scheme-1",
-        "padding-block-start": 0,
+        "padding-block-start": 24,
         "padding-block-end": 0
       }
     },
@@ -542,7 +569,7 @@
               "settings": {
                 "text": "{{ closest.product.metafields.custom.directions | metafield_tag }}",
                 "width": "fit-content",
-                "max_width": "narrow",
+                "max_width": "none",
                 "alignment": "left",
                 "type_preset": "rte",
                 "font": "var(--font-body--family)",
@@ -571,8 +598,13 @@
         "image_hjXWh9": {
           "type": "image",
           "settings": {
-            "image": "{{ closest.product.featured_image }}",
+            "image": "{{ closest.product.metafields.custom.how_to_use_image.value }}",
             "link": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 16,
+            "image_border_padding": 8,
             "image_ratio": "square",
             "width": "fill",
             "custom_width": 100,
@@ -591,7 +623,6 @@
         "group_hVhEXk",
         "image_hjXWh9"
       ],
-      "disabled": true,
       "name": "t:names.image_with_text",
       "settings": {
         "content_direction": "row",
@@ -601,10 +632,13 @@
         "align_baseline": false,
         "horizontal_alignment_flex_direction_column": "flex-start",
         "vertical_alignment_flex_direction_column": "center",
-        "gap": 0,
+        "gap": 24,
         "show_intro": false,
         "intro_heading": "",
         "intro_description": "",
+        "stack_columns_until_1001": false,
+        "heading_min_height": 0,
+        "description_min_height": 0,
         "show_image_border": false,
         "image_border_color": "#ffffff",
         "image_border_position": "inside",
@@ -687,8 +721,8 @@
           "name": "t:names.product_card",
           "static": true,
           "settings": {
-            "product_card_gap": 8,
-            "show_primary_button": true,
+            "product_card_gap": 12,
+            "show_primary_button": false,
             "primary_button_label": "Discover",
             "inherit_color_scheme": true,
             "color_scheme": "",
@@ -742,11 +776,38 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
+            },
+            "text_LjpePB": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<p>{{ closest.product.metafields.custom.product_card_type.value }}</p>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "h6",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
             }
           },
           "block_order": [
             "product_card_gallery_DNizbJ",
-            "product_title_M7MJkb"
+            "product_title_M7MJkb",
+            "text_LjpePB"
           ]
         }
       },
@@ -760,10 +821,10 @@
         "recommendation_type": "related",
         "layout_type": "carousel",
         "carousel_on_mobile": false,
-        "max_products": 3,
+        "max_products": 6,
         "columns": 3,
         "mobile_columns": "2",
-        "columns_gap": 12,
+        "columns_gap": 24,
         "rows_gap": 24,
         "icons_style": "arrow",
         "icons_shape": "circle",
@@ -781,7 +842,9 @@
           "type": "testimonial",
           "settings": {
             "quote_short": "<p>Cala Falcó is a refined, nuanced non-alcoholic aperitivo, crafted with  passion, exclusivity and remarkable botanical complexity.</p>",
-            "quote_full": "",
+            "cta_label": "Read full testimonial",
+            "cta_link": "",
+            "open_in_new_tab": true,
             "image": "shopify://shop_images/CalaFalco_25-119_1.jpg",
             "author": "Theo Hitchcock",
             "author_title": "Founder of The Travelcohol-Free Club"
@@ -791,7 +854,9 @@
           "type": "testimonial",
           "settings": {
             "quote_short": "<p>Beautifully complex and vibrant, Cala Falcó delivers elegant botanical depth as a sophisticated non-alcoholic aperitivo.</p>",
-            "quote_full": "",
+            "cta_label": "Read full testimonial",
+            "cta_link": "",
+            "open_in_new_tab": true,
             "image": "shopify://shop_images/693fea74543b5fdcedb311ba_IMG_9683.jpg",
             "author": "Claire Warner",
             "author_title": "Global Non-Alcoholic Drinks Industry Thought Leader"
@@ -801,7 +866,9 @@
           "type": "testimonial",
           "settings": {
             "quote_short": "<p>Cala Falcó is light, crisp and wonderfully thirst-quenching, with beautiful notes of rosemary and a subtle sea-water minerality that captures the essence of the Mediterranean. The perfect alcohol free drink.</p>",
-            "quote_full": "",
+            "cta_label": "Read full testimonial",
+            "cta_link": "",
+            "open_in_new_tab": true,
             "image": "shopify://shop_images/693c2ff85d73eb5105da6d85_IMG_9567.jpg",
             "author": "Emily Horner",
             "author_title": "Non-Alcoholic Drinks Influencer"
@@ -815,13 +882,14 @@
       ],
       "name": "t:names.testimonials",
       "settings": {
+        "heading": "Kind Words. Poured Generously",
         "section_width": "full-width",
         "color_scheme": "scheme-1",
         "corner_radius": 0,
         "slide_gap": 0,
         "autoplay": false,
         "autoplay_speed": 4,
-        "padding-block-start": 0,
+        "padding-block-start": 60,
         "padding-block-end": 0
       }
     },
@@ -1212,6 +1280,9 @@
         "show_intro": false,
         "intro_heading": "",
         "intro_description": "",
+        "stack_columns_until_1001": false,
+        "heading_min_height": 0,
+        "description_min_height": 0,
         "show_image_border": false,
         "image_border_color": "#ffffff",
         "image_border_position": "inside",
@@ -1234,45 +1305,48 @@
         "padding-block-end": 100
       }
     },
-    "column_callouts_3fLHkH": {
+    "column_callouts_ErKxaN": {
       "type": "column-callouts",
       "blocks": {
-        "callout_Lb9yF8": {
+        "callout_JTB84X": {
           "type": "callout",
           "settings": {
-            "icon": "shopify://shop_images/Vector_27.png",
+            "background_image": "shopify://shop_images/Frame_52.jpg",
+            "icon": "<svg width=\"16\" height=\"16\" viewbox=\"0 0 16 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M16 0.748212L15.5778 0L7.67967 2.51671C7.64449 2.4487 7.6269 2.38068 7.59172 2.32966C6.8705 0.901256 4.97073 0.0340096 2.85986 1.02029C0.748992 2.02357 -0.517529 4.38725 0.203684 5.79865C0.924897 7.22705 3.63384 7.72019 5.74471 6.71691C7.55654 5.86667 8.15461 4.28522 7.82039 2.94183L14.2409 1.22435C12.8337 2.72077 11.6024 4.37024 10.6349 6.15575C10.6173 6.15575 10.5821 6.13874 10.5645 6.13874C8.85824 5.66261 6.65942 6.73391 5.83266 9.53971C4.98832 12.3455 5.9382 15.4574 7.64449 15.9335C9.35077 16.4097 11.8662 14.267 12.693 11.4613C13.4142 9.04657 12.5698 7.19304 11.233 6.42782C12.4819 4.31923 14.153 2.39768 16 0.748212Z\" fill=\"currentColor\"></path>\n</svg>",
             "title": "Natural",
             "text": "<p>We are committed to sourcing the most exceptional natural  ingredients, to craft sustainable fragrances that elevate mood and  well-being.</p>"
           }
         },
-        "callout_NRi8gi": {
+        "callout_BCHMFL": {
           "type": "callout",
           "settings": {
-            "icon": "shopify://shop_images/Vector_26.png",
+            "background_image": "shopify://shop_images/Frame_51.jpg",
+            "icon": "<svg width=\"16\" height=\"16\" viewbox=\"0 0 16 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M6.95288 11.8271L6.93612 10.0387C6.93612 9.88536 6.85236 9.7491 6.71833 9.68097L5.26073 8.89748L3.60209 7.9607C3.46806 7.89257 3.31728 7.89257 3.18325 7.9607L0.217804 9.83427C0.0837727 9.91943 0 10.0727 0 10.226L0.100525 13.7006C0.100525 13.8369 0.167541 13.9561 0.284819 14.0413L1.65864 14.9781L1.77592 15.0292L3.18325 15.8126C3.31728 15.8808 3.46806 15.8808 3.60209 15.8126L5.1267 14.944L5.17696 14.9099L6.66807 13.9902C6.8021 13.922 6.86911 13.7858 6.86911 13.6325L6.95288 11.8271ZM16 11.9803L15.933 13.7688C15.933 13.905 15.8492 14.0413 15.7319 14.1264L14.2408 15.0462L14.1906 15.0802L12.666 15.9489C12.5319 16.017 12.3812 16.017 12.2471 15.9489L10.8398 15.1654L10.7225 15.1143L9.34869 14.1775C9.23142 14.1094 9.1644 13.9731 9.1644 13.8369L9.06388 10.3623C9.06388 10.209 9.14764 10.0557 9.28167 9.97053L12.2471 8.09696C12.3812 8.02883 12.5487 8.0118 12.666 8.09696L14.3246 9.03374L15.7654 9.83427C15.8995 9.9024 15.9832 10.0387 15.9832 10.1919L16 11.9803ZM11.4429 3.94105L11.3759 5.72945C11.3759 5.86571 11.2921 6.00197 11.1749 6.08714L9.68377 7.00689L9.63351 7.04095L8.1089 7.9096C7.97487 7.97773 7.82408 7.97773 7.69005 7.9096L6.28272 7.12611L6.16545 7.07502L4.79162 6.13823C4.67435 6.0701 4.60733 5.93384 4.60733 5.79758L4.50681 2.32297C4.50681 2.16968 4.59058 2.01639 4.72461 1.93123L7.69005 0.0576607C7.82408 -0.0104689 7.99162 -0.0275013 8.1089 0.0576607L9.76754 0.994443L11.2251 1.77793C11.3592 1.84606 11.4429 1.98232 11.4429 2.13561V3.94105Z\" fill=\"currentColor\"></path>\n</svg>",
             "title": "Artisanal",
             "text": "<p>Our perfumers, artisans in their own right, delve into the essence  of natural beauty to bring forth fragrances that are complex and  captivating.</p>"
           }
         },
-        "callout_bHqbqM": {
+        "callout_famVgq": {
           "type": "callout",
           "settings": {
-            "icon": "shopify://shop_images/Vector_25.png",
+            "background_image": "shopify://shop_images/Frame_54.jpg",
+            "icon": "<svg width=\"37\" height=\"16\" viewbox=\"0 0 37 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M33.911 12.7712C34.9179 12.0066 35.7029 10.8251 36.3344 9.60878H36.3515L37 9.88679L36.8805 10.2691C35.9248 13.918 32.4774 16.6112 28.7057 15.3775C27.2551 14.8563 26.0604 13.9006 25.0876 12.7364C24.2684 14.1438 22.9202 15.2385 21.3672 15.6555C20.292 15.9509 19.1827 16.1073 18.0904 15.9162C16.179 15.6034 14.4894 14.474 13.2947 12.9449C10.4447 16.8023 4.69326 17.0108 1.36531 13.3793C0.802122 12.7712 0.341328 12.0588 0 11.2595L0.529076 10.912L0.802134 11.19C4.06182 14.6304 10.8372 15.6903 13.09 9.08751C13.09 9.08751 14.8137 13.9006 18.756 13.7616C24.2172 14.2481 24.7463 9.41765 24.7463 9.41765C27.0161 13.918 31.3169 14.6825 33.911 12.7712ZM15.5816 4.2223C15.0867 4.89996 14.4894 5.49073 13.8067 5.97725C10.274 8.56624 4.23249 7.24568 3.00371 2.72799L2.90129 2.34572L3.43037 2.10246L3.70342 2.39785C6.62178 5.92513 13.5337 6.79391 15.5987 0C16.1448 3.70103 19.6264 4.98684 20.9917 5.12584C23.5005 5.14322 26.1116 3.97904 27.0674 1.47694L27.238 1.11205L27.8695 1.26843C27.7671 4.98684 24.2855 7.12405 20.9234 7.14143C18.756 7.10668 16.8958 5.85562 15.5816 4.2223Z\" fill=\"currentColor\"></path>\n</svg>",
             "title": "Sustainable",
             "text": "<p>From sustainable sourcing to eco-friendly packaging options, our  fragrances uphold the principles of environmental stewardship.</p>"
           }
         }
       },
       "block_order": [
-        "callout_Lb9yF8",
-        "callout_NRi8gi",
-        "callout_bHqbqM"
+        "callout_JTB84X",
+        "callout_BCHMFL",
+        "callout_famVgq"
       ],
       "name": "Column callouts",
       "settings": {
-        "background_image": "shopify://shop_images/Mask_group_9.jpg",
+        "background_image": "shopify://shop_images/Frame_53.jpg",
         "heading": "",
         "content_width": 980,
-        "section_height": "620px",
+        "section_height": "740px",
         "color_scheme": "",
         "padding-block-start": 0,
         "padding-block-end": 0
@@ -1285,6 +1359,6 @@
     "product_recommendations_qggXJq",
     "testimonials_bb7RDm",
     "section_mFnCfm",
-    "column_callouts_3fLHkH"
+    "column_callouts_ErKxaN"
   ]
 }
