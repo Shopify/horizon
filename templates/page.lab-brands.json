@@ -342,6 +342,58 @@
         "padding-block-end": 0
       }
     },
+    "content_cards_LHCdKx": {
+      "type": "content-cards",
+      "blocks": {
+        "card_d9xxec": {
+          "type": "card",
+          "settings": {
+            "show_number": true,
+            "number": "The Organ",
+            "show_icon": true,
+            "icon": "shopify://shop_images/IMG_4505.jpg",
+            "show_text": true,
+            "text": "<p>The organ is where creation begins. It is the workspace of our perfumer, where all the essential oils, absolutes, and natural extracts are carefully arranged. Here, compositions are tested, refined, and brought to life through balance and intuition.</p>"
+          }
+        },
+        "card_GhazwM": {
+          "type": "card",
+          "settings": {
+            "show_number": true,
+            "number": "Extraction",
+            "show_icon": true,
+            "icon": "shopify://shop_images/IMG_4508.jpg",
+            "show_text": true,
+            "text": "<p>Our plants are placed into an alembic for steam distillation. Water is boiled at the base, creating steam that rises through the plant material, capturing its aromatic compounds. As the steam cools it separates into the essential oil and the hydrolat.</p>"
+          }
+        },
+        "card_hBci9T": {
+          "type": "card",
+          "settings": {
+            "show_number": true,
+            "number": "Purification",
+            "show_icon": true,
+            "icon": "shopify://shop_images/IMG_4506.jpg",
+            "show_text": true,
+            "text": "<p>Once extracted, the essence is refined to isolate its most precise and expressive components, ensuring clarity, balance, and quality in every note. Pure, refined oils provide consistent therapeutic benefits and authentic aromatic profiles.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "card_d9xxec",
+        "card_GhazwM",
+        "card_hBci9T"
+      ],
+      "name": "Content cards",
+      "settings": {
+        "heading": "creating an olfactory identity",
+        "description": "<p>A scent service for luxury brands, rooted in nature</p>",
+        "section_width": "page-width",
+        "color_scheme": "",
+        "padding-block-start": 80,
+        "padding-block-end": 0
+      }
+    },
     "qa_mGGXch": {
       "type": "qa",
       "blocks": {
@@ -2476,6 +2528,7 @@
     "main",
     "section_L36UFW",
     "ingredients_nqJcBd",
+    "content_cards_LHCdKx",
     "qa_mGGXch",
     "carousel_yXky9f",
     "product_list_9feBaz",
