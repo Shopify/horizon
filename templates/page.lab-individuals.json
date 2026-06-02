@@ -781,326 +781,6 @@
         "padding-block-end": 80
       }
     },
-    "section_XCigD6": {
-      "type": "section",
-      "blocks": {
-        "text_i7CUyL": {
-          "type": "text",
-          "settings": {
-            "text": "<h2>enquiry form</h2>",
-            "width": "100%",
-            "max_width": "normal",
-            "alignment": "center",
-            "type_preset": "rte",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "contact_form_MMkJqC": {
-          "type": "contact-form",
-          "settings": {
-            "width": "custom",
-            "custom_width": 50,
-            "width_mobile": "custom",
-            "custom_width_mobile": 100,
-            "reason_for_enquiry_options": "General enquiry\nProduct information\nTrade & wholesale\nPress & media\nOther",
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "submit-button": {
-              "type": "contact-form-submit-button",
-              "static": true,
-              "settings": {
-                "label": "Submit",
-                "style_class": "button",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": []
-        }
-      },
-      "block_order": [
-        "text_i7CUyL",
-        "contact_form_MMkJqC"
-      ],
-      "name": "t:names.contact_form",
-      "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 32,
-        "show_intro": false,
-        "intro_heading": "",
-        "intro_description": "",
-        "stack_columns_until_1001": false,
-        "heading_min_height": 0,
-        "description_min_height": 0,
-        "show_multicolumn_button": false,
-        "multicolumn_button_label": "Shop now",
-        "multicolumn_button_link": "",
-        "multicolumn_button_open_in_new_tab": false,
-        "show_image_border": false,
-        "image_border_color": "#ffffff",
-        "image_border_position": "inside",
-        "section_width": "page-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "color_scheme": "scheme-1",
-        "background_media": "none",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_radius": 0,
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "padding-block-start": 32,
-        "padding-block-end": 32
-      }
-    },
-    "section_iTWTmW": {
-      "type": "section",
-      "blocks": {
-        "group_t9JJrq": {
-          "type": "group",
-          "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 24,
-            "width": "custom",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "link": "",
-            "open_in_new_tab": false,
-            "placeholder": "",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "text_m8TxH6": {
-              "type": "text",
-              "name": "t:names.heading",
-              "settings": {
-                "text": "<p>Workshops</p>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h2",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 12,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "text_VAWRAk": {
-              "type": "text",
-              "name": "t:names.heading",
-              "disabled": true,
-              "settings": {
-                "text": "<h4>A scent service for luxury brands, rooted in nature</h4>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "text_Ycwbgm": {
-              "type": "text",
-              "settings": {
-                "text": "<p>Explore how scent shapes perception, reveals memory and reconnects us to the landscapes we inhabit.<br/><br/>Our workshops are a fun and immersive exploration into the world of olflactory story telling and natural botanicals.</p>",
-                "width": "100%",
-                "max_width": "none",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "button_fJPih8": {
-              "type": "button",
-              "name": "t:names.button",
-              "settings": {
-                "label": "Discover our workshops",
-                "link": "shopify://collections/all",
-                "open_in_new_tab": false,
-                "style_class": "button",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "text_m8TxH6",
-            "text_VAWRAk",
-            "text_Ycwbgm",
-            "button_fJPih8"
-          ]
-        },
-        "image_7mMbQP": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/IMG_4256.jpg",
-            "link": "",
-            "border": "solid",
-            "border_width": 1,
-            "border_opacity": 19,
-            "border_radius": 16,
-            "image_border_padding": 8,
-            "image_ratio": "adapt",
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "group_t9JJrq",
-        "image_7mMbQP"
-      ],
-      "name": "t:names.image_with_text",
-      "settings": {
-        "content_direction": "row",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 64,
-        "show_intro": false,
-        "intro_heading": "",
-        "intro_description": "",
-        "stack_columns_until_1001": false,
-        "heading_min_height": 0,
-        "description_min_height": 0,
-        "show_multicolumn_button": false,
-        "multicolumn_button_label": "Shop now",
-        "multicolumn_button_link": "",
-        "multicolumn_button_open_in_new_tab": false,
-        "show_image_border": false,
-        "image_border_color": "#ffffff",
-        "image_border_position": "inside",
-        "section_width": "page-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "color_scheme": "",
-        "background_media": "none",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_radius": 0,
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "padding-block-start": 40,
-        "padding-block-end": 80
-      }
-    },
     "section_4mMBdd": {
       "type": "section",
       "blocks": {
@@ -1703,70 +1383,6 @@
         "padding-block-end": 60
       }
     },
-    "ingredients_qAqXba": {
-      "type": "ingredients",
-      "blocks": {
-        "ingredient_ixGbRR": {
-          "type": "ingredient",
-          "settings": {
-            "title": "Honey",
-            "description": "<p>A natural antibacterial and antioxidant. Acts as a dietary supplement for cardiovascular and immune health. Enhances digestion.</p>",
-            "image": "shopify://shop_images/6886308d49247233db8c1cb0_HONEY_ILLUSTRATION-p-500_1.png"
-          }
-        },
-        "ingredient_YACFKk": {
-          "type": "ingredient",
-          "settings": {
-            "title": "Mediterranean Sea Water",
-            "description": "<p>Renowned for its ability to restore the body's homeostasis, addressing imbalances that contribute to various pathologies.</p>",
-            "image": "shopify://shop_images/68c9b40545040b9db7dee7f2_SEA_POLAROID3.png"
-          }
-        },
-        "ingredient_QrpCNr": {
-          "type": "ingredient",
-          "settings": {
-            "title": "Mastic Pistacia Lentiscus",
-            "description": "<p>A bioactive resin with antibacterial, antiseptic, and wound-healing  capabilities, it further supports emotional well-being through its  aromachological benefits, acting as a natural stimulant with uplifting  and mood-enhancing effects that promote vitality.</p>",
-            "image": "shopify://shop_images/68861fa4192044cdab14729f_MASTIC_ILLUSTRATION.png"
-          }
-        },
-        "ingredient_krTHgU": {
-          "type": "ingredient",
-          "settings": {
-            "title": "Citrus Lemon",
-            "description": "<p>A natural source of diuretic, purifying, antioxidant, and bacteriostatic properties. </p>",
-            "image": "shopify://shop_images/68861fa4ad2c5c0d13872c0c_LEMON_ILLUSTRATION-p-500_1.png"
-          }
-        },
-        "ingredient_MPLTYN": {
-          "type": "ingredient",
-          "settings": {
-            "title": "Rosemary Salvia rosmarinus",
-            "description": "<p>Known as the “Mediterranean Ginseng,” this adaptogenic plant offers potent  anti-aging effects, enhancing joint, muscle, and skin health. Improves  memory and focus. Respiratory benefits, particularly in addressing  congestion and liver care.</p>",
-            "image": "shopify://shop_images/68861fa431a371dd91d95772_ROSEMARY_ILLUSTRATION.png"
-          }
-        }
-      },
-      "block_order": [
-        "ingredient_ixGbRR",
-        "ingredient_YACFKk",
-        "ingredient_QrpCNr",
-        "ingredient_krTHgU",
-        "ingredient_MPLTYN"
-      ],
-      "name": "Ingredients",
-      "settings": {
-        "heading": "Bursting With Botanicals",
-        "description": "<p>Discover the hero botanicals infused within our aperitivo. All ingredients are 100% natural and organically grown or harvested directly from the Cala Falcó estate.</p>",
-        "section_width": "page-width",
-        "color_scheme": "",
-        "arrow_size": 52,
-        "button_label": "",
-        "button_link": "",
-        "padding-block-start": 60,
-        "padding-block-end": 80
-      }
-    },
     "section_C44ezp": {
       "type": "section",
       "blocks": {
@@ -2072,6 +1688,295 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "ingredients_qAqXba": {
+      "type": "ingredients",
+      "blocks": {
+        "ingredient_ixGbRR": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Honey",
+            "description": "<p>A natural antibacterial and antioxidant. Acts as a dietary supplement for cardiovascular and immune health. Enhances digestion.</p>",
+            "image": "shopify://shop_images/6886308d49247233db8c1cb0_HONEY_ILLUSTRATION-p-500_1.png"
+          }
+        },
+        "ingredient_YACFKk": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Mediterranean Sea Water",
+            "description": "<p>Renowned for its ability to restore the body's homeostasis, addressing imbalances that contribute to various pathologies.</p>",
+            "image": "shopify://shop_images/68c9b40545040b9db7dee7f2_SEA_POLAROID3.png"
+          }
+        },
+        "ingredient_QrpCNr": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Mastic Pistacia Lentiscus",
+            "description": "<p>A bioactive resin with antibacterial, antiseptic, and wound-healing  capabilities, it further supports emotional well-being through its  aromachological benefits, acting as a natural stimulant with uplifting  and mood-enhancing effects that promote vitality.</p>",
+            "image": "shopify://shop_images/68861fa4192044cdab14729f_MASTIC_ILLUSTRATION.png"
+          }
+        },
+        "ingredient_krTHgU": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Citrus Lemon",
+            "description": "<p>A natural source of diuretic, purifying, antioxidant, and bacteriostatic properties. </p>",
+            "image": "shopify://shop_images/68861fa4ad2c5c0d13872c0c_LEMON_ILLUSTRATION-p-500_1.png"
+          }
+        },
+        "ingredient_MPLTYN": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Rosemary Salvia rosmarinus",
+            "description": "<p>Known as the “Mediterranean Ginseng,” this adaptogenic plant offers potent  anti-aging effects, enhancing joint, muscle, and skin health. Improves  memory and focus. Respiratory benefits, particularly in addressing  congestion and liver care.</p>",
+            "image": "shopify://shop_images/68861fa431a371dd91d95772_ROSEMARY_ILLUSTRATION.png"
+          }
+        }
+      },
+      "block_order": [
+        "ingredient_ixGbRR",
+        "ingredient_YACFKk",
+        "ingredient_QrpCNr",
+        "ingredient_krTHgU",
+        "ingredient_MPLTYN"
+      ],
+      "name": "Ingredients",
+      "settings": {
+        "heading": "Bursting With Botanicals",
+        "description": "<p>Discover the hero botanicals infused within our aperitivo. All ingredients are 100% natural and organically grown or harvested directly from the Cala Falcó estate.</p>",
+        "section_width": "page-width",
+        "color_scheme": "",
+        "arrow_size": 52,
+        "button_label": "",
+        "button_link": "",
+        "padding-block-start": 60,
+        "padding-block-end": 80
+      }
+    },
+    "hero_YXpkpt": {
+      "type": "hero",
+      "blocks": {
+        "text_3rLkKc": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Cala Falcó Lab Workshops</p>",
+            "width": "fit-content",
+            "max_width": "narrow",
+            "alignment": "left",
+            "type_preset": "h2",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "text_FbPAPa": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Explore how scent shapes perception, reveals memory and reconnects us to the landscapes we inhabit.<br/><br/>Our workshops are a fun and immersive exploration into the world of olflactory story telling and natural botanicals.</p>",
+            "width": "fit-content",
+            "max_width": "narrow",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 32,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "button_iWa9Qw": {
+          "type": "button",
+          "name": "t:names.button",
+          "settings": {
+            "label": "Discover Our Workshops",
+            "link": "shopify://pages/lab",
+            "open_in_new_tab": false,
+            "style_class": "button",
+            "width": "fit-content",
+            "custom_width": 100,
+            "width_mobile": "fit-content",
+            "custom_width_mobile": 100
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_3rLkKc",
+        "text_FbPAPa",
+        "button_iWa9Qw"
+      ],
+      "name": "t:names.hero",
+      "settings": {
+        "media_type_1": "image",
+        "image_1": "shopify://shop_images/Mask_group_21.png",
+        "media_type_2": "image",
+        "stack_media_on_mobile": false,
+        "custom_mobile_media": false,
+        "media_type_1_mobile": "image",
+        "media_type_2_mobile": "image",
+        "link": "",
+        "open_in_new_tab": false,
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 16,
+        "section_width": "page-width",
+        "section_height": "medium",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-cfa9c273-456f-45a2-b18d-d73976dc71f5",
+        "toggle_overlay": true,
+        "overlay_color": "#000000eb",
+        "overlay_style": "gradient",
+        "gradient_direction": "to top",
+        "blurred_reflection": false,
+        "reflection_opacity": 75,
+        "enable_module_frame": false,
+        "module_frame_padding": 16,
+        "module_frame_radius": 20,
+        "module_frame_border_width": 1,
+        "content_padding_block_start": 0,
+        "content_padding_block_end": 0,
+        "content_padding_inline_start": 0,
+        "content_padding_inline_end": 0,
+        "show_scroll_prompt": false,
+        "scroll_prompt_text": "Scroll down for more",
+        "scroll_frame_inset": 0,
+        "padding-block-start": 40,
+        "padding-block-end": 40
+      }
+    },
+    "section_XCigD6": {
+      "type": "section",
+      "blocks": {
+        "text_i7CUyL": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>enquiry form</h2>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "center",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "contact_form_MMkJqC": {
+          "type": "contact-form",
+          "settings": {
+            "width": "custom",
+            "custom_width": 50,
+            "width_mobile": "custom",
+            "custom_width_mobile": 100,
+            "reason_for_enquiry_options": "General enquiry\nProduct information\nTrade & wholesale\nPress & media\nOther",
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "submit-button": {
+              "type": "contact-form-submit-button",
+              "static": true,
+              "settings": {
+                "label": "Submit",
+                "style_class": "button",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        }
+      },
+      "block_order": [
+        "text_i7CUyL",
+        "contact_form_MMkJqC"
+      ],
+      "name": "t:names.contact_form",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 32,
+        "show_intro": false,
+        "intro_heading": "",
+        "intro_description": "",
+        "stack_columns_until_1001": false,
+        "heading_min_height": 0,
+        "description_min_height": 0,
+        "show_multicolumn_button": false,
+        "multicolumn_button_label": "Shop now",
+        "multicolumn_button_link": "",
+        "multicolumn_button_open_in_new_tab": false,
+        "show_image_border": false,
+        "image_border_color": "#ffffff",
+        "image_border_position": "inside",
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-1",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 32,
+        "padding-block-end": 32
+      }
     }
   },
   "order": [
@@ -2080,12 +1985,12 @@
     "ingredients_fKEj77",
     "section_Mh7fFy",
     "section_atXPT4",
-    "section_iTWTmW",
     "section_4mMBdd",
     "testimonials_qQi6Qy",
     "section_RGaxNH",
     "section_C44ezp",
     "ingredients_qAqXba",
+    "hero_YXpkpt",
     "section_XCigD6"
   ]
 }
