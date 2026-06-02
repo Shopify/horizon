@@ -41,6 +41,9 @@
 
 <div class="mega-menu-featured-collections">
   <div class="mega-menu-featured-collections__links">
+    <h5 class="mega-menu-featured-collections__heading">
+      {{ parent_link.title | escape }}
+    </h5>
     <ul class="mega-menu-featured-collections__links-list list-unstyled">
       {% for link in parent_link.links %}
         <li class="mega-menu-featured-collections__links-item">

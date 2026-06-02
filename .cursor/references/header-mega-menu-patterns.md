@@ -79,6 +79,23 @@ assign featured_pages = parent_page.metafields.custom.megamenu_featured_pages.va
 - Hidden submenus use `content-visibility: auto` without a fixed `contain-intrinsic-size` (a fixed 500px intrinsic size caused first-open clipping).
 - **Do not** disable `clip-path` for featured collections without replacing the reveal system — dropdowns will not show.
 
+## Submenu list heading
+
+- Add the top-level nav item title as non-clickable heading above submenu links in both:
+  - `snippets/mega-menu-list.liquid` (`.mega-menu__list-heading`)
+  - `snippets/mega-menu-featured-collections.liquid` (`.mega-menu-featured-collections__heading`)
+- Style shared heading tokens in `blocks/_header-menu.liquid` (H5 typography + uppercase) so the heading is visually separate from link rows.
+
+## Dropdown image hover zoom
+
+- Apply subtle zoom to dropdown images in `blocks/_header-menu.liquid`:
+  - `.mega-menu .resource-card__image` (featured cards/products/collections)
+  - `.mega-menu__link-image` (collection image link mode)
+- Trigger on hover/focus-within and use existing motion tokens:
+  - `transform: scale(var(--hover-subtle-zoom-amount, 1.015))`
+  - `transition: transform var(--hover-transition-duration) var(--hover-transition-timing)`
+- Respect reduced motion: disable transition and keep `transform: scale(1)` in `@media (prefers-reduced-motion: reduce)`.
+
 ## Featured collections panel: no scroll, compact cards
 
 - **Symptom:** Mega menu shows a vertical scrollbar; collection cards feel too large.

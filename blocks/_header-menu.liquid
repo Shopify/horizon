@@ -440,7 +440,7 @@
     width: 90vw;
     max-width: 90vw;
     top: calc(
-      100% - 1px + var(--border-bottom-width) - (var(--full-open-header-height) - var(--submenu-height))
+      100% - 20px + var(--border-bottom-width) - (var(--full-open-header-height) - var(--submenu-height))
         + var(--submenu-offset)
     );
     z-index: var(--layer-header-menu);
@@ -655,6 +655,11 @@
     padding-block: var(--padding-sm) 0;
   }
 
+  .mega-menu__link:has(.mega-menu__link-image) {
+    overflow: hidden;
+    border-radius: var(--menu-image-border-radius);
+  }
+
   .mega-menu__link-image {
     width: 100%;
     position: relative;
@@ -699,7 +704,7 @@
 
     @media screen and (min-width: 990px) {
       grid-template-columns: repeat(var(--menu-columns-desktop), minmax(0, 1fr));
-      padding: 2rem;
+      padding: 2rem 6rem !important;
     }
 
   }
@@ -748,6 +753,23 @@
     flex-direction: column;
     gap: var(--gap-md);
     min-width: 0;
+  }
+
+  .mega-menu-featured-collections__heading,
+  .mega-menu__list-heading {
+    margin: 0;
+    padding: 0 0 var(--padding-2xs);
+    font-family: var(--font-h5--family);
+    font-style: var(--font-h5--style);
+    font-weight: var(--font-h5--weight);
+    font-size: var(--font-size--h5);
+    line-height: var(--line-height--heading);
+    text-transform: uppercase;
+    color: var(--menu-parent-font-color);
+  }
+
+  .mega-menu__list-heading {
+    margin-block-end: var(--padding-xs);
   }
 
   .mega-menu-featured-collections__links-list {
@@ -836,8 +858,11 @@
     .mega-menu-featured-collections__link,
     .mega-menu__column .mega-menu__link:not(:has(.mega-menu__link-image)),
     .mega-menu-featured-collections__link-icon,
-    .mega-menu__link-icon {
+    .mega-menu__link-icon,
+    #header-component .mega-menu .resource-card__image,
+    #header-component .mega-menu .mega-menu__link-image {
       transition: none;
+      transform: scale(1);
     }
   }
 
@@ -1011,6 +1036,32 @@
   .mega-menu .resource-card__image-placeholder,
   .mega-menu .resource-card__collection-image {
     border-radius: 16px;
+  }
+
+  /*
+   * Dropdown image hover zoom.
+   * base.css disables subtle-zoom inside .header — use #header-component for higher specificity.
+   */
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    #header-component .mega-menu .resource-card__media {
+      overflow: hidden;
+    }
+
+    #header-component .mega-menu .resource-card__image,
+    #header-component .mega-menu .mega-menu__link-image {
+      transform: scale(1);
+      transition: transform var(--hover-transition-duration, 0.25s) var(--hover-transition-timing, ease);
+      will-change: transform;
+    }
+
+    #header-component .mega-menu .resource-card:hover .resource-card__image,
+    #header-component .mega-menu .resource-card:focus-within .resource-card__image,
+    #header-component .mega-menu .mega-menu-featured-collections__card:hover .resource-card__image,
+    #header-component .mega-menu .mega-menu__content-list-item:hover .resource-card__image,
+    #header-component .mega-menu .mega-menu__link:hover .mega-menu__link-image,
+    #header-component .mega-menu .mega-menu__link:focus-visible .mega-menu__link-image {
+      transform: scale(var(--hover-subtle-zoom-amount, 1.015));
+    }
   }
 
   .mega-menu .resource-card__image--secondary {
