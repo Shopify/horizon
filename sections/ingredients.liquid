@@ -93,24 +93,24 @@
     </div>
 
     <button
-      class="ingredients__arrow ingredients__arrow--prev button button-unstyled button-unstyled--transparent"
+      class="ingredients__arrow ingredients__arrow--prev button button-unstyled"
       type="button"
       data-prev
       aria-label="{{ 'accessibility.slideshow_previous' | t }}"
     >
       <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M11.3536 4.03544C11.5488 3.84018 11.5488 3.52359 11.3536 3.32833L8.17157 0.146351C7.97631 -0.0489113 7.65973 -0.0489113 7.46447 0.146351C7.2692 0.341613 7.2692 0.658195 7.46447 0.853458L10.2929 3.68188L7.46447 6.51031C7.2692 6.70557 7.2692 7.02216 7.46447 7.21742C7.65973 7.41268 7.97631 7.41268 8.17157 7.21742L11.3536 4.03544ZM0 3.68188V4.18188H11V3.68188V3.18188H0V3.68188Z" fill="#31331D"/>
+        <path d="M11.3536 4.03544C11.5488 3.84018 11.5488 3.52359 11.3536 3.32833L8.17157 0.146351C7.97631 -0.0489113 7.65973 -0.0489113 7.46447 0.146351C7.2692 0.341613 7.2692 0.658195 7.46447 0.853458L10.2929 3.68188L7.46447 6.51031C7.2692 6.70557 7.2692 7.02216 7.46447 7.21742C7.65973 7.41268 7.97631 7.41268 8.17157 7.21742L11.3536 4.03544ZM0 3.68188V4.18188H11V3.68188V3.18188H0V3.68188Z" fill="currentColor"/>
       </svg>
     </button>
 
     <button
-      class="ingredients__arrow ingredients__arrow--next button button-unstyled button-unstyled--transparent"
+      class="ingredients__arrow ingredients__arrow--next button button-unstyled"
       type="button"
       data-next
       aria-label="{{ 'accessibility.slideshow_next' | t }}"
     >
       <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M11.3536 4.03544C11.5488 3.84018 11.5488 3.52359 11.3536 3.32833L8.17157 0.146351C7.97631 -0.0489113 7.65973 -0.0489113 7.46447 0.146351C7.2692 0.341613 7.2692 0.658195 7.46447 0.853458L10.2929 3.68188L7.46447 6.51031C7.2692 6.70557 7.2692 7.02216 7.46447 7.21742C7.65973 7.41268 7.97631 7.41268 8.17157 7.21742L11.3536 4.03544ZM0 3.68188V4.18188H11V3.68188V3.18188H0V3.68188Z" fill="#31331D"/>
+        <path d="M11.3536 4.03544C11.5488 3.84018 11.5488 3.52359 11.3536 3.32833L8.17157 0.146351C7.97631 -0.0489113 7.65973 -0.0489113 7.46447 0.146351C7.2692 0.341613 7.2692 0.658195 7.46447 0.853458L10.2929 3.68188L7.46447 6.51031C7.2692 6.70557 7.2692 7.02216 7.46447 7.21742C7.65973 7.41268 7.97631 7.41268 8.17157 7.21742L11.3536 4.03544ZM0 3.68188V4.18188H11V3.68188V3.18188H0V3.68188Z" fill="currentColor"/>
       </svg>
     </button>
   </ingredients-swiper>
@@ -453,8 +453,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: #F9D8AF;
-    color: #31331D;
+    background-color: var(--color-primary-button-background);
+    color: var(--color-primary-button-text);
   }
 
   .ingredients__arrow:focus-visible {

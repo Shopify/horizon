@@ -4764,15 +4764,20 @@ slideshow-component.resource-list__carousel
   height: var(--icon-size-sm);
 }
 
-/* Primary CTA hover fill — featured collection & featured blog carousel arrows */
+/* Primary CTA hover fill — carousel / section nav icon buttons */
 :is(
     .resource-list__carousel slideshow-arrows .slideshow-control--shape-none,
     .resource-list__carousel slideshow-arrows .slideshow-control--shape-circle,
     .resource-list__carousel slideshow-arrows .slideshow-control--shape-square,
-    .featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control
+    .featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control,
+    .ingredients__arrow,
+    .testimonials-swiper__nav-button
   ) {
+  position: relative;
   isolation: isolate;
   overflow: hidden;
+  background-color: var(--color-primary-button-background);
+  color: var(--color-primary-button-text);
   --button-hover-fill-duration: 0.4s;
   transition: color var(--animation-speed) var(--animation-easing);
 }
@@ -4781,7 +4786,9 @@ slideshow-component.resource-list__carousel
     .resource-list__carousel slideshow-arrows .slideshow-control--shape-none,
     .resource-list__carousel slideshow-arrows .slideshow-control--shape-circle,
     .resource-list__carousel slideshow-arrows .slideshow-control--shape-square,
-    .featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control
+    .featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control,
+    .ingredients__arrow,
+    .testimonials-swiper__nav-button
   )::before {
   content: '';
   position: absolute;
@@ -4797,7 +4804,9 @@ slideshow-component.resource-list__carousel
 
 .resource-list__carousel slideshow-arrows .slideshow-control--shape-none .svg-wrapper,
 .resource-list__carousel slideshow-arrows .slideshow-control--shape-none svg,
-.featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control::after {
+.featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control::after,
+.ingredients__arrow svg,
+.testimonials-swiper__nav-button svg {
   position: relative;
   z-index: 1;
 }
@@ -4807,13 +4816,17 @@ slideshow-component.resource-list__carousel
       .resource-list__carousel slideshow-arrows .slideshow-control--shape-none,
       .resource-list__carousel slideshow-arrows .slideshow-control--shape-circle,
       .resource-list__carousel slideshow-arrows .slideshow-control--shape-square,
-      .featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control
+      .featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control,
+    .ingredients__arrow,
+    .testimonials-swiper__nav-button
     ):hover:not([disabled]):not([aria-disabled='true'])::before,
   :is(
       .resource-list__carousel slideshow-arrows .slideshow-control--shape-none,
       .resource-list__carousel slideshow-arrows .slideshow-control--shape-circle,
       .resource-list__carousel slideshow-arrows .slideshow-control--shape-square,
-      .featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control
+      .featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control,
+      .ingredients__arrow,
+      .testimonials-swiper__nav-button
     ):focus-visible:not([disabled]):not([aria-disabled='true'])::before {
     transform: scaleY(1);
   }
@@ -4822,13 +4835,17 @@ slideshow-component.resource-list__carousel
       .resource-list__carousel slideshow-arrows .slideshow-control--shape-none,
       .resource-list__carousel slideshow-arrows .slideshow-control--shape-circle,
       .resource-list__carousel slideshow-arrows .slideshow-control--shape-square,
-      .featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control
+      .featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control,
+      .ingredients__arrow,
+      .testimonials-swiper__nav-button
     ):hover:not([disabled]):not([aria-disabled='true']),
   :is(
       .resource-list__carousel slideshow-arrows .slideshow-control--shape-none,
       .resource-list__carousel slideshow-arrows .slideshow-control--shape-circle,
       .resource-list__carousel slideshow-arrows .slideshow-control--shape-square,
-      .featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control
+      .featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control,
+      .ingredients__arrow,
+      .testimonials-swiper__nav-button
     ):focus-visible:not([disabled]):not([aria-disabled='true']) {
     color: var(--color-primary-button-hover-text);
   }
@@ -4850,7 +4867,9 @@ slideshow-component.resource-list__carousel
       .resource-list__carousel slideshow-arrows .slideshow-control--shape-none,
       .resource-list__carousel slideshow-arrows .slideshow-control--shape-circle,
       .resource-list__carousel slideshow-arrows .slideshow-control--shape-square,
-      .featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control
+      .featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control,
+      .ingredients__arrow,
+      .testimonials-swiper__nav-button
     )::before {
     display: none;
   }
@@ -4859,13 +4878,17 @@ slideshow-component.resource-list__carousel
       .resource-list__carousel slideshow-arrows .slideshow-control--shape-none,
       .resource-list__carousel slideshow-arrows .slideshow-control--shape-circle,
       .resource-list__carousel slideshow-arrows .slideshow-control--shape-square,
-      .featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control
+      .featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control,
+      .ingredients__arrow,
+      .testimonials-swiper__nav-button
     ):hover:not([disabled]):not([aria-disabled='true']),
   :is(
       .resource-list__carousel slideshow-arrows .slideshow-control--shape-none,
       .resource-list__carousel slideshow-arrows .slideshow-control--shape-circle,
       .resource-list__carousel slideshow-arrows .slideshow-control--shape-square,
-      .featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control
+      .featured-blog-posts-section--carousel .resource-list__carousel slideshow-arrows .slideshow-control,
+      .ingredients__arrow,
+      .testimonials-swiper__nav-button
     ):focus-visible:not([disabled]):not([aria-disabled='true']) {
     background-color: var(--color-primary-button-hover-background);
     color: var(--color-primary-button-hover-text);
