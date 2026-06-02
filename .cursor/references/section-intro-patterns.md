@@ -20,7 +20,7 @@ Optional primary CTA below the column grid (centered), not a block:
   - `multicolumn_button_label` (`text`)
   - `multicolumn_button_link` (`url`)
   - `multicolumn_button_open_in_new_tab` (`checkbox`)
-- Rendered in `snippets/section.liquid` after `.section-content-wrapper`, inside `.custom-section-content`.
+- Rendered in `snippets/section.liquid` as the last child of `.section-content-wrapper` (not a sibling). Class `section-content-wrapper--with-footer-cta` sets `height: auto` and `flex-wrap: wrap` so the full-width button row stays inside section padding and does not overlap the next section.
 - Uses theme `.button` markup (label + arrow SVG) so primary hover fill from `base.css` applies.
 - Show when `show_multicolumn_button` and label are set; empty link uses `role="link"` + `aria-disabled="true"` like `snippets/button.liquid`.
 
