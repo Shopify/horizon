@@ -270,6 +270,10 @@
         "stack_columns_until_1001": false,
         "heading_min_height": 0,
         "description_min_height": 0,
+        "show_multicolumn_button": false,
+        "multicolumn_button_label": "Shop now",
+        "multicolumn_button_link": "",
+        "multicolumn_button_open_in_new_tab": false,
         "show_image_border": true,
         "image_border_color": "#dfdfdf",
         "image_border_position": "outside",
@@ -523,6 +527,10 @@
         "stack_columns_until_1001": false,
         "heading_min_height": 0,
         "description_min_height": 0,
+        "show_multicolumn_button": false,
+        "multicolumn_button_label": "Shop now",
+        "multicolumn_button_link": "",
+        "multicolumn_button_open_in_new_tab": false,
         "show_image_border": false,
         "image_border_color": "#ffffff",
         "image_border_position": "inside",
@@ -747,6 +755,10 @@
         "stack_columns_until_1001": false,
         "heading_min_height": 0,
         "description_min_height": 0,
+        "show_multicolumn_button": false,
+        "multicolumn_button_label": "Shop now",
+        "multicolumn_button_link": "",
+        "multicolumn_button_open_in_new_tab": false,
         "show_image_border": false,
         "image_border_color": "#ffffff",
         "image_border_position": "inside",
@@ -850,6 +862,10 @@
         "stack_columns_until_1001": false,
         "heading_min_height": 0,
         "description_min_height": 0,
+        "show_multicolumn_button": false,
+        "multicolumn_button_label": "Shop now",
+        "multicolumn_button_link": "",
+        "multicolumn_button_open_in_new_tab": false,
         "show_image_border": false,
         "image_border_color": "#ffffff",
         "image_border_position": "inside",
@@ -1059,6 +1075,10 @@
         "stack_columns_until_1001": false,
         "heading_min_height": 0,
         "description_min_height": 0,
+        "show_multicolumn_button": false,
+        "multicolumn_button_label": "Shop now",
+        "multicolumn_button_link": "",
+        "multicolumn_button_open_in_new_tab": false,
         "show_image_border": false,
         "image_border_color": "#ffffff",
         "image_border_position": "inside",
@@ -1361,6 +1381,10 @@
         "stack_columns_until_1001": false,
         "heading_min_height": 0,
         "description_min_height": 0,
+        "show_multicolumn_button": false,
+        "multicolumn_button_label": "Shop now",
+        "multicolumn_button_link": "",
+        "multicolumn_button_open_in_new_tab": false,
         "show_image_border": false,
         "image_border_color": "#ffffff",
         "image_border_position": "inside",
@@ -1653,6 +1677,10 @@
         "stack_columns_until_1001": false,
         "heading_min_height": 0,
         "description_min_height": 0,
+        "show_multicolumn_button": false,
+        "multicolumn_button_label": "Shop now",
+        "multicolumn_button_link": "",
+        "multicolumn_button_open_in_new_tab": false,
         "show_image_border": true,
         "image_border_color": "#dfdfdf",
         "image_border_position": "outside",
@@ -1673,6 +1701,70 @@
         "gradient_direction": "to top",
         "padding-block-start": 60,
         "padding-block-end": 60
+      }
+    },
+    "ingredients_qAqXba": {
+      "type": "ingredients",
+      "blocks": {
+        "ingredient_ixGbRR": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Honey",
+            "description": "<p>A natural antibacterial and antioxidant. Acts as a dietary supplement for cardiovascular and immune health. Enhances digestion.</p>",
+            "image": "shopify://shop_images/6886308d49247233db8c1cb0_HONEY_ILLUSTRATION-p-500_1.png"
+          }
+        },
+        "ingredient_YACFKk": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Mediterranean Sea Water",
+            "description": "<p>Renowned for its ability to restore the body's homeostasis, addressing imbalances that contribute to various pathologies.</p>",
+            "image": "shopify://shop_images/68c9b40545040b9db7dee7f2_SEA_POLAROID3.png"
+          }
+        },
+        "ingredient_QrpCNr": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Mastic Pistacia Lentiscus",
+            "description": "<p>A bioactive resin with antibacterial, antiseptic, and wound-healing  capabilities, it further supports emotional well-being through its  aromachological benefits, acting as a natural stimulant with uplifting  and mood-enhancing effects that promote vitality.</p>",
+            "image": "shopify://shop_images/68861fa4192044cdab14729f_MASTIC_ILLUSTRATION.png"
+          }
+        },
+        "ingredient_krTHgU": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Citrus Lemon",
+            "description": "<p>A natural source of diuretic, purifying, antioxidant, and bacteriostatic properties. </p>",
+            "image": "shopify://shop_images/68861fa4ad2c5c0d13872c0c_LEMON_ILLUSTRATION-p-500_1.png"
+          }
+        },
+        "ingredient_MPLTYN": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Rosemary Salvia rosmarinus",
+            "description": "<p>Known as the “Mediterranean Ginseng,” this adaptogenic plant offers potent  anti-aging effects, enhancing joint, muscle, and skin health. Improves  memory and focus. Respiratory benefits, particularly in addressing  congestion and liver care.</p>",
+            "image": "shopify://shop_images/68861fa431a371dd91d95772_ROSEMARY_ILLUSTRATION.png"
+          }
+        }
+      },
+      "block_order": [
+        "ingredient_ixGbRR",
+        "ingredient_YACFKk",
+        "ingredient_QrpCNr",
+        "ingredient_krTHgU",
+        "ingredient_MPLTYN"
+      ],
+      "name": "Ingredients",
+      "settings": {
+        "heading": "Bursting With Botanicals",
+        "description": "<p>Discover the hero botanicals infused within our aperitivo. All ingredients are 100% natural and organically grown or harvested directly from the Cala Falcó estate.</p>",
+        "section_width": "page-width",
+        "color_scheme": "",
+        "arrow_size": 52,
+        "button_label": "",
+        "button_link": "",
+        "padding-block-start": 60,
+        "padding-block-end": 80
       }
     },
     "section_C44ezp": {
@@ -1955,6 +2047,10 @@
         "stack_columns_until_1001": false,
         "heading_min_height": 0,
         "description_min_height": 0,
+        "show_multicolumn_button": false,
+        "multicolumn_button_label": "Shop now",
+        "multicolumn_button_link": "",
+        "multicolumn_button_open_in_new_tab": false,
         "show_image_border": false,
         "image_border_color": "#ffffff",
         "image_border_position": "inside",
@@ -1984,11 +2080,12 @@
     "ingredients_fKEj77",
     "section_Mh7fFy",
     "section_atXPT4",
-    "section_XCigD6",
     "section_iTWTmW",
     "section_4mMBdd",
     "testimonials_qQi6Qy",
     "section_RGaxNH",
-    "section_C44ezp"
+    "section_C44ezp",
+    "ingredients_qAqXba",
+    "section_XCigD6"
   ]
 }
