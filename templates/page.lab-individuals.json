@@ -391,8 +391,16 @@
         "qa_item_THMXtL": {
           "type": "qa_item",
           "settings": {
-            "question": "What makes crafting a non-alcoholic aperitivo different?",
-            "answer": "<p>Alcohol naturally carries flavour and gives structure, so without it you have to build that depth in other ways. That means working carefully with extraction methods, infusion times and the balance of botanicals to create texture, length and complexity. It’s a slower, more deliberate process, but it’s also incredibly rewarding. When the balance is right, you get a drink that feels vibrant, layered and alive with the character of the plants themselves.</p>",
+            "question": "3. Artisanal Creation",
+            "answer": "<p>Our in-house perfumer and scent scientists carefully blend 100% natural botanicals to craft a fragrance that is deeply personal and uniquely yours. Each composition is created with precision, artistry, and an unwavering commitment to authenticity.</p>",
+            "open_by_default": false
+          }
+        },
+        "qa_item_XxPGzz": {
+          "type": "qa_item",
+          "settings": {
+            "question": "3. Artisanal Creation",
+            "answer": "<p>Our in-house perfumer and scent scientists carefully blend 100% natural botanicals to craft a fragrance that is deeply personal and uniquely yours. Each composition is created with precision, artistry, and an unwavering commitment to authenticity.</p>",
             "open_by_default": false
           }
         }
@@ -400,7 +408,8 @@
       "block_order": [
         "qa_item_qQBwQB",
         "qa_item_hQJTPK",
-        "qa_item_THMXtL"
+        "qa_item_THMXtL",
+        "qa_item_XxPGzz"
       ],
       "name": "QA",
       "settings": {
