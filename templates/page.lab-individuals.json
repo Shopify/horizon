@@ -369,65 +369,6 @@
         "padding-block-end": 0
       }
     },
-    "qa_xdy36T": {
-      "type": "qa",
-      "blocks": {
-        "qa_item_qQBwQB": {
-          "type": "qa_item",
-          "settings": {
-            "question": "1. scent discovery",
-            "answer": "<p>Through a personal discovery session, we explore your memories, emotions, and individuality, uncovering the essence of who you are and how you want to be experienced.</p>",
-            "open_by_default": true
-          }
-        },
-        "qa_item_hQJTPK": {
-          "type": "qa_item",
-          "settings": {
-            "question": "2. From Memory to Inspiration",
-            "answer": "<p>We curate a palette of natural notes that reflect your story. Translating moments, places, and feelings into a unique olfactory direction that is entirely your own.<br/></p>",
-            "open_by_default": false
-          }
-        },
-        "qa_item_THMXtL": {
-          "type": "qa_item",
-          "settings": {
-            "question": "3. Artisanal Creation",
-            "answer": "<p>Our in-house perfumer and scent scientists carefully blend 100% natural botanicals to craft a fragrance that is deeply personal and uniquely yours. Each composition is created with precision, artistry, and an unwavering commitment to authenticity.</p>",
-            "open_by_default": false
-          }
-        },
-        "qa_item_XxPGzz": {
-          "type": "qa_item",
-          "settings": {
-            "question": "3. Artisanal Creation",
-            "answer": "<p>Our in-house perfumer and scent scientists carefully blend 100% natural botanicals to craft a fragrance that is deeply personal and uniquely yours. Each composition is created with precision, artistry, and an unwavering commitment to authenticity.</p>",
-            "open_by_default": false
-          }
-        }
-      },
-      "block_order": [
-        "qa_item_qQBwQB",
-        "qa_item_hQJTPK",
-        "qa_item_THMXtL",
-        "qa_item_XxPGzz"
-      ],
-      "name": "QA",
-      "settings": {
-        "person_image": "shopify://shop_images/CalaFalco_25-114.jpg",
-        "heading": "CREATING A BESPOKE PERFUME",
-        "subheading": "A scent service for individuals looking to tell their unique scent story",
-        "description": "",
-        "person_name": "",
-        "person_title": "",
-        "button_label": "Shop now",
-        "button_link": "shopify://products/cala-falco-at-spring",
-        "section_width": "page-width",
-        "color_scheme": "",
-        "accordion_icon": "caret",
-        "padding-block-start": 0,
-        "padding-block-end": 80
-      }
-    },
     "section_Mh7fFy": {
       "type": "section",
       "blocks": {
@@ -1349,7 +1290,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<p>SO FONG is a schooner built in 1937 by the AH KING shipyard in Causeway Bay, Hong Kong. Commissioned by a Stockbroker for the purpose of circumnavigating the world with his son. Since then she has raced, sailed the world, worked as a diving and salvage vessel and acted as a spy ship before being captured by the Vietnamese militia.   Today, So Fong, or \"Beautiful Girl,\" romantically sails the waters of the Balearic Islands. It is here that we were commissioned to translate her incredible travels and tell the olfactory story through scent science for her owner. Following a deep dive into the history of her journeys we created a bespoke fragrance to that reflected her aromatic voyage and story, building a beautifully rich and complex palette.</p>",
+                "text": "<p>SO FONG is a schooner built in 1937 by the AH KING shipyard in Causeway Bay, Hong Kong. Commissioned by a Stockbroker for the purpose of circumnavigating the world with his son. </p><p>Since then she has raced, sailed the world, worked as a diving and salvage vessel and even acted as a spy ship before being captured by the Vietnamese militia. </p><p>  Today, So Fong sails the waters of the Balearic Islands. It is here that we were commissioned to translate her incredible travels and tell the olfactory story through scent science for her owner. Following a deep dive into the history of her journeys we created a bespoke fragrance to that reflected her aromatic voyage and story, building a beautifully rich and complex fragrance.</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -1754,8 +1695,8 @@
         "ingredient_ixGbRR": {
           "type": "ingredient",
           "settings": {
-            "title": "Honey",
-            "description": "<p>A natural antibacterial and antioxidant. Acts as a dietary supplement for cardiovascular and immune health. Enhances digestion.</p>",
+            "title": "Incense olibanum",
+            "description": "<p>AROMACHOLOGY:<br/>Promotes spiritual learning, releases fear, reduces stress, anxiety and nervous tension.</p>",
             "image": "shopify://shop_images/6886308d49247233db8c1cb0_HONEY_ILLUSTRATION-p-500_1.png"
           }
         },
@@ -1801,8 +1742,8 @@
       ],
       "name": "Ingredients",
       "settings": {
-        "heading": "Bursting With Botanicals",
-        "description": "<p>Discover the hero botanicals infused within our aperitivo. All ingredients are 100% natural and organically grown or harvested directly from the Cala Falcó estate.</p>",
+        "heading": "Aromatic palette",
+        "description": "<p>To distill the essence of a classic sailing ship we had to delve deep into the history of its travels and map out the broad and exotic botanical story. Our Scent Scientists expertly blended this into a unique fragrance.</p>",
         "section_width": "page-width",
         "color_scheme": "",
         "arrow_size": 52,
@@ -2042,7 +1983,6 @@
     "main",
     "section_Ec8PYR",
     "ingredients_fKEj77",
-    "qa_xdy36T",
     "section_Mh7fFy",
     "section_atXPT4",
     "section_4mMBdd",
