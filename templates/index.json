@@ -228,7 +228,7 @@
         "show_scroll_prompt": false,
         "scroll_prompt_text": "Scroll down for more",
         "scroll_frame_inset": 0,
-        "padding-block-start": 40,
+        "padding-block-start": 80,
         "padding-block-end": 40
       }
     },
@@ -308,6 +308,10 @@
         "stack_columns_until_1001": false,
         "heading_min_height": 0,
         "description_min_height": 0,
+        "show_multicolumn_button": false,
+        "multicolumn_button_label": "Shop now",
+        "multicolumn_button_link": "",
+        "multicolumn_button_open_in_new_tab": false,
         "show_image_border": false,
         "image_border_color": "#ffffff",
         "image_border_position": "inside",
@@ -326,8 +330,8 @@
         "overlay_color": "#00000026",
         "overlay_style": "solid",
         "gradient_direction": "to top",
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "padding-block-start": 40,
+        "padding-block-end": 40
       }
     },
     "section_BWE7mW": {
@@ -635,6 +639,10 @@
         "stack_columns_until_1001": false,
         "heading_min_height": 0,
         "description_min_height": 0,
+        "show_multicolumn_button": false,
+        "multicolumn_button_label": "Shop now",
+        "multicolumn_button_link": "",
+        "multicolumn_button_open_in_new_tab": false,
         "show_image_border": false,
         "image_border_color": "#ffffff",
         "image_border_position": "inside",
@@ -1102,6 +1110,10 @@
         "stack_columns_until_1001": true,
         "heading_min_height": 84,
         "description_min_height": 132,
+        "show_multicolumn_button": false,
+        "multicolumn_button_label": "Shop now",
+        "multicolumn_button_link": "",
+        "multicolumn_button_open_in_new_tab": false,
         "show_image_border": false,
         "image_border_color": "#ffffff",
         "image_border_position": "inside",
@@ -1120,8 +1132,8 @@
         "overlay_color": "#00000026",
         "overlay_style": "solid",
         "gradient_direction": "to top",
-        "padding-block-start": 0,
-        "padding-block-end": 60
+        "padding-block-start": 40,
+        "padding-block-end": 40
       }
     },
     "product_list_fa6P9H": {
