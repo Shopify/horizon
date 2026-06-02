@@ -4773,7 +4773,6 @@ slideshow-component.resource-list__carousel
     .ingredients__arrow,
     .testimonials-swiper__nav-button
   ) {
-  position: relative;
   isolation: isolate;
   overflow: hidden;
   background-color: var(--color-primary-button-background);
@@ -4781,6 +4780,11 @@ slideshow-component.resource-list__carousel
   --button-hover-fill-duration: 0.4s;
   transition: color var(--animation-speed) var(--animation-easing);
 }
+
+ .ingredients__arrow,
+    .testimonials-swiper__nav-button{
+      position: relative;
+    }
 
 :is(
     .resource-list__carousel slideshow-arrows .slideshow-control--shape-none,

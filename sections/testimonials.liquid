@@ -82,7 +82,18 @@
               </div>
 
               <div class="testimonials-card__media">
-                {% if block_settings.image != blank %}
+                {% if block_settings.video != blank %}
+                  {{
+                    block_settings.video
+                    | video_tag:
+                      class: 'testimonials-card__video',
+                      image_size: '2000x',
+                      controls: true,
+                      autoplay: false,
+                      loop: false,
+                      muted: false
+                  }}
+                {% elsif block_settings.image != blank %}
                   {{
                     block_settings.image
                     | image_url: width: 2000
@@ -390,6 +401,18 @@
     border-radius: 24px;
   }
 
+  .testimonials-card__video {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    border-radius: 24px;
+  }
+
   .testimonials-swiper__navigation {
     position: absolute;
     inset-inline-end: clamp(1.5rem, 3.2vw, 3rem);
@@ -585,6 +608,11 @@
           "type": "image_picker",
           "id": "image",
           "label": "t:settings.image"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "t:settings.video"
         },
         {
           "type": "text",

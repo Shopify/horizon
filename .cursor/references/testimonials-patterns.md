@@ -24,3 +24,11 @@ Slides must not expand past the viewport width. Use `min-width: 0` on `.testimon
 ## Image sizing
 
 Testimonial images use a fixed **16 / 9** landscape frame (`.testimonials-card__media` with `aspect-ratio: 16 / 9`). Images fill the frame with `object-fit: cover` and `object-position: center`, so every slide shows the same dimensions regardless of source aspect ratio. Same ratio on mobile and desktop.
+
+## Video in media frame
+
+Each testimonial block can optionally use an uploaded Shopify `video` (`block.settings.video`) in the same media slot as the image.
+
+- Render precedence: `video` first, then fallback to `image`.
+- Video uses `video_tag` with controls enabled (`autoplay: false`, `loop: false`) and class `.testimonials-card__video`.
+- `.testimonials-card__video` uses the same absolute-fill, border-radius, and object-fit styles as `.testimonials-card__image`, so it inherits the exact same shaped frame and inner border treatment from `.testimonials-card__media`.
