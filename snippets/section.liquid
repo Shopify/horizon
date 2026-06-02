@@ -95,6 +95,31 @@
     >
       {{ children }}
     </div>
+
+    {% if section.settings.show_multicolumn_button and section.settings.multicolumn_button_label != blank %}
+      <div class="custom-section__multicolumn-button">
+        <a
+          {% if section.settings.multicolumn_button_link == blank %}
+            role="link"
+            aria-disabled="true"
+          {% else %}
+            href="{{ section.settings.multicolumn_button_link }}"
+          {% endif %}
+          class="button custom-section__multicolumn-button-link"
+          {% if section.settings.multicolumn_button_open_in_new_tab %}
+            target="_blank"
+            rel="noopener noreferrer"
+          {% endif %}
+        >
+          <span class="button__label">{{ section.settings.multicolumn_button_label | escape }}</span>
+          <span class="button__arrow" aria-hidden="true">
+            <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11.3536 4.03556C11.5488 3.8403 11.5488 3.52372 11.3536 3.32845L8.17157 0.146473C7.97631 -0.0487893 7.65973 -0.0487893 7.46447 0.146473C7.2692 0.341735 7.2692 0.658318 7.46447 0.85358L10.2929 3.68201L7.46447 6.51043C7.2692 6.7057 7.2692 7.02228 7.46447 7.21754C7.65973 7.4128 7.97631 7.4128 8.17157 7.21754L11.3536 4.03556ZM0 3.68201V4.18201H11V3.68201V3.18201H0V3.68201Z" fill="currentColor"/>
+            </svg>
+          </span>
+        </a>
+      </div>
+    {% endif %}
   </div>
 </div>
 
@@ -243,6 +268,19 @@
 
   .custom-section__intro-description p {
     margin: 0;
+  }
+
+  .custom-section__multicolumn-button {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-block-start: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .custom-section__multicolumn-button-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 
   .section-wrapper .custom-section-content :is(ul, ol) {

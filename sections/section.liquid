@@ -213,6 +213,32 @@
       "default": 0
     },
     {
+      "type": "checkbox",
+      "id": "show_multicolumn_button",
+      "label": "Show bottom button",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "multicolumn_button_label",
+      "label": "Button label",
+      "default": "Shop now",
+      "visible_if": "{{ section.settings.show_multicolumn_button }}"
+    },
+    {
+      "type": "url",
+      "id": "multicolumn_button_link",
+      "label": "Button link",
+      "visible_if": "{{ section.settings.show_multicolumn_button }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "multicolumn_button_open_in_new_tab",
+      "label": "t:settings.open_new_tab",
+      "default": false,
+      "visible_if": "{{ section.settings.show_multicolumn_button }}"
+    },
+    {
       "type": "header",
       "content": "Borders"
     },
