@@ -2497,6 +2497,7 @@ deferred-media[class] :is(.deferred-media__poster-button img, .deferred-media__p
 
   @media screen and (min-width: 750px) {
     padding: var(--padding-xs) var(--variant-option-padding-inline);
+    min-width: 73px;
   }
 }
 
