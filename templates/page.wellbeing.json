@@ -1946,16 +1946,16 @@
         "padding-block-end": 0
       }
     },
-    "section_fiKBKE": {
+    "section_ThHxwi": {
       "type": "section",
       "blocks": {
-        "text_LrCBxh": {
+        "text_4QgmNU": {
           "type": "text",
           "name": "t:names.heading",
           "settings": {
             "text": "<h2>THE SCENT SCIENTISTS</h2>",
             "width": "fit-content",
-            "max_width": "none",
+            "max_width": "normal",
             "alignment": "left",
             "type_preset": "rte",
             "font": "var(--font-body--family)",
@@ -1975,7 +1975,7 @@
           },
           "blocks": {}
         },
-        "text_yWrreH": {
+        "text_jYp6Qw": {
           "type": "text",
           "name": "t:names.text",
           "settings": {
@@ -2000,232 +2000,22 @@
             "padding-inline-end": 0
           },
           "blocks": {}
-        },
-        "group_jb3Xjd": {
-          "type": "group",
-          "name": "t:names.group",
-          "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "link": "",
-            "open_in_new_tab": false,
-            "placeholder": "",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "image_LKVtXe": {
-              "type": "image",
-              "name": "t:names.image",
-              "disabled": true,
-              "settings": {
-                "image": "shopify://shop_images/Group_427321495.png",
-                "link": "",
-                "border": "solid",
-                "border_width": 1,
-                "border_opacity": 50,
-                "border_radius": 16,
-                "image_border_padding": 8,
-                "image_ratio": "square",
-                "width": "fill",
-                "custom_width": 100,
-                "width_mobile": "fill",
-                "custom_width_mobile": 100,
-                "height": "fit",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "image_dtbgKT": {
-              "type": "image",
-              "name": "t:names.image",
-              "disabled": true,
-              "settings": {
-                "image": "shopify://shop_images/Group_427321495_1.png",
-                "link": "",
-                "border": "solid",
-                "border_width": 1,
-                "border_opacity": 50,
-                "border_radius": 16,
-                "image_border_padding": 8,
-                "image_ratio": "square",
-                "width": "fill",
-                "custom_width": 100,
-                "width_mobile": "fill",
-                "custom_width_mobile": 100,
-                "height": "fit",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "image_LKVtXe",
-            "image_dtbgKT"
-          ]
-        },
-        "group_wX8Jhe": {
-          "type": "group",
-          "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "width": "custom",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "link": "",
-            "open_in_new_tab": false,
-            "placeholder": "",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "text_A36bCH": {
-              "type": "text",
-              "name": "t:names.heading",
-              "settings": {
-                "text": "",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h2",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 12,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "text_WfTCHV": {
-              "type": "text",
-              "settings": {
-                "text": "",
-                "width": "100%",
-                "max_width": "none",
-                "alignment": "center",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "button_G4yBJd": {
-              "type": "button",
-              "disabled": true,
-              "settings": {
-                "label": "Discover Our Land",
-                "link": "shopify://collections/all",
-                "open_in_new_tab": false,
-                "style_class": "button",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "text_A36bCH",
-            "text_WfTCHV",
-            "button_G4yBJd"
-          ]
         }
       },
       "block_order": [
-        "text_LrCBxh",
-        "text_yWrreH",
-        "group_jb3Xjd",
-        "group_wX8Jhe"
+        "text_4QgmNU",
+        "text_jYp6Qw"
       ],
-      "name": "t:names.image_with_text",
+      "name": "t:names.rich_text_section",
       "settings": {
-        "content_direction": "row",
+        "content_direction": "column",
         "vertical_on_mobile": true,
         "horizontal_alignment": "flex-start",
-        "vertical_alignment": "flex-start",
+        "vertical_alignment": "center",
         "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
+        "horizontal_alignment_flex_direction_column": "center",
         "vertical_alignment_flex_direction_column": "center",
-        "gap": 64,
+        "gap": 25,
         "show_intro": false,
         "intro_heading": "",
         "intro_description": "",
@@ -2237,12 +2027,12 @@
         "multicolumn_button_link": "",
         "multicolumn_button_open_in_new_tab": false,
         "show_image_border": false,
-        "image_border_color": "#ffffff",
+        "image_border_color": "#FFFFFF",
         "image_border_position": "inside",
-        "section_width": "small",
+        "section_width": "full-width",
         "section_height": "",
         "section_height_custom": 50,
-        "color_scheme": "scheme-cfa9c273-456f-45a2-b18d-d73976dc71f5",
+        "color_scheme": "scheme-d70b8ec9-4fbd-4838-9889-afc90ece9d59",
         "background_media": "none",
         "video_position": "cover",
         "background_image_position": "cover",
@@ -2254,7 +2044,7 @@
         "overlay_color": "#00000026",
         "overlay_style": "solid",
         "gradient_direction": "to top",
-        "padding-block-start": 80,
+        "padding-block-start": 48,
         "padding-block-end": 0
       }
     },
@@ -3338,7 +3128,7 @@
     "product_list_Ddz9mc",
     "hero_xbJPf6",
     "section_hUtqcY",
-    "section_fiKBKE",
+    "section_ThHxwi",
     "section_zzAt6q",
     "section_Akzic6",
     "section_MMJTd9",
