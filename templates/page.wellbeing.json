@@ -826,119 +826,7 @@
           },
           "blocks": {}
         },
-        "group_j6a4Dp": {
-          "type": "group",
-          "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "width": "custom",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "link": "",
-            "open_in_new_tab": false,
-            "placeholder": "",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "text_YQwaUy": {
-              "type": "text",
-              "name": "t:names.heading",
-              "settings": {
-                "text": "<p>SCENT & AROMACHOLOGY</p>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h2",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 12,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "text_XmrwTY": {
-              "type": "text",
-              "settings": {
-                "text": "<p>Scent can evoke relaxation or exhilaration, comfort or courage. It can stimulate and it can soothe. All because the sense of smell is a direct channel to the limbic system, the area of the brain where emotions and memories are processed. The study into this connection between aromas and human psychology is known as aromachology.</p><p>By mixing traditional artisan perfumery techniques with the latest research into aromachology our scent scientists, led by our founder Victor Alarcon, use fragrances to stimulate chemical reactions in the brain. These olfactory reactions in turn trigger feelings, unlock memories and create moods.</p><p>Our natural fragrances can also restore biochemical, hormonal and emotional states, and enable us to tune into our consciousness and elevate our spirit.</p>",
-                "width": "100%",
-                "max_width": "none",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "button_98dRTp": {
-              "type": "button",
-              "disabled": true,
-              "settings": {
-                "label": "Discover Our Land",
-                "link": "shopify://collections/all",
-                "open_in_new_tab": false,
-                "style_class": "button",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "text_YQwaUy",
-            "text_XmrwTY",
-            "button_98dRTp"
-          ]
-        },
-        "group_QqG4A7": {
+        "group_KLBdrA": {
           "type": "group",
           "name": "t:names.group",
           "settings": {
@@ -1056,12 +944,124 @@
             "image_Kx77Dh",
             "image_36tirr"
           ]
+        },
+        "group_j6a4Dp": {
+          "type": "group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "custom",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "text_YQwaUy": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>SCENT & AROMACHOLOGY</p>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "h2",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 12,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "text_XmrwTY": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Scent can evoke relaxation or exhilaration, comfort or courage. It can stimulate and it can soothe. All because the sense of smell is a direct channel to the limbic system, the area of the brain where emotions and memories are processed. The study into this connection between aromas and human psychology is known as aromachology.</p><p>By mixing traditional artisan perfumery techniques with the latest research into aromachology our scent scientists, led by our founder Victor Alarcon, use fragrances to stimulate chemical reactions in the brain. These olfactory reactions in turn trigger feelings, unlock memories and create moods.</p><p>Our natural fragrances can also restore biochemical, hormonal and emotional states, and enable us to tune into our consciousness and elevate our spirit.</p>",
+                "width": "100%",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "button_98dRTp": {
+              "type": "button",
+              "disabled": true,
+              "settings": {
+                "label": "Discover Our Land",
+                "link": "shopify://collections/all",
+                "open_in_new_tab": false,
+                "style_class": "button",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_YQwaUy",
+            "text_XmrwTY",
+            "button_98dRTp"
+          ]
         }
       },
       "block_order": [
         "image_QFxHVQ",
-        "group_j6a4Dp",
-        "group_QqG4A7"
+        "group_KLBdrA",
+        "group_j6a4Dp"
       ],
       "name": "t:names.image_with_text",
       "settings": {
