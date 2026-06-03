@@ -2324,35 +2324,10 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
-            },
-            "image_kTnwW4": {
-              "type": "image",
-              "name": "t:names.image",
-              "settings": {
-                "image": "shopify://shop_images/Group_427321495_1.png",
-                "link": "",
-                "border": "solid",
-                "border_width": 1,
-                "border_opacity": 50,
-                "border_radius": 16,
-                "image_border_padding": 8,
-                "image_ratio": "square",
-                "width": "fill",
-                "custom_width": 100,
-                "width_mobile": "fill",
-                "custom_width_mobile": 100,
-                "height": "fit",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
             }
           },
           "block_order": [
-            "image_pUygWA",
-            "image_kTnwW4"
+            "image_pUygWA"
           ]
         },
         "group_Dc94AD": {
@@ -2394,36 +2369,10 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "text_P8zTGV": {
-              "type": "text",
-              "name": "t:names.heading",
-              "settings": {
-                "text": "<p>The Scent Scientists</p>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h2",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 12,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
             "text_aFYtGW": {
               "type": "text",
               "settings": {
-                "text": "<p>Our Scent Scientists are the people responsible for harnessing the natural botanicals and adaptogenics from our Cala Falco estate into our collections.<br/><br/><strong>Victor Alarcon - Creative Director</strong><br/>With a background in biochemistry and interdisciplinary studies, Victor Alarcón brings a research-driven and creative approach to Cala Falcó as Co-Founder, Creative Director, and Head of Labs. He bridges regenerative agriculture, formulation and storytelling. Guided by a soil-to-bottle philosophy, his work uses scent to regenerate ecosystems, shape emotion and redefine contemporary luxury.<br/><br/><strong>Tatsiana Salamanca - Lab Manager</strong><br/>With a PhD in Chemistry and nearly a decade of experience in advanced materials research, Tatsiana brings scientific precision and methodical rigor to Cala Falcó’s laboratory. She oversees the meticulous production of each formula, ensuring<br/>consistency, quality and fidelity to the original vision.</p>",
+                "text": "<p><strong>Victor Alarcón - Creative Director</strong><br/>With a background in biochemistry and interdisciplinary studies, Victor Alarcón brings a research-driven and creative approach to Cala Falcó as Co-Founder, Creative Director, and Head of Labs. He bridges regenerative agriculture, formulation and storytelling. Guided by a soil-to-bottle philosophy, his work uses scent to regenerate ecosystems, shape emotion and redefine contemporary luxury.</p>",
                 "width": "100%",
                 "max_width": "none",
                 "alignment": "left",
@@ -2462,7 +2411,6 @@
             }
           },
           "block_order": [
-            "text_P8zTGV",
             "text_aFYtGW",
             "button_RnhFty"
           ]
@@ -2471,6 +2419,237 @@
       "block_order": [
         "group_eBNHzQ",
         "group_Dc94AD"
+      ],
+      "name": "t:names.image_with_text",
+      "settings": {
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "flex-start",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 64,
+        "show_intro": false,
+        "intro_heading": "",
+        "intro_description": "",
+        "stack_columns_until_1001": false,
+        "heading_min_height": 0,
+        "description_min_height": 0,
+        "show_multicolumn_button": false,
+        "multicolumn_button_label": "Shop now",
+        "multicolumn_button_link": "",
+        "multicolumn_button_open_in_new_tab": false,
+        "show_image_border": false,
+        "image_border_color": "#ffffff",
+        "image_border_position": "inside",
+        "section_width": "small",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-cfa9c273-456f-45a2-b18d-d73976dc71f5",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      }
+    },
+    "section_Akzic6": {
+      "type": "section",
+      "blocks": {
+        "group_gaafEA": {
+          "type": "group",
+          "name": "t:names.group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "image_krW8QJ": {
+              "type": "image",
+              "name": "t:names.image",
+              "settings": {
+                "image": "shopify://shop_images/Group_427321495_1.png",
+                "link": "",
+                "border": "solid",
+                "border_width": 1,
+                "border_opacity": 50,
+                "border_radius": 16,
+                "image_border_padding": 8,
+                "image_ratio": "square",
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "image_krW8QJ"
+          ]
+        },
+        "group_QNrx9Y": {
+          "type": "group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "custom",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "text_nKPgYJ": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "h2",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 12,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "text_qRkxxd": {
+              "type": "text",
+              "settings": {
+                "text": "<p><strong>Tatsiana Salamanca - Lab Manager</strong><br/>With a PhD in Chemistry and nearly a decade of experience in advanced materials research, Tatsiana brings scientific precision and methodical rigor to Cala Falcó’s laboratory. She oversees the meticulous production of each formula, ensuring<br/>consistency, quality and fidelity to the original vision.</p>",
+                "width": "100%",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "button_qPG7rc": {
+              "type": "button",
+              "disabled": true,
+              "settings": {
+                "label": "Discover Our Land",
+                "link": "shopify://collections/all",
+                "open_in_new_tab": false,
+                "style_class": "button",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_nKPgYJ",
+            "text_qRkxxd",
+            "button_qPG7rc"
+          ]
+        }
+      },
+      "block_order": [
+        "group_gaafEA",
+        "group_QNrx9Y"
       ],
       "name": "t:names.image_with_text",
       "settings": {
@@ -3161,6 +3340,7 @@
     "section_hUtqcY",
     "section_fiKBKE",
     "section_zzAt6q",
+    "section_Akzic6",
     "section_MMJTd9",
     "section_XrMqJ3",
     "column_callouts_7E8VBP"
