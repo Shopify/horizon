@@ -9,11 +9,15 @@
   @param {object} block_settings - Header menu block settings (CTA, aspect ratio)
   @param {number} [image_border_radius] - Border radius for card images
   @param {object} [section] - Section object used for image loading behavior
+  @param {boolean} [show_cta] - Whether to render the View all CTA for this nav item
 {%- enddoc -%}
 
 {% liquid
   assign cta_label = block_settings.featured_collections_cta_label
   assign cta_link = block_settings.featured_collections_cta_link
+  if show_cta == nil
+    assign show_cta = true
+  endif
   assign card_aspect_ratio = '4 / 5'
 
   assign parent_page = blank
@@ -56,7 +60,7 @@
         </li>
       {% endfor %}
     </ul>
-    {% if cta_label != blank and cta_link != blank %}
+    {% if show_cta and cta_label != blank and cta_link != blank %}
       <a href="{{ cta_link }}" class="button mega-menu-featured-collections__cta">
         <span class="button__label">{{ cta_label | escape }}</span>
       </a>

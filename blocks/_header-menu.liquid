@@ -152,11 +152,25 @@
                     data-menu-grid-id="{{ list_id }}"
                   >
                     {% if menu_content_type == 'featured_collections' %}
+                      {% liquid
+                        assign show_featured_collections_cta = false
+                        if block_settings.featured_collections_cta_label != blank and block_settings.featured_collections_cta_link != blank
+                          assign cta_nav_item = block_settings.featured_collections_cta_nav_item | strip
+                          if cta_nav_item != blank
+                            if link.title == cta_nav_item
+                              assign show_featured_collections_cta = true
+                            endif
+                          else
+                            assign show_featured_collections_cta = true
+                          endif
+                        endif
+                      %}
                       {% render 'mega-menu-featured-collections',
                         parent_link: link,
                         block_settings: block_settings,
                         section: section,
-                        image_border_radius: image_border_radius
+                        image_border_radius: image_border_radius,
+                        show_cta: show_featured_collections_cta
                       %}
                     {% else %}
                       {% render 'mega-menu-list',
@@ -1320,6 +1334,13 @@
         }
       ],
       "default": "4 / 5",
+      "visible_if": "{{ block.settings.menu_style == 'featured_collections' }}"
+    },
+    {
+      "type": "text",
+      "id": "featured_collections_cta_nav_item",
+      "label": "Nav item for View all button",
+      "info": "Exact top-level nav link title (e.g. Wellbeing). View all only appears on this megamenu.",
       "visible_if": "{{ block.settings.menu_style == 'featured_collections' }}"
     },
     {

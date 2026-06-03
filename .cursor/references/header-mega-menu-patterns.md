@@ -31,7 +31,9 @@ assign featured_pages = parent_page.metafields.custom.megamenu_featured_pages.va
 2. (Optional) On pages referenced by `megamenu_featured_pages`, set `custom.megamenu_image` to control the card image.
 3. On each landing page (e.g. The Land), add the collections/pages to show in that page's megamenu dropdown.
 4. The main nav item must link to that page (`page_link` type).
-5. Header menu block → **Media type** = **Featured collections**. CTA label/link still come from the menu block settings.
+5. Header menu block → **Media type** = **Featured collections**. Set **Nav item for View all button** (exact top-level link title), **CTA label**, and **CTA link** on the Menu block. Leave nav item blank to show View all on every megamenu that has label + link configured.
+
+**View all CTA:** All three settings live on the Menu block (`featured_collections_cta_nav_item`, `featured_collections_cta_label`, `featured_collections_cta_link`). The button renders only when label, link, and nav item title match the open megamenu's parent link.
 
 **Pitfall:** If the nav item is not a page link, or both metafields are empty, the dropdown shows submenu links only (no cards).
 
