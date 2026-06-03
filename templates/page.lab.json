@@ -63,14 +63,14 @@
         "image_wrznXE": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/VitiVinci_Team_AleFlo-43.jpg",
+            "image": "shopify://shop_images/CalaFalco_25-209.jpg",
             "link": "",
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
             "border_radius": 16,
             "image_border_padding": 8,
-            "image_ratio": "portrait",
+            "image_ratio": "landscape",
             "width": "fill",
             "custom_width": 100,
             "width_mobile": "custom",
@@ -499,7 +499,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<p>The Atelier, Palma</p>",
+                "text": "<p>The Cala Falcó Lab & Atelier, Palma</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -524,7 +524,7 @@
             "text_GaUcbG": {
               "type": "text",
               "settings": {
-                "text": "<p>Our atelier is our portal into the olfactory sciences, a space to create innovative immersive scents and  experiences. </p><p>Set in the heart of the old town of Palma, we converge the old world with new science. In this space, we gather to explore, create and experiment in order to unlock natures incredible potency.</p>",
+                "text": "<p>Our atelier is our portal into the olfactory sciences, a space to create innovative immersive scents and  experiences. </p><p>Set in the heart of the old town of Palma, we converge the old world with new science. In this space, we gather to explore, create and experiment in order to unlock natures incredible potency.</p><p><strong>Tel:</strong> +34 664539899</p><p><strong>Addresses:</strong> Carrer de l'Estudi General, 2, 07001, Palma, Spain</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -1014,6 +1014,200 @@
         "padding-block-end": 80
       }
     },
+    "section_DVnfQV": {
+      "type": "section",
+      "blocks": {
+        "text_wbYNNr": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<h2>THE SCENT SCIENTISTS</h2>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "text_xaKByK": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<p>Our Scent Scientists are the people responsible for harnessing the natural botanicals and adaptogenics from our Cala Falco estate into our collections.<br/></p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_wbYNNr",
+        "text_xaKByK"
+      ],
+      "name": "t:names.rich_text_section",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 25,
+        "show_intro": false,
+        "intro_heading": "",
+        "intro_description": "",
+        "stack_columns_until_1001": false,
+        "heading_min_height": 0,
+        "description_min_height": 0,
+        "show_multicolumn_button": false,
+        "multicolumn_button_label": "Shop now",
+        "multicolumn_button_link": "",
+        "multicolumn_button_open_in_new_tab": false,
+        "show_image_border": false,
+        "image_border_color": "#ffffff",
+        "image_border_position": "inside",
+        "section_width": "full-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-d70b8ec9-4fbd-4838-9889-afc90ece9d59",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 48,
+        "padding-block-end": 0
+      }
+    },
+    "content_cards_xNGbMx": {
+      "type": "content-cards",
+      "blocks": {
+        "card_VFqyzh": {
+          "type": "card",
+          "settings": {
+            "show_number": true,
+            "number": "The Organ",
+            "show_icon": true,
+            "icon": "shopify://shop_images/IMG_4505.jpg",
+            "show_text": true,
+            "text": "<p>The organ is where creation begins. It is the workspace of our perfumer, where all the essential oils, absolutes, and natural extracts are carefully arranged. Here, compositions are tested, refined, and brought to life through balance and intuition.</p>"
+          }
+        },
+        "card_DiTx4R": {
+          "type": "card",
+          "settings": {
+            "show_number": true,
+            "number": "Extraction",
+            "show_icon": true,
+            "icon": "shopify://shop_images/IMG_4508.jpg",
+            "show_text": true,
+            "text": "<p>Our plants are placed into an alembic for steam distillation. Water is boiled at the base, creating steam that rises through the plant material, capturing its aromatic compounds. As the steam cools it separates into the essential oil and the hydrolat.</p>"
+          }
+        },
+        "card_BnTncR": {
+          "type": "card",
+          "settings": {
+            "show_number": true,
+            "number": "Purification",
+            "show_icon": true,
+            "icon": "shopify://shop_images/IMG_4506.jpg",
+            "show_text": true,
+            "text": "<p>Once extracted, the essence is refined to isolate its most precise and expressive components, ensuring clarity, balance, and quality in every note. Pure, refined oils provide consistent therapeutic benefits and authentic aromatic profiles.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "card_VFqyzh",
+        "card_DiTx4R",
+        "card_BnTncR"
+      ],
+      "name": "Content cards",
+      "settings": {
+        "heading": "Extracting the essentials",
+        "description": "<p>In The Lab our Scent Scientists go to great lengths to harvest and preserve the precious botanicals from our farm.</p>",
+        "section_width": "page-width",
+        "color_scheme": "",
+        "padding-block-start": 80,
+        "padding-block-end": 0
+      }
+    },
+    "content_cards_magaLR": {
+      "type": "content-cards",
+      "blocks": {
+        "card_Xx7Wfz": {
+          "type": "card",
+          "settings": {
+            "show_number": true,
+            "number": "Blending",
+            "show_icon": true,
+            "icon": "shopify://shop_images/IMG_4510.jpg",
+            "show_text": true,
+            "text": "<p>Our perfumer composes each fragrance following the olfactory pyramid. Carefully balancing top, heart, and base notes to create depth, evolution and harmony on the skin. Together these notes tell a unique sensory story.</p>"
+          }
+        },
+        "card_UCXgWE": {
+          "type": "card",
+          "settings": {
+            "show_number": true,
+            "number": "Bottling",
+            "show_icon": true,
+            "icon": "shopify://shop_images/IMG_4507.jpg",
+            "show_text": true,
+            "text": "<p>Once the perfumer has created the final essence, it is taken to our laboratory where our chemists develop the full formulation. After the necessary resting time, the fragrance is bottled and labelled, ready for enjoyment.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "card_Xx7Wfz",
+        "card_UCXgWE"
+      ],
+      "name": "Content cards",
+      "settings": {
+        "heading": "",
+        "description": "",
+        "section_width": "page-width",
+        "color_scheme": "",
+        "padding-block-start": 0,
+        "padding-block-end": 80
+      }
+    },
     "hero_HhRmch": {
       "type": "hero",
       "blocks": {
@@ -1185,7 +1379,10 @@
     "section_t9PBLt",
     "section_z9UUCR",
     "section_PiVMhF",
+    "section_DVnfQV",
     "section_gfTj8k",
+    "content_cards_xNGbMx",
+    "content_cards_magaLR",
     "hero_HhRmch",
     "column_callouts_cqDQpa"
   ]
