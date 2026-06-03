@@ -4823,6 +4823,54 @@
                 "text"
               ]
             },
+            "accordion_row_ratgdo": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_row",
+              "settings": {
+                "heading": "Comparing GDO blaQ with ratgdo?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "enable_mobile_size": false,
+                    "mobile_font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "custom_mobile_padding": false,
+                    "mobile-padding-block-start": 0,
+                    "mobile-padding-block-end": 0,
+                    "mobile-padding-inline-start": 0,
+                    "mobile-padding-inline-end": 0,
+                    "text": "<p>If you are evaluating the DIY ratgdo route, read the <a href=\"/pages/ratgdo-vs-konnected-gdo-blaq\">ratgdo vs GDO blaQ comparison</a> to see why GDO blaQ is the better finished product for most compatible Chamberlain and LiftMaster openers.</p>"
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text"
+              ]
+            },
             "accordion_row_compatibility": {
               "type": "_accordion-row",
               "name": "t:names.accordion_row",
@@ -5018,6 +5066,7 @@
           },
           "block_order": [
             "accordion_row_myq",
+            "accordion_row_ratgdo",
             "accordion_row_compatibility",
             "accordion_row_local",
             "accordion_row_homeassistant",
@@ -5568,24 +5617,7 @@
         "decision_paths",
         "accordion_guides"
       ],
-      "custom_css": [
-        ".section-content-wrapper {max-width: 960px; margin-inline: auto; padding: clamp(22px, 3vw, 34px); border: 1px solid rgb(var(--color-foreground-rgb) / 12%); border-radius: 8px; background: color-mix(in srgb, var(--color-background) 94%, var(--color-foreground) 6%);}",
-        ".text-block h2 {margin-block-end: 0;}",
-        ".gdo-decision-path-grid {width: 100%;}",
-        ".gdo-decision-path-grid .group-block-content {align-items: stretch;}",
-        ".gdo-decision-path-card {min-width: 0; padding: 14px 16px; border: 1px solid rgb(var(--color-foreground-rgb) / 10%); border-radius: 8px; background: rgb(var(--color-background-rgb) / 76%); transition: border-color var(--animation-speed-fast) var(--animation-easing), transform var(--animation-speed-fast) var(--animation-easing);}",
-        ".gdo-decision-path-card:hover {border-color: rgb(var(--color-foreground-rgb) / 22%); transform: translateY(-1px);}",
-        ".gdo-decision-path-card .text-block:first-child {color: rgb(var(--color-foreground-rgb) / 56%); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;}",
-        ".gdo-decision-path-card .text-block:last-child {color: rgb(var(--color-foreground-rgb) / 72%);}",
-        ".accordion {margin-block-start: 0; border-block-start: 1px solid rgb(var(--color-foreground-rgb) / 14%);}",
-        ".details {border-block-end: 1px solid rgb(var(--color-foreground-rgb) / 10%);}",
-        ".details__header {min-height: auto; padding: 13px 10px; gap: 12px; font-weight: 650; border-radius: 6px; transition: background-color var(--animation-speed-fast) var(--animation-easing);}",
-        ".details__header:hover {background-color: rgb(var(--color-foreground-rgb) / 4%);}",
-        ".details__icon {display: none;}",
-        ".details-content {padding-block-end: 14px; padding-inline-end: clamp(0px, 6vw, 72px); padding-inline-start: 10px;}",
-        ".details-content .text-block {color: rgb(var(--color-foreground-rgb) / 86%);}",
-        "@media screen and (max-width: 749px) {.section-content-wrapper {padding: 22px 20px; border-inline: 0; border-radius: 0;} .gdo-decision-path-card {padding: 11px 13px;} .details__header {padding: 13px 0;} .details-content {padding-inline-start: 0;}}"
-      ],
+      "custom_css": [],
       "name": "Garage Door Opener Decision Guide",
       "settings": {
         "content_direction": "column",

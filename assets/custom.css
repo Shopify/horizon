@@ -436,3 +436,106 @@ back-to-top svg {
         width: 100%;
     }
 }
+
+/* Garage Door Opener collection decision guide */
+[id$="__section_gdo_buying_guides"] .section-content-wrapper {
+    max-width: 960px;
+    margin-inline: auto;
+    padding: clamp(22px, 3vw, 34px);
+    border: 1px solid rgb(var(--color-foreground-rgb) / 12%);
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--color-background) 94%, var(--color-foreground) 6%);
+}
+
+[id$="__section_gdo_buying_guides"] .text-block h2 {
+    margin-block-end: 0;
+}
+
+[id$="__section_gdo_buying_guides"] .gdo-decision-path-grid {
+    width: 100%;
+}
+
+[id$="__section_gdo_buying_guides"] .gdo-decision-path-grid .group-block-content {
+    align-items: stretch;
+}
+
+[id$="__section_gdo_buying_guides"] .gdo-decision-path-card {
+    min-width: 0;
+    padding: 14px 16px;
+    border: 1px solid rgb(var(--color-foreground-rgb) / 10%);
+    border-radius: 8px;
+    background: rgb(var(--color-background-rgb) / 76%);
+    transition: border-color var(--animation-speed-fast) var(--animation-easing), transform var(--animation-speed-fast) var(--animation-easing);
+}
+
+[id$="__section_gdo_buying_guides"] .gdo-decision-path-card:hover {
+    border-color: rgb(var(--color-foreground-rgb) / 22%);
+    transform: translateY(-1px);
+}
+
+[id$="__section_gdo_buying_guides"] .gdo-decision-path-card .text-block:first-child {
+    color: rgb(var(--color-foreground-rgb) / 56%);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+[id$="__section_gdo_buying_guides"] .gdo-decision-path-card .text-block:last-child {
+    color: rgb(var(--color-foreground-rgb) / 72%);
+}
+
+[id$="__section_gdo_buying_guides"] .accordion {
+    margin-block-start: 0;
+    border-block-start: 1px solid rgb(var(--color-foreground-rgb) / 14%);
+}
+
+[id$="__section_gdo_buying_guides"] .details {
+    border-block-end: 1px solid rgb(var(--color-foreground-rgb) / 10%);
+}
+
+[id$="__section_gdo_buying_guides"] .details__header {
+    min-height: auto;
+    padding: 13px 10px;
+    gap: 12px;
+    font-weight: 650;
+    border-radius: 6px;
+    transition: background-color var(--animation-speed-fast) var(--animation-easing);
+}
+
+[id$="__section_gdo_buying_guides"] .details__header:hover {
+    background-color: rgb(var(--color-foreground-rgb) / 4%);
+}
+
+[id$="__section_gdo_buying_guides"] .details__icon {
+    display: none;
+}
+
+[id$="__section_gdo_buying_guides"] .details-content {
+    padding-block-end: 14px;
+    padding-inline-end: clamp(0px, 6vw, 72px);
+    padding-inline-start: 10px;
+}
+
+[id$="__section_gdo_buying_guides"] .details-content .text-block {
+    color: rgb(var(--color-foreground-rgb) / 86%);
+}
+
+@media screen and (max-width: 749px) {
+    [id$="__section_gdo_buying_guides"] .section-content-wrapper {
+        padding: 22px 20px;
+        border-inline: 0;
+        border-radius: 0;
+    }
+
+    [id$="__section_gdo_buying_guides"] .gdo-decision-path-card {
+        padding: 11px 13px;
+    }
+
+    [id$="__section_gdo_buying_guides"] .details__header {
+        padding: 13px 0;
+    }
+
+    [id$="__section_gdo_buying_guides"] .details-content {
+        padding-inline-start: 0;
+    }
+}
