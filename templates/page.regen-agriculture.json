@@ -2130,32 +2130,6 @@
     "section_kAn3DR": {
       "type": "section",
       "blocks": {
-        "text_9L6TqX": {
-          "type": "text",
-          "name": "t:names.heading",
-          "settings": {
-            "text": "<h2>DISCOVER OUR PRODUCTS</h2>",
-            "width": "fit-content",
-            "max_width": "none",
-            "alignment": "left",
-            "type_preset": "rte",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
         "group_T8CYcD": {
           "type": "group",
           "name": "t:names.column",
@@ -2578,7 +2552,6 @@
         }
       },
       "block_order": [
-        "text_9L6TqX",
         "group_T8CYcD",
         "group_KiiDj6",
         "group_xHPhLQ"
@@ -2593,8 +2566,8 @@
         "horizontal_alignment_flex_direction_column": "flex-start",
         "vertical_alignment_flex_direction_column": "center",
         "gap": 33,
-        "show_intro": false,
-        "intro_heading": "",
+        "show_intro": true,
+        "intro_heading": "DISCOVER OUR PRODUCTS",
         "intro_description": "",
         "stack_columns_until_1001": false,
         "heading_min_height": 0,
