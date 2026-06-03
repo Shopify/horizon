@@ -109,8 +109,11 @@
       assign other_media = product.media | reject: 'src', product.featured_media
       assign media_list_to_show = product.featured_media | concat: other_media
 
-      if product.media.size > 2 and generic_media_size > 0
-        assign show_arrows = true
+      assign show_arrows = false
+      if settings.product_card_carousel and product.media.size > 2 and generic_media_size > 0
+        if section.type != 'main-collection'
+          assign show_arrows = true
+        endif
       endif
 
       # Don't overfetch media if we don't need to
@@ -222,6 +225,10 @@
     overflow: hidden;
     container-type: inline-size; /* Make card-gallery a container */
     container-name: card-gallery-container; /* Optional: name the container */
+  }
+
+  .collection-wrapper .card-gallery slideshow-arrows {
+    display: none;
   }
 
   .card-gallery__placeholder svg {
