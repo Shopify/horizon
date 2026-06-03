@@ -369,6 +369,83 @@
         "padding-block-end": 0
       }
     },
+    "qa_QVFmwi": {
+      "type": "qa",
+      "blocks": {
+        "qa_item_RHDmkp": {
+          "type": "qa_item",
+          "settings": {
+            "question": "STEP 1: SCENT DISCOVERY",
+            "answer": "<p>A signature fragrance deepens brand recognition, subtly reinforcing your unique story.</p>",
+            "open_by_default": true
+          }
+        },
+        "qa_item_igdGFm": {
+          "type": "qa_item",
+          "settings": {
+            "question": "STEP 2: FROM MEMORY TO INSPIRATION",
+            "answer": "<p>STEP 2: FROM MEMO</p>",
+            "open_by_default": false
+          }
+        },
+        "qa_item_GeJTNK": {
+          "type": "qa_item",
+          "settings": {
+            "question": "STEP 3: ARTISANAL CREATION",
+            "answer": "<p>Showcase the bespoke collection with tailor made immersive discovery workshops for clients or press with our scent scientists and perfume noses.</p>",
+            "open_by_default": false
+          }
+        },
+        "qa_item_AmF6WH": {
+          "type": "qa_item",
+          "settings": {
+            "question": "STEP 4: REFINEMENT & EVOLUTION",
+            "answer": "<p>Using 100% natural ingredients, refillable packaging and responsible sourcing, honouring both nature and luxury sets a sustainability statement for your brand.</p>",
+            "open_by_default": false
+          }
+        },
+        "qa_item_fqTfXE": {
+          "type": "qa_item",
+          "settings": {
+            "question": "STEP 5: YOUR SIGNATURE SCENT",
+            "answer": "<p>Using 100% natural ingredients, refillable packaging and responsible sourcing, honouring both nature and luxury sets a sustainability statement for your brand.</p>",
+            "open_by_default": false
+          }
+        },
+        "qa_item_Arg3qF": {
+          "type": "qa_item",
+          "settings": {
+            "question": "STEP 6: CONTINUITY & RE-CREATION",
+            "answer": "<p>Using 100% natural ingredients, refillable packaging and responsible sourcing, honouring both nature and luxury sets a sustainability statement for your brand.</p>",
+            "open_by_default": false
+          }
+        }
+      },
+      "block_order": [
+        "qa_item_RHDmkp",
+        "qa_item_igdGFm",
+        "qa_item_GeJTNK",
+        "qa_item_AmF6WH",
+        "qa_item_fqTfXE",
+        "qa_item_Arg3qF"
+      ],
+      "name": "QA",
+      "settings": {
+        "person_image": "shopify://shop_images/CalaFalco_25-163.jpg",
+        "heading": "CREATING A BESPOKE PERFUME",
+        "subheading": "",
+        "description": "",
+        "person_name": "",
+        "person_title": "A scent service for individuals looking to tell their unique scent story",
+        "button_label": "Book A Consultation",
+        "button_link": "shopify://pages/contact",
+        "section_width": "page-width",
+        "color_scheme": "",
+        "accordion_icon": "caret",
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      }
+    },
     "section_Mh7fFy": {
       "type": "section",
       "blocks": {
@@ -2010,6 +2087,7 @@
     "main",
     "section_Ec8PYR",
     "ingredients_fKEj77",
+    "qa_QVFmwi",
     "section_Mh7fFy",
     "section_atXPT4",
     "section_4mMBdd",
