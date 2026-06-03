@@ -388,9 +388,9 @@
           "settings": {
             "image": "shopify://shop_images/DSCF2832.jpg",
             "link": "",
-            "border": "none",
+            "border": "solid",
             "border_width": 1,
-            "border_opacity": 100,
+            "border_opacity": 19,
             "border_radius": 16,
             "image_border_padding": 8,
             "image_ratio": "adapt",
@@ -437,7 +437,7 @@
         "section_width": "small",
         "section_height": "",
         "section_height_custom": 50,
-        "color_scheme": "scheme-cfa9c273-456f-45a2-b18d-d73976dc71f5",
+        "color_scheme": "scheme-1",
         "background_media": "none",
         "video_position": "cover",
         "background_image_position": "cover",
@@ -479,6 +479,7 @@
         "qa_item_KqMJDc",
         "qa_item_9xWeei"
       ],
+      "disabled": true,
       "name": "QA",
       "settings": {
         "person_image": "shopify://shop_images/montserratvalle.jpg",
@@ -494,6 +495,38 @@
         "accordion_icon": "caret",
         "padding-block-start": 80,
         "padding-block-end": 0
+      }
+    },
+    "testimonials_gxeiGc": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial_T6UNR8": {
+          "type": "testimonial",
+          "settings": {
+            "quote_short": "<p>Our way is not a path. It’s a return. A quiet calling back to something pure, something sacred. A way of seeing, of listening, of moving through the world with reverence. Cala Falcó is a philosophy, infused into the place we’ve built and the soulful products we steward. A devotion to the beauty that unfolds when we surrender to nature’s rhythm. We invite you to join The Cala Falcó Way. A return. A ritual. A way forward.</p>",
+            "cta_label": "Read full testimonial",
+            "cta_link": "",
+            "open_in_new_tab": true,
+            "image": "shopify://shop_images/CalaFalco_25-69.jpg",
+            "author": "Montserrat Valle",
+            "author_title": "Owner & Founder"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_T6UNR8"
+      ],
+      "name": "t:names.testimonials",
+      "settings": {
+        "heading": "A NOTE FROM OUR FOUNDER",
+        "section_width": "full-width",
+        "color_scheme": "",
+        "corner_radius": 24,
+        "slide_gap": 0,
+        "autoplay": false,
+        "autoplay_speed": 4,
+        "padding-block-start": 40,
+        "padding-block-end": 40
       }
     },
     "section_aaGNpq": {
@@ -2128,6 +2161,7 @@
     "section_U8Em6Y",
     "section_fcpiL9",
     "qa_9wNC4z",
+    "testimonials_gxeiGc",
     "section_aaGNpq",
     "section_QRTNQa",
     "hero_BX6hyA",
