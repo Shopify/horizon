@@ -460,7 +460,7 @@
               "type": "image",
               "name": "t:names.image",
               "settings": {
-                "image": "shopify://shop_images/DSCF2762.jpg",
+                "image": "shopify://shop_images/DSCF2767.jpg",
                 "link": "",
                 "border": "none",
                 "border_width": 1,
@@ -1600,8 +1600,8 @@
         "horizontal_alignment_flex_direction_column": "flex-start",
         "vertical_alignment_flex_direction_column": "center",
         "gap": 33,
-        "show_intro": true,
-        "intro_heading": "Heading",
+        "show_intro": false,
+        "intro_heading": "",
         "intro_description": "",
         "stack_columns_until_1001": true,
         "heading_min_height": 84,
@@ -1628,7 +1628,7 @@
         "overlay_color": "#00000026",
         "overlay_style": "solid",
         "gradient_direction": "to top",
-        "padding-block-start": 20,
+        "padding-block-start": 0,
         "padding-block-end": 60
       }
     },
