@@ -677,7 +677,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<p>bespoke perfume costs</p>",
+                "text": "<p>bespoke perfume price</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -703,7 +703,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<h4>priced from £1,000 </h4>",
+                "text": "<h4>POA</h4>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -743,7 +743,7 @@
             "text_CPJEtc": {
               "type": "text",
               "settings": {
-                "text": "<p>Our expert team led by Victor Alarcón will guide you through the in depth step by step process to deliver your bespoke perfume and scent story within 1 month.</p>",
+                "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sit amet <br/>scelerisque ex. Sed ante est, rhoncus ac dolor nec, feugiat sagittis <br/>erat. Vivamus fringilla nec felis ut ultrices. Nullam dolor velit, <br/>porttitor id venenatis eget, consectetur vitae velit. Mauris egestas <br/>neque quis sodales tincidunt. </p>",
                 "width": "100%",
                 "max_width": "none",
                 "alignment": "left",
@@ -1233,7 +1233,7 @@
             "border_opacity": 100,
             "border_radius": 16,
             "image_border_padding": 8,
-            "image_ratio": "adapt",
+            "image_ratio": "portrait",
             "width": "fill",
             "custom_width": 100,
             "width_mobile": "fill",
