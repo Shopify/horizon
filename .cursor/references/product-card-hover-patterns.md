@@ -18,7 +18,8 @@
 
 - All slides in `.product-card .card-gallery` use `object-fit: cover` and `border-radius: var(--product-corner-radius, 16px)` on both the slide and image (first and second image match).
 - `card-gallery--hover-fade` (2+ media): stacks first two **non-hidden** slides in a grid locked to `--gallery-aspect-ratio`; CSS crossfade (`0.35s` in, `0.15s` out on mouse leave). No `visibility` toggles (avoids jolt).
-- `card-gallery--hover-zoom-only` (single media): subtle zoom on the first image only.
+- `card-gallery--hover-zoom-only` (single media): uses the **same** `slideshow-slides` grid + `--gallery-aspect-ratio` frame as hover-fade (see shared rules in `snippets/product-card.liquid`); only interaction differs (zoom, no crossfade).
+- **Pitfall:** Do not lock aspect ratio only on `--hover-fade` — single-image cards looked taller because `.product-media-container` kept its own `aspect-ratio` without the parent grid. Use `:is(.card-gallery--hover-fade, .card-gallery--hover-zoom-only)` for slideshow layout rules.
 - When only one **visible** slide exists in a multi-media product (variant images hidden), zoom applies to the first visible slide instead of fading.
 - Zoom: `scale(1.015)` over `0.65s` on the hovered/active image. JS `previewImage` / `resetImage` only when a variant picker is present.
 
