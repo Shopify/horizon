@@ -356,6 +356,7 @@
         "ingredient_JtzFgk",
         "ingredient_Q3LJV3"
       ],
+      "disabled": true,
       "name": "Ingredients",
       "settings": {
         "heading": "Creating a Bespoke Perfume",
@@ -376,7 +377,7 @@
           "type": "qa_item",
           "settings": {
             "question": "STEP 1: SCENT DISCOVERY",
-            "answer": "<p>A signature fragrance deepens brand recognition, subtly reinforcing your unique story.</p>",
+            "answer": "<p>Through a personal discovery session, we explore your memories, emotions, and individuality, uncovering the essence of who you are and how you want to be experienced.</p>",
             "open_by_default": true
           }
         },
@@ -431,13 +432,13 @@
       ],
       "name": "QA",
       "settings": {
-        "person_image": "shopify://shop_images/CalaFalco_25-163.jpg",
+        "person_image": "shopify://shop_images/CalaFalco_25-195.jpg",
         "heading": "CREATING A BESPOKE PERFUME",
         "subheading": "",
         "description": "",
         "person_name": "",
         "person_title": "A scent service for individuals looking to tell their unique scent story",
-        "button_label": "Book A Consultation",
+        "button_label": "Start Your Sense Story",
         "button_link": "shopify://pages/contact",
         "section_width": "page-width",
         "color_scheme": "",
