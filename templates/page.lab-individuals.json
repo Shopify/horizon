@@ -356,7 +356,6 @@
         "ingredient_JtzFgk",
         "ingredient_Q3LJV3"
       ],
-      "disabled": true,
       "name": "Ingredients",
       "settings": {
         "heading": "Creating a Bespoke Perfume",
@@ -368,83 +367,6 @@
         "button_link": "",
         "padding-block-start": 0,
         "padding-block-end": 0
-      }
-    },
-    "qa_QVFmwi": {
-      "type": "qa",
-      "blocks": {
-        "qa_item_RHDmkp": {
-          "type": "qa_item",
-          "settings": {
-            "question": "STEP 1: SCENT DISCOVERY",
-            "answer": "<p>Through a personal discovery session, we explore your memories, emotions, and individuality, uncovering the essence of who you are and how you want to be experienced.</p>",
-            "open_by_default": true
-          }
-        },
-        "qa_item_igdGFm": {
-          "type": "qa_item",
-          "settings": {
-            "question": "STEP 2: FROM MEMORY TO INSPIRATION",
-            "answer": "<p>STEP 2: FROM MEMO</p>",
-            "open_by_default": false
-          }
-        },
-        "qa_item_GeJTNK": {
-          "type": "qa_item",
-          "settings": {
-            "question": "STEP 3: ARTISANAL CREATION",
-            "answer": "<p>Showcase the bespoke collection with tailor made immersive discovery workshops for clients or press with our scent scientists and perfume noses.</p>",
-            "open_by_default": false
-          }
-        },
-        "qa_item_AmF6WH": {
-          "type": "qa_item",
-          "settings": {
-            "question": "STEP 4: REFINEMENT & EVOLUTION",
-            "answer": "<p>Using 100% natural ingredients, refillable packaging and responsible sourcing, honouring both nature and luxury sets a sustainability statement for your brand.</p>",
-            "open_by_default": false
-          }
-        },
-        "qa_item_fqTfXE": {
-          "type": "qa_item",
-          "settings": {
-            "question": "STEP 5: YOUR SIGNATURE SCENT",
-            "answer": "<p>Using 100% natural ingredients, refillable packaging and responsible sourcing, honouring both nature and luxury sets a sustainability statement for your brand.</p>",
-            "open_by_default": false
-          }
-        },
-        "qa_item_Arg3qF": {
-          "type": "qa_item",
-          "settings": {
-            "question": "STEP 6: CONTINUITY & RE-CREATION",
-            "answer": "<p>Using 100% natural ingredients, refillable packaging and responsible sourcing, honouring both nature and luxury sets a sustainability statement for your brand.</p>",
-            "open_by_default": false
-          }
-        }
-      },
-      "block_order": [
-        "qa_item_RHDmkp",
-        "qa_item_igdGFm",
-        "qa_item_GeJTNK",
-        "qa_item_AmF6WH",
-        "qa_item_fqTfXE",
-        "qa_item_Arg3qF"
-      ],
-      "name": "QA",
-      "settings": {
-        "person_image": "shopify://shop_images/CalaFalco_25-195.jpg",
-        "heading": "CREATING A BESPOKE PERFUME",
-        "subheading": "",
-        "description": "",
-        "person_name": "",
-        "person_title": "A scent service for individuals looking to tell their unique scent story",
-        "button_label": "Start Your Sense Story",
-        "button_link": "shopify://pages/contact",
-        "section_width": "page-width",
-        "color_scheme": "",
-        "accordion_icon": "caret",
-        "padding-block-start": 80,
-        "padding-block-end": 80
       }
     },
     "section_Mh7fFy": {
@@ -677,7 +599,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<p>bespoke perfume price</p>",
+                "text": "<p>bespoke perfume costs</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -703,7 +625,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<h4>POA</h4>",
+                "text": "<h4>priced from £1,000 </h4>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -743,7 +665,7 @@
             "text_CPJEtc": {
               "type": "text",
               "settings": {
-                "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sit amet <br/>scelerisque ex. Sed ante est, rhoncus ac dolor nec, feugiat sagittis <br/>erat. Vivamus fringilla nec felis ut ultrices. Nullam dolor velit, <br/>porttitor id venenatis eget, consectetur vitae velit. Mauris egestas <br/>neque quis sodales tincidunt. </p>",
+                "text": "<p>Our expert team led by Victor Alarcón will guide you through the in depth step by step process to deliver your bespoke perfume and scent story within 1 month.</p>",
                 "width": "100%",
                 "max_width": "none",
                 "alignment": "left",
@@ -1175,6 +1097,7 @@
             "cta_label": "Read full testimonial",
             "cta_link": "",
             "open_in_new_tab": true,
+            "image": "shopify://shop_images/MAP.png",
             "author": "MY PERFUME",
             "author_title": "Founder of The Trove"
           }
@@ -1209,7 +1132,7 @@
       ],
       "name": "t:names.testimonials",
       "settings": {
-        "heading": "Kind Words. Poured Generously",
+        "heading": "Kind Words",
         "section_width": "full-width",
         "color_scheme": "",
         "corner_radius": 24,
@@ -2088,7 +2011,6 @@
     "main",
     "section_Ec8PYR",
     "ingredients_fKEj77",
-    "qa_QVFmwi",
     "section_Mh7fFy",
     "section_atXPT4",
     "section_4mMBdd",
