@@ -532,6 +532,29 @@
     "section_aaGNpq": {
       "type": "section",
       "blocks": {
+        "image_JgjXkT": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/CalaFalco_25-165.jpg",
+            "link": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 16,
+            "image_border_padding": 8,
+            "image_ratio": "landscape",
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
         "group_AbhPta": {
           "type": "group",
           "settings": {
@@ -643,34 +666,11 @@
             "text_TDJbiB",
             "button_NL3UXd"
           ]
-        },
-        "image_JgjXkT": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/CalaFalco_25-165.jpg",
-            "link": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 16,
-            "image_border_padding": 8,
-            "image_ratio": "landscape",
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
         }
       },
       "block_order": [
-        "group_AbhPta",
-        "image_JgjXkT"
+        "image_JgjXkT",
+        "group_AbhPta"
       ],
       "name": "t:names.image_with_text",
       "settings": {
@@ -698,7 +698,7 @@
         "section_width": "page-width",
         "section_height": "",
         "section_height_custom": 50,
-        "color_scheme": "scheme-58aef25d-7d5b-453f-b540-96a1c28ebfc1",
+        "color_scheme": "scheme-cfa9c273-456f-45a2-b18d-d73976dc71f5",
         "background_media": "none",
         "video_position": "cover",
         "background_image_position": "cover",
