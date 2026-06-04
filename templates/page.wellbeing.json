@@ -1314,6 +1314,58 @@
         "padding-block-end": 0
       }
     },
+    "content_cards_9beXWQ": {
+      "type": "content-cards",
+      "blocks": {
+        "card_GdHCyF": {
+          "type": "card",
+          "settings": {
+            "show_number": true,
+            "number": "The Organ",
+            "show_icon": true,
+            "icon": "shopify://shop_images/IMG_4505.jpg",
+            "show_text": true,
+            "text": "<p>The organ is where creation begins. It is the workspace of our perfumer, where all the essential oils, absolutes, and natural extracts are carefully arranged. Here, compositions are tested, refined, and brought to life through balance and intuition.</p>"
+          }
+        },
+        "card_VigfAF": {
+          "type": "card",
+          "settings": {
+            "show_number": true,
+            "number": "Extraction",
+            "show_icon": true,
+            "icon": "shopify://shop_images/IMG_4508.jpg",
+            "show_text": true,
+            "text": "<p>Our plants are placed into an alembic for steam distillation. Water is boiled at the base, creating steam that rises through the plant material, capturing its aromatic compounds. As the steam cools it separates into the essential oil and the hydrolat.</p>"
+          }
+        },
+        "card_Ha7apU": {
+          "type": "card",
+          "settings": {
+            "show_number": true,
+            "number": "Purification",
+            "show_icon": true,
+            "icon": "shopify://shop_images/IMG_4506.jpg",
+            "show_text": true,
+            "text": "<p>Once extracted, the essence is refined to isolate its most precise and expressive components, ensuring clarity, balance, and quality in every note. Pure, refined oils provide consistent therapeutic benefits and authentic aromatic profiles.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "card_GdHCyF",
+        "card_VigfAF",
+        "card_Ha7apU"
+      ],
+      "name": "Content cards",
+      "settings": {
+        "heading": "Extracting the essentials",
+        "description": "<p>In The Lab our Scent Scientists go to great lengths to harvest and preserve the precious botanicals from our farm.</p>",
+        "section_width": "page-width",
+        "color_scheme": "",
+        "padding-block-start": 80,
+        "padding-block-end": 0
+      }
+    },
     "content_cards_CrJNJA": {
       "type": "content-cards",
       "blocks": {
@@ -3408,6 +3460,7 @@
     "section_Ct3h3w",
     "ingredients_tnMT9F",
     "ingredients_TQxTYb",
+    "content_cards_9beXWQ",
     "content_cards_CrJNJA",
     "product_list_Ddz9mc",
     "hero_xbJPf6",
