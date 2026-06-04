@@ -53,7 +53,7 @@
     }}
   {%- else -%}
     <div class="placeholder-image border-style size-style" style="{{ image_border_style }}">
-      {{ 'detailed-apparel-1' | placeholder_svg_tag: 'hero__media' }}
+      {{ 'detailed-apparel-1' | placeholder_svg_tag: 'image-block__placeholder' }}
     </div>
   {%- endif -%}
 {% endcapture %}
@@ -78,6 +78,15 @@
 {% endif %}
 
 {% stylesheet %}
+  .image-block__placeholder {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center center;
+    overflow: hidden;
+    position: relative;
+  }
+
   .placeholder-image {
     position: relative;
     aspect-ratio: var(--ratio);

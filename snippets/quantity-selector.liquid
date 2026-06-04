@@ -9,6 +9,7 @@
   @param {string} [class] - custom class for the quantity selector, optional
   @param {boolean} [can_update_quantity] - whether the quantity can be updated, defaults to true
   @param {number} [min] - override the minimum quantity (e.g., 0 for quick order list)
+  @param {block} [block] - The block object, used for Shopify editor attributes.
 {%- enddoc -%}
 
 {% liquid
@@ -68,6 +69,7 @@
       on:blur="/setQuantity"
       on:focus="/selectInputValue"
       ref="quantityInput"
+      aria-live="polite"
       aria-label="{{ 'accessibility.quantity' | t }}"
       {% if line_index %}
         data-cart-line="{{ line_index | plus: 1 }}"

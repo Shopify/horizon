@@ -65,14 +65,21 @@
     "nested_product": "{{ product_title }} pour {{ parent_title }}",
     "remove": "Retirer",
     "view_pricing_info": "Afficher les informations de tarification",
-    "open_hotspot": "Ouvrir le point d’accès",
     "slideshow": "Diaporama",
-    "header_navigation_label": "Principale"
+    "header_navigation_label": "Principale",
+    "home_logo_alt": "{{ store_name }} – Accueil",
+    "active_filters": "Activez des filtres :",
+    "product_details": "Détails du produit",
+    "show_product_details": "Afficher les détails du produit pour {{ product_name }}",
+    "featured_product": "Produit en vedette",
+    "search_suggestions_available": "Rechercher des suggestions disponibles pour « {{ query }} »",
+    "price_filter_low": "Prix bas",
+    "price_filter_high": "Prix élevé"
   },
   "actions": {
     "add_to_cart": "Ajouter au panier",
     "clear_all": "Tout effacer",
-    "remove": "Supprimer",
+    "remove": "Retirer",
     "view_in_your_space": "Afficher dans votre espace",
     "show_filters": "Filtrer",
     "clear": "Effacer",
@@ -108,7 +115,9 @@
     "open_image_in_full_screen": "Ouvrir l’image en plein écran",
     "sort": "Trier",
     "show_all_options": "Afficher toutes les options",
-    "open": "Ouvrir"
+    "open": "Ouvrir",
+    "back_to": "Retour à {{ title }}",
+    "zoom_media": "Zoom du support multimédia {{ index }}"
   },
   "content": {
     "reviews": "avis",
@@ -240,7 +249,7 @@
     "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }} caractères utilisés",
     "terms_and_policies": "Conditions générales et politiques",
     "pagination": {
-      "nav_label": "Navigation par pagination",
+      "nav_label": "Pagination",
       "previous": "Précédent",
       "next": "Suivant",
       "page": "Page {{ page }}"
@@ -268,7 +277,8 @@
       "one": "1 article ajouté au panier",
       "other": "{{ count }} articles ajoutés au panier",
       "many": "{{ count }} articles ajoutés au panier"
-    }
+    },
+    "quick_order_list": "Liste de commande rapide"
   },
   "gift_cards": {
     "issued": {

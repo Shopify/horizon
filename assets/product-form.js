@@ -244,21 +244,22 @@ class ProductFormComponent extends Component {
   }
 
   /**
-   * Fetches cart and updates quantity selector for current variant
-   * @returns {Promise<number>} The cart quantity for the current variant
+   * Fetches the current cart and updates the quantity display.
+   * @returns {Promise<Cart | null>} The cart object, or null if fetch fails.
    */
   async #fetchAndUpdateCartQuantity() {
     const variantIdInput = /** @type {HTMLInputElement | null} */ (this.querySelector('input[name="id"]'));
-    if (!variantIdInput?.value) return 0;
+    if (!variantIdInput?.value) return null;
 
     try {
       const response = await fetch('/cart.js');
       const cart = await response.json();
 
-      return this.#updateCartQuantityFromData(cart);
+      this.#updateCartQuantityFromData(cart);
+      return cart;
     } catch (error) {
       console.error('Failed to fetch cart quantity:', error);
-      return 0;
+      return null;
     }
   }
 
@@ -466,10 +467,10 @@ class ProductFormComponent extends Component {
           }
 
           // Fetch the updated cart to get the actual total quantity for this variant
-          await this.#fetchAndUpdateCartQuantity();
+          const cart = await this.#fetchAndUpdateCartQuantity();
 
           this.dispatchEvent(
-            new CartAddEvent({}, id.toString(), {
+            new CartAddEvent(cart ?? undefined, id.toString(), {
               source: 'product-form-component',
               itemCount: Number(formData.get('quantity')) || Number(this.dataset.quantityDefault),
               productId: this.dataset.productId,
@@ -570,11 +571,11 @@ class ProductFormComponent extends Component {
           setTimeout(() => this.#clearLiveRegionText(), SUCCESS_MESSAGE_DISPLAY_DURATION);
         }
 
-        await this.#fetchAndUpdateCartQuantity();
+        const cart = await this.#fetchAndUpdateCartQuantity();
 
         const totalQuantity = items.reduce((sum, item) => sum + item.quantity, 0);
         this.dispatchEvent(
-          new CartAddEvent({}, this.id, {
+          new CartAddEvent(cart ?? undefined, this.id, {
             source: 'product-form-component',
             itemCount: totalQuantity,
             productId: this.dataset.productId,

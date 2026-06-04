@@ -1,6 +1,5 @@
 {%- doc -%}
   @param [limit] - {number}
-  @param [live_region] - {boolean}
 
   The maximum number of items in the cart to display. If the number of items in the cart is greater than this limit, the
   count will be displayed as "99+".
@@ -19,14 +18,7 @@
     ref="cartBubbleText"
     id="cart-bubble-text"
     class="cart-bubble__text"
-    {% if live_region %}
-      role="status"
-    {% endif %}
   >
-    <span class="visually-hidden">
-      {{- 'accessibility.cart_count' | t -}}
-      : {{ cart.item_count }}
-    </span>
     <span
       class="cart-bubble__text-count{% if cart == empty %} hidden{% endif %}"
       ref="cartBubbleCount"
@@ -39,3 +31,45 @@
     </span>
   </span>
 </div>
+
+{% stylesheet %}
+  .cart-bubble {
+    --cart-padding: 0.2em;
+
+    position: relative;
+    width: 20px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border-width: 0;
+    display: flex;
+    line-height: normal;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary-button-text);
+    padding-inline: var(--cart-padding);
+  }
+
+  .cart-bubble[data-maintain-ratio] {
+    aspect-ratio: 1;
+  }
+
+  .cart-bubble[data-maintain-ratio] .cart-bubble__background {
+    border-radius: var(--style-border-radius-50);
+  }
+
+  .cart-bubble__background {
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-primary-button-background);
+    border-radius: var(--style-border-radius-lg);
+  }
+
+  .cart-bubble__text {
+    font-size: var(--font-size--3xs);
+    z-index: var(--layer-flat);
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+{% endstylesheet %}

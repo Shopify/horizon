@@ -1,3 +1,9 @@
+{% doc %}
+  Outputs CSS custom property declarations for all color schemes defined in theme settings.
+
+  @param {string} [scheme_classes] - Accumulated CSS selector string for color schemes (used internally as an accumulator).
+{% enddoc %}
+
 {% style %}
   {% for scheme in settings.color_schemes -%}
     {% assign scheme_classes = scheme_classes | append: ', .color-' | append: scheme.id %}

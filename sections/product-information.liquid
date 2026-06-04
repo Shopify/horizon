@@ -85,12 +85,12 @@
         data-singleton="{{ product.has_only_default_variant }}"
         data-single-option="{{ has_single_option }}"
       >
-        <h3
+        <p
           class="sticky-add-to-cart__title"
           data-testid="sticky-product-title"
         >
           {{ product.title | escape }}
-        </h3>
+        </p>
         <div
           class="sticky-add-to-cart__variant"
           data-testid="sticky-variant-title"
@@ -260,6 +260,7 @@
   .sticky-add-to-cart__title {
     font-size: var(--font-paragraph-medium--size);
     font-weight: var(--font-weight-semibold);
+    line-height: var(--font-paragraph--line-height);
     margin: 0;
     overflow: hidden;
     text-overflow: ellipsis;

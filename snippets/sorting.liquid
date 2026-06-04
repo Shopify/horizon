@@ -68,12 +68,7 @@
     </div>
   </div>
 
-  <accordion-custom
-    {% if filter_style == 'horizontal' %}
-      data-disable-animation-on-desktop="true"
-      data-close-with-escape="true"
-    {% endif %}
-  >
+  {% capture accordion_children %}
     <details
       ref="details"
       id="Sorting-{{ section_id }}"
@@ -86,7 +81,7 @@
         class="facets__summary"
         role="button"
         aria-expanded="false"
-        aria-controls="sorting-options-{{ section_id }}"
+        aria-controls="sorting-options-{{ section_id }}-{{ suffix }}"
         ref="summary"
       >
         <span
@@ -105,7 +100,7 @@
         </span>
       </summary>
       <floating-panel-component
-        id="sorting-options-{{ section_id }}"
+        id="sorting-options-{{ section_id }}-{{ suffix }}"
         class="sorting-filter__options color-{{ settings.popover_color_scheme }}"
         role="listbox"
         aria-labelledby="sort-label-{{ section_id }}"
@@ -147,7 +142,18 @@
         </div>
       </floating-panel-component>
     </details>
-  </accordion-custom>
+  {% endcapture %}
+  {%- liquid
+    assign is_horizontal = false
+    if filter_style == 'horizontal'
+      assign is_horizontal = true
+    endif
+  -%}
+  {% render 'accordion-custom-component',
+    children: accordion_children,
+    disable_animation_on_desktop: is_horizontal,
+    close_with_escape: is_horizontal
+  %}
 </sorting-filter-component>
 
 {% stylesheet %}

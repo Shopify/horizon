@@ -15,7 +15,6 @@
   @param {string} [video_type] - 'youtube' or 'vimeo'
   @param {boolean} [disable_controls] - Whether to disable controls. If true, only play/pause will be usable.
   @param {object} video - The Shopify video object or a string containing a YouTube ID or Vimeo ID
-  @param {string} section_id - The section ID
   @param {object} [block] - The block object
 
   Video from URL:
@@ -24,7 +23,7 @@
   @param {string} [video_alt] - The video alt text
 
   @example
-  {% render 'video', video: section.settings.video, video_autoplay: true, video_loop: true, section_id: section.id %}
+  {% render 'video', video: section.settings.video, video_autoplay: true, video_loop: true %}
 {%- enddoc -%}
 
 {% liquid

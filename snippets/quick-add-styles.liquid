@@ -1,0 +1,205 @@
+{%- doc -%}
+  Quick-add styles consolidated into a single snippet.
+
+  @example
+  {% render 'quick-add-styles' %}
+{%- enddoc -%}
+
+{% stylesheet %}
+  /* Quick Add */
+  .quick-add {
+    --quick-add-offset: var(--padding-sm);
+    --quick-add-right: calc(var(--quick-add-offset) + var(--padding-inline-end));
+    --quick-add-bottom: calc(var(--quick-add-offset) + var(--padding-block-end));
+
+    position: absolute;
+    inset: 0;
+    z-index: var(--layer-raised);
+    pointer-events: none;
+
+    @media screen and (min-width: 750px) {
+      --quick-add-offset: var(--padding-md);
+    }
+  }
+
+  .quick-add .variant-option__button-label input[data-option-available='false'] {
+    cursor: not-allowed;
+  }
+
+  .quick-add[class*='color-scheme-'] {
+    background-color: #0000;
+  }
+
+  product-card:is(:hover, :focus-within) .quick-add__button {
+    opacity: 1;
+  }
+
+  .quick-add__button {
+    display: var(--quick-add-mobile-display, none);
+    align-items: center;
+    background: linear-gradient(var(--color-background) 0 100%) padding-box;
+    padding: 0;
+    border-radius: 50px;
+    border: 2px solid hsl(0 0% 0% / 0.15);
+    height: var(--button-size-md);
+    cursor: pointer;
+    opacity: var(--quick-add-mobile-opacity, 0);
+    overflow: hidden;
+    color: var(--color-foreground);
+    pointer-events: all;
+    position: absolute;
+    right: max(var(--quick-add-right), calc((var(--border-radius) + var(--quick-add-right)) * (1 - cos(45deg))));
+    bottom: max(var(--quick-add-bottom), calc((var(--border-radius) + var(--quick-add-bottom)) * (1 - cos(45deg))));
+    backdrop-filter: blur(20px) saturate(180%);
+
+    &:hover {
+      scale: 1.03;
+
+      /* Hover stabilizer: extends hit area to maintain hover state */
+      &::before {
+        content: '';
+        position: absolute;
+        inset: -10px;
+        z-index: -1;
+      }
+    }
+
+    &:active {
+      scale: 0.99;
+    }
+
+    .quick-add[stay-visible] & {
+      display: grid;
+    }
+
+    @media screen and (min-width: 750px) {
+      display: var(--quick-add-display, flex);
+      opacity: 0;
+    }
+  }
+
+  .quick-add__button.add-to-cart-button {
+    height: var(--button-size-md);
+  }
+
+  .quick-add__button .add-to-cart-text {
+    background: var(--color-background);
+    overflow: hidden;
+    border-radius: 50px;
+    height: 100%;
+    gap: 0;
+  }
+
+  .quick-add__button .svg-wrapper .checkmark-burst {
+    width: 22px;
+    height: 22px;
+  }
+
+  .quick-add__button .add-to-cart-icon {
+    /* account for border width */
+    height: 100%;
+    width: calc(var(--button-size-md) - 4px);
+  }
+
+  .quick-add__button .add-to-cart-text__content {
+    display: grid;
+    grid-template-columns: 0fr;
+
+    & > span {
+      min-width: 0;
+
+      span {
+        padding-right: var(--padding-sm);
+        opacity: 0;
+        display: inline-block;
+        filter: blur(2px);
+        translate: 0.5ch 0;
+      }
+    }
+  }
+
+  .quick-add__button[data-added='true'] .add-to-cart-text {
+    animation-name: atc-fade-out;
+  }
+
+  .quick-add__button[data-added='true'] .add-to-cart-text--added {
+    translate: 0 0;
+    animation-name: atc-fade-in;
+  }
+
+  .quick-add__product-form-component {
+    height: 100%;
+  }
+
+  .quick-add__product-form-component .shopify-product-form {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    container-type: inline-size;
+    height: 100%;
+  }
+
+  .quick-add-modal .product-media {
+    width: 100%;
+    height: 100%;
+  }
+
+  .quick-add-modal deferred-media {
+    display: none;
+  }
+
+  .quick-add-modal .media-gallery--carousel slideshow-component {
+    --cursor: default;
+  }
+
+  .quick-add__button:is(:hover, :focus-visible) {
+    .add-to-cart-text__content {
+      grid-template-columns: 1fr;
+
+      span span {
+        opacity: 1;
+        translate: 0 0;
+        filter: blur(0);
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .quick-add__button .add-to-cart-text__content {
+      grid-template-columns: 1fr;
+
+      span span {
+        opacity: 1;
+        translate: 0 0;
+        filter: blur(0);
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .quick-add__button {
+      transition-property: scale, translate, opacity;
+      transition-duration: var(--animation-speed);
+      transition-timing-function: var(--ease-out-cubic);
+    }
+
+    .quick-add__button:is(:hover, :focus-visible) {
+      .add-to-cart-text__content,
+      .add-to-cart-text__content span span {
+        transition-delay: var(--animation-speed);
+      }
+    }
+
+    .quick-add__button .add-to-cart-text__content {
+      transition-property: grid-template-columns;
+      transition-duration: var(--animation-speed);
+      transition-timing-function: var(--ease-out-cubic);
+
+      span span {
+        transition-property: opacity, filter, translate;
+        transition-duration: var(--animation-speed-slow);
+        transition-timing-function: var(--ease-out-quad);
+      }
+    }
+  }
+{% endstylesheet %}

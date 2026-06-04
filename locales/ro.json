@@ -65,14 +65,21 @@
     "discount_menu": "Coduri de reduceri",
     "remove": "Elimină",
     "view_pricing_info": "Vezi informațiile de tarifare",
-    "open_hotspot": "Pornește hotspot",
     "slideshow": "Prezentare de diapozitive",
-    "header_navigation_label": "principală"
+    "header_navigation_label": "principală",
+    "home_logo_alt": "{{ store_name }} – Acasă",
+    "active_filters": "Filtre active:",
+    "product_details": "Detalii produs",
+    "show_product_details": "Afișează detaliile produsului pentru {{ product_name }}",
+    "featured_product": "Produs recomandat",
+    "search_suggestions_available": "Sugestii de căutare disponibile pentru „{{ query }}”",
+    "price_filter_low": "Preț mic",
+    "price_filter_high": "Preț mare"
   },
   "actions": {
     "add_to_cart": "Adaugă în coș",
     "clear_all": "Golește tot",
-    "remove": "Elimină",
+    "remove": "Eliminare",
     "view_in_your_space": "Vezi în spațiul tău",
     "show_filters": "Filtrează",
     "clear": "Golește",
@@ -108,7 +115,9 @@
     "sign_up": "Înscrie-te",
     "sort": "Sortează",
     "show_all_options": "Afișează toate opțiunile",
-    "open": "Deschidere"
+    "open": "Deschidere",
+    "back_to": "Înapoi la {{ title }}",
+    "zoom_media": "Fă zoom pe elementul media {{ index }}"
   },
   "content": {
     "reviews": "recenzii",
@@ -240,7 +249,7 @@
     "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }} caractere folosite",
     "terms_and_policies": "Termeni și politici",
     "pagination": {
-      "nav_label": "Navigare în paginare",
+      "nav_label": "Paginare",
       "previous": "Anteriorul",
       "next": "Următorul",
       "page": "Pagina {{ page }}"
@@ -268,7 +277,8 @@
       "other": "{{ count }} articole au fost adăugate în coș",
       "few": "{{ count }} articole au fost adăugate în coș"
     },
-    "item_count_cutoff": "Peste {{ count }} articole"
+    "item_count_cutoff": "Peste {{ count }} articole",
+    "quick_order_list": "Lista comenzilor rapide"
   },
   "gift_cards": {
     "issued": {

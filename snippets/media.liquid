@@ -1,7 +1,6 @@
 {%- doc -%}
   Renders media block contents (used in _media and _media-without-appearance blocks)
 
-  @param {string} section_id - The section ID
   @param {object} [block] - The block object
   @param {boolean} [unset_image_tag] - if true, ignores the image focal point in the image
 {%- enddoc -%}
@@ -47,7 +46,7 @@
         %}
       {% else %}
         <div class="media-block__media border-style">
-          {{ 'detailed-apparel-1' | placeholder_svg_tag: 'hero__media' }}
+          {{ 'detailed-apparel-1' | placeholder_svg_tag: 'media-block__placeholder' }}
         </div>
       {% endif %}
     {% endcapture %}
@@ -67,8 +66,7 @@
       video: block_settings.video,
       video_autoplay: block_settings.video_autoplay,
       video_loop: block_settings.video_loop,
-      video_class: 'media-block__media media-block__media--video border-style',
-      section_id: section_id
+      video_class: 'media-block__media media-block__media--video border-style'
     %}
   {%- else -%}
     <div class="media-block__media border-style">
@@ -105,6 +103,15 @@
   }
 
   /* This is to support corner radius on video and align the video to the center of the block */
+  .media-block__placeholder {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center center;
+    overflow: hidden;
+    position: relative;
+  }
+
   .media-block__media--video {
     display: flex;
     align-items: center;

@@ -20,12 +20,13 @@
 >
   <button
     class="hotspot-trigger"
-    aria-label="{{ 'accessibility.open_hotspot' | t }}"
+    aria-label="{{ 'accessibility.show_product_details' | t: product_name: hotspot_product_title }}"
     ref="trigger"
     on:click="/handleHotspotClick"
     style="anchor-name: --hotspot-trigger-{{ block.id }};"
   ></button>
   <dialog
+    aria-label="{{ 'accessibility.product_details' | t }}"
     class="hotspot-dialog"
     ref="dialog"
   >
@@ -54,7 +55,7 @@
           <div
             class="hotspot-dialog__product-price {{ section.settings.product_price_preset | default: 'h6' }}"
           >
-            {% render 'price', product_resource: hotspot_product, block: block %}
+            {% render 'price', product_resource: hotspot_product %}
           </div>
         </div>
         {% if hotspot_product != blank %}

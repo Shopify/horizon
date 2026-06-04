@@ -64,9 +64,16 @@
     "nested_product": "{{ parent_title }}용 {{ product_title }}",
     "remove": "제거",
     "view_pricing_info": "가격 정보 보기",
-    "open_hotspot": "핫스팟 열기",
     "slideshow": "슬라이드 쇼",
-    "header_navigation_label": "기본"
+    "header_navigation_label": "기본",
+    "home_logo_alt": "{{ store_name }} - 홈",
+    "active_filters": "활성 필터:",
+    "product_details": "제품 세부 정보",
+    "show_product_details": "{{ product_name }} 제품 세부 정보 표시",
+    "featured_product": "추천 제품",
+    "search_suggestions_available": "\"{{ query }}\"에 대한 검색 제안이 있습니다",
+    "price_filter_low": "낮은 가격",
+    "price_filter_high": "높은 가격"
   },
   "actions": {
     "add_to_cart": "카트에 추가",
@@ -106,7 +113,9 @@
     "sign_up": "가입하기",
     "sort": "정렬",
     "show_all_options": "모든 옵션 보기",
-    "open": "열기"
+    "open": "열기",
+    "back_to": "{{ title }}(으)로 돌아가기",
+    "zoom_media": "{{ index }} 미디어 확대/축소"
   },
   "content": {
     "reviews": "리뷰",
@@ -235,7 +244,7 @@
     "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }}자 입력함",
     "terms_and_policies": "약관 및 정책",
     "pagination": {
-      "nav_label": "페이지 탐색",
+      "nav_label": "페이지 매김",
       "previous": "이전",
       "next": "다음",
       "page": "{{ page }}페이지"
@@ -262,7 +271,8 @@
       "one": "카트에 1개 품목이 추가됨",
       "other": "카트에 {{ count }}개 품목이 추가됨"
     },
-    "item_count_cutoff": "{{ count }}개 이상의 품목"
+    "item_count_cutoff": "{{ count }}개 이상의 품목",
+    "quick_order_list": "빠른 주문 목록"
   },
   "gift_cards": {
     "issued": {

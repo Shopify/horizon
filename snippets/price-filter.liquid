@@ -4,24 +4,22 @@
   @param {object} filter - The filter object to render.
   @param {string} filter_style - The filter style, can be 'horizontal' or 'vertical'.
   @param {boolean} [should_render_clear] - Whether to render the clear button.
+  @param {string} [id_prefix] - Unique prefix to avoid duplicate IDs when rendered multiple times.
 
   @example
-  {% render 'price-filter', filter: filter, filter_style: 'vertical' %}
+  {% render 'price-filter', filter: filter, filter_style: 'vertical', id_prefix: 'dialog' %}
 {%- enddoc -%}
 
-<accordion-custom
-  class="facets__item"
-  {% if filter_style == 'horizontal' %}
-    data-disable-animation-on-desktop="true"
-    data-close-with-escape="true"
-  {% endif %}
-
-  {% if filter_style == 'vertical' %}
-    open
-    open-by-default-on-mobile
-    open-by-default-on-desktop
-  {% endif %}
->
+{%- liquid
+  assign is_horizontal = false
+  assign is_vertical = false
+  if filter_style == 'horizontal'
+    assign is_horizontal = true
+  elsif filter_style == 'vertical'
+    assign is_vertical = true
+  endif
+-%}
+{% capture accordion_children %}
   <details
     class="facets__panel"
     {% if filter_style == 'horizontal' %}
@@ -94,7 +92,7 @@
               <input
                 class="field__input price-facet__input"
                 name="{{ filter.min_value.param_name }}"
-                id="{{ filter.label | escape }}-GTE"
+                id="{{ filter.label | escape }}-GTE-{{ id_prefix }}"
                 {%- if filter.min_value.value -%}
                   value="{{ filter.min_value.value | money_without_currency }}"
                 {%- endif -%}
@@ -105,11 +103,12 @@
                 data-max="{{ min_input_max_value | money_without_currency }}"
                 ref="minInput"
                 autocomplete="off"
+                aria-label="{{ 'accessibility.price_filter_low' | t }}"
               >
 
               <label
                 class="field__label price-facet__label"
-                for="{{ filter.label | escape }}-GTE"
+                for="{{ filter.label | escape }}-GTE-{{ id_prefix }}"
               >
                 {{ cart.currency.symbol }}
               </label>
@@ -121,7 +120,7 @@
               <input
                 class="field__input price-facet__input"
                 name="{{ filter.max_value.param_name }}"
-                id="{{ filter.label | escape }}-LTE"
+                id="{{ filter.label | escape }}-LTE-{{ id_prefix }}"
                 {%- if filter.max_value.value -%}
                   value="{{ filter.max_value.value | money_without_currency }}"
                 {%- endif -%}
@@ -132,10 +131,11 @@
                 data-max="{{ filter.range_max | money_without_currency }}"
                 ref="maxInput"
                 autocomplete="off"
+                aria-label="{{ 'accessibility.price_filter_high' | t }}"
               >
               <label
                 class="field__label price-facet__label"
-                for="{{ filter.label | escape }}-LTE"
+                for="{{ filter.label | escape }}-LTE-{{ id_prefix }}"
               >
                 {{ cart.currency.symbol }}
               </label>
@@ -177,7 +177,16 @@
       </price-facet-component>
     </floating-panel-component>
   </details>
-</accordion-custom>
+{% endcapture %}
+{% render 'accordion-custom-component',
+  children: accordion_children,
+  class: 'facets__item',
+  open: is_vertical,
+  open_by_default_on_desktop: is_vertical,
+  open_by_default_on_mobile: is_vertical,
+  disable_animation_on_desktop: is_horizontal,
+  close_with_escape: is_horizontal
+%}
 
 {% stylesheet %}
   /* Price filter */

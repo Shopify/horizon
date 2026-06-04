@@ -43,27 +43,10 @@
     background: #1891AB;
   }
 
-  /* ---- Reveal animation base ---- */
+  /* ---- Reveal — static, fully visible for AI readability ---- */
   .convo-reveal {
-    opacity: 0;
-    transform: translateY(12px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-
-  .convo-reveal.is-visible {
     opacity: 1;
-    transform: translateY(0);
   }
-
-  /* Stagger children */
-  .convo-reveal-group .convo-reveal:nth-child(1) { transition-delay: 0s; }
-  .convo-reveal-group .convo-reveal:nth-child(2) { transition-delay: 0.15s; }
-  .convo-reveal-group .convo-reveal:nth-child(3) { transition-delay: 0.3s; }
-  .convo-reveal-group .convo-reveal:nth-child(4) { transition-delay: 0.45s; }
-  .convo-reveal-group .convo-reveal:nth-child(5) { transition-delay: 0.6s; }
-  .convo-reveal-group .convo-reveal:nth-child(6) { transition-delay: 0.75s; }
-  .convo-reveal-group .convo-reveal:nth-child(7) { transition-delay: 0.9s; }
-  .convo-reveal-group .convo-reveal:nth-child(8) { transition-delay: 1.05s; }
 
   /* ---- Typography ---- */
   .convo-heading {
@@ -593,29 +576,3 @@
   }
 </style>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var reveals = document.querySelectorAll('.convo-reveal');
-    if (!reveals.length) return;
-
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          /* Hide cursor after reveal */
-          var cursor = entry.target.querySelector('.convo-cursor');
-          if (cursor) {
-            setTimeout(function() { cursor.classList.add('is-hidden'); }, 2000);
-          }
-        }
-      });
-    }, {
-      threshold: 0.15,
-      rootMargin: '0px 0px -40px 0px'
-    });
-
-    reveals.forEach(function(el) {
-      observer.observe(el);
-    });
-  });
-</script>
