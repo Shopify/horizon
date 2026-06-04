@@ -369,6 +369,65 @@
         "padding-block-end": 0
       }
     },
+    "qa_Me6Rgj": {
+      "type": "qa",
+      "blocks": {
+        "qa_item_9HQfgh": {
+          "type": "qa_item",
+          "settings": {
+            "question": "STEP 1: SCENT DISCOVERY",
+            "answer": "<p>Through a personal discovery session, we explore your memories, emotions, and individuality, uncovering the essence of who you are and how you want to be experienced.</p>",
+            "open_by_default": true
+          }
+        },
+        "qa_item_XpKikc": {
+          "type": "qa_item",
+          "settings": {
+            "question": "STEP 2:",
+            "answer": "<p>Ability to offer an olfactory collection through your boutique or spa, providing an additional revenue stream while enhancing brand engagement.</p>",
+            "open_by_default": false
+          }
+        },
+        "qa_item_pJ7y8i": {
+          "type": "qa_item",
+          "settings": {
+            "question": "WORKSHOPS AND EXPERIENCES",
+            "answer": "<p>Showcase the bespoke collection with tailor made immersive discovery workshops for clients or press with our scent scientists and perfume noses.</p>",
+            "open_by_default": false
+          }
+        },
+        "qa_item_LVwTYY": {
+          "type": "qa_item",
+          "settings": {
+            "question": "SUSTAINABILITY COMMITMENT",
+            "answer": "<p>Using 100% natural ingredients, refillable packaging and responsible sourcing, honouring both nature and luxury sets a sustainability statement for your brand.</p>",
+            "open_by_default": false
+          }
+        }
+      },
+      "block_order": [
+        "qa_item_9HQfgh",
+        "qa_item_XpKikc",
+        "qa_item_pJ7y8i",
+        "qa_item_LVwTYY"
+      ],
+      "name": "QA",
+      "settings": {
+        "person_image": "shopify://shop_images/Group_427321495_3.png",
+        "heading": "creating a bespoke perfume",
+        "subheading": "",
+        "description": "",
+        "person_name": "",
+        "person_title": "A scent service for individuals looking to tell their unique scent story",
+        "button_label": "Book A Consultation",
+        "button_link": "shopify://pages/contact",
+        "section_width": "page-width",
+        "color_scheme": "",
+        "accordion_icon": "caret",
+        "padding-block-start": 0,
+        "padding-block-end": 80
+      }
+    },
     "section_Mh7fFy": {
       "type": "section",
       "blocks": {
@@ -2132,6 +2191,7 @@
     "main",
     "section_Ec8PYR",
     "ingredients_fKEj77",
+    "qa_Me6Rgj",
     "section_Mh7fFy",
     "section_atXPT4",
     "section_4mMBdd",
