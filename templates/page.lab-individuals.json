@@ -1427,6 +1427,17 @@
     "testimonials_qQi6Qy": {
       "type": "testimonials",
       "blocks": {
+        "testimonial_X8wqXe": {
+          "type": "testimonial",
+          "settings": {
+            "quote_short": "",
+            "cta_label": "Read full testimonial",
+            "cta_link": "",
+            "open_in_new_tab": true,
+            "author": "Theo Hitchcock",
+            "author_title": "Founder"
+          }
+        },
         "testimonial_c9c4Nb": {
           "type": "testimonial",
           "settings": {
@@ -1463,6 +1474,7 @@
         }
       },
       "block_order": [
+        "testimonial_X8wqXe",
         "testimonial_c9c4Nb",
         "testimonial_Ct6GHK",
         "testimonial_MHnaLG"
