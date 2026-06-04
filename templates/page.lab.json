@@ -70,7 +70,7 @@
             "border_opacity": 100,
             "border_radius": 16,
             "image_border_padding": 8,
-            "image_ratio": "portrait",
+            "image_ratio": "landscape",
             "width": "fill",
             "custom_width": 100,
             "width_mobile": "custom",
@@ -126,7 +126,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<p>The Cala Falcó Lab</p>",
+                "text": "<p>The Lab</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -152,7 +152,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<p>Bespoke olfactory identities for brands and individuals</p>",
+                "text": "",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -177,7 +177,7 @@
             "text_CNg9et": {
               "type": "text",
               "settings": {
-                "text": "<p>We call this The Cala Falcó LAB. Here we combine science with artistry, using our 100% natural botanicals, to create  a bespoke fragrance identity that awakens the senses, stirs emotions, evokes memories and enhances environments.<br/></p>",
+                "text": "<p>The lab’s home is in our atelier in Palma. It is our portal into the olfactory sciences, a space to create innovative immersive scents and experiences. Set in the heart of the old town of Palma, we converge the old world with new science. In this space, we gather to explore, create and experiment in order to unlock natures incredible potency.</p>",
                 "width": "100%",
                 "max_width": "none",
                 "alignment": "left",
@@ -215,6 +215,7 @@
             },
             "button_DPFNcj": {
               "type": "button",
+              "disabled": true,
               "settings": {
                 "label": "The Lab For Private Clients",
                 "link": "shopify://pages/for-individuals",
