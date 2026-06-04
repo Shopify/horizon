@@ -24,20 +24,17 @@
   endif
 %}
 
-<accordion-custom
-  class="facets__item"
-  {% if filter_style == 'horizontal' %}
-    data-disable-animation-on-desktop="true"
-    data-close-with-escape="true"
-  {% endif %}
-
-  {% if filter_style == 'vertical' %}
-    open
-    open-by-default-on-mobile
-    open-by-default-on-desktop
-  {% endif %}
-  data-filter-param-name="{{ filter.param_name | escape | replace: '.', '-' }}"
->
+{%- liquid
+  assign is_horizontal = false
+  assign is_vertical = false
+  if filter_style == 'horizontal'
+    assign is_horizontal = true
+  elsif filter_style == 'vertical'
+    assign is_vertical = true
+  endif
+  assign filter_param_name = filter.param_name | escape | replace: '.', '-'
+-%}
+{% capture accordion_children %}
   <details
     id="Facet-Details-{{ sectionId }}-{{ filter.param_name | escape | replace: '.', '-' }}"
     class="facets__panel"
@@ -66,7 +63,7 @@
                   echo active_value_count
                 elsif active_value_count > 0 and active_value_count <= 3
                   for value in filter.active_values
-                    render 'swatch', swatch: value.swatch, mode: 'filter'
+                    render 'swatch', swatch: value.swatch, mode: 'filter', label: value.label
                   endfor
                 endif
               -%}
@@ -238,7 +235,7 @@
                   >
                     <div class="facets__image-wrapper">
                       {% if value.image %}
-                        {{ value.image | image_url: width: 300 | image_tag: alt: value.alt }}
+                        {{ value.image | image_url: width: 300 | image_tag: alt: '' }}
                       {% endif %}
                       {% if is_disabled %}
                         <svg
@@ -425,7 +422,17 @@
       </facet-inputs-component>
     </floating-panel-component>
   </details>
-</accordion-custom>
+{% endcapture %}
+{% render 'accordion-custom-component',
+  children: accordion_children,
+  class: 'facets__item',
+  open: is_vertical,
+  open_by_default_on_desktop: is_vertical,
+  open_by_default_on_mobile: is_vertical,
+  disable_animation_on_desktop: is_horizontal,
+  close_with_escape: is_horizontal,
+  data_filter_param_name: filter_param_name
+%}
 
 {% stylesheet %}
   .facets input:checked + label {

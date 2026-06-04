@@ -1,0 +1,338 @@
+{%- doc -%}
+  Buy-buttons styles consolidated into a single snippet.
+
+  @example
+  {% render 'buy-buttons-styles' %}
+{%- enddoc -%}
+
+{% stylesheet %}
+  .buy-buttons-block {
+    --buy-button-preferred-width: 185px;
+
+    width: 100%;
+  }
+
+  .product-form-buttons {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .product-form-buttons:not(:has(.quantity-rules)) {
+    gap: calc(var(--gap-sm) / 2);
+
+    @media screen and (min-width: 750px) {
+      gap: var(--gap-sm);
+    }
+  }
+
+  .product-form-buttons
+    > *:not(.quantity-selector-wrapper, .quantity-rules, .quantity-label, .volume-pricing, .product-form-text__error) {
+    flex: 1 1 var(--buy-button-preferred-width, 0);
+    min-width: fit-content;
+  }
+
+  .product-form-buttons--stacked
+    > *:not(.quantity-selector-wrapper, .quantity-rules, .quantity-label, .volume-pricing, .product-form-text__error) {
+    flex-basis: 51%;
+  }
+
+  .product-form-buttons button {
+    width: 100%;
+    padding-block: var(--padding-lg);
+  }
+
+  .quantity-selector {
+    flex-grow: 0;
+    flex-shrink: 0;
+    height: var(--height-buy-buttons);
+  }
+
+  .quantity-label {
+    flex: 1 0 100%;
+    width: 100%;
+    font-size: var(--font-size--sm);
+    margin-block-end: var(--gap-xs);
+  }
+
+  .quantity-label__cart-count {
+    color: var(--color-foreground-secondary);
+  }
+
+  .quantity-rules {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    row-gap: calc(var(--gap-xs) / 2);
+    flex: 1 0 100%;
+    width: 100%;
+    font-size: var(--font-size--xs);
+    color: var(--color-foreground-secondary);
+    margin-block-start: var(--gap-xs);
+    margin-block-end: var(--gap);
+  }
+
+  .product-form-buttons:has(~ .volume-pricing .volume-pricing__title) .quantity-rules {
+    margin-block-end: var(--gap-md);
+  }
+
+  .quantity-rules__item {
+    position: relative;
+    display: inline-block;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+  }
+
+  .quantity-rules__item:not(:last-child) {
+    padding-right: var(--padding-xl);
+    margin-right: var(--margin-2xs);
+  }
+
+  .quantity-rules__item:not(:last-child)::after {
+    content: '•';
+    position: absolute;
+    inset-inline-end: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.5em;
+    line-height: 0;
+  }
+
+  .add-to-cart-button {
+    height: var(--height-buy-buttons);
+    text-transform: var(--button-text-case-primary);
+  }
+
+  .add-to-cart-button.button-secondary {
+    text-transform: var(--button-text-case-secondary);
+  }
+
+  .product-form-text__error {
+    display: flex;
+    flex: 1 0 100%;
+    align-items: flex-start;
+    gap: var(--gap-xs);
+    margin-block-end: var(--gap-xs);
+  }
+
+  .product__pickup-availabilities {
+    width: 100%;
+  }
+
+  .pickup-availability__column {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .pickup-availability__row {
+    display: flex;
+    gap: var(--padding-xs);
+  }
+
+  .pickup-availability__dialog-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .pickup-availability__header-container {
+    padding-block-end: var(--padding-2xl);
+  }
+
+  .pickup-location__wrapper {
+    display: flex;
+    flex-direction: column;
+    padding-block: var(--padding-2xl);
+    border-top: 1px solid var(--color-border);
+    gap: var(--padding-xs);
+  }
+
+  .pickup-location__address-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-md);
+  }
+
+  .pickup-location__dialog {
+    padding: var(--padding-2xl);
+    position: fixed;
+    border-radius: 0;
+    width: var(--sidebar-width);
+    max-width: 95vw;
+    height: 100%;
+    margin: 0 0 0 auto;
+    border: var(--style-border-drawer);
+    box-shadow: var(--shadow-drawer);
+    background-color: var(--color-background);
+  }
+
+  .pickup-location__dialog:modal {
+    max-height: 100dvh;
+  }
+
+  .pickup-location__text-sm {
+    font-size: var(--font-size--sm);
+    margin: 0;
+  }
+
+  .pickup-location__text-xs {
+    font-size: var(--font-size--xs);
+    margin: 0;
+  }
+
+  .pickup-location__button {
+    width: fit-content;
+    color: var(--color-primary);
+    font-size: var(--font-size--xs);
+    font-family: var(--font-body--family);
+    padding: 0;
+    cursor: pointer;
+    margin-block: var(--margin-xs);
+  }
+
+  .pickup-location__button:hover {
+    color: var(--color-primary-hover);
+  }
+
+  .pickup-location__h4 {
+    margin: 0;
+  }
+
+  .pickup-location__text-bold {
+    font-size: var(--font-size--md);
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .pickup-location__availability-wrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-xs);
+    font-family: var(--font-paragraph--family);
+  }
+
+  .pickup-location__address {
+    font-style: normal;
+  }
+
+  .pickup-location__close-button {
+    top: calc(var(--padding-2xl) - (var(--icon-size-xs) / 2));
+    right: calc(var(--padding-2xl) - var(--icon-size-xs));
+  }
+
+  .volume-pricing {
+    display: block;
+    width: 100%;
+    margin-bottom: var(--gap);
+  }
+
+  .volume-pricing:not(:has(.volume-pricing__title)) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .volume-pricing__title {
+    display: block;
+    margin-block-end: var(--gap-sm);
+    font-size: var(--font-size--sm);
+    font-weight: var(--font-body--weight);
+    color: var(--color-foreground);
+  }
+
+  .volume-pricing__table {
+    width: 100%;
+  }
+
+  .volume-pricing__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-block: var(--padding-sm);
+    padding-inline: var(--padding-md);
+    font-size: var(--font-size--sm);
+  }
+
+  .volume-pricing__row--even {
+    background: rgb(var(--color-foreground-rgb) / var(--opacity-5));
+  }
+
+  .volume-pricing__row--odd {
+    background: var(--color-background);
+  }
+
+  .volume-pricing__collapsible-wrapper {
+    block-size: 0;
+    overflow-y: clip;
+    opacity: 0;
+    interpolate-size: allow-keywords;
+    transition: opacity var(--animation-speed-slow) var(--animation-easing),
+      block-size var(--animation-speed-slow) var(--animation-easing);
+  }
+
+  .volume-pricing__toggle {
+    width: 100%;
+    padding-bottom: 0;
+    padding-inline: 0;
+    text-align: left;
+    color: var(--color-foreground-secondary);
+    font-size: var(--font-size--xs);
+    cursor: default;
+    margin-block-start: 0;
+    pointer-events: none;
+  }
+
+  button.volume-pricing__toggle {
+    /* Need the extra specificity to override .product-form-buttons button */
+    padding-block: var(--padding-sm);
+  }
+
+  .volume-pricing__toggle-text {
+    cursor: pointer;
+    display: inline-block;
+    pointer-events: auto;
+  }
+
+  .volume-pricing__show-less {
+    display: none;
+  }
+
+  .volume-pricing--expanded .volume-pricing__collapsible-wrapper {
+    opacity: 1;
+    block-size: auto;
+
+    @starting-style {
+      block-size: 0;
+      opacity: 0;
+      overflow-y: clip;
+    }
+  }
+
+  .volume-pricing--expanded .volume-pricing__show-more {
+    display: none;
+  }
+
+  .volume-pricing--expanded .volume-pricing__show-less {
+    display: inline;
+  }
+
+  /* Accelerated checkout styles — co-located here so they compile on pages
+     where the quick-add modal can display buy buttons (e.g. collection pages). */
+  .accelerated-checkout-block[data-shopify-visual-preview] {
+    width: 300px;
+  }
+
+  more-payment-options-link {
+    font-size: smaller;
+  }
+
+  more-payment-options-link a {
+    --button-color: var(--color-primary);
+  }
+
+  more-payment-options-link a:hover {
+    --button-color: var(--color-primary-hover);
+  }
+
+  .shopify-payment-button__more-options[aria-hidden='true'] {
+    display: none;
+  }
+{% endstylesheet %}

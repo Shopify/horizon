@@ -38,6 +38,9 @@ class QuickOrderListComponent extends Component {
   /** @type {(event: Event) => void} */
   #boundHandleCartUpdate;
 
+  /** @type {HTMLElement|null} */
+  #confirmationTrigger = null;
+
   /**
    * Gets the current page number from pagination controls
    * @returns {number}
@@ -84,6 +87,7 @@ class QuickOrderListComponent extends Component {
     this.removeEventListener('keyup', this.#handleKeyup, true);
 
     this.#abortController?.abort();
+    this.#confirmationTrigger = null;
   }
 
   /**
@@ -174,6 +178,9 @@ class QuickOrderListComponent extends Component {
       url: newURL,
     });
     this.#scrollToTopOfSection();
+    // Morph preserves focus on the pagination button — defer focus to override it
+    // after the morph and any MutationObserver callbacks have settled.
+    requestAnimationFrame(() => this.#focusFirstQuantityInput());
   }
 
   /**
@@ -249,6 +256,7 @@ class QuickOrderListComponent extends Component {
       } else {
         this.#updateSectionHTML(data);
         this.#toggleConfirmationPanel(false);
+        this.#confirmationTrigger = null;
 
         document.dispatchEvent(
           new CartAddEvent(data, this.id, {
@@ -408,6 +416,7 @@ class QuickOrderListComponent extends Component {
    */
   showRemoveAllConfirmation(event) {
     event.preventDefault();
+    this.#confirmationTrigger = /** @type {HTMLElement} */ (event.target);
     this.#toggleConfirmationPanel(true);
   }
 
@@ -418,6 +427,8 @@ class QuickOrderListComponent extends Component {
   hideRemoveAllConfirmation(event) {
     event.preventDefault();
     this.#toggleConfirmationPanel(false);
+    this.#confirmationTrigger?.focus();
+    this.#confirmationTrigger = null;
   }
 
   /**
@@ -492,6 +503,15 @@ class QuickOrderListComponent extends Component {
       const top = this.getBoundingClientRect().top;
       window.scrollTo({ top: top + window.scrollY, behavior: 'smooth' });
     });
+  }
+
+  #focusFirstQuantityInput() {
+    for (const input of this.querySelectorAll('input[type="number"][data-cart-quantity]')) {
+      if (input instanceof HTMLElement && input.offsetParent !== null) {
+        input.focus({ preventScroll: true });
+        return;
+      }
+    }
   }
 
   /**

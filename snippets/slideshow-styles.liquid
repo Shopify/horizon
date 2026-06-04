@@ -1,0 +1,207 @@
+{%- doc -%}
+  Slideshow component styles consolidated into a single snippet for reliable CSS subsetting.
+  Rendered from both the slideshow snippets (where slideshows appear on the page) and the
+  predictive-search-resource-carousel snippet (where collection carousels render in search results)
+  so styles are available when the section rendering API dynamically loads slideshow content.
+
+  @example
+  {% render 'slideshow-styles' %}
+{%- enddoc -%}
+
+{% stylesheet %}
+  /*
+   * Slideshow Component
+   */
+  slideshow-component {
+    --cursor: grab;
+    --slide-offset: 6px;
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    timeline-scope: var(--slideshow-timeline);
+  }
+
+  .slideshow--single-media {
+    --cursor: default;
+  }
+
+  a slideshow-component {
+    --cursor: pointer;
+  }
+
+  slideshow-component [data-placeholder='true'] * {
+    cursor: grab;
+  }
+
+  /*
+   * Slideshow Slides
+   */
+  slideshow-slides {
+    width: 100%;
+    position: relative;
+    display: flex;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-color: transparent transparent;
+    scrollbar-width: none;
+    gap: var(--slideshow-gap, 0);
+    cursor: var(--cursor);
+    min-height: var(--slide-min-height);
+    align-items: var(--slideshow-align-items, normal);
+
+    @media (prefers-reduced-motion) {
+      scroll-behavior: auto;
+    }
+
+    &::-webkit-scrollbar {
+      width: 0;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: transparent;
+      border: none;
+    }
+
+    @media screen and (min-width: 750px) {
+      min-height: var(--slide-min-height-desktop);
+    }
+  }
+
+  .slideshow--stretch-content slideshow-slides > * {
+    height: auto;
+  }
+
+  slideshow-component[disabled='true'] slideshow-slides {
+    overflow: hidden;
+  }
+
+  /**
+   * By default, slideshows have overflow: hidden (no compositor layer).
+   * When the slideshow enters the viewport, JavaScript adds [in-viewport] which enables scrolling.
+   */
+  slideshow-component:not([in-viewport]) slideshow-slides {
+    overflow: hidden;
+  }
+
+  slideshow-component[mobile-disabled] slideshow-slides {
+    @media screen and (max-width: 749px) {
+      overflow: hidden;
+    }
+  }
+
+  slideshow-slides[gutters*='start'] {
+    padding-inline-start: var(--gutter-slide-width, 0);
+    scroll-padding-inline-start: var(--gutter-slide-width, 0);
+  }
+
+  slideshow-slides[gutters*='end'] {
+    padding-inline-end: var(--gutter-slide-width, 0);
+  }
+
+  slideshow-component[dragging] {
+    --cursor: grabbing;
+
+    * {
+      pointer-events: none;
+    }
+  }
+
+  slideshow-component[dragging] slideshow-arrows {
+    display: none;
+  }
+
+  slideshow-container {
+    width: 100%;
+    display: block;
+    position: relative;
+    grid-area: container;
+    container-type: inline-size;
+    background-color: var(--color-background);
+  }
+
+  /*
+   * Be specific about HTML children structure to avoid targeting nested slideshows.
+   * Ensure that the content is 'visible' while scrolling instead of 'auto' to avoid issues in Safari.
+   */
+  slideshow-component:is([dragging], [transitioning], :hover) > slideshow-container > slideshow-slides > slideshow-slide {
+    content-visibility: visible;
+  }
+
+  @keyframes slide-reveal {
+    0% {
+      translate: calc(var(--slideshow-slide-offset, 6) * 1rem) 0;
+      opacity: 0;
+    }
+
+    50% {
+      opacity: 1;
+    }
+
+    100% {
+      translate: calc(var(--slideshow-slide-offset, 6) * -1rem) 0;
+      opacity: 0;
+    }
+  }
+
+  /*
+   * Slideshow Slide
+   */
+  slideshow-slide {
+    position: relative;
+    scroll-snap-align: center;
+    width: var(--slide-width, 100%);
+    max-height: 100%;
+    flex-shrink: 0;
+    view-timeline-name: var(--slideshow-timeline);
+    view-timeline-axis: inline;
+    content-visibility: auto;
+    contain-intrinsic-size: auto none;
+    border-radius: var(--corner-radius, 0);
+    overflow: hidden;
+
+    slideshow-component[actioned] &,
+    &[aria-hidden='false'] {
+      content-visibility: visible;
+    }
+
+    slideshow-component slideshow-slide:not([aria-hidden='false']) {
+      content-visibility: hidden;
+    }
+
+    &[hidden]:not([reveal]) {
+      display: none;
+    }
+
+    /* Make inactive slides appear clickable */
+    &[aria-hidden='true'] {
+      cursor: pointer;
+    }
+  }
+
+  slideshow-slide .shopify-model-viewer-ui__controls-area.shopify-model-viewer-ui__controls-area {
+    bottom: var(--padding-sm);
+    right: var(--padding-sm);
+  }
+
+  slideshow-component.slideshow--content-below-media slideshow-slide {
+    display: grid;
+  }
+
+  .slideshow--content-below-media slideshow-slide :is(.slide__image-container, .slide__content) {
+    position: static;
+  }
+
+  .slideshow--content-below-media slideshow-slide {
+    grid-template-rows: var(--grid-template-rows);
+
+    @media screen and (min-width: 750px) {
+      grid-template-rows: var(--grid-template-rows-desktop);
+    }
+  }
+{% endstylesheet %}

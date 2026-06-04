@@ -10,6 +10,10 @@
 {%- enddoc -%}
 
 <div class="facets-remove facets-remove--mobile-and-vertical">
+  {%- if filters -%}
+    <h3 class="visually-hidden">{{ 'accessibility.active_filters' | t }}</h3>
+  {%- endif -%}
+
   {%- for filter in filters -%}
     {% if filter.type == 'price_range' and filter.min_value.value != null or filter.max_value.value != null %}
       {%- liquid
@@ -60,9 +64,6 @@
           role="button"
           on:click="/removeFilter?form="
           on:keydown="/removeFilter?form="
-          {% if is_first_filter and forloop.first %}
-            autofocus
-          {% endif %}
         >
           {% if value.swatch %}
             {% render 'swatch', swatch: value.swatch, mode: 'pill' %}

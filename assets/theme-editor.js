@@ -213,22 +213,29 @@ if (window.Shopify?.designMode && !isIOS) {
     const features = [
       {
         name: 'account-popover',
-        selector: '.account-popover',
-        matches(el) {
-          return el.matches(this.selector);
-        },
-        isOpen: (el) => el.getAttribute('open') != null,
-        open: (el) => el.setAttribute('open', ''),
-      },
-      {
-        name: 'account-drawer',
-        selector: '.account-drawer',
+        selector: 'shopify-account',
         matches(el) {
           return !!el.closest(this.selector);
         },
-        isOpen: (el) => el.getAttribute('open') != null,
-        // @ts-ignore
-        open: (el) => el.showDialog(),
+        isOpen: (el) => {
+          const shadowRoot = el.shadowRoot;
+          if (!shadowRoot) return false;
+          return shadowRoot.querySelector('dialog[open], [popover]:popover-open') != null;
+        },
+        async open(el) {
+          await customElements.whenDefined('shopify-account');
+          const shadowRoot = el.shadowRoot;
+          if (shadowRoot) {
+            const button =
+              shadowRoot.querySelector('button[popovertarget], button[aria-haspopup]') ??
+              shadowRoot.querySelector('button');
+            if (button instanceof HTMLElement) {
+              button.click();
+              return;
+            }
+          }
+          if (el instanceof HTMLElement) el.click();
+        },
       },
       {
         name: 'localization-dropdown',
@@ -387,5 +394,25 @@ if (window.Shopify?.designMode && !isIOS) {
       attributeFilter: trackedAttributes,
       subtree: true,
     });
+
+    // To track shopify-account state changes
+    (async () => {
+      await customElements.whenDefined('shopify-account');
+      const el = document.querySelector('shopify-account');
+      if (!el?.shadowRoot) return;
+
+      const shadowObserver = new MutationObserver(() => {
+        update(el);
+      });
+
+      shadowObserver.observe(el.shadowRoot, {
+        attributes: true,
+        attributeFilter: ['open'],
+        subtree: true,
+      });
+
+      // Popover API's toggle event has composed: true, so it crosses the shadow boundary
+      el.addEventListener('toggle', () => update(el), true);
+    })();
   })();
 }

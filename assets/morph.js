@@ -58,16 +58,9 @@ export const MORPH_OPTIONS = {
 
       // Special case for elements that need to keep their style
       const elements = ['floating-panel-component', 'fieldset.variant-option'];
-      const ids = ['account-popover'];
 
       for (const element of elements) {
         if (oldNode.matches(element) && newNode.matches(element)) {
-          const oldStyle = oldNode.getAttribute('style');
-          if (oldStyle) newNode.setAttribute('style', oldStyle);
-        }
-      }
-      for (const id of ids) {
-        if (oldNode.id === id && newNode.id === id) {
           const oldStyle = oldNode.getAttribute('style');
           if (oldStyle) newNode.setAttribute('style', oldStyle);
         }

@@ -1,0 +1,193 @@
+{%- doc -%}
+  Gift card recipient form styles consolidated into a single snippet for reliable CSS subsetting.
+  Rendered from both the gift-card-recipient-form snippet (product pages) and the product card block
+  (collection/search pages) so styles are available when the quick-add modal displays
+  gift card recipient form content.
+
+  @example
+  {% render 'gift-card-recipient-form-styles' %}
+{%- enddoc -%}
+
+{% stylesheet %}
+  .recipient-form {
+    --options-border-radius: var(--variant-picker-button-radius);
+    --options-border-width: var(--variant-picker-button-border-width);
+
+    display: flex;
+    flex-direction: column;
+    padding-bottom: var(--padding-2xl);
+  }
+
+  .recipient-form__send-to {
+    padding: 0;
+    margin-block-end: var(--margin-xs);
+  }
+
+  .gift-card-form-option {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gap-sm);
+    padding: 0;
+    border: none;
+  }
+
+  .gift-card-form-option__button-label {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-block: var(--padding-sm);
+    padding-inline: var(--padding-lg);
+    border: var(--style-border-width) solid var(--color-variant-border);
+    border-radius: var(--options-border-radius);
+    border-width: var(--options-border-width);
+    overflow: clip;
+    justify-content: center;
+    min-width: auto;
+    background-color: var(--color-variant-background);
+    color: var(--color-variant-text);
+    transition: background-color var(--animation-speed) var(--animation-easing),
+      border-color var(--animation-speed) var(--animation-easing);
+
+    &:hover {
+      background-color: var(--color-variant-hover-background);
+      border-color: var(--color-variant-hover-border);
+      color: var(--color-variant-hover-text);
+    }
+  }
+
+  .gift-card-form-option__button-label:has(:focus-visible) {
+    --variant-picker-stroke-color: var(--color-foreground);
+
+    border-color: var(--color-foreground);
+    outline: var(--focus-outline-width) solid var(--color-foreground);
+    outline-offset: var(--focus-outline-offset);
+  }
+
+  .gift-card-form-option__button-label:has(:checked) {
+    color: var(--color-selected-variant-text);
+    background-color: var(--color-selected-variant-background);
+    border-color: var(--color-selected-variant-border);
+    transition: background-color var(--animation-speed) var(--animation-easing),
+      border-color var(--animation-speed) var(--animation-easing);
+
+    &:hover {
+      background-color: var(--color-selected-variant-hover-background);
+      border-color: var(--color-selected-variant-hover-border);
+      color: var(--color-selected-variant-hover-text);
+    }
+  }
+
+  .gift-card-form-option__button-label input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    margin: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+  }
+
+  .recipient-fields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-sm);
+    transition: opacity 0.3s var(--animation-easing);
+    padding-block-start: var(--padding-xl);
+  }
+
+  .recipient-fields[hidden] {
+    display: none;
+  }
+
+  .field--send-on {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .recipient-form__message {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--gap-sm);
+    margin-top: var(--margin-sm);
+  }
+
+  .recipient-form-field-label {
+    position: absolute;
+    left: var(--padding-sm);
+    bottom: var(--padding-sm);
+    font-style: italic;
+    color: var(--color-input-text);
+  }
+
+  .recipient-fields__textarea {
+    min-height: 5.5rem;
+    overflow-y: auto;
+
+    /* Space for the character count */
+    padding-bottom: calc(var(--padding-sm) * 3);
+    scroll-padding-bottom: calc(var(--padding-sm) * 3);
+  }
+
+  .recipient-fields__input {
+    flex-grow: 1;
+    transition: background-color var(--animation-speed) ease, border-color var(--animation-speed) ease;
+    padding: var(--input-padding);
+    background-color: var(--color-input-background);
+    color: var(--color-input-text);
+    text-align: left;
+    font-size: var(--font-paragraph--size);
+    border: var(--style-border-width-inputs) solid var(--color-input-border);
+    border-radius: var(--style-border-radius-inputs);
+
+    &:autofill {
+      background-color: var(--color-input-background);
+      color: var(--color-input-text);
+    }
+
+    &:is(:focus, :hover) {
+      background-color: var(--color-input-hover-background);
+    }
+
+    &:is(:focus) {
+      outline-color: var(--color-input-background);
+    }
+  }
+
+  /* Date picker calendar icon
+   * Safari doesn't show the icon and Firefox correctly applies the color from the input field.
+   * Webkit browsers need the mask-image trick to use the correct icon color.
+   */
+  .field--send-on .recipient-fields__input::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24' %3E%3Cg%3E%3Cpath d='M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-image: none;
+    background-color: currentColor;
+    mask-type: match-source;
+  }
+
+  /* For Webkit browsers - text cursor for input area */
+  .field--send-on .recipient-fields__input::-webkit-datetime-edit {
+    cursor: text;
+  }
+
+  .field--send-on .recipient-fields__input::-webkit-datetime-edit-year-field,
+  .field--send-on .recipient-fields__input::-webkit-datetime-edit-month-field,
+  .field--send-on .recipient-fields__input::-webkit-datetime-edit-day-field {
+    /* Override the disabled color */
+    color: var(--color-input-text);
+  }
+
+  /* Fallback for other browsers */
+  .field--send-on .recipient-fields__input {
+    cursor: text;
+  }
+
+  /* For Firefox - entire field is clickable, so show pointer */
+  @supports (-moz-appearance: none) {
+    .field--send-on .recipient-fields__input {
+      cursor: pointer;
+    }
+  }
+{% endstylesheet %}

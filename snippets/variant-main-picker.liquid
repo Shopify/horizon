@@ -3,6 +3,8 @@
 
   @param {object} product_resource - The product object.
   @param {object} [block] - The block object
+  @param {object} section - The section object.
+  @param {object} product - The current product object (used to determine selected variant state).
 {%- enddoc -%}
 
 {% assign block_settings = block.settings %}
@@ -91,7 +93,7 @@
                   type="radio"
                   name="{{ product_option.name | escape }}-{{ block.id }}-{{ product_resource.id }}"
                   value="{{ product_option_value | escape }}"
-                  aria-label="{{ product_option_value.name }}"
+                  aria-label="{{ product_option_value.name | escape }}{% if product_option_value.available == false %} - {{ 'products.product.sold_out' | t }}{% endif %}"
                   {% if product_option_value.available == false %}
                     aria-disabled="true"
                   {% endif %}

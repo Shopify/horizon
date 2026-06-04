@@ -66,9 +66,16 @@
     "nested_product": "{{ product_title }} pro {{ parent_title }}",
     "remove": "Odebrat",
     "view_pricing_info": "Zobrazit informace o cenách",
-    "open_hotspot": "Otevřený hotspot",
     "slideshow": "Prezentace",
-    "header_navigation_label": "Hlavní"
+    "header_navigation_label": "Hlavní",
+    "home_logo_alt": "{{ store_name }} – Domů",
+    "active_filters": "Aktivní filtry:",
+    "featured_product": "Doporučený produkt",
+    "product_details": "Podrobnosti o produktu",
+    "show_product_details": "Zobrazit podrobnosti o produktu {{ product_name }}",
+    "search_suggestions_available": "Vyhledat dostupné návrhy pro výraz „{{ query }}“",
+    "price_filter_low": "Nízká cena",
+    "price_filter_high": "Vysoká cena"
   },
   "actions": {
     "add_to_cart": "Přidat do košíku",
@@ -110,7 +117,9 @@
     "open_image_in_full_screen": "Otevřít obrázek na celou obrazovku",
     "sort": "Třídit",
     "show_all_options": "Zobrazit všechny možnosti",
-    "open": "Otevřít"
+    "open": "Otevřít",
+    "back_to": "Zpět na {{ title }}",
+    "zoom_media": "Přiblížit média {{ index }}"
   },
   "content": {
     "reviews": "recen.",
@@ -245,7 +254,7 @@
     "product_custom_property_character_count": "Použito {{ used_chars }}/{{ max_chars }} znaků",
     "terms_and_policies": "Podmínky a zásady",
     "pagination": {
-      "nav_label": "Navigace stránkováním",
+      "nav_label": "Stránkování",
       "previous": "Předchozí",
       "next": "Další",
       "page": "Strana {{ page }}"
@@ -274,7 +283,8 @@
       "few": "Počet položek přidaných do košíku: {{ count }}",
       "many": "Počet položek přidaných do košíku: {{ count }}"
     },
-    "item_count_cutoff": "Počet položek: více než {{ count }}"
+    "item_count_cutoff": "Počet položek: více než {{ count }}",
+    "quick_order_list": "Seznam pro rychlou objednávku"
   },
   "gift_cards": {
     "issued": {

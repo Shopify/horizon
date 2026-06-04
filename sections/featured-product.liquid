@@ -6,6 +6,11 @@
   assign product = section.settings.product
   assign gallery_aspect_ratio = product.featured_media.preview_image.aspect_ratio | default: 1
 -%}
+{% render 'quick-add-styles' %}
+{% render 'quick-add-modal-styles' %}
+{% render 'buy-buttons-styles' %}
+{% render 'product-badges-styles' %}
+
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div
   class="
@@ -17,6 +22,7 @@
   style="--gallery-aspect-ratio: {{ gallery_aspect_ratio }};"
   data-testid="featured-product-{{ section.id }}"
 >
+  <h2 class="visually-hidden">{{ 'accessibility.featured_product' | t }}</h2>
   <div
     class="section-content-wrapper spacing-style size-style border-style"
     style="

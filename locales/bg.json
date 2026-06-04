@@ -64,9 +64,16 @@
     "discount_menu": "Кодове за отстъпка",
     "remove": "Премахване",
     "view_pricing_info": "Преглед на информация за ценообразуването",
-    "open_hotspot": "Отваряне на гореща точка",
     "slideshow": "Слайдшоу",
-    "header_navigation_label": "Основна"
+    "header_navigation_label": "Основна",
+    "home_logo_alt": "{{ store_name }} – Начало",
+    "active_filters": "Активни филтри:",
+    "product_details": "Подробности за продукта",
+    "show_product_details": "Показване на подробности за продукта {{ product_name }}",
+    "featured_product": "Представен продукт",
+    "search_suggestions_available": "Налични са предложения за търсене за „{{ query }}“",
+    "price_filter_low": "Ниска цена",
+    "price_filter_high": "Висока цена"
   },
   "actions": {
     "add_to_cart": "Добавяне към количката",
@@ -106,7 +113,9 @@
     "open_image_in_full_screen": "Отваряне на изображението на цял екран",
     "sort": "Сортиране",
     "show_all_options": "Показване на всички опции",
-    "open": "Отваряне"
+    "open": "Отваряне",
+    "back_to": "Назад към {{ title }}",
+    "zoom_media": "Увеличаване на мултимедия {{ index }}"
   },
   "content": {
     "reviews": "мнения",
@@ -235,7 +244,7 @@
     "product_custom_property_character_count": "Използвани знаци: {{ used_chars }}/{{ max_chars }}",
     "terms_and_policies": "Правила и условия",
     "pagination": {
-      "nav_label": "Навигиране в странирането",
+      "nav_label": "Страниране",
       "previous": "Предишна",
       "next": "Следваща",
       "page": "Страница {{ page }}"
@@ -262,7 +271,8 @@
     "items_added_to_cart": {
       "one": "1 артикул е добавен в количката",
       "other": "{{ count }} артикула са добавени в количката"
-    }
+    },
+    "quick_order_list": "Бърз списък с поръчки"
   },
   "gift_cards": {
     "issued": {

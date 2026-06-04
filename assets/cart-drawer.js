@@ -7,6 +7,7 @@ import { isMobileBreakpoint } from '@theme/utilities';
  *
  * @typedef {object} Refs
  * @property {HTMLDialogElement} dialog - The dialog element.
+ * @property {HTMLElement} [liveRegion] - The live region for cart announcements when dialog is open.
  *
  * @extends {DialogComponent}
  */
@@ -64,11 +65,28 @@ class CartDrawerComponent extends DialogComponent {
     }
   };
 
-  #handleCartAdd = () => {
+  /**
+   * Handles cart add events - opens drawer if auto-open and announces count when open.
+   * @param {CustomEvent<{ resource?: { item_count?: number } }>} event
+   */
+  #handleCartAdd = (event) => {
     if (this.hasAttribute('auto-open')) {
       this.showDialog();
     }
+
+    this.#announceCartCount(event.detail.resource?.item_count);
   };
+
+  /**
+   * Announces cart count to screen readers when dialog is open.
+   * @param {number | undefined} cartCount
+   */
+  #announceCartCount(cartCount) {
+    const liveRegion = /** @type {HTMLElement | undefined} */ (this.refs.liveRegion);
+    if (!this.refs.dialog?.open || !liveRegion || cartCount === undefined) return;
+
+    liveRegion.textContent = `${Theme.translations.cart_count}: ${cartCount}`;
+  }
 
   open() {
     this.showDialog();

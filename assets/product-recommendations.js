@@ -1,4 +1,5 @@
 import { Component } from '@theme/component';
+import { morphSection } from '@theme/section-renderer';
 
 class ProductRecommendations extends Component {
   /**
@@ -72,10 +73,9 @@ class ProductRecommendations extends Component {
    */
   #loadRecommendations() {
     const { productId, recommendationsPerformed, sectionId, intent } = this.dataset;
-    const id = this.id;
 
-    if (!productId || !id) {
-      throw new Error('Product ID and an ID attribute are required');
+    if (!productId || !sectionId) {
+      throw new Error('Product ID and a section ID are required');
     }
 
     // If the recommendations have already been loaded, accounts for the case where the Theme Editor
@@ -95,13 +95,9 @@ class ProductRecommendations extends Component {
           return;
         }
 
-        const html = document.createElement('div');
-        html.innerHTML = result.data || '';
-        const recommendations = html.querySelector(`product-recommendations[id="${id}"]`);
-
-        if (recommendations?.innerHTML && recommendations.innerHTML.trim().length) {
+        if (result.data?.trim().length) {
           this.dataset.recommendationsPerformed = 'true';
-          this.innerHTML = recommendations.innerHTML;
+          morphSection(sectionId, result.data, { mode: 'hydration', injectStylesheet: true });
         } else {
           this.#handleError(new Error('No recommendations available'));
         }

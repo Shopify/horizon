@@ -82,37 +82,6 @@
   {%- endif -%}
 </product-price>
 
-{% # theme-check-disable %}
-{% stylesheet %}
-  .tax-note:empty {
-    display: none;
-  }
-
-  form.payment-terms {
-    padding-top: 0.5em;
-    font-size: min(0.85em, var(--font-paragraph--size));
-    font-weight: var(--font-paragraph--weight);
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
-  }
-
-  .installments:not(:has(shopify-payment-terms)) {
-    display: none;
-  }
-
-  /* Volume pricing note should match unit-price styling (small, grey text) */
-  product-price .volume-pricing-note,
-  product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) .volume-pricing-note {
-    display: block;
-    font-family: var(--font-body--family);
-    font-weight: normal;
-    font-size: var(--font-size--xs);
-    line-height: normal;
-    letter-spacing: normal;
-    text-transform: none;
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
-  }
-{% endstylesheet %}
-
 {% schema %}
 {
   "name": "t:names.product_price",
@@ -450,4 +419,3 @@
   ]
 }
 {% endschema %}
-{% # theme-check-enable %}

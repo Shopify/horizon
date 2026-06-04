@@ -66,9 +66,16 @@
     "discount_menu": "Zľavové kódy",
     "remove": "Odstrániť",
     "view_pricing_info": "Zobraziť informácie o cenách",
-    "open_hotspot": "Otvoriť hotspot",
     "slideshow": "Prezentácia",
-    "header_navigation_label": "Primárna"
+    "header_navigation_label": "Primárna",
+    "home_logo_alt": "{{ store_name }} – Domov",
+    "active_filters": "Aktívne filtre:",
+    "product_details": "Detaily produktu",
+    "show_product_details": "Zobraziť detaily produktu {{ product_name }}",
+    "featured_product": "Odporúčaný produkt",
+    "search_suggestions_available": "Návrhy vyhľadávania dostupné pre „{{ query }}“",
+    "price_filter_low": "Nízka cena",
+    "price_filter_high": "Vysoká cena"
   },
   "actions": {
     "add_to_cart": "Pridať do košíka",
@@ -110,7 +117,9 @@
     "open_image_in_full_screen": "Otvoriť obrázok na celú obrazovku",
     "sort": "Zoradiť",
     "show_all_options": "Zobraziť všetky možnosti",
-    "open": "Otvoriť"
+    "open": "Otvoriť",
+    "back_to": "Späť na: {{ title }}",
+    "zoom_media": "Nástroj na priblíženie {{ index }}"
   },
   "content": {
     "reviews": "recenz.",
@@ -245,7 +254,7 @@
     "product_custom_property_character_count": "Počet použitých znakov: {{ used_chars }} z {{ max_chars }}",
     "terms_and_policies": "Pravidlá a podmienky",
     "pagination": {
-      "nav_label": "Navigácia po stránkach",
+      "nav_label": "Stránkovanie",
       "previous": "Predchádzajúce",
       "next": "Nasledujúce",
       "page": "Stránka {{ page }}"
@@ -274,7 +283,8 @@
       "few": "Počet položiek pridaných do košíka: {{ count }}",
       "many": "Počet položiek pridaných do košíka: {{ count }}"
     },
-    "item_count_cutoff": "Viac ako {{ count }} položky/položiek"
+    "item_count_cutoff": "Viac ako {{ count }} položky/položiek",
+    "quick_order_list": "Rýchly zoznam objednávok"
   },
   "gift_cards": {
     "issued": {

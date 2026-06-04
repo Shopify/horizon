@@ -64,9 +64,16 @@
     "nested_product": "{{ product_title }} for {{ parent_title }}",
     "remove": "Fjern",
     "view_pricing_info": "Se prisinformasjon",
-    "open_hotspot": "Åpne tilgangspunkt",
     "slideshow": "Lysbildefremvisning",
-    "header_navigation_label": "Primær"
+    "header_navigation_label": "Primær",
+    "home_logo_alt": "{{ store_name }} – Startside",
+    "active_filters": "Aktive filtre:",
+    "product_details": "Produktdetaljer",
+    "show_product_details": "Vis produktdetaljer for {{ product_name }}",
+    "featured_product": "Fremhevet produkt",
+    "search_suggestions_available": "Søkeforslag tilgjengelige for «{{ query }}»",
+    "price_filter_low": "Lav pris",
+    "price_filter_high": "Høy pris"
   },
   "actions": {
     "add_to_cart": "Legg i handlekurv",
@@ -106,7 +113,9 @@
     "sign_up": "Registrer deg",
     "sort": "Sorter",
     "show_all_options": "Vis alle alternativer",
-    "open": "Åpen"
+    "open": "Åpen",
+    "back_to": "Tilbake til {{ title }}",
+    "zoom_media": "Zoom medier {{ index }}"
   },
   "content": {
     "reviews": "anmeldelser",
@@ -235,7 +244,7 @@
     "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }} tegn er brukt",
     "terms_and_policies": "Vilkår og betingelser",
     "pagination": {
-      "nav_label": "Sideinndelingsnavigasjon",
+      "nav_label": "Sideinndeling",
       "previous": "Forrige",
       "next": "Neste",
       "page": "Side {{ page }}"
@@ -262,7 +271,8 @@
       "one": "Én vare er lagt til i handlekurven",
       "other": "{{ count }} varer er lagt til i handlekurven"
     },
-    "item_count_cutoff": "Mer enn {{ count }} varer"
+    "item_count_cutoff": "Mer enn {{ count }} varer",
+    "quick_order_list": "Hurtigbestillingsliste"
   },
   "gift_cards": {
     "issued": {

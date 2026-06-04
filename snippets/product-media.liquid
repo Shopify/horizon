@@ -7,7 +7,6 @@
   @param {string} [sizes] - Image sizes for responsive images.
   @param {string} [loading] - The loading attribute for the image.
   @param {object} [block] - The block object.
-  @param {object} [section] - The section object.
   @param {object} [selected_product] - The currently selected product.
   @param {boolean} [first_3d_model] - Indicates if this is the first 3D model.
   @param {boolean} [is_main_product_media] - Indicates if this is the main product image.
@@ -131,8 +130,7 @@
           widths: widths,
           sizes: sizes,
           loading: loading,
-          disable_controls: true,
-          section_id: section.id
+          disable_controls: true
         -%}
     {% endcase %}
   {% endunless %}

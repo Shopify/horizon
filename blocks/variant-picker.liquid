@@ -6,7 +6,7 @@
 -%}
 
 {% unless product_resource == blank %}
-  {% render 'variant-main-picker', product_resource: product_resource %}
+  {% render 'variant-main-picker', product_resource: product_resource, section: section, product: product %}
 {% endunless %}
 
 {% schema %}

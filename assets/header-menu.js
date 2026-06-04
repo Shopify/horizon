@@ -33,6 +33,10 @@ class HeaderMenu extends Component {
   disconnectedCallback() {
     super.disconnectedCallback();
     window.removeEventListener('resize', this.#resizeListener);
+    document.body.removeEventListener('pointermove', this.#onPointerMove);
+    if (this.#state.activeItem) {
+      this.#stopPointerTracking(this.#state.activeItem);
+    }
     this.overflowMenu?.removeEventListener('pointerleave', this.#overflowSubmenuListener);
     this.#cleanupMutationObserver();
   }
@@ -44,7 +48,6 @@ class HeaderMenu extends Component {
     setHeaderMenuStyle();
   }, 100);
 
-
   #overflowSubmenuListener = () => {
     this.#deactivate();
   };
@@ -55,6 +58,89 @@ class HeaderMenu extends Component {
   #state = {
     activeItem: null,
   };
+
+  /**
+   * @type {ReturnType<typeof setTimeout> | undefined}
+   */
+  #pointerIdleTimer;
+
+  /**
+   * Last known pointer position for Safari hit-test reconciliation.
+   * @type {{ x: number, y: number }}
+   */
+  #lastPointer = { x: 0, y: 0 };
+
+  /**
+   * Update the safety box idle state on the active menu item.
+   * @param {PointerEvent} event
+   */
+  #onPointerMove = (event) => {
+    const activeLink = this.#state.activeItem;
+    if (!activeLink) return;
+
+    this.#lastPointer.x = event.clientX;
+    this.#lastPointer.y = event.clientY;
+
+    const moving = Math.abs(event.movementX) >= 1 || event.movementY >= 1;
+    activeLink.dataset.safetyBox = `${moving}`;
+
+    clearTimeout(this.#pointerIdleTimer);
+    if (moving) {
+      this.#pointerIdleTimer = setTimeout(() => {
+        if (this.#state.activeItem) {
+          this.#state.activeItem.dataset.safetyBox = 'false';
+          this.#reconcilePointerTarget();
+        }
+      }, 50);
+    } else {
+      this.#reconcilePointerTarget();
+    }
+  };
+
+  /**
+   * Check if the pointer is over a different menu item and trigger activation if so.
+   * Works around Safari not re-evaluating hit targets after pseudo-element changes.
+   */
+  #reconcilePointerTarget() {
+    const { x, y } = this.#lastPointer;
+    requestAnimationFrame(() => {
+      const target = document.elementFromPoint(x, y);
+      if (!target) return;
+      const listItem = target.closest('.menu-list__list-item');
+      if (listItem && !listItem.contains(this.#state.activeItem)) {
+        listItem.dispatchEvent(new PointerEvent('pointerenter', { bubbles: false }));
+      }
+    });
+  }
+
+  /**
+   * Begin pointer tracking for the safety box on the newly active item.
+   * @param {HTMLElement} item
+   * @param {HTMLElement | null} previousItem
+   */
+  #startPointerTracking(item, previousItem) {
+    if (previousItem) {
+      this.#stopPointerTracking(previousItem);
+    } else {
+      document.body.addEventListener('pointermove', this.#onPointerMove);
+    }
+
+    const rect = item.getBoundingClientRect();
+    const isOverlap = this.headerComponent?.hasAttribute('data-submenu-overlap-bottom-row');
+    const boundary = isOverlap ? this.headerComponent?.querySelector('.header__row--top') : this.headerComponent;
+    item.style.setProperty('--box-height', `${(boundary?.getBoundingClientRect().bottom ?? 0) - rect.top}px`);
+  }
+
+  /**
+   * Stop pointer tracking and remove all safety box properties from an item.
+   * @param {HTMLElement} item
+   */
+  #stopPointerTracking(item) {
+    clearTimeout(this.#pointerIdleTimer);
+    this.#pointerIdleTimer = undefined;
+    item.style.removeProperty('--box-height');
+    delete item.dataset.safetyBox;
+  }
 
   /**
    * Get the overflow menu
@@ -128,7 +214,7 @@ class HeaderMenu extends Component {
           });
         });
       });
-      this.#submenuMutationObserver.observe(submenu, {childList: true, subtree: true});
+      this.#submenuMutationObserver.observe(submenu, { childList: true, subtree: true });
 
       // Auto-disconnect after 500ms to prevent memory leaks
       setTimeout(() => {
@@ -159,6 +245,7 @@ class HeaderMenu extends Component {
     this.headerComponent.style.setProperty('--submenu-height', `${finalHeight}px`);
     this.#setFullOpenHeaderHeight(finalHeight);
     this.style.setProperty('--submenu-opacity', '1');
+    this.#startPointerTracking(item, previouslyActiveItem);
   };
 
   /**
@@ -175,7 +262,12 @@ class HeaderMenu extends Component {
     const isMovingToOverflowMenu =
       event.relatedTarget instanceof Node && event.relatedTarget.parentElement?.matches('[slot="overflow"]');
 
-    if (isMovingWithinMenu || isMovingToOverflowMenu || isMovingToSubmenu) return;
+    if (isMovingWithinMenu || isMovingToOverflowMenu || isMovingToSubmenu) {
+      if (this.#state.activeItem) {
+        this.#stopPointerTracking(this.#state.activeItem);
+      }
+      return;
+    }
 
     this.#deactivate();
   }
@@ -196,6 +288,9 @@ class HeaderMenu extends Component {
     this.dataset.overflowExpanded = 'false';
 
     const submenu = findSubmenu(item);
+
+    document.body.removeEventListener('pointermove', this.#onPointerMove);
+    this.#stopPointerTracking(item);
 
     this.#state.activeItem = null;
     this.ariaExpanded = 'false';
@@ -221,7 +316,7 @@ class HeaderMenu extends Component {
           cb(submenu);
         }
       });
-    }
+    };
 
     mapSubmenus((submenu) => {
       submenu.style.setProperty('display', 'none');

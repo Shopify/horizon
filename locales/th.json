@@ -64,14 +64,21 @@
     "nested_product": "{{ product_title }} สำหรับ {{ parent_title }}",
     "remove": "ลบ",
     "view_pricing_info": "ดูข้อมูลการกำหนดราคา",
-    "open_hotspot": "เปิดฮอตสปอต",
     "slideshow": "สไลด์โชว์",
-    "header_navigation_label": "หลัก"
+    "header_navigation_label": "หลัก",
+    "home_logo_alt": "{{ store_name }} – หน้าหลัก",
+    "active_filters": "ตัวกรองที่ใช้งานอยู่:",
+    "product_details": "รายละเอียดสินค้า",
+    "show_product_details": "แสดงรายละเอียดสินค้าสำหรับ {{ product_name }}",
+    "featured_product": "สินค้าแนะนำ",
+    "search_suggestions_available": "ค้นหาคำแนะนำสำหรับ \"{{ query }}\" ที่พร้อมใช้งาน",
+    "price_filter_low": "ราคาประหยัด",
+    "price_filter_high": "ราคาแพง"
   },
   "actions": {
     "add_to_cart": "เพิ่มลงในตะกร้าสินค้า",
     "clear_all": "ล้างทั้งหมด",
-    "remove": "ลบออก",
+    "remove": "ลบ",
     "view_in_your_space": "ดูในพื้นที่ของคุณ",
     "show_filters": "ตัวกรอง",
     "clear": "ล้าง",
@@ -106,7 +113,9 @@
     "open_image_in_full_screen": "เปิดรูปภาพแบบเต็มหน้าจอ",
     "sort": "จัดเรียง",
     "show_all_options": "แสดงตัวเลือกทั้งหมด",
-    "open": "เปิด"
+    "open": "เปิด",
+    "back_to": "กลับไปที่ {{ title }}",
+    "zoom_media": "ซูมสื่อ {{ index }}"
   },
   "content": {
     "reviews": "รีวิว",
@@ -235,7 +244,7 @@
     "product_custom_property_character_count": "ใช้ไปแล้ว {{ used_chars }}/{{ max_chars }} อักขระ",
     "terms_and_policies": "ข้อกำหนดและนโยบาย",
     "pagination": {
-      "nav_label": "การนำทางไปที่การแบ่งหน้า",
+      "nav_label": "การแบ่งหน้า",
       "previous": "ก่อนหน้า",
       "next": "ถัดไป",
       "page": "หน้า {{ page }}"
@@ -262,7 +271,8 @@
     "items_added_to_cart": {
       "one": "เพิ่มสินค้า 1 รายการลงในตะกร้าแล้ว",
       "other": "เพิ่มสินค้า {{ count }} รายการลงในตะกร้า"
-    }
+    },
+    "quick_order_list": "รายการคำสั่งซื้อด่วน"
   },
   "gift_cards": {
     "issued": {

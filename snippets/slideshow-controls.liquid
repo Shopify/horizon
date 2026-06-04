@@ -497,4 +497,31 @@
     fill: var(--color-foreground);
     opacity: 0.6;
   }
+
+  /* Slideshow Play/Pause */
+  .slideshow-control:is(.icon-pause, .icon-play) {
+    color: var(--color-active);
+
+    &:hover {
+      color: var(--color-hover);
+    }
+
+    svg {
+      display: none;
+    }
+  }
+
+  slideshow-component:is([autoplay]) {
+    &:is([paused]) {
+      .icon-play > svg {
+        display: block;
+      }
+    }
+
+    &:not([paused]) {
+      .icon-pause > svg {
+        display: block;
+      }
+    }
+  }
 {% endstylesheet %}
