@@ -216,10 +216,10 @@
     <span>Aero</span> · Multiplist Intelligence Engine
   </div>
 
-  <h1 class="aero-hero__title">Your Intelligence Field</h1>
+  <h1 class="aero-hero__title">Where AI plugs into your work</h1>
 
   <p class="aero-hero__subtitle">
-    AI infused with your intellectual property. Start a conversation — discover what you already know but haven't articulated yet.
+    A 10-minute conversation. A free map of where AI can give you the most relief, fastest.
   </p>
 
   <div class="aero-hero__chat">
@@ -230,7 +230,7 @@
 
     <div class="aero-hero__chat-body">
       <p class="aero-hero__chat-message">
-        What does your work create — and what would change if nothing you've figured out ever got lost again?
+        What does your work create — and where are you feeling the most friction right now?
       </p>
     </div>
 
@@ -248,17 +248,25 @@
   <p class="aero-hero__subtext">Free Seed Doc conversation · No forms · Value before payment</p>
 </div>
 
+<script src="https://multiplist.ai/aero-widget.js" defer></script>
 <script>
   (function() {
     const input = document.getElementById('aero-hero-input');
     const sendBtn = document.getElementById('aero-hero-send');
 
+    function callOpenAero(opts, retries) {
+      retries = retries === undefined ? 5 : retries;
+      if (typeof window.openAero === 'function') {
+        window.openAero(opts);
+      } else if (retries > 0) {
+        setTimeout(function() { callOpenAero(opts, retries - 1); }, 200);
+      }
+    }
+
     function handleHeroSend() {
       const message = input.value.trim();
       if (!message) return;
-      if (typeof window.openAero === 'function') {
-        window.openAero({ initialMessage: message });
-      }
+      callOpenAero({ initialMessage: message });
       input.value = '';
       input.placeholder = 'Continuing in the chat panel →';
       sendBtn.textContent = 'Sent ✓';

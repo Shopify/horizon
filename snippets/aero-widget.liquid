@@ -5,10 +5,12 @@
   Seed Doc generation, typing indicators, mobile responsive layout.
   All styling is inline in the JS bundle — no CSS conflicts with theme.
 
-  HIDDEN on homepage — the Aero Hero chat panel replaces it there.
-  HIDDEN on password page.
+  EXCLUDED on homepage — aero-hero.liquid loads the script directly
+  there so the FAB doesn't appear alongside the hero. The hero IS the
+  intake surface on the homepage.
+  EXCLUDED on password page.
 {% endcomment %}
 
-{% if template.name != 'password' %}
+{% if template.name != 'password' and template.name != 'index' %}
 <script src="https://multiplist.ai/aero-widget.js" defer></script>
 {% endif %}
