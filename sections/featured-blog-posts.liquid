@@ -1,8 +1,14 @@
 {% liquid
   assign max_items = section.settings.post_limit
+  assign filter_by_tag = section.settings.filter_by_tag | strip
   assign view_all_link = section.settings.view_all_url
   if view_all_link == blank and section.settings.blog != blank
-    assign view_all_link = section.settings.blog.url
+    if filter_by_tag != blank
+      assign filter_tag_handle = filter_by_tag | handle
+      assign view_all_link = section.settings.blog.url | append: '/tagged/' | append: filter_tag_handle
+    else
+      assign view_all_link = section.settings.blog.url
+    endif
   endif
 %}
 
@@ -41,27 +47,38 @@
     {% endif %}
   </div>
 
-  {% if section.settings.blog != blank and section.settings.blog.articles_count > 0 %}
-    {% paginate section.settings.blog.articles by max_items %}
-      {% assign section_articles = section.settings.blog.articles %}
-    {% endpaginate %}
-  {% else %}
-    {% assign section_articles = '' %}
-    {% for i in (1..max_items) %}
-      {% assign section_articles = section_articles | append: ', ' %}
-    {% endfor %}
-    {% assign section_articles = section_articles | split: ',' %}
-  {% endif %}
-
   {% capture list_items %}
-    {% for article in section_articles limit: max_items %}
-      <div class="resource-list__item">
-        {% content_for 'block', id: 'static-blog-post-card', type: '_featured-blog-posts-card', article: article, closest.article: article %}
-      </div>
-      {% unless forloop.last %}
-        <!--@list/split-->
-      {% endunless %}
-    {% endfor %}
+    {% if section.settings.blog != blank and section.settings.blog.articles_count > 0 %}
+      {% assign posts_shown = 0 %}
+      {% paginate section.settings.blog.articles by 50 %}
+        {% for article in section.settings.blog.articles %}
+          {% if filter_by_tag != blank %}
+            {% unless article.tags contains filter_by_tag %}
+              {% continue %}
+            {% endunless %}
+          {% endif %}
+          {% if posts_shown >= max_items %}
+            {% break %}
+          {% endif %}
+          {% if posts_shown > 0 %}
+            <!--@list/split-->
+          {% endif %}
+          <div class="resource-list__item">
+            {% content_for 'block', id: 'static-blog-post-card', type: '_featured-blog-posts-card', article: article, closest.article: article %}
+          </div>
+          {% assign posts_shown = posts_shown | plus: 1 %}
+        {% endfor %}
+      {% endpaginate %}
+    {% else %}
+      {% for i in (1..max_items) %}
+        {% if forloop.index > 1 %}
+          <!--@list/split-->
+        {% endif %}
+        <div class="resource-list__item">
+          {% content_for 'block', id: 'static-blog-post-card', type: '_featured-blog-posts-card', article: blank, closest.article: blank %}
+        </div>
+      {% endfor %}
+    {% endif %}
   {% endcapture %}
 
   {% liquid
@@ -275,6 +292,12 @@
       "type": "blog",
       "id": "blog",
       "label": "t:settings.blog"
+    },
+    {
+      "type": "text",
+      "id": "filter_by_tag",
+      "label": "Filter by tag",
+      "info": "Only show articles with this tag (exact match, case-sensitive). Leave blank for the latest posts from the blog."
     },
     {
       "type": "checkbox",

@@ -1,5 +1,12 @@
 # Featured Blog Posts Patterns
 
+## Filter by article tag
+
+- `sections/featured-blog-posts.liquid` setting **Filter by tag** (`filter_by_tag`): scans up to 50 articles from the selected blog, keeps only those where `article.tags contains filter_by_tag`, then applies `post_limit`.
+- Tag text must match the tag in Shopify admin **exactly** (case-sensitive).
+- Leave blank to show the latest posts (first `post_limit` articles, same as before).
+- When tag is set and **View all button link** is empty, View all points to `{{ blog.url }}/tagged/{{ tag | handle }}`.
+
 ## Width Settings
 
 - `sections/featured-blog-posts.liquid` supports section width via `section.settings.section_width`.
