@@ -129,7 +129,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<p>Crafted from nature and composed with intention, we create bespoke botanical fragrances that give your brand a distinct, memorable identity. Rooted in authenticity, and impossible to replicate.</p>",
+                "text": "<p>Our workshops are a fun and immersive exploration into the world of olfactory story telling and natural botanicals.</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -150,26 +150,11 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
-            },
-            "button_XDcyWB": {
-              "type": "button",
-              "settings": {
-                "label": "Book An Event",
-                "link": "shopify://pages/contact",
-                "open_in_new_tab": false,
-                "style_class": "button",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
             }
           },
           "block_order": [
             "text_yPLU8L",
-            "text_Nh33wd",
-            "button_XDcyWB"
+            "text_Nh33wd"
           ]
         },
         "image_jcUhkb": {
@@ -347,7 +332,7 @@
       ],
       "name": "Ingredients",
       "settings": {
-        "heading": "Aromatic palette",
+        "heading": "OUR EVENTS",
         "description": "<p>To distill the essence of a classic sailing ship we had to delve deep into the history of its travels and map out the broad and exotic botanical story. Our Scent Scientists expertly blended this into a unique fragrance.</p>",
         "section_width": "page-width",
         "color_scheme": "",
