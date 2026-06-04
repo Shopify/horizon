@@ -1,0 +1,172 @@
+/* ==========================================================================
+   Multiplist Studios — Intelligence Field Custom Styles
+   Applied to Horizon theme for dark consulting aesthetic
+   ========================================================================== */
+
+/* ---------- Dark Theme Refinements ---------- */
+
+/* Ensure strong contrast on dark backgrounds */
+.color-scheme-8 h1,
+.color-scheme-8 h2,
+.color-scheme-8 h3 {
+  color: #EAEAEA;
+}
+
+.color-scheme-8 p,
+.color-scheme-8 li {
+  color: #c8c8c8;
+  line-height: 1.75;
+}
+
+.color-scheme-8 strong {
+  color: #0097b2;
+}
+
+/* ---------- Services Page Tier Cards ---------- */
+
+.tier-card {
+  background: #262626;
+  border: 1px solid #3b3b3b;
+  border-radius: 12px;
+  padding: 32px;
+  margin-bottom: 24px;
+  transition: border-color 0.3s ease;
+}
+
+.tier-card:hover {
+  border-color: #0097b2;
+}
+
+.tier-card h3 {
+  color: #0097b2;
+  margin-bottom: 8px;
+}
+
+.tier-card .tier-price {
+  font-size: 0.875rem;
+  color: #a6a6a6;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+}
+
+/* ---------- Phase Steps (How It Works) ---------- */
+
+.phase-step {
+  position: relative;
+  padding-left: 48px;
+  margin-bottom: 48px;
+}
+
+.phase-step::before {
+  content: attr(data-phase);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #0097b2;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+/* ---------- CTA Sections ---------- */
+
+.cta-section {
+  text-align: center;
+  padding: 64px 24px;
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 151, 178, 0.08) 100%);
+  border-radius: 16px;
+  margin: 48px 0;
+}
+
+.cta-section h2 {
+  margin-bottom: 16px;
+}
+
+.cta-section p {
+  margin-bottom: 32px;
+  color: #a6a6a6;
+}
+
+/* ---------- Intelligence Field Content Styling ---------- */
+
+/* Divider lines between service tiers */
+.services-divider {
+  border: none;
+  border-top: 1px solid #3b3b3b;
+  margin: 40px 0;
+}
+
+/* Accent underlines for headings */
+.accent-underline {
+  display: inline-block;
+  position: relative;
+}
+
+.accent-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 48px;
+  height: 2px;
+  background: #0097b2;
+}
+
+/* ---------- Responsive Adjustments ---------- */
+
+@media (max-width: 768px) {
+  .tier-card {
+    padding: 24px;
+  }
+
+  .phase-step {
+    padding-left: 40px;
+  }
+
+  .cta-section {
+    padding: 40px 16px;
+  }
+}
+
+/* ---------- Dark/Light Section Alternation ---------- */
+
+.section-dark {
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+}
+
+.section-light {
+  background-color: #262626;
+  color: #e0e0e0;
+}
+
+/* ---------- Link Styling on Dark ---------- */
+
+.color-scheme-8 a:not(.button):not(.link) {
+  color: #0097b2;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.color-scheme-8 a:not(.button):not(.link):hover {
+  border-bottom-color: #0097b2;
+}
+
+/* ---------- Clay Accent Elements ---------- */
+
+.clay-accent {
+  color: #E8DDD6;
+}
+
+.clay-bg {
+  background-color: #E8DDD6;
+  color: #1a1a1a;
+}

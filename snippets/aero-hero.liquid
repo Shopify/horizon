@@ -1,0 +1,295 @@
+{% comment %}
+  Aero Hero — The homepage chat experience.
+  A large, inviting embedded Aero conversation panel that IS the hero.
+  Connects to V12 via the same aero-widget.js streaming logic.
+  When user sends a message here, it opens the full chat in the floating panel.
+{% endcomment %}
+
+<style>
+  .aero-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    padding: 80px 24px 60px;
+    text-align: center;
+    background: #12252B;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .aero-hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at center, rgba(24, 145, 171, 0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .aero-hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    border: 1px solid #3b3b3b;
+    border-radius: 100px;
+    font-size: 0.8125rem;
+    color: #a6a6a6;
+    letter-spacing: 0.02em;
+    margin-bottom: 32px;
+    font-family: var(--font-body--family, 'Inter', sans-serif);
+  }
+
+  .aero-hero__badge span {
+    color: #1891AB;
+    font-weight: 600;
+  }
+
+  .aero-hero__title {
+    font-family: var(--font-heading--family, 'Inter', sans-serif);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    color: #EAEAEA;
+    line-height: 1.15;
+    margin: 0 0 20px;
+    max-width: 720px;
+  }
+
+  .aero-hero__subtitle {
+    font-family: var(--font-body--family, 'Inter', sans-serif);
+    font-size: clamp(1rem, 2vw, 1.1875rem);
+    color: #a6a6a6;
+    line-height: 1.6;
+    max-width: 560px;
+    margin: 0 0 48px;
+  }
+
+  .aero-hero__chat {
+    width: 100%;
+    max-width: 640px;
+    background: #1a1a1a;
+    border: 1px solid #3b3b3b;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 60px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(24, 145, 171, 0.08);
+    position: relative;
+    z-index: 1;
+  }
+
+  .aero-hero__chat-header {
+    padding: 20px 28px;
+    border-bottom: 1px solid #3b3b3b;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .aero-hero__chat-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #1891AB;
+    animation: aero-pulse 2.5s ease-in-out infinite;
+  }
+
+  @keyframes aero-pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  .aero-hero__chat-name {
+    font-size: 0.875rem;
+    color: #e0e0e0;
+    font-family: var(--font-body--family, 'Inter', sans-serif);
+    font-weight: 500;
+  }
+
+  .aero-hero__chat-name strong {
+    color: #1891AB;
+  }
+
+  .aero-hero__chat-body {
+    padding: 28px;
+  }
+
+  .aero-hero__chat-message {
+    font-family: var(--font-body--family, 'Inter', sans-serif);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    color: #e0e0e0;
+    text-align: left;
+    margin: 0;
+  }
+
+  .aero-hero__chat-input-area {
+    padding: 16px 20px;
+    border-top: 1px solid #3b3b3b;
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+  }
+
+  .aero-hero__chat-input {
+    flex: 1;
+    background: #f5f5f5;
+    border: 1px solid #d0d0d0;
+    border-radius: 12px;
+    padding: 14px 18px;
+    color: #1a1a1a !important;
+    font-size: 1rem;
+    font-family: var(--font-body--family, 'Inter', sans-serif);
+    outline: none;
+    resize: none;
+    transition: border-color 0.2s ease;
+    min-height: 52px;
+  }
+
+  .aero-hero__chat-input::placeholder {
+    color: #888;
+  }
+
+  .aero-hero__chat-input:focus {
+    border-color: #1891AB;
+    background: #fff;
+  }
+
+  .aero-hero__chat-send {
+    background: #1891AB;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 24px;
+    color: #12252B !important;
+    cursor: pointer;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    font-family: var(--font-body--family, 'Inter', sans-serif);
+    transition: background 0.2s ease;
+    white-space: nowrap;
+    min-height: 52px;
+  }
+
+  .aero-hero__chat-send:hover {
+    background: #0097b2;
+  }
+
+  .aero-hero__subtext {
+    margin-top: 24px;
+    font-size: 0.8125rem;
+    color: #666;
+    font-family: var(--font-body--family, 'Inter', sans-serif);
+  }
+
+  @media (max-width: 640px) {
+    .aero-hero {
+      padding: 60px 16px 40px;
+      min-height: 90vh;
+    }
+
+    .aero-hero__chat {
+      border-radius: 16px;
+    }
+
+    .aero-hero__chat-body {
+      padding: 20px;
+    }
+
+    .aero-hero__chat-message {
+      font-size: 0.9375rem;
+    }
+
+    .aero-hero__chat-input-area {
+      flex-direction: column;
+    }
+
+    .aero-hero__chat-send {
+      width: 100%;
+    }
+  }
+</style>
+
+<div class="aero-hero">
+  <div class="aero-hero__badge">
+    <span>Aero</span> · Multiplist Intelligence Engine
+  </div>
+
+  <h1 class="aero-hero__title">Where AI plugs into your work</h1>
+
+  <p class="aero-hero__subtitle">
+    A 10-minute conversation. A free map of where AI can give you the most relief, fastest.
+  </p>
+
+  <div class="aero-hero__chat">
+    <div class="aero-hero__chat-header">
+      <div class="aero-hero__chat-dot"></div>
+      <div class="aero-hero__chat-name"><strong>Aero</strong> is listening</div>
+    </div>
+
+    <div class="aero-hero__chat-body">
+      <p class="aero-hero__chat-message">
+        What does your work create — and where are you feeling the most friction right now?
+      </p>
+    </div>
+
+    <div class="aero-hero__chat-input-area">
+      <textarea
+        class="aero-hero__chat-input"
+        id="aero-hero-input"
+        placeholder="Share what's on your mind..."
+        rows="1"
+      ></textarea>
+      <button class="aero-hero__chat-send" id="aero-hero-send">Begin</button>
+    </div>
+  </div>
+
+  <p class="aero-hero__subtext">Free Seed Doc conversation · No forms · Value before payment</p>
+</div>
+
+<script src="https://multiplist.ai/aero-widget.js" defer></script>
+<script>
+  (function() {
+    const input = document.getElementById('aero-hero-input');
+    const sendBtn = document.getElementById('aero-hero-send');
+
+    function callOpenAero(opts, retries) {
+      retries = retries === undefined ? 5 : retries;
+      if (typeof window.openAero === 'function') {
+        window.openAero(opts);
+      } else if (retries > 0) {
+        setTimeout(function() { callOpenAero(opts, retries - 1); }, 200);
+      }
+    }
+
+    function handleHeroSend() {
+      const message = input.value.trim();
+      if (!message) return;
+      callOpenAero({ initialMessage: message });
+      input.value = '';
+      input.placeholder = 'Continuing in the chat panel →';
+      sendBtn.textContent = 'Sent ✓';
+      sendBtn.disabled = true;
+    }
+
+    if (sendBtn) {
+      sendBtn.addEventListener('click', handleHeroSend);
+    }
+
+    if (input) {
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          handleHeroSend();
+        }
+      });
+
+      /* Auto-resize textarea */
+      input.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+      });
+    }
+  })();
+</script>

@@ -31,6 +31,7 @@
     {%- render 'scripts' -%}
     {%- render 'theme-styles-variables' -%}
     {%- render 'color-schemes' -%}
+    {{ 'multiplist-custom.css' | asset_url | stylesheet_tag }}
 
     {% if request.design_mode %}
       {%- render 'theme-editor' -%}
@@ -134,5 +135,7 @@
     {% if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add-modal' %}
     {% endif %}
+
+    {% render 'aero-widget' %}
   </body>
 </html>

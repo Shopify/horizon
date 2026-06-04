@@ -1,0 +1,208 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "name": "Page Title",
+          "settings": {
+            "text": "<h1>How It Works</h1>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "center",
+            "type_preset": "h1",
+            "font": "var(--font-heading--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "intro": {
+          "type": "text",
+          "name": "Intro",
+          "settings": {
+            "text": "<p>Four phases. Each one compounds what came before. You start wherever you are — we meet you there.</p>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "center",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1.125rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 16,
+            "padding-block-end": 16,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "phase-reveal": {
+          "type": "text",
+          "name": "Phase 1: Reveal",
+          "settings": {
+            "text": "<h2>Phase 1 — Reveal</h2><p>It starts with a conversation. Not an intake form — a thinking partnership. Our AI conducts a Fractal Twinning session that surfaces the shape of your Intelligence Field: your frameworks, friction points, opportunities, and cognitive style. You walk away with a personalized Seed Doc. Value before payment. Always.</p>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "center",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 16,
+            "padding-block-end": 16,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "phase-map": {
+          "type": "text",
+          "name": "Phase 2: Map",
+          "settings": {
+            "text": "<h2>Phase 2 — Map</h2><p>The AI Amnesia Audit examines five dimensions of your current intelligence landscape: Surfaces (where your IP lives), Systems (how information flows), Stack (your tools and gaps), Syncs (where context breaks), and Sources (your raw material). You receive a comprehensive diagnostic with specific recommendations.</p>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "center",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 16,
+            "padding-block-end": 16,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "phase-build": {
+          "type": "text",
+          "name": "Phase 3: Build",
+          "settings": {
+            "text": "<h2>Phase 3 — Build</h2><p>Memory Migration transforms your scattered Notion, Trello, Google Drive, and conversation chaos into a structured, queryable Intelligence Field. Your IP gets extracted, organized, and activated. Your team gets onboarded. Your Fractal Twin comes alive.</p>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "center",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 16,
+            "padding-block-end": 16,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "phase-cultivate": {
+          "type": "text",
+          "name": "Phase 4: Cultivate",
+          "settings": {
+            "text": "<h2>Phase 4 — Cultivate</h2><p>Ongoing Intelligence Field cultivation. Weekly extractions from new conversations, meetings, and content. Vault gardening to keep your field clean, connected, and alive. Voice Pack maintenance as your thinking evolves. Quarterly knowledge health reports. Every new client doesn't drain you — they expand your field. The opposite of burnout work.</p>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "center",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 16,
+            "padding-block-end": 16,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "cta": {
+          "type": "button",
+          "name": "CTA",
+          "settings": {
+            "label": "Start Your Seed Doc →",
+            "link": "/pages/contact",
+            "open_in_new_tab": false,
+            "style_class": "button",
+            "width": "custom",
+            "custom_width": 100,
+            "width_mobile": "fit-content",
+            "custom_width_mobile": 100
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "heading",
+        "intro",
+        "phase-reveal",
+        "phase-map",
+        "phase-build",
+        "phase-cultivate",
+        "cta"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "gap": 8,
+        "color_scheme": "scheme-8",
+        "padding-block-start": 48,
+        "padding-block-end": 80
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
