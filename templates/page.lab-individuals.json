@@ -70,7 +70,7 @@
             "border_opacity": 100,
             "border_radius": 16,
             "image_border_padding": 8,
-            "image_ratio": "adapt",
+            "image_ratio": "square",
             "width": "fill",
             "custom_width": 100,
             "width_mobile": "fill",
@@ -415,7 +415,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<p>Why Create Your Own Bespoke Perfume?</p>",
+                "text": "<p>Why Choose  Bespoke Perfume?</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -493,7 +493,7 @@
             "border_opacity": 100,
             "border_radius": 16,
             "image_border_padding": 8,
-            "image_ratio": "adapt",
+            "image_ratio": "portrait",
             "width": "fill",
             "custom_width": 100,
             "width_mobile": "fill",
@@ -599,7 +599,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<p>bespoke perfume costs</p>",
+                "text": "<p>bespoke perfume Price</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -625,7 +625,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<h4>priced from £1,000 </h4>",
+                "text": "<h4>Priced on application </h4>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -1097,7 +1097,7 @@
             "cta_label": "Read full testimonial",
             "cta_link": "",
             "open_in_new_tab": true,
-            "image": "shopify://shop_images/MAP.png",
+            "image": "shopify://shop_images/DJI_0036.jpg",
             "author": "MY PERFUME",
             "author_title": "Founder of The Trove"
           }
@@ -1190,7 +1190,7 @@
               "type": "image",
               "name": "t:names.image",
               "settings": {
-                "image": "shopify://shop_images/VitiVinci_Team_AleFlo-42.jpg",
+                "image": "shopify://shop_images/So_Fong.png",
                 "link": "",
                 "border": "none",
                 "border_width": 1,
@@ -1214,7 +1214,7 @@
               "type": "image",
               "name": "t:names.image",
               "settings": {
-                "image": "shopify://shop_images/VitiVinci_Team_AleFlo-43.jpg",
+                "image": "shopify://shop_images/DJI_0036.jpg",
                 "link": "",
                 "border": "none",
                 "border_width": 1,
@@ -1238,14 +1238,14 @@
               "type": "image",
               "name": "t:names.image",
               "settings": {
-                "image": "shopify://shop_images/VitiVinci_Team_AleFlo-40.jpg",
+                "image": "shopify://shop_images/MAP.png",
                 "link": "",
                 "border": "none",
                 "border_width": 1,
                 "border_opacity": 100,
                 "border_radius": 16,
                 "image_border_padding": 8,
-                "image_ratio": "square",
+                "image_ratio": "landscape",
                 "width": "fill",
                 "custom_width": 100,
                 "width_mobile": "fill",
