@@ -267,6 +267,97 @@
         "padding-block-end": 80
       }
     },
+    "ingredients_VDjDjn": {
+      "type": "ingredients",
+      "blocks": {
+        "ingredient_TGUA6H": {
+          "type": "ingredient",
+          "settings": {
+            "title": "",
+            "description": "",
+            "image": "shopify://shop_images/IMG_4258.jpg"
+          }
+        },
+        "ingredient_JpXpTk": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Cedarwood",
+            "description": "<p>AROMACHOLOGY:<br/>Emotional balance, inner calm, wellbeing, balancing mood swings, mindfulness, positivity, confidence, concentration, self-esteem, assertiveness.</p>",
+            "image": "shopify://shop_images/e6491e68-4fce-43dc-9c17-13ba25e5a8cd-removebg-preview.png"
+          }
+        },
+        "ingredient_ix6jpJ": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Myrrh",
+            "description": "<p>AROMACHOLOGY<br/>Promotes emotional balance and wellbeing, elevates mood, promotes awareness, feeling of inner peace, strengthens and activates the immune system, stimulates blood circulation. <br/></p>",
+            "image": "shopify://shop_images/8a066162-358b-4961-b1dc-ffe35fa8b3ec-removebg-preview.png"
+          }
+        },
+        "ingredient_kqi479": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Cardamom",
+            "description": "<p>AROMACHOLOGY:<br/>Relieves mental fatigue and nervous tension, stimulant, aphrodisiac, increases libido, revitalising.</p>",
+            "image": "shopify://shop_images/2d418edc-512c-4826-b989-196dfe7937bc-removebg-preview.png"
+          }
+        },
+        "ingredient_Yz7bjh": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Elemi",
+            "description": "<p>AROMACHOLOGY:<br/>Concentration, realigning the chakras, discovering emotions, harmonising and<br/>balancing, calming stress, nervousness, verbal expression, strengthening the will.</p>",
+            "image": "shopify://shop_images/992f1592-495f-4630-9645-14241bc5f484-removebg-preview.png"
+          }
+        },
+        "ingredient_DXxCFf": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Red Mandarin",
+            "description": "<p>AROMACHOLOGY:<br/>Its primary aromatic effect is joy, vitality, and relaxation, making it a powerful tool to lower stress and prepare the mind for restorative sleep.</p>",
+            "image": "shopify://shop_images/780bc423-42de-499f-b612-5522a2e42843-removebg-preview.png"
+          }
+        },
+        "ingredient_CnV3qc": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Black Pepper",
+            "description": "<p>AROMACHOLOGY<br/>Resistance, stimulating, aphrodisiac, antioxidant, anti-inflammatory.</p>",
+            "image": "shopify://shop_images/524aacb9-ae46-436a-9d99-e456d4fbd411-removebg-preview.png"
+          }
+        },
+        "ingredient_XQpGUK": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Siam Wood",
+            "description": "<p>AROMACHOLOGY<br/>Positivity, calm, grounding, perspective. On a physical level, it can be of value in cases of adrenal fatigue and low testosterone levels.</p>",
+            "image": "shopify://shop_images/98894a5f-649b-47c6-b4ce-131a250ca390-removebg-preview.png"
+          }
+        }
+      },
+      "block_order": [
+        "ingredient_TGUA6H",
+        "ingredient_JpXpTk",
+        "ingredient_ix6jpJ",
+        "ingredient_kqi479",
+        "ingredient_Yz7bjh",
+        "ingredient_DXxCFf",
+        "ingredient_CnV3qc",
+        "ingredient_XQpGUK"
+      ],
+      "name": "Ingredients",
+      "settings": {
+        "heading": "Aromatic palette",
+        "description": "<p>To distill the essence of a classic sailing ship we had to delve deep into the history of its travels and map out the broad and exotic botanical story. Our Scent Scientists expertly blended this into a unique fragrance.</p>",
+        "section_width": "page-width",
+        "color_scheme": "",
+        "arrow_size": 52,
+        "button_label": "",
+        "button_link": "",
+        "padding-block-start": 40,
+        "padding-block-end": 40
+      }
+    },
     "qa_qFEGan": {
       "type": "qa",
       "blocks": {
@@ -1058,6 +1149,7 @@
   "order": [
     "main",
     "section_qqizQE",
+    "ingredients_VDjDjn",
     "qa_qFEGan",
     "section_XLGtyG",
     "section_nrrJqU",
