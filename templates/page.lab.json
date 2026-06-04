@@ -70,7 +70,7 @@
             "border_opacity": 100,
             "border_radius": 16,
             "image_border_padding": 8,
-            "image_ratio": "landscape",
+            "image_ratio": "portrait",
             "width": "fill",
             "custom_width": 100,
             "width_mobile": "custom",
@@ -499,7 +499,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<p>The Cala Falcó Atelier, Palma</p>",
+                "text": "<p>The Atelier, Palma</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
