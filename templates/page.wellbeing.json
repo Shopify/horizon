@@ -130,9 +130,9 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<p>Made from hand picked seasonal botancials. </p>",
+                "text": "<p>Made from hand picked seasonal botancials. Each product in our collection is distilled by our scent scientists into soulful fragrances and wellness offerings.</p>",
                 "width": "fit-content",
-                "max_width": "normal",
+                "max_width": "none",
                 "alignment": "left",
                 "type_preset": "rte",
                 "font": "var(--font-body--family)",
@@ -478,6 +478,7 @@
         "image_8zJaHi",
         "group_a7b3TP"
       ],
+      "disabled": true,
       "name": "t:names.image_with_text",
       "settings": {
         "content_direction": "row",
