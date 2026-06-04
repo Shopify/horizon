@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "main": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "{% render 'learn-page' %}",
+        "color_scheme": "scheme-8",
+        "section_width": "full-width",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    }
+  },
+  "order": ["main"]
+}
