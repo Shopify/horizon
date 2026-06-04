@@ -658,7 +658,7 @@
                 "border_opacity": 100,
                 "border_radius": 16,
                 "image_border_padding": 8,
-                "image_ratio": "landscape",
+                "image_ratio": "square",
                 "width": "fill",
                 "custom_width": 100,
                 "width_mobile": "fill",
@@ -674,6 +674,7 @@
             "image_HcJqzE": {
               "type": "image",
               "name": "t:names.image",
+              "disabled": true,
               "settings": {
                 "image": "shopify://shop_images/DSCF2748.jpg",
                 "link": "",
@@ -1403,7 +1404,7 @@
         "section_width": "page-width",
         "color_scheme": "",
         "padding-block-start": 0,
-        "padding-block-end": 80
+        "padding-block-end": 0
       }
     },
     "product_list_Ddz9mc": {
@@ -1615,7 +1616,7 @@
         "gap": 28,
         "color_scheme": "scheme-1",
         "padding-block-start": 80,
-        "padding-block-end": 80
+        "padding-block-end": 40
       }
     },
     "hero_xbJPf6": {
