@@ -1314,6 +1314,46 @@
         "padding-block-end": 0
       }
     },
+    "content_cards_CrJNJA": {
+      "type": "content-cards",
+      "blocks": {
+        "card_qHRQtd": {
+          "type": "card",
+          "settings": {
+            "show_number": true,
+            "number": "Blending",
+            "show_icon": true,
+            "icon": "shopify://shop_images/IMG_4510.jpg",
+            "show_text": true,
+            "text": "<p>Our perfumer composes each fragrance following the olfactory pyramid. Carefully balancing top, heart, and base notes to create depth, evolution and harmony on the skin. Together these notes tell a unique sensory story.</p>"
+          }
+        },
+        "card_tiKjxA": {
+          "type": "card",
+          "settings": {
+            "show_number": true,
+            "number": "Bottling",
+            "show_icon": true,
+            "icon": "shopify://shop_images/IMG_4507.jpg",
+            "show_text": true,
+            "text": "<p>Once the perfumer has created the final essence, it is taken to our laboratory where our chemists develop the full formulation. After the necessary resting time, the fragrance is bottled and labelled, ready for enjoyment.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "card_qHRQtd",
+        "card_tiKjxA"
+      ],
+      "name": "Content cards",
+      "settings": {
+        "heading": "",
+        "description": "",
+        "section_width": "page-width",
+        "color_scheme": "",
+        "padding-block-start": 0,
+        "padding-block-end": 80
+      }
+    },
     "product_list_Ddz9mc": {
       "type": "product-list",
       "blocks": {
@@ -3368,6 +3408,7 @@
     "section_Ct3h3w",
     "ingredients_tnMT9F",
     "ingredients_TQxTYb",
+    "content_cards_CrJNJA",
     "product_list_Ddz9mc",
     "hero_xbJPf6",
     "section_hUtqcY",
