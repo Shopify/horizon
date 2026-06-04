@@ -52,6 +52,9 @@
 
     <div
       class="qa__accordion accordion accordion--{{ section.id }} accordion--{{ section.settings.accordion_icon | default: 'caret' }} border-style accordion--dividers"
+      {% if section.settings.single_open != false %}
+        data-single-open
+      {% endif %}
       style="
         --summary-font-family: var(--font-h6--family);
         --summary-font-style: var(--font-h6--style);
@@ -288,6 +291,12 @@
       "id": "color_scheme",
       "label": "Color scheme",
       "default": "scheme-1"
+    },
+    {
+      "type": "checkbox",
+      "id": "single_open",
+      "label": "Only one row open at a time",
+      "default": true
     },
     {
       "type": "select",

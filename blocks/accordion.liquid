@@ -1,6 +1,9 @@
 {% assign block_settings = block.settings %}
 <div
   class="accordion accordion--{{ block.id }} accordion--{{ block_settings.icon }} border-style spacing-style{% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %}{% if block_settings.dividers %} accordion--dividers{% endif %}"
+  {% if block_settings.single_open != false %}
+    data-single-open
+  {% endif %}
   style="
     --summary-font-family: var(--font-{{ block_settings.type_preset }}--family);
      --summary-font-style: var(--font-{{ block_settings.type_preset }}--style);
@@ -20,6 +23,10 @@
   .accordion {
     flex: 1;
     width: 100%;
+  }
+
+  .accordion[data-single-open] {
+    --accordion-close-duration: 0.38s;
   }
 
   .accordion--dividers accordion-custom:not(:first-child) .details {
@@ -56,13 +63,12 @@
 
   /* because we can't pass apply a specific class on a block based on its parent block setting */
   .accordion .details__header {
-    font-family: var(--font-h2--family);
+    font-family: var(--font-h6--family);
     font-style: var(--summary-font-style);
     font-weight: 400;
     font-size: 24px;
     line-height: var(--summary-font-line-height);
     min-height: var(--minimum-touch-target);
-    text-transform: uppercase;
     padding: 1rem 0;;
   }
 
@@ -105,6 +111,12 @@
       "type": "checkbox",
       "id": "dividers",
       "label": "t:settings.dividers",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "single_open",
+      "label": "Only one row open at a time",
       "default": true
     },
     {
@@ -261,6 +273,9 @@
     {
       "name": "t:names.accordion",
       "category": "t:categories.layout",
+      "settings": {
+        "single_open": true
+      },
       "blocks": {
         "row-1": {
           "type": "_accordion-row",

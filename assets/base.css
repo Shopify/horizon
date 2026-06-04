@@ -5058,9 +5058,19 @@ accordion-custom {
     }
 
     /* Disable transitions when the content toggle is not caused by the direct user interaction, e.g. opening the filters on mobile. */
-    &:not(:focus-within)::details-content,
-    &:not(:focus-within) .details-content {
+    &:not(:focus-within):not(.accordion-custom--closing)::details-content,
+    &:not(:focus-within):not(.accordion-custom--closing) .details-content {
       transition: none;
+    }
+
+    &.accordion-custom--closing {
+      &::details-content,
+      .details-content {
+        transition: content-visibility var(--accordion-close-duration, 0.38s) allow-discrete,
+          padding-block var(--accordion-close-duration, 0.38s) var(--animation-easing),
+          opacity var(--accordion-close-duration, 0.38s) var(--animation-easing),
+          block-size var(--accordion-close-duration, 0.38s) var(--animation-easing);
+      }
     }
 
     &:not([open]) {
