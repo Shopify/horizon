@@ -399,8 +399,24 @@
         "qa_item_LVwTYY": {
           "type": "qa_item",
           "settings": {
-            "question": "SUSTAINABILITY COMMITMENT",
-            "answer": "<p>Using 100% natural ingredients, refillable packaging and responsible sourcing, honouring both nature and luxury sets a sustainability statement for your brand.</p>",
+            "question": "STEP 4: REFINEMENT & EVOLUTION",
+            "answer": "<p>We refine your fragrance together, ensuring it resonates perfectly with your senses. Evolving until it feels instinctively right, like a true extension of you.</p>",
+            "open_by_default": false
+          }
+        },
+        "qa_item_RNHJ7h": {
+          "type": "qa_item",
+          "settings": {
+            "question": "STEP 5: YOUR SIGNATURE SCENT",
+            "answer": "<p>Your bespoke fragrance becomes your personal signature. Distinctive, memorable, and impossible to replicate. A scent that lingers, tells your story, and leaves a lasting impression.</p>",
+            "open_by_default": false
+          }
+        },
+        "qa_item_k6D4xd": {
+          "type": "qa_item",
+          "settings": {
+            "question": "STEP 6: CONTINUITY & RE-CREATION",
+            "answer": "<p>Your formula is saved on our archives and can be recreated or evolved over time, allowing your scent to grow with you. Whether as a personal fragrance or across candles, home scents, and more.</p>",
             "open_by_default": false
           }
         }
@@ -409,7 +425,9 @@
         "qa_item_9HQfgh",
         "qa_item_XpKikc",
         "qa_item_pJ7y8i",
-        "qa_item_LVwTYY"
+        "qa_item_LVwTYY",
+        "qa_item_RNHJ7h",
+        "qa_item_k6D4xd"
       ],
       "name": "QA",
       "settings": {
