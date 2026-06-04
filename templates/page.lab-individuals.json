@@ -296,79 +296,6 @@
         "padding-block-end": 80
       }
     },
-    "ingredients_fKEj77": {
-      "type": "ingredients",
-      "blocks": {
-        "ingredient_3fX33P": {
-          "type": "ingredient",
-          "settings": {
-            "title": "STEP 1: SCENT DISCOVERY",
-            "description": "<p>Through a personal discovery session, we explore your memories, emotions, and individuality, uncovering the essence of who you are and how you want to be experienced.</p>",
-            "image": "shopify://shop_images/d7e5190d-c9e3-4aa0-82f8-1da5f98e2376-removebg-preview.png"
-          }
-        },
-        "ingredient_tcinaa": {
-          "type": "ingredient",
-          "settings": {
-            "title": "STEP 2: FROM MEMORY TO INSPIRATION",
-            "description": "<p>We curate a palette of natural notes that reflect your story. Translating moments, places, and feelings into a unique olfactory direction that is entirely your own.<br/></p>",
-            "image": "shopify://shop_images/47118989-ddc4-4992-9325-c86df7889e42-removebg-preview.png"
-          }
-        },
-        "ingredient_GKmiYC": {
-          "type": "ingredient",
-          "settings": {
-            "title": "STEP 3: ARTISANAL CREATION",
-            "description": "<p>Our in-house perfumer and scent scientists carefully blend 100% natural botanicals to craft a fragrance that is deeply personal and uniquely yours. Each composition is created with precision, artistry, and an unwavering commitment to authenticity.</p>",
-            "image": "shopify://shop_images/7c50cdcb-3f0e-48e8-8b0a-732c090b03ed.png"
-          }
-        },
-        "ingredient_JyhUz7": {
-          "type": "ingredient",
-          "settings": {
-            "title": "STEP 4: REFINEMENT & EVOLUTION",
-            "description": "<p>We refine your fragrance together, ensuring it resonates perfectly with your senses. Evolving until it feels instinctively right, like a true extension of you.</p>",
-            "image": "shopify://shop_images/3636cfd5-8dc7-4a9d-9e3b-3ffc699f102f-removebg-preview.png"
-          }
-        },
-        "ingredient_JtzFgk": {
-          "type": "ingredient",
-          "settings": {
-            "title": "STEP 5: YOUR SIGNATURE SCENT",
-            "description": "<p>Your bespoke fragrance becomes your personal signature. Distinctive, memorable, and impossible to replicate. A scent that lingers, tells your story, and leaves a lasting impression.</p>",
-            "image": "shopify://shop_images/2220b059-86a3-47e7-9c87-369b620f2818-removebg-preview.png"
-          }
-        },
-        "ingredient_Q3LJV3": {
-          "type": "ingredient",
-          "settings": {
-            "title": "STEP 6: CONTINUITY & RE-CREATION",
-            "description": "<p>Your formula is saved on our archives and can be recreated or evolved over time, allowing your scent to grow with you. Whether as a personal fragrance or across candles, home scents, and more.</p>",
-            "image": "shopify://shop_images/040eb0ed-7b6f-4712-a876-bada12819f6d-removebg-preview.png"
-          }
-        }
-      },
-      "block_order": [
-        "ingredient_3fX33P",
-        "ingredient_tcinaa",
-        "ingredient_GKmiYC",
-        "ingredient_JyhUz7",
-        "ingredient_JtzFgk",
-        "ingredient_Q3LJV3"
-      ],
-      "name": "Ingredients",
-      "settings": {
-        "heading": "Creating a Bespoke Perfume",
-        "description": "<p>A scent service for individuals looking to tell their unique scent story</p>",
-        "section_width": "page-width",
-        "color_scheme": "",
-        "arrow_size": 52,
-        "button_label": "",
-        "button_link": "",
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      }
-    },
     "qa_Me6Rgj": {
       "type": "qa",
       "blocks": {
@@ -2208,7 +2135,6 @@
   "order": [
     "main",
     "section_Ec8PYR",
-    "ingredients_fKEj77",
     "qa_Me6Rgj",
     "section_Mh7fFy",
     "section_atXPT4",
