@@ -455,7 +455,7 @@
         "qa_item_QphKAT": {
           "type": "qa_item",
           "settings": {
-            "question": "ENHANCING BRAND IDENTITY",
+            "question": "Enhancing Brand Identity",
             "answer": "<p>A signature fragrance deepens brand recognition, subtly reinforcing your unique story.</p>",
             "open_by_default": true
           }
@@ -503,6 +503,7 @@
         "button_link": "shopify://pages/contact",
         "section_width": "page-width",
         "color_scheme": "",
+        "single_open": true,
         "accordion_icon": "caret",
         "padding-block-start": 0,
         "padding-block-end": 80
@@ -2667,6 +2668,7 @@
           "settings": {
             "icon": "caret",
             "dividers": true,
+            "single_open": true,
             "type_preset": "h5",
             "inherit_color_scheme": true,
             "color_scheme": "",

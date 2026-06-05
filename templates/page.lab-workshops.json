@@ -167,7 +167,7 @@
             "border_opacity": 19,
             "border_radius": 16,
             "image_border_padding": 8,
-            "image_ratio": "square",
+            "image_ratio": "landscape",
             "width": "fill",
             "custom_width": 100,
             "width_mobile": "fill",
@@ -340,7 +340,7 @@
         "button_label": "",
         "button_link": "",
         "padding-block-start": 40,
-        "padding-block-end": 40
+        "padding-block-end": 80
       }
     },
     "qa_qFEGan": {
@@ -406,6 +406,7 @@
         "button_link": "shopify://products/cala-falco-at-spring",
         "section_width": "page-width",
         "color_scheme": "",
+        "single_open": true,
         "accordion_icon": "caret",
         "padding-block-start": 0,
         "padding-block-end": 80
@@ -553,6 +554,7 @@
           "settings": {
             "icon": "caret",
             "dividers": true,
+            "single_open": true,
             "type_preset": "h5",
             "inherit_color_scheme": true,
             "color_scheme": "",
@@ -859,6 +861,7 @@
           "settings": {
             "icon": "caret",
             "dividers": true,
+            "single_open": true,
             "type_preset": "h5",
             "inherit_color_scheme": true,
             "color_scheme": "",
