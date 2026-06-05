@@ -7,8 +7,19 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
+{
   "sections": {
+    "graza_hero": {
+      "type": "graza-hero",
+      "settings": {
+        "heading": "Extra Virgin Olive Oil",
+        "subheading": "makes everything better",
+        "overlay_opacity": 30,
+        "text_color": "#ffffff",
+        "cta_primary_label": "Shop Now",
+        "cta_secondary_label": "Learn More"
+      }
+    },
     "hero_jVaWmY": {
       "type": "hero",
       "blocks": {
@@ -16,11 +27,11 @@
           "type": "text",
           "name": "t:names.heading",
           "settings": {
-            "text": "<p>Browse our latest products</p>",
+            "text": "<p>Extra Virgin Olive Oil makes <br/>everything better</p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
-            "type_preset": "h2",
+            "type_preset": "h3",
             "font": "var(--font-body--family)",
             "font_size": "1rem",
             "line_height": "normal",
@@ -29,7 +40,7 @@
             "wrap": "pretty",
             "color": "var(--color-foreground-heading)",
             "background": false,
-            "background_color": "#00000026",
+            "background_color": "#000000",
             "corner_radius": 0,
             "padding-block-start": 0,
             "padding-block-end": 0,
@@ -42,7 +53,7 @@
           "type": "button",
           "name": "t:names.button",
           "settings": {
-            "label": "Shop all",
+            "label": "Shop Now",
             "link": "shopify://collections/all",
             "open_in_new_tab": false,
             "style_class": "button-secondary",
@@ -60,8 +71,13 @@
       ],
       "name": "t:names.hero",
       "settings": {
-        "media_type_1": "image",
+        "media_type_1": "video",
+        "video_1": "shopify://files/videos/d0c3bf24aec84ce98f1086cd44df957e.HD-1080p-7.2Mbps-84024008.mp4",
         "media_type_2": "image",
+        "stack_media_on_mobile": false,
+        "custom_mobile_media": false,
+        "media_type_1_mobile": "image",
+        "media_type_2_mobile": "image",
         "link": "",
         "open_in_new_tab": false,
         "content_direction": "column",
@@ -69,11 +85,11 @@
         "horizontal_alignment": "space-between",
         "vertical_alignment": "flex-end",
         "align_baseline": true,
-        "horizontal_alignment_flex_direction_column": "center",
+        "horizontal_alignment_flex_direction_column": "flex-start",
         "vertical_alignment_flex_direction_column": "flex-end",
         "gap": 24,
         "section_width": "page-width",
-        "section_height": "medium",
+        "section_height": "full-screen",
         "section_height_custom": 50,
         "color_scheme": "scheme-6",
         "toggle_overlay": true,
@@ -282,6 +298,7 @@
     }
   },
   "order": [
+    "graza_hero",
     "hero_jVaWmY",
     "product_list_fa6P9H"
   ]
