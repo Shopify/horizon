@@ -2018,50 +2018,6 @@
         "padding-block-end": 40
       }
     },
-    "marquee_BW4LKy": {
-      "type": "marquee",
-      "blocks": {
-        "text_nL63mj": {
-          "type": "text",
-          "disabled": true,
-          "settings": {
-            "text": "<p>We make things that work better and last longer.</p>",
-            "image": "shopify://shop_images/Vector_27.png",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "custom",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "tight",
-            "letter_spacing": "tight",
-            "case": "none",
-            "wrap": "nowrap",
-            "color": "var(--color-foreground)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "text_nL63mj"
-      ],
-      "name": "t:names.marquee_section",
-      "settings": {
-        "movement_direction": "normal",
-        "color_scheme": "",
-        "padding-block-start": 24,
-        "padding-block-end": 24,
-        "gap_between_elements": 24,
-        "block_image_height": 48
-      }
-    },
     "section_TBtpYk": {
       "type": "section",
       "blocks": {
@@ -2297,7 +2253,7 @@
         "overlay_color": "#00000026",
         "overlay_style": "solid",
         "gradient_direction": "to top",
-        "padding-block-start": 60,
+        "padding-block-start": 40,
         "padding-block-end": 60
       }
     },
@@ -2416,7 +2372,7 @@
         "scroll_prompt_text": "Scroll down for more",
         "scroll_frame_inset": 0,
         "padding-block-start": 20,
-        "padding-block-end": 40
+        "padding-block-end": 48
       }
     },
     "section_VmfL7y": {
@@ -3061,7 +3017,6 @@
     "marquee_w8wP9q",
     "section_NPPgxd",
     "ingredients_NDekDN",
-    "marquee_BW4LKy",
     "section_TBtpYk",
     "hero_p94Whg",
     "section_VmfL7y",
