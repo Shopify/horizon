@@ -1,0 +1,209 @@
+/* ==========================================================================
+   Graza Image Text Carousel — assets/graza-carousel.css
+   ========================================================================== */
+
+#image-text-carousel {
+  overflow: hidden;
+}
+
+#image-text-carousel .swiper {
+  overflow: visible;
+}
+
+/* --------------------------------------------------------------------------
+   Slide
+   -------------------------------------------------------------------------- */
+
+.graza-carousel-slide {
+  display: flex;
+  align-items: stretch;
+  min-height: 500px;
+}
+
+.graza-carousel-slide--text-left {
+  flex-direction: row-reverse;
+}
+
+/* --------------------------------------------------------------------------
+   Image column
+   -------------------------------------------------------------------------- */
+
+.graza-carousel-slide__image-col {
+  flex: 1 1 50%;
+  min-width: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.graza-carousel-slide__image-col img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.graza-carousel-slide__image-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+  background-color: rgba(0, 0, 0, 0.05);
+  color: rgba(0, 0, 0, 0.35);
+  font-family: var(--font-body--family);
+  font-size: 14px;
+}
+
+/* --------------------------------------------------------------------------
+   Text column
+   -------------------------------------------------------------------------- */
+
+.graza-carousel-slide__text-col {
+  flex: 1 1 50%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 48px;
+}
+
+.graza-carousel-slide__heading {
+  margin: 0 0 16px;
+  font-family: var(--font-heading--family);
+  font-weight: var(--font-heading--weight);
+  font-size: clamp(1.5rem, 2vw + 1rem, 2.25rem);
+  line-height: 1.2;
+  color: inherit;
+}
+
+.graza-carousel-slide__body {
+  margin: 0 0 24px;
+  font-family: var(--font-body--family);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: inherit;
+}
+
+.graza-carousel-slide__body:empty {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   Section heading
+   -------------------------------------------------------------------------- */
+
+.graza-carousel__section-heading {
+  margin: 0 0 24px;
+  padding-inline: 24px;
+  font-family: var(--font-heading--family);
+  font-weight: var(--font-heading--weight);
+  font-size: clamp(1.5rem, 2vw + 1rem, 2.25rem);
+  line-height: 1.2;
+  text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   CTA Button — .graza-btn
+   -------------------------------------------------------------------------- */
+
+.graza-btn {
+  display: inline-block;
+  padding: 12px 28px;
+  font-family: var(--font-body--family);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+  text-decoration: none;
+  text-align: center;
+  color: #ffffff;
+  background-color: #2b3b2e;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.graza-btn:hover {
+  transform: translateY(1px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.graza-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+.graza-btn:focus-visible {
+  outline: 2px solid #2b3b2e;
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Swiper navigation arrow overrides
+   -------------------------------------------------------------------------- */
+
+#image-text-carousel .swiper-button-next,
+#image-text-carousel .swiper-button-prev {
+  color: #2b3b2e;
+  width: 44px;
+  height: 44px;
+}
+
+#image-text-carousel .swiper-button-next::after,
+#image-text-carousel .swiper-button-prev::after {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* --------------------------------------------------------------------------
+   Swiper pagination dot overrides
+   -------------------------------------------------------------------------- */
+
+#image-text-carousel .swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background: #2b3b2e;
+  opacity: 0.35;
+}
+
+#image-text-carousel .swiper-pagination-bullet-active {
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Mobile — max-width: 768px
+   -------------------------------------------------------------------------- */
+
+@media screen and (max-width: 768px) {
+  .graza-carousel-slide {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .graza-carousel-slide--text-left {
+    flex-direction: column;
+  }
+
+  .graza-carousel-slide__image-col {
+    flex: 0 0 auto;
+    min-height: 250px;
+    max-height: 350px;
+  }
+
+  .graza-carousel-slide__text-col {
+    flex: 0 0 auto;
+    padding: 32px 24px;
+  }
+
+  .graza-carousel__section-heading {
+    padding-inline: 16px;
+  }
+
+  #image-text-carousel .swiper-button-next,
+  #image-text-carousel .swiper-button-prev {
+    display: none;
+  }
+}

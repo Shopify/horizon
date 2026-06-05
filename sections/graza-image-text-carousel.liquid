@@ -1,0 +1,320 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+{{ 'graza-carousel.css' | asset_url | stylesheet_tag }}
+
+<div
+  id="image-text-carousel"
+  style="
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  {% if section.settings.section_heading != blank %}
+    <h2 class="graza-carousel__section-heading">
+      {{ section.settings.section_heading | escape }}
+    </h2>
+  {% endif %}
+
+  <div class="swiper" id="graza-swiper-{{ section.id }}">
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+        {% liquid
+          assign text_pos = block.settings.text_position | default: 'right'
+          assign modifier = ''
+          if text_pos == 'left'
+            assign modifier = ' graza-carousel-slide--text-left'
+          endif
+        %}
+
+        <div
+          class="swiper-slide"
+          style="background-color: {{ block.settings.slide_background_color }};"
+          {{ block.shopify_attributes }}
+        >
+          <div class="graza-carousel-slide{{ modifier }}">
+            <div class="graza-carousel-slide__image-col">
+              {% if block.settings.slide_image != blank %}
+                {{
+                  block.settings.slide_image
+                  | image_url: width: 800
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '375,550,750,800',
+                    sizes: '(min-width: 769px) 50vw, 100vw',
+                    alt: block.settings.slide_heading
+                }}
+              {% else %}
+                <div class="graza-carousel-slide__image-placeholder">
+                  {{ 'general.card.image_placeholder' | t | default: 'Image' }}
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="graza-carousel-slide__text-col">
+              {% if block.settings.slide_heading != blank %}
+                <h3 class="graza-carousel-slide__heading">
+                  {{ block.settings.slide_heading | escape }}
+                </h3>
+              {% endif %}
+
+              {% if block.settings.slide_body != blank %}
+                <div class="graza-carousel-slide__body">
+                  {{ block.settings.slide_body }}
+                </div>
+              {% endif %}
+
+              {% if block.settings.slide_cta_label != blank and block.settings.slide_cta_url != blank %}
+                <div>
+                  <a
+                    href="{{ block.settings.slide_cta_url }}"
+                    class="graza-btn"
+                  >
+                    {{ block.settings.slide_cta_label | escape }}
+                  </a>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if section.settings.show_navigation_arrows %}
+      <div class="swiper-button-prev" aria-label="Previous slide"></div>
+      <div class="swiper-button-next" aria-label="Next slide"></div>
+    {% endif %}
+
+    {% if section.settings.show_pagination_dots %}
+      <div class="swiper-pagination"></div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  (function () {
+    var swiperContainerId = 'graza-swiper-{{ section.id }}';
+
+    function initCarousel() {
+      var container = document.getElementById(swiperContainerId);
+      if (!container) return;
+
+      new Swiper('#' + swiperContainerId, {
+        loop: false,
+        slidesPerView: {{ section.settings.slides_per_view_desktop | default: 1 }},
+        grabCursor: true,
+        spaceBetween: 0,
+        {% if section.settings.show_navigation_arrows %}
+          navigation: {
+            nextEl: '#' + swiperContainerId + ' .swiper-button-next',
+            prevEl: '#' + swiperContainerId + ' .swiper-button-prev'
+          },
+        {% endif %}
+        {% if section.settings.show_pagination_dots %}
+          pagination: {
+            el: '#' + swiperContainerId + ' .swiper-pagination',
+            clickable: true
+          },
+        {% endif %}
+        breakpoints: {
+          0: {
+            slidesPerView: 1
+          },
+          769: {
+            slidesPerView: {{ section.settings.slides_per_view_desktop | default: 1 }}
+          }
+        }
+      });
+    }
+
+    function loadSwiperAndInit() {
+      if (typeof Swiper !== 'undefined') {
+        initCarousel();
+        return;
+      }
+
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js';
+      script.onload = function () {
+        initCarousel();
+      };
+      document.head.appendChild(script);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadSwiperAndInit);
+    } else {
+      loadSwiperAndInit();
+    }
+
+    /* Re-init on Shopify section editor events */
+    if (Shopify && Shopify.designMode) {
+      document.addEventListener('shopify:section:load', function (event) {
+        if (event.target.querySelector('#' + swiperContainerId)) {
+          loadSwiperAndInit();
+        }
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "t:names.graza_image_text_carousel",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Section heading"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "slides_per_view_desktop",
+      "label": "Slides per view (desktop)",
+      "min": 1,
+      "max": 2,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_navigation_arrows",
+      "label": "Show navigation arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination_dots",
+      "label": "Show pagination dots",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image_text_slide",
+      "name": "t:names.image_text_slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "slide_image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "slide_heading",
+          "label": "Heading",
+          "default": "Slide heading"
+        },
+        {
+          "type": "richtext",
+          "id": "slide_body",
+          "label": "Body text",
+          "default": "<p>Add a description for this slide.</p>"
+        },
+        {
+          "type": "text",
+          "id": "slide_cta_label",
+          "label": "Button label",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "slide_cta_url",
+          "label": "Button link"
+        },
+        {
+          "type": "header",
+          "content": "Appearance"
+        },
+        {
+          "type": "color",
+          "id": "slide_background_color",
+          "label": "Background color",
+          "default": "#F5E6C8"
+        },
+        {
+          "type": "select",
+          "id": "text_position",
+          "label": "Text position",
+          "options": [
+            { "value": "right", "label": "Right" },
+            { "value": "left", "label": "Left" }
+          ],
+          "default": "right"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.graza_image_text_carousel",
+      "blocks": [
+        {
+          "type": "image_text_slide",
+          "settings": {
+            "slide_heading": "Fresh from the grove",
+            "slide_body": "<p>Our extra virgin olive oil is cold-pressed within hours of harvest for peak freshness and flavor.</p>",
+            "slide_cta_label": "Shop Now",
+            "slide_background_color": "#F5E6C8",
+            "text_position": "right"
+          }
+        },
+        {
+          "type": "image_text_slide",
+          "settings": {
+            "slide_heading": "Cook with confidence",
+            "slide_body": "<p>High smoke point and bold flavor make it perfect for every dish, from salads to sautees.</p>",
+            "slide_cta_label": "Learn More",
+            "slide_background_color": "#C8D5C3",
+            "text_position": "left"
+          }
+        },
+        {
+          "type": "image_text_slide",
+          "settings": {
+            "slide_heading": "Sustainable sourcing",
+            "slide_body": "<p>We partner with family farms committed to regenerative agriculture and ethical practices.</p>",
+            "slide_cta_label": "Our Story",
+            "slide_background_color": "#D4A574",
+            "text_position": "right"
+          }
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}
