@@ -2301,13 +2301,13 @@
         "padding-block-end": 60
       }
     },
-    "hero_VtUdV9": {
+    "hero_p94Whg": {
       "type": "hero",
       "blocks": {
-        "text_NWt4Ca": {
+        "text_DzEWrx": {
           "type": "text",
           "settings": {
-            "text": "<p>Cala Falcó Lab Workshops</p>",
+            "text": "<p>SENSORY Workshops</p>",
             "width": "fit-content",
             "max_width": "narrow",
             "alignment": "left",
@@ -2329,10 +2329,10 @@
           },
           "blocks": {}
         },
-        "text_KceHyX": {
+        "text_A9frjb": {
           "type": "text",
           "settings": {
-            "text": "<p>Explore how scent shapes perception, reveals memory and reconnects us to the landscapes we inhabit.<br/><br/>Our workshops are a fun and immersive exploration into the world of olfactory story telling and natural botanicals.</p>",
+            "text": "<p>Explore how scent shapes perception, reveals memory and reconnects us to the landscapes we inhabit.<br/><br/>Our workshops are a fun and immersive exploration into the world of olflactory story telling and natural botanicals.</p>",
             "width": "fit-content",
             "max_width": "narrow",
             "alignment": "left",
@@ -2354,7 +2354,7 @@
           },
           "blocks": {}
         },
-        "button_GjBaqz": {
+        "button_tRw9wW": {
           "type": "button",
           "name": "t:names.button",
           "settings": {
@@ -2371,14 +2371,14 @@
         }
       },
       "block_order": [
-        "text_NWt4Ca",
-        "text_KceHyX",
-        "button_GjBaqz"
+        "text_DzEWrx",
+        "text_A9frjb",
+        "button_tRw9wW"
       ],
       "name": "t:names.hero",
       "settings": {
         "media_type_1": "image",
-        "image_1": "shopify://shop_images/Mask_group_21.png",
+        "image_1": "shopify://shop_images/IMG_4256.jpg",
         "media_type_2": "image",
         "stack_media_on_mobile": false,
         "custom_mobile_media": false,
@@ -2415,7 +2415,7 @@
         "show_scroll_prompt": false,
         "scroll_prompt_text": "Scroll down for more",
         "scroll_frame_inset": 0,
-        "padding-block-start": 40,
+        "padding-block-start": 20,
         "padding-block-end": 40
       }
     },
@@ -3063,7 +3063,7 @@
     "ingredients_NDekDN",
     "marquee_BW4LKy",
     "section_TBtpYk",
-    "hero_VtUdV9",
+    "hero_p94Whg",
     "section_VmfL7y",
     "section_HigWDT",
     "section_RR3rW4"
