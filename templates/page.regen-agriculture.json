@@ -283,7 +283,6 @@
         "image_XCefcy": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/CalaFalco_25-154.jpg",
             "link": "",
             "border": "none",
             "border_width": 1,
@@ -939,7 +938,6 @@
               "type": "image",
               "name": "t:names.image",
               "settings": {
-                "image": "shopify://shop_images/CalaFalco_25-168.jpg",
                 "link": "",
                 "border": "none",
                 "border_width": 1,
@@ -1092,7 +1090,6 @@
         "image_jRecHG": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/DSCF2864.jpg",
             "link": "",
             "border": "none",
             "border_width": 1,
@@ -1548,7 +1545,7 @@
                 "border_opacity": 100,
                 "border_radius": 16,
                 "image_border_padding": 8,
-                "image_ratio": "landscape",
+                "image_ratio": "portrait",
                 "width": "fill",
                 "custom_width": 100,
                 "width_mobile": "fill",
@@ -1572,7 +1569,7 @@
                 "border_opacity": 100,
                 "border_radius": 16,
                 "image_border_padding": 8,
-                "image_ratio": "landscape",
+                "image_ratio": "portrait",
                 "width": "fill",
                 "custom_width": 100,
                 "width_mobile": "fill",
