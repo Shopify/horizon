@@ -29,53 +29,6 @@
         "show_bar": true
       }
     },
-    "graza_image_text_carousel": {
-      "type": "graza-image-text-carousel",
-      "blocks": {
-        "slide_1": {
-          "type": "image_text_slide",
-          "settings": {
-            "slide_heading": "Fresh from the grove",
-            "slide_body": "<p>Our extra virgin olive oil is cold-pressed within hours of harvest for peak freshness and flavor.</p>",
-            "slide_cta_label": "Shop Now",
-            "slide_background_color": "#F5E6C8",
-            "text_position": "right"
-          }
-        },
-        "slide_2": {
-          "type": "image_text_slide",
-          "settings": {
-            "slide_heading": "Cook with confidence",
-            "slide_body": "<p>High smoke point and bold flavor make it perfect for every dish, from salads to sautees.</p>",
-            "slide_cta_label": "Learn More",
-            "slide_background_color": "#C8D5C3",
-            "text_position": "left"
-          }
-        },
-        "slide_3": {
-          "type": "image_text_slide",
-          "settings": {
-            "slide_heading": "Sustainable sourcing",
-            "slide_body": "<p>We partner with family farms committed to regenerative agriculture and ethical practices.</p>",
-            "slide_cta_label": "Our Story",
-            "slide_background_color": "#D4A574",
-            "text_position": "right"
-          }
-        }
-      },
-      "block_order": [
-        "slide_1",
-        "slide_2",
-        "slide_3"
-      ],
-      "settings": {
-        "slides_per_view_desktop": 1,
-        "show_navigation_arrows": true,
-        "show_pagination_dots": true,
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
     "hero_jVaWmY": {
       "type": "hero",
       "blocks": {
@@ -356,7 +309,6 @@
   "order": [
     "graza_hero",
     "graza_announcement_bar",
-    "graza_image_text_carousel",
     "hero_jVaWmY",
     "product_list_fa6P9H"
   ]
