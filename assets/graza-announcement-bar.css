@@ -1,0 +1,40 @@
+.graza-announcement-bar {
+  width: 100%;
+  padding: 12px 20px;
+  text-align: center;
+}
+
+.graza-announcement-bar__inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.graza-announcement-bar__text {
+  margin: 0;
+  font-family: var(--font-body--family);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+}
+
+.graza-announcement-bar__link {
+  font-family: var(--font-body--family);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+
+  &:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+}

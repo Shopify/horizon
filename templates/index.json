@@ -20,6 +20,15 @@
         "cta_secondary_label": "Learn More"
       }
     },
+    "graza_announcement_bar": {
+      "type": "graza-announcement-bar",
+      "settings": {
+        "announcement_text": "Free shipping on orders over $50",
+        "background_color": "#2b3b2e",
+        "text_color": "#ffffff",
+        "show_bar": true
+      }
+    },
     "hero_jVaWmY": {
       "type": "hero",
       "blocks": {
@@ -299,6 +308,7 @@
   },
   "order": [
     "graza_hero",
+    "graza_announcement_bar",
     "hero_jVaWmY",
     "product_list_fa6P9H"
   ]

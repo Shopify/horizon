@@ -1,0 +1,85 @@
+{{ 'graza-announcement-bar.css' | asset_url | stylesheet_tag }}
+
+{% if section.settings.show_bar %}
+  <div
+    id="announcement-bar"
+    class="graza-announcement-bar"
+    style="background-color: {{ section.settings.background_color }}; color: {{ section.settings.text_color }};"
+  >
+    <div class="graza-announcement-bar__inner">
+      {% if section.settings.announcement_text != blank %}
+        <p class="graza-announcement-bar__text">
+          {{ section.settings.announcement_text | escape }}
+        </p>
+      {% endif %}
+
+      {% if section.settings.announcement_link_label != blank and section.settings.announcement_link_url != blank %}
+        <a
+          href="{{ section.settings.announcement_link_url }}"
+          class="graza-announcement-bar__link"
+        >
+          {{ section.settings.announcement_link_label | escape }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "t:names.graza_announcement_bar",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Announcement text",
+      "default": "Free shipping on orders over $50"
+    },
+    {
+      "type": "text",
+      "id": "announcement_link_label",
+      "label": "Link label"
+    },
+    {
+      "type": "url",
+      "id": "announcement_link_url",
+      "label": "Link URL"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#2b3b2e"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Visibility"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bar",
+      "label": "Show bar",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.graza_announcement_bar"
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}
