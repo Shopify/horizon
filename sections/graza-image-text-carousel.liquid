@@ -23,6 +23,7 @@
           if text_pos == 'left'
             assign modifier = ' graza-carousel-slide--text-left'
           endif
+          assign img_bg = block.settings.slide_image_bg_color | default: '#ede9df'
         %}
 
         <div
@@ -31,25 +32,34 @@
           {{ block.shopify_attributes }}
         >
           <div class="graza-carousel-slide{{ modifier }}">
-            <div class="graza-carousel-slide__image-col">
+            <div
+              class="graza-carousel-slide__image-col"
+              style="--slide-image-bg: {{ img_bg }};"
+            >
               {% if block.settings.slide_image != blank %}
                 {{
                   block.settings.slide_image
-                  | image_url: width: 800
+                  | image_url: width: 900
                   | image_tag:
                     loading: 'lazy',
-                    widths: '375,550,750,800',
-                    sizes: '(min-width: 769px) 50vw, 100vw',
+                    widths: '375,550,750,900',
+                    sizes: '(min-width: 769px) 45vw, 90vw',
                     alt: block.settings.slide_heading
                 }}
               {% else %}
                 <div class="graza-carousel-slide__image-placeholder">
-                  {{ 'general.card.image_placeholder' | t | default: 'Image' }}
+                  {{ 'Image' }}
                 </div>
               {% endif %}
             </div>
 
             <div class="graza-carousel-slide__text-col">
+              {% if block.settings.slide_label != blank %}
+                <span class="graza-carousel-slide__label">
+                  {{ block.settings.slide_label | escape }}
+                </span>
+              {% endif %}
+
               {% if block.settings.slide_heading != blank %}
                 <h3 class="graza-carousel-slide__heading">
                   {{ block.settings.slide_heading | escape }}
@@ -62,14 +72,30 @@
                 </div>
               {% endif %}
 
-              {% if block.settings.slide_cta_label != blank and block.settings.slide_cta_url != blank %}
-                <div>
+              {% if block.settings.slide_cta_label != blank %}
+                <div class="graza-carousel-slide__cta">
                   <a
-                    href="{{ block.settings.slide_cta_url }}"
+                    href="{{ block.settings.slide_cta_url | default: '#' }}"
                     class="graza-btn"
                   >
                     {{ block.settings.slide_cta_label | escape }}
                   </a>
+                </div>
+              {% endif %}
+
+              {% if section.settings.show_navigation_arrows and forloop.first %}
+                <div
+                  class="graza-carousel-nav"
+                  id="graza-nav-{{ section.id }}"
+                >
+                  <button
+                    class="graza-carousel-nav__btn graza-carousel-nav__prev"
+                    aria-label="Previous slide"
+                  >&#8592;</button>
+                  <button
+                    class="graza-carousel-nav__btn graza-carousel-nav__next"
+                    aria-label="Next slide"
+                  >&#8594;</button>
                 </div>
               {% endif %}
             </div>
@@ -77,11 +103,6 @@
         </div>
       {% endfor %}
     </div>
-
-    {% if section.settings.show_navigation_arrows %}
-      <div class="swiper-button-prev" aria-label="Previous slide"></div>
-      <div class="swiper-button-next" aria-label="Next slide"></div>
-    {% endif %}
 
     {% if section.settings.show_pagination_dots %}
       <div class="swiper-pagination"></div>
@@ -91,33 +112,33 @@
 
 <script>
   (function () {
-    var swiperContainerId = 'graza-swiper-{{ section.id }}';
+    var swiperId = 'graza-swiper-{{ section.id }}';
+    var navId    = 'graza-nav-{{ section.id }}';
 
     function initCarousel() {
-      var container = document.getElementById(swiperContainerId);
+      var container = document.getElementById(swiperId);
       if (!container) return;
 
-      new Swiper('#' + swiperContainerId, {
+      var navEl = document.getElementById(navId);
+
+      new Swiper('#' + swiperId, {
         loop: false,
-        slidesPerView: {{ section.settings.slides_per_view_desktop | default: 1 }},
+        slidesPerView: 1,
         grabCursor: true,
         spaceBetween: 0,
         {% if section.settings.show_navigation_arrows %}
-          navigation: {
-            nextEl: '#' + swiperContainerId + ' .swiper-button-next',
-            prevEl: '#' + swiperContainerId + ' .swiper-button-prev'
-          },
+        navigation: {
+          nextEl: navEl ? navEl.querySelector('.graza-carousel-nav__next') : null,
+          prevEl: navEl ? navEl.querySelector('.graza-carousel-nav__prev') : null
+        },
         {% endif %}
         {% if section.settings.show_pagination_dots %}
-          pagination: {
-            el: '#' + swiperContainerId + ' .swiper-pagination',
-            clickable: true
-          },
+        pagination: {
+          el: '#' + swiperId + ' .swiper-pagination',
+          clickable: true
+        },
         {% endif %}
         breakpoints: {
-          0: {
-            slidesPerView: 1
-          },
           769: {
             slidesPerView: {{ section.settings.slides_per_view_desktop | default: 1 }}
           }
@@ -130,12 +151,9 @@
         initCarousel();
         return;
       }
-
       var script = document.createElement('script');
       script.src = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js';
-      script.onload = function () {
-        initCarousel();
-      };
+      script.onload = initCarousel;
       document.head.appendChild(script);
     }
 
@@ -145,12 +163,9 @@
       loadSwiperAndInit();
     }
 
-    /* Re-init on Shopify section editor events */
-    if (Shopify && Shopify.designMode) {
-      document.addEventListener('shopify:section:load', function (event) {
-        if (event.target.querySelector('#' + swiperContainerId)) {
-          loadSwiperAndInit();
-        }
+    if (typeof Shopify !== 'undefined' && Shopify.designMode) {
+      document.addEventListener('shopify:section:load', function (e) {
+        if (e.target.querySelector('#' + swiperId)) loadSwiperAndInit();
       });
     }
   })();
@@ -193,7 +208,7 @@
       "type": "checkbox",
       "id": "show_pagination_dots",
       "label": "Show pagination dots",
-      "default": true
+      "default": false
     },
     {
       "type": "header",
@@ -232,6 +247,11 @@
         },
         {
           "type": "text",
+          "id": "slide_label",
+          "label": "Label (small text above heading)"
+        },
+        {
+          "type": "text",
           "id": "slide_heading",
           "label": "Heading",
           "default": "Slide heading"
@@ -260,18 +280,24 @@
         {
           "type": "color",
           "id": "slide_background_color",
-          "label": "Background color",
+          "label": "Slide background color",
           "default": "#F5E6C8"
+        },
+        {
+          "type": "color",
+          "id": "slide_image_bg_color",
+          "label": "Image panel background",
+          "default": "#EDE9DF"
         },
         {
           "type": "select",
           "id": "text_position",
           "label": "Text position",
           "options": [
-            { "value": "right", "label": "Right" },
-            { "value": "left", "label": "Left" }
+            { "value": "left", "label": "Left" },
+            { "value": "right", "label": "Right" }
           ],
-          "default": "right"
+          "default": "left"
         }
       ]
     }
@@ -283,31 +309,37 @@
         {
           "type": "image_text_slide",
           "settings": {
+            "slide_label": "✿ NOT YOUR AVERAGE CHIP ✿",
             "slide_heading": "Fresh from the grove",
             "slide_body": "<p>Our extra virgin olive oil is cold-pressed within hours of harvest for peak freshness and flavor.</p>",
             "slide_cta_label": "Shop Now",
-            "slide_background_color": "#F5E6C8",
-            "text_position": "right"
-          }
-        },
-        {
-          "type": "image_text_slide",
-          "settings": {
-            "slide_heading": "Cook with confidence",
-            "slide_body": "<p>High smoke point and bold flavor make it perfect for every dish, from salads to sautees.</p>",
-            "slide_cta_label": "Learn More",
-            "slide_background_color": "#C8D5C3",
+            "slide_background_color": "#F5D53A",
+            "slide_image_bg_color": "#EDE9DF",
             "text_position": "left"
           }
         },
         {
           "type": "image_text_slide",
           "settings": {
+            "slide_label": "✿ CHEF'S PICK ✿",
+            "slide_heading": "Cook with confidence",
+            "slide_body": "<p>High smoke point and bold flavor make it perfect for every dish, from salads to sautées.</p>",
+            "slide_cta_label": "Learn More",
+            "slide_background_color": "#C8D5C3",
+            "slide_image_bg_color": "#EDE9DF",
+            "text_position": "left"
+          }
+        },
+        {
+          "type": "image_text_slide",
+          "settings": {
+            "slide_label": "✿ FARM TO BOTTLE ✿",
             "slide_heading": "Sustainable sourcing",
             "slide_body": "<p>We partner with family farms committed to regenerative agriculture and ethical practices.</p>",
             "slide_cta_label": "Our Story",
             "slide_background_color": "#D4A574",
-            "text_position": "right"
+            "slide_image_bg_color": "#EDE9DF",
+            "text_position": "left"
           }
         }
       ]
