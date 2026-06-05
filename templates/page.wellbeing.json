@@ -923,7 +923,7 @@
               "type": "image",
               "name": "t:names.image",
               "settings": {
-                "image": "shopify://shop_images/e16468dc-36e5-4b69-bd31-a12b8dfab9fd.png",
+                "image": "shopify://shop_images/8c9111a5-cc67-47ac-9f91-81f02817f7e5.png",
                 "link": "",
                 "border": "none",
                 "border_width": 1,
@@ -2903,6 +2903,7 @@
           "settings": {
             "icon": "caret",
             "dividers": true,
+            "single_open": true,
             "type_preset": "h5",
             "inherit_color_scheme": true,
             "color_scheme": "",
