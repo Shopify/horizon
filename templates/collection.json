@@ -16,7 +16,7 @@
           "type": "text",
           "name": "Title",
           "settings": {
-            "text": "<h1>THE CALA FALCÓ COLLECTION</h1>",
+            "text": "<p>{{ closest.collection.title }}</p>",
             "width": "100%",
             "max_width": "normal",
             "alignment": "center",
@@ -28,32 +28,6 @@
             "case": "none",
             "wrap": "pretty",
             "color": "",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "text_HV9x4J": {
-          "type": "text",
-          "name": "t:names.heading",
-          "settings": {
-            "text": "<p>Made from hand picked seasonal botancials. Each product in our collection is distilled by our scent scientists into soulful fragrances and wellness offerings.</p>",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "rte",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground)",
             "background": false,
             "background_color": "#00000026",
             "corner_radius": 0,
@@ -93,7 +67,6 @@
       },
       "block_order": [
         "text_tqQTNE",
-        "text_HV9x4J",
         "text_twGGkJ"
       ],
       "name": "Collection heading",
