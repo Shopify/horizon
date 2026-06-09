@@ -19,6 +19,7 @@
 - Hide header bar search on mobile with `.search-action:not(.search-action--in-drawer) { display: none }` in `snippets/search.liquid`.
 - Hide header bar account on mobile with `header-actions:not(.header-actions--drawer) .account-button { display: none }` in `snippets/header-actions.liquid`.
 - Cart stays in the header bar; only search and account move into the drawer footer.
+- Normalize drawer utility icon sizing with `--menu-drawer-icon-size: var(--icon-size-md)` on `.menu-drawer` and apply it to all `.menu-drawer__utility-actions` icons (search, account, and close button in the drawer header). Match touch targets with `var(--minimum-touch-target)` on each action wrapper.
 
 ## Fix Pattern
 - In `sections/header.liquid`, use distinct ids for each captured `_header-menu` variant:
