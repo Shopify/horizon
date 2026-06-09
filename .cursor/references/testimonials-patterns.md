@@ -1,5 +1,19 @@
 # Testimonials Section Patterns
 
+## Color scheme
+
+The section uses the theme **Color scheme** setting (`color_scheme`, default **scheme-cfa9c273-456f-45a2-b18d-d73976dc71f5** — dark green `#31331e` background, white text, gold accent buttons). Background and text come from the selected scheme via `color-{{ section.settings.color_scheme }}` on `.section-background` and the section element — do not hardcode section background or foreground colors.
+
+Scheme-aware styling in `sections/testimonials.liquid`:
+
+- Text: `var(--color-foreground)`, `var(--color-foreground-muted)`
+- Author divider: `rgb(var(--color-foreground-rgb) / var(--opacity-10-25))`
+- Quote mark SVG: `fill="currentColor"` with muted foreground opacity on `.testimonials-card__quote-mark`
+- Media frame accent: `var(--color-primary-button-background)`
+- Nav buttons: already use `--color-primary-button-background` / `--color-primary-button-text`
+
+Merchants can switch to a dark scheme (e.g. a custom scheme with `#31331d` background) in the theme editor without code changes.
+
 ## CTA link (replaces read more)
 
 Each testimonial block supports an optional external CTA instead of expandable quote text:

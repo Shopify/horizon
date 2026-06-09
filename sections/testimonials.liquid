@@ -45,7 +45,7 @@
               <div class="testimonials-card__quote">
                 <div class="testimonials-card__quote-mark" aria-hidden="true">
                   <svg width="50" height="49" viewBox="0 0 50 49" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path opacity="0.2" d="M26.8465 45.75C32.6556 40.9167 36.971 36.0833 39.7925 31.25C42.4481 26.5833 43.527 22.5833 43.029 19.25L42.2822 18H40.7884L40.0415 18.25L36.556 18.5C34.0664 18.5 31.9917 17.5 30.332 15.5C28.5062 13.6667 27.5934 11.5 27.5934 9C27.5934 6.66666 28.6722 4.58334 30.8299 2.75C32.9876 0.916668 35.6432 0 38.7967 0C41.7842 0 44.4398 1.58334 46.7635 4.75C48.9212 7.91667 50 11.5833 50 15.75C50 22.4167 47.7593 28.75 43.278 34.75C40.1245 39.5833 35.3942 44.3333 29.0871 49L26.8465 45.75ZM0 45.75C5.80913 40.9167 10.1245 36.0833 12.9461 31.25C15.6017 26.5833 16.6805 22.5833 16.1826 19.25L15.4357 18H13.9419L12.9461 18.25L9.70954 18.5C7.21992 18.5 5.14523 17.5 3.48547 15.5C1.65974 13.6667 0.746883 11.5 0.746883 9C0.746883 6.66666 1.82573 4.58334 3.9834 2.75C6.14108 0.916668 8.79668 0 11.9502 0C14.9378 0 17.5934 1.58334 19.917 4.75C22.0747 7.91667 23.1535 11.5833 23.1535 15.75C23.1535 27.25 16.1826 38.3333 2.24066 49L0 45.75Z" fill="white"/>
+                    <path d="M26.8465 45.75C32.6556 40.9167 36.971 36.0833 39.7925 31.25C42.4481 26.5833 43.527 22.5833 43.029 19.25L42.2822 18H40.7884L40.0415 18.25L36.556 18.5C34.0664 18.5 31.9917 17.5 30.332 15.5C28.5062 13.6667 27.5934 11.5 27.5934 9C27.5934 6.66666 28.6722 4.58334 30.8299 2.75C32.9876 0.916668 35.6432 0 38.7967 0C41.7842 0 44.4398 1.58334 46.7635 4.75C48.9212 7.91667 50 11.5833 50 15.75C50 22.4167 47.7593 28.75 43.278 34.75C40.1245 39.5833 35.3942 44.3333 29.0871 49L26.8465 45.75ZM0 45.75C5.80913 40.9167 10.1245 36.0833 12.9461 31.25C15.6017 26.5833 16.6805 22.5833 16.1826 19.25L15.4357 18H13.9419L12.9461 18.25L9.70954 18.5C7.21992 18.5 5.14523 17.5 3.48547 15.5C1.65974 13.6667 0.746883 11.5 0.746883 9C0.746883 6.66666 1.82573 4.58334 3.9834 2.75C6.14108 0.916668 8.79668 0 11.9502 0C14.9378 0 17.5934 1.58334 19.917 4.75C22.0747 7.91667 23.1535 11.5833 23.1535 15.75C23.1535 27.25 16.1826 38.3333 2.24066 49L0 45.75Z" fill="currentColor"/>
                   </svg>
                 </div>
 
@@ -234,10 +234,6 @@
 {% endjavascript %}
 
 {% stylesheet %}
-
-.testimonials-swiper-section{
-  background: #31331D !important;
-}
   .testimonials-swiper {
     display: block;
     position: relative;
@@ -249,11 +245,12 @@
 
   .testimonials-swiper__header {
     display: grid;
-    grid-template-columns: 1fr 1.2fr;
+    grid-template-columns: 2fr;
     gap: var(--testimonials-slide-gap, 0px);
     padding-inline: clamp(1.5rem, 3.2vw, 3rem);
     margin-block-end: 1.25rem;
-    color: #ffffff;
+    color: var(--color-foreground);
+    text-align: center;
   }
 
   .testimonials-swiper__heading {
@@ -290,7 +287,7 @@
     display: grid;
     grid-template-columns: 1fr 1.2fr;
     gap: var(--testimonials-slide-gap, 0px);
-    color: #FFFFFF;
+    color: var(--color-foreground);
     overflow: hidden;
     width: 100%;
     min-width: 0;
@@ -311,6 +308,7 @@
     width: 40px;
     line-height: 0;
     margin-bottom: 1rem;
+    color: rgb(var(--color-foreground-rgb) / 0.2);
   }
 
   .testimonials-card__quote-short {
@@ -350,7 +348,7 @@
   .testimonials-card__author {
     margin-top: auto;
     padding-top: 1.2rem;
-    border-top: 1px solid rgb(244 239 223 / 0.22);
+    border-top: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-10-25));
     display: grid;
     gap: 0.35rem;
   }
@@ -364,7 +362,7 @@
   }
 
   .testimonials-card__author-title {
-    opacity: 0.85;
+    color: var(--color-foreground-muted);
     font-size: 0.9rem;
   }
 
@@ -381,7 +379,7 @@
     content: '';
     position: absolute;
     inset: clamp(0.5rem, 1.1vw, 0.9rem);
-    border: 1px solid #F4C077;
+    border: 1px solid var(--color-primary-button-background);
     border-radius: 24px;
     pointer-events: none;
     z-index: 2;
@@ -446,7 +444,7 @@
 
   .testimonials-swiper__nav-button:focus-visible,
   .testimonials-card__cta-link:focus-visible {
-    outline: 2px solid #f4efdf;
+    outline: 2px solid var(--color-foreground);
     outline-offset: 3px;
   }
 
@@ -511,7 +509,7 @@
       "type": "color_scheme",
       "id": "color_scheme",
       "label": "t:settings.color_scheme",
-      "default": "scheme-1"
+      "default": "scheme-cfa9c273-456f-45a2-b18d-d73976dc71f5"
     },
     {
       "type": "range",
@@ -633,7 +631,8 @@
       "name": "t:names.testimonials",
       "category": "t:categories.storytelling",
       "settings": {
-        "heading": "Kind Words. Poured Generously"
+        "heading": "Kind Words. Poured Generously",
+        "color_scheme": "scheme-cfa9c273-456f-45a2-b18d-d73976dc71f5"
       },
       "blocks": {
         "testimonial_1": {
