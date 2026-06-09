@@ -1186,6 +1186,70 @@
         "padding-block-end": 0
       }
     },
+    "ingredients_m643zQ": {
+      "type": "ingredients",
+      "blocks": {
+        "ingredient_hXMqRY": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Montserrat Valle",
+            "description": "<p><em>Founder</em></p><p></p><p>Montserrat Valle is the the founder whose deep intuition, curiosity, and love for the land gave birth to the project. With a unique ability to see potential where others see rawness, she weaves together agriculture, science, art, and social purpose into a living ecosystem.</p>",
+            "image": "shopify://shop_images/6886308d49247233db8c1cb0_HONEY_ILLUSTRATION-p-500_1.png"
+          }
+        },
+        "ingredient_eLqFRE": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Mediterranean Sea Water",
+            "description": "<p>Renowned for its ability to restore the body's homeostasis, addressing imbalances that contribute to various pathologies.</p>",
+            "image": "shopify://shop_images/15090039-45a7-44d2-9beb-b062996ea722.png"
+          }
+        },
+        "ingredient_QJPYBT": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Mastic Pistacia Lentiscus",
+            "description": "<p>A bioactive resin with antibacterial, antiseptic, and wound-healing  capabilities, it further supports emotional well-being through its  aromachological benefits, acting as a natural stimulant with uplifting  and mood-enhancing effects that promote vitality.</p>",
+            "image": "shopify://shop_images/3a0f1780-d121-4e39-90f3-d0b4e6ec530b-removebg-preview.png"
+          }
+        },
+        "ingredient_3m4EpM": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Citrus Lemon",
+            "description": "<p>A natural source of diuretic, purifying, antioxidant, and bacteriostatic properties. </p>",
+            "image": "shopify://shop_images/52b7526d-5ee2-4dc3-bd1e-1355e7f16f67-removebg-preview.png"
+          }
+        },
+        "ingredient_CrGUH6": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Rosemary Salvia rosmarinus",
+            "description": "<p>Known as the “Mediterranean Ginseng,” this adaptogenic plant offers potent  anti-aging effects, enhancing joint, muscle, and skin health. Improves  memory and focus. Respiratory benefits, particularly in addressing  congestion and liver care.</p>",
+            "image": "shopify://shop_images/68861fa431a371dd91d95772_ROSEMARY_ILLUSTRATION.png"
+          }
+        }
+      },
+      "block_order": [
+        "ingredient_hXMqRY",
+        "ingredient_eLqFRE",
+        "ingredient_QJPYBT",
+        "ingredient_3m4EpM",
+        "ingredient_CrGUH6"
+      ],
+      "name": "Ingredients",
+      "settings": {
+        "heading": "",
+        "description": "",
+        "section_width": "page-width",
+        "color_scheme": "",
+        "arrow_size": 52,
+        "button_label": "",
+        "button_link": "",
+        "padding-block-start": 60,
+        "padding-block-end": 80
+      }
+    },
     "section_UQc4pF": {
       "type": "section",
       "blocks": {
@@ -3403,6 +3467,7 @@
     "section_QRTNQa",
     "hero_BX6hyA",
     "section_NQqf8D",
+    "ingredients_m643zQ",
     "section_UQc4pF",
     "section_GXXUgn",
     "section_4yR6mY",
