@@ -139,6 +139,26 @@
           },
           "blocks": {}
         },
+        "social_links_86EMM6": {
+          "type": "social-links",
+          "name": "t:names.social_media_links",
+          "settings": {
+            "facebook_url": "",
+            "instagram_url": "https://www.instagram.com/calafalco/",
+            "youtube_url": "",
+            "tiktok_url": "",
+            "twitter_url": "",
+            "threads_url": "",
+            "linkedin_url": "",
+            "bluesky_url": "",
+            "snapchat_url": "",
+            "pinterest_url": "",
+            "tumblr_url": "",
+            "vimeo_url": "",
+            "custom_url": ""
+          },
+          "blocks": {}
+        },
         "menu_XCWhbM": {
           "type": "menu",
           "name": "t:names.menu",
@@ -159,33 +179,13 @@
             "padding-inline-end": 0
           },
           "blocks": {}
-        },
-        "social_links_86EMM6": {
-          "type": "social-links",
-          "name": "t:names.social_media_links",
-          "settings": {
-            "facebook_url": "",
-            "instagram_url": "https://www.instagram.com/calafalco/",
-            "youtube_url": "",
-            "tiktok_url": "",
-            "twitter_url": "",
-            "threads_url": "",
-            "linkedin_url": "",
-            "bluesky_url": "",
-            "snapchat_url": "",
-            "pinterest_url": "",
-            "tumblr_url": "",
-            "vimeo_url": "",
-            "custom_url": ""
-          },
-          "blocks": {}
         }
       },
       "block_order": [
         "group_wErUQf",
         "email-signup_HafH7P",
-        "menu_XCWhbM",
-        "social_links_86EMM6"
+        "social_links_86EMM6",
+        "menu_XCWhbM"
       ],
       "name": "t:names.footer",
       "settings": {
