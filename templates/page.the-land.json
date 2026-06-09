@@ -1020,6 +1020,55 @@
     "section_NQqf8D": {
       "type": "section",
       "blocks": {
+        "text_fCEddM": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<h2>our team</h2>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "image_axzE9d": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/The_Cala_Falc_team.jpg",
+            "link": "",
+            "border": "solid",
+            "border_width": 1,
+            "border_opacity": 19,
+            "border_radius": 16,
+            "image_border_padding": 11,
+            "image_ratio": "landscape",
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
         "group_CfjC6E": {
           "type": "group",
           "settings": {
@@ -1063,7 +1112,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<p>OUR TEAM</p>",
+                "text": "",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -1115,34 +1164,12 @@
             "text_GxADnW",
             "text_DAmtY7"
           ]
-        },
-        "image_axzE9d": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/The_Cala_Falc_team.jpg",
-            "link": "",
-            "border": "solid",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 16,
-            "image_border_padding": 8,
-            "image_ratio": "landscape",
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
         }
       },
       "block_order": [
-        "group_CfjC6E",
-        "image_axzE9d"
+        "text_fCEddM",
+        "image_axzE9d",
+        "group_CfjC6E"
       ],
       "name": "t:names.image_with_text",
       "settings": {
@@ -1876,6 +1903,7 @@
         "group_ygFWFd",
         "group_b6bUAX"
       ],
+      "disabled": true,
       "name": "t:names.multicolumn",
       "settings": {
         "content_direction": "row",
