@@ -1342,18 +1342,6 @@
     "testimonials_4P3EMV": {
       "type": "testimonials",
       "blocks": {
-        "testimonial_R8Twfz": {
-          "type": "testimonial",
-          "settings": {
-            "quote_short": "",
-            "cta_label": "Read full testimonial",
-            "cta_link": "",
-            "open_in_new_tab": true,
-            "image": "shopify://shop_images/DJI_0036.jpg",
-            "author": "Theo Hitchcock",
-            "author_title": "Founder"
-          }
-        },
         "testimonial_nwWnmD": {
           "type": "testimonial",
           "settings": {
@@ -1365,11 +1353,23 @@
             "author": "La Residencia, A Belmond hotel",
             "author_title": "Hotel Partnership | Olfactory Identity | Bespoke creation"
           }
+        },
+        "testimonial_R8Twfz": {
+          "type": "testimonial",
+          "settings": {
+            "quote_short": "",
+            "cta_label": "Read full testimonial",
+            "cta_link": "",
+            "open_in_new_tab": true,
+            "image": "shopify://shop_images/DJI_0036.jpg",
+            "author": "Theo Hitchcock",
+            "author_title": "Founder"
+          }
         }
       },
       "block_order": [
-        "testimonial_R8Twfz",
-        "testimonial_nwWnmD"
+        "testimonial_nwWnmD",
+        "testimonial_R8Twfz"
       ],
       "name": "t:names.testimonials",
       "settings": {
