@@ -26,6 +26,11 @@
         "info": "t:content.inverse_logo_info"
       },
       {
+        "type": "image_picker",
+        "id": "logo_mobile",
+        "label": "t:settings.mobile_logo_image"
+      },
+      {
         "type": "range",
         "id": "logo_height",
         "label": "t:settings.desktop_height",
@@ -34,7 +39,7 @@
         "step": 1,
         "unit": "px",
         "default": 36,
-        "visible_if": "{{ settings.logo != blank or settings.logo_inverse != blank }}",
+        "visible_if": "{{ settings.logo != blank or settings.logo_inverse != blank or settings.logo_mobile != blank }}",
         "info": "t:info.logo_height"
       },
       {
@@ -46,7 +51,7 @@
         "step": 1,
         "unit": "px",
         "default": 28,
-        "visible_if": "{{ settings.logo != blank or settings.logo_inverse != blank }}",
+        "visible_if": "{{ settings.logo != blank or settings.logo_inverse != blank or settings.logo_mobile != blank }}",
         "info": "t:info.logo_height"
       },
       {
