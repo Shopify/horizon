@@ -152,7 +152,7 @@
 
   .section-background--page-white,
   .section--page-shell-white {
-    background: #FBFBF8;
+    background: #FCFCF8;
   }
 
   .custom-section-content {
@@ -172,6 +172,15 @@
     max-width: calc(100% - (var(--page-margin) * 2));
     padding-inline: var(--page-margin);
     margin-inline: auto;
+  }
+
+  .section.section--page-width .custom-section-content:has(.accordion) {
+    min-width: 0;
+  }
+
+  .section-content-wrapper.layout-panel-flex:has(> .accordion) {
+    min-width: 0;
+    max-width: 100%;
   }
 
   .section.section--small .custom-section-content {

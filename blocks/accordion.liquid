@@ -21,7 +21,28 @@
 
 {% stylesheet %}
   .accordion {
-    flex: 1;
+    flex: 1 1 auto;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    align-self: stretch;
+    overflow-x: clip;
+  }
+
+  .layout-panel-flex--column:has(> .accordion) {
+    align-items: stretch;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .layout-panel-flex--column > .accordion,
+  .qa__accordion {
+    min-width: 0;
+  }
+
+  .accordion accordion-custom,
+  .accordion .details {
+    display: block;
     width: 100%;
   }
 
@@ -70,7 +91,7 @@
     line-height: var(--summary-font-line-height);
     min-height: var(--minimum-touch-target);
     padding: 1rem 0;;
-    text-transform: capitalize;
+    text-transform: inherit;
   }
 
     .product-details .accordion .details__header {
