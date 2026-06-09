@@ -1279,11 +1279,37 @@
               },
               "blocks": {}
             },
+            "product_description_J3D4PT": {
+              "type": "product-description",
+              "name": "t:names.product_description",
+              "settings": {
+                "text": "<p><em>Founder</em></p>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "center",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
             "text_bFPx6M": {
               "type": "text",
               "name": "t:names.description",
               "settings": {
-                "text": "<p><em>Founder</em></p><p>Montserrat Valle is the the founder whose deep intuition, curiosity, and love for the land gave birth to the project. With a unique ability to see potential where others see rawness, she weaves together agriculture, science, art, and social purpose into a living ecosystem.</p>",
+                "text": "<p>Montserrat Valle is the the founder whose deep intuition, curiosity, and love for the land gave birth to the project. With a unique ability to see potential where others see rawness, she weaves together agriculture, science, art, and social purpose into a living ecosystem.</p>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "center",
@@ -1309,6 +1335,7 @@
           "block_order": [
             "image_MjN4zr",
             "text_3RtgjV",
+            "product_description_J3D4PT",
             "text_bFPx6M"
           ]
         },
@@ -1402,11 +1429,37 @@
               },
               "blocks": {}
             },
+            "product_description_hqkB4n": {
+              "type": "product-description",
+              "name": "t:names.product_description",
+              "settings": {
+                "text": "<p><em>Botanist & Microbiologist</em></p>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "center",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
             "text_C8hqiT": {
               "type": "text",
               "name": "t:names.description",
               "settings": {
-                "text": "<p><em>Botanist & Microbiologist</em><br/><br/>Esteve Gomila, is the alchemist behind each of our botanical beverages. With a rare ability to translate ideas into tangible creations, he takes inspiration from the land, the plants, and their stories to formulate prototypes that awaken the senses.</p>",
+                "text": "<p>Esteve Gomila, is the alchemist behind each of our botanical beverages. With a rare ability to translate ideas into tangible creations, he takes inspiration from the land, the plants, and their stories to formulate prototypes that awaken the senses.</p>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "center",
@@ -1432,6 +1485,7 @@
           "block_order": [
             "image_UhBAfn",
             "text_Q9R8wj",
+            "product_description_hqkB4n",
             "text_C8hqiT"
           ]
         },
@@ -1525,11 +1579,37 @@
               },
               "blocks": {}
             },
+            "text_34LxwB": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<p><em>Lab Manager</em></p>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "center",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
             "text_Tmd3bn": {
               "type": "text",
               "name": "t:names.description",
               "settings": {
-                "text": "<p><em>Lab Manager</em></p><p></p><p>With a PhD in Chemistry and nearly a decade of experience in advanced materials research, Tatsiana brings scientific precision and methodical rigor to Cala Falcó’s laboratory. She oversees the meticulous production of each formula, ensuring<br/>consistency, quality, and fidelity to the original vision.</p>",
+                "text": "<p>With a PhD in Chemistry and nearly a decade of experience in advanced materials research, Tatsiana brings scientific precision and methodical rigor to Cala Falcó’s laboratory. She oversees the meticulous production of each formula, ensuring<br/>consistency, quality, and fidelity to the original vision.</p>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "center",
@@ -1555,6 +1635,7 @@
           "block_order": [
             "image_GGgmUe",
             "text_Ejw4Ma",
+            "text_34LxwB",
             "text_Tmd3bn"
           ]
         },
@@ -1648,11 +1729,37 @@
               },
               "blocks": {}
             },
+            "text_PbWNzw": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<p><em>Biochemist & Lab Director</em></p>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "center",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
             "text_hwBNiE": {
               "type": "text",
               "name": "t:names.description",
               "settings": {
-                "text": "<p><em>Biochemist & Lab Director</em><br/><br/>Víctor Alarcón leads the lab with precision and passion, ensuring that every process—from distillation to production—meets the highest standards. He translates ideas from the field into real, tangible products, bridging creativity and execution. </p>",
+                "text": "<p>Víctor Alarcón leads the lab with precision and passion, ensuring that every process—from distillation to production—meets the highest standards. He translates ideas from the field into real, tangible products, bridging creativity and execution. </p>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "center",
@@ -1678,6 +1785,7 @@
           "block_order": [
             "image_cfzn3x",
             "text_pPUnQG",
+            "text_PbWNzw",
             "text_hwBNiE"
           ]
         },
@@ -1771,11 +1879,37 @@
               },
               "blocks": {}
             },
+            "text_GbNhje": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<p>Lorem ipsum</p>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "center",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
             "text_wgBxff": {
               "type": "text",
               "name": "t:names.description",
               "settings": {
-                "text": "<p>Lorem ipsum<br/><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>",
+                "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "center",
@@ -1801,6 +1935,7 @@
           "block_order": [
             "image_rmFdgz",
             "text_ieUf4W",
+            "text_GbNhje",
             "text_wgBxff"
           ]
         }
@@ -1826,7 +1961,7 @@
         "intro_heading": "",
         "intro_description": "",
         "stack_columns_until_1001": false,
-        "heading_min_height": 0,
+        "heading_min_height": 52,
         "description_min_height": 0,
         "show_multicolumn_button": false,
         "multicolumn_button_label": "Shop now",
