@@ -18,7 +18,11 @@
       data-hydration-key="header-drawer-mobile"
       {{ block.shopify_attributes }}
     >
-      {% render 'header-drawer', linklist: block_settings.menu, data_header_drawer_type: 'mobile-drawer' %}
+      {% render 'header-drawer',
+        linklist: block_settings.menu,
+        data_header_drawer_type: 'mobile-drawer',
+        section: section
+      %}
     </div>
 
   {% when 'navigation_bar' %}

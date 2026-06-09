@@ -47,52 +47,46 @@
   {% liquid
     assign logo_width = settings.logo_height | times: settings.logo.aspect_ratio | ceil
     assign logo_width_mobile = settings.logo_height_mobile | times: settings.logo.aspect_ratio | ceil
-    assign inverse_logo_width = settings.logo_height | times: inverse_logo.aspect_ratio | ceil
-    assign inverse_logo_width_mobile = settings.logo_height_mobile | times: inverse_logo.aspect_ratio | ceil
     assign logo_style = '--header-logo-image-width: ' | append: logo_width | append: 'px;' | append: '--header-logo-image-width-mobile: ' | append: logo_width_mobile | append: 'px; --header-logo-image-height: ' | append: settings.logo_height | append: 'px; --header-logo-image-height-mobile: ' | append: settings.logo_height_mobile | append: 'px;'
-    assign inverse_logo_style = '--header-logo-image-width: ' | append: inverse_logo_width | append: 'px;' | append: '--header-logo-image-width-mobile: ' | append: inverse_logo_width_mobile | append: 'px; --header-logo-image-height: ' | append: settings.logo_height | append: 'px; --header-logo-image-height-mobile: ' | append: settings.logo_height_mobile | append: 'px;'
+
+    if use_inverse_logo
+      assign inverse_logo_width = settings.logo_height | times: inverse_logo.aspect_ratio | ceil
+      assign inverse_logo_width_mobile = settings.logo_height_mobile | times: inverse_logo.aspect_ratio | ceil
+      assign inverse_logo_style = '--header-logo-image-width: ' | append: inverse_logo_width | append: 'px;' | append: '--header-logo-image-width-mobile: ' | append: inverse_logo_width_mobile | append: 'px; --header-logo-image-height: ' | append: settings.logo_height | append: 'px; --header-logo-image-height-mobile: ' | append: settings.logo_height_mobile | append: 'px;'
+    endif
 
     if settings.logo_mobile != blank
       assign mobile_logo_width_mobile = settings.logo_height_mobile | times: settings.logo_mobile.aspect_ratio | ceil
-      assign mobile_logo_style = '--header-logo-image-width: ' | append: logo_width | append: 'px;' | append: '--header-logo-image-width-mobile: ' | append: mobile_logo_width_mobile | append: 'px; --header-logo-image-height: ' | append: settings.logo_height | append: 'px; --header-logo-image-height-mobile: ' | append: settings.logo_height_mobile | append: 'px;'
+      assign mobile_logo_style = '--header-logo-image-width-mobile: ' | append: mobile_logo_width_mobile | append: 'px; --header-logo-image-height-mobile: ' | append: settings.logo_height_mobile | append: 'px;'
     endif
   %}
+
+  {% if settings.logo_mobile != blank %}
+    <span
+      class="header-logo__image-container header-logo__image-container--mobile"
+      data-testid="header-logo-mobile"
+    >
+      {% render 'image',
+        image: settings.logo_mobile,
+        class: 'header-logo__image header-logo__image--mobile-only',
+        height: settings.logo_height_mobile,
+        text_fallback: shop.name,
+        style: mobile_logo_style
+      %}
+    </span>
+  {% endif %}
 
   <span
     class="header-logo__image-container header-logo__image-container--original"
     data-testid="header-logo"
   >
-    {% if settings.logo_mobile != blank %}
-      <span class="header-logo__image-variant header-logo__image-variant--desktop">
-        {% render 'image',
-          image: settings.logo,
-          class: 'header-logo__image',
-          height: settings.logo_height,
-          text_fallback: shop.name,
-          style: logo_style
-        %}
-      </span>
-      <span
-        class="header-logo__image-variant header-logo__image-variant--mobile"
-        data-testid="header-logo-mobile"
-      >
-        {% render 'image',
-          image: settings.logo_mobile,
-          class: 'header-logo__image',
-          height: settings.logo_height_mobile,
-          text_fallback: shop.name,
-          style: mobile_logo_style
-        %}
-      </span>
-    {% else %}
-      {% render 'image',
-        image: settings.logo,
-        class: 'header-logo__image',
-        height: settings.logo_height,
-        text_fallback: shop.name,
-        style: logo_style
-      %}
-    {% endif %}
+    {% render 'image',
+      image: settings.logo,
+      class: 'header-logo__image',
+      height: settings.logo_height,
+      text_fallback: shop.name,
+      style: logo_style
+    %}
   </span>
 
   {% if use_inverse_logo %}
@@ -163,6 +157,11 @@
     }
   }
 
+  .header-logo__image--mobile-only {
+    height: var(--header-logo-image-height-mobile);
+    width: var(--header-logo-image-width-mobile);
+  }
+
   .header-logo:has(.header-logo__image-container--inverse) .header-logo__image-container--original {
     display: var(--header-logo-display, block);
   }
@@ -171,16 +170,17 @@
     display: var(--header-logo-inverse-display, none);
   }
 
-  .header-logo__image-variant--mobile {
+  .header-logo__image-container--mobile {
     display: none;
   }
 
   @media screen and (max-width: 749px) {
-    .header-logo:has(.header-logo__image-variant--mobile) .header-logo__image-variant--desktop {
-      display: none;
+    .header-logo:has(.header-logo__image-container--mobile) .header-logo__image-container--original,
+    .header-logo:has(.header-logo__image-container--mobile) .header-logo__image-container--inverse {
+      display: none !important;
     }
 
-    .header-logo__image-variant--mobile {
+    .header-logo__image-container--mobile {
       display: block;
     }
   }

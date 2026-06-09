@@ -5,7 +5,7 @@
   @param {string} [class] - Additional classes to add to the drawer
   @param {string} [data_header_drawer_type] - The type of header drawer to render
   @param {object} [block] - The block that can be used to provide settings
-  @param {object} [section] - The section that can be used to provide settings
+  @param {object} [section] - The header section (required for drawer utility actions)
 
   @example
   {% render 'header-drawer', linklist: section.settings.menu, class: 'header-drawer--mobile' %}
@@ -34,6 +34,17 @@
   assign eager_loading = false
   if section.index == blank
     assign eager_loading = true
+  endif
+
+  if settings.logo_mobile != blank
+    assign drawer_logo = settings.logo_mobile
+  else
+    assign drawer_logo = settings.logo
+  endif
+
+  if drawer_logo != blank
+    assign drawer_logo_width = settings.logo_height_mobile | times: drawer_logo.aspect_ratio | ceil
+    assign drawer_logo_style = '--menu-drawer-logo-width: ' | append: drawer_logo_width | append: 'px; --menu-drawer-logo-height: ' | append: settings.logo_height_mobile | append: 'px;'
   endif
 %}
 
@@ -73,16 +84,54 @@
         color-{{ block_settings.color_scheme }}
       "
     >
-      <button
-        class=" close-button menu-drawer__close-button"
-        type="button"
-        aria-label="{{ 'actions.close' | t }}"
-        on:click="/close"
-      >
-        <span class="svg-wrapper header-drawer-icon header-drawer-icon--close">
-          {{- 'icon-close.svg' | inline_asset_content -}}
-        </span>
-      </button>
+      {% if data_header_drawer_type == 'mobile-drawer' %}
+        <div class="menu-drawer__header">
+          {% if drawer_logo != blank %}
+            <a
+              href="{{ routes.root_url }}"
+              class="menu-drawer__logo"
+              {% if drawer_logo_style != blank %}
+                style="{{ drawer_logo_style }}"
+              {% endif %}
+            >
+              {% render 'image',
+                image: drawer_logo,
+                class: 'menu-drawer__logo-image',
+                height: settings.logo_height_mobile,
+                text_fallback: shop.name
+              %}
+            </a>
+          {% else %}
+            <a
+              href="{{ routes.root_url }}"
+              class="menu-drawer__logo menu-drawer__logo--text"
+            >
+              {{ shop.name }}
+            </a>
+          {% endif %}
+          <button
+            class="close-button menu-drawer__close-button menu-drawer__close-button--header"
+            type="button"
+            aria-label="{{ 'actions.close' | t }}"
+            on:click="/close"
+          >
+            <span class="svg-wrapper header-drawer-icon header-drawer-icon--close">
+              {{- 'icon-close.svg' | inline_asset_content -}}
+            </span>
+          </button>
+        </div>
+      {% else %}
+        <button
+          class="close-button menu-drawer__close-button"
+          type="button"
+          aria-label="{{ 'actions.close' | t }}"
+          on:click="/close"
+        >
+          <span class="svg-wrapper header-drawer-icon header-drawer-icon--close">
+            {{- 'icon-close.svg' | inline_asset_content -}}
+          </span>
+        </button>
+      {% endif %}
       <nav
         class="menu-drawer__navigation"
         style="
@@ -128,7 +177,10 @@
                       >
                         <span class="menu-drawer__menu-item-text wrap-text">{{ link.title | escape }}</span>
                         <span class="svg-wrapper icon-plus">
-                          {{- 'icon-plus.svg' | inline_asset_content -}}
+                         <svg width="10" height="5" viewBox="0 0 10 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0.5 0.555939L4.75 3.63489L9 0.500031" stroke="white" stroke-linecap="round"/>
+</svg>
+
                         </span>
                       </summary>
                       {% liquid
@@ -379,7 +431,10 @@
                                           {{- childlink.title | escape -}}
                                         </span>
                                         <span class="svg-wrapper icon-plus">
-                                          {{- 'icon-plus.svg' | inline_asset_content -}}
+                                         <svg width="10" height="5" viewBox="0 0 10 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0.5 0.555939L4.75 3.63489L9 0.500031" stroke="white" stroke-linecap="round"/>
+</svg>
+
                                         </span>
                                       </summary>
                                       {% liquid
@@ -565,19 +620,79 @@
           {% endif %}
         </ul>
       </nav>
+
+      {% liquid
+        if block_settings.menu_style == 'featured_collections'
+          assign top_level_featured_collections = linklist.links | where: 'type', 'collection_link'
+        endif
+
+        if eager_loading and block_settings.menu_style == 'featured_products'
+          for link in linklist.links
+            if link.type == 'collection_link'
+              assign collection_linklist = link
+              assign top_level_featured_products_collection = collection_linklist.object
+              break
+            elsif link.type == 'catalog_link' or link.type == 'collections_link'
+              assign top_level_featured_products_collection = collections.all
+              break
+            endif
+          endfor
+        endif
+      -%}
+      {% if top_level_featured_collections.size > 0 or top_level_featured_products_collection.products_count > 0 %}
+        <div
+          class="menu-drawer__featured-content"
+          style="--menu-drawer-animation-index: {{ linklist.links.size | plus: 1 }};"
+        >
+          <ul class="menu-drawer__featured-content-list menu-drawer__animated-element list-unstyled">
+            {% if top_level_featured_collections.size > 0 %}
+              {%- for collection in top_level_featured_collections limit: max_featured_items -%}
+                <li class="menu-drawer__featured-content-list-item menu-drawer__featured-content-list-item--collection">
+                  {% render 'resource-card',
+                    resource: collection.object,
+                    resource_type: 'collection',
+                    style: 'overlay',
+                    image_aspect_ratio: ratio,
+                    image_sizes: 'auto, 400px'
+                  %}
+                </li>
+              {%- endfor -%}
+            {% elsif top_level_featured_products_collection.products_count > 0 %}
+              {% paginate top_level_featured_products_collection.products by max_featured_items %}
+                {%- for product in top_level_featured_products_collection.products limit: max_featured_items -%}
+                  <li class="menu-drawer__featured-content-list-item menu-drawer__featured-content-list-item--product">
+                    {% render 'resource-card',
+                      resource: product,
+                      resource_type: 'product',
+                      image_aspect_ratio: ratio,
+                      image_sizes: 'auto, 400px'
+                    %}
+                  </li>
+                {%- endfor -%}
+              {% endpaginate %}
+            {% endif %}
+          </ul>
+        </div>
+      {% endif %}
+
       <div
         class="menu-drawer__utility-links menu-drawer__animated-element"
         style="--menu-drawer-animation-index: {{ linklist.links.size }};"
       >
         {% liquid
-          assign show_language = section.settings.show_language
-          if localization.available_languages.size <= 1
-            assign show_language = false
-          endif
+          assign show_language = false
+          assign show_country = false
 
-          assign show_country = section.settings.show_country
-          if localization.available_countries.size <= 1
-            assign show_country = false
+          if section != blank
+            assign show_language = section.settings.show_language
+            if localization.available_languages.size <= 1
+              assign show_language = false
+            endif
+
+            assign show_country = section.settings.show_country
+            if localization.available_countries.size <= 1
+              assign show_country = false
+            endif
           endif
         %}
         {% if data_header_drawer_type == 'mobile-drawer' and show_country or show_language %}
@@ -695,61 +810,31 @@
             </drawer-localization-component>
           {% endif %}
         {%- endif -%}
+
+        {% if data_header_drawer_type == 'mobile-drawer' and section != blank %}
+          {% if section.settings.show_search or shop.customer_accounts_enabled %}
+            <div class="menu-drawer__utility-actions">
+              {% if section.settings.show_search %}
+                {% render 'search',
+                  style: 'modal',
+                  display_style: section.settings.actions_display_style,
+                  class: 'search-action--in-drawer'
+                %}
+              {% endif %}
+
+              {% if shop.customer_accounts_enabled %}
+                {% render 'header-actions',
+                  customer_account_menu: section.settings.customer_account_menu,
+                  display_style: section.settings.actions_display_style,
+                  section: section,
+                  show_cart: false,
+                  context: 'drawer'
+                %}
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endif %}
       </div>
-
-      {% liquid
-        if block_settings.menu_style == 'featured_collections'
-          assign top_level_featured_collections = linklist.links | where: 'type', 'collection_link'
-        endif
-
-        if eager_loading and block_settings.menu_style == 'featured_products'
-          for link in linklist.links
-            if link.type == 'collection_link'
-              assign collection_linklist = link
-              assign top_level_featured_products_collection = collection_linklist.object
-              break
-            elsif link.type == 'catalog_link' or link.type == 'collections_link'
-              assign top_level_featured_products_collection = collections.all
-              break
-            endif
-          endfor
-        endif
-      -%}
-      {% if top_level_featured_collections.size > 0 or top_level_featured_products_collection.products_count > 0 %}
-        <div
-          class="menu-drawer__featured-content"
-          style="--menu-drawer-animation-index: {{ linklist.links.size | plus: 1 }};"
-        >
-          <ul class="menu-drawer__featured-content-list menu-drawer__animated-element list-unstyled">
-            {% if top_level_featured_collections.size > 0 %}
-              {%- for collection in top_level_featured_collections limit: max_featured_items -%}
-                <li class="menu-drawer__featured-content-list-item menu-drawer__featured-content-list-item--collection">
-                  {% render 'resource-card',
-                    resource: collection.object,
-                    resource_type: 'collection',
-                    style: 'overlay',
-                    image_aspect_ratio: ratio,
-                    image_sizes: 'auto, 400px'
-                  %}
-                </li>
-              {%- endfor -%}
-            {% elsif top_level_featured_products_collection.products_count > 0 %}
-              {% paginate top_level_featured_products_collection.products by max_featured_items %}
-                {%- for product in top_level_featured_products_collection.products limit: max_featured_items -%}
-                  <li class="menu-drawer__featured-content-list-item menu-drawer__featured-content-list-item--product">
-                    {% render 'resource-card',
-                      resource: product,
-                      resource_type: 'product',
-                      image_aspect_ratio: ratio,
-                      image_sizes: 'auto, 400px'
-                    %}
-                  </li>
-                {%- endfor -%}
-              {% endpaginate %}
-            {% endif %}
-          </ul>
-        </div>
-      {% endif %}
     </div>
     <div
       class="menu-drawer__backdrop"
@@ -828,6 +913,9 @@
   }
 
   .menu-drawer__navigation {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
     padding: 0;
 
     @media screen and (min-width: 750px) {
@@ -865,7 +953,7 @@
     top: 0;
     padding: 0;
     background-color: var(--color-background);
-    overflow: auto;
+    overflow: hidden;
     display: flex;
     border-right: var(--style-border-drawer);
     box-shadow: var(--shadow-drawer);
@@ -943,6 +1031,7 @@
   }
 
   .menu-drawer__menu {
+    padding-top: 4rem;
     --menu-drawer-inline-padding: calc(var(--padding-sm) + 7px);
 
     list-style: none;
@@ -1119,8 +1208,9 @@
     padding: var(--padding-2xs) 0;
     position: relative;
     text-decoration: none;
-    justify-content: space-between;
+    gap: 8px;
     align-items: center;
+    justify-content: flex-start;
   }
 
   .menu-drawer__menu-item:has(> .menu-drawer__link-image) {
@@ -1162,6 +1252,38 @@
     border-radius: var(--menu-image-border-radius);
   }
 
+  .menu-drawer__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    gap: var(--gap-md);
+    padding-inline: var(--padding-xl);
+    padding-block: var(--padding-lg);
+  }
+
+  .menu-drawer__logo {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    text-decoration: none;
+    color: var(--color-foreground);
+  }
+
+  .menu-drawer__logo--text {
+    font-family: var(--font-heading--family);
+    font-size: var(--font-size--md);
+    font-weight: var(--font-heading--weight);
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing--heading-normal);
+  }
+
+  .menu-drawer__logo-image {
+    width: var(--menu-drawer-logo-width);
+    height: var(--menu-drawer-logo-height);
+    object-fit: contain;
+  }
+
   .menu-drawer__close-button {
     position: relative;
     right: auto;
@@ -1170,6 +1292,22 @@
     height: fit-content;
     color: inherit;
     padding: var(--padding-lg);
+  }
+
+  .menu-drawer__close-button--header {
+    flex-shrink: 0;
+    margin-inline-start: auto;
+    padding: 0;
+    min-width: var(--minimum-touch-target);
+    min-height: var(--minimum-touch-target);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .menu-drawer__close-button--header .header-drawer-icon {
+    width: var(--icon-size-sm);
+    height: var(--icon-size-sm);
   }
 
   .menu-drawer__back-button {
@@ -1191,8 +1329,6 @@
   .menu-drawer__menu-item-text {
     overflow: hidden;
     text-overflow: ellipsis;
-    text-transform: uppercase;
-    font-family: var(--menu-child-font-family);
   }
 
   /** Styles when the country selector is hidden */
@@ -1248,10 +1384,29 @@
   .menu-drawer__utility-links {
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
     padding: 0;
-    margin-block: auto var(--padding-sm);
+    margin-block-start: auto;
+    margin-block-end: var(--padding-sm);
     margin-inline-start: var(--padding-xl);
     background-color: rgb(var(--color-foreground) 0.03);
+  }
+
+  .menu-drawer__utility-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-lg);
+    padding-block: var(--padding-md);
+    padding-inline-end: var(--padding-xl);
+    justify-content: flex-end;
+  }
+
+  .menu-drawer__utility-actions header-actions {
+    justify-self: unset;
+  }
+
+  .menu-drawer__utility-actions .search-action--in-drawer {
+    display: flex;
   }
 
   .menu-drawer__account {

@@ -45,9 +45,23 @@
   </svg>
 {% endcapture %}
 
+{% liquid
+  assign show_cart = show_cart | default: true
+  assign context = context | default: 'header'
+  assign header_actions_class = ''
+
+  if display_style == 'text'
+    assign header_actions_class = header_actions_class | append: ' header-actions--text'
+  endif
+
+  if context == 'drawer'
+    assign header_actions_class = header_actions_class | append: ' header-actions--drawer'
+  endif
+%}
+
 <header-actions
-  {% if display_style == 'text' %}
-    class="header-actions--text"
+  {% if header_actions_class != blank %}
+    class="{{ header_actions_class | strip }}"
   {% endif %}
   {{- block.shopify_attributes -}}
 >
@@ -101,7 +115,7 @@
     </div>
   {% endif %}
 
-  {% if settings.cart_type == 'drawer' and template.name != 'cart' %}
+  {% if show_cart and settings.cart_type == 'drawer' and template.name != 'cart' %}
     <script
       src="{{ 'cart-drawer.js' | asset_url }}"
       type="module"
@@ -226,7 +240,7 @@
         </div>
       </dialog>
     </cart-drawer-component>
-  {% else %}
+  {% elsif show_cart %}
     <a
       href="{{ routes.cart_url }}"
       class="header-actions__action action__cart{% if display_style == 'text' %} header-actions__text-style{% endif %}"
@@ -514,6 +528,12 @@
 
     @media screen and (max-width: 749px) {
       justify-self: flex-end;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    header-actions:not(.header-actions--drawer) .account-button {
+      display: none;
     }
   }
 

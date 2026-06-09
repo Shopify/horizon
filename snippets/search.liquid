@@ -38,13 +38,25 @@
     display: flex;
   }
 
+  .search-action--in-drawer .header-actions__action {
+    min-height: var(--minimum-touch-target);
+    min-width: var(--minimum-touch-target);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   @media screen and (max-width: 749px) {
-    .search-action--hidden-on-drawer {
+    .search-action:not(.search-action--in-drawer) {
       display: none;
     }
   }
 
   @media screen and (min-width: 750px) {
+    .search-action--in-drawer {
+      display: none;
+    }
+
     [data-menu-style='drawer'] .search-action--hidden-on-drawer {
       display: none;
     }
