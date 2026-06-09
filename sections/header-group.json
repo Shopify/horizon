@@ -134,10 +134,11 @@
         },
         "header-menu-mobile": {
           "type": "_header-menu",
+          "name": "Mobile Menu",
           "static": true,
           "settings": {
             "menu": "main-menu",
-            "color_scheme": "",
+            "color_scheme": "scheme-d70b8ec9-4fbd-4838-9889-afc90ece9d59",
             "type_font_primary_size": "1rem",
             "menu_font_style": "inverse",
             "type_font_primary_link": "heading",
