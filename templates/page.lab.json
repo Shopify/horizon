@@ -355,7 +355,7 @@
             "text_LadYVb": {
               "type": "text",
               "settings": {
-                "text": "<p>Our atelier is our portal into the olfactory sciences, a space to create innovative immersive scent experiences. <br/><br/>Set in the heart of the old town of Palma, we converge the old world with new science. In this space, we gather to explore, create, study and experiment in order to unlock natures incredible potency.</p><p>Tel: +34 664539899</p><p>Addresses: Carrer de l'Estudi General, 2, 07001, Palma, Spain</p>",
+                "text": "<p>Our atelier is our portal into the olfactory sciences, a space to create innovative immersive scent experiences. <br/><br/>Set in the heart of the old town of Palma, we converge the old world with new science. In this space, we gather to explore, create, study and experiment in order to unlock natures incredible potency.</p><p><strong>Tel:</strong> +34 664539899</p><p><strong>Address: </strong>Carrer de l'Estudi General, 2, 07001, Palma, Spain</p>",
                 "width": "100%",
                 "max_width": "none",
                 "alignment": "left",
@@ -376,11 +376,27 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
+            },
+            "button_8NJCfe": {
+              "type": "button",
+              "name": "t:names.button",
+              "settings": {
+                "label": "Find Us",
+                "link": "https://maps.app.goo.gl/WWLu3Zv9uxBuuBMXA",
+                "open_in_new_tab": false,
+                "style_class": "button",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
             }
           },
           "block_order": [
             "text_Fy7pcp",
-            "text_LadYVb"
+            "text_LadYVb",
+            "button_8NJCfe"
           ]
         },
         "image_VfrwFd": {
@@ -411,7 +427,6 @@
         "group_rzQNW7",
         "image_VfrwFd"
       ],
-      "disabled": true,
       "name": "t:names.image_with_text",
       "settings": {
         "content_direction": "row",
