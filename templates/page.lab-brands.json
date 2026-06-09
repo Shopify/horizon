@@ -181,7 +181,7 @@
               "name": "t:names.button",
               "settings": {
                 "label": "Start your sense story",
-                "link": "shopify://pages/contact",
+                "link": "#contact-form",
                 "open_in_new_tab": false,
                 "style_class": "button",
                 "width": "fit-content",
@@ -500,7 +500,7 @@
         "person_name": "",
         "person_title": "Creating a unique brand fragrance and olfactory identity is more that a nice to do. It can be a moment in your brands development that can lead to deeper emotional connection and commercial opportunities alike.",
         "button_label": "Book A Consultation",
-        "button_link": "shopify://pages/contact",
+        "button_link": "#contact-form",
         "section_width": "page-width",
         "color_scheme": "",
         "single_open": true,
@@ -2191,7 +2191,7 @@
               "type": "button",
               "settings": {
                 "label": "Enquire",
-                "link": "shopify://pages/contact",
+                "link": "#contact-form",
                 "open_in_new_tab": false,
                 "style_class": "button",
                 "width": "fit-content",
