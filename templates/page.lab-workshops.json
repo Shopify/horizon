@@ -252,6 +252,75 @@
         "padding-block-end": 40
       }
     },
+    "qa_qFEGan": {
+      "type": "qa",
+      "blocks": {
+        "qa_item_JqJnME": {
+          "type": "qa_item",
+          "settings": {
+            "question": "1. Botanical Drinks Workshop",
+            "answer": "<p>Duration: 2–2.5 hours </p><p>Format: Sensorial workshop. Hands-on creation</p><p>Price: From £600 for a group of 4, £120  per additional person<br/><br/>A journey from Mallorca’s sunlit rosemary, mastic and citrus to Scotland’s Scots pine and bog myrtle. Attendees explore hydrolates, aromatic waters from steam distillation, and learn how  to blend their own Botanical Concentrate to later infuse in drinking water.<br/><br/>Guests will: </p><p>• Discover hydrolates & gentle “adaptogenic” aromatics </p><p>• Explore a curated Mediterranean + Scottish hydrolate library </p><p>• Create a personal 30 ml concentrate </p><p>• Practise a smell sip → breathe → ritual</p>",
+            "open_by_default": true
+          }
+        },
+        "qa_item_UWFm9N": {
+          "type": "qa_item",
+          "settings": {
+            "question": "2. Olfactory Tasting",
+            "answer": "<p>Exploring England’s landscapes through scent </p><p>Duration: 1 hour </p><p> Format: Guided fragrance tasting</p><p>Price: From £600 for a group of 4, £120  per additional person </p><p>An elegant olfactory tasting exploring England’s landscapes through scent, The Garden, The Seaside, The Countryside, Wild Nature. </p><p>A refined exercise in emotional memory, slow perception and sensory presence.</p>",
+            "open_by_default": false
+          }
+        },
+        "qa_item_CUyNLe": {
+          "type": "qa_item",
+          "settings": {
+            "question": "3. The Anatomy of Calm",
+            "answer": "<p>Create Your Functional Synergy Perfume </p><p>Duration: 2 hours </p><p>Format: Neuroaesthetic ritual + creation lab</p><p>Price: From £250 per person, minimum group of 10  </p><p>A theatrical meditation on calm. </p><p>Attendees learn how certain botanical molecules modulate the nervous system through breath, movement, and sound. </p><p>They then create a Fragrance of Equilibrium, a personalised roll-on synergy for daily ritual.</p>",
+            "open_by_default": false
+          }
+        },
+        "qa_item_bnDiWr": {
+          "type": "qa_item",
+          "settings": {
+            "question": "4. Create Your Own Perfume",
+            "answer": "<p>Bespoke perfume creation in the Perfumery Lab</p><p>Duration: 2–4 hours </p><p>Format: Bespoke perfume building </p><p>Price: From £600 for a group of 4, £120  per additional person<br/><br/>A deep dive into raw ingredients, distillation principles, accords, and personal  formula building. </p><p></p><p>Guests create a bespoke 11 ml perfume guided by one of our perfumers.</p>",
+            "open_by_default": false
+          }
+        },
+        "qa_item_4re7Ty": {
+          "type": "qa_item",
+          "settings": {
+            "question": "5. Cala Falcó at Spring Tasting",
+            "answer": "<p>Discover the botanical notes in our first botanical Aperitivo </p><p>Duration: 30–45 minutes <br/></p><p>Format: Guided tastings from the Cala Falco at Spring natural botanical Aperitivo<br/></p><p>Price: From £600 for a group of 4, £120  per additional person<br/></p><p>A sensorial tasting of Spring, our botanical Aperitivo crafted with wild Mediterranean plants and UK grown botanicals. </p><p>Perfect as an add-on for Dry January or wellness evenings.</p>",
+            "open_by_default": false
+          }
+        }
+      },
+      "block_order": [
+        "qa_item_JqJnME",
+        "qa_item_UWFm9N",
+        "qa_item_CUyNLe",
+        "qa_item_bnDiWr",
+        "qa_item_4re7Ty"
+      ],
+      "name": "QA",
+      "settings": {
+        "person_image": "shopify://shop_images/IMG_4258.jpg",
+        "heading": "our workshops",
+        "subheading": "",
+        "description": "",
+        "person_name": "",
+        "person_title": "Immerse yourself in a Cala Falcó \nLab sensory experience.\n<br>Sensorial · Holistic · Botanical \n · Neuroaesthetic\n<br> Each experience can be hosted in an intimate format (ideal 8–16 participants) and possible in private or mixed groups.",
+        "button_label": "Enquire For Bookings",
+        "button_link": "shopify://products/cala-falco-at-spring",
+        "section_width": "page-width",
+        "color_scheme": "",
+        "single_open": true,
+        "accordion_icon": "caret",
+        "padding-block-start": 0,
+        "padding-block-end": 80
+      }
+    },
     "ingredients_VDjDjn": {
       "type": "ingredients",
       "blocks": {
@@ -339,75 +408,6 @@
         "arrow_size": 52,
         "button_label": "",
         "button_link": "",
-        "padding-block-start": 40,
-        "padding-block-end": 80
-      }
-    },
-    "qa_qFEGan": {
-      "type": "qa",
-      "blocks": {
-        "qa_item_JqJnME": {
-          "type": "qa_item",
-          "settings": {
-            "question": "1. Botanical Drinks Workshop",
-            "answer": "<p>Duration: 2–2.5 hours </p><p>Format: Sensorial workshop. Hands-on creation</p><p>Price: From £600 for a group of 4, £120  per additional person<br/><br/>A journey from Mallorca’s sunlit rosemary, mastic and citrus to Scotland’s Scots pine and bog myrtle. Attendees explore hydrolates, aromatic waters from steam distillation, and learn how  to blend their own Botanical Concentrate to later infuse in drinking water.<br/><br/>Guests will: </p><p>• Discover hydrolates & gentle “adaptogenic” aromatics </p><p>• Explore a curated Mediterranean + Scottish hydrolate library </p><p>• Create a personal 30 ml concentrate </p><p>• Practise a smell sip → breathe → ritual</p>",
-            "open_by_default": true
-          }
-        },
-        "qa_item_UWFm9N": {
-          "type": "qa_item",
-          "settings": {
-            "question": "2. Olfactory Tasting",
-            "answer": "<p>Exploring England’s landscapes through scent </p><p>Duration: 1 hour </p><p> Format: Guided fragrance tasting</p><p>Price: From £600 for a group of 4, £120  per additional person </p><p>An elegant olfactory tasting exploring England’s landscapes through scent, The Garden, The Seaside, The Countryside, Wild Nature. </p><p>A refined exercise in emotional memory, slow perception and sensory presence.</p>",
-            "open_by_default": false
-          }
-        },
-        "qa_item_CUyNLe": {
-          "type": "qa_item",
-          "settings": {
-            "question": "3. The Anatomy of Calm",
-            "answer": "<p>Create Your Functional Synergy Perfume </p><p>Duration: 2 hours </p><p>Format: Neuroaesthetic ritual + creation lab</p><p>Price: From £250 per person, minimum group of 10  </p><p>A theatrical meditation on calm. </p><p>Attendees learn how certain botanical molecules modulate the nervous system through breath, movement, and sound. </p><p>They then create a Fragrance of Equilibrium, a personalised roll-on synergy for daily ritual.</p>",
-            "open_by_default": false
-          }
-        },
-        "qa_item_bnDiWr": {
-          "type": "qa_item",
-          "settings": {
-            "question": "4. Create Your Own Perfume",
-            "answer": "<p>Bespoke perfume creation in the Perfumery Lab</p><p>Duration: 2–4 hours </p><p>Format: Bespoke perfume building </p><p>Price: From £600 for a group of 4, £120  per additional person<br/><br/>A deep dive into raw ingredients, distillation principles, accords, and personal  formula building. </p><p></p><p>Guests create a bespoke 11 ml perfume guided by one of our perfumers.</p>",
-            "open_by_default": false
-          }
-        },
-        "qa_item_4re7Ty": {
-          "type": "qa_item",
-          "settings": {
-            "question": "5. Cala Falcó at Spring Tasting",
-            "answer": "<p>Discover the botanical notes in our first botanical Aperitivo </p><p>Duration: 30–45 minutes <br/></p><p>Format: Guided tastings from the Cala Falco at Spring natural botanical Aperitivo<br/></p><p>Price: From £600 for a group of 4, £120  per additional person<br/></p><p>A sensorial tasting of Spring, our botanical Aperitivo crafted with wild Mediterranean plants and UK grown botanicals. </p><p>Perfect as an add-on for Dry January or wellness evenings.</p>",
-            "open_by_default": false
-          }
-        }
-      },
-      "block_order": [
-        "qa_item_JqJnME",
-        "qa_item_UWFm9N",
-        "qa_item_CUyNLe",
-        "qa_item_bnDiWr",
-        "qa_item_4re7Ty"
-      ],
-      "name": "QA",
-      "settings": {
-        "person_image": "shopify://shop_images/IMG_4258.jpg",
-        "heading": "our workshops",
-        "subheading": "",
-        "description": "",
-        "person_name": "",
-        "person_title": "Immerse yourself in a Cala Falcó \nLab sensory experience.\n<br>Sensorial · Holistic · Botanical \n · Neuroaesthetic\n<br> Each experience can be hosted in an intimate format (ideal 8–16 participants) and possible in private or mixed groups.",
-        "button_label": "Enquire For Bookings",
-        "button_link": "shopify://products/cala-falco-at-spring",
-        "section_width": "page-width",
-        "color_scheme": "",
-        "single_open": true,
-        "accordion_icon": "caret",
         "padding-block-start": 0,
         "padding-block-end": 80
       }
@@ -1137,8 +1137,8 @@
   "order": [
     "main",
     "section_qqizQE",
-    "ingredients_VDjDjn",
     "qa_qFEGan",
+    "ingredients_VDjDjn",
     "section_XLGtyG",
     "section_nrrJqU",
     "section_GDjbTA"
