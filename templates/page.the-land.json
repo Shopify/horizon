@@ -3681,28 +3681,12 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
-            },
-            "button_XxKjyJ": {
-              "type": "button",
-              "name": "t:names.button",
-              "settings": {
-                "label": "Shop Drinks",
-                "link": "shopify://products/cala-falco-at-spring",
-                "open_in_new_tab": false,
-                "style_class": "button",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
             }
           },
           "block_order": [
             "image_dfLq39",
             "text_FXzngU",
-            "text_RwnDzy",
-            "button_XxKjyJ"
+            "text_RwnDzy"
           ]
         },
         "group_z4khBF": {
@@ -3820,28 +3804,12 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
-            },
-            "button_m7EWxL": {
-              "type": "button",
-              "name": "t:names.button",
-              "settings": {
-                "label": "Shop The Collection",
-                "link": "shopify://collections/the-cala-falco-collection",
-                "open_in_new_tab": false,
-                "style_class": "button",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
             }
           },
           "block_order": [
             "image_6aE9MB",
             "text_fWMKin",
-            "text_zzDVjz",
-            "button_m7EWxL"
+            "text_zzDVjz"
           ]
         }
       },
@@ -3887,7 +3855,7 @@
         "overlay_color": "#00000026",
         "overlay_style": "solid",
         "gradient_direction": "to top",
-        "padding-block-start": 40,
+        "padding-block-start": 20,
         "padding-block-end": 40
       }
     },
