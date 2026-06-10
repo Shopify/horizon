@@ -8,7 +8,11 @@
     when 'portrait'
       assign ratio = '4 / 5'
     when 'adapt'
-      assign ratio = block_settings.image.aspect_ratio
+      if block_settings.video != blank
+        assign ratio = block_settings.video.aspect_ratio
+      else
+        assign ratio = block_settings.image.aspect_ratio
+      endif
   endcase
 
   if ratio == 0 or ratio == null
@@ -61,7 +65,20 @@
     style="{{ image_frame_style }}"
   >
     <div class="image-block__media{% if has_hover_image %} image-block__media--has-hover{% endif %}">
-    {%- if block_settings.image -%}
+    {%- if block_settings.video != blank -%}
+      {{
+        block_settings.video
+        | video_tag:
+          class: 'image-block__video',
+          style: image_border_style,
+          autoplay: true,
+          loop: true,
+          muted: true,
+          controls: false,
+          playsinline: true,
+          preload: 'metadata'
+      }}
+    {%- elsif block_settings.image -%}
       {{
         block_settings.image
         | image_url: width: 3840
@@ -138,7 +155,8 @@
     height: 100%;
   }
 
-  .image-block--height-fill .image-block__image {
+  .image-block--height-fill .image-block__image,
+  .image-block--height-fill .image-block__video {
     height: 100%;
   }
 
@@ -180,7 +198,8 @@
     border-radius: var(--image-block-inner-radius, 16px);
   }
 
-  .image-block__image {
+  .image-block__image,
+  .image-block__video {
     object-fit: cover;
     aspect-ratio: var(--ratio);
     border-radius: 16px;
@@ -190,6 +209,7 @@
   }
 
   .image-block--bordered .image-block__image,
+  .image-block--bordered .image-block__video,
   .image-block--bordered .placeholder-image {
     border-radius: var(--image-block-inner-radius, 0);
   }
@@ -267,6 +287,12 @@
       "type": "image_picker",
       "id": "image",
       "label": "t:settings.image"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "t:settings.video",
+      "info": "Plays instead of the image when set. Connect to the same file metafield as the image to support either file type."
     },
     {
       "type": "image_picker",
