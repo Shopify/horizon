@@ -1,6 +1,10 @@
 {%- doc -%}
   Renders the featured image for a menu item.
 
+  Supports collection, collections list, and catalog links (collection/product
+  featured images), plus page links via the page's `custom.megamenu_image`
+  metafield (file_reference).
+
   @param {object} link - The link to render
   @param {string} [class] - The class to apply to the image
   @param {string} [sizes] - The sizes to apply to the image
@@ -44,4 +48,12 @@
     | image_url: width: 800
     | image_tag: loading: 'lazy', class: class, sizes: image_sizes
   }}
+{% elsif link.type == 'page_link' %}
+  {% if link.object.metafields.custom.megamenu_image != blank %}
+    {{
+      link.object.metafields.custom.megamenu_image
+      | image_url: width: 800
+      | image_tag: loading: 'lazy', class: class, sizes: image_sizes
+    }}
+  {% endif %}
 {% endif %}

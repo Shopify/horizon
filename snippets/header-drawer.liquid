@@ -200,6 +200,13 @@
                           if catalog_links.size > 0 or collection_list_links.size > 0 or collection_links.size > 0
                             assign render_link_image = true
                           endif
+                          assign page_links = link.links | where: 'type', 'page_link'
+                          for page_link in page_links
+                            if page_link.object.metafields.custom.megamenu_image != blank
+                              assign render_link_image = true
+                              break
+                            endif
+                          endfor
                         endif
                       %}
                       <ul
@@ -257,6 +264,13 @@
                       if catalog_links.size > 0 or collection_list_links.size > 0 or collection_links.size > 0
                         assign render_link_image = true
                       endif
+                      assign page_links = link.links | where: 'type', 'page_link'
+                      for page_link in page_links
+                        if page_link.object.metafields.custom.megamenu_image != blank
+                          assign render_link_image = true
+                          break
+                        endif
+                      endfor
                     endif
                   %}
                   <ul
@@ -373,6 +387,13 @@
                             if catalog_links.size > 0 or collection_list_links.size > 0 or collection_links.size > 0
                               assign render_link_image = true
                             endif
+                            assign page_links = link.links | where: 'type', 'page_link'
+                            for page_link in page_links
+                              if page_link.object.metafields.custom.megamenu_image != blank
+                                assign render_link_image = true
+                                break
+                              endif
+                            endfor
                           endif
                         %}
                         <ul
@@ -454,6 +475,13 @@
                                           if catalog_links.size > 0 or collection_list_links.size > 0 or collection_links.size > 0
                                             assign render_link_image = true
                                           endif
+                                          assign page_links = childlink.links | where: 'type', 'page_link'
+                                          for page_link in page_links
+                                            if page_link.object.metafields.custom.megamenu_image != blank
+                                              assign render_link_image = true
+                                              break
+                                            endif
+                                          endfor
                                         endif
                                       %}
                                       <ul
@@ -515,6 +543,13 @@
                                       if catalog_links.size > 0 or collection_list_links.size > 0 or collection_links.size > 0
                                         assign render_link_image = true
                                       endif
+                                      assign page_links = childlink.links | where: 'type', 'page_link'
+                                      for page_link in page_links
+                                        if page_link.object.metafields.custom.megamenu_image != blank
+                                          assign render_link_image = true
+                                          break
+                                        endif
+                                      endfor
                                     endif
                                   %}
                                   <ul
