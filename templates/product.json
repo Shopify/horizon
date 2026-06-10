@@ -600,7 +600,6 @@
           "type": "image",
           "settings": {
             "image": "{{ closest.product.metafields.custom.how_to_use_image.value }}",
-            "video": "{{ closest.product.metafields.custom.how_to_use_image.value }}",
             "link": "",
             "border": "none",
             "border_width": 1,

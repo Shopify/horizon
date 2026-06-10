@@ -2,14 +2,21 @@
   assign block_settings = block.settings
   assign ratio = 1
 
+  # The image setting can resolve to a video object when connected to a File
+  # metafield that holds a video (image_url would only render its thumbnail).
+  assign block_video = block_settings.video
+  if block_video == blank and block_settings.image.media_type == 'video'
+    assign block_video = block_settings.image
+  endif
+
   case block_settings.image_ratio
     when 'landscape'
       assign ratio = '3 / 2'
     when 'portrait'
       assign ratio = '4 / 5'
     when 'adapt'
-      if block_settings.video != blank
-        assign ratio = block_settings.video.aspect_ratio
+      if block_video != blank
+        assign ratio = block_video.aspect_ratio
       else
         assign ratio = block_settings.image.aspect_ratio
       endif
@@ -20,7 +27,7 @@
   endif
 
   assign has_hover_image = false
-  if block_settings.image != blank and block_settings.image_on_hover != blank
+  if block_video == blank and block_settings.image != blank and block_settings.image_on_hover != blank
     assign has_hover_image = true
   endif
 
@@ -65,9 +72,9 @@
     style="{{ image_frame_style }}"
   >
     <div class="image-block__media{% if has_hover_image %} image-block__media--has-hover{% endif %}">
-    {%- if block_settings.video != blank -%}
+    {%- if block_video != blank -%}
       {{
-        block_settings.video
+        block_video
         | video_tag:
           class: 'image-block__video',
           style: image_border_style,
