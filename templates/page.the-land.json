@@ -57,191 +57,6 @@
         "padding-block-end": 80
       }
     },
-    "section_fcpiL9": {
-      "type": "section",
-      "blocks": {
-        "image_9FUmXK": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/Picking_botanicals_from_the_Cala_Falc_farm.jpg",
-            "link": "",
-            "border": "solid",
-            "border_width": 1,
-            "border_opacity": 19,
-            "border_radius": 16,
-            "image_border_padding": 12,
-            "image_ratio": "square",
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fill",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "group_jLnCyr": {
-          "type": "group",
-          "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 24,
-            "width": "custom",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "link": "",
-            "open_in_new_tab": false,
-            "placeholder": "",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "text_3hBLdW": {
-              "type": "text",
-              "name": "t:names.heading",
-              "settings": {
-                "text": "<p>The Cala Falcó Way</p>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h2",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 12,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "text_3yy6Gy": {
-              "type": "text",
-              "settings": {
-                "text": "<p>How can we restore our relationship with the soil, so that we both may flourish? We believe the answer lies in the quiet understanding that we are not separate from nature but a part of it. To take without giving only breaks the delicate balance that has sustained life for centuries. Instead, we choose another way, The Cala Falcó Way. </p><p>Here, we move with intention, honouring the soil, the sea, the air we breathe, everything around us. We craft with care, believing that true luxury is not in abundance, but in the rare and meaningful. </p><p>And we discover a level of health and wellbeing that isn’t temporary, but transformative. For the mind, body, and spirit. Deep down, we long for something real. A life woven with the elements, not against them.  </p><p>At Cala Falcó, we listen to nature as a teacher, a guide, a partner. This is more than a philosophy. It is an invitation. To return to something pure, joyful and enduring. Welcome to our way. The Cala Falcó way.</p>",
-                "width": "100%",
-                "max_width": "none",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "button_cHyCrK": {
-              "type": "button",
-              "disabled": true,
-              "settings": {
-                "label": "Join Our Way",
-                "link": "shopify://collections/all",
-                "open_in_new_tab": false,
-                "style_class": "button",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "text_3hBLdW",
-            "text_3yy6Gy",
-            "button_cHyCrK"
-          ]
-        }
-      },
-      "block_order": [
-        "image_9FUmXK",
-        "group_jLnCyr"
-      ],
-      "name": "t:names.image_with_text",
-      "settings": {
-        "content_direction": "row",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "flex-start",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 64,
-        "show_intro": false,
-        "intro_heading": "",
-        "intro_description": "",
-        "stack_columns_until_1001": false,
-        "heading_min_height": 0,
-        "description_min_height": 0,
-        "show_multicolumn_button": false,
-        "multicolumn_button_label": "Shop now",
-        "multicolumn_button_link": "",
-        "multicolumn_button_open_in_new_tab": false,
-        "show_image_border": false,
-        "image_border_color": "#ffffff",
-        "image_border_position": "inside",
-        "section_width": "small",
-        "section_height": "",
-        "section_height_custom": 50,
-        "color_scheme": "scheme-1",
-        "background_media": "none",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_radius": 0,
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "padding-block-start": 80,
-        "padding-block-end": 80
-      }
-    },
     "qa_9wNC4z": {
       "type": "qa",
       "blocks": {
@@ -284,223 +99,6 @@
         "single_open": true,
         "accordion_icon": "caret",
         "padding-block-start": 80,
-        "padding-block-end": 0
-      }
-    },
-    "testimonials_gxeiGc": {
-      "type": "testimonials",
-      "blocks": {
-        "testimonial_T6UNR8": {
-          "type": "testimonial",
-          "settings": {
-            "quote_short": "<p>Our way is not a path. It’s a return. A quiet calling back to something pure, something sacred. A way of seeing, of listening, of moving through the world with reverence. Cala Falcó is a philosophy, infused into the place we’ve built and the soulful products we steward. A devotion to the beauty that unfolds when we surrender to nature’s rhythm. We invite you to join The Cala Falcó Way. A return. A ritual. A way forward.</p>",
-            "cta_label": "Read full testimonial",
-            "cta_link": "",
-            "open_in_new_tab": true,
-            "image": "shopify://shop_images/Cove_on_the_Cala_Falc_estate.jpg",
-            "author": "Victor alarcón & maria sánchez",
-            "author_title": "Co-Founders"
-          }
-        }
-      },
-      "block_order": [
-        "testimonial_T6UNR8"
-      ],
-      "name": "t:names.testimonials",
-      "settings": {
-        "heading": "A NOTE FROM OUR CO-FOUNDERS",
-        "section_width": "full-width",
-        "color_scheme": "",
-        "corner_radius": 24,
-        "slide_gap": 0,
-        "autoplay": false,
-        "autoplay_speed": 4,
-        "padding-block-start": 40,
-        "padding-block-end": 40
-      }
-    },
-    "section_aaGNpq": {
-      "type": "section",
-      "blocks": {
-        "image_JgjXkT": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/DSCF2874-83.jpg",
-            "link": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 16,
-            "image_border_padding": 8,
-            "image_ratio": "landscape",
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "group_AbhPta": {
-          "type": "group",
-          "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 24,
-            "width": "custom",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "link": "",
-            "open_in_new_tab": false,
-            "placeholder": "",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "text_4UVgXW": {
-              "type": "text",
-              "name": "t:names.heading",
-              "settings": {
-                "text": "<p>Regenerative Agriculture Rulebook</p>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h2",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 1,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "text_TDJbiB": {
-              "type": "text",
-              "settings": {
-                "text": "<p>At Cala Falcó we lead by example, to regenerate the land and protect ecosystems through our unwavering commitment to agro-ecology and pioneering regenerative farming techniques.</p>",
-                "width": "fit-content",
-                "max_width": "none",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "button_NL3UXd": {
-              "type": "button",
-              "name": "t:names.button",
-              "settings": {
-                "label": "Our Approach",
-                "link": "shopify://pages/regenerative-agriculture",
-                "open_in_new_tab": false,
-                "style_class": "button",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "text_4UVgXW",
-            "text_TDJbiB",
-            "button_NL3UXd"
-          ]
-        }
-      },
-      "block_order": [
-        "image_JgjXkT",
-        "group_AbhPta"
-      ],
-      "name": "t:names.image_with_text",
-      "settings": {
-        "content_direction": "row",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "flex-start",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 64,
-        "show_intro": false,
-        "intro_heading": "",
-        "intro_description": "",
-        "stack_columns_until_1001": false,
-        "heading_min_height": 0,
-        "description_min_height": 0,
-        "show_multicolumn_button": false,
-        "multicolumn_button_label": "Shop now",
-        "multicolumn_button_link": "",
-        "multicolumn_button_open_in_new_tab": false,
-        "show_image_border": true,
-        "image_border_color": "#f4c077",
-        "image_border_position": "inside",
-        "section_width": "page-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "color_scheme": "scheme-cfa9c273-456f-45a2-b18d-d73976dc71f5",
-        "background_media": "none",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 65,
-        "border_radius": 17,
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "padding-block-start": 0,
         "padding-block-end": 0
       }
     },
@@ -550,7 +148,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<p>La Marca De Cala Falcó</p>",
+                "text": "<p>our team</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -572,10 +170,36 @@
               },
               "blocks": {}
             },
+            "text_kHyQTh": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<h4>The cALA falcó way</h4>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
             "text_mHDp8L": {
               "type": "text",
               "settings": {
-                "text": "<p>We aim to set a new benchmark for those that also believe that, not only can we work in harmony with nature, you can give back more than you take. Our pioneering and rigorous commitment to regenerative farming techniques is captured in La Marca De Cala Falcó. </p><p>As we encourage more people to walk our path and follow 'The Cala Falcó Way’ we envision our marque as a recognised symbol for regenerative farming practices. You will find our marque on all Cala Falcó products and the product of partners who have achieved the exemplary standard we hold ourselves accountable to.</p>",
+                "text": "<p>A family project - friends and professionals building a new philosophy of life together.</p>",
                 "width": "100%",
                 "max_width": "none",
                 "alignment": "left",
@@ -596,32 +220,18 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
-            },
-            "button_a33NmX": {
-              "type": "button",
-              "settings": {
-                "label": "Work With Us",
-                "link": "shopify://pages/contact",
-                "open_in_new_tab": false,
-                "style_class": "button",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
             }
           },
           "block_order": [
             "text_Wy7dH9",
-            "text_mHDp8L",
-            "button_a33NmX"
+            "text_kHyQTh",
+            "text_mHDp8L"
           ]
         },
         "image_dUkfJP": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/La_Marca_De_Cala_Falc.png",
+            "image": "shopify://shop_images/The_Cala_Falc_team.jpg",
             "link": "",
             "border": "none",
             "border_width": 1,
@@ -4556,10 +4166,7 @@
   },
   "order": [
     "main",
-    "section_fcpiL9",
     "qa_9wNC4z",
-    "testimonials_gxeiGc",
-    "section_aaGNpq",
     "section_QRTNQa",
     "hero_BX6hyA",
     "section_QfEr93",
