@@ -1237,20 +1237,20 @@
     "ingredients_TQxTYb": {
       "type": "ingredients",
       "blocks": {
+        "ingredient_tcEQcb": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Helichrysum",
+            "description": "<p><strong>Aroma: </strong>warm, honeyed, slightly curry-like<br/><strong>Aromachology:</strong> deeply grounding, regenerative<br/><strong>Use: </strong>skin repair, emotional healing, deep stress</p>",
+            "image": "shopify://shop_images/shutterstock_2720327497-removebg-preview.png"
+          }
+        },
         "ingredient_JjjwUN": {
           "type": "ingredient",
           "settings": {
             "title": "Rosemary",
             "description": "<p><strong>Aroma: </strong>fresh, resinous, herbal<br/><strong>Aromachology: </strong>stimulating, enhances memory and focus<br/><strong>Use:</strong> mental fatigue, headaches, circulation</p>",
             "image": "shopify://shop_images/shutterstock_2307730407-removebg-preview.png"
-          }
-        },
-        "ingredient_yPbTpk": {
-          "type": "ingredient",
-          "settings": {
-            "title": "Lavender",
-            "description": "<p><strong>Aroma: </strong>soft floral, clean<br/><strong>Aromachology:</strong> calming, regulates the nervous system<br/><strong>Use: </strong>stress, sleep, emotional balance</p>",
-            "image": "shopify://shop_images/shutterstock_2724753661-removebg-preview.png"
           }
         },
         "ingredient_brLBqD": {
@@ -1261,20 +1261,12 @@
             "image": "shopify://shop_images/shutterstock_1299752026-removebg-preview.png"
           }
         },
-        "ingredient_tcEQcb": {
+        "ingredient_F9twXz": {
           "type": "ingredient",
           "settings": {
-            "title": "Helichrysum",
-            "description": "<p><strong>Aroma: </strong>warm, honeyed, slightly curry-like<br/><strong>Aromachology:</strong> deeply grounding, regenerative<br/><strong>Use: </strong>skin repair, emotional healing, deep stress</p>",
-            "image": "shopify://shop_images/shutterstock_2720327497-removebg-preview.png"
-          }
-        },
-        "ingredient_zKECPk": {
-          "type": "ingredient",
-          "settings": {
-            "title": "santolina",
-            "description": "<p><strong>Aroma: </strong>dry, herbal, slightly bitter<br/><strong>Aromachology:</strong> clarifying, purifying<br/><strong>Use:</strong> mental clarity, environmental cleansing</p>",
-            "image": "shopify://shop_images/shutterstock_2705611523-removebg-preview.png"
+            "title": "wildfennel",
+            "description": "<p><strong>Aroma: </strong>sweet, anise-like<br/><strong>Aromachology: </strong>comforting, balancing<br/><strong>Use:</strong> digestion, relaxation</p>",
+            "image": "shopify://shop_images/shutterstock_2195701359-removebg-preview.png"
           }
         },
         "ingredient_PTYpVy": {
@@ -1285,12 +1277,20 @@
             "image": "shopify://shop_images/76848490-db32-4c07-94e9-1082b31561c9-removebg-preview.png"
           }
         },
-        "ingredient_F9twXz": {
+        "ingredient_yPbTpk": {
           "type": "ingredient",
           "settings": {
-            "title": "wildfennel",
-            "description": "<p><strong>Aroma: </strong>sweet, anise-like<br/><strong>Aromachology: </strong>comforting, balancing<br/><strong>Use:</strong> digestion, relaxation</p>",
-            "image": "shopify://shop_images/shutterstock_2195701359-removebg-preview.png"
+            "title": "Lavender",
+            "description": "<p><strong>Aroma: </strong>soft floral, clean<br/><strong>Aromachology:</strong> calming, regulates the nervous system<br/><strong>Use: </strong>stress, sleep, emotional balance</p>",
+            "image": "shopify://shop_images/shutterstock_2724753661-removebg-preview.png"
+          }
+        },
+        "ingredient_zKECPk": {
+          "type": "ingredient",
+          "settings": {
+            "title": "santolina",
+            "description": "<p><strong>Aroma: </strong>dry, herbal, slightly bitter<br/><strong>Aromachology:</strong> clarifying, purifying<br/><strong>Use:</strong> mental clarity, environmental cleansing</p>",
+            "image": "shopify://shop_images/shutterstock_2705611523-removebg-preview.png"
           }
         },
         "ingredient_w4BywQ": {
@@ -1319,13 +1319,13 @@
         }
       },
       "block_order": [
-        "ingredient_JjjwUN",
-        "ingredient_yPbTpk",
-        "ingredient_brLBqD",
         "ingredient_tcEQcb",
-        "ingredient_zKECPk",
-        "ingredient_PTYpVy",
+        "ingredient_JjjwUN",
+        "ingredient_brLBqD",
         "ingredient_F9twXz",
+        "ingredient_PTYpVy",
+        "ingredient_yPbTpk",
+        "ingredient_zKECPk",
         "ingredient_w4BywQ",
         "ingredient_gzhfPQ",
         "ingredient_yF6eiX"
