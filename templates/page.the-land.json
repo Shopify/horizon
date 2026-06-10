@@ -3126,24 +3126,9 @@
                 "background_color": "#00000026",
                 "corner_radius": 0,
                 "padding-block-start": 12,
-                "padding-block-end": 24,
+                "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "button_ekq3yP": {
-              "type": "button",
-              "name": "t:names.button",
-              "settings": {
-                "label": "Shop Drinks",
-                "link": "shopify://products/cala-falco-at-spring",
-                "open_in_new_tab": false,
-                "style_class": "button",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
               },
               "blocks": {}
             }
@@ -3151,8 +3136,7 @@
           "block_order": [
             "image_YMt8f6",
             "text_rPTUwg",
-            "text_wcRNGM",
-            "button_ekq3yP"
+            "text_wcRNGM"
           ]
         },
         "group_QL4Ubb": {
@@ -3199,8 +3183,7 @@
               "type": "image",
               "name": "t:names.image",
               "settings": {
-                "image": "shopify://shop_images/Cala_Falc_Collection_product_image.png",
-                "image_on_hover": "shopify://shop_images/collestion_2.png",
+                "image": "shopify://shop_images/Cala_Falc_Atelier.jpg",
                 "link": "",
                 "border": "none",
                 "border_width": 1,
@@ -3224,7 +3207,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<p>Cala Falcó Collection</p>",
+                "text": "<p>MARIA SÁNCHEZ</p>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",
@@ -3250,7 +3233,7 @@
               "type": "text",
               "name": "t:names.description",
               "settings": {
-                "text": "<p>Cala Falcó Collection is a natural holistic wellness house and aromachologist.</p>",
+                "text": "<p>Co-founder & CEO</p>",
                 "width": "100%",
                 "max_width": "none",
                 "alignment": "left",
@@ -3271,28 +3254,12 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
-            },
-            "button_atJtyP": {
-              "type": "button",
-              "name": "t:names.button",
-              "settings": {
-                "label": "Shop The Collection",
-                "link": "shopify://collections/the-cala-falco-collection",
-                "open_in_new_tab": false,
-                "style_class": "button",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
             }
           },
           "block_order": [
             "image_XpXPbU",
             "text_GnKPbX",
-            "text_yAwfCk",
-            "button_atJtyP"
+            "text_yAwfCk"
           ]
         },
         "group_xDacT9": {
@@ -3339,7 +3306,7 @@
               "type": "image",
               "name": "t:names.image",
               "settings": {
-                "image": "shopify://shop_images/Viti_Vinci_The_Collector.jpg",
+                "image": "shopify://shop_images/Group_427321495.png",
                 "image_on_hover": "shopify://shop_images/CalaFalco_Box_Front.jpg",
                 "link": "",
                 "border": "none",
@@ -3364,7 +3331,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<p>VITI VINCI</p>",
+                "text": "<p>Victor AlarcÓn</p>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",
@@ -3390,7 +3357,310 @@
               "type": "text",
               "name": "t:names.description",
               "settings": {
-                "text": "<p>Viti Vinci is an olfactory art studio creating scent art through installations, commissions, and collectible wearable editions.</p>",
+                "text": "<p>Co-founder & Lab Director</p>",
+                "width": "100%",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 12,
+                "padding-block-end": 24,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "image_itPDWj",
+            "text_WtzT99",
+            "text_iVDta8"
+          ]
+        }
+      },
+      "block_order": [
+        "group_3kL3LA",
+        "group_QL4Ubb",
+        "group_xDacT9"
+      ],
+      "name": "t:names.multicolumn",
+      "settings": {
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "flex-start",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 33,
+        "show_intro": false,
+        "intro_heading": "",
+        "intro_description": "",
+        "stack_columns_until_1001": true,
+        "heading_min_height": 84,
+        "description_min_height": 132,
+        "show_multicolumn_button": false,
+        "multicolumn_button_label": "Shop now",
+        "multicolumn_button_link": "",
+        "multicolumn_button_open_in_new_tab": false,
+        "show_image_border": false,
+        "image_border_color": "#ffffff",
+        "image_border_position": "inside",
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 20,
+        "padding-block-end": 40
+      }
+    },
+    "section_GhaJyB": {
+      "type": "section",
+      "blocks": {
+        "text_TLWzzC": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<h2>MARKETING</h2>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "text_KAfaiC": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<p>Alex shapes how Cala Falcó speaks to the world, two decades in luxury and high-net-worth sectors. </p><p>Helena brings daily structure and consistency to everything we communicate, from content to brand voice across all touchpoints.</p>",
+            "width": "fit-content",
+            "max_width": "none",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "text_xEmXYe": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_TLWzzC",
+        "text_KAfaiC",
+        "text_xEmXYe"
+      ],
+      "name": "t:names.rich_text_section",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 25,
+        "show_intro": false,
+        "intro_heading": "",
+        "intro_description": "",
+        "stack_columns_until_1001": false,
+        "heading_min_height": 0,
+        "description_min_height": 0,
+        "show_multicolumn_button": false,
+        "multicolumn_button_label": "Shop now",
+        "multicolumn_button_link": "",
+        "multicolumn_button_open_in_new_tab": false,
+        "show_image_border": false,
+        "image_border_color": "#ffffff",
+        "image_border_position": "inside",
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 40,
+        "padding-block-end": 40
+      }
+    },
+    "section_UfCqbN": {
+      "type": "section",
+      "blocks": {
+        "group_dabLyK": {
+          "type": "group",
+          "name": "t:names.column",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "flex-start",
+            "gap": 8,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 10,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "image_dfLq39": {
+              "type": "image",
+              "name": "t:names.image",
+              "settings": {
+                "image": "shopify://shop_images/Cala_Falc_at_Spring_bottle.png",
+                "link": "",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 16,
+                "image_border_padding": 8,
+                "image_ratio": "landscape",
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "text_FXzngU": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>alex field</p>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "h3",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 12,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "text_RwnDzy": {
+              "type": "text",
+              "name": "t:names.description",
+              "settings": {
+                "text": "<p>Marketing Director</p>",
                 "width": "100%",
                 "max_width": "none",
                 "alignment": "left",
@@ -3412,12 +3682,12 @@
               },
               "blocks": {}
             },
-            "button_eeBY4P": {
+            "button_XxKjyJ": {
               "type": "button",
               "name": "t:names.button",
               "settings": {
-                "label": "Discover Olfactory Art",
-                "link": "shopify://pages/olfactory-studio",
+                "label": "Shop Drinks",
+                "link": "shopify://products/cala-falco-at-spring",
                 "open_in_new_tab": false,
                 "style_class": "button",
                 "width": "fit-content",
@@ -3429,17 +3699,155 @@
             }
           },
           "block_order": [
-            "image_itPDWj",
-            "text_WtzT99",
-            "text_iVDta8",
-            "button_eeBY4P"
+            "image_dfLq39",
+            "text_FXzngU",
+            "text_RwnDzy",
+            "button_XxKjyJ"
+          ]
+        },
+        "group_z4khBF": {
+          "type": "group",
+          "name": "t:names.column",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "flex-start",
+            "gap": 8,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 10,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "image_6aE9MB": {
+              "type": "image",
+              "name": "t:names.image",
+              "settings": {
+                "image": "shopify://shop_images/Cala_Falc_Collection_product_image.png",
+                "link": "",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 16,
+                "image_border_padding": 8,
+                "image_ratio": "landscape",
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "text_fWMKin": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>HELENA Balaguer</p>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "h3",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 12,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "text_zzDVjz": {
+              "type": "text",
+              "name": "t:names.description",
+              "settings": {
+                "text": "<p>Marketing Manager</p>",
+                "width": "100%",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 12,
+                "padding-block-end": 24,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "button_m7EWxL": {
+              "type": "button",
+              "name": "t:names.button",
+              "settings": {
+                "label": "Shop The Collection",
+                "link": "shopify://collections/the-cala-falco-collection",
+                "open_in_new_tab": false,
+                "style_class": "button",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "image_6aE9MB",
+            "text_fWMKin",
+            "text_zzDVjz",
+            "button_m7EWxL"
           ]
         }
       },
       "block_order": [
-        "group_3kL3LA",
-        "group_QL4Ubb",
-        "group_xDacT9"
+        "group_dabLyK",
+        "group_z4khBF"
       ],
       "name": "t:names.multicolumn",
       "settings": {
@@ -4100,6 +4508,8 @@
     "section_GXXUgn",
     "section_4yR6mY",
     "section_QgUB9X",
+    "section_GhaJyB",
+    "section_UfCqbN",
     "section_aXNHqN",
     "section_FbtzbD"
   ]
