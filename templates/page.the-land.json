@@ -434,7 +434,7 @@
             "text_YcQaBa": {
               "type": "text",
               "settings": {
-                "text": "<p>We believe the answer lies in the quiet understanding that we are not separate from nature but a part of it. To take without giving, only breaks the delicate balance that has sustained life for centuries. Instead, we choose another way, The Cala Falcó Way. </p><p>Here, we move with intention, honouring the soil, the sea, the air we breathe, everything around us. We craft with care, believing that true luxury is not in abundance but in the rare, the meaningful and the deeply personal. We find a deeper sense of happiness, trusting that time enriches everything it touches. Ingredients, experiences, even ourselves. <br/><br/>And we discover a level of health and wellbeing that isn’t temporary, but transformative. We have been conditioned to accept the artificial as normal. But deep down, we long for something real. Something regenerative.</p><p>At Cala Falcó, we listen to nature as a teacher, a guide, a partner. This is more than a philosophy. It is an invitation.To return to something pure, joyful, and enduring. Welcome to our way. The Cala Falcó way.</p>",
+                "text": "<p>We believe the answer lies in reverence, in rhythm, in the quiet understanding that we are not separate from nature but a part of it. To take without giving, to rush without listening, only breaks the delicate balance that has sustained life for centuries. Instead, we choose another way, the Cala Falcó Way. <br/></p><p>Here, we move with intention, honouring the soil, the sea, the air we breathe, everything above us, beneath us, and beside us. We craft with care, believing that true luxury is not in abundance but in the rare, the meaningful, the deeply personal. We find a deeper sense of happiness, trusting that time enriches everything it touches. Ingredients, experiences, even ourselves. <br/><br/>And we discover a level of health and wellbeing that isn’t temporary, but transformative. For the mind, body, and spirit. We have been conditioned to accept the artificial as normal. But deep down, we long for something real. Something regenerative. A life woven with the elements, not against them. <br/>At Cala Falcó, we listen to nature as a teacher, a guide, a partner. And we bring our teachings into today, modernising ancient values for a new era. This is more than a philosophy. It is an invitation.To return to something pure, joyful, and enduring.<br/><br/>Welcome to our way. The Cala Falcó way.</p>",
                 "width": "100%",
                 "max_width": "none",
                 "alignment": "left",
@@ -506,7 +506,7 @@
         "overlay_color": "#00000026",
         "overlay_style": "solid",
         "gradient_direction": "to top",
-        "padding-block-start": 40,
+        "padding-block-start": 80,
         "padding-block-end": 40
       }
     },
@@ -555,7 +555,7 @@
             "border_opacity": 100,
             "border_radius": 16,
             "image_border_padding": 8,
-            "image_ratio": "square",
+            "image_ratio": "landscape",
             "width": "fill",
             "custom_width": 100,
             "width_mobile": "custom",
@@ -611,7 +611,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<p>regenerative agriculture</p>",
+                "text": "<p>our rulebook</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -687,7 +687,7 @@
             "button_Cw8Era": {
               "type": "button",
               "settings": {
-                "label": "Our Regenerative Rulebook",
+                "label": "Our Approach To Regenerative Agriculture",
                 "link": "shopify://pages/regenerative-agriculture",
                 "open_in_new_tab": false,
                 "style_class": "button",
@@ -748,7 +748,7 @@
         "multicolumn_button_link": "",
         "multicolumn_button_open_in_new_tab": false,
         "show_image_border": true,
-        "image_border_color": "#31331d",
+        "image_border_color": "#f4c077",
         "image_border_position": "outside",
         "section_width": "page-width",
         "section_height": "small",
@@ -766,7 +766,7 @@
         "overlay_style": "solid",
         "gradient_direction": "to top",
         "padding-block-start": 46,
-        "padding-block-end": 40
+        "padding-block-end": 80
       }
     },
     "section_3xWB3Q": {
@@ -977,36 +977,13 @@
         "overlay_color": "#00000026",
         "overlay_style": "solid",
         "gradient_direction": "to top",
-        "padding-block-start": 40,
+        "padding-block-start": 80,
         "padding-block-end": 40
       }
     },
     "section_Yq3xPb": {
       "type": "section",
       "blocks": {
-        "image_HfxBKn": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/The_Cala_Falc_team.jpg",
-            "link": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 16,
-            "image_border_padding": 8,
-            "image_ratio": "adapt",
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
         "group_Ggyxqw": {
           "type": "group",
           "settings": {
@@ -1076,7 +1053,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "",
+                "text": "<h4>welcome to our family</h4>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -1101,7 +1078,7 @@
             "text_deWHgk": {
               "type": "text",
               "settings": {
-                "text": "<p>We are one big happy family at Cala Falcó. From our founder to our farmers, from the pickers to the botanical microbiologists, everyone plays a crucial role in delivering our vision to heal the land.</p>",
+                "text": "<p>A family project bringing together friends, professionals and the wider community around a shared philosophy of inclusion and wellbeing. </p><p>Founded in 1997, Estel de Llevant supports people with mental health conditions through training, employment and social integration. At Cala Falcó, we collaborate closely with their team through essential oil distillation and seasonal harvests, creating a shared path where regeneration extends beyond the land and into the community.</p>",
                 "width": "100%",
                 "max_width": "none",
                 "alignment": "left",
@@ -1123,11 +1100,11 @@
               },
               "blocks": {}
             },
-            "button_h3bLQA": {
+            "button_4NhC9h": {
               "type": "button",
               "name": "t:names.button",
               "settings": {
-                "label": "Meet Our Team",
+                "label": "Shop now",
                 "link": "shopify://pages/the-team",
                 "open_in_new_tab": false,
                 "style_class": "button",
@@ -1143,13 +1120,36 @@
             "text_kP8UAY",
             "text_TEMyeA",
             "text_deWHgk",
-            "button_h3bLQA"
+            "button_4NhC9h"
           ]
+        },
+        "image_xFy8gd": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/The_Cala_Falc_team.jpg",
+            "link": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 16,
+            "image_border_padding": 8,
+            "image_ratio": "adapt",
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
         }
       },
       "block_order": [
-        "image_HfxBKn",
-        "group_Ggyxqw"
+        "group_Ggyxqw",
+        "image_xFy8gd"
       ],
       "name": "t:names.image_with_text",
       "settings": {
@@ -1189,7 +1189,7 @@
         "overlay_color": "#00000026",
         "overlay_style": "solid",
         "gradient_direction": "to top",
-        "padding-block-start": 40,
+        "padding-block-start": 80,
         "padding-block-end": 40
       }
     },
@@ -1198,7 +1198,6 @@
       "blocks": {
         "group_fhNpQT": {
           "type": "group",
-          "disabled": true,
           "settings": {
             "content_direction": "column",
             "vertical_on_mobile": true,
@@ -1348,7 +1347,6 @@
         "group_fhNpQT",
         "image_7ptzyE"
       ],
-      "disabled": true,
       "name": "t:names.image_with_text",
       "settings": {
         "content_direction": "row",
@@ -1543,7 +1541,6 @@
         "text_TGkRBd",
         "text_Hdmgch"
       ],
-      "disabled": true,
       "name": "t:names.rich_text_section",
       "settings": {
         "content_direction": "column",
@@ -3572,7 +3569,6 @@
         "group_QL4Ubb",
         "group_xDacT9"
       ],
-      "disabled": true,
       "name": "t:names.multicolumn",
       "settings": {
         "content_direction": "row",
@@ -3702,7 +3698,6 @@
         "text_KAfaiC",
         "text_xEmXYe"
       ],
-      "disabled": true,
       "name": "t:names.rich_text_section",
       "settings": {
         "content_direction": "column",
@@ -3999,7 +3994,6 @@
         "group_dabLyK",
         "group_z4khBF"
       ],
-      "disabled": true,
       "name": "t:names.multicolumn",
       "settings": {
         "content_direction": "row",
@@ -4129,7 +4123,6 @@
         "text_6Fjicz",
         "text_BetQfQ"
       ],
-      "disabled": true,
       "name": "t:names.rich_text_section",
       "settings": {
         "content_direction": "column",
@@ -4426,7 +4419,6 @@
         "group_TfmrUz",
         "group_VQGjCd"
       ],
-      "disabled": true,
       "name": "t:names.multicolumn",
       "settings": {
         "content_direction": "row",
@@ -4556,7 +4548,6 @@
         "text_caAf8G",
         "text_7WL7NA"
       ],
-      "disabled": true,
       "name": "t:names.rich_text_section",
       "settings": {
         "content_direction": "column",
@@ -5103,7 +5094,6 @@
         "group_6hx6MX",
         "group_VD8nYK"
       ],
-      "disabled": true,
       "name": "t:names.multicolumn",
       "settings": {
         "content_direction": "row",
@@ -5179,9 +5169,9 @@
           "type": "text",
           "name": "t:names.text",
           "settings": {
-            "text": "<p>The brands in our stable. Nurtured by botanicals grown The Cala Falcó Way.</p>",
+            "text": "<p>The Brands in our stable. Nurtured  by botanicals grown The Cala Falcó Way.</p>",
             "width": "fit-content",
-            "max_width": "normal",
+            "max_width": "none",
             "alignment": "left",
             "type_preset": "rte",
             "font": "var(--font-body--family)",
