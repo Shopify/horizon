@@ -984,6 +984,29 @@
     "section_Yq3xPb": {
       "type": "section",
       "blocks": {
+        "image_qFNFRe": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/The_Cala_Falc_team.jpg",
+            "link": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 16,
+            "image_border_padding": 8,
+            "image_ratio": "adapt",
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
         "group_Ggyxqw": {
           "type": "group",
           "settings": {
@@ -1122,34 +1145,11 @@
             "text_deWHgk",
             "button_4NhC9h"
           ]
-        },
-        "image_xFy8gd": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/The_Cala_Falc_team.jpg",
-            "link": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 16,
-            "image_border_padding": 8,
-            "image_ratio": "adapt",
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
         }
       },
       "block_order": [
-        "group_Ggyxqw",
-        "image_xFy8gd"
+        "image_qFNFRe",
+        "group_Ggyxqw"
       ],
       "name": "t:names.image_with_text",
       "settings": {
