@@ -524,10 +524,22 @@
             "author": "VICTOR ALARCÓN & MARIA SÁNCHEZ",
             "author_title": "Co-Founders"
           }
+        },
+        "testimonial_bRPVy8": {
+          "type": "testimonial",
+          "settings": {
+            "quote_short": "",
+            "cta_label": "Read full testimonial",
+            "cta_link": "",
+            "open_in_new_tab": true,
+            "author": "Theo Hitchcock",
+            "author_title": "Founder"
+          }
         }
       },
       "block_order": [
-        "testimonial_Fm4Lz9"
+        "testimonial_Fm4Lz9",
+        "testimonial_bRPVy8"
       ],
       "name": "t:names.testimonials",
       "settings": {
