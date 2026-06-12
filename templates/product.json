@@ -599,7 +599,7 @@
         "image_hjXWh9": {
           "type": "image",
           "settings": {
-            "image": "{{ closest.product.metafields.custom.how_to_use_image.value }}",
+            "image": "shopify://shop_images/9c5e6694-c6f1-4add-bf6a-7e1a41551755.png",
             "video": "{{ closest.product.metafields.custom.how_to_use_image.value }}",
             "link": "",
             "border": "none",
