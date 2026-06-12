@@ -1,5 +1,9 @@
 # Testimonials Section Patterns
 
+## Product testimonials variant (metafield-driven)
+
+`sections/product-testimonials.liquid` is a copy of the testimonials section that pulls slides from the product metafield `custom.product_testimonials` (a **list of testimonial metaobjects**) instead of section blocks. Metaobject fields per slide: `quote` (rendered via `metafield_tag`), `link` (URL), `image` (file), `author`, `title` — access values with `.value`. Section settings are the same, plus section-level `cta_label` and `open_in_new_tab` (these were per-block in the original; the metaobject has no label field). The section renders nothing when the metafield is empty, is restricted to product templates via `enabled_on`, and defines its own custom element class but reuses the `testimonials-swiper` tag name (guarded with `customElements.get`) and the same CSS class names.
+
 ## Color scheme
 
 The section uses the theme **Color scheme** setting (`color_scheme`, default **scheme-cfa9c273-456f-45a2-b18d-d73976dc71f5** — dark green `#31331e` background, white text, gold accent buttons). Background and text come from the selected scheme via `color-{{ section.settings.color_scheme }}` on `.section-background` and the section element — do not hardcode section background or foreground colors.

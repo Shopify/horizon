@@ -1,0 +1,579 @@
+{% liquid
+  assign testimonials = product.metafields.custom.product_testimonials.value
+  assign slide_count = testimonials.size
+  assign section_width_class = 'section--' | append: section.settings.section_width
+%}
+
+{% if slide_count > 0 %}
+  <div class="section-background color-{{ section.settings.color_scheme }}"></div>
+
+  <section
+    class="testimonials-swiper-section spacing-style section {{ section_width_class }} color-{{ section.settings.color_scheme }}"
+    style="
+      {% render 'spacing-padding', settings: section.settings %};
+      --testimonials-corner-radius: {{ section.settings.corner_radius }}px;
+      --testimonials-slide-gap: {{ section.settings.slide_gap }}px;
+    "
+  >
+    <testimonials-swiper
+      class="testimonials-swiper"
+      data-slide-count="{{ slide_count }}"
+      data-autoplay="{{ section.settings.autoplay }}"
+      data-autoplay-speed="{{ section.settings.autoplay_speed | times: 1000 }}"
+    >
+      {% if section.settings.heading != blank %}
+        <div class="testimonials-swiper__header">
+          <h5 class="testimonials-swiper__heading">{{ section.settings.heading | escape }}</h5>
+        </div>
+      {% endif %}
+
+      <div class="testimonials-swiper__viewport">
+        <div class="testimonials-swiper__track" data-track>
+          {% for testimonial in testimonials %}
+            {% liquid
+              assign testimonial_image = testimonial.image.value
+              assign image_alt = testimonial_image.alt | default: testimonial.author.value | default: 'Testimonial image'
+            %}
+            <article
+              class="testimonials-swiper__slide"
+              data-slide
+              data-index="{{ forloop.index0 }}"
+              aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}"
+            >
+              <div class="testimonials-card">
+                <div class="testimonials-card__quote">
+                  <div class="testimonials-card__quote-mark" aria-hidden="true">
+                    <svg width="50" height="49" viewBox="0 0 50 49" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M26.8465 45.75C32.6556 40.9167 36.971 36.0833 39.7925 31.25C42.4481 26.5833 43.527 22.5833 43.029 19.25L42.2822 18H40.7884L40.0415 18.25L36.556 18.5C34.0664 18.5 31.9917 17.5 30.332 15.5C28.5062 13.6667 27.5934 11.5 27.5934 9C27.5934 6.66666 28.6722 4.58334 30.8299 2.75C32.9876 0.916668 35.6432 0 38.7967 0C41.7842 0 44.4398 1.58334 46.7635 4.75C48.9212 7.91667 50 11.5833 50 15.75C50 22.4167 47.7593 28.75 43.278 34.75C40.1245 39.5833 35.3942 44.3333 29.0871 49L26.8465 45.75ZM0 45.75C5.80913 40.9167 10.1245 36.0833 12.9461 31.25C15.6017 26.5833 16.6805 22.5833 16.1826 19.25L15.4357 18H13.9419L12.9461 18.25L9.70954 18.5C7.21992 18.5 5.14523 17.5 3.48547 15.5C1.65974 13.6667 0.746883 11.5 0.746883 9C0.746883 6.66666 1.82573 4.58334 3.9834 2.75C6.14108 0.916668 8.79668 0 11.9502 0C14.9378 0 17.5934 1.58334 19.917 4.75C22.0747 7.91667 23.1535 11.5833 23.1535 15.75C23.1535 27.25 16.1826 38.3333 2.24066 49L0 45.75Z" fill="currentColor"/>
+                    </svg>
+                  </div>
+
+                  {% if testimonial.quote != blank %}
+                    <div class="testimonials-card__quote-short rte">
+                      {{ testimonial.quote | metafield_tag }}
+                    </div>
+                  {% endif %}
+
+                  {% if testimonial.link.value != blank %}
+                    <div class="testimonials-card__cta">
+                      <a
+                        href="{{ testimonial.link.value }}"
+                        class="testimonials-card__cta-link show-more__button button-unstyled button-unstyled--with-icon"
+                        {% if section.settings.open_in_new_tab %}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        {% endif %}
+                      >
+                        <span>{{ section.settings.cta_label | escape }}</span>
+                        <span class="svg-wrapper icon-arrow">{{- 'icon-arrow.svg' | inline_asset_content -}}</span>
+                      </a>
+                    </div>
+                  {% endif %}
+
+                  <div class="testimonials-card__author">
+                    {% if testimonial.author.value != blank %}
+                      <span class="testimonials-card__author-name">{{ testimonial.author.value | escape }}</span>
+                    {% endif %}
+                    {% if testimonial.title.value != blank %}
+                      <span class="testimonials-card__author-title">{{ testimonial.title.value | escape }}</span>
+                    {% endif %}
+                  </div>
+                </div>
+
+                <div class="testimonials-card__media">
+                  {% if testimonial_image != blank %}
+                    {{
+                      testimonial_image
+                      | image_url: width: 2000
+                      | image_tag:
+                        widths: '750, 1100, 1500, 2000',
+                        sizes: '(min-width: 750px) 50vw, 100vw',
+                        class: 'testimonials-card__image',
+                        loading: 'lazy',
+                        alt: image_alt
+                    }}
+                  {% endif %}
+                </div>
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+      </div>
+
+      {% if slide_count > 1 %}
+        <div class="testimonials-swiper__navigation">
+          <button
+            class="testimonials-swiper__nav-button testimonials-swiper__nav-button--prev button button-unstyled"
+            type="button"
+            data-prev
+            aria-label="{{ 'accessibility.slideshow_previous' | t }}"
+          >
+            <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M11.3536 4.03556C11.5488 3.8403 11.5488 3.52372 11.3536 3.32845L8.17157 0.146473C7.97631 -0.0487893 7.65973 -0.0487893 7.46447 0.146473C7.2692 0.341735 7.2692 0.658318 7.46447 0.85358L10.2929 3.68201L7.46447 6.51043C7.2692 6.7057 7.2692 7.02228 7.46447 7.21754C7.65973 7.4128 7.97631 7.4128 8.17157 7.21754L11.3536 4.03556ZM0 3.68201V4.18201H11V3.68201V3.18201H0V3.68201Z" fill="currentColor"/>
+            </svg>
+          </button>
+          <button
+            class="testimonials-swiper__nav-button testimonials-swiper__nav-button--next button button-unstyled"
+            type="button"
+            data-next
+            aria-label="{{ 'accessibility.slideshow_next' | t }}"
+          >
+            <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M11.3536 4.03556C11.5488 3.8403 11.5488 3.52372 11.3536 3.32845L8.17157 0.146473C7.97631 -0.0487893 7.65973 -0.0487893 7.46447 0.146473C7.2692 0.341735 7.2692 0.658318 7.46447 0.85358L10.2929 3.68201L7.46447 6.51043C7.2692 6.7057 7.2692 7.02228 7.46447 7.21754C7.65973 7.4128 7.97631 7.4128 8.17157 7.21754L11.3536 4.03556ZM0 3.68201V4.18201H11V3.68201V3.18201H0V3.68201Z" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+      {% endif %}
+    </testimonials-swiper>
+  </section>
+{% endif %}
+
+{% javascript %}
+  class ProductTestimonialsSwiper extends HTMLElement {
+    connectedCallback() {
+      this.track = this.querySelector('[data-track]');
+      this.slides = Array.from(this.querySelectorAll('[data-slide]'));
+      this.prevButton = this.querySelector('[data-prev]');
+      this.nextButton = this.querySelector('[data-next]');
+
+      this.currentIndex = 0;
+      this.slideCount = Number(this.dataset.slideCount || this.slides.length);
+      this.autoplay = this.dataset.autoplay === 'true';
+      this.autoplaySpeed = Number(this.dataset.autoplaySpeed || 4000);
+
+      if (!this.track || this.slideCount <= 1) return;
+
+      this.bindEvents();
+      this.update();
+      this.startAutoplay();
+    }
+
+    disconnectedCallback() {
+      this.stopAutoplay();
+      if (this.handleResizeBound) {
+        window.removeEventListener('resize', this.handleResizeBound);
+      }
+    }
+
+    bindEvents() {
+      if (this.prevButton) {
+        this.prevButton.addEventListener('click', () => this.goTo(this.currentIndex - 1));
+      }
+      if (this.nextButton) {
+        this.nextButton.addEventListener('click', () => this.goTo(this.currentIndex + 1));
+      }
+
+      this.handleResizeBound = () => this.update(false);
+      window.addEventListener('resize', this.handleResizeBound);
+
+      this.addEventListener('mouseenter', () => this.stopAutoplay());
+      this.addEventListener('mouseleave', () => this.startAutoplay());
+    }
+
+    goTo(index, animate = true) {
+      const maxIndex = this.slideCount - 1;
+      if (index < 0) {
+        this.currentIndex = maxIndex;
+      } else if (index > maxIndex) {
+        this.currentIndex = 0;
+      } else {
+        this.currentIndex = index;
+      }
+      this.update(animate);
+      this.startAutoplay();
+    }
+
+    update(animate = true) {
+      if (!this.track) return;
+      this.track.style.transitionDuration = animate ? '420ms' : '0ms';
+      this.track.style.transform = `translate3d(-${this.currentIndex * 100}%, 0, 0)`;
+      this.slides.forEach((slide, index) => {
+        slide.setAttribute('aria-hidden', index === this.currentIndex ? 'false' : 'true');
+      });
+    }
+
+    startAutoplay() {
+      this.stopAutoplay();
+      if (!this.autoplay || this.slideCount <= 1) return;
+      this.timer = window.setInterval(() => {
+        this.goTo(this.currentIndex + 1);
+      }, this.autoplaySpeed);
+    }
+
+    stopAutoplay() {
+      if (this.timer) {
+        window.clearInterval(this.timer);
+        this.timer = null;
+      }
+    }
+  }
+
+  if (!customElements.get('testimonials-swiper')) {
+    customElements.define('testimonials-swiper', ProductTestimonialsSwiper);
+  }
+{% endjavascript %}
+
+{% stylesheet %}
+  .testimonials-swiper {
+    display: block;
+    position: relative;
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  .testimonials-swiper__header {
+    display: grid;
+    grid-template-columns: 2fr;
+    gap: var(--testimonials-slide-gap, 0px);
+    padding-inline: clamp(1.5rem, 3.2vw, 3rem);
+    margin-block-end: 1.25rem;
+    color: var(--color-foreground);
+    text-align: center;
+  }
+
+  .testimonials-swiper__heading {
+    padding: 0 clamp(1.5rem,3.2vw,3rem);
+    grid-column: 1;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-family: var(--font-heading--family);
+    font-style: var(--font-heading--style);
+    font-weight: var(--font-heading--weight);
+  }
+
+  .testimonials-swiper__viewport {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .testimonials-swiper__track {
+    display: flex;
+    width: 100%;
+    transition: transform 420ms ease;
+    will-change: transform;
+  }
+
+  .testimonials-swiper__slide {
+    flex: 0 0 100%;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .testimonials-card {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: var(--testimonials-slide-gap, 0px);
+    color: var(--color-foreground);
+    overflow: hidden;
+    width: 100%;
+    min-width: 0;
+    min-height: 520px;
+    padding: 3rem;
+    box-sizing: border-box;
+  }
+
+  .testimonials-card__quote {
+    padding: 0 clamp(1.5rem, 3.2vw, 3rem);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .testimonials-card__quote-mark {
+    width: 40px;
+    line-height: 0;
+    margin-bottom: 1rem;
+    color: rgb(var(--color-foreground-rgb) / 0.2);
+  }
+
+  .testimonials-card__quote-short {
+    letter-spacing: 0.05em;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+
+  .testimonials-card__quote-short p:first-child {
+    margin-top: 0;
+  }
+
+  .testimonials-card__quote-short p:last-child {
+    margin-bottom: 0;
+  }
+
+  .testimonials-card__cta {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .testimonials-card__cta-link {
+    color: inherit;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+  }
+
+  .testimonials-card__cta-link .svg-wrapper {
+    width: 0.95rem;
+    height: 0.95rem;
+  }
+
+  .testimonials-card__author {
+    margin-top: auto;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-10-25));
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .testimonials-card__author-name {
+    font-family: var(--font-heading--family);
+    font-style: var(--font-heading--style);
+    font-weight: var(--font-heading--weight);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .testimonials-card__author-title {
+    color: var(--color-foreground-muted);
+    font-size: 0.9rem;
+  }
+
+  .testimonials-card__media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    align-self: center;
+    border-radius: 24px;
+    overflow: hidden;
+  }
+
+  .testimonials-card__media::after {
+    content: '';
+    position: absolute;
+    inset: clamp(0.5rem, 1.1vw, 0.9rem);
+    border: 1px solid var(--color-primary-button-background);
+    border-radius: 24px;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .testimonials-card__image {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    border-radius: 24px;
+  }
+
+  .testimonials-swiper__navigation {
+    position: absolute;
+    inset-inline-end: clamp(1.5rem, 3.2vw, 3rem);
+    inset-block-end: clamp(1.5rem, 3.2vw, 3rem);
+    bottom: 15%;
+    right: 6%;
+    display: flex;
+    gap: clamp(0.75rem, 1vw, 1.25rem);
+    z-index: 2;
+  }
+
+  .testimonials-swiper__nav-button {
+    width: 3rem;
+    aspect-ratio: 1 / 1;
+    height: auto;
+    border-radius: 50%;
+    background-color: var(--color-primary-button-background);
+    color: var(--color-primary-button-text);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .testimonials-swiper__nav-button--prev svg {
+    transform: rotate(180deg);
+  }
+
+  .testimonials-swiper__nav-button svg {
+    width: 12px;
+    height: 8px;
+    display: block;
+  }
+
+  .testimonials-swiper__nav-button:focus-visible,
+  .testimonials-card__cta-link:focus-visible {
+    outline: 2px solid var(--color-foreground);
+    outline-offset: 3px;
+  }
+
+  @media screen and (max-width: 989px) {
+    .testimonials-card__quote-short{
+      padding-bottom: 24px;
+
+    }
+    .testimonials-card {
+      grid-template-columns: 1fr;
+      min-height: auto;
+      padding: 0;
+    }
+
+    .testimonials-swiper__header {
+      grid-template-columns: 1fr;
+    }
+
+    .testimonials-card__quote {
+      border-right: 0;
+      padding: clamp(1.5rem, 3.2vw, 3rem);
+    }
+
+    .testimonials-card__media {
+      margin-inline: clamp(1.5rem, 3.2vw, 3rem);
+      width: auto;
+    }
+
+    .testimonials-swiper__navigation {
+      bottom: 15%;
+      right: 10%;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.product_testimonials",
+  "tag": "section",
+  "class": "section-testimonials",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Slides are pulled from the product metafield custom.product_testimonials (list of testimonial metaobjects)."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Kind Words. Poured Generously"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "info": "Shown on slides that have a link.",
+      "default": "Read full testimonial"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_in_new_tab",
+      "label": "t:settings.open_new_tab",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:settings.width",
+      "options": [
+        { "value": "page-width", "label": "t:options.page" },
+        { "value": "full-width", "label": "t:options.full" }
+      ],
+      "default": "full-width"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-cfa9c273-456f-45a2-b18d-d73976dc71f5"
+    },
+    {
+      "type": "range",
+      "id": "corner_radius",
+      "label": "t:settings.corner_radius",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "slide_gap",
+      "label": "t:settings.gap",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "t:settings.auto_rotate_slides",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "t:settings.speed",
+      "min": 3,
+      "max": 8,
+      "step": 1,
+      "unit": "s",
+      "default": 4,
+      "visible_if": "{{ section.settings.autoplay }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.product_testimonials",
+      "category": "t:categories.storytelling",
+      "settings": {
+        "heading": "Kind Words. Poured Generously",
+        "section_width": "full-width",
+        "color_scheme": "scheme-cfa9c273-456f-45a2-b18d-d73976dc71f5",
+        "corner_radius": 0,
+        "slide_gap": 0,
+        "autoplay": false,
+        "autoplay_speed": 4,
+        "padding-block-start": 60,
+        "padding-block-end": 0
+      }
+    }
+  ]
+}
+{% endschema %}

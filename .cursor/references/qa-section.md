@@ -19,6 +19,7 @@ Build a dedicated `qa` section that combines a featured person intro with FAQ-st
 
 ## Implementation Notes
 - Implemented as a standalone section: `sections/qa.liquid`.
+- **Metafield-driven sibling:** `sections/product-faq.liquid` uses the same accordion markup/classes but pulls rows from the product metafield `custom.product_faqs` (list of FAQ metaobjects with `question` and `answer` fields, accessed via `.value` / `metafield_tag`). Renders nothing when the metafield is empty; restricted to product templates via `enabled_on`. Reusing global `.accordion`/`.details` classes triggers benign theme-check "class may be defined outside the scope" warnings.
 - Uses native `<details>/<summary>` via `accordion-custom` for accessible accordion behavior.
 - **Only one row open at a time** (`single_open`, default on): parent `.accordion[data-single-open]`; logic in `assets/accordion-custom.js`. Sibling closes use `.accordion-custom--closing` for a ~0.38s height/opacity transition (`--accordion-close-duration` on `.accordion[data-single-open]`).
 - Chevron indicator is drawn with CSS and rotates for open state.

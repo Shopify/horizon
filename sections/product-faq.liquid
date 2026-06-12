@@ -1,0 +1,228 @@
+{% liquid
+  assign faqs = product.metafields.custom.product_faqs.value
+  assign faq_count = faqs.size
+  assign section_width_class = 'section--' | append: section.settings.section_width
+%}
+
+{% if faq_count > 0 %}
+  <div class="section-background color-{{ section.settings.color_scheme }}"></div>
+
+  <section
+    class="product-faq section spacing-style {{ section_width_class }} color-{{ section.settings.color_scheme }}"
+    style="{% render 'spacing-padding', settings: section.settings %}"
+  >
+    <div class="product-faq__inner">
+      {% if section.settings.heading != blank %}
+        <h2 class="product-faq__heading">{{ section.settings.heading | escape }}</h2>
+      {% endif %}
+
+      {% if section.settings.description != blank %}
+        <div class="product-faq__description rte">
+          {{ section.settings.description }}
+        </div>
+      {% endif %}
+
+      <div
+        class="product-faq__accordion accordion accordion--{{ section.id }} accordion--{{ section.settings.accordion_icon | default: 'caret' }} border-style accordion--dividers"
+        {% if section.settings.single_open != false %}
+          data-single-open
+        {% endif %}
+        style="
+          --summary-font-family: var(--font-h5--family);
+          --summary-font-style: var(--font-h5--style);
+          --summary-font-weight: var(--font-h5--weight);
+          --summary-font-size: var(--font-h5--size);
+          --summary-font-line-height: var(--font-h5--line-height);
+          --summary-font-case: var(--font-h5--case);
+          --border-width: 1px;
+          --border-style: none;
+          --border-color: rgb(var(--color-border-rgb) / 1);
+          --border-radius: 0px;
+        "
+      >
+        {% for faq in faqs %}
+          {% liquid
+            assign open_row = false
+            if forloop.first and section.settings.open_first
+              assign open_row = true
+            endif
+          %}
+          <accordion-custom
+            {% if open_row %}
+              open-by-default-on-desktop
+              open-by-default-on-mobile
+            {% endif %}
+          >
+            <details
+              class="details"
+              data-testid="accordion-details"
+              {% if open_row %}
+                open
+              {% endif %}
+            >
+              <summary class="details__header h5">
+                {{ faq.question.value | escape }}
+                <span class="svg-wrapper icon-caret icon-animated">
+                  {{- 'icon-caret.svg' | inline_asset_content -}}
+                </span>
+                <span class="svg-wrapper icon-plus">
+                  {{- 'icon-plus.svg' | inline_asset_content -}}
+                </span>
+              </summary>
+              <div class="details-content">
+                <div class="rte">{{ faq.answer | metafield_tag }}</div>
+              </div>
+            </details>
+          </accordion-custom>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+{% stylesheet %}
+  .product-faq__inner {
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* Match the 32px flex gap used by the block-based FAQ section on product.json */
+  .product-faq__heading {
+    margin: 0 0 32px;
+    max-width: 40rem;
+  }
+
+  .product-faq__description {
+    max-width: 46rem;
+    margin-block-end: 32px;
+  }
+
+  .product-faq__description p {
+    margin: 0;
+  }
+
+  .product-faq__accordion .details-content .rte {
+    max-width: 60rem;
+  }
+
+  .product-faq__accordion .details-content .rte p:first-child {
+    margin-block-start: 0;
+  }
+
+  .product-faq__accordion .details-content .rte p:last-child {
+    margin-block-end: 0;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.product_faq",
+  "tag": "section",
+  "class": "section-product-faq",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Questions are pulled from the product metafield custom.product_faqs (list of FAQ metaobjects)."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Discover Our Natural Approach to Well-Being"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Text",
+      "default": "<p>We answer your top questions about our natural, mood-enhancing, and sustainable products.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "single_open",
+      "label": "Only one row open at a time",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "open_first",
+      "label": "Open first question by default",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "accordion_icon",
+      "label": "t:settings.icon",
+      "options": [
+        {
+          "value": "caret",
+          "label": "t:options.caret"
+        },
+        {
+          "value": "plus",
+          "label": "t:options.plus"
+        }
+      ],
+      "default": "caret"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:settings.width",
+      "options": [
+        { "value": "page-width", "label": "t:options.page" },
+        { "value": "full-width", "label": "t:options.full" }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 100
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.product_faq",
+      "category": "t:categories.text",
+      "settings": {
+        "heading": "Discover Our Natural Approach to Well-Being",
+        "description": "<p>We answer your top questions about our natural, mood-enhancing, and sustainable products.</p>",
+        "single_open": true,
+        "open_first": true,
+        "accordion_icon": "caret",
+        "section_width": "page-width",
+        "padding-block-start": 100,
+        "padding-block-end": 100
+      }
+    }
+  ]
+}
+{% endschema %}

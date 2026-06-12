@@ -900,6 +900,23 @@
         "padding-block-end": 0
       }
     },
+    "product_testimonials_main": {
+      "type": "product-testimonials",
+      "name": "t:names.product_testimonials",
+      "settings": {
+        "heading": "Kind Words. Poured Generously",
+        "cta_label": "Read full testimonial",
+        "open_in_new_tab": true,
+        "section_width": "full-width",
+        "color_scheme": "scheme-cfa9c273-456f-45a2-b18d-d73976dc71f5",
+        "corner_radius": 0,
+        "slide_gap": 0,
+        "autoplay": false,
+        "autoplay_speed": 4,
+        "padding-block-start": 60,
+        "padding-block-end": 0
+      }
+    },
     "section_mFnCfm": {
       "type": "section",
       "blocks": {
@@ -1317,6 +1334,21 @@
         "padding-block-end": 100
       }
     },
+    "product_faq_main": {
+      "type": "product-faq",
+      "name": "t:names.product_faq",
+      "settings": {
+        "heading": "Discover Our Natural Approach to Well-Being",
+        "description": "<p>We answer your top questions about our natural,  mood-enhancing, and sustainable products.</p>",
+        "single_open": true,
+        "open_first": true,
+        "accordion_icon": "caret",
+        "section_width": "page-width",
+        "color_scheme": "scheme-1",
+        "padding-block-start": 100,
+        "padding-block-end": 100
+      }
+    },
     "column_callouts_ErKxaN": {
       "type": "column-callouts",
       "blocks": {
@@ -1370,7 +1402,9 @@
     "section_3YqBWc",
     "product_recommendations_qggXJq",
     "testimonials_bb7RDm",
+    "product_testimonials_main",
     "section_mFnCfm",
+    "product_faq_main",
     "column_callouts_ErKxaN"
   ]
 }
