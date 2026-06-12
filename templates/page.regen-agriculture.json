@@ -1884,6 +1884,7 @@
             "image_TgpyiJ": {
               "type": "image",
               "name": "t:names.image",
+              "disabled": true,
               "settings": {
                 "image": "shopify://shop_images/Mask_group_22.png",
                 "link": "",
@@ -1908,6 +1909,7 @@
             "image_Mncbmk": {
               "type": "image",
               "name": "t:names.image",
+              "disabled": true,
               "settings": {
                 "image": "shopify://shop_images/Group_1597881109.png",
                 "link": "",
@@ -1933,14 +1935,14 @@
               "type": "image",
               "name": "t:names.image",
               "settings": {
-                "image": "shopify://shop_images/693c2a1f8ca87da327ef969a_IMG_9565.jpg",
+                "image": "shopify://shop_images/8385453e-58c5-43fd-88a3-69bf9cb0b1d0.png",
                 "link": "",
                 "border": "none",
                 "border_width": 1,
                 "border_opacity": 100,
                 "border_radius": 16,
                 "image_border_padding": 8,
-                "image_ratio": "landscape",
+                "image_ratio": "adapt",
                 "width": "fill",
                 "custom_width": 100,
                 "width_mobile": "fill",
