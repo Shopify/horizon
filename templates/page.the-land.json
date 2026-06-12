@@ -317,6 +317,29 @@
     "section_6j3trg": {
       "type": "section",
       "blocks": {
+        "image_iPexb3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Picking_botanicals_from_the_Cala_Falc_farm.jpg",
+            "link": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 16,
+            "image_border_padding": 8,
+            "image_ratio": "portrait",
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
         "group_dQw3Ap": {
           "type": "group",
           "settings": {
@@ -432,57 +455,18 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
-            },
-            "button_xtaxPQ": {
-              "type": "button",
-              "name": "t:names.button",
-              "settings": {
-                "label": "Shop Products",
-                "link": "shopify://collections/all",
-                "open_in_new_tab": false,
-                "style_class": "button",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
             }
           },
           "block_order": [
             "text_hbFGYP",
             "text_PrT9gH",
-            "text_YcQaBa",
-            "button_xtaxPQ"
+            "text_YcQaBa"
           ]
-        },
-        "image_zhNWHC": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/Cala_Falc_estate_farm_in_Mallorca.jpg",
-            "link": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 16,
-            "image_border_padding": 8,
-            "image_ratio": "square",
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
         }
       },
       "block_order": [
-        "group_dQw3Ap",
-        "image_zhNWHC"
+        "image_iPexb3",
+        "group_dQw3Ap"
       ],
       "name": "t:names.image_with_text",
       "settings": {
