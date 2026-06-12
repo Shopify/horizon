@@ -148,7 +148,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<p>our team</p>",
+                "text": "<p>the land</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -174,7 +174,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<h4>welcome to our family</h4>",
+                "text": "<h4>Cala Falcó is a family owned 42.5-hectare estate on the dramatic coastline of Mallorca.</h4>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -197,6 +197,218 @@
               "blocks": {}
             },
             "text_mHDp8L": {
+              "type": "text",
+              "settings": {
+                "text": "<p>With a commitment to reversing the biodiversity loss caused by decades of agricultural intensification, Cala Falcó actively regenerates the soil through sustainable farming practices of botanicals. More than a place, it is a living example of how humans can enrich, rather than deplete, the earth.<br/><br/>Cala Falcó and it’s wild botanical farm nurtures and feeds the products that use its powerful natural ingredients. Whether it is our restorative botanical aperitivo ‘Cala Falcó at Spring’ or our Collection of natural holistic wellness products, we harness the power of nature, botanicals and aromacology into each and every one of our Cala Falcó offering.</p>",
+                "width": "100%",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "button_TVCkpH": {
+              "type": "button",
+              "name": "t:names.button",
+              "settings": {
+                "label": "Shop Products",
+                "link": "shopify://collections/all",
+                "open_in_new_tab": false,
+                "style_class": "button",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_Wy7dH9",
+            "text_kHyQTh",
+            "text_mHDp8L",
+            "button_TVCkpH"
+          ]
+        },
+        "image_dUkfJP": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Cala_Falc_estate_farm_in_Mallorca.jpg",
+            "link": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 16,
+            "image_border_padding": 8,
+            "image_ratio": "square",
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "group_6xxhUe",
+        "image_dUkfJP"
+      ],
+      "name": "t:names.image_with_text",
+      "settings": {
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "flex-start",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 64,
+        "show_intro": false,
+        "intro_heading": "",
+        "intro_description": "",
+        "stack_columns_until_1001": false,
+        "heading_min_height": 0,
+        "description_min_height": 0,
+        "show_multicolumn_button": false,
+        "multicolumn_button_label": "Shop now",
+        "multicolumn_button_link": "",
+        "multicolumn_button_open_in_new_tab": false,
+        "show_image_border": false,
+        "image_border_color": "#ffffff",
+        "image_border_position": "inside",
+        "section_width": "small",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 80,
+        "padding-block-end": 40
+      }
+    },
+    "section_Yq3xPb": {
+      "type": "section",
+      "blocks": {
+        "group_Ggyxqw": {
+          "type": "group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 24,
+            "width": "custom",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "text_kP8UAY": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>our team</p>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "h2",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 12,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "text_TEMyeA": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<h4>welcome to our family</h4>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "text_deWHgk": {
               "type": "text",
               "settings": {
                 "text": "<p>A family project bringing together friends, professionals and the wider community around a shared philosophy of inclusion and wellbeing. </p><p>Founded in 1997, Estel de Llevant supports people with mental health conditions through training, employment and social integration. At Cala Falcó, we collaborate closely with their team through essential oil distillation and seasonal harvests, creating a shared path where regeneration extends beyond the land and into the community.</p>",
@@ -223,12 +435,12 @@
             }
           },
           "block_order": [
-            "text_Wy7dH9",
-            "text_kHyQTh",
-            "text_mHDp8L"
+            "text_kP8UAY",
+            "text_TEMyeA",
+            "text_deWHgk"
           ]
         },
-        "image_dUkfJP": {
+        "image_xFy8gd": {
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/The_Cala_Falc_team.jpg",
@@ -253,8 +465,8 @@
         }
       },
       "block_order": [
-        "group_6xxhUe",
-        "image_dUkfJP"
+        "group_Ggyxqw",
+        "image_xFy8gd"
       ],
       "name": "t:names.image_with_text",
       "settings": {
@@ -4650,6 +4862,7 @@
     "main",
     "qa_9wNC4z",
     "section_QRTNQa",
+    "section_Yq3xPb",
     "ingredients_m643zQ",
     "section_qH3t4r",
     "section_UQc4pF",
