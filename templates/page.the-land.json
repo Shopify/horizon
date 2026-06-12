@@ -1099,12 +1099,28 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
+            },
+            "button_4NhC9h": {
+              "type": "button",
+              "name": "t:names.button",
+              "settings": {
+                "label": "Shop now",
+                "link": "shopify://pages/the-team",
+                "open_in_new_tab": false,
+                "style_class": "button",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
             }
           },
           "block_order": [
             "text_kP8UAY",
             "text_TEMyeA",
-            "text_deWHgk"
+            "text_deWHgk",
+            "button_4NhC9h"
           ]
         },
         "image_xFy8gd": {
