@@ -841,65 +841,6 @@
         "padding-block-end": 48
       }
     },
-    "testimonials_bb7RDm": {
-      "type": "testimonials",
-      "blocks": {
-        "testimonial_Rp8a6a": {
-          "type": "testimonial",
-          "settings": {
-            "quote_short": "<p>Cala Falcó is a refined, nuanced non-alcoholic aperitivo, crafted with  passion, exclusivity and remarkable botanical complexity.</p>",
-            "cta_label": "Read full testimonial",
-            "cta_link": "",
-            "open_in_new_tab": true,
-            "image": "shopify://shop_images/CalaFalco_25-119_1.jpg",
-            "author": "Theo Hitchcock",
-            "author_title": "Founder of The Travelcohol-Free Club"
-          }
-        },
-        "testimonial_PprHVA": {
-          "type": "testimonial",
-          "settings": {
-            "quote_short": "<p>Beautifully complex and vibrant, Cala Falcó delivers elegant botanical depth as a sophisticated non-alcoholic aperitivo.</p>",
-            "cta_label": "Read full testimonial",
-            "cta_link": "",
-            "open_in_new_tab": true,
-            "image": "shopify://shop_images/693fea74543b5fdcedb311ba_IMG_9683.jpg",
-            "author": "Claire Warner",
-            "author_title": "Global Non-Alcoholic Drinks Industry Thought Leader"
-          }
-        },
-        "testimonial_jq9aET": {
-          "type": "testimonial",
-          "settings": {
-            "quote_short": "<p>Cala Falcó is light, crisp and wonderfully thirst-quenching, with beautiful notes of rosemary and a subtle sea-water minerality that captures the essence of the Mediterranean. The perfect alcohol free drink.</p>",
-            "cta_label": "Read full testimonial",
-            "cta_link": "",
-            "open_in_new_tab": true,
-            "image": "shopify://shop_images/693c2ff85d73eb5105da6d85_IMG_9567.jpg",
-            "author": "Emily Horner",
-            "author_title": "Non-Alcoholic Drinks Influencer"
-          }
-        }
-      },
-      "block_order": [
-        "testimonial_Rp8a6a",
-        "testimonial_PprHVA",
-        "testimonial_jq9aET"
-      ],
-      "disabled": true,
-      "name": "t:names.testimonials",
-      "settings": {
-        "heading": "Kind Words. Poured Generously",
-        "section_width": "full-width",
-        "color_scheme": "scheme-cfa9c273-456f-45a2-b18d-d73976dc71f5",
-        "corner_radius": 0,
-        "slide_gap": 0,
-        "autoplay": false,
-        "autoplay_speed": 4,
-        "padding-block-start": 60,
-        "padding-block-end": 0
-      }
-    },
     "product_testimonials_main": {
       "type": "product-testimonials",
       "name": "t:names.product_testimonials",
@@ -1402,7 +1343,6 @@
     "main",
     "section_3YqBWc",
     "product_recommendations_qggXJq",
-    "testimonials_bb7RDm",
     "product_testimonials_main",
     "section_mFnCfm",
     "product_faq_main",
