@@ -1292,6 +1292,7 @@
         "text_YBrRnd",
         "accordion_R8LkYk"
       ],
+      "disabled": true,
       "name": "t:names.faq_section",
       "settings": {
         "content_direction": "column",
@@ -1345,8 +1346,8 @@
         "accordion_icon": "caret",
         "section_width": "page-width",
         "color_scheme": "scheme-1",
-        "padding-block-start": 100,
-        "padding-block-end": 100
+        "padding-block-start": 60,
+        "padding-block-end": 0
       }
     },
     "column_callouts_ErKxaN": {
