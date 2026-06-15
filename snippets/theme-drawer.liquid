@@ -1,0 +1,129 @@
+{% doc %}
+  Theme Drawer Infrastructure
+
+  Loads the theme-drawer Web Component and provides global drawer
+  coordination: session restore, page-wrapper squeeze, and state persistence.
+  Rendered once from layout/theme.liquid.
+
+  Individual drawer snippets (e.g. chat-drawer) render their own
+  <theme-drawer> elements. Shared structural CSS is inlined here.
+
+  @example
+  {% render 'theme-drawer' %}
+{% enddoc %}
+
+{% render 'theme-drawer-styles' %}
+
+<script
+  type="module"
+  src="{{ 'theme-drawer.js' | asset_url }}"
+  fetchpriority="low"
+></script>
+
+<script>
+  /* Runs synchronously during HTML parsing — opens the correct drawer on first
+     paint if navigation state was saved, so it renders with the rest of the page. */
+  (function () {
+    var drawerIds = (sessionStorage.getItem('theme-drawer-open') || '').split(',').filter(Boolean);
+    if (!drawerIds.length) return;
+
+    // Only restore on wide viewports (squeeze mode). On narrow viewports the
+    // drawer is a modal overlay — let it start closed after navigation rather
+    // than re-opening a fullscreen dialog the user may have left behind.
+    if (!window.matchMedia('(min-width: 990px)').matches) return;
+
+    var dialogs = [];
+    for (var i = 0; i < drawerIds.length; i++) {
+      var drawer = document.getElementById(drawerIds[i]);
+      if (!drawer) continue;
+
+      drawer.setAttribute('open', '');
+
+      // Set [open] directly so the CSS slide-in applies without triggering
+      // the browser's dialog focusing steps — on wide viewports the drawer is
+      // a sidebar, not a modal, so focus should stay where it is.
+      // The instant class suppresses the slide-in transition for the initial restore.
+      // Set --drawer-stack-order so z-index layering matches the original order.
+      drawer.style.setProperty('--drawer-stack-order', String(i + 1));
+
+      var dialog = drawer.querySelector('dialog');
+      if (dialog) {
+        dialog.setAttribute('open', '');
+        dialog.classList.add('theme-drawer__dialog-instant');
+        dialogs.push(dialog);
+      }
+
+      // Let each drawer type handle its own restore (e.g. shopify-chat mode).
+      // Synchronous dispatch — listeners attached during earlier parsing run immediately.
+      drawer.dispatchEvent(new CustomEvent('theme-drawer:restoring'));
+    }
+
+    // Apply squeeze immediately, bypassing the margin transition.
+    // Only squeeze if at least one drawer was actually restored — saved
+    // drawer IDs may not exist on every page (e.g. cart-drawer on /cart).
+    var pageWrapper = document.querySelector('.page-wrapper');
+    if (pageWrapper && dialogs.length > 0) {
+      pageWrapper.style.transition = 'none';
+      pageWrapper.classList.add('page-wrapper--drawer-open');
+    }
+
+    // Re-enable transitions after one paint so the instant state is rendered first.
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        if (pageWrapper) pageWrapper.style.transition = '';
+        for (var j = 0; j < dialogs.length; j++) {
+          dialogs[j].classList.remove('theme-drawer__dialog-instant');
+        }
+      });
+    });
+  })();
+</script>
+
+<script
+  type="module"
+>
+  const pageWrapper = document.querySelector('.page-wrapper');
+  const squeezeQuery = window.matchMedia('(min-width: 990px)');
+
+  // ── Squeeze coordination ──
+  // Listens to all drawers. Only squeezes on wide viewports.
+  document.addEventListener('theme-drawer:open', () => {
+    if (squeezeQuery.matches) {
+      pageWrapper?.classList.add('page-wrapper--drawer-open');
+    }
+  });
+
+  document.addEventListener('theme-drawer:close', () => {
+    const openDrawer = document.querySelector('theme-drawer[open]');
+    if (!openDrawer) {
+      pageWrapper?.classList.remove('page-wrapper--drawer-open');
+    }
+  });
+
+  squeezeQuery.addEventListener('change', () => {
+    const openDrawer = document.querySelector('theme-drawer[open]');
+    pageWrapper?.classList.toggle('page-wrapper--drawer-open', Boolean(openDrawer) && squeezeQuery.matches);
+  });
+
+  // ── State persistence ──
+  // Store open drawer IDs sorted by their visual stack order so
+  // the restore script can recreate the same z-index layering.
+  function persistDrawerState() {
+    const openDrawers = Array.from(document.querySelectorAll('theme-drawer[open]:not([no-persist])'));
+    if (!openDrawers.length) {
+      sessionStorage.removeItem('theme-drawer-open');
+      return;
+    }
+
+    openDrawers.sort((a, b) => {
+      const orderA = Number(a.style.getPropertyValue('--drawer-stack-order') || 0);
+      const orderB = Number(b.style.getPropertyValue('--drawer-stack-order') || 0);
+      return orderA - orderB;
+    });
+
+    sessionStorage.setItem('theme-drawer-open', openDrawers.map((d) => d.id).join(','));
+  }
+
+  document.addEventListener('theme-drawer:open', persistDrawerState);
+  document.addEventListener('theme-drawer:close', persistDrawerState);
+</script>

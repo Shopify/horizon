@@ -66,7 +66,7 @@
     "view_pricing_info": "Fiyatlandırma bilgilerini görüntüle",
     "slideshow": "Slayt gösterisi",
     "header_navigation_label": "Birincil",
-    "home_logo_alt": "{{ store_name }} – Ana Sayfa",
+    "home_logo_alt": "{{ store_name }} ana sayfası",
     "active_filters": "Etkin filtreler:",
     "featured_product": "Öne çıkan ürün",
     "product_details": "Ürün ayrıntıları",
@@ -79,14 +79,14 @@
     "add_to_cart": "Sepete ekle",
     "clear_all": "Tümünü temizle",
     "remove": "Kaldır",
-    "view_in_your_space": "Kendi alanınızda görüntüleyin",
+    "view_in_your_space": "Alanınızda görüntüleyin",
     "show_filters": "Filtrele",
     "clear": "Temizle",
     "continue_shopping": "Alışverişe devam et",
     "log_in_html": "Hesabınız var mı? Daha hızlı ödeme yapmak için <a href=\"{{ link }}\">oturum açın</a>.",
     "see_items": {
       "one": "{{ count }} ürün görüntüle",
-      "other": "{{ count }} ürün görüntüle"
+      "other": "{{ count }} ürünü gör"
     },
     "view_all": "Tümünü görüntüle",
     "add": "Ekle",
@@ -213,7 +213,7 @@
     "taxes_included_shipping_at_checkout_with_policy_without_discounts_html": "Vergiler dahil. Kargo, ödeme sayfasında hesaplanır.",
     "taxes_included_shipping_at_checkout_without_policy_without_discounts": "Vergiler dahil. Kargo, ödeme sayfasında hesaplanır.",
     "wrong_password": "Yanlış parola",
-    "view_more_details": "Daha fazla ayrıntı görüntüle",
+    "view_more_details": "Daha fazla bilgi görüntüle",
     "powered_by": "Bu mağaza için destek sağlayan:",
     "store_owner_link_html": "Mağaza sahibi misiniz? <a href=\"{{ link }}\">Buradan oturum açın</a>",
     "shipping_discount_error": "Kargo indirimleri, adres eklendikten sonra ödeme sayfasında gösterilir",
@@ -229,7 +229,7 @@
       "one": "{{ count }} kaldı",
       "other": "{{ count }} kaldı"
     },
-    "recipient_form_send_to": "Şuraya gönder:",
+    "recipient_form_send_to": "Şuraya gönder",
     "recipient_form_email_label": "Alıcının e-posta adresi",
     "recipient_form_email_label_my_email": "E-posta adresim",
     "recipient_form_email_address": "Alıcı e-posta adresi",
@@ -309,7 +309,7 @@
     }
   },
   "fields": {
-    "separator": "-"
+    "separator": "ile"
   },
   "placeholders": {
     "password": "Parola",

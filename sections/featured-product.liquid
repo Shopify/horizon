@@ -5,19 +5,26 @@
 {%- liquid
   assign product = section.settings.product
   assign gallery_aspect_ratio = product.featured_media.preview_image.aspect_ratio | default: 1
+
+  if section.settings.background_color != blank
+    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  endif
 -%}
 {% render 'quick-add-styles' %}
 {% render 'quick-add-modal-styles' %}
+{% render 'variant-picker-styles' %}
 {% render 'buy-buttons-styles' %}
 {% render 'product-badges-styles' %}
 
-<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div
+  class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+></div>
 <div
   class="
     featured-product-section
     section
     section--full-width
-    color-{{ section.settings.color_scheme }}
+    {% if section.settings.background_color != blank %}color-custom-{{ section.id }}{% endif %}
   "
   style="--gallery-aspect-ratio: {{ gallery_aspect_ratio }};"
   data-testid="featured-product-{{ section.id }}"
@@ -127,10 +134,10 @@
       "default": "media-left"
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:settings.color_scheme",
-      "default": "scheme-1"
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "placeholder": "t:settings.default"
     },
     {
       "type": "header",
@@ -161,9 +168,7 @@
     {
       "name": "t:names.featured_product",
       "category": "t:categories.products",
-      "settings": {
-        "color_scheme": "scheme-3"
-      },
+      "settings": {},
       "blocks": {
         "media": {
           "type": "_media-without-appearance",

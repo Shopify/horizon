@@ -66,7 +66,7 @@
     "view_pricing_info": "Näytä hinnoittelutiedot",
     "slideshow": "Diaesitys",
     "header_navigation_label": "Ensisijainen",
-    "home_logo_alt": "{{ store_name }} – Koti",
+    "home_logo_alt": "{{ store_name }} - Koti",
     "active_filters": "AKtiiviset suodattimet:",
     "product_details": "Tuotetiedot",
     "show_product_details": "Näytä tuotteen {{ product_name }} tuotetiedot",
@@ -79,7 +79,7 @@
     "add_to_cart": "Lisää ostoskoriin",
     "clear_all": "Tyhjennä kaikki",
     "remove": "Poista",
-    "view_in_your_space": "Näytä omassa tilassasi",
+    "view_in_your_space": "Tarkastele tilassasi",
     "show_filters": "Suodata",
     "clear": "Tyhjennä",
     "continue_shopping": "Jatka ostoksia",
@@ -213,7 +213,7 @@
     "taxes_included_shipping_at_checkout_with_policy_without_discounts_html": "Sisältää verot. Toimituskulut lasketaan kassalla.",
     "taxes_included_shipping_at_checkout_without_policy_without_discounts": "Sisältää verot. Toimituskulut lasketaan kassalla.",
     "wrong_password": "Väärä salasana",
-    "view_more_details": "Katso lisätietoja",
+    "view_more_details": "Näytä lisätiedot",
     "inventory_low_stock": "Varasto vähissä",
     "inventory_in_stock": "Varastossa",
     "inventory_out_of_stock": "Loppunut varastosta",
@@ -229,7 +229,7 @@
     "shipping_discount_error": "Toimitusalennukset näytetään kassalla osoitteen lisäämisen jälkeen",
     "discount_code_error": "Alennuskoodin lisääminen ostoskoriisi ei onnistu",
     "shipping_policy": "Toimituskulut lasketaan kassalla.",
-    "recipient_form_send_to": "Lähetä:",
+    "recipient_form_send_to": "Vastaanottaja",
     "recipient_form_email_label": "Vastaanottajan sähköpostiosoite",
     "recipient_form_email_label_my_email": "Oma sähköpostiosoite",
     "recipient_form_email_address": "Vastaanottajan sähköpostiosoite",
@@ -318,7 +318,7 @@
     }
   },
   "fields": {
-    "separator": "-"
+    "separator": "–"
   },
   "blogs": {
     "article": {

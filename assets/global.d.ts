@@ -71,3 +71,54 @@ declare global {
     readonly deviceMemory?: number;
   }
 }
+
+/** Augment ProductSelectEvent detail with Horizon-specific fields */
+declare module '@shopify/events' {
+  interface ProductSelectPayloadDetail {
+    optionValueId?: string;
+  }
+  interface ProductSelectResultDetail {
+    html: Document;
+    productId: string;
+    newProduct?: { id: string; url: string };
+    sourceId: string;
+    resource?: {
+      id?: string;
+      title?: string;
+      sku?: string;
+      available?: boolean;
+      price?: number;
+      featured_media?: {
+        preview_image?: {
+          src?: string;
+        };
+      };
+      [k: string]: unknown;
+    };
+  }
+}
+
+/** Augment CartErrorEvent detail with Horizon-specific fields */
+declare module '@shopify/events' {
+  interface CartErrorPayloadDetail {
+    errors?: Record<string, string[]>;
+  }
+}
+
+/** Augment CartDiscountUpdateEvent result detail with Horizon-specific fields */
+declare module '@shopify/events' {
+  interface CartDiscountUpdateResultDetail {
+    sections?: Record<string, string>;
+  }
+}
+
+/** Augment CartLinesUpdateEvent result detail with Horizon-specific fields */
+declare module '@shopify/events' {
+  interface CartLinesUpdateResultDetail {
+    sections?: Record<string, string>;
+    didError?: boolean;
+    source?: string;
+    sourceId?: string;
+    itemCount?: number;
+  }
+}

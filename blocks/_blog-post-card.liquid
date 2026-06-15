@@ -1,7 +1,21 @@
 {%- assign block_settings = block.settings -%}
 
+{% liquid
+  if block_settings.background_color != blank
+    render 'contrast-override', background_color: block_settings.background_color, section_id: block.id
+  endif
+%}
+
+{% if block_settings.background_color != blank %}
+  {% style %}
+    blog-posts-list[section-id="{{ section.id }}"] .blog-post-item {
+      --color-background: {{ block_settings.background_color }};
+    }
+  {% endstyle %}
+{% endif %}
+
 <div
-  class="blog-post-card"
+  class="blog-post-card{% if block_settings.background_color != blank %} color-custom-{{ block.id }}{% endif %}"
   style="--text-align: {{ block_settings.alignment }}"
 >
   {% if article.image %}
@@ -10,6 +24,7 @@
 
   <div class="blog-post-card__content">
     <a
+      class="blog-post-card__title-link"
       href="{{ article.url }}"
       data-testid="blog-post-link"
     >
@@ -51,6 +66,12 @@
     flex-direction: column;
   }
 
+  .blog-post-item--horizontal .blog-post-card__title-link .spacing-style,
+  .blog-post-item--horizontal .blog-post-details,
+  .blog-post-item--horizontal .blog-post-card__content-text {
+    padding-inline-start: 0;
+  }
+
   .blog-post-item .blog-post-card__image-container,
   .blog-post-item .blog-post-card__content {
     width: 100%;
@@ -74,19 +95,19 @@
     text-wrap: pretty;
     text-decoration: none;
     padding-block-start: 0.75rem;
+    color: var(--color-foreground);
   }
 
-  .blog-post-card__content a:hover,
-  .blog-post-card__content a:hover [style*='--color: var(--color-primary)'] {
-    color: var(--color-primary-hover);
+  .blog-post-card__content a:hover {
+    color: var(--color-foreground-subdued);
   }
 
-  .blog-post-card__content a:hover [style*='--color: var(--color-foreground-heading)'] {
-    color: rgb(var(--color-foreground-heading-rgb) / var(--opacity-subdued-text));
-  }
+  a.blog-post-card__title-link {
+    color: var(--color-foreground);
 
-  .blog-post-card__content a:hover [style*='--color: var(--color-foreground)'] {
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+    &:hover {
+      color: var(--color-foreground-subdued);
+    }
   }
 {% endstylesheet %}
 
@@ -99,6 +120,12 @@
       "id": "alignment",
       "label": "t:settings.alignment",
       "default": "left"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "placeholder": "t:settings.default"
     }
   ]
 }

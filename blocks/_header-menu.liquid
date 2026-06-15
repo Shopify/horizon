@@ -7,6 +7,7 @@
 
 {% liquid
   assign block_settings = block.settings
+  assign effective_submenu_color = block_settings.background_color | default: settings.page_background_color
 %}
 
 {% case variant %}
@@ -17,13 +18,23 @@
       data-hydration-key="header-drawer-mobile"
       {{ block.shopify_attributes }}
     >
-      {% render 'header-drawer', linklist: block_settings.menu, data_header_drawer_type: 'mobile-drawer', block: block, section: section %}
+      {% render 'header-drawer',
+        linklist: block_settings.menu,
+        data_header_drawer_type: 'mobile-drawer',
+        block: block,
+        section: section
+      %}
     </div>
 
   {% when 'navigation_bar' %}
     {% if block_settings.navigation_bar == true %}
+      {% render 'contrast-override',
+        background_color: block_settings.background_color_navigation_bar,
+        text_color: block_settings.text_color_navigation_bar,
+        section_id: block.id
+      %}
       <div
-        class="menu-list menu-list--mobile{% if transparent == blank %} color-{{ block_settings.color_scheme_navigation_bar }}{% endif %}"
+        class="menu-list menu-list--mobile{% if transparent == blank %} color-custom-{{ block.id }}{% endif %}"
         style="--menu-horizontal-gap: 15px; --mobile-nav-margin: auto;"
         data-hydration-key="header-menu-mobile-navigation-bar"
       >
@@ -55,18 +66,21 @@
       assign block_settings = block.settings
       assign menu_content_type = block_settings.menu_style | default: 'text'
       assign image_border_radius = block_settings.image_border_radius
-      assign color_scheme_classes = ''
-      assign color_scheme_setting_id = 'color_scheme_' | append: section.settings.menu_row
-      assign current_color_scheme = block_settings.color_scheme
-      assign parent_color_scheme = section.settings[color_scheme_setting_id]
 
-      if parent_color_scheme.id != current_color_scheme.id
-        assign color_scheme_classes = ' color-' | append: current_color_scheme
+      render 'contrast-override', background_color: block_settings.background_color, text_color: block_settings.text_color, section_id: block.id
+
+      assign background_color_classes = ''
+      assign background_color_setting_id = 'background_color_' | append: section.settings.menu_row
+      assign current_background_color = block_settings.background_color | default: settings.page_background_color
+      assign parent_background_color = section.settings[background_color_setting_id] | default: settings.page_background_color
+
+      if parent_background_color != current_background_color or block_settings.text_color != blank
+        assign background_color_classes = ' color-custom-' | append: block.id
       endif
 
       # Check if header and menu colors match. This is used to apply different padding styles in css
-      if parent_color_scheme.settings.background.rgb == current_color_scheme.settings.background.rgb
-        assign color_scheme_classes = color_scheme_classes | append: ' color-scheme-matches-parent'
+      if parent_background_color.rgb == current_background_color.rgb
+        assign background_color_classes = background_color_classes | append: ' background-matches-parent'
       endif
 
       if block_settings.menu_style == 'featured_collections'
@@ -103,7 +117,7 @@
             <span class="menu-list__link-title">{{- link.title -}}</span>
           </a>
           {%- if link.links != blank -%}
-            <div class="menu-list__submenu{{ color_scheme_classes }}" ref="submenu[]">
+            <div class="menu-list__submenu{{ background_color_classes }}" ref="submenu[]">
               <div
                 id="submenu-{{ forloop.index }}"
                 class="menu-list__submenu-inner"
@@ -160,7 +174,7 @@
           aria-label="{{ 'accessibility.header_navigation_label' | t }}"
           style="{% render 'menu-font-styles', settings: block_settings, menu_type: 'mega_menu' %}"
         >
-          {% assign class = 'overflow-menu' | append: color_scheme_classes %}
+          {% assign class = 'overflow-menu' | append: background_color_classes %}
           {% render 'overflow-list',
             class: class,
             ref: 'overflowMenu',
@@ -182,7 +196,7 @@
 
 {% style %}
   .header__underlay {
-    --color-submenu: rgb({{ block_settings.color_scheme.settings.background.rgba }});
+    --color-submenu: rgb({{effective_submenu_color.rgb}});
   }
 {% endstyle %}
 {% stylesheet %}
@@ -359,7 +373,8 @@
   }
 
   .overflow-menu {
-    background-color: transparent;
+    /* stylelint-disable-next-line declaration-no-important */
+    background-color: transparent !important;
     padding: var(--focus-outline-size);
     margin: calc(-1 * var(--focus-outline-size));
   }
@@ -374,8 +389,8 @@
   }
 
   .header__row[style*='--border-bottom-width: 0px'] {
-    .menu-list__submenu.color-scheme-matches-parent,
-    .overflow-menu.color-scheme-matches-parent::part(overflow) {
+    .menu-list__submenu.background-matches-parent,
+    .overflow-menu.background-matches-parent::part(overflow) {
       --submenu-padding-block-start: 0px;
     }
   }
@@ -679,6 +694,11 @@
     /* preserves the inherited grid layout when this submenu wrapper is used */
     display: contents;
   }
+
+  /* Hide product cards in collapsed submenus from the IntersectionObserver that fires product view events */
+  .menu-list__list-item:not(:has([aria-expanded='true'])) > .menu-list__submenu product-component {
+    display: none;
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -693,10 +713,24 @@
       "default": "main-menu"
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:settings.color_scheme",
-      "default": "primary"
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:content.menu_appearance_paragraph"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "default": "{{ settings.color_palette.background }}"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:settings.text_color",
+      "placeholder": "t:settings.default"
     },
     {
       "type": "header",
@@ -882,10 +916,17 @@
       "label": "t:settings.navigation_bar"
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme_navigation_bar",
-      "label": "t:settings.navigation_bar_color_scheme",
-      "default": "primary",
+      "type": "color",
+      "id": "background_color_navigation_bar",
+      "label": "t:settings.navigation_bar_background_color",
+      "default": "{{ settings.color_palette.background }}",
+      "visible_if": "{{ block.settings.navigation_bar }}"
+    },
+    {
+      "type": "color",
+      "id": "text_color_navigation_bar",
+      "label": "t:settings.navigation_bar_text_color",
+      "placeholder": "t:settings.default",
       "visible_if": "{{ block.settings.navigation_bar }}"
     },
     {

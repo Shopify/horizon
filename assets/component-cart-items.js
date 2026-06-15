@@ -8,14 +8,16 @@ import {
   startViewTransition,
 } from '@theme/utilities';
 import { morphSection, sectionRenderer } from '@theme/section-renderer';
-import {
-  ThemeEvents,
-  CartUpdateEvent,
-  QuantitySelectorUpdateEvent,
-  CartAddEvent,
-  DiscountUpdateEvent,
-} from '@theme/events';
+import { ThemeEvents, QuantitySelectorUpdateEvent } from '@theme/events';
 import { cartPerformance } from '@theme/performance';
+import {
+  createViewEventElement,
+  CartErrorEvent,
+  CartDiscountUpdateEvent,
+  CartLinesUpdateEvent,
+  CartNoteUpdateEvent,
+  StandardEvents,
+} from '@shopify/events';
 
 /** @typedef {import('./utilities').TextComponent} TextComponent */
 
@@ -29,23 +31,92 @@ import { cartPerformance } from '@theme/performance';
  *
  * @extends {Component<Refs>}
  */
-class CartItemsComponent extends Component {
-  #debouncedOnChange = debounce(this.#onQuantityChange, 300).bind(this);
+export class CartItemsComponent extends createViewEventElement(Component) {
+  #debouncedOnChange = debounce(
+    /** @param {Event} event */
+    (event) => {
+      if (event instanceof QuantitySelectorUpdateEvent) this.#onQuantityChange(event);
+    },
+    300
+  );
+  /** @type {Promise<any> | null} */
+  #pendingCartFetch = null;
+
+  /**
+   * True when the event was dispatched from outside this cart-items-component (e.g.
+   * `Shopify.actions.updateCart(...)` from an external app, or the SFAPI default
+   * handler). Internal dispatchers (cart-discount-component, cart-note) live inside
+   * `this` and either morph the section themselves or don't need a refresh — running
+   * a fallback render in that case double-renders and can clobber form state.
+   * @param {Event} event
+   */
+  #isExternalCartUpdate(event) {
+    return !(event.target instanceof Node) || !this.contains(event.target);
+  }
+
+  /** @param {CartDiscountUpdateEvent} event */
+  #handleDiscountUpdate = (event) => {
+    const external = this.#isExternalCartUpdate(event);
+    event.promise
+      ?.then(({ detail }) => {
+        const sectionsHtml = detail?.sections?.[this.sectionId];
+        if (sectionsHtml) {
+          morphSection(this.sectionId, sectionsHtml, { mode: this.isDrawer ? 'hydration' : 'full' });
+          this.#updateCartQuantitySelectorButtonStates();
+        } else if (external) {
+          // External caller (Shopify.actions.updateCart or SFAPI default handler) didn't
+          // attach sections; refetch so the discount UI reflects the post-mutation cart.
+          // Internal cart-discount-component morphs the section itself — no fallback needed.
+          sectionRenderer.renderSection(this.sectionId, {
+            cache: false,
+            mode: this.isDrawer ? 'hydration' : 'full',
+          });
+        }
+      })
+      .catch((error) => {
+        if (error?.name !== 'AbortError') console.warn('[cart-items] Event promise rejected:', error);
+      });
+  };
+
+  /** @param {CartNoteUpdateEvent} event */
+  #handleNoteUpdate = (event) => {
+    // Internal cart-note dispatches don't need a section refresh — the user typed the
+    // value and the textarea retains it. Only external callers need the UI synced.
+    if (!this.#isExternalCartUpdate(event)) return;
+    event.promise
+      ?.then(({ detail }) => {
+        const sections = /** @type {Record<string, string> | undefined} */ (detail?.sections);
+        const sectionsHtml = sections?.[this.sectionId];
+        if (sectionsHtml) {
+          morphSection(this.sectionId, sectionsHtml, { mode: this.isDrawer ? 'hydration' : 'full' });
+        } else {
+          sectionRenderer.renderSection(this.sectionId, {
+            cache: false,
+            mode: this.isDrawer ? 'hydration' : 'full',
+          });
+        }
+      })
+      .catch((error) => {
+        if (error?.name !== 'AbortError') console.warn('[cart-items] Event promise rejected:', error);
+      });
+  };
 
   connectedCallback() {
     super.connectedCallback();
 
-    document.addEventListener(ThemeEvents.cartUpdate, this.#handleCartUpdate);
-    document.addEventListener(ThemeEvents.discountUpdate, this.handleDiscountUpdate);
+    document.addEventListener(StandardEvents.cartLinesUpdate, this.#handleCartUpdate);
     document.addEventListener(ThemeEvents.quantitySelectorUpdate, this.#debouncedOnChange);
+    document.addEventListener(StandardEvents.cartDiscountUpdate, this.#handleDiscountUpdate);
+    document.addEventListener(StandardEvents.cartNoteUpdate, this.#handleNoteUpdate);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
 
-    document.removeEventListener(ThemeEvents.cartUpdate, this.#handleCartUpdate);
-    document.removeEventListener(ThemeEvents.discountUpdate, this.handleDiscountUpdate);
+    document.removeEventListener(StandardEvents.cartLinesUpdate, this.#handleCartUpdate);
     document.removeEventListener(ThemeEvents.quantitySelectorUpdate, this.#debouncedOnChange);
+    document.removeEventListener(StandardEvents.cartDiscountUpdate, this.#handleDiscountUpdate);
+    document.removeEventListener(StandardEvents.cartNoteUpdate, this.#handleNoteUpdate);
   }
 
   /**
@@ -106,6 +177,7 @@ class CartItemsComponent extends Component {
       const clone = document.importNode(template.content, true);
 
       startViewTransition(() => {
+        document.getElementById('cart-drawer-heading')?.remove();
         this.replaceChildren(clone);
       }, [this.isDrawer ? 'empty-cart-drawer' : 'empty-cart-page']);
 
@@ -158,6 +230,17 @@ class CartItemsComponent extends Component {
 
     cartTotal?.shimmer();
 
+    const deferredUpdatePromise = CartLinesUpdateEvent.createPromise();
+    const lineId = this.refs.cartItemRows[line - 1]?.dataset.key ?? '';
+    this.dispatchEvent(
+      new CartLinesUpdateEvent({
+        action: config.action === 'change' && quantity > 0 ? 'update' : 'remove',
+        context: 'cart',
+        lines: [{ id: lineId, quantity }],
+        promise: deferredUpdatePromise.promise,
+      })
+    );
+
     fetch(`${Theme.routes.cart_change_url}`, fetchConfig('json', { body }))
       .then((response) => {
         return response.text();
@@ -169,6 +252,7 @@ class CartItemsComponent extends Component {
 
         if (parsedResponseText.errors) {
           this.#handleCartError(line, parsedResponseText);
+          deferredUpdatePromise.reject(new Error(parsedResponseText.errors));
           return;
         }
 
@@ -184,34 +268,39 @@ class CartItemsComponent extends Component {
         // Update data-cart-quantity for all matching variants
         this.#updateQuantitySelectors(parsedResponseText);
 
-        this.dispatchEvent(
-          new CartUpdateEvent(parsedResponseText, this.sectionId, {
+        deferredUpdatePromise.resolve({
+          cart: CartLinesUpdateEvent.createCartFromAjaxResponse(parsedResponseText),
+          detail: {
+            sections: parsedResponseText.sections,
+            items: parsedResponseText.items,
             itemCount: newCartItemCount,
             source: 'cart-items-component',
-            sections: parsedResponseText.sections,
-          })
-        );
+            didError: false,
+          },
+        });
 
-        morphSection(this.sectionId, parsedResponseText.sections[this.sectionId], { mode: this.isDrawer ? 'hydration' : 'full' });
+        morphSection(this.sectionId, parsedResponseText.sections[this.sectionId], {
+          mode: this.isDrawer ? 'hydration' : 'full',
+        });
 
         this.#updateCartQuantitySelectorButtonStates();
       })
       .catch((error) => {
         console.error(error);
+        deferredUpdatePromise.reject(error);
+
+        this.dispatchEvent(
+          new CartErrorEvent({
+            error: error?.message || 'Failed to update cart',
+            code: 'SERVICE_UNAVAILABLE',
+          })
+        );
       })
       .finally(() => {
         this.#enableCartItems();
         cartPerformance.measureFromMarker(cartPerformaceUpdateMarker);
       });
   }
-
-  /**
-   * Handles the discount update.
-   * @param {DiscountUpdateEvent} event - The event.
-   */
-  handleDiscountUpdate = (event) => {
-    this.#handleCartUpdate(event);
-  };
 
   /**
    * Handles the cart error.
@@ -235,29 +324,68 @@ class CartItemsComponent extends Component {
 
     cartItemError.textContent = parsedResponseText.errors;
     cartItemErrorContainer.classList.remove('hidden');
+
+    this.dispatchEvent(
+      new CartErrorEvent({
+        error: parsedResponseText.errors || 'Cart update failed',
+        code: 'INVALID',
+      })
+    );
   };
 
   /**
    * Handles the cart update.
    *
-   * @param {DiscountUpdateEvent | CartUpdateEvent | CartAddEvent} event
+   * @param {CartLinesUpdateEvent} event
    */
   #handleCartUpdate = (event) => {
-    if (event instanceof DiscountUpdateEvent) {
-      sectionRenderer.renderSection(this.sectionId, { cache: false });
-      return;
-    }
     if (event.target === this) return;
 
-    const cartItemsHtml = event.detail.data.sections?.[this.sectionId];
-    if (cartItemsHtml) {
-      morphSection(this.sectionId, cartItemsHtml);
+    event.promise
+      ?.then(async ({ detail }) => {
+        const sections = detail?.sections;
+        const cartItemsHtml = sections?.[this.sectionId];
+        // Animate empty → non-empty in the drawer (possible in squeeze mode
+        // where the page is interactive alongside the open drawer). This also
+        // needs the response stylesheet because it adds the cart summary markup.
+        const wasEmptyCartDrawer = this.isDrawer && this.querySelector('[data-cart-drawer-empty]') !== null;
+        /** @type {'hydration' | 'full'} */
+        const mode = this.isDrawer ? 'hydration' : 'full';
+        const morphOptions = {
+          mode,
+          injectStylesheet: wasEmptyCartDrawer,
+        };
 
-      // Update button states for all cart quantity selectors after morph
-      this.#updateCartQuantitySelectorButtonStates();
-    } else {
-      sectionRenderer.renderSection(this.sectionId, { cache: false });
-    }
+        if (cartItemsHtml) {
+          const existingKeys = new Set(this.refs.cartItemRows?.map((row) => row.dataset.key) ?? []);
+
+          if (wasEmptyCartDrawer) {
+            startViewTransition(() => {
+              morphSection(this.sectionId, cartItemsHtml, morphOptions);
+            }, ['fill-cart-drawer']);
+          } else {
+            await morphSection(this.sectionId, cartItemsHtml, morphOptions);
+          }
+
+          // Animate newly added rows (reverse of the remove animation).
+          if (!wasEmptyCartDrawer && !prefersReducedMotion()) {
+            for (const row of this.refs.cartItemRows ?? []) {
+              if (!existingKeys.has(row.dataset.key)) {
+                row.classList.add('adding');
+                onAnimationEnd(row, () => row.classList.remove('adding'));
+              }
+            }
+          }
+
+          // Update button states for all cart quantity selectors after morph
+          this.#updateCartQuantitySelectorButtonStates();
+        } else {
+          sectionRenderer.renderSection(this.sectionId, { cache: false, ...morphOptions });
+        }
+      })
+      .catch((error) => {
+        if (error?.name !== 'AbortError') console.warn('[cart-items] Event promise rejected:', error);
+      });
   };
 
   /**
@@ -307,6 +435,24 @@ class CartItemsComponent extends Component {
     for (const selector of document.querySelectorAll('cart-quantity-selector-component')) {
       /** @type {any} */ (selector).updateButtonStates?.();
     }
+  }
+
+  async fetchCartData() {
+    if (this.#pendingCartFetch) return this.#pendingCartFetch;
+
+    this.#pendingCartFetch = (async () => {
+      const response = await fetch(`${Theme.routes.cart_url}.json`, {
+        headers: { Accept: 'application/json' },
+        credentials: 'same-origin',
+      });
+      if (!response.ok) throw new Error(`Failed to fetch cart: ${response.status} ${response.statusText}`);
+      const data = await response.json();
+      return data;
+    })().finally(() => {
+      this.#pendingCartFetch = null;
+    });
+
+    return this.#pendingCartFetch;
   }
 
   /**

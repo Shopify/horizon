@@ -258,18 +258,6 @@ if (window.Shopify?.designMode && !isIOS) {
         open: (el) => el.showDialog(),
       },
       {
-        name: 'cart-drawer',
-        selector: 'cart-drawer-component',
-        matches(el) {
-          return !!el.closest(this.selector);
-        },
-        isOpen: (el) => el.getAttribute('open') != null,
-        open: (el) => {
-          // @ts-ignore
-          el.open();
-        },
-      },
-      {
         name: 'header-drawer',
         selector: 'header-drawer',
         matches(el) {

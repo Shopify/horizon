@@ -173,16 +173,15 @@
       %}
     </a>
   {% elsif product != blank and product.media.size == 0 %}
-    <product-title class="product-card-gallery__title-placeholder">
+    <div class="product-card-gallery__title-placeholder">
       <a
         class="contents"
-        ref="productTitleLink"
+        ref="cardGalleryLink"
         href="{{ product.selected_or_first_available_variant.url }}"
-        aria-hidden="true"
       >
         <span class="title-text">{{- product.title -}}</span>
       </a>
-    </product-title>
+    </div>
   {% elsif product == blank %}
     {% liquid
       capture placeholder_image
@@ -227,14 +226,20 @@
     background-color: rgb(var(--color-foreground-rgb) / var(--opacity-5));
     aspect-ratio: var(--gallery-aspect-ratio);
     border-radius: var(--product-corner-radius);
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    display: block;
   }
 
-  .product-card-gallery__title-placeholder a {
-    color: var(--color-foreground);
+  .product-card-gallery__title-placeholder .title-text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+    line-clamp: 5;
+    overflow: hidden;
+  }
+
+  .card-gallery[data-image-ratio='landscape'] .product-card-gallery__title-placeholder .title-text {
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
   }
 
   @media screen and (min-width: 750px) {

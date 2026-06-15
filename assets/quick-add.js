@@ -1,9 +1,10 @@
-import { morph } from '@theme/morph';
 import { Component } from '@theme/component';
-import { CartUpdateEvent, ThemeEvents, VariantSelectedEvent } from '@theme/events';
+import { morph } from '@theme/morph';
+import { ThemeEvents } from '@theme/events';
 import { DialogComponent, DialogCloseEvent } from '@theme/dialog';
 import { mediaQueryLarge, isMobileBreakpoint, getIOSVersion } from '@theme/utilities';
 import VariantPicker from '@theme/variant-picker';
+import { StandardEvents, ProductSelectEvent, CartLinesUpdateEvent } from '@shopify/events';
 
 export class QuickAddComponent extends Component {
   /** @type {AbortController | null} */
@@ -49,10 +50,10 @@ export class QuickAddComponent extends Component {
     super.connectedCallback();
 
     mediaQueryLarge.addEventListener('change', this.#closeQuickAddModal);
-    document.addEventListener(ThemeEvents.cartUpdate, this.#handleCartUpdate, {
+    document.addEventListener(StandardEvents.cartLinesUpdate, this.#handleCartUpdate, {
       signal: this.#cartUpdateAbortController.signal,
     });
-    document.addEventListener(ThemeEvents.variantSelected, this.#updateQuickAddButtonState.bind(this));
+    document.addEventListener(StandardEvents.productSelect, this.#handleProductSelectUpdate);
   }
 
   disconnectedCallback() {
@@ -61,8 +62,20 @@ export class QuickAddComponent extends Component {
     mediaQueryLarge.removeEventListener('change', this.#closeQuickAddModal);
     this.#abortController?.abort();
     this.#cartUpdateAbortController.abort();
-    document.removeEventListener(ThemeEvents.variantSelected, this.#updateQuickAddButtonState.bind(this));
+    document.removeEventListener(StandardEvents.productSelect, this.#handleProductSelectUpdate);
   }
+
+  /**
+   * Updates quick-add button state when product variant is selected
+   * @param {ProductSelectEvent} event - The product select event
+   */
+  #handleProductSelectUpdate = (event) => {
+    if (!(event.target instanceof HTMLElement)) return;
+    if (event.target.closest('product-card') !== this.closest('product-card')) return;
+    const productOptionsCount = this.dataset.productOptionsCount;
+    const quickAddButton = productOptionsCount === '1' ? 'add' : 'choose';
+    this.setAttribute('data-quick-add-button', quickAddButton);
+  };
 
   /**
    * Clears the cached content when cart is updated
@@ -234,21 +247,13 @@ export class QuickAddComponent extends Component {
       productDetails?.remove();
     }
 
+    // Sync the view-event-payload attribute and morph children into the modal's product-component
+    const payload = productGrid.getAttribute('view-event-payload') || '';
+    modalContent.setAttribute('view-event-payload', payload);
+
     morph(modalContent, productGrid);
 
     this.#syncVariantSelection(modalContent);
-  }
-
-  /**
-   * Updates the quick-add button state based on whether a swatch is selected
-   * @param {VariantSelectedEvent} event - The variant selected event
-   */
-  #updateQuickAddButtonState(event) {
-    if (!(event.target instanceof HTMLElement)) return;
-    if (event.target.closest('product-card') !== this.closest('product-card')) return;
-    const productOptionsCount = this.dataset.productOptionsCount;
-    const quickAddButton = productOptionsCount === '1' ? 'add' : 'choose';
-    this.setAttribute('data-quick-add-button', quickAddButton);
   }
 
   /**
@@ -281,8 +286,10 @@ class QuickAddDialog extends DialogComponent {
   connectedCallback() {
     super.connectedCallback();
 
-    this.addEventListener(ThemeEvents.cartUpdate, this.handleCartUpdate, { signal: this.#abortController.signal });
-    this.addEventListener(ThemeEvents.variantUpdate, this.#updateProductTitleLink);
+    this.addEventListener(StandardEvents.cartLinesUpdate, this.handleCartUpdate, {
+      signal: this.#abortController.signal,
+    });
+    this.addEventListener(StandardEvents.productSelect, this.#handleProductSelect);
 
     this.addEventListener(DialogCloseEvent.eventName, this.#handleDialogClose);
   }
@@ -295,25 +302,40 @@ class QuickAddDialog extends DialogComponent {
   }
 
   /**
-   * Closes the dialog
-   * @param {CartUpdateEvent} event - The cart update event
+   * Closes the dialog on successful cart update
+   * @param {CartLinesUpdateEvent} event - The cart lines update event
    */
   handleCartUpdate = (event) => {
-    if (event.detail.data.didError) return;
-    this.closeDialog();
+    event.promise
+      ?.then(({ detail }) => {
+        if (detail?.didError) return;
+        this.closeDialog();
+      })
+      .catch((error) => {
+        if (error?.name !== 'AbortError') console.warn('[quick-add] Event promise rejected:', error);
+      });
   };
 
-  #updateProductTitleLink = (/** @type {CustomEvent} */ event) => {
-    const anchorElement = /** @type {HTMLAnchorElement} */ (
-      event.detail.data.html?.querySelector('.view-product-title a')
-    );
-    const viewMoreDetailsLink = /** @type {HTMLAnchorElement} */ (this.querySelector('.view-product-title a'));
-    const mobileProductTitle = /** @type {HTMLAnchorElement} */ (this.querySelector('.product-header a'));
+  /** @param {ProductSelectEvent} event - The product select event */
+  #handleProductSelect = (event) => {
+    // Wait for variant update data
+    event.promise
+      .then(({ detail }) => {
+        if (!detail?.html) return;
 
-    if (!anchorElement) return;
+        const { html } = detail;
+        const anchorElement = /** @type {HTMLAnchorElement} */ (html.querySelector('.view-product-title a'));
+        const viewMoreDetailsLink = /** @type {HTMLAnchorElement} */ (this.querySelector('.view-product-title a'));
+        const mobileProductTitle = /** @type {HTMLAnchorElement} */ (this.querySelector('.product-header a'));
 
-    if (viewMoreDetailsLink) viewMoreDetailsLink.href = anchorElement.href;
-    if (mobileProductTitle) mobileProductTitle.href = anchorElement.href;
+        if (!anchorElement) return;
+
+        if (viewMoreDetailsLink) viewMoreDetailsLink.href = anchorElement.href;
+        if (mobileProductTitle) mobileProductTitle.href = anchorElement.href;
+      })
+      .catch((error) => {
+        if (error?.name !== 'AbortError') console.warn('[quick-add] Event promise rejected:', error);
+      });
   };
 
   #handleDialogClose = () => {

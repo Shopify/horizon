@@ -9,20 +9,38 @@
 
 {% assign block_settings = block.settings %}
 
+{% liquid
+  # Custom styling applies to:
+  #   - dropdowns + buttons when variant_style_class == 'custom' (unselected colors)
+  #   - buttons only when selected_variant_style_class == 'custom' (selected colors)
+  # The 'buttons' label is kept for backwards-compat of the class name.
+  assign has_custom_variant_buttons = false
+  if block_settings.variant_style_class == 'custom'
+    assign has_custom_variant_buttons = true
+  endif
+  if block_settings.variant_style == 'buttons' and block_settings.selected_variant_style_class == 'custom'
+    assign has_custom_variant_buttons = true
+  endif
+  assign fieldset_index = 0
+%}
+
 {% unless product_resource.has_only_default_variant %}
-  {% liquid
-    assign button_background_brightness = section.settings.color_scheme.settings.foreground | color_brightness
-    if button_background_brightness < 105
-      assign strikethrough_color_mix = '#000'
-    else
-      assign strikethrough_color_mix = '#fff'
-    endif
-  %}
+  {% if has_custom_variant_buttons %}
+    {% render 'variant-button-custom-styles', block_settings: block_settings, block_id: block.id %}
+  {% endif %}
   <variant-picker
-    class="variant-picker spacing-style variant-picker--{{ block_settings.alignment }}"
-    style="--color-strikethrough-mix: {{ strikethrough_color_mix }}; {% render 'spacing-style', settings: block_settings %}"
+    class="variant-picker spacing-style variant-picker--{{ block_settings.alignment }}{% if has_custom_variant_buttons %} variant-picker--custom-{{ block.id }}{% endif %}"
+    style="
+      {% render 'spacing-style', settings: block_settings %}
+       {% if block_settings.option_label_text_color != blank %}
+        --variant-option-label-color: rgba({{ block_settings.option_label_text_color.rgba }});
+        --variant-option-label-color-subdued: rgba({{ block_settings.option_label_text_color.rgb }} / var(--opacity-subdued-text));
+      {% endif %}
+    "
     data-section-id="{{ section.id }}"
     data-product-id="{{ product_resource.id }}"
+    data-product-handle="{{ product_resource.handle }}"
+    data-product-title="{{ product_resource.title | escape }}"
     data-block-id="{{ block.id }}"
     data-product-url="{{ product_resource.url }}"
     ref="mainVariantPicker"
@@ -69,7 +87,6 @@
             </span>
           </div>
         {%- elsif variant_style == 'swatch' or block_settings.variant_style == 'buttons' -%}
-          {%- assign fieldset_index = forloop.index0 -%}
           <fieldset
             class="variant-option variant-option--buttons{% if variant_style == 'swatch' %} variant-option--swatches{% else %} variant-option--{{ settings.variant_button_width }}{% endif %}"
             data-fieldset-index="{{ fieldset_index }}"
@@ -101,6 +118,7 @@
                   data-fieldset-index="{{ fieldset_index }}"
                   data-input-index="{{ forloop.index0 }}"
                   data-input-id="{{ product_option.position }}-{{ forloop.index0 }}"
+                  data-option-name="{{ product_option.name | escape }}"
                   data-option-value-id="{{ product_option_value.id }}"
                   data-option-available="{{ product_option_value.available }}"
                   data-connected-product-url="{{ product_option_value.product_url }}"
@@ -155,6 +173,7 @@
               {% endstyle %}
             {% endif %}
           </fieldset>
+          {%- assign fieldset_index = fieldset_index | plus: 1 -%}
         {%- elsif block_settings.variant_style == 'dropdowns' -%}
           {%
             # There is an opportunity to build a custom select component that will allow us to style the select element further (animation for dropdown, swatches shown in the dropdown options, etc)
@@ -189,6 +208,7 @@
                   <option
                     value="{{ product_option_value | escape }}"
                     data-input-id="{{ product_option.position }}-{{ forloop.index0 }}"
+                    data-option-name="{{ product_option.name | escape }}"
                     data-option-value-id="{{ product_option_value.id }}"
                     data-variant-id="{{ product_option_value.variant.id }}"
                     data-connected-product-url="{{ product_option_value.product_url }}"
@@ -224,89 +244,4 @@
   </variant-picker>
 {% endunless %}
 
-{% stylesheet %}
-  /* Variant picker container styles - unique to main variant picker */
-  .variant-picker {
-    width: 100%;
-  }
-
-  .variant-picker__form {
-    width: 100%;
-  }
-
-  .variant-picker[data-shopify-visual-preview] {
-    min-width: 300px;
-    padding-inline-start: max(4px, var(--padding-inline-start));
-  }
-
-  /* Dropdown variant option styles */
-  .variant-option__select-wrapper {
-    display: flex;
-    position: relative;
-    border: var(--style-border-width-inputs) solid var(--color-border);
-    border-radius: var(--style-border-radius-inputs);
-    align-items: center;
-    margin-top: var(--margin-2xs);
-    overflow: clip;
-  }
-
-  .variant-option__select-wrapper:has(.swatch) {
-    --variant-picker-swatch-width: 20px;
-    --variant-picker-swatch-height: 20px;
-  }
-
-  .variant-option__select-wrapper:hover {
-    border-color: var(--color-variant-hover-border);
-  }
-
-  .variant-option__select:focus-visible {
-    outline: var(--focus-outline-width) solid currentcolor;
-    outline-offset: var(--focus-outline-offset);
-  }
-
-  .variant-option__select {
-    padding-block: var(--padding-md);
-    padding-inline: var(--padding-lg) calc(var(--padding-lg) + var(--icon-size-2xs));
-    appearance: none;
-    border: 0;
-    width: 100%;
-    margin: 0;
-    cursor: pointer;
-  }
-
-  .variant-option__select-wrapper .icon {
-    position: absolute;
-    right: var(--padding-md);
-    top: 50%;
-    transform: translateY(-50%);
-    width: var(--icon-size-2xs);
-    height: var(--icon-size-2xs);
-    pointer-events: none;
-  }
-
-  .variant-option__select--has-swatch {
-    padding-inline-start: calc((2 * var(--padding-sm)) + var(--variant-picker-swatch-width));
-  }
-
-  .variant-option__select-wrapper .swatch {
-    position: absolute;
-    top: 50%;
-    left: var(--padding-md);
-    transform: translateY(-50%);
-  }
-
-  /* Variant picker alignment modifiers */
-  .variant-picker--center,
-  .variant-picker--center .variant-option {
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-  }
-
-  .variant-picker--right,
-  .variant-picker--right .variant-option {
-    text-align: right;
-    justify-content: right;
-  }
-{% endstylesheet %}
+{% render 'variant-picker-styles' %}

@@ -23,11 +23,22 @@
   if ratio == 0 or ratio == null
     assign ratio = 1
   endif
+
+  render 'contrast-override', background_color: block.settings.slider_bg_color, section_id: block.id
 %}
 
 <comparison-slider-component
-  class="comparison-slider comparison-slider--{{ block.settings.slider_style }} spacing-style size-style border-style{% if block.settings.inherit_color_scheme == false %} color-{{ block.settings.color_scheme }}{% endif %}"
-  style="--ratio: {{ ratio }}; --text-background-color: {{ block.settings.text_background_color }}; --text-corner-radius: {{ block.settings.text_corner_radius }}px; {% render 'spacing-style', settings: block.settings %} {% render 'size-style', settings: block.settings %} {% render 'border-override', settings: block.settings %}"
+  class="comparison-slider comparison-slider--{{ block.settings.slider_style }} spacing-style size-style border-style {% if block.settings.slider_bg_color != blank %} color-custom-{{ block.id }} {% endif %}"
+  style="
+    --ratio: {{ ratio }}; --text-background-color: {{ block.settings.text_background_color }}; --text-corner-radius: {{ block.settings.text_corner_radius }}px;
+    {% if block.settings.slider_bg_color != blank %} --color-background: {{ block.settings.slider_bg_color }};{% endif %}
+    {% if block.settings.slider_handle_color != blank %}
+      --handle-color: {{ block.settings.slider_handle_color }};
+    {% endif %}
+    {% render 'spacing-style', settings: block.settings %}
+    {% render 'size-style', settings: block.settings %}
+    {% render 'border-override', settings: block.settings %}
+  "
   {{ block.shopify_attributes }}
 >
   <div class="comparison-slider__container">
@@ -68,7 +79,12 @@
         {%- endif -%}
 
         {% if block.settings.show_text and block.settings.before_text != blank %}
-          <div class="comparison-slider__text comparison-slider__text--before{% if block.settings.text_background %} comparison-slider__text--with-bg{% endif %}">
+          <div
+            class="comparison-slider__text comparison-slider__text--before{% if block.settings.text_background %} comparison-slider__text--with-bg{% endif %}"
+            {% if block.settings.text_color != blank %}
+              style="--color: {{ block.settings.text_color }}; --color-rgb: {{ block.settings.text_color.rgb }}"
+            {% endif %}
+          >
             <div class="{{ block.settings.text_preset | default: 'h6' }}">{{ block.settings.before_text }}</div>
           </div>
         {% endif %}
@@ -98,7 +114,12 @@
         {%- endif -%}
 
         {% if block.settings.show_text and block.settings.after_text != blank %}
-          <div class="comparison-slider__text comparison-slider__text--after{% if block.settings.text_background %} comparison-slider__text--with-bg{% endif %}">
+          <div
+            class="comparison-slider__text comparison-slider__text--after{% if block.settings.text_background %} comparison-slider__text--with-bg{% endif %}"
+            {% if block.settings.text_color != blank %}
+              style="--color: {{ block.settings.text_color }}; --color-rgb: {{ block.settings.text_color.rgb }}"
+            {% endif %}
+          >
             <div class="{{ block.settings.text_preset | default: 'h6' }}">{{ block.settings.after_text }}</div>
           </div>
         {% endif %}
@@ -305,6 +326,7 @@
     pointer-events: none;
     width: var(--button-size);
     height: var(--button-size);
+    color: var(--handle-color, var(--color-foreground));
     background: var(--color-background);
     border-radius: 50%;
     display: flex;
@@ -526,7 +548,7 @@
       "type": "color",
       "id": "text_background_color",
       "label": "t:settings.background_color",
-      "default": "#FFFFFF",
+      "default": "{{ settings.color_palette.background }}",
       "visible_if": "{{ block.settings.text_background and block.settings.show_text }}"
     },
     {
@@ -538,6 +560,13 @@
       "max": 50,
       "step": 1,
       "visible_if": "{{ block.settings.text_background and block.settings.show_text }}"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:settings.text_color",
+      "default": "{{ settings.color_palette.foreground }}",
+      "visible_if": "{{ block.settings.show_text }}"
     },
     {
       "type": "header",
@@ -651,17 +680,16 @@
       "content": "t:content.appearance"
     },
     {
-      "type": "checkbox",
-      "id": "inherit_color_scheme",
-      "label": "t:settings.inherit_color_scheme",
-      "default": true
+      "type": "color",
+      "id": "slider_bg_color",
+      "label": "t:settings.slider_color",
+      "placeholder": "t:settings.default"
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:settings.color_scheme",
-      "default": "scheme-1",
-      "visible_if": "{{ block.settings.inherit_color_scheme == false }}"
+      "type": "color",
+      "id": "slider_handle_color",
+      "label": "t:settings.slider_inner_color",
+      "placeholder": "t:settings.default"
     },
     {
       "type": "select",
@@ -699,6 +727,13 @@
       "unit": "%",
       "label": "t:settings.opacity",
       "default": 100,
+      "visible_if": "{{ block.settings.border != 'none' }}"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "t:settings.color",
+      "placeholder": "t:settings.default",
       "visible_if": "{{ block.settings.border != 'none' }}"
     },
     {

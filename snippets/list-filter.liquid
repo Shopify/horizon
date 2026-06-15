@@ -109,7 +109,7 @@
       {% unless filter_style == 'vertical' %}
         data-close-on-resize
       {% endunless %}
-      class="facets__inputs facets__panel-content details-content{% if filter_style == 'horizontal' %} color-{{ settings.popover_color_scheme }}{% endif %}"
+      class="facets__inputs facets__panel-content details-content{% if filter_style == 'horizontal' %} color-custom-popover{% endif %}"
       id="facet-inputs-{{ filter.param_name | escape | replace: '.', '-' }}"
     >
       <facet-inputs-component
@@ -282,6 +282,7 @@
                       class="variant-option__button-label variant-option__button-label--has-swatch"
                       on:pointerenter="/prefetchPage"
                       on:pointerleave="/cancelPrefetchPage"
+                      on:pointerdown="/prefetchPageImmediate"
                     >
                       <div
                         class="variant-option__swatch-wrapper"
@@ -373,7 +374,7 @@
                       id: input_id,
                       disabled: is_disabled,
                       inputRef: 'facetInputs[]',
-                      events: 'on:pointerenter="/prefetchPage" on:pointerleave="/cancelPrefetchPage"'
+                      events: 'on:pointerenter="/prefetchPage" on:pointerleave="/cancelPrefetchPage" on:pointerdown="/prefetchPageImmediate"'
                     %}
                   {% endif %}
                 {% endif %}
@@ -412,7 +413,7 @@
                 type="button"
                 on:click="/clearFilter"
                 on:keydown="/clearFilter"
-                class="clear-filter button button-secondary"
+                class="clear-filter button button-unstyled"
               >
                 {{- 'actions.clear' | t -}}
               </button>
@@ -450,11 +451,14 @@
 
   /* Hover state for checked checkboxes - targeting via adjacent sibling */
   .facets .checkbox:not(.checkbox--disabled):hover .checkbox__input:checked + .checkbox__label .icon-checkmark {
-    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-85));
+    background-color: var(--color-foreground-subdued);
   }
 
+  .facets .checkbox:not(.checkbox--disabled) .checkbox__label-text {
+    color: var(--color-foreground-subdued);
+  }
   .facets .checkbox:not(.checkbox--disabled):hover .checkbox__label-text {
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-90));
+    color: var(--color-foreground-rgb);
   }
 
   .facets .checkbox .checkbox__label-text {
@@ -493,6 +497,11 @@
     &:hover {
       --pill-label-border-opacity: 100%;
     }
+  }
+
+  .facets__pill-input:not(:checked) + .facets__pill-label:hover {
+    --pill-label-color-rgb: var(--color-foreground-rgb);
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-5));
   }
 
   .facets__pill-input {

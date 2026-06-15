@@ -7,6 +7,7 @@
   @param {object} children - The children of the product card
   @param {object} [block] - The block object
   @param {number} [product_card_gap] - The gap between the product card children (overrides block settings)
+  @param {string} [product_view_context] - The context in which the product card is being rendered. Used for standard events.
 {%- enddoc -%}
 
 {% assign block_settings = block.settings %}
@@ -52,6 +53,10 @@
   if product.id == empty or product == blank
     assign onboarding = true
   endif
+
+  if block_settings.background_color != blank
+    render 'contrast-override', background_color: block_settings.background_color, text_color: block_settings.text_color, section_id: block.id
+  endif
 %}
 
 <product-card
@@ -68,6 +73,10 @@
   {% if onboarding %}
     data-placeholder="true"
   {% endif %}
+  {%- unless onboarding -%}
+    {% # theme-check-disable-next-line UnknownFilter %}
+    view-event-payload="{{ product | standard_event_data: 'view', context: product_view_context | escape }}"
+  {%- endunless -%}
 >
   <a
     id="{{ product_card_id | md5 }}"
@@ -90,7 +99,7 @@
       spacing-style
       border-style
       gap-style
-      {% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %}
+      {% if block_settings.background_color != blank %} color-custom-{{ block.id }}{% endif %}
     "
     style="
       {% render 'border-override', settings: block_settings %}

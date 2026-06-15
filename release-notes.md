@@ -1,12 +1,23 @@
-# Release Notes - Version 3.5.1
+# Release Notes - Version 4.0.0
 
-Various fixes to translation strings and better support for "Split showcase" section on small screens.
+This release introduces color palettes: a simpler way to manage theme colors used across the theme. It also allows blog post to be more customizable with reorderable blocks.
 
 ## What's Changed
 
+### Added
+
+* [Colors] Added global color palette settings and numerous text and background color settings across blocks and sections.
+* [Blog posts] Blog post now support reorderable theme and app blocks.
+* [Storefront Events & Actions] Added support for app, agent, and AI cart interactions without page reloads.
+
+### Removed
+
+* [Color schemes] Removed global color scheme settings and replaced it with color palette settings.
+
 ### Fixes and improvements
 
-* [Accessibility] Fixed header logo alt text bug caused by translation strings
-* [Performance] Color swatch rendering improvement for combined listing products
-* [Split Showcase] Stop content overlap when blocks wrap on mobile
-* [Collections] Added missing translations strings for price filtering components
+* Improved cart drawer reliability across cart updates.
+* Improved cart and filter drawer accessibility.
+* Improved sticky add-to-cart visibility and sync behavior.
+* Fixed filter drawer persistence and vertical filter display issues.
+* Improved font preloading.

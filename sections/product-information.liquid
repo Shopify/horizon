@@ -38,7 +38,7 @@
     data-default-variant-title="{{ 'products.product.default_title' | t }}"
   >
     <div
-      class="sticky-add-to-cart__bar color-{{ settings.popover_color_scheme }}"
+      class="sticky-add-to-cart__bar color-custom-popover"
       data-stuck="false"
       ref="stickyBar"
       role="region"
@@ -127,7 +127,7 @@
           class="add-to-cart-text"
         >
           {% if current_variant.available %}
-            <span class="svg-wrapper add-to-cart-icon">
+            <span class="svg-wrapper">
               {{- 'icon-add-to-cart.svg' | inline_asset_content -}}
             </span>
           {% endif %}
@@ -166,7 +166,7 @@
 {% endif %}
 
 {% render 'product-information-content',
-  product_media_size: closest.product.media.size,
+  product: closest.product,
   section_id: section.id,
   settings: section.settings,
   media_gallery: media_gallery,
@@ -437,10 +437,10 @@
       "default": true
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:settings.color_scheme",
-      "default": "scheme-1"
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "placeholder": "t:settings.default"
     },
     {
       "type": "header",

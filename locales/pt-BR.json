@@ -67,7 +67,7 @@
     "view_pricing_info": "Ver informações sobre preços",
     "slideshow": "Apresentação de slides",
     "header_navigation_label": "Principal",
-    "home_logo_alt": "{{ store_name }} – Início",
+    "home_logo_alt": "{{ store_name }} - Início",
     "active_filters": "Filtros ativos:",
     "product_details": "Detalhes do produto",
     "show_product_details": "Exibir detalhes do produto {{ product_name }}",
@@ -80,10 +80,10 @@
     "add_to_cart": "Adicionar ao carrinho",
     "clear_all": "Limpar tudo",
     "remove": "Remover",
-    "view_in_your_space": "Ver em seu espaço",
+    "view_in_your_space": "Ver no seu espaço",
     "show_filters": "Filtrar",
     "clear": "Limpar",
-    "continue_shopping": "Voltar à loja",
+    "continue_shopping": "Continuar comprando",
     "log_in_html": "Já tem conta? <a href=\"{{ link }}\">Faça login</a> para finalizar a compra mais rápido.",
     "see_items": {
       "one": "Ver {{ count }} item",
@@ -98,7 +98,7 @@
     "show_more": "Exibir mais",
     "close": "Fechar",
     "more": "Mais",
-    "reset": "Restaurar",
+    "reset": "Reinicializar",
     "zoom": "Zoom",
     "close_dialog": "Fechar caixa de diálogo",
     "back": "Voltar",
@@ -114,7 +114,7 @@
     "sign_up": "Criar conta",
     "open_image_in_full_screen": "Abrir imagem em tela cheia",
     "sort": "Classificar",
-    "show_all_options": "Mostrar todas as opções",
+    "show_all_options": "Exibir todas as opções",
     "open": "Abrir",
     "back_to": "Voltar para {{ title }}",
     "zoom_media": "Mídia de zoom {{ index }}"
@@ -217,7 +217,7 @@
     "taxes_included_shipping_at_checkout_with_policy_without_discounts_html": "Tributos incluídos. Frete calculado no checkout.",
     "taxes_included_shipping_at_checkout_without_policy_without_discounts": "Tributos incluídos. Frete calculado no checkout.",
     "wrong_password": "Senha incorreta",
-    "view_more_details": "Ver mais informações",
+    "view_more_details": "Ver mais detalhes",
     "page_placeholder_title": "Título da página",
     "page_placeholder_content": "Selecione uma página para exibir o conteúdo.",
     "placeholder_image": "Imagem do marcador de posição",
@@ -324,7 +324,7 @@
     }
   },
   "fields": {
-    "separator": "para"
+    "separator": "até"
   },
   "blogs": {
     "article": {

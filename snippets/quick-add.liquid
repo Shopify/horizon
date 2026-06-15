@@ -4,15 +4,12 @@
   @param {object} product - The product object
   @param {string} section_id - The section ID
   @param {object} [block] - The block object
-  @param {string} [color_scheme] - The color scheme to use
 {%- enddoc -%}
 
 {% liquid
   assign product_form_id = 'QuickAdd-ProductForm-' | append: product.id | append: '-' | append: block.id
   assign add_to_cart_text = 'actions.add' | t
   assign choose_options_text = 'actions.choose' | t
-  assign color_scheme = color_scheme | default: settings.quick_add_color_scheme
-
   # Logic to determine which variant to use (matching swatch selection logic from product-card)
   assign variant = product.selected_or_first_available_variant
 
@@ -29,7 +26,7 @@
 %}
 
 <quick-add-component
-  class="quick-add color-{{ color_scheme }} "
+  class="quick-add custom-color-quick-add"
   ref="quickAdd"
   data-product-title="{{ product.title }}"
   data-quick-add-button="{{ quick_add_button }}"

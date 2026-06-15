@@ -1,6 +1,14 @@
 {% assign block_settings = block.settings %}
 {% assign icon_block_class = 'icon-block__media icon-block-' | append: block.id %}
 
+{% if block_settings.icon_color != blank %}
+  {% style %}
+    .icon-block-{{ block.id }} {
+      color: {{ block_settings.icon_color }};
+    }
+  {% endstyle %}
+{% endif %}
+
 {% capture icon %}
   {% render 'icon-or-image',
     icon: block_settings.icon,
@@ -310,6 +318,12 @@
       "id": "open_in_new_tab",
       "label": "t:settings.open_new_tab",
       "default": false
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "t:settings.color",
+      "placeholder": "t:settings.default"
     }
   ],
   "presets": [

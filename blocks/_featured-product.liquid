@@ -23,7 +23,12 @@
   {% endif %}
 {% endcapture %}
 
-{% render 'product-card', children: product_card_children, product: closest.product, product_card_gap: 8 %}
+{% render 'product-card',
+  children: product_card_children,
+  product: closest.product,
+  product_card_gap: 8,
+  product_view_context: 'page'
+%}
 
 {% stylesheet %}
   .featured-product-content-top {

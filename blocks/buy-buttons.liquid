@@ -1,3 +1,4 @@
+{% render 'theme-drawer-styles' %}
 {% liquid
   assign block_settings = block.settings
   assign product = closest.product
@@ -36,6 +37,9 @@
 
 <span
   class="buy-buttons-block buy-buttons-block--{{ block.id }}"
+  {% if block_settings.text_color != blank %}
+    style="--color: {{ block_settings.text_color }}; --color-rgb: {{ block_settings.text_color.rgb  }}"
+  {% endif %}
   {{ block.shopify_attributes }}
 >
   {%- if product != blank -%}
@@ -267,100 +271,113 @@
     data-section-id="{{ section.id }}"
     data-product-url="{{ closest.product.url }}"
     data-variant-id="{{ closest.product.selected_or_first_available_variant.id }}"
-    style="{% render 'spacing-style', settings: block_settings %}"
+    style="
+      {% render 'spacing-style', settings: block_settings %}
+      {% if block_settings.text_color != blank %}
+        --color: {{ block_settings.text_color }};
+        --color-rgb: {{ block_settings.text_color.rgb }}
+      {% endif %}
+    "
     ref="localPickupButton"
   >
     {% if can_add_to_cart %}
-      <dialog-component>
-        <div class="pickup-availability__row">
-          <div class="pickup-availability__column">
-            <span class="svg-wrapper">
-              {% if pick_up_availabilities.first.available %}
-                {{- 'icon-available.svg' | inline_asset_content -}}
-              {% else %}
-                {{- 'icon-unavailable.svg' | inline_asset_content -}}
-              {% endif %}
-            </span>
-          </div>
-          <div class="pickup-availability__column">
+      <div class="pickup-availability__row">
+        <div class="pickup-availability__column">
+          <span class="svg-wrapper">
             {% if pick_up_availabilities.first.available %}
-              <p class="pickup-location__text-sm">
-                {{ 'content.pickup_available_at_html' | t: location: pick_up_availabilities.first.location.name }}
-              </p>
-              <p class="pickup-location__text-xs">
-                {{ 'content.pickup_ready_in' | t: pickup_time: pick_up_availabilities.first.pick_up_time }}
-              </p>
+              {{- 'icon-available.svg' | inline_asset_content -}}
             {% else %}
-              <p class="pickup-location__text-sm">
-                {{ 'content.pickup_not_available' | t }}
-              </p>
+              {{- 'icon-unavailable.svg' | inline_asset_content -}}
             {% endif %}
-            <button
-              on:click="/showDialog"
-              class="button-unstyled pickup-location__button"
-            >
-              {{ 'actions.view_store_information' | t }}
-            </button>
-          </div>
+          </span>
         </div>
-        <dialog
-          ref="dialog"
-          class="dialog-modal dialog-drawer pickup-location__dialog color-{{ settings.drawer_color_scheme }}"
-          scroll-lock
-          aria-labelledby="pickup-dialog-heading"
-          data-testid="pickup-location-dialog"
-        >
-          <h2
-            id="pickup-dialog-heading"
-            class="visually-hidden"
+        <div class="pickup-availability__column">
+          {% if pick_up_availabilities.first.available %}
+            <p class="pickup-location__text-sm">
+              {{ 'content.pickup_available_at_html' | t: location: pick_up_availabilities.first.location.name }}
+            </p>
+            <p class="pickup-location__text-xs">
+              {{ 'content.pickup_ready_in' | t: pickup_time: pick_up_availabilities.first.pick_up_time }}
+            </p>
+          {% else %}
+            <p class="pickup-location__text-sm">
+              {{ 'content.pickup_not_available' | t }}
+            </p>
+          {% endif %}
+          <button
+            on:click="#pickup-drawer-{{ block.id }}/toggle"
+            class="button-unstyled pickup-location__button"
           >
             {{ 'actions.view_store_information' | t }}
-          </h2>
-          <div class="pickup-availability__dialog-row pickup-availability__header-container">
-            <div class="pickup-availability__column">
-              <h4 class="pickup-location__h4">{{ closest.product.title }}</h4>
-              {% unless closest.product.has_only_default_variant %}
-                <p class="pickup-location__text-sm">
-                  {{ closest.product.selected_or_first_available_variant.title }}
-                </p>
-              {% endunless %}
-            </div>
-            <button
-              ref="closeButton"
-              on:click="/closeDialog"
-              class="button button-unstyled close-button pickup-location__close-button"
-              aria-label="{{ 'actions.close_dialog' | t }}"
-            >
-              <span class="svg-wrapper">
-                {{- 'icon-close.svg' | inline_asset_content -}}
-              </span>
-            </button>
-          </div>
-          {% for pick_up_availability in pick_up_availabilities %}
-            <div class="pickup-location__wrapper">
-              <p class="pickup-location__text-bold">{{ pick_up_availability.location.name }}</p>
-              <div class="pickup-location__address-wrapper">
-                <span class="pickup-location__availability-wrapper">
-                  {% if pick_up_availability.available %}
-                    {{- 'icon-available.svg' | inline_asset_content -}}
-                    {% assign pickup_time = pick_up_availability.pick_up_time | downcase %}
-                    {{ 'content.pickup_available_in' | t: pickup_time: pickup_time }}
-                  {% else %}
-                    {{- 'icon-unavailable.svg' | inline_asset_content -}}
-                    {{ 'content.pickup_not_available' | t }}
-                  {% endif %}
-                </span>
-                <address class="pickup-location__address">
-                  {{ pick_up_availability.location.address | format_address }}
-                  {{ pick_up_availability.location.address.phone }}
-                </address>
-              </div>
-            </div>
-          {% endfor %}
-        </dialog>
-      </dialog-component>
+          </button>
+        </div>
+      </div>
     {% endif %}
   </local-pickup>
+
+  {% if can_add_to_cart %}
+    <theme-drawer
+      id="pickup-drawer-{{ block.id }}"
+      class="pickup-drawer"
+      data-skip-node-update
+      no-persist
+    >
+      <dialog
+        ref="panel"
+        class="theme-drawer__dialog color-custom-drawer"
+        aria-labelledby="pickup-dialog-heading-{{ block.id }}"
+        data-testid="pickup-location-dialog"
+      >
+        <h2
+          id="pickup-dialog-heading-{{ block.id }}"
+          class="visually-hidden"
+        >
+          {{ 'actions.view_store_information' | t }}
+        </h2>
+        <div class="theme-drawer__header pickup-availability__header-container">
+          <div class="pickup-availability__column">
+            <h4 class="pickup-location__h4">{{ closest.product.title }}</h4>
+            {% unless closest.product.has_only_default_variant %}
+              <p class="pickup-location__text-sm">
+                {{ closest.product.selected_or_first_available_variant.title }}
+              </p>
+            {% endunless %}
+          </div>
+          <button
+            on:click="#pickup-drawer-{{ block.id }}/close"
+            class="theme-drawer__close-button"
+            type="button"
+            aria-label="{{ 'actions.close' | t }}"
+          >
+            <span class="svg-wrapper">
+              {{- 'icon-close.svg' | inline_asset_content -}}
+            </span>
+          </button>
+        </div>
+        {% for pick_up_availability in pick_up_availabilities %}
+          <div class="pickup-location__wrapper">
+            <p class="pickup-location__text-bold">{{ pick_up_availability.location.name }}</p>
+            <div class="pickup-location__address-wrapper">
+              <span class="pickup-location__availability-wrapper">
+                {% if pick_up_availability.available %}
+                  {{- 'icon-available.svg' | inline_asset_content -}}
+                  {% assign pickup_time = pick_up_availability.pick_up_time | downcase %}
+                  {{ 'content.pickup_available_in' | t: pickup_time: pickup_time }}
+                {% else %}
+                  {{- 'icon-unavailable.svg' | inline_asset_content -}}
+                  {{ 'content.pickup_not_available' | t }}
+                {% endif %}
+              </span>
+              <address class="pickup-location__address">
+                {{ pick_up_availability.location.address | format_address }}
+                {{ pick_up_availability.location.address.phone }}
+              </address>
+            </div>
+          </div>
+        {% endfor %}
+      </dialog>
+    </theme-drawer>
+  {% endif %}
 {% endif %}
 
 {% render 'buy-buttons-styles' %}
@@ -371,20 +388,34 @@
   "tag": null,
   "settings": [
     {
-      "type": "paragraph",
-      "content": "t:content.resource_reference_product"
-    },
-    {
       "type": "checkbox",
       "id": "stacking",
       "label": "t:settings.always_stack_buttons",
       "default": false
     },
     {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:settings.text_color",
+      "placeholder": "t:settings.default"
+    },
+    {
+      "type": "header",
+      "content": "t:content.local_pickup"
+    },
+    {
       "type": "checkbox",
       "id": "show_pickup_availability",
       "label": "t:settings.show_pickup_availability",
       "default": true
+    },
+    {
+      "type": "paragraph",
+      "content": "t:content.local_pickup_description"
+    },
+    {
+      "type": "header",
+      "content": "t:content.gift_card_products"
     },
     {
       "type": "checkbox",
@@ -395,6 +426,149 @@
     {
       "type": "paragraph",
       "content": "t:content.gift_card_form_description"
+    },
+    {
+      "type": "select",
+      "id": "recipient_button_style",
+      "label": "t:settings.button_style",
+      "options": [
+        {
+          "value": "default",
+          "label": "t:options.default"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "default",
+      "visible_if": "{{ block.settings.gift_card_form }}"
+    },
+    {
+      "type": "color",
+      "id": "recipient_button_background",
+      "label": "t:settings.background",
+      "default": "{{ settings.color_palette.background }}",
+      "alpha": true,
+      "visible_if": "{{ block.settings.gift_card_form and block.settings.recipient_button_style == \"custom\" }}"
+    },
+    {
+      "type": "color",
+      "id": "recipient_button_text",
+      "label": "t:settings.text",
+      "default": "{{ settings.color_palette.foreground }}",
+      "alpha": true,
+      "visible_if": "{{ block.settings.gift_card_form and block.settings.recipient_button_style == \"custom\" }}"
+    },
+    {
+      "type": "color",
+      "id": "recipient_button_border",
+      "label": "t:settings.borders",
+      "default": "{{ settings.color_palette.foreground }}",
+      "alpha": true,
+      "visible_if": "{{ block.settings.gift_card_form and block.settings.recipient_button_style == \"custom\" }}"
+    },
+    {
+      "type": "select",
+      "id": "selected_recipient_button_style",
+      "label": "t:settings.selected_button_style",
+      "options": [
+        {
+          "value": "default",
+          "label": "t:options.default"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "default",
+      "visible_if": "{{ block.settings.gift_card_form }}"
+    },
+    {
+      "type": "color",
+      "id": "selected_recipient_button_background",
+      "label": "t:settings.background",
+      "default": "{{ settings.color_palette.foreground }}",
+      "alpha": true,
+      "visible_if": "{{ block.settings.gift_card_form and block.settings.selected_recipient_button_style == \"custom\" }}"
+    },
+    {
+      "type": "color",
+      "id": "selected_recipient_button_text",
+      "label": "t:settings.text",
+      "default": "{{ settings.color_palette.background }}",
+      "alpha": true,
+      "visible_if": "{{ block.settings.gift_card_form and block.settings.selected_recipient_button_style == \"custom\" }}"
+    },
+    {
+      "type": "color",
+      "id": "selected_recipient_button_border",
+      "label": "t:settings.borders",
+      "default": "{{ settings.color_palette.foreground }}",
+      "alpha": true,
+      "visible_if": "{{ block.settings.gift_card_form and block.settings.selected_recipient_button_style == \"custom\" }}"
+    },
+    {
+      "type": "select",
+      "id": "input_style",
+      "label": "t:settings.input_style",
+      "options": [
+        {
+          "value": "default",
+          "label": "t:options.input_field"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "default",
+      "info": "t:info.edit_input_field_in_theme_settings",
+      "visible_if": "{{ block.settings.gift_card_form }}"
+    },
+    {
+      "type": "color",
+      "id": "input_background_color",
+      "label": "t:settings.background",
+      "default": "{{ settings.color_palette.background }}",
+      "visible_if": "{{ block.settings.gift_card_form and block.settings.input_style == \"custom\" }}"
+    },
+    {
+      "type": "color",
+      "id": "input_text_color",
+      "label": "t:settings.text",
+      "default": "{{ settings.color_palette.foreground }}",
+      "visible_if": "{{ block.settings.gift_card_form and block.settings.input_style == \"custom\" }}"
+    },
+    {
+      "type": "color",
+      "id": "input_border_color",
+      "label": "t:settings.borders",
+      "default": "{{ settings.color_palette.foreground }}",
+      "visible_if": "{{ block.settings.gift_card_form and block.settings.input_style == \"custom\" }}"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "t:settings.border_width",
+      "min": 0,
+      "max": 4,
+      "step": 0.5,
+      "unit": "px",
+      "default": 1,
+      "visible_if": "{{ block.settings.gift_card_form and block.settings.input_style == \"custom\" }}"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.gift_card_form and block.settings.input_style == \"custom\" }}"
     },
     {
       "type": "header",

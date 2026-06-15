@@ -9,6 +9,7 @@
   @param {number} [settings.thickness] - The thickness of the divider line in pixels.
   @param {string} [settings.corner_radius] - The corner radius of the divider, e.g., 'rounded'.
   @param {number} [settings.width_percent] - The width of the divider as a percentage of its container.
+  @param {string} [settings.divider_color] - The color of the divider line. Falls back to `--color-border` when blank.
 
   @param {boolean} [full_width] - When `true`, the divider spans the full width of its container.
   @param {boolean} [attributes] - When `true`, render block.shopify_attributes on the divider container.
@@ -19,6 +20,7 @@
   class="divider divider-{{ id }} spacing-style"
   style="
     --divider-justify-content: {{ settings.alignment_horizontal | default: 'center' }};
+    {% if settings.divider_color != blank %}--color-border: {{ settings.divider_color }};{% endif %}
     {% render 'spacing-style', settings: settings %}
   "
   {% if attributes %}

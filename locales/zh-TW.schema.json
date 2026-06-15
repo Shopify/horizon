@@ -3,7 +3,7 @@
     "404": "404",
     "borders": "邊框",
     "collapsible_row": "可摺疊列",
-    "colors": "顏色",
+    "colors": "調色盤",
     "custom_section": "自訂區段",
     "icon": "圖示",
     "logo_and_favicon": "標誌與 favicon",
@@ -147,7 +147,7 @@
     "media_with_text": "多媒體附文字",
     "page": "頁面",
     "page_content": "內容",
-    "page_layout": "頁面版面配置",
+    "page_layout": "頁面",
     "policy_list": "政策連結",
     "prices": "價格",
     "products_carousel": "精選商品系列：輪播",
@@ -188,7 +188,9 @@
     "product_hotspots": "商品熱點",
     "hotspot_product": "熱點",
     "product_sku": "存貨單位 (SKU)",
-    "layered_slideshow": "分層輪播"
+    "layered_slideshow": "分層輪播",
+    "drawer": "抽屜",
+    "cart_drawer": "購物車"
   },
   "settings": {
     "alignment": "對齊",
@@ -248,7 +250,6 @@
     "z_index": "Z-index",
     "limit_content_width": "限制內容寬度",
     "color_scheme": "顏色配置",
-    "inherit_color_scheme": "繼承顏色配置",
     "product_count": "產品數",
     "product_type": "產品類型",
     "content_width": "內容寬度",
@@ -301,8 +302,6 @@
     "background_color": "背景顏色",
     "badge_corner_radius": "圓角半徑",
     "badge_position": "卡片上的位置",
-    "badge_sale_color_scheme": "特價",
-    "badge_sold_out_color_scheme": "售罄",
     "behavior": "行為",
     "blur": "陰影模糊",
     "border": "邊框",
@@ -371,6 +370,7 @@
     "limit_media_to_screen_height": "限制為螢幕高度",
     "limit_product_details_width": "限制產品詳細資訊寬度",
     "link_preset": "連結預設",
+    "link_text_color": "連結文字顏色",
     "links": "連結",
     "logo_font": "標誌字型",
     "logo": "標誌",
@@ -389,7 +389,6 @@
     "motion_direction": "動態方向",
     "motion": "動態",
     "movement_direction": "移動方向",
-    "navigation_bar_color_scheme": "導覽列顏色配置",
     "navigation_bar": "導覽列",
     "navigation": "導覽",
     "open_new_tab": "在新分頁中開啟連結",
@@ -578,7 +577,33 @@
     "y_position": "垂直位置",
     "enable_sticky_add_to_cart": "固定加入購物車列",
     "sticky_add_to_cart": "固定加入購物車",
-    "actions_display_style": "選單樣式"
+    "actions_display_style": "選單樣式",
+    "badge_sale_background_color": "特價徽章背景",
+    "badge_sale_text_color": "特價徽章文字",
+    "badge_sold_out_background_color": "售罄徽章背景",
+    "badge_sold_out_text_color": "售罄徽章文字",
+    "border_color": "邊框顏色",
+    "drawer_borders": "抽屜邊框",
+    "navigation_bar_background_color": "導覽列背景顏色",
+    "navigation_bar_text_color": "導覽列文字顏色",
+    "page_background_color": "背景",
+    "page_text_color": "文字",
+    "variant_button_style": "子類樣式",
+    "selected_variant_button_style": "所選子類樣式",
+    "top_row": "頂端列",
+    "text_color": "文字顏色",
+    "text_color_transparent": "透明頁首文字",
+    "slider_color": "滑桿顏色",
+    "slider_inner_color": "滑桿內部顏色",
+    "bubble_style": "氣泡樣式",
+    "top_row_background": "頂端列背景",
+    "top_row_text": "頂端列文字",
+    "bottom_row_background": "底端列背景",
+    "bottom_row_text": "底端列文字",
+    "bottom_border_color": "底部邊框顏色",
+    "button_style": "按鈕樣式",
+    "input_style": "輸入欄位樣式",
+    "selected_button_style": "選取的按鈕樣式"
   },
   "options": {
     "apple": "Apple",
@@ -853,7 +878,8 @@
     "with_hints": "附提示",
     "below_media": "多媒體檔案下方",
     "full_frame": "滿版",
-    "icons": "圖示"
+    "icons": "圖示",
+    "input_field": "輸入欄位"
   },
   "content": {
     "advanced": "進階",
@@ -885,7 +911,6 @@
     "copyright": "著作權",
     "edit_logo_in_theme_settings": "在[主題設定](/editor?context=theme&category=logo%20and%20favicon)中編輯標誌",
     "edit_price_in_theme_settings": "在[主題設定](/editor?context=theme&category=currency%20code)中調整價格格式",
-    "edit_variants_in_theme_settings": "在[主題設定](/editor?context=theme&category=variants)中編輯子類樣式",
     "email_signups_create_customer_profiles": "註冊會新增[顧客資料](https://help.shopify.com/manual/customers)",
     "follow_on_shop_eligiblity": "要顯示按鈕，必須安裝 Shop 管道並啟用 Shop Pay。[瞭解詳情](https://help.shopify.com/en/manual/online-store/themes/customizing-themes/add-shop-buttons)",
     "fonts": "字型",
@@ -895,6 +920,7 @@
     "input": "輸入",
     "layout": "版面配置",
     "link": "連結",
+    "links": "連結",
     "link_padding": "連結內距",
     "localization": "本地化",
     "logo": "標誌",
@@ -902,6 +928,7 @@
     "media": "多媒體檔案",
     "media_1": "多媒體檔案 1",
     "media_2": "多媒體檔案 2",
+    "menu_appearance_paragraph": "影響電腦版的子選單和行動版的主選單。",
     "menu": "選單",
     "mobile_layout": "行動版面配置",
     "padding": "內距",
@@ -970,7 +997,15 @@
     "resource_reference_product_sku": "顯示父商品的存貨單位 (SKU)",
     "content_layout": "內容版面配置",
     "mobile_media_1": "行動裝置用多媒體檔案 1",
-    "utilities": "公用程式"
+    "utilities": "公用程式",
+    "button_colors": "按鈕顏色",
+    "cart_bubble": "購物車氣泡",
+    "type": "類型",
+    "cart_summary_mobile_colors": "在行動裝置上，摘要顏色會繼承購物車區段。",
+    "local_pickup_description": "設定網路商店本地取貨後，顯示附近的取貨地點。[深入瞭解](https://help.shopify.com/en/manual/fulfillment/setup/delivery-methods/pickup-in-store)",
+    "local_pickup": "本地取貨",
+    "gift_card_products": "禮品卡產品",
+    "page_text_color_contrast_info": "具備自訂背景顏色的區段，只有在色彩對比度足夠時才會使用此文字顏色。"
   },
   "html_defaults": {
     "share_information_about_your": "<p>向顧客分享您的品牌故事。可用來敘述產品、發布公告，或歡迎顧客造訪您的商店。</p>",
@@ -1075,6 +1110,7 @@
     "checkout_buttons": "可讓買家更快結帳，有助提升轉換率。[瞭解詳情](https://help.shopify.com/manual/online-store/dynamic-checkout)",
     "custom_heading": "自訂標題",
     "edit_presets_in_theme_settings": "在[主題設定](/editor?context=theme&category=typography)中編輯預設值",
+    "edit_button_style_in_theme_settings": "在[主題設定](/editor?context=theme&category=buttons)中編輯主要和次要按鈕樣式",
     "enable_filtering_info": "使用[Search & Discovery app](https://help.shopify.com/manual/online-store/search-and-discovery/filters)自訂篩選器",
     "grid_layout_on_mobile": "行動裝置會使用網格版面配置",
     "logo_font": "僅在未選擇標誌時適用",
@@ -1089,7 +1125,10 @@
     "hide_logo_on_home_page_help": "啟用固定頁首時，標誌仍會顯示",
     "media_type_info": "功能會根據您的選單連結自動帶入",
     "logo_height": "僅影響頁首標誌",
-    "actions_display_style": "在行動裝置上一律使用圖示"
+    "page_text_color_default_info": "佈景主題區段的預設值",
+    "actions_display_style": "在行動裝置上一律使用圖示",
+    "edit_input_field_in_theme_settings": "在 [佈景主題設定](/editor?context=theme&category=input%20fields) 中編輯輸入欄位",
+    "edit_variants_in_theme_settings": "在[主題設定](/editor?context=theme&category=variant%20pickers)中編輯子類樣式"
   },
   "categories": {
     "basic": "基本",
@@ -1109,6 +1148,7 @@
     "products": "產品",
     "other_sections": "其他",
     "storytelling": "故事敘述",
-    "text": "文字"
+    "text": "文字",
+    "blog_post": "網誌文章"
   }
 }

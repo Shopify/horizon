@@ -59,6 +59,24 @@ const CURRENCY_DECIMALS = {
 };
 
 /**
+ * Gets currency precision (number of decimal places).
+ * @param {string} currency - The currency code (e.g., 'USD', 'JPY')
+ * @returns {number} The decimal precision
+ */
+function getCurrencyPrecision(currency) {
+  return CURRENCY_DECIMALS[currency.toUpperCase()] ?? DEFAULT_CURRENCY_DECIMALS;
+}
+
+/**
+ * Gets the divisor for converting minor units to major units.
+ * @param {string} currency - The currency code (e.g., 'USD', 'JPY')
+ * @returns {number} The divisor for the currency
+ */
+function getCurrencyDivisor(currency) {
+  return Math.pow(10, getCurrencyPrecision(currency));
+}
+
+/**
  * Parses a money string into minor units (the smallest denomination of a currency).
  * Does not assume the money string is formatted in a specific way, aims to be resilient to user input.
  * Example: convertMoneyToMinorUnits("1.000,50", "EUR") → 100050
@@ -71,7 +89,7 @@ const CURRENCY_DECIMALS = {
  * @returns {number|null} The value in minor units, or null if parsing failed
  */
 export function convertMoneyToMinorUnits(value, currency) {
-  const precision = CURRENCY_DECIMALS[currency.toUpperCase()] ?? DEFAULT_CURRENCY_DECIMALS;
+  const precision = getCurrencyPrecision(currency);
   const multiplier = Math.pow(10, precision);
 
   if (!value || !value.trim()) {
@@ -152,8 +170,8 @@ function formatCents(moneyValue, thousandsSeparator, decimalSeparator, precision
  */
 export function formatMoney(moneyValue, format, currency) {
   // Calculate divisor based on currency's native precision
-  const currencyPrecision = CURRENCY_DECIMALS[currency.toUpperCase()] ?? DEFAULT_CURRENCY_DECIMALS;
-  const divisor = Math.pow(10, currencyPrecision);
+  const currencyPrecision = getCurrencyPrecision(currency);
+  const divisor = getCurrencyDivisor(currency);
 
   return format.replace(/{{\s*(\w+)\s*}}/g, (_, placeholder) => {
     if (typeof placeholder !== 'string') return '';
@@ -165,40 +183,40 @@ export function formatMoney(moneyValue, format, currency) {
 
     switch (placeholder) {
       case 'amount':
-      // Check first since it's the most common, use defaults.
+        // Check first since it's the most common, use defaults.
         break;
       case 'amount_no_decimals':
         precision = 0;
         break;
       case 'amount_with_comma_separator':
-      thousandsSeparator = '.';
-      decimalSeparator = ',';
-      break;
+        thousandsSeparator = '.';
+        decimalSeparator = ',';
+        break;
       case 'amount_no_decimals_with_comma_separator':
-      // Weirdly, this is correct. It uses amount_with_comma_separator's
-      // behaviour but removes decimals, resulting in an unintuitive
-      // output that can't possibly include commas, despite the name.
-      thousandsSeparator = '.';
-      precision = 0;
-      break;
-    case 'amount_no_decimals_with_space_separator':
-      thousandsSeparator = ' ';
-      precision = 0;
-      break;
-    case 'amount_with_space_separator':
-      thousandsSeparator = ' ';
-      decimalSeparator = ',';
-      break;
-    case 'amount_with_period_and_space_separator':
-      thousandsSeparator = ' ';
-      decimalSeparator = '.';
-      break;
-    case 'amount_with_apostrophe_separator':
-      thousandsSeparator = "'";
-      decimalSeparator = '.';
-      break;
-    default:
-      break;
+        // Weirdly, this is correct. It uses amount_with_comma_separator's
+        // behaviour but removes decimals, resulting in an unintuitive
+        // output that can't possibly include commas, despite the name.
+        thousandsSeparator = '.';
+        precision = 0;
+        break;
+      case 'amount_no_decimals_with_space_separator':
+        thousandsSeparator = ' ';
+        precision = 0;
+        break;
+      case 'amount_with_space_separator':
+        thousandsSeparator = ' ';
+        decimalSeparator = ',';
+        break;
+      case 'amount_with_period_and_space_separator':
+        thousandsSeparator = ' ';
+        decimalSeparator = '.';
+        break;
+      case 'amount_with_apostrophe_separator':
+        thousandsSeparator = "'";
+        decimalSeparator = '.';
+        break;
+      default:
+        break;
     }
 
     return formatCents(moneyValue, thousandsSeparator, decimalSeparator, precision, divisor);

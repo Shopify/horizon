@@ -296,7 +296,7 @@
   }
 
   localization-form-component .button:is(:not(.country-filter__reset-button)) {
-    --button-color: var(--color-primary);
+    --button-color: var(--color-foreground);
     --button-background-color: var(--language-button-background-color, var(--color-background));
     --button-border-color: var(--language-button-border-color, var(--color-border));
 
@@ -309,15 +309,15 @@
   localization-form-component .button:is(:not(.country-filter__reset-button)):hover,
   .localization-form__list-item:hover,
   .localization-form__list-item:focus {
-    --button-color: var(--color-primary-hover);
+    --button-color: var(--color-foreground-subdued);
 
-    background-color: rgb(var(--color-primary-hover-rgb) / var(--opacity-8));
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-8));
   }
 
   .localization-form__list-item[aria-current='true'] {
     --button-color: var(--color-primary-active);
 
-    background-color: rgb(var(--color-primary-hover-rgb) / var(--opacity-10));
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-10));
   }
 
   .localization-form__list-item-disabled {
@@ -398,11 +398,11 @@
   .localization-form__list-item#no-results-message {
     grid-template-columns: 1fr;
     text-align: center;
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+    color: var(--color-foreground-subdued);
   }
 
   .is-searching .localization-form__list-item .country {
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-80));
+    color: var(--color-foreground-subdued);
   }
 
   .localization-form__list-item .country mark {
@@ -440,14 +440,14 @@
 
   .language-selector__label {
     flex-shrink: 0;
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+    color: var(--color-foreground-subdued);
   }
 
   .localization-form__select {
     border: none;
     color: var(--color-foreground);
     appearance: none;
-    background-color: var(--color-input-background);
+    background-color: var(--color-background);
     padding-block: var(--padding-3xs);
     padding-inline: var(--padding-xs) calc(var(--icon-size-xs) + var(--padding-xs));
     text-align: right;

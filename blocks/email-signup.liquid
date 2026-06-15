@@ -1,18 +1,52 @@
 {% assign block_settings = block.settings %}
+{% liquid
+  assign is_custom_input = false
+  if block_settings.input_style == 'custom'
+    assign is_custom_input = true
+  endif
+%}
+{% render 'button-custom-styles', block_settings: block_settings, block_id: block.id %}
 <div
   class="email-signup-block size-style spacing-style"
-  style="{% render 'size-style', settings: block_settings %}{% render 'spacing-style', settings: block_settings %}"
+  style="
+    {% render 'size-style', settings: block_settings %}
+    {% render 'spacing-style', settings: block_settings %}
+  "
   {{ block.shopify_attributes }}
 >
   {% if block_settings.heading != blank %}
-    <div class="email-signup__heading {{ block_settings.heading_preset }}">
+    <div
+      class="email-signup__heading {{ block_settings.heading_preset }}"
+      style="{% if block_settings.heading_text_color != blank %}--color: {{ block_settings.heading_text_color }}; --color-rgb: {{ block_settings.heading_text_color.rgb }};{% endif %}"
+    >
       {{ block_settings.heading | escape }}
     </div>
   {% endif %}
   {%- form 'customer', class: 'email-signup__form spacing-style' %}
+    {% comment %} --- Input group classes --- {% endcomment %}
+    {%- liquid
+      assign input_group_classes = 'email-signup__input-group'
+      if block_settings.integrated_button and block_settings.border_style != 'underline'
+        assign input_group_classes = input_group_classes | append: ' email-signup__input-group--integrated'
+      endif
+      if block_settings.border_style == 'underline'
+        assign input_group_classes = input_group_classes | append: ' email-signup__input-group--underline'
+      endif
+      if block_settings.border_style == 'none'
+        assign input_group_classes = input_group_classes | append: ' email-signup__input-group--no-border'
+      endif
+      if block_settings.display_type == 'arrow'
+        assign input_group_classes = input_group_classes | append: ' email-signup__input-group--arrow'
+      endif
+    -%}
+
     <div
-      class="email-signup__input-group {% if block_settings.integrated_button and block_settings.border_style != 'underline' %}email-signup__input-group--integrated{% endif %} {% if block_settings.border_style == 'underline' %}email-signup__input-group--underline{% endif %} {% if block_settings.border_style == 'none' %}email-signup__input-group--no-border{% endif %} {% if block_settings.display_type == 'arrow' %}email-signup__input-group--arrow{% endif %} {% if block_settings.inherit_color_scheme == false %}color-{{ block_settings.color_scheme }}{% endif %}"
-      style="--border-width: {{ block_settings.border_width }}px; --border-radius: {{ block_settings.border_radius }}px;"
+      class="{{ input_group_classes }}"
+      style="
+        --border-width: {% if is_custom_input %}{{ block_settings.border_width }}px{% else %}var(--style-border-width-inputs){% endif %};
+        --border-radius: {% if is_custom_input %}{{ block_settings.border_radius }}px{% else %}var(--style-border-radius-inputs){% endif %};
+        {% if is_custom_input %}{% render 'input-custom-styles', block_settings: block_settings %}{% endif %}
+      "
     >
       <label
         for="EmailInput-{{ block.id }}"
@@ -22,7 +56,7 @@
       </label>
       <input
         id="EmailInput-{{ block.id }}"
-        class="email-signup__input email-signup__input--{{ block_settings.border_style }} {{ block_settings.input_type_preset }} {{ block_settings.border_variation }}"
+        class="email-signup__input email-signup__input--{{ block_settings.border_style }} {% if is_custom_input %}{{ block_settings.input_type_preset }}{% else %}{{ settings.type_preset }}{% endif %} {{ block_settings.border_variation }}"
         type="email"
         name="contact[email]"
         autocorrect="off"
@@ -39,7 +73,7 @@
         {% endif %}
       >
       <button
-        class="email-signup__button {% if block_settings.integrated_button or block_settings.border_style == 'underline' %}email-signup__button--integrated{% endif %} email-signup__button--{{ block_settings.display_type }} {{ block_settings.button_type_preset }} {{ block_settings.style_class }} {{ block_settings.style_class }}--{{ block.id }} {% if block_settings.inherit_color_scheme == false %}color-{{ block_settings.color_scheme }}{% endif %}"
+        class="email-signup__button {% if block_settings.integrated_button or block_settings.border_style == 'underline' %}email-signup__button--integrated{% endif %} email-signup__button--{{ block_settings.display_type }} {{ block_settings.button_type_preset }} {{ block_settings.style_class }} {{ block_settings.style_class }}--{{ block.id }}"
         {% if block_settings.display_type != 'text' %}
           aria-label="{{ 'actions.sign_up' | t }}"
         {% endif %}
@@ -112,6 +146,7 @@
   }
 
   .email-signup__heading {
+    color: var(--color, inherit);
     padding-block: var(--padding-sm);
   }
 
@@ -158,16 +193,13 @@
     border-radius: var(--border-radius);
     border-style: solid;
     border-color: var(--color-input-border);
+    background-color: var(--color-input-background);
+    transition: background-color var(--animation-speed) var(--animation-easing),
+      color var(--animation-speed) var(--animation-easing);
 
     @media screen and (max-width: 749px) {
       width: 100%;
     }
-  }
-
-  .email-signup__input-group--integrated .email-signup__input {
-    background-color: transparent;
-    border: none;
-    border-radius: 0;
   }
 
   .email-signup__input.paragraph {
@@ -224,6 +256,12 @@
     color: var(--color-input-text);
     background-color: var(--color-input-background);
     border: none;
+  }
+
+  .email-signup__input-group--integrated .email-signup__input {
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
   }
 
   .email-signup__button-icon {
@@ -348,7 +386,9 @@
   }
 
   .email-signup__button.button-unstyled:hover {
-    color: rgb(var(--color-input-text-rgb) / var(--opacity-70));
+    --hover-color-rgb: var(--color-input-text-rgb);
+
+    color: rgb(var(--hover-color-rgb) / var(--opacity-70));
     cursor: pointer;
   }
 
@@ -400,19 +440,6 @@
       "visible_if": "{{ block.settings.width == \"custom\" }}"
     },
     {
-      "type": "checkbox",
-      "id": "inherit_color_scheme",
-      "label": "t:settings.inherit_color_scheme",
-      "default": true
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:settings.color_scheme",
-      "default": "primary",
-      "visible_if": "{{ block.settings.inherit_color_scheme == false }}"
-    },
-    {
       "type": "header",
       "content": "t:content.heading"
     },
@@ -420,6 +447,11 @@
       "type": "text",
       "id": "heading",
       "label": "t:settings.text"
+    },
+    {
+      "type": "color",
+      "id": "heading_text_color",
+      "label": "t:settings.color"
     },
     {
       "type": "select",
@@ -487,6 +519,23 @@
       "default": "all"
     },
     {
+      "type": "select",
+      "id": "input_style",
+      "label": "t:settings.style",
+      "options": [
+        {
+          "value": "default",
+          "label": "t:options.default"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "default",
+      "info": "t:info.edit_input_field_in_theme_settings"
+    },
+    {
       "type": "range",
       "id": "border_width",
       "label": "t:settings.border_width",
@@ -495,7 +544,7 @@
       "step": 0.5,
       "unit": "px",
       "default": 1,
-      "visible_if": "{{ block.settings.border_style != \"none\" }}"
+      "visible_if": "{{ block.settings.input_style == \"custom\" and block.settings.border_style != \"none\" }}"
     },
     {
       "type": "range",
@@ -506,7 +555,28 @@
       "step": 1,
       "unit": "px",
       "default": 100,
-      "visible_if": "{{ block.settings.border_style != \"underline\" }}"
+      "visible_if": "{{ block.settings.input_style == \"custom\" and block.settings.border_style != \"underline\" }}"
+    },
+    {
+      "type": "color",
+      "id": "input_background_color",
+      "label": "t:settings.background",
+      "placeholder": "t:settings.default",
+      "visible_if": "{{ block.settings.input_style == \"custom\" and block.settings.border_style != \"underline\" }}"
+    },
+    {
+      "type": "color",
+      "id": "input_text_color",
+      "label": "t:settings.text",
+      "placeholder": "t:settings.default",
+      "visible_if": "{{ block.settings.input_style == \"custom\" }}"
+    },
+    {
+      "type": "color",
+      "id": "input_border_color",
+      "label": "t:settings.borders",
+      "placeholder": "t:settings.default",
+      "visible_if": "{{ block.settings.input_style == \"custom\" }}"
     },
     {
       "type": "select",
@@ -547,7 +617,8 @@
         }
       ],
       "default": "paragraph",
-      "info": "t:info.edit_presets_in_theme_settings"
+      "info": "t:info.edit_presets_in_theme_settings",
+      "visible_if": "{{ block.settings.input_style == \"custom\" }}"
     },
     {
       "type": "header",
@@ -569,9 +640,50 @@
         {
           "value": "button-unstyled",
           "label": "t:options.link"
+        },
+        {
+          "value": "button-custom",
+          "label": "t:options.custom"
         }
       ],
-      "default": "button"
+      "default": "button",
+      "info": "t:info.edit_button_style_in_theme_settings"
+    },
+    {
+      "type": "header",
+      "content": "t:content.button_colors",
+      "visible_if": "{{ block.settings.style_class == \"button-custom\" }}"
+    },
+    {
+      "type": "color",
+      "id": "custom_button_background",
+      "label": "t:settings.background",
+      "default": "{{ settings.color_palette.foreground }}",
+      "alpha": true,
+      "visible_if": "{{ block.settings.style_class == 'button-custom' }}"
+    },
+    {
+      "type": "color",
+      "id": "custom_button_text",
+      "label": "t:settings.text",
+      "default": "{{ settings.color_palette.background }}",
+      "alpha": true,
+      "visible_if": "{{ block.settings.style_class == 'button-custom' }}"
+    },
+    {
+      "type": "color",
+      "id": "custom_button_border",
+      "label": "t:settings.borders",
+      "default": "{{ settings.color_palette.background }}",
+      "alpha": true,
+      "visible_if": "{{ block.settings.style_class == 'button-custom' }}"
+    },
+    {
+      "type": "color",
+      "id": "link_text_color",
+      "label": "t:settings.link_text_color",
+      "placeholder": "t:settings.default",
+      "visible_if": "{{ block.settings.style_class == 'button-unstyled' }}"
     },
     {
       "type": "select",

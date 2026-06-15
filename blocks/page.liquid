@@ -1,7 +1,19 @@
 {% assign block_settings = block.settings %}
+
+{% render 'contrast-override',
+  background_color: block_settings.background_color,
+  text_color: block_settings.text_color,
+  section_id: block.id
+%}
+
 <div
-  class="page-block spacing-style{% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %}"
-  style="{% render 'spacing-padding', settings: block_settings %}{% if block_settings.background %} background-color: {{ block_settings.background_color }};{% endif %}"
+  class="page-block spacing-style{% if block_settings.background_color != blank or block_settings.text_color != blank %} color-custom-{{ block.id }}{% endif %}"
+  style="
+    {%- if block_settings.max_width != 'none' -%}
+      --max-width: var(--max-width--body-{{ block_settings.max_width }});
+    {%- endif -%}
+    {% render 'spacing-padding', settings: block_settings %}
+  "
 >
   {%- if block_settings.page != blank -%}
     {%- if block_settings.page.title != blank -%}
@@ -46,34 +58,40 @@
       "label": "t:settings.page"
     },
     {
-      "type": "checkbox",
-      "id": "inherit_color_scheme",
-      "label": "t:settings.inherit_color_scheme",
-      "default": true
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:settings.color_scheme",
-      "default": "scheme-1",
-      "visible_if": "{{ block.settings.inherit_color_scheme == false }}"
+      "type": "select",
+      "id": "max_width",
+      "label": "t:settings.max_width",
+      "options": [
+        {
+          "value": "narrow",
+          "label": "t:options.narrow"
+        },
+        {
+          "value": "normal",
+          "label": "t:options.normal"
+        },
+        {
+          "value": "none",
+          "label": "t:options.none"
+        }
+      ],
+      "default": "normal"
     },
     {
       "type": "header",
       "content": "t:content.appearance"
     },
     {
-      "type": "checkbox",
-      "id": "background",
-      "label": "t:settings.background",
-      "default": false
-    },
-    {
       "type": "color",
       "id": "background_color",
       "label": "t:settings.background_color",
-      "default": "#00000026",
-      "visible_if": "{{ block.settings.background }}"
+      "placeholder": "t:settings.default"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:settings.text_color",
+      "placeholder": "t:settings.default"
     },
     {
       "type": "header",

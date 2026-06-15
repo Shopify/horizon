@@ -78,7 +78,7 @@
   .quantity-rules__item {
     position: relative;
     display: inline-block;
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+    color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-subdued-text));
   }
 
   .quantity-rules__item:not(:last-child) {
@@ -115,6 +115,7 @@
 
   .product__pickup-availabilities {
     width: 100%;
+    color: var(--color, var(--color-foreground));
   }
 
   .pickup-availability__column {
@@ -142,6 +143,7 @@
     display: flex;
     flex-direction: column;
     padding-block: var(--padding-2xl);
+    padding-inline: var(--theme-drawer-padding);
     border-top: 1px solid var(--color-border);
     gap: var(--padding-xs);
   }
@@ -150,23 +152,6 @@
     display: flex;
     flex-direction: column;
     gap: var(--padding-md);
-  }
-
-  .pickup-location__dialog {
-    padding: var(--padding-2xl);
-    position: fixed;
-    border-radius: 0;
-    width: var(--sidebar-width);
-    max-width: 95vw;
-    height: 100%;
-    margin: 0 0 0 auto;
-    border: var(--style-border-drawer);
-    box-shadow: var(--shadow-drawer);
-    background-color: var(--color-background);
-  }
-
-  .pickup-location__dialog:modal {
-    max-height: 100dvh;
   }
 
   .pickup-location__text-sm {
@@ -181,7 +166,7 @@
 
   .pickup-location__button {
     width: fit-content;
-    color: var(--color-primary);
+    color: var(--color, var(--color-foreground));
     font-size: var(--font-size--xs);
     font-family: var(--font-body--family);
     padding: 0;
@@ -190,7 +175,7 @@
   }
 
   .pickup-location__button:hover {
-    color: var(--color-primary-hover);
+    color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-subdued-text));
   }
 
   .pickup-location__h4 {
@@ -212,11 +197,6 @@
 
   .pickup-location__address {
     font-style: normal;
-  }
-
-  .pickup-location__close-button {
-    top: calc(var(--padding-2xl) - (var(--icon-size-xs) / 2));
-    right: calc(var(--padding-2xl) - var(--icon-size-xs));
   }
 
   .volume-pricing {
@@ -315,7 +295,7 @@
   }
 
   /* Accelerated checkout styles — co-located here so they compile on pages
-     where the quick-add modal can display buy buttons (e.g. collection pages). */
+       where the quick-add modal can display buy buttons (e.g. collection pages). */
   .accelerated-checkout-block[data-shopify-visual-preview] {
     width: 300px;
   }
@@ -324,12 +304,8 @@
     font-size: smaller;
   }
 
-  more-payment-options-link a {
-    --button-color: var(--color-primary);
-  }
-
   more-payment-options-link a:hover {
-    --button-color: var(--color-primary-hover);
+    color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-subdued-text));
   }
 
   .shopify-payment-button__more-options[aria-hidden='true'] {

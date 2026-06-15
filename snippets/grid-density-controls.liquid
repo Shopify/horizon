@@ -142,15 +142,15 @@
   }
 
   /* Override base rule for grid density controls - only when visible */
-  .column-options-wrapper .column-options__option:has(input[type="radio"]):has(.column-picker-mobile--single),
-  .column-options-wrapper .column-options__option:has(input[type="radio"]):has(.column-picker-mobile--double) {
+  .column-options-wrapper .column-options__option:has(input[type='radio']):has(.column-picker-mobile--single),
+  .column-options-wrapper .column-options__option:has(input[type='radio']):has(.column-picker-mobile--double) {
     @media screen and (max-width: 749px) {
       display: flex;
     }
   }
 
-  .column-options-wrapper .column-options__option:has(input[type="radio"]):has(.column-picker--default),
-  .column-options-wrapper .column-options__option:has(input[type="radio"]):has(.column-picker--zoom-out) {
+  .column-options-wrapper .column-options__option:has(input[type='radio']):has(.column-picker--default),
+  .column-options-wrapper .column-options__option:has(input[type='radio']):has(.column-picker--zoom-out) {
     @media screen and (min-width: 750px) {
       display: flex;
     }
@@ -186,7 +186,7 @@
   }
 
   .column-picker {
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-50));
+    color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-50));
     padding: var(--padding-2xs);
     border-radius: var(--style-border-radius-xs);
     transition: background-color var(--animation-speed) ease, color var(--animation-speed) ease;
@@ -197,7 +197,7 @@
   }
 
   .column-options__option-input:checked ~ .column-picker {
-    color: rgb(var(--color-foreground-rgb));
+    color: rgb(var(--color-rgb, var(--color-foreground-rgb)));
     background-color: rgb(var(--color-foreground-rgb) / var(--opacity-5));
   }
 {% endstylesheet %}

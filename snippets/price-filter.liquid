@@ -67,7 +67,7 @@
       {% unless filter_style == 'vertical' %}
         data-close-on-resize
       {% endunless %}
-      class="facets__panel-content details-content{% if filter_style == 'horizontal' %} color-{{ settings.popover_color_scheme }}{% endif %}"
+      class="facets__panel-content details-content{% if filter_style == 'horizontal' %} color-custom-popover{% endif %}"
     >
       {% assign min_input_max_value = filter.max_value.value | default: filter.range_max %}
       {% assign max_input_min_value = filter.min_value.value | default: 0 %}
@@ -230,6 +230,7 @@
   }
 
   .price-facet__highest-price {
+    color: var(--color-foreground-muted);
     padding: var(--padding-xs) 0 var(--padding-sm);
   }
 

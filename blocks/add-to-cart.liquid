@@ -7,9 +7,11 @@
 {%- enddoc -%}
 
 {% liquid
-  assign class = 'add-to-cart-button ' | append: block.settings.style_class
+  assign scoped_class = block.settings.style_class | append: '--' | append: block.id
+  assign class = 'add-to-cart-button ' | append: block.settings.style_class | append: ' ' | append: scoped_class
   assign id = 'BuyButtons-ProductSubmitButton-' | append: block.id
 %}
+{% render 'button-custom-styles', block_settings: block.settings, block_id: block.id %}
 
 <span
   {{ block.shopify_attributes }}
@@ -42,9 +44,43 @@
         {
           "value": "button-secondary",
           "label": "t:options.secondary"
+        },
+        {
+          "value": "button-custom",
+          "label": "t:options.custom"
         }
       ],
-      "default": "button-secondary"
+      "default": "button-secondary",
+      "info": "t:info.edit_button_style_in_theme_settings"
+    },
+    {
+      "type": "header",
+      "content": "t:content.button_colors",
+      "visible_if": "{{ block.settings.style_class == \"button-custom\" }}"
+    },
+    {
+      "type": "color",
+      "id": "custom_button_background",
+      "label": "t:settings.background",
+      "default": "{{ settings.color_palette.foreground }}",
+      "alpha": true,
+      "visible_if": "{{ block.settings.style_class == 'button-custom' }}"
+    },
+    {
+      "type": "color",
+      "id": "custom_button_text",
+      "label": "t:settings.text",
+      "default": "{{ settings.color_palette.background }}",
+      "alpha": true,
+      "visible_if": "{{ block.settings.style_class == 'button-custom' }}"
+    },
+    {
+      "type": "color",
+      "id": "custom_button_border",
+      "label": "t:settings.borders",
+      "default": "{{ settings.color_palette.background }}",
+      "alpha": true,
+      "visible_if": "{{ block.settings.style_class == 'button-custom' }}"
     }
   ]
 }

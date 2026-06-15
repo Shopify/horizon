@@ -1,0 +1,41 @@
+{% doc %}
+  Theme Drawer Header
+
+  Renders a standardized header for theme drawers with a title and close button.
+
+  @param {string} title - The heading text
+  @param {string} drawer_id - The ID of the parent theme-drawer element (for the close button target)
+  @param {string} [heading_id] - Optional ID for the heading element (for aria-labelledby)
+  @param {string} [title_append] - Optional HTML to render after the title text (e.g., cart bubble, filter count)
+
+  @example
+  {% render 'theme-drawer-header',
+    title: 'content.cart_title' | t,
+    drawer_id: 'cart-drawer',
+    heading_id: 'cart-drawer-heading',
+    title_append: cart_bubble_html
+  %}
+{% enddoc %}
+
+<div class="theme-drawer__header">
+  <h2
+    class="theme-drawer__title h4"
+    {% if heading_id %}
+      id="{{ heading_id }}"
+    {% endif %}
+  >
+    {{ title }}
+    {{ title_append }}
+  </h2>
+
+  <button
+    class="theme-drawer__close-button"
+    on:click="#{{ drawer_id }}/close"
+    type="button"
+    aria-label="{{ 'actions.close' | t }}"
+  >
+    <span class="svg-wrapper">
+      {{- 'icon-close.svg' | inline_asset_content -}}
+    </span>
+  </button>
+</div>

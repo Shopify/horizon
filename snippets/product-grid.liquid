@@ -9,6 +9,12 @@
   @param {boolean} [enable_infinite_scroll] - Whether to enable infinite scroll (default: true)
 {%- enddoc -%}
 
+{%- liquid
+  if section.settings.background_color != blank
+    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  endif
+-%}
+
 {% capture product_card_size %}
   {% render 'util-product-grid-card-size' section: section %}
 {% endcapture %}
@@ -77,7 +83,7 @@
   id="ResultsList"
   class="
     grid main-collection-grid
-    {%- if section.settings.inherit_color_scheme == false %} color-{{ section.settings.color_scheme }}{% endif %}
+    {%- if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}
     {%- if section.settings.product_grid_width == 'full-width' %} collection-wrapper--full-width{% endif %}
     {%- if section.settings.full_width_on_mobile == true %} collection-wrapper--full-width-on-mobile{% endif %}
     spacing-style

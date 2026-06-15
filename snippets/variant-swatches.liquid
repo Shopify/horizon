@@ -84,6 +84,8 @@
 <swatches-variant-picker-component
   data-product-id="{{ product_resource.id }}"
   data-product-url="{{ product_resource.url }}"
+  data-product-handle="{{ product_resource.handle }}"
+  data-product-title="{{ product_resource.title | escape }}"
   ref="swatchesVariantPicker"
 >
   <form>
@@ -158,6 +160,7 @@
                   value="{{ product_option_value | escape }}"
                   aria-label="{{ product_option_value.name }}"
                   data-input-id="{{ product_option.position }}-{{ forloop.index0 }}"
+                  data-option-name="{{ product_option.name | escape }}"
                   data-option-media-id="{{ featured_media.id }}"
                   data-option-value-id="{{ product_option_value.id }}"
                   data-option-available="{{ product_option_value.available }}"

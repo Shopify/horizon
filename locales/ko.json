@@ -79,14 +79,14 @@
     "add_to_cart": "카트에 추가",
     "clear_all": "모두 지우기",
     "remove": "제거",
-    "view_in_your_space": "사용자 공간에서 보기",
+    "view_in_your_space": "내 공간에서 보기",
     "show_filters": "필터",
     "clear": "지우기",
     "continue_shopping": "쇼핑 계속하기",
     "log_in_html": "계정이 있으십니까? 더 빠르게 결제하려면 <a href=\"{{ link }}\">로그인</a>하십시오.",
     "see_items": {
       "one": "{{ count }}개 품목 보기",
-      "other": "{{ count }}개 품목 보기"
+      "other": "품목 {{ count }}개 보기"
     },
     "view_all": "모두 보기",
     "add": "추가",
@@ -112,7 +112,7 @@
     "sign_in_options": "기타 로그인 옵션",
     "sign_up": "가입하기",
     "sort": "정렬",
-    "show_all_options": "모든 옵션 보기",
+    "show_all_options": "모든 옵션 표시",
     "open": "열기",
     "back_to": "{{ title }}(으)로 돌아가기",
     "zoom_media": "{{ index }} 미디어 확대/축소"
@@ -129,7 +129,7 @@
     "quantity": "수량",
     "product_total": "제품 총계",
     "cart_estimated_total": "예상 총액",
-    "seller_note": "특별 지침",
+    "seller_note": "특별 요청 사항",
     "cart_subtotal": "소계",
     "discounts": "할인",
     "discount": "할인",
@@ -213,7 +213,7 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts": "세금 및 배송료는 결제 시 계산됩니다.",
     "taxes_included_shipping_at_checkout_with_policy_without_discounts_html": "세금이 포함된 가격입니다. 배송료는 결제 시 계산됩니다.",
     "taxes_included_shipping_at_checkout_without_policy_without_discounts": "세금이 포함된 가격입니다. 배송료는 결제 시 계산됩니다.",
-    "view_more_details": "더 많은 세부 정보 보기",
+    "view_more_details": "세부 정보 더 보기",
     "powered_by": "상점 제공:",
     "store_owner_link_html": "스토어 소유자이신가요? <a href=\"{{ link }}\">여기에서 로그인</a>하세요.",
     "shipping_discount_error": "배송 요금 할인은 결제 단계에서 주소를 추가한 후에 표시됩니다.",
@@ -229,7 +229,7 @@
       "one": "{{ count }}개 남음",
       "other": "{{ count }}개 남음"
     },
-    "recipient_form_send_to": "전송 대상:",
+    "recipient_form_send_to": "받는 사람",
     "recipient_form_email_label": "수신자 이메일",
     "recipient_form_email_label_my_email": "내 이메일",
     "recipient_form_email_address": "수신자 이메일 주소",

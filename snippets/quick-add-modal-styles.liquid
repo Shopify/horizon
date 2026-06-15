@@ -10,6 +10,23 @@
     display: contents;
   }
 
+  /* Inputs inside the quick-add modal use the global Input Fields settings,
+     not any per-block overrides set on the product page. */
+  .quick-add-modal .quantity-selector-wrapper {
+    --color-input-background: inherit;
+    --color-input-text: inherit;
+    --color-input-text-rgb: inherit;
+    --color-input-border: inherit;
+    --style-border-width-inputs: inherit;
+    --style-border-radius-inputs: inherit;
+    --style-border-radius-buttons-primary: var(--style-border-radius-inputs);
+    --style-border-radius-buttons-secondary: var(--style-border-radius-inputs);
+  }
+
+  .quick-add-modal .product-details .quantity-selector {
+    border-radius: var(--style-border-radius-inputs);
+  }
+
   @media screen and (min-width: 750px) {
     .quick-add-modal {
       width: var(--quick-add-modal-width);

@@ -1,0 +1,59 @@
+{%- doc -%}
+  Emits CSS custom properties for the gift card recipient option buttons.
+  Each scope (unselected / selected) is controlled by its own Default/Custom
+  select on the buy-buttons block and is emitted independently.
+
+  @param {object} block_settings - The buy-buttons block settings.
+
+  @example
+  <div style="{% render 'gift-card-recipient-button-custom-styles', block_settings: block.settings %}">
+{%- enddoc -%}
+
+{%- liquid
+  assign unselected_custom = false
+  if block_settings.recipient_button_style == 'custom'
+    assign unselected_custom = true
+
+    assign u_background = block_settings.recipient_button_background | default: settings.palette_variant_background
+    assign u_text = block_settings.recipient_button_text | default: settings.palette_variant_text
+    assign u_border = block_settings.recipient_button_border | default: settings.palette_variant_border
+
+    capture unselected_hover
+      render 'resolve-custom-hover', base_bg: u_background, base_text: u_text, base_border: u_border
+    endcapture
+    assign u_hover_parts = unselected_hover | strip | split: '||'
+    assign u_hover_background = u_hover_parts[0]
+    assign u_hover_text = u_hover_parts[1]
+    assign u_hover_border = u_hover_parts[2]
+  endif
+
+  assign selected_custom = false
+  if block_settings.selected_recipient_button_style == 'custom'
+    assign selected_custom = true
+
+    assign s_background = block_settings.selected_recipient_button_background | default: settings.palette_selected_variant_background
+    assign s_text = block_settings.selected_recipient_button_text | default: settings.palette_selected_variant_text
+    assign s_border = block_settings.selected_recipient_button_border | default: settings.palette_selected_variant_border
+
+    capture selected_hover
+      render 'resolve-custom-hover', base_bg: s_background, base_text: s_text, base_border: s_border
+    endcapture
+    assign s_hover_parts = selected_hover | strip | split: '||'
+    assign s_hover_background = s_hover_parts[0]
+    assign s_hover_text = s_hover_parts[1]
+    assign s_hover_border = s_hover_parts[2]
+  endif
+-%}
+{%- if unselected_custom -%}
+  --color-variant-background: rgb({{ u_background.rgba }}); --color-variant-text: rgb({{ u_text.rgba }});
+  --color-variant-text-rgb: {{ u_text.rgb }}; --color-variant-border: rgb({{ u_border.rgba }});
+  --color-variant-hover-background: {{ u_hover_background }}; --color-variant-hover-text: {{ u_hover_text }};
+  --color-variant-hover-border: {{ u_hover_border }};
+{%- endif -%}
+{%- if selected_custom -%}
+  --color-selected-variant-background: rgb({{ s_background.rgba }}); --color-selected-variant-text: rgb(
+  {{- s_text.rgba -}}
+  ); --color-selected-variant-border: rgb({{ s_border.rgba }}); --color-selected-variant-hover-background:
+  {{ s_hover_background }}; --color-selected-variant-hover-text: {{ s_hover_text }};
+  --color-selected-variant-hover-border: {{ s_hover_border }};
+{%- endif -%}

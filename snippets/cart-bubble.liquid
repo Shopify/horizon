@@ -1,13 +1,21 @@
 {%- doc -%}
   @param [limit] - {number}
 
-  The maximum number of items in the cart to display. If the number of items in the cart is greater than this limit, the
-  count will be displayed as "99+".
+  The maximum number of items to display. Anything above shows as "99+".
+
+  Colors: reads --cart-bubble-background / --cart-bubble-text from an ancestor. Falls back to a contrasting pair
+  computed from the palette foreground when unset.
 {%- enddoc -%}
+
+{% liquid
+  assign bubble_bg_fallback = settings.page_text_color
+  assign bubble_text_fallback = settings.page_background_color
+%}
 
 <div
   ref="cartBubble"
   class="cart-bubble{% if cart == empty %} visually-hidden{% endif %}"
+  style="--cart-bubble-background-fallback: {{ bubble_bg_fallback }}; --cart-bubble-text-fallback: {{ bubble_text_fallback }};"
   {% assign item_count = cart.item_count %}
   {% if item_count <= 99 %}
     data-maintain-ratio
@@ -45,7 +53,7 @@
     line-height: normal;
     align-items: center;
     justify-content: center;
-    color: var(--color-primary-button-text);
+    color: var(--cart-bubble-text, var(--cart-bubble-text-fallback));
     padding-inline: var(--cart-padding);
   }
 
@@ -60,7 +68,7 @@
   .cart-bubble__background {
     position: absolute;
     inset: 0;
-    background-color: var(--color-primary-button-background);
+    background-color: var(--cart-bubble-background, var(--cart-bubble-background-fallback));
     border-radius: var(--style-border-radius-lg);
   }
 

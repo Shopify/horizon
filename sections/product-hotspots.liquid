@@ -6,17 +6,26 @@
 
 {% render 'quick-add-styles' %}
 {% render 'quick-add-modal-styles' %}
+{% render 'variant-picker-styles' %}
 {% render 'buy-buttons-styles' %}
 {% render 'product-badges-styles' %}
 
-<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+{% liquid
+  if section.settings.background_color != blank
+    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  endif
+%}
+
+<div
+  class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+></div>
 
 <div
   class="
     section
     section--{{ section.settings.section_width }}
     section-product-hotspots
-    color-{{ section.settings.color_scheme }}
+    {% if section.settings.background_color != blank %}color-custom-{{ section.id }}{% endif %}
     spacing-style
     gap-style
   "
@@ -423,8 +432,8 @@
       height: fit-content;
       translate: var(--padding-2xs) 0;
       border: none;
-      color: var(--color-foreground);
-      background-color: var(--color-background);
+      color: var(--quick-add-foreground, var(--color-foreground));
+      background-color: var(--quick-add-background, var(--color-background));
       overflow: visible;
       pointer-events: all;
       opacity: 1;
@@ -586,10 +595,10 @@
       "alpha": true
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:settings.color_scheme",
-      "default": "scheme-1"
+      "type": "color",
+      "id": "background_color",
+      "placeholder": "t:settings.default",
+      "label": "t:settings.background_color"
     },
     {
       "type": "header",
@@ -694,7 +703,6 @@
       "category": "t:categories.products",
       "settings": {
         "section_width": "page-width",
-        "color_scheme": "scheme-1",
         "product_title_gap": 8,
         "padding-block-start": 40,
         "padding-block-end": 40

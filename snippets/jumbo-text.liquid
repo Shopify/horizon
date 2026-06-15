@@ -42,10 +42,11 @@
   style="
     --font-family: var(--font-{{ block_settings.font | default: 'accent'}}--family);
     --font-weight: var(--font-{{ block_settings.font | default: 'accent'}}--weight);
-    {% if block_settings.font == 'body' %}
-      --color: var(--color-foreground);
+    {% if block_settings.text_color != blank %}
+      --color: {{ block_settings.text_color }};
+      --color-rgb: {{ block_settings.text_color.rgb }};
     {% else %}
-      --color: var(--color-foreground-heading);
+      --color: var(--color-foreground);
     {% endif %}
     --text-align: {{ block_settings.alignment | default: 'left' }};
     {% if block_settings.alignment == "left" %}

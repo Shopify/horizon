@@ -27,7 +27,7 @@ All commits must follow the [Conventional Commits](https://www.conventionalcommi
 
 ## Enforcement
 
-- A local `commit-msg` hook rejects non-conforming messages (auto-installed via `npm install`).
+- A local `commit-msg` hook rejects non-conforming messages (auto-installed via `pnpm install`).
 - A CI workflow validates every commit in a PR.
 - A CI workflow validates that PR titles also follow Conventional Commits format.
 - Merge, revert, `fixup!`, and `squash!` commits are automatically skipped.

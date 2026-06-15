@@ -1,0 +1,33 @@
+{%- doc -%}
+  Returns a color hexcode based on the given color. Intended for providing a
+  hover/interaction state color.
+  The colors are either lightened / darkened based on the provided color's brightness,
+  of have their transparency level decreased based on the alpha channel value.
+
+  @param {color} color - The source color (color object or color string).
+
+  @example
+  {% capture variant_hover_bg %}
+    {% render 'util-palette-hover-shift', color: settings.palette_variant_background %}
+  {% endcapture %}
+{%- enddoc -%}
+
+{%- liquid
+  assign alpha = color.alpha | default: 1
+  if alpha < 0.4
+    # Transparency too high to rely on color brightness change
+    assign new_alpha = alpha | plus: 0.15
+    echo color | color_modify: 'alpha', new_alpha
+  else
+    assign source_brightness = color | color_brightness
+    if source_brightness <= 40
+      echo color | color_lighten: 15
+    elsif source_brightness <= 128
+      echo color | color_lighten: 5
+    elsif source_brightness <= 190
+      echo color | color_darken: 10
+    else
+      echo color | color_darken: 5
+    endif
+  endif
+-%}

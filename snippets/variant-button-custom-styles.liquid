@@ -1,0 +1,92 @@
+{% doc %}
+  Outputs scoped CSS custom properties for the variant-picker block.
+
+  @param {object} block_settings - The block's settings object
+  @param {string} block_id - The block ID used to scope the CSS
+
+  @example
+  {% render 'variant-button-custom-styles', block_settings: block_settings, block_id: block.id %}
+{% enddoc %}
+
+{% liquid
+  assign unselected_custom = false
+  if block_settings.variant_style_class == 'custom'
+    assign unselected_custom = true
+  endif
+
+  assign selected_custom = false
+  if block_settings.variant_style == 'buttons' and block_settings.selected_variant_style_class == 'custom'
+    assign selected_custom = true
+  endif
+%}
+
+{% if unselected_custom %}
+  {%- assign effective_background_color = block_settings.custom_variant_background
+    | default: settings.palette_variant_background
+  %}
+  {%- assign effective_text_color = block_settings.custom_variant_text | default: settings.palette_variant_text -%}
+  {%- assign effective_border_color = block_settings.custom_variant_border
+    | default: settings.palette_variant_border
+  -%}
+  {%- capture u_hover -%}
+    {% render 'resolve-custom-hover',
+      base_bg: effective_background_color,
+      base_text: effective_text_color,
+      base_border: effective_border_color
+    %}
+  {%- endcapture -%}
+  {%- assign u_parts = u_hover | strip | split: '||' -%}
+  {%- assign u_effective_hover_bg = u_parts[0] -%}
+  {%- assign u_effective_hover_text = u_parts[1] -%}
+  {%- assign u_effective_hover_border = u_parts[2] -%}
+{% endif %}
+
+{% if selected_custom %}
+  {%- assign effective_selected_background_color = block_settings.custom_selected_variant_background
+    | default: settings.palette_selected_variant_background
+  %}
+  {%- assign effective_selected_text_color = block_settings.custom_selected_variant_text
+    | default: settings.palette_selected_variant_text
+  -%}
+  {%- assign effective_selected_border_color = block_settings.custom_selected_variant_border
+    | default: settings.palette_selected_variant_border
+  -%}
+  {%- capture s_hover -%}
+    {% render 'resolve-custom-hover',
+      base_bg: effective_selected_background_color,
+      base_text: effective_selected_text_color,
+      base_border: effective_selected_border_color
+    %}
+  {%- endcapture -%}
+  {%- assign s_parts = s_hover | strip | split: '||' -%}
+  {%- assign s_effective_hover_bg = s_parts[0] -%}
+  {%- assign s_effective_hover_text = s_parts[1] -%}
+  {%- assign s_effective_hover_border = s_parts[2] -%}
+{% endif %}
+
+{% style %}
+  {% if unselected_custom %}
+    .variant-picker--custom-{{ block_id }} {
+      --color-variant-background: rgb({{ effective_background_color.rgba }});
+      --color-variant-text: rgb({{ effective_text_color.rgba }});
+      --color-variant-text-rgb: {{ effective_text_color.rgb }};
+      --color-variant-border: rgb({{ effective_border_color.rgba }});
+      --color-variant-hover-background: {{ u_effective_hover_bg }};
+      --color-variant-hover-text: {{ u_effective_hover_text }};
+      --color-variant-hover-border: {{ u_effective_hover_border }};
+      {% if block_settings.variant_style == 'dropdowns' %}
+        --color-selected-variant-border: rgb({{ effective_border_color.rgba }});
+      {% endif %}
+    }
+  {% endif %}
+  {% if selected_custom %}
+    .variant-picker--custom-{{ block_id }} {
+      --color-selected-variant-background: rgb({{ effective_selected_background_color.rgba }});
+      --color-selected-variant-text: rgb({{ effective_selected_text_color.rgba }});
+      --color-selected-variant-border: rgb({{ effective_selected_border_color.rgba }});
+      --color-selected-variant-hover-background: {{ s_effective_hover_bg }};
+      --color-selected-variant-hover-text: {{ s_effective_hover_text }};
+      --color-selected-variant-hover-border: {{ s_effective_hover_border }};
+    }
+  {% endif %}
+{% endstyle %}
