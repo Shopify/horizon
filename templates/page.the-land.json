@@ -542,20 +542,20 @@
         "padding-block-end": 40
       }
     },
-    "section_kAFGm6": {
+    "section_k3w3zd": {
       "type": "section",
       "blocks": {
-        "image_jdYaJP": {
+        "image_aaJ7AR": {
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/DSCF2874-83.jpg",
             "link": "",
-            "border": "solid",
+            "border": "none",
             "border_width": 1,
             "border_opacity": 100,
             "border_radius": 16,
             "image_border_padding": 8,
-            "image_ratio": "adapt",
+            "image_ratio": "landscape",
             "width": "fill",
             "custom_width": 100,
             "width_mobile": "fill",
@@ -568,7 +568,7 @@
           },
           "blocks": {}
         },
-        "group_ApCzbC": {
+        "group_AwyhRa": {
           "type": "group",
           "settings": {
             "content_direction": "column",
@@ -578,7 +578,7 @@
             "align_baseline": false,
             "horizontal_alignment_flex_direction_column": "flex-start",
             "vertical_alignment_flex_direction_column": "center",
-            "gap": 24,
+            "gap": 12,
             "width": "custom",
             "custom_width": 100,
             "width_mobile": "fill",
@@ -607,7 +607,7 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "text_mGXK9a": {
+            "text_PdFVrJ": {
               "type": "text",
               "name": "t:names.heading",
               "settings": {
@@ -633,9 +633,35 @@
               },
               "blocks": {}
             },
-            "text_CFBrDr": {
+            "text_rbgT8x": {
               "type": "text",
-              "name": "t:names.text",
+              "disabled": true,
+              "settings": {
+                "text": "<h4>A seasonal alcohol-free aperitivo</h4>",
+                "width": "fit-content",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "text_9td4b9": {
+              "type": "text",
+              "name": "t:names.heading",
               "settings": {
                 "text": "",
                 "width": "fit-content",
@@ -659,12 +685,13 @@
               },
               "blocks": {}
             },
-            "text_iJdrpM": {
+            "text_rihexT": {
               "type": "text",
+              "name": "t:names.text",
               "settings": {
                 "text": "<p>At Cala Falcó we lead by example, to regenerate the land and protect ecosystems through our unwavering commitment to agro-ecology and pioneering regenerative farming techniques.</p>",
-                "width": "100%",
-                "max_width": "none",
+                "width": "fit-content",
+                "max_width": "normal",
                 "alignment": "left",
                 "type_preset": "rte",
                 "font": "var(--font-body--family)",
@@ -684,12 +711,11 @@
               },
               "blocks": {}
             },
-            "button_PQdEn8": {
+            "button_JJyKBG": {
               "type": "button",
-              "name": "t:names.button",
               "settings": {
                 "label": "Our Regenerative Approach",
-                "link": "shopify://collections/all",
+                "link": "shopify://pages/regenerative-agriculture",
                 "open_in_new_tab": false,
                 "style_class": "button",
                 "width": "fit-content",
@@ -701,23 +727,24 @@
             }
           },
           "block_order": [
-            "text_mGXK9a",
-            "text_CFBrDr",
-            "text_iJdrpM",
-            "button_PQdEn8"
+            "text_PdFVrJ",
+            "text_rbgT8x",
+            "text_9td4b9",
+            "text_rihexT",
+            "button_JJyKBG"
           ]
         }
       },
       "block_order": [
-        "image_jdYaJP",
-        "group_ApCzbC"
+        "image_aaJ7AR",
+        "group_AwyhRa"
       ],
       "name": "t:names.image_with_text",
       "settings": {
         "content_direction": "row",
         "vertical_on_mobile": true,
         "horizontal_alignment": "flex-start",
-        "vertical_alignment": "flex-start",
+        "vertical_alignment": "center",
         "align_baseline": false,
         "horizontal_alignment_flex_direction_column": "flex-start",
         "vertical_alignment_flex_direction_column": "center",
@@ -732,26 +759,26 @@
         "multicolumn_button_label": "Shop now",
         "multicolumn_button_link": "",
         "multicolumn_button_open_in_new_tab": false,
-        "show_image_border": false,
-        "image_border_color": "#ffffff",
-        "image_border_position": "inside",
-        "section_width": "small",
+        "show_image_border": true,
+        "image_border_color": "#E9C08B",
+        "image_border_position": "outside",
+        "section_width": "page-width",
         "section_height": "",
         "section_height_custom": 50,
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-cfa9c273-456f-45a2-b18d-d73976dc71f5",
         "background_media": "none",
         "video_position": "cover",
         "background_image_position": "cover",
         "border": "none",
         "border_width": 1,
         "border_opacity": 100,
-        "border_radius": 54,
+        "border_radius": 20,
         "toggle_overlay": false,
         "overlay_color": "#00000026",
         "overlay_style": "solid",
         "gradient_direction": "to top",
-        "padding-block-start": 80,
-        "padding-block-end": 40
+        "padding-block-start": 60,
+        "padding-block-end": 60
       }
     },
     "section_EUkfqi": {
@@ -5516,7 +5543,7 @@
     "section_QRTNQa",
     "section_NhbG33",
     "testimonials_Lew6rq",
-    "section_kAFGm6",
+    "section_k3w3zd",
     "section_EUkfqi",
     "section_TckyDX",
     "ingredients_m643zQ",
