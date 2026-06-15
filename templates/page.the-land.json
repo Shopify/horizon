@@ -510,6 +510,38 @@
         "padding-block-end": 40
       }
     },
+    "testimonials_Lew6rq": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial_FQwxVi": {
+          "type": "testimonial",
+          "settings": {
+            "quote_short": "<p>Our way is not a path. It’s a return. A quiet calling back to something pure, something sacred. A way of seeing, of listening, of moving through the world with reverence. Cala Falcó is a philosophy, infused into the place we’ve built and the soulful products we steward. A devotion to the beauty that unfolds when we surrender to nature’s rhythm. This is the Cala Falcó Way. A return. A ritual. A way forward.</p>",
+            "cta_label": "",
+            "cta_link": "",
+            "open_in_new_tab": true,
+            "image": "shopify://shop_images/Cove_on_the_Cala_Falc_estate.jpg",
+            "author": "Victor Alarcón & maria sánchez",
+            "author_title": "Co-founders"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_FQwxVi"
+      ],
+      "name": "t:names.testimonials",
+      "settings": {
+        "heading": "a note from our co-founders",
+        "section_width": "full-width",
+        "color_scheme": "",
+        "corner_radius": 24,
+        "slide_gap": 0,
+        "autoplay": false,
+        "autoplay_speed": 4,
+        "padding-block-start": 40,
+        "padding-block-end": 40
+      }
+    },
     "section_TckyDX": {
       "type": "section",
       "blocks": {
@@ -5059,6 +5091,7 @@
     "qa_9wNC4z",
     "section_QRTNQa",
     "section_NhbG33",
+    "testimonials_Lew6rq",
     "section_TckyDX",
     "ingredients_m643zQ",
     "section_qH3t4r",
