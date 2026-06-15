@@ -841,20 +841,61 @@
         "padding-block-end": 48
       }
     },
-    "product_testimonials_main": {
-      "type": "product-testimonials",
-      "name": "t:names.product_testimonials",
+    "testimonials_RhJrC7": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial_ABAryJ": {
+          "type": "testimonial",
+          "settings": {
+            "quote_short": "<p>Cala Falcó at spring is a refined, nuanced non-alcoholic aperitivo, crafted with  passion, exclusivity and remarkable botanical complexity.</p>",
+            "cta_label": "Read full testimonial",
+            "cta_link": "",
+            "open_in_new_tab": true,
+            "image": "shopify://shop_images/IMG_4425.jpg",
+            "author": "Theo Hitchcock",
+            "author_title": "Founder of The Travelcohol-Free Club"
+          }
+        },
+        "testimonial_g8fAdm": {
+          "type": "testimonial",
+          "settings": {
+            "quote_short": "<p>Beautifully complex and vibrant, Cala Falcó at spring delivers elegant botanical depth as a sophisticated non-alcoholic aperitivo.</p>",
+            "cta_label": "Read full testimonial",
+            "cta_link": "",
+            "open_in_new_tab": true,
+            "image": "shopify://shop_images/CalaFalco_25-113.jpg",
+            "author": "Claire Warner",
+            "author_title": "Global Non-Alcoholic Drinks Industry Thought Leader"
+          }
+        },
+        "testimonial_gkFAGp": {
+          "type": "testimonial",
+          "settings": {
+            "quote_short": "<p>Cala Falcó at spring is light, crisp and wonderfully thirst-quenching, with beautiful notes of rosemary and a subtle sea-water minerality that captures the essence of the Mediterranean. The perfect alcohol free drink.</p>",
+            "cta_label": "Read full testimonial",
+            "cta_link": "",
+            "open_in_new_tab": true,
+            "image": "shopify://shop_images/31aa7097-131c-4714-9dbe-274db0762e22-1.png",
+            "author": "Emily Horner",
+            "author_title": "Non-Alcoholic Drinks Influencer"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_ABAryJ",
+        "testimonial_g8fAdm",
+        "testimonial_gkFAGp"
+      ],
+      "name": "t:names.testimonials",
       "settings": {
-        "heading": "Kind Words. Poured Generously",
-        "cta_label": "Read full testimonial",
-        "open_in_new_tab": true,
+        "heading": "Kind Words. Poured Generously.",
         "section_width": "full-width",
-        "color_scheme": "scheme-cfa9c273-456f-45a2-b18d-d73976dc71f5",
+        "color_scheme": "scheme-58aef25d-7d5b-453f-b540-96a1c28ebfc1",
         "corner_radius": 0,
         "slide_gap": 0,
         "autoplay": false,
         "autoplay_speed": 4,
-        "padding-block-start": 60,
+        "padding-block-start": 80,
         "padding-block-end": 0
       }
     },
@@ -959,7 +1000,7 @@
     "main",
     "section_3YqBWc",
     "product_recommendations_qggXJq",
-    "product_testimonials_main",
+    "testimonials_RhJrC7",
     "product_faq_main",
     "column_callouts_ErKxaN"
   ]
