@@ -3,7 +3,7 @@
     "404": "404",
     "borders": "Kanter",
     "collapsible_row": "Sammenleggbar rad",
-    "colors": "Farger",
+    "colors": "Fargepalett",
     "custom_section": "Egendefinert seksjon",
     "icon": "Ikon",
     "logo_and_favicon": "Logo og favorittikon",
@@ -150,7 +150,7 @@
     "media_with_text": "Medier med tekst",
     "page": "Side",
     "page_content": "Innhold",
-    "page_layout": "Sidelayout",
+    "page_layout": "Side",
     "policy_list": "Retningslinjelenker",
     "prices": "Priser",
     "products_editorial": "Utvalgt samling: Redaksjonelt",
@@ -188,7 +188,9 @@
     "product_hotspots": "Produkthotspots",
     "hotspot_product": "Hotspot",
     "product_sku": "SKU",
-    "layered_slideshow": "Lagdelt lysbildefremvisning"
+    "layered_slideshow": "Lagdelt lysbildefremvisning",
+    "drawer": "Skuff",
+    "cart_drawer": "Handlekurvskuff"
   },
   "settings": {
     "alignment": "Justering",
@@ -248,7 +250,6 @@
     "z_index": "Z-indeks",
     "limit_content_width": "Begrens innholdsbredde",
     "color_scheme": "Fargeskjema",
-    "inherit_color_scheme": "Arv fargeskjema",
     "product_count": "Antall produkter",
     "product_type": "Produkttype",
     "content_width": "Innholdsbredde",
@@ -275,7 +276,7 @@
     "filter_style": "Filterstil",
     "swatches": "Produktversjoner",
     "quick_add_colors": "Farger for hurtigkjøp",
-    "divider_color": "Skillelinje",
+    "divider_color": "Delelinjefarge",
     "border_opacity": "Kantlinjeopasitet",
     "hover_background": "Bakgrunn ved peking",
     "hover_borders": "Kantlinjer ved peking",
@@ -304,8 +305,6 @@
     "background_color": "Bakgrunnsfarge",
     "badge_corner_radius": "Hjørneradius",
     "badge_position": "Posisjon på kort",
-    "badge_sale_color_scheme": "Salg",
-    "badge_sold_out_color_scheme": "Utsolgt",
     "behavior": "Atferd",
     "blur": "Skyggeuskarphet",
     "border": "Kantlinje",
@@ -373,6 +372,7 @@
     "limit_media_to_screen_height": "Begrens til skjermhøyde",
     "limit_product_details_width": "Begrens bredden på produktopplysninger",
     "link_preset": "Forhåndsinnstilling for kobling",
+    "link_text_color": "Tekstfarge for kobling",
     "links": "Koblinger",
     "logo_font": "Skrifttype for logo",
     "logo": "Logo",
@@ -392,7 +392,6 @@
     "motion_direction": "Bevegelsesretning",
     "motion": "Bevegelse",
     "movement_direction": "Bevegelsesretning",
-    "navigation_bar_color_scheme": "Fargeskjema for navigasjonslinje",
     "navigation_bar": "Navigasjonslinje",
     "navigation": "Navigasjon",
     "open_new_tab": "Åpne kobling i ny fane",
@@ -578,7 +577,33 @@
     "y_position": "Loddrett posisjon",
     "enable_sticky_add_to_cart": "Festet «Legg i handlekurv»-linje",
     "sticky_add_to_cart": "Festet «Legg i handlekurv»",
-    "actions_display_style": "Menystil"
+    "actions_display_style": "Menystil",
+    "badge_sale_background_color": "Bakgrunn for salgsmerke",
+    "badge_sale_text_color": "Tekst for salgsmerke",
+    "badge_sold_out_background_color": "Bakgrunn for utsolgt-merke",
+    "badge_sold_out_text_color": "Tekst for utsolgt-merke",
+    "border_color": "Kantlinjefarge",
+    "bottom_border_color": "Farge på nedre kantlinje",
+    "drawer_borders": "Kantlinje for skuff",
+    "navigation_bar_background_color": "Bakgrunnsfarge for navigasjonsfelt",
+    "navigation_bar_text_color": "Tekstfarge for navigasjonsfelt",
+    "page_background_color": "Bakgrunn",
+    "page_text_color": "Tekst",
+    "variant_button_style": "Stil for variant",
+    "selected_variant_button_style": "Stil for valgt variant",
+    "top_row": "Øverste rad",
+    "text_color": "Tekstfarge",
+    "text_color_transparent": "Gjennomsiktig overskriftstekst",
+    "slider_color": "Farge på glidebryter",
+    "slider_inner_color": "Indre farge på glidebryter",
+    "bubble_style": "Boblestil",
+    "top_row_background": "Bakgrunn for øverste rad",
+    "top_row_text": "Tekst i øverste rad",
+    "bottom_row_background": "Bakgrunn for nederste rad",
+    "bottom_row_text": "Tekst i nederste rad",
+    "button_style": "Knappstil",
+    "input_style": "Inputstil",
+    "selected_button_style": "Stil for valgt knapp"
   },
   "options": {
     "apple": "Eple",
@@ -853,7 +878,8 @@
     "with_hints": "Med hint",
     "below_media": "Under mediene",
     "full_frame": "Full ramme",
-    "icons": "Ikoner"
+    "icons": "Ikoner",
+    "input_field": "Inndatafelt"
   },
   "content": {
     "advanced": "Avansert",
@@ -885,7 +911,6 @@
     "copyright": "Opphavsrett",
     "edit_logo_in_theme_settings": "Rediger logo i [temainnstillinger](/editor?context=theme&category=logo%20and%20favicon)",
     "edit_price_in_theme_settings": "Rediger prisformatering i [temainnstillinger](/editor?context=theme&category=currency%20code)",
-    "edit_variants_in_theme_settings": "Rediger styling av varianter i [temainnstillinger](/editor?context=theme&category=variants)",
     "email_signups_create_customer_profiles": "Registreringer legger til [kundeprofiler](https://help.shopify.com/manual/customers)",
     "follow_on_shop_eligiblity": "For at knappen skal vises, må Shop-kanalen være installert og Shop Pay aktivert. [Finn ut mer](https://help.shopify.com/en/manual/online-store/themes/customizing-themes/add-shop-buttons)",
     "fonts": "Skrifttyper",
@@ -902,6 +927,7 @@
     "media": "Medier",
     "media_1": "Medie 1",
     "media_2": "Medie 2",
+    "menu_appearance_paragraph": "Påvirker undermenyer på stasjonær datamaskin og hovedmenyen på mobil.",
     "menu": "Meny",
     "mobile_layout": "Mobillayout",
     "padding": "Utfylling",
@@ -970,7 +996,16 @@
     "resource_reference_product_sku": "Viser SKU fra hovedproduktet",
     "content_layout": "Innholdslayout",
     "mobile_media_1": "Mobilmedium 1",
-    "utilities": "Verktøy"
+    "utilities": "Verktøy",
+    "button_colors": "Knappefarger",
+    "cart_bubble": "Handlekurvboble",
+    "links": "Lenker",
+    "type": "Type",
+    "cart_summary_mobile_colors": "På mobil arver sammendragsfargene fra handlekurvseksjonen.",
+    "local_pickup_description": "Vis hentesteder i nærheten når lokal henting i nettbutikken er konfigurert. [Finn ut mer](https://help.shopify.com/en/manual/fulfillment/setup/delivery-methods/pickup-in-store)",
+    "local_pickup": "Lokal henting",
+    "gift_card_products": "Gavekortprodukter",
+    "page_text_color_contrast_info": "Seksjoner med egendefinert bakgrunnsfarge bruker kun denne tekstfargen når det er tilstrekkelig fargekontrast."
   },
   "html_defaults": {
     "share_information_about_your": "<p>Del informasjon om merkevaren din med kundene. Beskriv et produkt, kom med kunngjøringer eller ønsk kundene velkommen til butikken.</p>",
@@ -1075,6 +1110,7 @@
     "checkout_buttons": "Lar kjøpere betale raskere og kan forbedre konverteringen. [Finn ut mer](https://help.shopify.com/manual/online-store/dynamic-checkout)",
     "custom_heading": "Egendefinert overskrift",
     "edit_presets_in_theme_settings": "Rediger forhåndsinnstillinger i [temainnstillinger](/editor?context=theme&category=typography)",
+    "edit_button_style_in_theme_settings": "Rediger stiler for primær- og sekundærknapper i [temainnstillinger](/editor?context=theme&category=buttons)",
     "enable_filtering_info": "Tilpass filtre med [appen Search & Discovery](https://help.shopify.com/manual/online-store/search-and-discovery/filters)",
     "grid_layout_on_mobile": "Rutenettlayout brukes på mobil",
     "logo_font": "Gjelder bare når en logo ikke er valgt",
@@ -1089,7 +1125,10 @@
     "hide_logo_on_home_page_help": "Logoen forblir synlig når klebrig topptekst er aktiv",
     "media_type_info": "Funksjonene hentes fra menykoblingene",
     "logo_height": "Påvirker kun logoen i toppteksten",
-    "actions_display_style": "Ikoner brukes alltid på mobil"
+    "page_text_color_default_info": "Standard for temaseksjoner",
+    "actions_display_style": "Ikoner brukes alltid på mobil",
+    "edit_input_field_in_theme_settings": "Rediger inndatafelt i [temainnstillinger](/editor?context=theme&category=input%20fields)",
+    "edit_variants_in_theme_settings": "Rediger styling av varianter i [temainnstillinger](/editor?context=theme&category=variant%20pickers)"
   },
   "categories": {
     "product_list": "Utvalgt samling",
@@ -1109,6 +1148,7 @@
     "products": "Produkter",
     "other_sections": "Annet",
     "storytelling": "Historiefortelling",
-    "text": "Tekst"
+    "text": "Tekst",
+    "blog_post": "Blogginnlegg"
   }
 }

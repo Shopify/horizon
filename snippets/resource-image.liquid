@@ -110,6 +110,10 @@
   assign content_index = block_parts.last | default: 0
   assign variant = content_index | modulo: placeholder_variants | plus: 1
   assign placeholder_name = placeholder_prefix | append: variant
+
+  if block_settings.background_color != blank
+    render 'contrast-override', background_color: block_settings.background_color, section_id: parent_block_id
+  endif
 %}
 
 {% comment %} Apply aspect ratio to parent component {% endcomment %}
@@ -135,7 +139,7 @@
         collection-card__image
       {% endif %}
       spacing-style border-style
-      {% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %}
+      {% if block_settings.background_color != blank %} color-custom-{{ parent_block_id }}{% endif %}
     "
     style="
       {%- render 'spacing-style', settings: block_settings -%}
@@ -163,7 +167,7 @@
         collection-card__image collection-card__image--placeholder
       {% endif %}
       spacing-style border-style
-      {% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %}
+      {% if block_settings.background_color != blank %} color-custom-{{ parent_block_id }}{% endif %}
     "
     style="
       {%- render 'spacing-style', settings: block_settings -%}

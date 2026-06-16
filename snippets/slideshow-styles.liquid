@@ -129,7 +129,10 @@
    * Be specific about HTML children structure to avoid targeting nested slideshows.
    * Ensure that the content is 'visible' while scrolling instead of 'auto' to avoid issues in Safari.
    */
-  slideshow-component:is([dragging], [transitioning], :hover) > slideshow-container > slideshow-slides > slideshow-slide {
+  slideshow-component:is([dragging], [transitioning], :hover)
+    > slideshow-container
+    > slideshow-slides
+    > slideshow-slide {
     content-visibility: visible;
   }
 

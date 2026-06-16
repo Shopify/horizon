@@ -91,7 +91,14 @@
    * @returns {viewTransition is null}
    */
   function shouldSkipViewTransition(viewTransition) {
-    return !(viewTransition instanceof ViewTransition) || isLowPowerDevice();
+    return !(viewTransition instanceof ViewTransition) || isLowPowerDevice() || prefersReducedMotion();
+  }
+
+  /*
+   * We can't import this logic from utilities.js here, but we should keep them in sync.
+   */
+  function prefersReducedMotion() {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   }
 
   /*

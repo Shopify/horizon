@@ -73,7 +73,7 @@ CSS variables, a.k.a. custom properties, are a powerful tool for reducing redund
 
 Global variables should be scoped to the `:root` selector in `snippets/theme-styles-variables.liquid`.
 
-**Example of global variables**
+Example of global variables:
 
 ```css
 /* in snippets/theme-styles-variables.liquid */
@@ -88,7 +88,7 @@ Global variables should be scoped to the `:root` selector in `snippets/theme-sty
 
 Be sure to scope your CSS variables to the component they are being used in, if they are not meant to be global. Scoped variables can reference global variables.
 
-**Example of scoped variables**
+Example of scoped variables:
 
 ```css
 /* in assets/facets.css */
@@ -134,16 +134,12 @@ Use semantic naming for better maintainability:
   --color-secondary: {{ settings.colors_accent_2 }};
 
   /* Semantic colors */
-  --color-text-primary: rgb(var(--color-foreground));
-  --color-text-secondary: rgb(var(--color-foreground) / 0.75);
-  --color-text-disabled: rgb(var(--color-foreground) / 0.38);
+  --color-foreground-muted: rgb(var(--color-rgb) / 0.6);
+  --color-text-disabled: rgb(var(--color-rgb) / 0.38);
 
   /* Interactive states */
-  --color-interactive-default: rgb(var(--color-accent));
-  /* color-mix isn't supported in earlier version of iOS <16.2 so limit its usage to progressive enhancement */
-  --color-interactive-hover: color-mix(in srgb, rgb(var(--color-accent)) 90%, black);
-  --color-interactive-pressed: color-mix(in srgb, rgb(var(--color-accent)) 80%, black);
-  --color-interactive-disabled: rgb(var(--color-accent) / 0.38);
+  --hover-color: var(--link-text-color-rgb, var(--color-foreground-rgb));
+  --color-active: var(--color-foreground);
 }
 ```
 
@@ -933,11 +929,11 @@ Use consistent commenting for better maintainability:
   .featured-collection {
     --section-padding: {{ section.settings.padding | default: 60 }}px;
     --bg-color: {{ section.settings.background_color | default: '#ffffff' }};
-    --text-color: {{ section.settings.text_color | default: '#000000' }};
+    --color: {{ section.settings.text_color | default: '#000000' }};
 
     padding: var(--section-padding) 0;
     background-color: var(--bg-color);
-    color: var(--text-color);
+    color: var(--color);
     container-type: inline-size;
   }
 

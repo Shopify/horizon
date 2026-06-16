@@ -126,6 +126,7 @@
   :root {
     /* Page Layout */
     --sidebar-width: 25rem;
+    --theme-drawer-width: 30rem;
     --narrow-content-width: 36rem;
     --normal-content-width: 42rem;
     --wide-content-width: 46rem;
@@ -177,14 +178,6 @@
     --font-h5--spacing: var(--font-heading--spacing);
     --font-h6--spacing: var(--font-heading--spacing);
     --font-paragraph--spacing: 0.5em;
-
-    /* Heading colors */
-    --font-h1--color: var(--color-foreground-heading);
-    --font-h2--color: var(--color-foreground-heading);
-    --font-h3--color: var(--color-foreground-heading);
-    --font-h4--color: var(--color-foreground-heading);
-    --font-h5--color: var(--color-foreground-heading);
-    --font-h6--color: var(--color-foreground-heading);
 
     /** Z-Index / Layering */
     --layer-section-background: -2;
@@ -403,7 +396,8 @@
     --opacity-80: 0.8;
     --opacity-85: 0.85;
     --opacity-90: 0.9;
-    --opacity-subdued-text: var(--opacity-70);
+    --opacity-subdued-text: 0.8;
+    --opacity-muted-text: 0.6;
 
     --shadow-button: 0 2px 3px rgb(0 0 0 / 20%);
     --gradient-image-overlay: linear-gradient(to top, rgb(0 0 0 / 0.5), transparent);
@@ -469,8 +463,8 @@
     --style-border-width-secondary: {{ settings.secondary_button_border_width }}px;
     --style-border-width-inputs: {{ settings.input_border_width }}px;
     --style-border-radius-popover: {{ settings.popover_border_radius }}px;
-    --style-border-popover: {{ settings.popover_border_width }}px {{ settings.popover_border }} rgb(var(--color-border-rgb) / {{ settings.popover_border_opacity }}%);
-    --style-border-drawer: {{ settings.drawer_border_width }}px {{ settings.drawer_border }} rgb(var(--color-border-rgb) / {{ settings.drawer_border_opacity }}%);
+    --style-border-popover: {{ settings.popover_border_width }}px solid {{ settings.popover_border_color }};
+    --style-border-drawer: 1px solid {{ settings.drawer_border_color }};
     --style-border-swatch-opacity: {{ settings.variant_swatch_border_opacity }}%;
     --style-border-swatch-width: {{ settings.variant_swatch_border_width }}px;
     --style-border-swatch-style: {{ settings.variant_swatch_border_style }};
@@ -630,6 +624,7 @@
     /* Variant Picker Buttons */
     --variant-picker-button-radius: {{ settings.variant_button_radius | append: 'px' }};
     --variant-picker-button-border-width: {{ settings.variant_button_border_width | append: 'px' }};
+    --variant-option-label-color: var(--color, var(--color-foreground));
 
     /* Slideshow */
     --slideshow-controls-size: 3.5rem;
@@ -686,3 +681,33 @@
     --cart-secondary-font-weight: var(--font-{{ settings.cart_price_font }}--weight);
   }
 {% endstyle %}
+
+{% render 'contrast-override',
+  background_color: settings.popover_background_color,
+  text_color: settings.popover_text_color,
+  border_color: settings.popover_border_color,
+  section_id: 'popover',
+  preset: 'ui'
+%}
+
+{% render 'contrast-override',
+  background_color: settings.drawer_background_color,
+  text_color: settings.drawer_text_color,
+  border_color: settings.drawer_border_color,
+  section_id: 'drawer',
+  preset: 'ui'
+%}
+
+{% render 'contrast-override',
+  background_color: settings.badge_sale_background_color,
+  text_color: settings.badge_sale_text_color,
+  section_id: 'badge-sale',
+  preset: 'ui'
+%}
+
+{% render 'contrast-override',
+  background_color: settings.badge_sold_out_background_color,
+  text_color: settings.badge_sold_out_text_color,
+  section_id: 'badge-sold-out',
+  preset: 'ui'
+%}

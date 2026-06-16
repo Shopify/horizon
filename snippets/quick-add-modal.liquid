@@ -5,7 +5,7 @@
 ></script>
 <quick-add-dialog id="quick-add-dialog">
   <dialog
-    class="quick-add-modal dialog-modal color-{{ settings.popover_color_scheme }}"
+    class="quick-add-modal dialog-modal color-custom-popover"
     ref="dialog"
     scroll-lock
   >
@@ -18,10 +18,11 @@
       {{- 'icon-close.svg' | inline_asset_content -}}
     </button>
 
-    <div
+    <product-component
       id="quick-add-modal-content"
       class="quick-add-modal__content"
-    ></div>
+      view-event-trigger="dialog"
+    ></product-component>
   </dialog>
 </quick-add-dialog>
 

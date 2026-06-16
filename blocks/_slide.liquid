@@ -10,8 +10,17 @@
     endif
 
     assign rounded_image_corners = false
-    if block_settings.inherit_color_scheme == true or block_settings.inherit_color_scheme == false and section.settings.color_scheme.settings.background.rgb == block_settings.color_scheme.settings.background.rgb
+    if block_settings.background_color == blank or section.settings.background_color == block_settings.background_color
       assign rounded_image_corners = true
+    endif
+
+    if block_settings.background_color != blank
+      assign skip_slide_contrast = false
+      if section.settings.content_position == 'on-media'
+        assign skip_slide_contrast = true
+      endif
+      render 'contrast-override', background_color: block_settings.background_color, section_id: block.id, skip_contrast: skip_slide_contrast
+      assign class = 'color-custom-' | append: block.id
     endif
   %}
   {% if section.settings.slide_height == 'adapt_image' and block_index == 0 and preview_image != blank %}
@@ -91,7 +100,7 @@
     {%- endif -%}
   </div>
   <div
-    class="spacing-style slide__content{% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %}{% if preview_image or block_settings.toggle_overlay %} background-transparent{% endif %}"
+    class="spacing-style slide__content {{ class }}{% if preview_image or block_settings.toggle_overlay %} background-transparent{% endif %}"
     style="{% render 'spacing-style', settings: block_settings %}"
     {{ block.shopify_attributes }}
   >
@@ -106,12 +115,6 @@
     </div>
   </div>
 {% endcapture %}
-
-{%- capture class -%}
-  {%- if block_settings.inherit_color_scheme == false -%}
-    color-{{ block_settings.color_scheme }}
-  {%- endif -%}
-{%- endcapture -%}
 
 {% render 'slideshow-slide',
   index: block_index,
@@ -388,17 +391,10 @@
       "content": "t:content.appearance"
     },
     {
-      "type": "checkbox",
-      "id": "inherit_color_scheme",
-      "label": "t:settings.inherit_color_scheme",
-      "default": true
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:settings.color_scheme",
-      "default": "scheme-1",
-      "visible_if": "{{ block.settings.inherit_color_scheme == false }}"
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "placeholder": "t:settings.default"
     },
     {
       "type": "checkbox",
@@ -497,8 +493,6 @@
       "name": "t:names.slide",
       "settings": {
         "horizontal_alignment_flex_direction_column": "center",
-        "inherit_color_scheme": false,
-        "color_scheme": "scheme-6",
         "padding-inline-start": 48,
         "padding-inline-end": 48,
         "padding-block-start": 48,

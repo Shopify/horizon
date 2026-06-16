@@ -66,7 +66,7 @@
     "view_pricing_info": "ดูข้อมูลการกำหนดราคา",
     "slideshow": "สไลด์โชว์",
     "header_navigation_label": "หลัก",
-    "home_logo_alt": "{{ store_name }} – หน้าหลัก",
+    "home_logo_alt": "{{ store_name }} - หน้าหลัก",
     "active_filters": "ตัวกรองที่ใช้งานอยู่:",
     "product_details": "รายละเอียดสินค้า",
     "show_product_details": "แสดงรายละเอียดสินค้าสำหรับ {{ product_name }}",
@@ -78,15 +78,15 @@
   "actions": {
     "add_to_cart": "เพิ่มลงในตะกร้าสินค้า",
     "clear_all": "ล้างทั้งหมด",
-    "remove": "ลบ",
+    "remove": "ลบออก",
     "view_in_your_space": "ดูในพื้นที่ของคุณ",
     "show_filters": "ตัวกรอง",
     "clear": "ล้าง",
-    "continue_shopping": "เลือกซื้อต่อ",
+    "continue_shopping": "เลือกซื้อสินค้าต่อ",
     "log_in_html": "หากมีบัญชีผู้ใช้อยู่แล้ว <a href=\"{{ link }}\">เข้าสู่ระบบ</a>เพื่อชำระเงินได้รวดเร็วขึ้น",
     "see_items": {
       "one": "ดูสินค้า {{ count }} รายการ",
-      "other": "ดูสินค้า {{ count }} รายการ"
+      "other": "ดู {{ count }} รายการ"
     },
     "view_all": "ดูทั้งหมด",
     "add": "เพิ่ม",
@@ -107,7 +107,7 @@
     "back": "ย้อนกลับ",
     "log_in": "ลงชื่อเข้าใช้",
     "log_out": "ออกจากระบบ",
-    "apply": "ใช้",
+    "apply": "นำไปใช้",
     "sign_in_options": "ตัวเลือกอื่นๆ ในการลงชื่อเข้าใช้",
     "sign_up": "ลงทะเบียน",
     "open_image_in_full_screen": "เปิดรูปภาพแบบเต็มหน้าจอ",

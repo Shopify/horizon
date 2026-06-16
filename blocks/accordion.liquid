@@ -1,6 +1,13 @@
 {% assign block_settings = block.settings %}
+
+{% render 'contrast-override',
+  background_color: block_settings.background_color,
+  text_color: block_settings.text_color,
+  section_id: block.id
+%}
+
 <div
-  class="accordion accordion--{{ block.id }} accordion--{{ block_settings.icon }} border-style spacing-style{% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %}{% if block_settings.dividers %} accordion--dividers{% endif %}"
+  class="accordion accordion--{{ block.id }} accordion--{{ block_settings.icon }} border-style spacing-style{% if block_settings.background_color != blank or block_settings.text_color != blank %} color-custom-{{ block.id }}{% endif %}{% if block_settings.background_color != blank %} accordion--custom-background{% endif %}{% if block_settings.dividers %} accordion--dividers{% endif %}"
   style="
     --summary-font-family: var(--font-{{ block_settings.type_preset }}--family);
      --summary-font-style: var(--font-{{ block_settings.type_preset }}--style);
@@ -10,6 +17,7 @@
      --summary-font-case: var(--font-{{ block_settings.type_preset }}--case);
     {% render 'spacing-style', settings: block_settings %}
     {% render 'border-override', settings: block_settings %}
+    {% if block_settings.divider_color != blank %} --color-border: {{ block_settings.divider_color }};{% endif %}
   "
   {{ block.shopify_attributes }}
 >
@@ -32,8 +40,8 @@
     --show-fallback-borders: 0;
   }
 
-  .accordion--dividers:not([class*='color-'])[style*='--border-width: 0'],
-  .accordion--dividers:not([class*='color-'])[style*='--border-style: none'] {
+  .accordion--dividers:not(.accordion--custom-background)[style*='--border-width: 0'],
+  .accordion--dividers:not(.accordion--custom-background)[style*='--border-style: none'] {
     --show-fallback-borders: 1;
   }
 
@@ -100,6 +108,13 @@
       "default": true
     },
     {
+      "type": "color",
+      "id": "divider_color",
+      "label": "t:settings.divider_color",
+      "placeholder": "t:settings.default",
+      "visible_if": "{{ block.settings.dividers }}"
+    },
+    {
       "type": "select",
       "id": "type_preset",
       "label": "t:settings.heading_preset",
@@ -141,17 +156,20 @@
       "info": "t:info.edit_presets_in_theme_settings"
     },
     {
-      "type": "checkbox",
-      "id": "inherit_color_scheme",
-      "label": "t:settings.inherit_color_scheme",
-      "default": true
+      "type": "header",
+      "content": "t:content.appearance"
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:settings.color_scheme",
-      "default": "scheme-1",
-      "visible_if": "{{ block.settings.inherit_color_scheme == false }}"
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "placeholder": "t:settings.default"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:settings.text_color",
+      "placeholder": "t:settings.default"
     },
     {
       "type": "header",
@@ -182,7 +200,7 @@
       "unit": "px",
       "label": "t:settings.thickness",
       "default": 1,
-      "visible_if": "{{ block.settings.border != \"none\" }}"
+      "visible_if": "{{ block.settings.border != 'none' }}"
     },
     {
       "type": "range",
@@ -193,7 +211,14 @@
       "unit": "%",
       "label": "t:settings.opacity",
       "default": 100,
-      "visible_if": "{{ block.settings.border != \"none\" }}"
+      "visible_if": "{{ block.settings.border != 'none' }}"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "t:settings.color",
+      "placeholder": "t:settings.default",
+      "visible_if": "{{ block.settings.border != 'none' }}"
     },
     {
       "type": "range",
@@ -202,6 +227,7 @@
       "min": 0,
       "max": 100,
       "step": 1,
+      "unit": "px",
       "default": 0
     },
     {

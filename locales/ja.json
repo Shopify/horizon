@@ -65,7 +65,7 @@
     "remove": "削除",
     "view_pricing_info": "価格情報を表示する",
     "slideshow": "スライドショー",
-    "header_navigation_label": "プライマリー",
+    "header_navigation_label": "メイン",
     "home_logo_alt": "{{ store_name }} - ホーム",
     "product_details": "商品詳細",
     "show_product_details": "{{ product_name }} の商品詳細を表示",
@@ -79,16 +79,16 @@
     "add_to_cart": "カートに追加",
     "clear_all": "すべてクリア",
     "remove": "削除",
-    "view_in_your_space": "スペースに表示",
+    "view_in_your_space": "自分のスペースで表示",
     "show_filters": "フィルター",
-    "clear": "透明",
+    "clear": "クリア",
     "continue_shopping": "買い物を続ける",
     "log_in_html": "アカウントをお持ちですか？<a href=\"{{ link }}\">ログイン</a>することで、チェックアウトがスピーディーに行えます。",
     "see_items": {
       "one": "{{ count }}個のアイテムを表示する",
-      "other": "{{ count }}個のアイテムを表示する"
+      "other": "{{ count }} 件のアイテムを見る"
     },
-    "view_all": "すべてを表示",
+    "view_all": "すべて表示",
     "add": "追加",
     "choose": "選択",
     "added": "追加済み",
@@ -112,7 +112,7 @@
     "sign_in_options": "その他のログインオプション",
     "sign_up": "サインアップする",
     "sort": "並び替え",
-    "show_all_options": "すべてのオプションを表示する",
+    "show_all_options": "すべてのオプションを表示",
     "open": "オープン",
     "back_to": "{{ title }} に戻る",
     "zoom_media": "ズームメディア {{ index }}"
@@ -129,7 +129,7 @@
     "quantity": "数量",
     "product_total": "商品合計",
     "cart_estimated_total": "見積もり合計",
-    "seller_note": "特別な指示",
+    "seller_note": "特記事項",
     "cart_subtotal": "小計",
     "discounts": "ディスカウント",
     "discount": "ディスカウント",
@@ -163,7 +163,7 @@
     "search_results_resource_pages": "ページ",
     "search_results_resource_products": "商品管理",
     "search_results_resource_queries": "検索候補",
-    "search_results_view_all": "すべてを表示",
+    "search_results_view_all": "すべて表示",
     "search_results_view_all_button": "すべてを表示",
     "search_results_resource_products_count": {
       "one": "{{ count }}個の商品",
@@ -212,7 +212,7 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts": "税と配送料はチェックアウト時に計算されます",
     "taxes_included_shipping_at_checkout_with_policy_without_discounts_html": "税込。送料はチェックアウト時に計算されます。",
     "taxes_included_shipping_at_checkout_without_policy_without_discounts": "税込。送料はチェックアウト時に計算されます。",
-    "view_more_details": "詳細を表示する",
+    "view_more_details": "詳細を表示",
     "wrong_password": "パスワードが正しくありません。",
     "powered_by": "このお店は次を使用しています",
     "store_owner_link_html": "あなたはストアオーナーですか?<a href=\"{{ link }}\">こちらからログインする</a>",
@@ -229,7 +229,7 @@
       "one": "残り{{ count }}利用できます",
       "other": "残り{{ count }}利用できます"
     },
-    "recipient_form_send_to": "送信先",
+    "recipient_form_send_to": "宛先",
     "recipient_form_email_label": "受信者のメール",
     "recipient_form_email_label_my_email": "私のメール",
     "recipient_form_email_address": "受信者のメールアドレス",
@@ -318,7 +318,7 @@
     }
   },
   "fields": {
-    "separator": "～"
+    "separator": "〜"
   },
   "blogs": {
     "article": {

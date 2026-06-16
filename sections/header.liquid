@@ -13,19 +13,18 @@
   endif
 
   if section.settings.show_search
-    render 'predictive-search-styles'
     render 'slideshow-styles'
   endif
 
   if section.settings.enable_transparent_header_home and template.name == 'index'
     assign transparent = 'always'
-    assign transparent_color_scheme = section.settings.home_color_scheme
+    assign transparent_text_color_setting = section.settings.text_color_transparent_home
   elsif section.settings.enable_transparent_header_product and template.name == 'product'
     assign transparent = 'always'
-    assign transparent_color_scheme = section.settings.product_color_scheme
+    assign transparent_text_color_setting = section.settings.text_color_transparent_product
   elsif section.settings.enable_transparent_header_collection and template.name == 'collection'
     assign transparent = 'always'
-    assign transparent_color_scheme = section.settings.collection_color_scheme
+    assign transparent_text_color_setting = section.settings.text_color_transparent_collection
   endif
 
   if section.settings.enable_sticky_header == 'always'
@@ -38,11 +37,44 @@
     assign transparent = 'not-sticky'
   endif
 
-  if transparent
-    if transparent_color_scheme == 'inverse'
-      assign transparent_color_scheme = 'color-' | append: section.settings.color_scheme_transparent
-    else
-      assign transparent_color_scheme = 'color-' | append: section.settings.color_scheme_top
+  assign text_color_transparent = transparent_text_color_setting | default: settings.page_text_color
+  assign transparent_text_brightness = text_color_transparent | color_brightness
+  if transparent_text_brightness > 128
+    assign transparent_text_contrast = 'var(--palette-darkest)'
+  else
+    assign transparent_text_contrast = 'var(--palette-lightest)'
+  endif
+
+  # Cart bubble colors: custom styles apply in every header state; default
+  # mirrors the top row's effective text color, with a contrasting text color.
+  if section.settings.bubble_style == 'custom' or section.settings.text_color_top != blank or section.settings.background_color_top != blank
+    assign cart_bubble_color_override = true
+  endif
+  if cart_bubble_color_override
+    if section.settings.bubble_style == 'custom'
+      assign cart_bubble_background = section.settings.bubble_background_color | default: section.settings.text_color_top | default: settings.page_text_color
+      assign cart_bubble_text = section.settings.bubble_text_color | default: section.settings.background_color_top | default: settings.page_background_color
+    elsif section.settings.text_color_top != blank
+      assign cart_bubble_background = section.settings.text_color_top
+      if section.settings.background_color_top != blank
+        assign cart_bubble_text = section.settings.background_color_top
+      else
+        assign cart_bubble_bg_brightness = cart_bubble_background | color_brightness
+        if cart_bubble_bg_brightness > 128
+          assign cart_bubble_text = 'var(--palette-darkest)'
+        else
+          assign cart_bubble_text = 'var(--palette-lightest)'
+        endif
+      endif
+    elsif section.settings.background_color_top != blank
+      assign bg_top = section.settings.background_color_top
+      assign bg_top_brightness = bg_top | color_brightness
+      assign cart_bubble_text = bg_top
+      if bg_top_brightness > 128
+        assign cart_bubble_background = 'var(--palette-darkest)'
+      else
+        assign cart_bubble_background = 'var(--palette-lightest)'
+      endif
     endif
   endif
 
@@ -50,7 +82,6 @@
     content_for 'block', type: '_header-logo', id: 'header-logo'
   endcapture
 
-  # theme-check-disable UniqueStaticBlockId
   capture menu
     content_for 'block', type: '_header-menu', id: 'header-menu'
   endcapture
@@ -62,7 +93,6 @@
   capture navigation_bar
     content_for 'block', type: '_header-menu', id: 'header-menu', variant: 'navigation_bar', transparent: transparent
   endcapture
-  # theme-check-enable UniqueStaticBlockId
 
   capture actions
     render 'header-actions', customer_account_menu: section.settings.customer_account_menu, display_style: section.settings.actions_display_style, section: section
@@ -149,15 +179,11 @@
     assign header_height_class = ' header--compact'
   endif
 
-  if bottom_row_blocks.size > 0 and section.settings.color_scheme_top.settings.background.rgb == section.settings.color_scheme_bottom.settings.background.rgb and section.settings.divider_width == 0
+  if bottom_row_blocks.size > 0 and section.settings.background_color_top == section.settings.background_color_bottom and section.settings.divider_width == 0
     assign collapse_header_paddings_class = 'header--collapse-row-paddings'
   endif
 
   assign class = 'header'
-
-  if transparent_color_scheme
-    assign class = class | append: ' ' | append: transparent_color_scheme
-  endif
 
   if header_height_class
     assign class = class | append: ' ' | append: header_height_class
@@ -171,20 +197,20 @@
   assign top_transparent = false
   assign bottom_transparent = false
 
-  if section.settings.color_scheme_top.settings.background.alpha != 1
+  if section.settings.background_color_top.alpha != 1
     assign top_transparent = true
   endif
 
-  if section.settings.color_scheme_bottom.settings.background.alpha != 1
+  if section.settings.background_color_bottom.alpha != 1
     assign bottom_transparent = true
   endif
 
   if top_transparent and bottom_transparent
-    assign transparent_color_scheme_value = 'both'
+    assign background_transparent_color_value = 'both'
   elsif top_transparent
-    assign transparent_color_scheme_value = 'top'
+    assign background_transparent_color_value = 'top'
   elsif bottom_transparent
-    assign transparent_color_scheme_value = 'bottom'
+    assign background_transparent_color_value = 'bottom'
   endif
 %}
 
@@ -220,8 +246,9 @@
       >
         {% if show_country %}
           {% if section.settings.country_selector_style == true %}
+            {% assign localization_background_color = 'background_color_[row]' | replace: '[row]', section.settings.localization_row %}
             {% liquid
-              assign background_brightness = section.settings.color_scheme.settings.background | color_brightness
+              assign background_brightness = section.settings[localization_background_color] | color_brightness
               if background_brightness < 64
                 assign shadow_size = 4
               else
@@ -266,7 +293,7 @@
       </button>
 
       <div
-        class="localization-wrapper {{ section.settings.localization_position }}-bound color-{{ settings.popover_color_scheme }}"
+        class="localization-wrapper {{ section.settings.localization_position }}-bound color-custom-popover"
         hidden
         ref="panel"
       >
@@ -297,7 +324,8 @@
 <header-component
   id="header-component"
   class="{{ class }}"
-  data-theme-color="rgb({{ section.settings.color_scheme_top.settings.background.rgb }})"
+  data-theme-color="rgb({{ section.settings.background_color_top.rgb | default: settings.page_background_color.rgb }})"
+  data-bubble-style="{{ section.settings.bubble_style }}"
   {% if transparent %}
     transparent="{{ transparent }}"
   {% endif %}
@@ -309,12 +337,21 @@
   {% if section.settings.menu_row == 'top' and bottom_row_blocks.size > 0 %}
     data-submenu-overlap-bottom-row
   {% endif %}
-  {% if transparent_color_scheme_value %}
-    data-transparent-color-scheme="{{ transparent_color_scheme_value }}"
+  {% if background_transparent_color_value %}
+    data-transparent-background="{{ background_transparent_color_value }}"
   {% endif %}
   style="
-    --color-scheme-top-row: rgba({{ section.settings.color_scheme_top.settings.background.rgba }});
-    --color-scheme-bottom-row: rgba({{ section.settings.color_scheme_bottom.settings.background.rgba }});
+    --color-background-top-row: rgba({{ section.settings.background_color_top.rgba | default: settings.page_background_color.rgba }});
+    --color-background-bottom-row: rgba({{ section.settings.background_color_bottom.rgba | default: settings.page_background_color.rgba }});
+    {% if transparent and text_color_transparent != blank %}
+      --color-transparent-text: {{ text_color_transparent }};
+      --color-transparent-text-rgb: {{ text_color_transparent.rgb }};
+      --color-transparent-text-contrast: {{ transparent_text_contrast }};
+    {% endif %}
+    {% if cart_bubble_color_override %}
+      --cart-bubble-background: {{ cart_bubble_background }};
+      --cart-bubble-text: {{ cart_bubble_text }};
+    {% endif %}
     {% if section.settings.actions_display_style == 'text' %}
       --header-actions-font-size: {{ section.settings.actions_font_size | default: '1rem' }};
       --header-actions-font-family: var(--font-{{ section.settings.actions_font | default: 'heading' }}--family);
@@ -332,8 +369,12 @@
   {%- endif -%}
   {% for row in rows %}
     {% liquid
-      assign scheme = 'color_scheme_' | append: row
-      assign class = 'header__row header__row--[row] color-[row_scheme] section section--full-width-margin section--[section-width]' | replace: '[row]', row | replace: '[row_scheme]', section.settings[scheme] | replace: '[section-width]', section.settings.section_width
+      assign background = 'background_color_' | append: row
+      assign row_setting = 'background_color_' | append: row
+      assign text_setting = 'text_color_' | append: row
+      assign row_class_id = row | append: '-' | append: section.id
+      assign row_class = ' color-custom-' | append: row_class_id
+      assign class = 'header__row header__row--[row] color-[row_background] section section--full-width-margin section--[section-width]' | replace: '[row]', row | replace: '[row_background]', section.settings[background] | replace: '[section-width]', section.settings.section_width
 
       case row
         when 'top'
@@ -345,24 +386,45 @@
 
           if bottom_row_blocks.size > 0
             assign border_bottom_setting_id = 'divider_width'
+            assign border_bottom_color_setting_id = 'divider_color'
           else
             assign border_bottom_setting_id = 'border_width'
+            assign border_bottom_color_setting_id = 'bottom_border_color'
           endif
         when 'bottom'
           assign first = ''
           assign class = class | append: ' mobile:hidden'
 
           assign border_bottom_setting_id = 'border_width'
+          assign border_bottom_color_setting_id = 'bottom_border_color'
       endcase
 
       assign style = '--border-bottom-width: [width]px; ' | replace: '[width]', section.settings[border_bottom_setting_id]
 
+      assign border_bottom_color_value = section.settings[border_bottom_color_setting_id]
+      if border_bottom_color_value != blank
+        assign style = style | append: '--border-bottom-color: [color]; ' | replace: '[color]', border_bottom_color_value
+      endif
+
       if row == 'top'
+        assign custom_color_styles = true
+        assign class = class | append: row_class
         assign style = style | append: '--border-bottom-width-mobile: [width]px; ' | replace: '[width]', section.settings.border_width
+
+        assign mobile_border_color = section.settings.bottom_border_color | default: 'var(--color-border)'
+        assign style = style | append: '--border-bottom-color-mobile: [color]; ' | replace: '[color]', mobile_border_color
+      elsif bottom_row_blocks.size > 0
+        assign custom_color_styles = true
+        assign class = class | append: row_class
+      else
+        assign custom_color_styles = false
       endif
     %}
 
     {% capture content %}
+      {% if custom_color_styles %}
+        {% render 'contrast-override', background_color: section.settings[row_setting], text_color: section.settings[text_setting], section_id: row_class_id %}
+      {% endif %}
       {% render 'header-row',
         row: row,
         order: order,
@@ -394,7 +456,7 @@
   {% endfor %}
 
   {% if navigation_bar != blank %}
-    <div class="header__row header__navigation-bar-row color-{{ section.settings.color_scheme_bottom }}">
+    <div class="header__row header__navigation-bar-row">
       {{ navigation_bar }}
     </div>
   {% endif %}
@@ -483,14 +545,24 @@
       --closed-underlay-height: 100%;
     }
 
-    /** For transparent header, apply inherit to rows when menu is not hovered */
+    /** For transparent header, apply transparent text color to rows when menu is not hovered */
     &:not([data-sticky-state='active']):not(:has(.menu-list__link:is(:hover, [aria-expanded='true']))) .header__row {
-      --color-foreground: inherit;
-      --color-foreground-rgb: inherit;
-      --color-border: inherit;
-      --color-border-rgb: inherit;
-      --color-primary-button-background: inherit;
-      --color-primary-button-text: inherit;
+      --color-foreground: var(--color-transparent-text);
+      --color-foreground-rgb: var(--color-transparent-text-rgb);
+      --color-border: var(--color-transparent-text);
+      --color-border-rgb: var(--color-transparent-text-rgb);
+      --color-primary-button-background: var(--color-transparent-text);
+      --color-primary-button-text: var(--color-transparent-text-contrast);
+    }
+
+    /* Swap the cart bubble in transparent state only when using the default
+       style. Custom bubble colors apply unchanged across header states. */
+    &[data-bubble-style='default']:not([data-sticky-state='active']):not(
+        :has(.menu-list__link:is(:hover, [aria-expanded='true']))
+      )
+      .header__row {
+      --cart-bubble-background: var(--color-transparent-text, var(--cart-bubble-background-fallback));
+      --cart-bubble-text: var(--color-transparent-text-contrast, var(--cart-bubble-text-fallback));
     }
 
     /* Multiple selectors for performance: each simple :has() check is faster than one complex selector with multiple conditions */
@@ -510,10 +582,10 @@
   }
 
   /* When top row has transparent background, make it inherit colors from header component */
-  [data-transparent-color-scheme='top']:hover .header__row--top,
-  [data-transparent-color-scheme='top']:focus-within .header__row--top,
-  [data-transparent-color-scheme='both']:hover .header__row--top,
-  [data-transparent-color-scheme='both']:focus-within .header__row--top {
+  [data-transparent-background='top']:hover .header__row--top,
+  [data-transparent-background='top']:focus-within .header__row--top,
+  [data-transparent-background='both']:hover .header__row--top,
+  [data-transparent-background='both']:focus-within .header__row--top {
     --color-foreground: inherit;
     --color-foreground-rgb: inherit;
     --color-border: inherit;
@@ -523,10 +595,10 @@
   }
 
   /* When bottom row has transparent background, make it inherit colors from header component */
-  [data-transparent-color-scheme='bottom']:hover .header__row--bottom,
-  [data-transparent-color-scheme='bottom']:focus-within .header__row--bottom,
-  [data-transparent-color-scheme='both']:hover .header__row--bottom,
-  [data-transparent-color-scheme='both']:focus-within .header__row--bottom {
+  [data-transparent-background='bottom']:hover .header__row--bottom,
+  [data-transparent-background='bottom']:focus-within .header__row--bottom,
+  [data-transparent-background='both']:hover .header__row--bottom,
+  [data-transparent-background='both']:focus-within .header__row--bottom {
     --color-foreground: inherit;
     --color-foreground-rgb: inherit;
     --color-border: inherit;
@@ -537,7 +609,7 @@
 
   .header-section {
     position: relative;
-    z-index: var(--layer-heightened);
+    z-index: var(--layer-menu-drawer);
   }
 
   /* need default values for non-flash transitions on first overflow menu open */
@@ -556,7 +628,7 @@
 
     /* Use -1 instead of 0 so intersection observer can track sticky state */
     top: -1px;
-    z-index: var(--layer-sticky);
+    z-index: var(--layer-menu-drawer);
   }
 
   .header[data-sticky-state] {
@@ -590,8 +662,8 @@
     height: var(--closed-underlay-height, 100%);
     z-index: var(--layer-lowest);
     background: linear-gradient(
-      var(--color-scheme-top-row) 0 var(--top-row-height),
-      var(--color-scheme-bottom-row) var(--top-row-height) var(--header-height)
+      var(--color-background-top-row) 0 var(--top-row-height),
+      var(--color-background-bottom-row) var(--top-row-height) var(--header-height)
     );
     transition: height var(--animation-speed-slow) var(--ease-out-cubic);
   }
@@ -599,8 +671,8 @@
   .header__underlay-open {
     height: var(--full-open-header-height);
     background: linear-gradient(
-      var(--color-scheme-top-row) 0 var(--top-row-height),
-      var(--color-scheme-bottom-row) var(--top-row-height) var(--header-height),
+      var(--color-background-top-row) 0 var(--top-row-height),
+      var(--color-background-bottom-row) var(--top-row-height) var(--header-height),
       var(--color-submenu) var(--header-height) 100%
     );
     /* header-height is updated via js, the transition works automagically */
@@ -616,30 +688,30 @@
     transition: height var(--submenu-animation-speed) var(--ease-out-cubic);
   }
 
-  /* When top row has transparent background, make underlay inherit colors from header component */
-  [data-transparent-color-scheme='top']:hover,
-  [data-transparent-color-scheme='top']:focus-within,
-  [data-transparent-color-scheme='both']:hover,
-  [data-transparent-color-scheme='both']:focus-within {
+  /* When top row has transparent background, swap underlay to merchant's chosen color at full opacity */
+  [data-transparent-background='top']:hover,
+  [data-transparent-background='top']:focus-within,
+  [data-transparent-background='both']:hover,
+  [data-transparent-background='both']:focus-within {
     :is(.header__underlay-open, .header__underlay-closed) {
-      --color-scheme-top-row: var(--color-background);
+      --color-background-top-row: var(--color-background);
     }
   }
 
-  /* When bottom row has transparent background, make underlay inherit colors from header component */
-  [data-transparent-color-scheme='bottom']:hover,
-  [data-transparent-color-scheme='bottom']:focus-within,
-  [data-transparent-color-scheme='both']:hover,
-  [data-transparent-color-scheme='both']:focus-within {
+  /* When bottom row has transparent background, swap underlay to merchant's chosen color at full opacity */
+  [data-transparent-background='bottom']:hover,
+  [data-transparent-background='bottom']:focus-within,
+  [data-transparent-background='both']:hover,
+  [data-transparent-background='both']:focus-within {
     :is(.header__underlay-open, .header__underlay-closed) {
-      --color-scheme-bottom-row: var(--color-background);
+      --color-background-bottom-row: var(--color-background);
     }
   }
 
   [data-submenu-overlap-bottom-row] {
     .header__underlay-open {
       background: linear-gradient(
-        var(--color-scheme-top-row) 0 var(--top-row-height),
+        var(--color-background-top-row) 0 var(--top-row-height),
         var(--color-submenu) var(--top-row-height) 100%
       );
     }
@@ -652,13 +724,14 @@
   /* End Underlays ================ */
 
   .header__row {
-    /* The account component uses a different color scheme, but we need to override it to inherit the color of the header row */
+    /* The account component uses a different background color, but we need to override it to inherit the color of the header row */
     --color-account-icon: var(--color-foreground);
 
     position: relative;
 
-    /* Overwrite color from color scheme, background is controlled by the underlays */
-    background-color: transparent;
+    /* Overwrite color from section settings, background is controlled by the underlays */
+    /* stylelint-disable-next-line declaration-no-important */
+    background-color: transparent !important;
 
     &:has(.mega-menu__list:hover),
     &:has(.menu-list__link[aria-haspopup]:is(:hover, [aria-expanded='true'])),
@@ -671,19 +744,21 @@
   .header__row--top:not(.divider--page-width),
   .header__row--top.divider--page-width .header__columns,
   .header__row--bottom {
-    border-bottom: var(--border-bottom-width) solid var(--color-border);
+    border-bottom: var(--border-bottom-width) solid var(--border-bottom-color, var(--color-border));
   }
 
   @media screen and (max-width: 749px) {
     .header__row--top:not(.divider--page-width),
     .header__row--top.divider--page-width .header__columns {
       border-bottom-width: var(--border-bottom-width-mobile);
+      border-bottom-color: var(--border-bottom-color-mobile);
     }
   }
 
   #header-component[data-menu-style='drawer'] .header__row--top:not(.divider--page-width),
   #header-component[data-menu-style='drawer'] .header__row--top.divider--page-width .header__columns {
     border-bottom-width: var(--border-bottom-width-mobile);
+    border-bottom-color: var(--border-bottom-color-mobile);
   }
 
   .header__row.divider--page-width:not(.section--page-width) .header__columns {
@@ -923,27 +998,6 @@
     margin-top: var(--header-height);
   }
 
-  /* When the header is transparent, and when there is no header-section below it, offset the first main-section with
-     * the height of the header
-     */
-
-  main > .shopify-section:first-child .section:not(.disable-section-top-offset) {
-    &.spacing-style,
-    .spacing-style {
-      --section-top-offset: calc(var(--header-height) * var(--transparent-header-offset-boolean));
-
-      /* Any nested sections should not be offset */
-      :is(.spacing-style, .inherit-spacing) {
-        --section-top-offset: 0px;
-      }
-    }
-
-    /* Make sticky content immediately stick to the top of the page */
-    .sticky-content {
-      margin-top: calc(var(--header-height) * var(--transparent-header-offset-boolean) * -1);
-    }
-  }
-
   /* Optimize layout performance for hidden menus */
   .header-menu .menu-list__submenu {
     content-visibility: auto;
@@ -1087,7 +1141,7 @@
   }
 
   dropdown-localization-component .localization-form__select:hover {
-    background-color: rgb(var(--color-primary-hover-rgb) / var(--opacity-8));
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-8));
   }
 
   dropdown-localization-component
@@ -1445,6 +1499,13 @@
       "visible_if": "{{ section.settings.divider_width > 0 and section.settings.menu_row == 'bottom' or section.settings.localization_row == 'bottom' or section.settings.search_row == 'bottom' }}"
     },
     {
+      "type": "color",
+      "id": "divider_color",
+      "label": "t:settings.divider_color",
+      "placeholder": "t:settings.default",
+      "visible_if": "{{ section.settings.divider_width > 0 and section.settings.menu_row == 'bottom' or section.settings.localization_row == 'bottom' or section.settings.search_row == 'bottom' }}"
+    },
+    {
       "type": "range",
       "id": "border_width",
       "label": "t:settings.border_width",
@@ -1453,6 +1514,13 @@
       "step": 0.5,
       "unit": "px",
       "default": 0
+    },
+    {
+      "type": "color",
+      "id": "bottom_border_color",
+      "label": "t:settings.bottom_border_color",
+      "placeholder": "t:settings.default",
+      "visible_if": "{{ section.settings.border_width > 0 }}"
     },
     {
       "type": "header",
@@ -1547,24 +1615,64 @@
       "content": "t:content.colors"
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme_top",
-      "label": "t:settings.default",
-      "default": "primary"
+      "type": "color",
+      "id": "background_color_top",
+      "label": "t:settings.top_row_background",
+      "placeholder": "t:settings.default"
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme_bottom",
-      "label": "t:settings.bottom_row",
-      "default": "primary",
+      "type": "color",
+      "id": "text_color_top",
+      "label": "t:settings.top_row_text",
+      "placeholder": "t:settings.default"
+    },
+    {
+      "type": "color",
+      "id": "background_color_bottom",
+      "label": "t:settings.bottom_row_background",
+      "placeholder": "t:settings.default",
       "visible_if": "{{ section.settings.menu_row == 'bottom' or section.settings.localization_row == 'bottom' or section.settings.search_row == 'bottom' }}"
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme_transparent",
-      "label": "t:settings.inverse",
-      "default": "primary",
-      "visible_if": "{{ section.settings.enable_transparent_header_home or section.settings.enable_transparent_header_product or section.settings.enable_transparent_header_collection }}"
+      "type": "color",
+      "id": "text_color_bottom",
+      "label": "t:settings.bottom_row_text",
+      "placeholder": "t:settings.default",
+      "visible_if": "{{ section.settings.menu_row == 'bottom' or section.settings.localization_row == 'bottom' or section.settings.search_row == 'bottom' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.cart_bubble"
+    },
+    {
+      "type": "select",
+      "id": "bubble_style",
+      "label": "t:settings.bubble_style",
+      "options": [
+        {
+          "value": "default",
+          "label": "t:options.default"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "color",
+      "id": "bubble_background_color",
+      "label": "t:settings.background",
+      "placeholder": "t:settings.default",
+      "visible_if": "{{ section.settings.bubble_style == 'custom' }}"
+    },
+    {
+      "type": "color",
+      "id": "bubble_text_color",
+      "label": "t:settings.text",
+      "placeholder": "t:settings.default",
+      "visible_if": "{{ section.settings.bubble_style == 'custom' }}"
     },
     {
       "type": "header",
@@ -1577,20 +1685,17 @@
       "default": false
     },
     {
-      "type": "select",
-      "id": "home_color_scheme",
-      "label": "t:settings.color_scheme",
-      "options": [
-        {
-          "value": "default",
-          "label": "t:options.default"
-        },
-        {
-          "value": "inverse",
-          "label": "t:options.inverse"
-        }
-      ],
-      "default": "default",
+      "type": "checkbox",
+      "id": "home_inverse_logo",
+      "label": "t:settings.inverse_logo",
+      "default": false,
+      "visible_if": "{{ section.settings.enable_transparent_header_home }}"
+    },
+    {
+      "type": "color",
+      "id": "text_color_transparent_home",
+      "label": "t:settings.text_color_transparent",
+      "placeholder": "t:settings.default",
       "visible_if": "{{ section.settings.enable_transparent_header_home }}"
     },
     {
@@ -1604,20 +1709,17 @@
       "default": false
     },
     {
-      "type": "select",
-      "id": "product_color_scheme",
-      "label": "t:settings.color_scheme",
-      "options": [
-        {
-          "value": "default",
-          "label": "t:options.default"
-        },
-        {
-          "value": "inverse",
-          "label": "t:options.inverse"
-        }
-      ],
-      "default": "default",
+      "type": "checkbox",
+      "id": "product_inverse_logo",
+      "label": "t:settings.inverse_logo",
+      "default": false,
+      "visible_if": "{{ section.settings.enable_transparent_header_product }}"
+    },
+    {
+      "type": "color",
+      "id": "text_color_transparent_product",
+      "label": "t:settings.text_color_transparent",
+      "placeholder": "t:settings.default",
       "visible_if": "{{ section.settings.enable_transparent_header_product }}"
     },
     {
@@ -1631,20 +1733,17 @@
       "default": false
     },
     {
-      "type": "select",
-      "id": "collection_color_scheme",
-      "label": "t:settings.color_scheme",
-      "options": [
-        {
-          "value": "default",
-          "label": "t:options.default"
-        },
-        {
-          "value": "inverse",
-          "label": "t:options.inverse"
-        }
-      ],
-      "default": "default",
+      "type": "checkbox",
+      "id": "collection_inverse_logo",
+      "label": "t:settings.inverse_logo",
+      "default": false,
+      "visible_if": "{{ section.settings.enable_transparent_header_collection }}"
+    },
+    {
+      "type": "color",
+      "id": "text_color_transparent_collection",
+      "label": "t:settings.text_color_transparent",
+      "placeholder": "t:settings.default",
       "visible_if": "{{ section.settings.enable_transparent_header_collection }}"
     }
   ],

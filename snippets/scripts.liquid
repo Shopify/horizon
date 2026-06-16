@@ -8,10 +8,11 @@
   {
     "imports": {
       "@theme/overflow-list": "{{ 'overflow-list.js' | asset_url }}",
-      "@theme/product-title": "{{ 'product-title-truncation.js' | asset_url }}",
       "@theme/component": "{{ 'component.js' | asset_url }}",
       "@theme/dialog": "{{ 'dialog.js' | asset_url }}",
       "@theme/events": "{{ 'events.js' | asset_url }}",
+      "@shopify/events": "https://cdn.shopify.com/storefront/standard-events.js",
+      "@theme/view-event-elements": "{{ 'view-event-elements.js' | asset_url }}",
       "@theme/focus": "{{ 'focus.js' | asset_url }}",
       "@theme/morph": "{{ 'morph.js' | asset_url }}",
       "@theme/paginated-list": "{{ 'paginated-list.js' | asset_url }}",
@@ -31,10 +32,29 @@
       "@theme/component-quantity-selector": "{{ 'component-quantity-selector.js' | asset_url }}",
       "@theme/comparison-slider": "{{ 'comparison-slider.js' | asset_url }}",
       "@theme/sticky-add-to-cart": "{{ 'sticky-add-to-cart.js' | asset_url }}",
-      "@theme/fly-to-cart": "{{ 'fly-to-cart.js' | asset_url }}"
+      "@theme/fly-to-cart": "{{ 'fly-to-cart.js' | asset_url }}",
+      "@theme/scroll-container": "{{ 'scroll-container.js' | asset_url }}",
+      "@theme/theme-drawer": "{{ 'theme-drawer.js' | asset_url }}"
     }
   }
 </script>
+
+{%- comment -%}
+  Registers Horizon's cart-drawer behaviour against the standard-actions
+  bundle (loaded separately into <head>). Module scripts execute in
+  document order, so this runs after the bundle regardless of where it
+  lands in <head>.
+{%- endcomment -%}
+<script
+  src="{{ 'standard-actions-override.js' | asset_url }}"
+  type="module"
+></script>
+
+<script
+  src="{{ 'page-view-event.js' | asset_url }}"
+  type="module"
+  defer
+></script>
 
 <script
   src="{{ 'view-transitions.js' | asset_url }}"
@@ -79,12 +99,6 @@
   <link
     rel="modulepreload"
     href="{{ 'paginated-list.js' | asset_url }}"
-    fetchpriority="low"
-  >
-
-  <link
-    rel="modulepreload"
-    href="{{ 'product-title-truncation.js' | asset_url }}"
     fetchpriority="low"
   >
 {% endif %}
@@ -178,11 +192,6 @@
   fetchpriority="low"
 ></script>
 <script
-  src="{{ 'product-title-truncation.js' | asset_url }}"
-  type="module"
-  fetchpriority="low"
-></script>
-<script
   src="{{ 'product-inventory.js' | asset_url }}"
   type="module"
   fetchpriority="low"
@@ -257,11 +266,6 @@
 {% endif %}
 
 {% if template == 'product' or template.name == 'product' or request.page_type == 'product' %}
-  <script
-    src="{{ 'fly-to-cart.js' | asset_url }}"
-    type="module"
-    fetchpriority="low"
-  ></script>
   <script
     src="{{ 'sticky-add-to-cart.js' | asset_url }}"
     type="module"

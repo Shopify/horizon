@@ -67,7 +67,7 @@
     "view_pricing_info": "Visualizza informazioni sui prezzi",
     "slideshow": "Presentazione",
     "header_navigation_label": "Principale",
-    "home_logo_alt": "{{ store_name }} – Home",
+    "home_logo_alt": "{{ store_name }} - Home",
     "active_filters": "Filtri attivi:",
     "product_details": "Dettagli del prodotto",
     "show_product_details": "Mostra i dettagli del prodotto per {{ product_name }}",
@@ -83,12 +83,12 @@
     "view_in_your_space": "Visualizza nel tuo spazio",
     "show_filters": "Filtro",
     "clear": "Cancella",
-    "continue_shopping": "Continua lo shopping",
+    "continue_shopping": "Continua gli acquisti",
     "log_in_html": "Hai un account? <a href=\"{{ link }}\">Accedi</a> per un check-out più veloce.",
     "see_items": {
       "one": "Vedi {{ count }} articolo",
-      "other": "Vedi {{ count }} articoli",
-      "many": "Vedi {{ count }} articoli"
+      "other": "Visualizza {{ count }} articoli",
+      "many": "Visualizza {{ count }} articoli"
     },
     "view_all": "Visualizza tutto",
     "add": "Aggiungi",
@@ -217,7 +217,7 @@
     "taxes_included_shipping_at_checkout_with_policy_without_discounts_html": "Imposte incluse. Le spese di spedizione vengono calcolate al check-out.",
     "taxes_included_shipping_at_checkout_without_policy_without_discounts": "Imposte incluse. Le spese di spedizione vengono calcolate al check-out.",
     "wrong_password": "Password errata",
-    "view_more_details": "Visualizza più dettagli",
+    "view_more_details": "Visualizza altri dettagli",
     "inventory_low_stock": "Scorte ridotte",
     "inventory_in_stock": "Disponibile",
     "inventory_out_of_stock": "Esaurito",

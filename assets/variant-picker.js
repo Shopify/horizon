@@ -1,8 +1,8 @@
 import { Component } from '@theme/component';
-import { VariantSelectedEvent, VariantUpdateEvent } from '@theme/events';
 import { morph, MORPH_OPTIONS } from '@theme/morph';
 import { OverflowList } from '@theme/overflow-list';
 import { yieldToMainThread, getViewParameterValue, ResizeNotifier } from '@theme/utilities';
+import { ProductSelectEvent } from '@shopify/events';
 
 /**
  * @typedef {object} VariantPickerRefs
@@ -67,9 +67,6 @@ export default class VariantPicker extends Component {
     if (!selectedOption) return;
 
     this.updateSelectedOption(event.target);
-    this.dispatchEvent(new VariantSelectedEvent({
-      id: selectedOption.dataset.optionValueId ?? '',
-    }));
 
     const isOnProductPage =
       this.dataset.templateProductMatch === 'true' &&
@@ -89,7 +86,8 @@ export default class VariantPicker extends Component {
       ? 'featured-product-information'
       : undefined;
 
-    this.fetchUpdatedSection(this.buildRequestUrl(selectedOption), morphElementSelector);
+    const optionValueId = selectedOption.dataset.optionValueId ?? '';
+    this.fetchUpdatedSection(this.buildRequestUrl(selectedOption), morphElementSelector, optionValueId);
 
     const url = new URL(window.location.href);
 
@@ -304,11 +302,30 @@ export default class VariantPicker extends Component {
    * Fetches the updated section.
    * @param {string} requestUrl - The request URL.
    * @param {string} [morphElementSelector] - The selector of the element to be morphed. By default, only the variant picker is morphed.
+   * @param {string} [optionValueId] - The selected option value ID for event detail.
    */
-  fetchUpdatedSection(requestUrl, morphElementSelector) {
+  fetchUpdatedSection(requestUrl, morphElementSelector, optionValueId = '') {
     // We use this to abort the previous fetch request if it's still pending.
     this.#abortController?.abort();
     this.#abortController = new AbortController();
+
+    const deferredEventPromise = ProductSelectEvent.createPromise();
+    const selectedOptions = this.getAllSelectedOptions();
+
+    this.dispatchEvent(
+      new ProductSelectEvent({
+        product: {
+          id: this.dataset.productId ?? '',
+          title: this.dataset.productTitle ?? '',
+          handle: this.dataset.productHandle ?? '',
+        },
+        selectedOptions,
+        detail: {
+          optionValueId,
+        },
+        promise: deferredEventPromise.promise,
+      })
+    );
 
     fetch(requestUrl, { signal: this.#abortController.signal })
       .then((response) => response.text())
@@ -318,8 +335,21 @@ export default class VariantPicker extends Component {
         // Defer is only useful for the initial rendering of the page. Remove it here.
         html.querySelector('overflow-list[defer]')?.removeAttribute('defer');
 
-        const textContent = html.querySelector(`variant-picker script[type="application/json"]`)?.textContent;
-        if (!textContent) return;
+        const variantPickerJsonScript = html.querySelector(`variant-picker script[type="application/json"]`);
+        const textContent = variantPickerJsonScript?.textContent;
+
+        if (!textContent) {
+          deferredEventPromise.resolve({
+            variant: null,
+            detail: {
+              html,
+              productId: this.dataset.productId ?? '',
+              sourceId: this.selectedOptionId,
+              resource: null,
+            },
+          });
+          return;
+        }
 
         let newProduct;
 
@@ -342,18 +372,46 @@ export default class VariantPicker extends Component {
           }
         }
 
-        // Dispatch for all paths so product-form-component can reset #variantChangeInProgress
+        // Resolve the ProductSelectEvent promise with all data needed by listeners
         if (this.selectedOptionId) {
-          this.dispatchEvent(
-            new VariantUpdateEvent(JSON.parse(textContent), this.selectedOptionId, {
-              html,
-              productId: this.dataset.productId ?? '',
-              newProduct,
-            })
-          );
+          const variantData = JSON.parse(textContent);
+
+          if (variantData && typeof variantData === 'object') {
+            const productViewAttr = variantPickerJsonScript
+              ?.closest('[view-event-payload]')
+              ?.getAttribute('view-event-payload')
+              ?.trim();
+
+            deferredEventPromise.resolve({
+              variant: (productViewAttr && JSON.parse(productViewAttr))?.product?.selectedVariant ?? null,
+              detail: {
+                html,
+                productId: this.dataset.productId ?? '',
+                newProduct,
+                sourceId: this.selectedOptionId,
+                resource: variantData,
+              },
+            });
+
+            return;
+          }
         }
+
+        // Variant data is null/invalid (e.g. unavailable variant combination) —
+        // still include detail with html so listeners can update UI (disable buttons, morph text)
+        deferredEventPromise.resolve({
+          variant: null,
+          detail: {
+            html,
+            productId: this.dataset.productId ?? '',
+            newProduct,
+            sourceId: this.selectedOptionId,
+            resource: null,
+          },
+        });
       })
       .catch((error) => {
+        deferredEventPromise.reject(error);
         if (error.name === 'AbortError') {
           console.warn('Fetch aborted by user');
         } else {
@@ -464,6 +522,35 @@ export default class VariantPicker extends Component {
     }
 
     return selectedOption;
+  }
+
+  /**
+   * Gets all the selected options.
+   * @returns {{name: string, value: string}[]} All the currently selected options.
+   */
+  getAllSelectedOptions() {
+    /** @type {{name: string, value: string}[]} */
+    const options = [];
+
+    // For <select> elements, use .selectedOptions to get the current selection
+    // (the [selected] HTML attribute only reflects the initial state, not user changes)
+    for (const select of this.querySelectorAll('select')) {
+      const selected = select.selectedOptions[0];
+      if (selected?.dataset?.optionName) {
+        options.push({ name: selected.dataset.optionName, value: selected.value });
+      }
+    }
+
+    // For radio/checkbox fieldsets, :checked reflects the current state
+    /** @type {NodeListOf<HTMLInputElement>} */
+    const checkedInputs = this.querySelectorAll('fieldset input:checked');
+    for (const input of checkedInputs) {
+      if (input.dataset?.optionName) {
+        options.push({ name: input.dataset.optionName, value: input.value });
+      }
+    }
+
+    return options;
   }
 
   /**

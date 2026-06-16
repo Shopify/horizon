@@ -23,7 +23,7 @@
 <featured-product-information id="{{ section.id }}">
   <h2 class="visually-hidden">{{ 'accessibility.featured_product' | t }}</h2>
   {% render 'product-information-content',
-    product_media_size: section.settings.product.media.size,
+    product: section.settings.product,
     section_id: section.id,
     settings: section.settings,
     media_gallery: media_gallery,
@@ -109,10 +109,10 @@
       "default": 16
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:settings.color_scheme",
-      "default": "scheme-1"
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "placeholder": "t:settings.default"
     },
     {
       "type": "header",

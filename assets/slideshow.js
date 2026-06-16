@@ -925,6 +925,11 @@ export class Slideshow extends Component {
 
     const visibleSlides = this.visibleSlides;
 
+    // If the IntersectionObserver reports zero visible slides, then the slideshow has intersected, but no slides meet the visibility threshold.
+    // Probably that the slideshow's host is mid-animation or zero-layout, like in an animating modal.
+    // Don't stamp aria-hidden="true" on every slide. Set the current slide to the first visible slide.
+    if (visibleSlides.length === 0) return 0;
+
     // Batch writes to the DOM
     scheduler.schedule(() => {
       // Update aria-hidden based on visibility

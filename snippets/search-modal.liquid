@@ -5,6 +5,8 @@
   @param {string} [class] - Additional CSS classes to apply to the predictive search component.
 {% enddoc %}
 
+{% render 'predictive-search-styles' %}
+
 <script
   src="{{ 'dialog.js' | asset_url }}"
   type="module"
@@ -36,7 +38,7 @@
       {{ 'content.search' | t }}
     </h2>
     <predictive-search-component
-      class="predictive-search color-{{ settings.popover_color_scheme }}{% if class != blank %} {{ class | strip }}{% endif %}"
+      class="predictive-search color-custom-popover{% if class != blank %} {{ class | strip }}{% endif %}"
       style="--product-corner-radius: {{ settings.product_corner_radius | default: 8 | append: 'px' }}; --card-corner-radius: {{ settings.card_corner_radius | default: 8 | append: 'px' }};{% if settings.card_title_case == 'uppercase' %} --title-case: uppercase;{% endif %}"
       data-section-id="predictive-search"
       data-testid="{{ 'search-component--modal' }}"
@@ -287,7 +289,6 @@
     border-radius: 0 0 var(--search-border-radius) var(--search-border-radius);
     transition: box-shadow var(--animation-speed) var(--animation-easing);
     transform: translateZ(0);
-    will-change: transform, opacity;
     overflow: hidden;
 
     @media screen and (max-width: 749px) {
@@ -325,7 +326,7 @@
     outline-offset: var(--focus-outline-offset);
 
     @media screen and (min-width: 750px) {
-      outline: var(--focus-outline-width) solid var(--color-primary);
+      outline: var(--focus-outline-width) solid var(--color-foreground);
     }
   }
 
@@ -368,18 +369,18 @@
     border: 0;
   }
 
-  .search-input::placeholder {
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+  input.search-input::placeholder {
+    color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-muted-text));
   }
 
-  .search-input,
-  .search-input:is(:focus, :focus-visible, :focus-within),
+  input.search-input,
+  input.search-input:is(:focus, :focus-visible, :focus-within),
   .predictive-search-form__header *:is(:focus, :focus-visible) {
     outline: none;
     box-shadow: none;
   }
 
-  .search-input:hover {
+  input.search-input:hover {
     background-color: transparent;
   }
 
@@ -389,7 +390,7 @@
     top: auto;
     width: var(--icon-size-lg);
     height: var(--icon-size-lg);
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-60));
+    color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-60));
 
     @media screen and (min-width: 750px) {
       left: var(--margin-md);
@@ -447,7 +448,7 @@
     border-radius: 50%;
 
     &:hover {
-      background-color: rgb(var(--color-primary-hover-rgb) / var(--opacity-8));
+      background-color: rgb(var(--color-foreground-rgb) / var(--opacity-8));
     }
   }
 

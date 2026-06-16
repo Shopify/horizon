@@ -8,7 +8,7 @@ alwaysApply: false
 
 Every section and block must include a `{% schema %}` tag with valid JSON structure.
 
-We write our schemas in the schemas folder and then run `npm run build:schemas` to push them to the `.liquid` files. This allows us to take advantage of Typescript for validation and reuse parts of schemas to avoid re-writing them many times.
+We write our schemas in the schemas folder and then run `pnpm run build:schemas` to push them to the `.liquid` files. This allows us to take advantage of Typescript for validation and reuse parts of schemas to avoid re-writing them many times.
 
 ## Schema Structure
 
@@ -140,7 +140,7 @@ See [sidebar settings documentation](mdc:https:/shopify.dev/docs/storefronts/the
 - Schema names must use valid translation keys: `'t:names.keyname'`
 - Keys must exist in `locales/en.default.schema.json` under the `names` section
 - **If a key doesn't exist, add it to the `names` section** (e.g., `"carousel": "Carousel"`)
-- Run `npm run build:schemas` after making changes
+- Run `pnpm run build:schemas` after making changes
 
 ### Setting Organization Rules
 

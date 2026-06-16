@@ -66,7 +66,7 @@
     "view_pricing_info": "Προβολή πληροφοριών τιμολόγησης",
     "slideshow": "Προβολή διαφανειών",
     "header_navigation_label": "Κύρια",
-    "home_logo_alt": "{{ store_name }} – Αρχική",
+    "home_logo_alt": "{{ store_name }} - Αρχική",
     "active_filters": "Ενεργά φίλτρα:",
     "product_details": "Λεπτομέρειες προϊόντος",
     "show_product_details": "Εμφάνιση λεπτομερειών προϊόντος για {{ product_name }}",
@@ -77,16 +77,16 @@
   },
   "actions": {
     "add_to_cart": "Προσθήκη στο καλάθι",
-    "clear_all": "Διαγραφή όλων",
+    "clear_all": "Εκκαθάριση όλων",
     "remove": "Αφαίρεση",
     "view_in_your_space": "Προβολή στον χώρο σας",
     "show_filters": "Φιλτράρισμα",
-    "clear": "Διαγραφή",
-    "continue_shopping": "Συνέχιση αγορών",
+    "clear": "Εκκαθάριση",
+    "continue_shopping": "Συνέχεια αγορών",
     "log_in_html": "Έχετε λογαριασμό; <a href=\"{{ link }}\">Συνδεθείτε</a> για ταχύτερη ολοκλήρωση των αγορών σας.",
     "see_items": {
       "one": "Δείτε {{ count }} στοιχείο",
-      "other": "Δείτε {{ count }} στοιχεία"
+      "other": "Δείτε {{ count }} είδη"
     },
     "view_all": "Προβολή όλων",
     "add": "Προσθήκη",
@@ -213,7 +213,7 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts": "Οι φόροι και τα έξοδα αποστολής υπολογίζονται κατά την ολοκλήρωση της αγοράς.",
     "taxes_included_shipping_at_checkout_with_policy_without_discounts_html": "Οι φόροι συμπεριλαμβάνονται. Τα έξοδα αποστολής υπολογίζονται κατά την ολοκλήρωση της αγοράς.",
     "taxes_included_shipping_at_checkout_without_policy_without_discounts": "Οι φόροι συμπεριλαμβάνονται. Τα έξοδα αποστολής υπολογίζονται κατά την ολοκλήρωση της αγοράς.",
-    "view_more_details": "Προβολή περισσοτέρων λεπτομερειών",
+    "view_more_details": "Προβολή περισσότερων λεπτομερειών",
     "inventory_low_stock": "Χαμηλό απόθεμα",
     "inventory_in_stock": "Σε απόθεμα",
     "inventory_out_of_stock": "Χωρίς απόθεμα",
@@ -318,7 +318,7 @@
     }
   },
   "fields": {
-    "separator": "σε"
+    "separator": "έως"
   },
   "blogs": {
     "article": {

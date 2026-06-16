@@ -1,3 +1,7 @@
+{%- doc -%}
+  @param {string} [product_view_context] - Context value passed through to the card snippet.
+{%- enddoc -%}
+
 {% liquid
   assign product = closest.product
 -%}
@@ -6,11 +10,12 @@
   {% content_for 'blocks', closest.product: product %}
 {% endcapture %}
 
-{% render 'product-card', children: children, product: product %}
+{% render 'product-card', children: children, product: product, product_view_context: product_view_context %}
 {% render 'buy-buttons-styles' %}
 {% render 'gift-card-recipient-form-styles' %}
 {% render 'quick-add-styles' %}
 {% render 'quick-add-modal-styles' %}
+{% render 'variant-picker-styles' %}
 {% render 'product-badges-styles' %}
 
 {% schema %}
@@ -71,17 +76,14 @@
       "default": 16
     },
     {
-      "type": "checkbox",
-      "id": "inherit_color_scheme",
-      "label": "t:settings.inherit_color_scheme",
-      "default": true
+      "type": "header",
+      "content": "t:content.appearance"
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:settings.color_scheme",
-      "default": "scheme-1",
-      "visible_if": "{{ block.settings.inherit_color_scheme == false }}"
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "placeholder": "t:settings.default"
     },
     {
       "type": "header",
@@ -126,12 +128,20 @@
       "visible_if": "{{ block.settings.border != 'none' }}"
     },
     {
+      "type": "color",
+      "id": "border_color",
+      "label": "t:settings.color",
+      "placeholder": "t:settings.default",
+      "visible_if": "{{ block.settings.border != 'none' }}"
+    },
+    {
       "type": "range",
       "id": "border_radius",
       "label": "t:settings.border_radius",
       "min": 0,
       "max": 32,
       "step": 1,
+      "unit": "px",
       "default": 0
     },
     {

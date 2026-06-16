@@ -4,7 +4,7 @@
   Renders the product information layout with media gallery and product details.
   Used by both product-information and featured-product-information sections.
 
-  @param {number} product_media_size - Number of media items in the product
+  @param {product} product - Product object
   @param {string} section_id - Unique section ID
   @param {object} settings - Section settings object
   @param {string} media_gallery - Captured HTML for the product media gallery block
@@ -25,7 +25,7 @@
   {% endcapture %}
 
   {% render 'product-information-content',
-    product_media_size: product.media.size,
+    product: product,
     section_id: section.id,
     settings: section.settings,
     media_gallery: media_gallery,
@@ -44,7 +44,7 @@
 
   # Check if product has media
   assign product_has_media = true
-  if product_media_size == 0
+  if product.media.size == 0
     assign product_has_media = false
   endif
 
@@ -76,9 +76,17 @@
   endcase
 %}
 
-<div class="section-background color-{{ settings.color_scheme }}"></div>
+{% liquid
+  if settings.background_color != blank
+    render 'contrast-override', background_color: settings.background_color, section_id: section_id
+  endif
+%}
+
 <div
-  class="product-information section section--{{ content_width }} spacing-style color-{{ settings.color_scheme }} relative"
+  class="section-background{% if settings.background_color != blank %} color-custom-{{ section_id }}{% endif %}"
+></div>
+<div
+  class="product-information section section--{{ content_width }} spacing-style{% if settings.background_color != blank %} color-custom-{{ section_id }}{% endif %} relative"
   style="{% render 'spacing-style', settings: settings %} --gap: {{ settings.gap }}px;"
   data-testid="product-information"
 >
@@ -86,9 +94,12 @@
     {% assign product_href = '#ProductInformation-' | append: section_id %}
     {% render 'skip-to-content-link', href: product_href, text: 'accessibility.skip_to_product_info' %}
   {% endif %}
-  <div
+  <product-component
     class="{{ product_grid_class }}"
     data-product-grid-content
+    {% # theme-check-disable UnknownFilter %}
+    view-event-payload="{{ product | standard_event_data: 'view' | escape }}"
+    {% # theme-check-enable UnknownFilter %}
   >
     {% assign render_order_array = render_order | split: ',' %}
     {% capture media %}
@@ -107,7 +118,7 @@
         {{ product_details }}
       {% endif %}
     {% endfor %}
-  </div>
+  </product-component>
 
   {{ additional_blocks }}
 </div>

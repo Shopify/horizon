@@ -1,5 +1,5 @@
 import { Component } from '@theme/component';
-import { ThemeEvents, CartErrorEvent, CartAddEvent } from '@theme/events';
+import { StandardEvents, CartErrorEvent, CartLinesUpdateEvent } from '@shopify/events';
 
 /**
  * @typedef {Object} GiftCardRecipientFormRefs
@@ -34,9 +34,9 @@ class GiftCardRecipientForm extends Component {
   // Store bound event handlers for cleanup
   /** @type {(() => void) | null} */
   #updateCharacterCountBound = null;
-  /** @type {((event: Event) => void) | null} */
+  /** @type {((event: CartErrorEvent) => void) | null} */
   #displayCartErrorBound = null;
-  /** @type {(() => void) | null} */
+  /** @type {((event: CartLinesUpdateEvent) => void) | null} */
   #cartAddEventBound = null;
 
   requiredRefs = [
@@ -66,10 +66,10 @@ class GiftCardRecipientForm extends Component {
 
     this.#displayCartErrorBound = this.#displayCartError.bind(this);
     // @ts-ignore - #displayCartErrorBound is guaranteed to be non-null here
-    document.addEventListener(ThemeEvents.cartError, this.#displayCartErrorBound);
+    document.addEventListener(StandardEvents.cartError, this.#displayCartErrorBound);
 
-    this.#cartAddEventBound = () => this.#handleCartAdd();
-    document.addEventListener(ThemeEvents.cartUpdate, this.#cartAddEventBound);
+    this.#cartAddEventBound = (/** @type {CartLinesUpdateEvent} */ event) => this.#handleCartAdd(event);
+    document.addEventListener(StandardEvents.cartLinesUpdate, this.#cartAddEventBound);
   }
 
   disconnectedCallback() {
@@ -81,12 +81,12 @@ class GiftCardRecipientForm extends Component {
     }
 
     if (this.#displayCartErrorBound) {
-      document.removeEventListener(ThemeEvents.cartError, this.#displayCartErrorBound);
+      document.removeEventListener(StandardEvents.cartError, this.#displayCartErrorBound);
       this.#displayCartErrorBound = null;
     }
 
     if (this.#cartAddEventBound) {
-      document.removeEventListener(ThemeEvents.cartUpdate, this.#cartAddEventBound);
+      document.removeEventListener(StandardEvents.cartLinesUpdate, this.#cartAddEventBound);
       this.#cartAddEventBound = null;
     }
   }
@@ -309,18 +309,20 @@ class GiftCardRecipientForm extends Component {
 
   /**
    * Handles cart error events
-   * @param {CartErrorEvent} event - The cart error event
+   * @param {import('@shopify/events').CartErrorEvent} event - The standardized cart error event
    */
   #displayCartError(event) {
-    if (event.detail?.data) {
-      const { message, errors, description } = event.detail.data;
+    const { error, code, detail } = event;
 
-      // Display the error message
-      if (errors && typeof errors === 'object') {
-        this.#displayErrorMessage(message || 'There was an error', errors);
-      } else if (message) {
-        this.#displayErrorMessage(message, description);
-      }
+    // Only handle API validation errors
+    if (code !== 'INVALID') return;
+
+    if (detail?.errors && typeof detail.errors === 'object') {
+      // Structured field-level errors — display per-field messages and announce
+      this.#displayErrorMessage(error || 'There was an error', detail.errors);
+    } else if (error) {
+      // Generic INVALID error without structured payload — still announce to screen readers
+      this.#displayErrorMessage(error, {});
     }
   }
 
@@ -405,8 +407,12 @@ class GiftCardRecipientForm extends Component {
     }
   }
 
-  #handleCartAdd() {
-    this.#clearErrorMessages();
+  /**
+   * @param {CartLinesUpdateEvent} event
+   */
+  #handleCartAdd(event) {
+    if (event.action !== 'add') return;
+    event.promise?.then(() => this.#clearErrorMessages()).catch(() => {});
   }
 }
 

@@ -22,9 +22,6 @@
       if block_settings.font_size != ''
         echo ' custom-font-size '
       endif
-      if block_settings.color != ''
-        echo ' custom-color '
-      endif
     endif
     if is_rte
       echo ' rte '
@@ -40,8 +37,9 @@
   style="
     {% render 'spacing-padding', settings: block_settings %}
     {% render 'typography-style', settings: block_settings %}
-    {% if block_settings.color != '' %}
-      --color: {{ block_settings.color }};
+    {% if block_settings.text_color != blank %}
+      --color: {{ block_settings.text_color }};
+      --color-rgb: {{ block_settings.text_color.rgb }};
     {% endif %}
   "
 
@@ -71,18 +69,18 @@
 
 {% stylesheet %}
   .blog-post-card__content-text a {
-    color: var(--color-primary);
+    color: currentcolor;
   }
 
-  .custom-color,
-  .custom-color > :is(h1, h2, h3, h4, h5, h6, p, *) {
-    color: var(--color);
+  .blog-post-card__content-text a:hover {
+    color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-subdued-text));
   }
 {% endstylesheet %}
 
 {% schema %}
 {
   "name": "t:names.description",
+  "tag": null,
   "settings": [
     {
       "type": "header",
@@ -315,25 +313,14 @@
       "visible_if": "{{ block.settings.type_preset == 'custom' }}"
     },
     {
-      "type": "select",
-      "id": "color",
-      "label": "t:settings.color",
-      "options": [
-        {
-          "value": "var(--color-foreground)",
-          "label": "t:options.text"
-        },
-        {
-          "value": "var(--color-foreground-heading)",
-          "label": "t:options.heading"
-        },
-        {
-          "value": "var(--color-primary)",
-          "label": "t:options.link"
-        }
-      ],
-      "default": "var(--color-foreground)",
-      "visible_if": "{{ block.settings.type_preset != 'rte' }}"
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:settings.text_color",
+      "placeholder": "t:settings.default"
     },
     {
       "type": "header",
@@ -353,6 +340,26 @@
       "type": "range",
       "id": "padding-block-end",
       "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
       "min": 0,
       "max": 100,
       "step": 1,

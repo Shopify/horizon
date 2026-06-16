@@ -32,8 +32,43 @@ html {
   scroll-behavior: smooth;
 }
 
-html[scroll-lock] {
+@media (min-width: 990px) {
+  html:has(.page-wrapper),
+  html:has(.page-wrapper) body {
+    height: 100dvh;
+    overflow: hidden;
+  }
+}
+
+html[scroll-lock],
+html[scroll-lock] .page-wrapper {
   overflow: hidden;
+}
+
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  transition: margin-right var(--animation-speed) var(--animation-timing-fade-out);
+}
+
+@media (min-width: 990px) {
+  .page-wrapper {
+    height: 100dvh;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--color-foreground-rgb) / var(--opacity-40)) var(--color-background);
+  }
+
+  .page-wrapper--drawer-open shopify-account::part(dialog) {
+    translate: calc(-1 * var(--theme-drawer-width, var(--sidebar-width)));
+  }
+}
+
+.page-wrapper--drawer-open {
+  margin-right: var(--theme-drawer-width, var(--sidebar-width));
+  transition-timing-function: var(--animation-timing-fade-in);
 }
 
 img,
@@ -55,11 +90,6 @@ textarea,
 select {
   font: inherit;
   border-radius: var(--style-border-radius-inputs);
-}
-
-input:hover,
-textarea:hover {
-  background-color: var(--color-input-hover-background);
 }
 
 /** override ios and firefox defaults */
@@ -181,7 +211,6 @@ select {
   .card-hover-effect-subtle-zoom .predictive-search-results__card:hover {
     transform: scale(var(--hover-subtle-zoom-amount));
   }
-
 }
 
 dialog {
@@ -415,6 +444,7 @@ p:empty {
   position: absolute;
   inset: 0;
   z-index: var(--layer-section-background);
+  background-color: var(--color-background);
 }
 
 /* For page-width sections, all content goes in the center column */
@@ -750,7 +780,7 @@ h1,
   line-height: var(--font-h1--line-height);
   letter-spacing: var(--font-h1--letter-spacing);
   text-transform: var(--font-h1--case);
-  color: var(--color, var(--font-h1-color));
+  color: var(--color);
 }
 
 @media screen and (max-width: 1200px) {
@@ -772,7 +802,7 @@ h2,
   line-height: var(--font-h2--line-height);
   letter-spacing: var(--font-h2--letter-spacing);
   text-transform: var(--font-h2--case);
-  color: var(--color, var(--font-h2-color));
+  color: var(--color);
 }
 
 @media screen and (max-width: 1200px) {
@@ -795,7 +825,7 @@ h3,
   line-height: var(--font-h3--line-height);
   letter-spacing: var(--font-h3--letter-spacing);
   text-transform: var(--font-h3--case);
-  color: var(--color, var(--font-h3-color));
+  color: var(--color);
 }
 
 @media screen and (max-width: 1200px) {
@@ -817,7 +847,7 @@ h4,
   line-height: var(--font-h4--line-height);
   letter-spacing: var(--font-h4--letter-spacing);
   text-transform: var(--font-h4--case);
-  color: var(--color, var(--font-h4-color));
+  color: var(--color);
 }
 
 @media screen and (max-width: 1200px) {
@@ -839,7 +869,7 @@ h5,
   line-height: var(--font-h5--line-height);
   letter-spacing: var(--font-h5--letter-spacing);
   text-transform: var(--font-h5--case);
-  color: var(--color, var(--font-h5-color));
+  color: var(--color);
 }
 
 @media screen and (max-width: 1200px) {
@@ -861,7 +891,7 @@ h6,
   line-height: var(--font-h6--line-height);
   letter-spacing: var(--font-h6--letter-spacing);
   text-transform: var(--font-h6--case);
-  color: var(--color, var(--font-h6-color));
+  color: var(--color);
 }
 
 @media screen and (max-width: 1200px) {
@@ -882,9 +912,7 @@ h6,
 
 /* Links */
 a {
-  --button-color: var(--color, var(--color-primary));
-
-  color: var(--button-color);
+  color: currentcolor;
   text-decoration-color: transparent;
   text-decoration-thickness: 0.075em;
   text-underline-offset: 0.125em;
@@ -893,7 +921,7 @@ a {
 }
 
 :is(h1, h2, h3, h4, h5, h6, p) > a:hover {
-  --button-color: var(--color, var(--color-primary-hover));
+  color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / 0.7);
 }
 
 /* Add underline to text using our paragraph styles only. */
@@ -902,8 +930,8 @@ p:not(.h1, .h2, .h3, .h4, .h5, .h6) a:where(:not(.button, .button-secondary)),
   text-decoration-color: currentcolor;
 
   &:hover {
-    text-decoration-color: transparent;
-    color: var(--color-primary-hover);
+    text-decoration-color: currentcolor;
+    color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / 0.7);
   }
 }
 
@@ -936,13 +964,13 @@ body:has(.header[transparent]) .content-for-layout > .shopify-section:first-chil
 }
 
 body:has(.header[transparent]) #header-group > .header-section {
-  z-index: var(--layer-sticky);
+  z-index: var(--layer-menu-drawer);
 }
 
 /* All other header group content should be beneath the floating header,
 but above the rest of the page content */
 body:has(.header[transparent]) #header-group > *:not(.header-section) {
-  z-index: calc(var(--layer-sticky) - 1);
+  z-index: calc(var(--layer-menu-drawer) - 1);
 }
 
 /* Featured collection block */
@@ -1269,6 +1297,7 @@ results-list[initialized] {
 /* Buttons */
 .button,
 .button-secondary,
+.button-custom,
 button.shopify-payment-button__button--unbranded {
   --text-align: center;
 
@@ -1303,7 +1332,7 @@ button.shopify-payment-button__button--unbranded {
 }
 
 .button:not(.button-secondary, .button-unstyled) {
-  outline-color: var(--button-background-color);
+  outline-color: var(--button-focus-outline-color, var(--button-background-color));
 }
 
 .button-secondary {
@@ -1325,7 +1354,7 @@ input:not([type='checkbox'], [type='radio']) {
 
 textarea::placeholder,
 input::placeholder {
-  color: var(--color-input-text);
+  color: rgb(var(--color-input-text-rgb) / var(--opacity-muted-text));
 }
 
 textarea:not(:placeholder-shown)::placeholder,
@@ -1351,6 +1380,7 @@ button.shopify-payment-button__button--unbranded {
   --button-background-color: var(--color-primary-button-background);
   --button-border-color: var(--color-primary-button-border);
   --button-border-width: var(--style-border-width-primary);
+  --button-focus-outline-color: var(--color-primary-button-focus-outline);
 }
 
 .button:hover,
@@ -1373,6 +1403,25 @@ button.shopify-payment-button__button--unbranded:hover:not([disabled]) {
   --button-border-color: var(--color-secondary-button-hover-border);
 }
 
+.button-custom {
+  --button-color: var(--color-primary-button-text);
+  --button-background-color: var(--color-primary-button-background);
+  --button-border-color: var(--color-primary-button-border);
+  --button-border-width: var(--style-border-width-secondary);
+  --button-focus-outline-color: var(--color-primary-button-focus-outline);
+
+  font-family: var(--button-font-family-primary);
+  text-transform: var(--button-text-case-primary);
+  border-radius: var(--style-border-radius-buttons-primary);
+  outline-color: var(--button-focus-outline-color, var(--button-background-color));
+}
+
+.button-custom:hover {
+  --button-color: var(--color-primary-button-hover-text);
+  --button-background-color: var(--color-primary-button-hover-background);
+  --button-border-color: var(--color-primary-button-hover-border);
+}
+
 /* Needed to override the default Shopify styles */
 button.shopify-payment-button__button--unbranded:hover:not([disabled]) {
   background-color: var(--button-background-color);
@@ -1382,7 +1431,7 @@ button.shopify-payment-button__button--unbranded:hover:not([disabled]) {
   display: block;
   padding: 0;
   background-color: inherit;
-  color: inherit;
+  color: var(--color-foreground);
   border: 0;
   border-radius: 0;
   overflow: hidden;
@@ -1394,6 +1443,14 @@ button.shopify-payment-button__button--unbranded:hover:not([disabled]) {
 
 .button-unstyled:hover {
   background-color: inherit;
+}
+
+/* Default hover dim for link-style buttons, scoped via :where() so component-specific
+   hover rules (.facets__clear-all-link, .header-actions__action, etc.) still win. */
+:where(.button-unstyled):hover {
+  --hover-color-rgb: var(--color-foreground-rgb);
+
+  color: rgb(var(--hover-color-rgb) / var(--opacity-70));
 }
 
 .button-unstyled--with-icon {
@@ -1411,13 +1468,13 @@ button.shopify-payment-button__button--unbranded:hover:not([disabled]) {
 /* Show more */
 
 .show-more__button {
-  color: var(--color-primary);
+  color: var(--color-foreground);
   cursor: pointer;
 }
 
 .show-more__button:hover {
   @media screen and (min-width: 750px) {
-    color: var(--color-primary-hover);
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-80));
   }
 }
 
@@ -1435,11 +1492,6 @@ button.shopify-payment-button__button--unbranded:hover:not([disabled]) {
 .show-more[data-expanded='true'] .show-more__label--more,
 .show-more[data-expanded='false'] .show-more__label--less {
   display: none;
-}
-
-.link {
-  display: inline-block;
-  text-align: center;
 }
 
 shopify-accelerated-checkout,
@@ -1477,7 +1529,7 @@ summary {
 }
 
 summary:hover {
-  color: var(--color-primary-hover);
+  color: rgb(var(--color-foreground-rgb) / var(--opacity-80));
 }
 
 summary .svg-wrapper {
@@ -1986,9 +2038,15 @@ deferred-media[class] :is(.deferred-media__poster-button img, .deferred-media__p
   margin-block-end: var(--margin-xs);
 }
 
+.variant-option--buttons legend,
+.variant-option--dropdowns > label,
+.variant-option[data-testid='variant-option-single'] {
+  color: var(--variant-option-label-color, var(--color-foreground));
+}
+
 .variant-option__swatch-value {
   padding-inline-start: var(--padding-xs);
-  color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
+  color: var(--variant-option-label-color-subdued, var(--color-foreground-subdued));
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -2053,6 +2111,8 @@ deferred-media[class] :is(.deferred-media__poster-button img, .deferred-media__p
 
   &:hover,
   &:hover:has([aria-disabled='true']):has([data-option-available='false']) {
+    --variant-picker-stroke-color: var(--color-variant-hover-border);
+
     background-color: var(--color-variant-hover-background);
     border-color: var(--color-variant-hover-border);
     color: var(--color-variant-hover-text);
@@ -2215,6 +2275,8 @@ deferred-media[class] :is(.deferred-media__poster-button img, .deferred-media__p
 }
 
 .variant-option__button-label:has(:checked) {
+  --variant-picker-stroke-color: var(--color-selected-variant-border);
+
   color: var(--color-selected-variant-text);
   border-color: var(--color-selected-variant-border);
 }
@@ -2233,12 +2295,17 @@ deferred-media[class] :is(.deferred-media__poster-button img, .deferred-media__p
 }
 
 .variant-option__button-label--has-swatch:hover {
-  outline: var(--focus-outline-width) solid rgb(var(--color-foreground-rgb) / var(--opacity-35-55));
+  outline: var(--focus-outline-width) solid var(--color-variant-hover-border);
   outline-offset: var(--focus-outline-offset);
 }
 
+.variant-option__button-label--has-swatch:has([data-option-available='false']) svg,
+.variant-option__button-label--has-swatch:has([data-option-available='false']) .swatch {
+  stroke: var(--color-variant-border);
+}
+
 .variant-option__button-label--has-swatch:has(:checked) {
-  --focus-outline: var(--focus-outline-width) solid var(--color-foreground);
+  --focus-outline: var(--focus-outline-width) solid var(--color-selected-variant-border);
 
   outline: var(--focus-outline);
   outline-offset: var(--focus-outline-offset);
@@ -2343,13 +2410,13 @@ deferred-media[class] :is(.deferred-media__poster-button img, .deferred-media__p
 .unit-price {
   display: block;
   font-size: min(0.85em, var(--font-paragraph--size));
-  color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+  color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-subdued-text));
 }
 
 .tax-note.tax-note.tax-note {
   font-size: min(0.85em, var(--font-paragraph--size));
   font-weight: var(--font-paragraph--weight);
-  color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+  color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-subdued-text));
 }
 
 .tax-note:empty {
@@ -2370,13 +2437,14 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) .volume-pricing-note {
   line-height: normal;
   letter-spacing: normal;
   text-transform: none;
-  color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+  color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-subdued-text));
 }
 
 .compare-at-price {
-  opacity: 0.4;
+  color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-subdued-text));
   text-decoration-line: line-through;
   text-decoration-thickness: 1.5px;
+  text-decoration-color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-30));
 }
 
 .price-item__group {
@@ -2395,7 +2463,7 @@ form.payment-terms {
   padding-top: 0.5em;
   font-size: min(0.85em, var(--font-paragraph--size));
   font-weight: var(--font-paragraph--weight);
-  color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+  color: var(--color, rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text)));
 }
 
 .installments:not(:has(shopify-payment-terms)) {
@@ -2420,53 +2488,6 @@ form.payment-terms {
 /* Hide "Choose" button when "Add" button is shown */
 [data-quick-add-button='add'] .quick-add__button--choose {
   display: none;
-}
-
-/* Drawer */
-.drawer {
-  background-color: var(--color-background);
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: var(--sidebar-width);
-  z-index: var(--layer-raised);
-  transform: translateX(-120%);
-  transition: transform var(--animation-speed) var(--animation-easing);
-}
-
-.drawer[data-open='true'] {
-  transform: translateX(0);
-}
-
-.drawer-toggle {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-}
-
-.drawer__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: var(--drawer-header-block-padding) var(--drawer-inline-padding);
-}
-
-.drawer__title {
-  font-size: var(--font-h2--size);
-  margin: 0;
-}
-
-.drawer__close {
-  width: var(--minimum-touch-target);
-  height: var(--minimum-touch-target);
-}
-
-.drawer__content {
-  display: block;
-  padding: var(--drawer-content-block-padding) var(--drawer-inline-padding);
-  width: 100%;
 }
 
 /* Background overlay */
@@ -2666,9 +2687,8 @@ form.payment-terms {
   }
 }
 
-.field__input:is(:focus, :hover) {
+.field__input:focus {
   box-shadow: var(--input-box-shadow-focus);
-  background-color: var(--color-input-hover-background);
 }
 
 .field__input--button-radius {
@@ -3032,11 +3052,6 @@ label:has(input[type='checkbox']:disabled) {
   border-radius: var(--style-border-radius-inputs);
   flex: 1 1 var(--quantity-selector-width);
   align-self: stretch;
-  transition: background-color var(--animation-speed) var(--animation-easing);
-
-  &:hover {
-    background-color: var(--color-input-hover-background);
-  }
 }
 
 .product-form-buttons:has(.add-to-cart-button.button-secondary) .quantity-selector {
@@ -3863,7 +3878,9 @@ text-component {
   line-height: 1;
 
   &::after {
-    content: attr(value);
+    /* Empty alt text — the pseudo-element is a visual shimmer overlay, not announceable content.
+      Without this, VoiceOver reads attr(value) in addition to the inner text node, doubling the announcement. */
+    content: attr(value) / '';
     position: absolute;
     inset: 0;
     color: transparent;
@@ -4211,5 +4228,25 @@ product-recommendations:has([data-has-recommendations='false']) {
   to {
     opacity: var(--atc-opacity, 1);
     translate: 0px var(--atc-destination, 0px);
+  }
+}
+
+/* When the header is transparent, and when there is no header-section below it, offset the first main-section with
+ * the height of the header
+ */
+main > .shopify-section:first-child .section:not(.disable-section-top-offset) {
+  &.spacing-style,
+  .spacing-style {
+    --section-top-offset: calc(var(--header-height) * var(--transparent-header-offset-boolean));
+
+    /* Any nested sections should not be offset */
+    :is(.spacing-style, .inherit-spacing) {
+      --section-top-offset: 0px;
+    }
+  }
+
+  /* Make sticky content immediately stick to the top of the page */
+  .sticky-content {
+    margin-top: calc(var(--header-height) * var(--transparent-header-offset-boolean) * -1);
   }
 }

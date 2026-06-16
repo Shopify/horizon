@@ -1,7 +1,8 @@
 {%- assign block_settings = block.settings -%}
+{% render 'button-custom-styles', block_settings: block_settings, block_id: block.id %}
 <button
   type="submit"
-  class="button submit-button size-style {{ block_settings.style_class }}"
+  class="button submit-button size-style {{ block_settings.style_class }} {{ block_settings.style_class }}--{{ block.id }}"
   style="{% render 'size-style', settings: block_settings %}"
   {{ block.shopify_attributes }}
 >
@@ -37,9 +38,43 @@
         {
           "value": "button-secondary",
           "label": "t:options.secondary"
+        },
+        {
+          "value": "button-custom",
+          "label": "t:options.custom"
         }
       ],
-      "default": "button"
+      "default": "button",
+      "info": "t:info.edit_button_style_in_theme_settings"
+    },
+    {
+      "type": "header",
+      "content": "t:content.button_colors",
+      "visible_if": "{{ block.settings.style_class == \"button-custom\" }}"
+    },
+    {
+      "type": "color",
+      "id": "custom_button_background",
+      "label": "t:settings.background",
+      "default": "{{ settings.color_palette.foreground }}",
+      "alpha": true,
+      "visible_if": "{{ block.settings.style_class == 'button-custom' }}"
+    },
+    {
+      "type": "color",
+      "id": "custom_button_text",
+      "label": "t:settings.text",
+      "default": "{{ settings.color_palette.background }}",
+      "alpha": true,
+      "visible_if": "{{ block.settings.style_class == 'button-custom' }}"
+    },
+    {
+      "type": "color",
+      "id": "custom_button_border",
+      "label": "t:settings.borders",
+      "default": "{{ settings.color_palette.background }}",
+      "alpha": true,
+      "visible_if": "{{ block.settings.style_class == 'button-custom' }}"
     },
     {
       "type": "header",

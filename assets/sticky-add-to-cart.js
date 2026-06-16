@@ -2,6 +2,7 @@ import { Component } from '@theme/component';
 import { ThemeEvents, QuantitySelectorUpdateEvent } from '@theme/events';
 import { morph } from '@theme/morph';
 import { onAnimationEnd } from '@theme/utilities';
+import { StandardEvents, ProductSelectEvent, CartLinesUpdateEvent, CartErrorEvent } from '@shopify/events';
 
 /**
  * @typedef {Object} ProductVariant
@@ -75,14 +76,22 @@ class StickyAddToCartComponent extends Component {
 
     const { signal } = this.#abortController;
     const target = this.closest('.shopify-section');
-    target?.addEventListener(ThemeEvents.variantUpdate, this.#handleVariantUpdate, { signal });
-    target?.addEventListener(ThemeEvents.variantSelected, this.#handleVariantSelected, { signal });
+    target?.addEventListener(StandardEvents.productSelect, this.#handleProductSelect, { signal });
 
-    document.addEventListener(ThemeEvents.cartUpdate, this.#handleCartAddComplete, { signal });
-    document.addEventListener(ThemeEvents.cartError, this.#handleCartAddComplete, { signal });
+    document.addEventListener(StandardEvents.cartLinesUpdate, this.#handleCartAddComplete, { signal });
+    document.addEventListener(StandardEvents.cartError, this.#handleCartAddComplete, { signal });
     document.addEventListener(ThemeEvents.quantitySelectorUpdate, this.#handleQuantityUpdate, { signal });
 
     this.#getInitialQuantity();
+
+    // IntersectionObserver callbacks gate visibility on #isChatActive(), but
+    // if the shopper scrolls before the Inbox bundle has upgraded
+    // <shopify-chat>, the bar shows and nothing re-runs that check. Hide it
+    // once the element is defined so the bar doesn't overlap the chat UI.
+    customElements.whenDefined('shopify-chat').then(() => {
+      if (signal.aborted) return;
+      if (this.#isStuck && this.#isChatActive()) this.#hideStickyBar();
+    });
   }
 
   disconnectedCallback() {
@@ -119,7 +128,7 @@ class StickyAddToCartComponent extends Component {
         // Check if the element is above the viewport (scrolled past) or below (not yet reached)
         const rect = entry.target.getBoundingClientRect();
         if (rect.bottom < 0 || rect.top < 0) {
-          // Element is above viewport - show sticky bar
+          if (this.#isChatActive()) return;
           this.#showStickyBar();
         }
         // If rect.top >= 0, element is below viewport - don't show sticky bar yet
@@ -144,7 +153,9 @@ class StickyAddToCartComponent extends Component {
           // Only show if buy buttons are above the viewport (scrolled past)
           if (rect.bottom < 0 || rect.top < 0) {
             this.#hiddenByBottom = false;
-            this.#showStickyBar();
+            if (!this.#isChatActive()) {
+              this.#showStickyBar();
+            }
           }
         }
       },
@@ -193,60 +204,65 @@ class StickyAddToCartComponent extends Component {
   };
 
   /**
-   * Handles variant update events
-   * @param {CustomEvent} event - The variant update event
+   * Handles product select events (variant selected and updated)
+   * @param {ProductSelectEvent} event - The product select event
    */
-  #handleVariantUpdate = (event) => {
-    if (event.detail.data.productId !== this.dataset.productId) return;
+  #handleProductSelect = (event) => {
+    if (!(event.target instanceof Element) || event.target.closest('product-card')) return;
 
-    const variant = event.detail.resource;
-
-    // Get the new sticky add to cart HTML from the server response
-    const newStickyAddToCart = event.detail.data.html.querySelector('sticky-add-to-cart');
-    if (!newStickyAddToCart) return;
-
-    const newStickyBar = newStickyAddToCart.querySelector('[ref="stickyBar"]');
-    if (!newStickyBar) return;
-
-    // Store current visibility state before morphing
-    const currentStuck = this.refs.stickyBar.getAttribute('data-stuck') || 'false';
-    const variantAvailable = newStickyAddToCart.dataset.variantAvailable;
-
-    // Morph the entire sticky bar content
-    morph(this.refs.stickyBar, newStickyBar, { childrenOnly: true });
-
-    // Restore visibility state after morphing
-    this.refs.stickyBar.setAttribute('data-stuck', currentStuck);
-    this.dataset.variantAvailable = variantAvailable;
-
-    // Update the dataset attributes with new variant info
-    if (variant && variant.id) {
-      this.dataset.currentVariantId = variant.id;
+    // Update variant ID from the event detail (variant:selected part)
+    const { optionValueId } = event.detail ?? {};
+    if (optionValueId) {
+      this.dataset.currentVariantId = optionValueId;
     }
 
-    // Re-cache the target add to cart button after morphing
-    const productForm = this.#getProductForm();
-    if (productForm) {
-      this.#targetAddToCartButton = productForm.querySelector('[ref="addToCartButton"]');
-    }
+    // Wait for the promise to resolve with variant update data
+    event.promise
+      .then(({ detail }) => {
+        if (!detail?.html) return;
 
-    if (variant == null) {
-      this.#handleVariantUnavailable();
-    }
-    // Restore the current quantity display if needed
-    this.#updateButtonText();
-  };
+        const { html, productId, resource: variant } = detail;
 
-  /**
-   * Handles variant selected events
-   * @param {CustomEvent} event - The variant selected event
-   */
-  #handleVariantSelected = (event) => {
-    // The variant update event will follow and handle all updates via morph
-    // We just update the dataset here for tracking
-    const variantId = event.detail.resource?.id;
-    if (!variantId) return;
-    this.dataset.currentVariantId = variantId;
+        if (productId && productId !== this.dataset.productId) return;
+
+        // Get the new sticky add to cart HTML from the server response
+        const newStickyAddToCart = /** @type {HTMLElement | null} */ (html.querySelector('sticky-add-to-cart'));
+        if (!newStickyAddToCart) return;
+
+        const newStickyBar = newStickyAddToCart.querySelector('[ref="stickyBar"]');
+        if (!newStickyBar) return;
+
+        // Store current visibility state before morphing
+        const currentStuck = this.refs.stickyBar.getAttribute('data-stuck') || 'false';
+        const variantAvailable = newStickyAddToCart.dataset.variantAvailable;
+
+        // Morph the entire sticky bar content
+        morph(this.refs.stickyBar, newStickyBar, { childrenOnly: true });
+
+        // Restore visibility state after morphing
+        this.refs.stickyBar.setAttribute('data-stuck', currentStuck);
+        this.dataset.variantAvailable = variantAvailable;
+
+        // Update the dataset attributes with new variant info
+        if (variant && variant.id) {
+          this.dataset.currentVariantId = variant.id;
+        }
+
+        // Re-cache the target add to cart button after morphing
+        const productForm = this.#getProductForm();
+        if (productForm) {
+          this.#targetAddToCartButton = productForm.querySelector('[ref="addToCartButton"]');
+        }
+
+        if (variant == null) {
+          this.#handleVariantUnavailable();
+        }
+        // Restore the current quantity display if needed
+        this.#updateButtonText();
+      })
+      .catch((error) => {
+        if (error?.name !== 'AbortError') console.warn('[sticky-add-to-cart] Event promise rejected:', error);
+      });
   };
 
   /**
@@ -269,12 +285,22 @@ class StickyAddToCartComponent extends Component {
 
   /**
    * Handles cart add complete (success or error) - resets puppet flag
-   * @param {CustomEvent} _event - The cart event (unused)
+   * @param {CartLinesUpdateEvent | CartErrorEvent} event - The cart event
    */
-  #handleCartAddComplete = (_event) => {
-    // Reset the puppet flag after cart operation
-    if (this.#targetAddToCartButton) {
-      this.#targetAddToCartButton.dataset.puppet = 'false';
+  #handleCartAddComplete = (event) => {
+    // Reset the puppet flag only after the cart operation's promise settles,
+    // not when the event is first dispatched (before the HTTP request completes).
+    const resetPuppet = () => {
+      if (this.#targetAddToCartButton) {
+        this.#targetAddToCartButton.dataset.puppet = 'false';
+      }
+    };
+
+    // CartLinesUpdateEvent has a promise; CartErrorEvent does not (error already happened).
+    if ('promise' in event && event.promise instanceof Promise) {
+      event.promise.finally(resetPuppet);
+    } else {
+      resetPuppet();
     }
   };
 
@@ -309,6 +335,24 @@ class StickyAddToCartComponent extends Component {
   }
 
   // Helper methods
+  /**
+   * Checks whether the Shopify Chat is active on the page.
+   * When active, the sticky bar must stay hidden to avoid overlapping the chat UI.
+   *
+   * <shopify-chat> is rendered unconditionally by chat-drawer.liquid, but
+   * the "Ask anything" button only paints once the Inbox app has installed
+   * and upgraded the element. Gate on the registration of the custom element
+   * (the same signal chat-drawer.liquid uses via customElements.whenDefined)
+   * so the inert placeholder on shops without Inbox doesn't suppress the
+   * sticky bar.
+   *
+   * @returns {boolean}
+   */
+  #isChatActive() {
+    if (!customElements.get('shopify-chat')) return false;
+    return Boolean(document.querySelector('shopify-chat'));
+  }
+
   /**
    * Gets the product form element
    * @returns {HTMLElement | null}

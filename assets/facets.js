@@ -1,8 +1,9 @@
 import { sectionRenderer } from '@theme/section-renderer';
 import { Component } from '@theme/component';
-import { FilterUpdateEvent, ThemeEvents } from '@theme/events';
-import { debounce, startViewTransition } from '@theme/utilities';
+import { debounce, mediaQueryLarge, startViewTransition } from '@theme/utilities';
 import { convertMoneyToMinorUnits, formatMoney } from '@theme/money-formatting';
+import { CollectionUpdateEvent, SearchUpdateEvent, StandardEvents } from '@shopify/events';
+
 /**
  * Search query parameter.
  * @type {string}
@@ -20,6 +21,30 @@ const SEARCH_QUERY = 'q';
  */
 class FacetsFormComponent extends Component {
   requiredRefs = ['facetsForm'];
+
+  connectedCallback() {
+    super.connectedCallback();
+    // In vertical filter mode the in-page filters take over at ≥750px, so a
+    // drawer left open across a mobile→desktop resize would render duplicate
+    // filter UI. `data-filter-style` is only set on the drawer variant (see
+    // blocks/filters.liquid), so matching "vertical" here uniquely targets it.
+    if (this.dataset.filterStyle === 'vertical') {
+      mediaQueryLarge.addEventListener('change', this.#onBreakpointChange);
+    }
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    mediaQueryLarge.removeEventListener('change', this.#onBreakpointChange);
+  }
+
+  #onBreakpointChange = (/** @type {MediaQueryListEvent} */ event) => {
+    if (!event.matches) return;
+    const drawer = document.getElementById('filters-drawer');
+    if (drawer && 'close' in drawer && typeof drawer.close === 'function') {
+      drawer.close();
+    }
+  };
 
   /**
    * Creates URL parameters from form data
@@ -75,21 +100,61 @@ class FacetsFormComponent extends Component {
    */
   updateFilters = () => {
     this.#updateURLHash();
-    this.dispatchEvent(new FilterUpdateEvent(this.createURLParameters()));
-    this.#updateSection();
+    const renderPromise = this.#updateSection();
+    if (this.dataset.pageType === 'search') {
+      this.#dispatchSearchUpdateEvent(renderPromise);
+    } else {
+      this.#dispatchCollectionUpdateEvent(renderPromise);
+    }
   };
 
   /**
    * Updates the section
+   * @returns {Promise<void>}
    */
   #updateSection() {
     const viewTransition = !this.closest('dialog');
 
     if (viewTransition) {
-      startViewTransition(() => sectionRenderer.renderSection(this.sectionId), ['product-grid']);
+      return startViewTransition(() => sectionRenderer.renderSection(this.sectionId), ['product-grid']);
     } else {
-      sectionRenderer.renderSection(this.sectionId);
+      return sectionRenderer.renderSection(this.sectionId).then(() => {});
     }
+  }
+
+  /**
+   * Dispatches search:update event if on the search page.
+   * @param {Promise<void>} renderPromise - The promise from section rendering
+   */
+  #dispatchSearchUpdateEvent(renderPromise) {
+    const query = this.#getSearchQuery();
+
+    const deferredPromise = SearchUpdateEvent.createPromise();
+    const productFilters = SearchUpdateEvent.parseProductFilters();
+
+    this.dispatchEvent(
+      new SearchUpdateEvent({
+        search: {
+          query,
+          ...(productFilters && { productFilters }),
+          sortKey: SearchUpdateEvent.getSortKey(),
+        },
+        promise: deferredPromise.promise,
+      })
+    );
+
+    // Resolve promise after section renders with result count
+    renderPromise
+      .then(() => deferredPromise.resolve({ totalCount: this.#getResultsCount() }))
+      .catch((error) => deferredPromise.reject(error));
+  }
+
+  /**
+   * Gets the count of product results from the server-rendered data attribute.
+   * @returns {number}
+   */
+  #getResultsCount() {
+    return Number(this.dataset.resultsCount) || 0;
   }
 
   /**
@@ -98,8 +163,45 @@ class FacetsFormComponent extends Component {
    */
   updateFiltersByURL(url) {
     history.pushState('', '', url);
-    this.dispatchEvent(new FilterUpdateEvent(this.createURLParameters()));
-    this.#updateSection();
+    const renderPromise = this.#updateSection();
+    if (this.dataset.pageType === 'search') {
+      this.#dispatchSearchUpdateEvent(renderPromise);
+    } else {
+      this.#dispatchCollectionUpdateEvent(renderPromise);
+    }
+  }
+
+  /**
+   * Dispatches collection:update event if on a collection page.
+   * @param {Promise<void>} renderPromise - The promise from section rendering
+   */
+  #dispatchCollectionUpdateEvent(renderPromise) {
+    // Build collection object with available identifiers
+    // Only use numeric IDs — non-numeric values like "all" fail GID validation
+    /** @type {any} */
+    const rawId = this.dataset.collectionId;
+    const collectionData = {
+      id: rawId && /^\d+$/.test(rawId) ? rawId : null,
+      handle: /** @type {string} */ (this.dataset.collectionHandle),
+      productsCount: this.#getResultsCount(),
+    };
+
+    const deferredPromise = CollectionUpdateEvent.createPromise();
+    const productFilters = CollectionUpdateEvent.parseProductFilters();
+
+    this.dispatchEvent(
+      new CollectionUpdateEvent({
+        collection: collectionData,
+        ...(productFilters && { productFilters }),
+        sortKey: CollectionUpdateEvent.getSortKey(),
+        promise: deferredPromise.promise,
+      })
+    );
+
+    // Resolve promise after section renders with product count
+    renderPromise
+      .then(() => deferredPromise.resolve({ productsCount: this.#getResultsCount() }))
+      .catch((error) => deferredPromise.reject(error));
   }
 }
 
@@ -153,27 +255,33 @@ class FacetInputsComponent extends Component {
   }
 
   /**
-   * Handles mouseover events on facet labels
-   * @param {MouseEvent} event - The mouseover event
+   * Fires immediately on pointerdown so a quick tap triggers the prefetch.
+   * @param {PointerEvent} event
    */
-  prefetchPage = debounce((event) => {
+  prefetchPageImmediate(event) {
     if (!(event.target instanceof HTMLElement)) return;
+    this.#prefetchOption(event.target);
+  }
 
+  /**
+   * Reads `checked` at call time, so callers must invoke it before the toggle
+   * for the predicted post-toggle URL to be correct.
+   * @param {HTMLElement} optionElement
+   */
+  #prefetchOption(optionElement) {
     const form = this.closest('form');
     if (!form) return;
 
-    const formData = new FormData(form);
-    const inputElement = event.target.querySelector('input');
-
-    if (!(inputElement instanceof HTMLInputElement)) return;
-
-    if (!inputElement.checked) formData.append(inputElement.name, inputElement.value);
+    const inputElement = optionElement.querySelector('input');
+    if (!(inputElement instanceof HTMLInputElement) || inputElement.disabled) return;
 
     const facetsForm = this.closest('facets-form-component');
     if (!(facetsForm instanceof FacetsFormComponent)) return;
 
-    const urlParameters = facetsForm.createURLParameters(formData);
+    const formData = new FormData(form);
+    if (!inputElement.checked) formData.append(inputElement.name, inputElement.value);
 
+    const urlParameters = facetsForm.createURLParameters(formData);
     const url = new URL(window.location.pathname, window.location.origin);
 
     for (const [key, value] of urlParameters) url.searchParams.append(key, value);
@@ -181,6 +289,14 @@ class FacetInputsComponent extends Component {
     if (inputElement.checked) url.searchParams.delete(inputElement.name, inputElement.value);
 
     sectionRenderer.getSectionHTML(this.sectionId, true, url);
+  }
+
+  /**
+   * @param {PointerEvent} event
+   */
+  prefetchPage = debounce((event) => {
+    if (!(event.target instanceof HTMLElement)) return;
+    this.#prefetchOption(event.target);
   }, 200);
 
   cancelPrefetchPage = () => this.prefetchPage.cancel();
@@ -344,12 +460,14 @@ class FacetClearComponent extends Component {
   connectedCallback() {
     super.connectedCallback();
     this.addEventListener('keyup', this.#handleKeyUp);
-    document.addEventListener(ThemeEvents.FilterUpdate, this.#handleFilterUpdate);
+    document.addEventListener(StandardEvents.searchUpdate, this.#handleFilterUpdate);
+    document.addEventListener(StandardEvents.collectionUpdate, this.#handleFilterUpdate);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    document.removeEventListener(ThemeEvents.FilterUpdate, this.#handleFilterUpdate);
+    document.removeEventListener(StandardEvents.searchUpdate, this.#handleFilterUpdate);
+    document.removeEventListener(StandardEvents.collectionUpdate, this.#handleFilterUpdate);
   }
 
   /**
@@ -400,12 +518,19 @@ class FacetClearComponent extends Component {
    * Toggle clear button visibility when filters are applied. Happens before the
    * Section Rendering Request resolves.
    *
-   * @param {FilterUpdateEvent} event
+   * @param {SearchUpdateEvent | CollectionUpdateEvent} event
    */
-  #handleFilterUpdate = (event) => {
+  #handleFilterUpdate = (/** @type {SearchUpdateEvent | CollectionUpdateEvent} */ event) => {
+    // Ignore events from other sections (e.g. predictive search in header)
+    const eventSection = /** @type {Element | null} */ (event.target)?.closest('.shopify-section');
+    const mySection = this.closest('.shopify-section');
+    if (eventSection && mySection && eventSection !== mySection) return;
+
     const { clearButton } = this.refs;
     if (clearButton instanceof Element) {
-      clearButton.classList.toggle('facets__clear--active', event.shouldShowClearAll());
+      const filters =
+        event instanceof SearchUpdateEvent ? event.search?.productFilters ?? [] : event.productFilters ?? [];
+      clearButton.classList.toggle('facets__clear--active', filters.length > 0);
     }
   };
 }
@@ -426,12 +551,14 @@ if (!customElements.get('facet-clear-component')) {
 class FacetRemoveComponent extends Component {
   connectedCallback() {
     super.connectedCallback();
-    document.addEventListener(ThemeEvents.FilterUpdate, this.#handleFilterUpdate);
+    document.addEventListener(StandardEvents.searchUpdate, this.#handleFilterUpdate);
+    document.addEventListener(StandardEvents.collectionUpdate, this.#handleFilterUpdate);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    document.removeEventListener(ThemeEvents.FilterUpdate, this.#handleFilterUpdate);
+    document.removeEventListener(StandardEvents.searchUpdate, this.#handleFilterUpdate);
+    document.removeEventListener(StandardEvents.collectionUpdate, this.#handleFilterUpdate);
   }
 
   /**
@@ -462,13 +589,20 @@ class FacetRemoveComponent extends Component {
    * Toggle clear button visibility when filters are applied. Happens before the
    * Section Rendering Request resolves.
    *
-   * @param {FilterUpdateEvent} event
+   * @param {SearchUpdateEvent | CollectionUpdateEvent} event
    */
-  #handleFilterUpdate = (event) => {
+  #handleFilterUpdate = (/** @type {SearchUpdateEvent | CollectionUpdateEvent} */ event) => {
+    // Ignore events from other sections (e.g. predictive search in header)
+    const eventSection = /** @type {Element | null} */ (event.target)?.closest('.shopify-section');
+    const mySection = this.closest('.shopify-section');
+    if (eventSection && mySection && eventSection !== mySection) return;
+
     const { clearButton } = this.refs;
     if (clearButton instanceof Element) {
       const activeClass = this.getAttribute('active-class') || 'active';
-      clearButton.classList.toggle(activeClass, event.shouldShowClearAll());
+      const filters =
+        event instanceof SearchUpdateEvent ? event.search?.productFilters ?? [] : event.productFilters ?? [];
+      clearButton.classList.toggle(activeClass, filters.length > 0);
     }
   };
 }
