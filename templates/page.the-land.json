@@ -220,12 +220,28 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
+            },
+            "button_PeCmxA": {
+              "type": "button",
+              "name": "t:names.button",
+              "settings": {
+                "label": "Shop Products",
+                "link": "shopify://collections/all",
+                "open_in_new_tab": false,
+                "style_class": "button",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
             }
           },
           "block_order": [
             "text_Wy7dH9",
             "text_kHyQTh",
-            "text_mHDp8L"
+            "text_mHDp8L",
+            "button_PeCmxA"
           ]
         },
         "image_dUkfJP": {
@@ -250,27 +266,11 @@
             "padding-inline-end": 0
           },
           "blocks": {}
-        },
-        "button_qVtJPa": {
-          "type": "button",
-          "name": "t:names.button",
-          "settings": {
-            "label": "Shop Products",
-            "link": "shopify://collections/all",
-            "open_in_new_tab": false,
-            "style_class": "button",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100
-          },
-          "blocks": {}
         }
       },
       "block_order": [
         "group_6xxhUe",
-        "image_dUkfJP",
-        "button_qVtJPa"
+        "image_dUkfJP"
       ],
       "name": "t:names.image_with_text",
       "settings": {
@@ -317,6 +317,29 @@
     "section_NhbG33": {
       "type": "section",
       "blocks": {
+        "image_watkhL": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/41dfbafe-74ac-495d-8d48-efee0b279e86.png",
+            "link": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 16,
+            "image_border_padding": 8,
+            "image_ratio": "portrait",
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
         "group_MKcPJC": {
           "type": "group",
           "settings": {
@@ -411,7 +434,7 @@
             "text_NyCtwA": {
               "type": "text",
               "settings": {
-                "text": "<p>We believe the answer lies in reverence, in rhythm, in the quiet understanding that we are not separate from nature but a part of it. To take without giving, to rush without listening, only breaks the delicate balance that has sustained life for centuries. Instead, we choose another way, The Cala Falcó Way.<br/><br/>Here, we move with intention, honouring the soil, the sea, the air we breathe and nature around us. We craft with care, believing that true luxury is not in abundance but in the rare, the meaningful, the deeply personal.<br/><br/>And we discover a level of health and wellbeing that isn’t temporary, but transformative. For the mind, body, and spirit. We have been conditioned to accept the artificial as normal. But deep down, we long for something real. Something regenerative.<br/><br/>At Cala Falcó, we listen to nature as a teacher, a guide, a partner. This is more than a philosophy. It is an invitation.To return to something pure, joyful, and enduring.</p><p>Welcome to our way. The Cala Falcó way.</p>",
+                "text": "<p>We believe the answer lies in reverence, in rhythm, in the quiet understanding that we are not separate from nature but a part of it. To take without giving, to rush without listening, only breaks the delicate balance that has sustained life for centuries. Instead, we choose another way, The Cala Falcó Way.<br/><br/>Here, we move with intention, honouring the soil, the sea, the air we breathe and nature around us. We craft with care, believing that true luxury is not in abundance but in the rare, the meaningful, the deeply personal.<br/><br/>And we discover a level of health and wellbeing that isn’t temporary, but transformative. For the mind, body, and spirit. We have been conditioned to accept the artificial as normal. But deep down, we long for something real. Something regenerative.<br/><br/>At Cala Falcó, we listen to nature as a teacher, a guide, a partner. This is more than a philosophy. It is an invitation.To return to something pure, joyful, and enduring.<br/><br/>Welcome to our way. The Cala Falcó way.</p>",
                 "width": "100%",
                 "max_width": "none",
                 "alignment": "left",
@@ -432,40 +455,17 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
-            },
-            "image_EMwxkz": {
-              "type": "image",
-              "settings": {
-                "image": "shopify://shop_images/41dfbafe-74ac-495d-8d48-efee0b279e86.png",
-                "link": "",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 16,
-                "image_border_padding": 8,
-                "image_ratio": "portrait",
-                "width": "fill",
-                "custom_width": 100,
-                "width_mobile": "fill",
-                "custom_width_mobile": 100,
-                "height": "fit",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
             }
           },
           "block_order": [
             "text_GfrmtU",
             "text_XwyYrT",
-            "text_NyCtwA",
-            "image_EMwxkz"
+            "text_NyCtwA"
           ]
         }
       },
       "block_order": [
+        "image_watkhL",
         "group_MKcPJC"
       ],
       "name": "t:names.image_with_text",
