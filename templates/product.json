@@ -322,6 +322,45 @@
                     "text_PViY9J"
                   ]
                 },
+                "accordion_row_JXUd7N": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Tasting Notes",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "text_gG3RUL": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>A revitalising and aromatic beverage with citrus and herbal nuances, complemented by mineral-rich marine notes. The sweetness of honey balances the subtle brininess, while rosemary adds a crisp, woody finish.</p>",
+                        "width": "100%",
+                        "max_width": "none",
+                        "alignment": "left",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_size": "1rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_gG3RUL"
+                  ]
+                },
                 "accordion_row_qjUkWM": {
                   "type": "_accordion-row",
                   "settings": {
@@ -400,45 +439,6 @@
                     "text_BBBpae"
                   ]
                 },
-                "accordion_row_JXUd7N": {
-                  "type": "_accordion-row",
-                  "settings": {
-                    "heading": "Tasting Benefits",
-                    "open_by_default": false,
-                    "icon": "none",
-                    "width": 20
-                  },
-                  "blocks": {
-                    "text_gG3RUL": {
-                      "type": "text",
-                      "settings": {
-                        "text": "<p>A revitalising and aromatic beverage with citrus and herbal nuances, complemented by mineral-rich marine notes. The sweetness of honey balances the subtle brininess, while rosemary adds a crisp, woody finish.</p>",
-                        "width": "100%",
-                        "max_width": "none",
-                        "alignment": "left",
-                        "type_preset": "rte",
-                        "font": "var(--font-body--family)",
-                        "font_size": "1rem",
-                        "line_height": "normal",
-                        "letter_spacing": "normal",
-                        "case": "none",
-                        "wrap": "pretty",
-                        "color": "var(--color-foreground)",
-                        "background": false,
-                        "background_color": "#00000026",
-                        "corner_radius": 0,
-                        "padding-block-start": 0,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "text_gG3RUL"
-                  ]
-                },
                 "accordion_row_edk437": {
                   "type": "_accordion-row",
                   "settings": {
@@ -481,9 +481,9 @@
               },
               "block_order": [
                 "accordion_row_m9AYzq",
+                "accordion_row_JXUd7N",
                 "accordion_row_qjUkWM",
                 "accordion_row_dpVC3r",
-                "accordion_row_JXUd7N",
                 "accordion_row_edk437"
               ]
             },
