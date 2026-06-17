@@ -33,7 +33,7 @@
             "background_color": "#00000026",
             "corner_radius": 0,
             "padding-block-start": 48,
-            "padding-block-end": 48,
+            "padding-block-end": 0,
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
@@ -44,8 +44,8 @@
           "name": "Details",
           "static": true,
           "settings": {
-            "show_date": false,
-            "show_author": false,
+            "show_date": true,
+            "show_author": true,
             "type_preset": "",
             "alignment": "center",
             "show_alignment": true,
@@ -69,7 +69,7 @@
             "border_width": 1,
             "border_opacity": 100,
             "border_radius": 20,
-            "padding-block-start": 0,
+            "padding-block-start": 24,
             "padding-block-end": 24,
             "padding-inline-start": 0,
             "padding-inline-end": 0
