@@ -295,7 +295,7 @@
                     "text_PViY9J": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>{{ closest.product.description }}</p>",
+                        "text": "{{ closest.product.description }}",
                         "width": "100%",
                         "max_width": "none",
                         "alignment": "left",
@@ -580,6 +580,58 @@
             "padding-inline-end": 0
           },
           "blocks": {
+            "text_ATVyfH": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<h2>tasting notes </h2>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "text_CmURFK": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<p>A revitalising and aromatic beverage with citrus and herbal nuances, complemented by mineral-rich marine notes. The sweetness of honey balances the subtle brininess, while rosemary adds a crisp, woody finish.</p>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
             "text_FYWKR4": {
               "type": "text",
               "name": "t:names.heading",
@@ -633,6 +685,8 @@
             }
           },
           "block_order": [
+            "text_ATVyfH",
+            "text_CmURFK",
             "text_FYWKR4",
             "text_gwBTgz"
           ]
