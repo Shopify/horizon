@@ -1662,8 +1662,8 @@ summary:hover {
 
 summary .svg-wrapper {
   margin-inline-start: auto;
-  height: var(--icon-size-xs);
-  width: var(--icon-size-xs);
+  height: var(--icon-size-sm);
+  width: var(--icon-size-sm);
   transition: transform var(--animation-speed) var(--animation-easing);
 }
 
@@ -2841,10 +2841,18 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
 
 .spacing-style,
 .inherit-spacing {
-  padding-block: calc(var(--padding-block-start) + var(--section-top-offset, 0px)) var(--padding-block-end);
+  padding-block: calc(var(--padding-block-start-mobile, var(--padding-block-start, 0px)) + var(--section-top-offset, 0px))
+    var(--padding-block-end-mobile, var(--padding-block-end, 0px));
   padding-inline: var(--padding-inline-start) var(--padding-inline-end);
   margin-block: var(--margin-block-start) var(--margin-block-end);
   margin-inline: var(--margin-inline-start) var(--margin-inline-end);
+}
+
+@media screen and (min-width: 750px) {
+  .spacing-style,
+  .inherit-spacing {
+    padding-block: calc(var(--padding-block-start) + var(--section-top-offset, 0px)) var(--padding-block-end);
+  }
 }
 
 /* Size style */
@@ -2928,8 +2936,14 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
 
 .layout-panel-flex {
   display: flex;
-  gap: var(--gap);
+  gap: var(--gap-mobile, var(--gap));
   height: 100%;
+}
+
+@media screen and (min-width: 750px) {
+  .layout-panel-flex {
+    gap: var(--gap);
+  }
 }
 
 .layout-panel-flex--row {

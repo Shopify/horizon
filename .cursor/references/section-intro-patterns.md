@@ -27,3 +27,4 @@ Optional primary CTA below the column grid (centered), not a block:
 ## Notes
 - Liquid conditionals in theme files should avoid grouped boolean expressions with parentheses for better theme-check compatibility.
 - Use nested `if` statements for combined checks (`show_intro` + non-blank heading/description).
+- `sections/section.liquid` now supports mobile spacing controls for presets (including Image with Text): `gap-mobile` (default `10`) and `padding-block-start-mobile` / `padding-block-end-mobile` (default `40`). Shared rendering uses mobile values below `750px` with desktop fallback.

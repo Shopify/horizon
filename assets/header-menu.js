@@ -771,14 +771,14 @@ class HeaderMenu extends Component {
   }
 
   #initDebugTools() {
-    const queryEnabled = new URLSearchParams(window.location.search).get('megaMenuDebug') === '1';
-    const storedEnabled = window.localStorage.getItem(HeaderMenu.DEBUG_STORAGE_KEY) === '1';
-    this.#debugEnabled = queryEnabled || storedEnabled;
+    this.#debugEnabled = false;
+    this.#debugFreezeOpen = false;
+    this.dataset.debugFreeze = 'false';
+    this.headerComponent?.removeAttribute('data-mega-menu-debug-freeze');
+    this.#teardownDebugPanel();
 
-    if (!this.#debugEnabled) return;
-
-    this.#mountDebugPanel();
-    this.#updateDebugPanel('init');
+    // Ensure previous debug sessions do not auto-enable on reload.
+    window.localStorage.removeItem(HeaderMenu.DEBUG_STORAGE_KEY);
   }
 
   /**
