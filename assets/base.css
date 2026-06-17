@@ -844,6 +844,7 @@ h1,
   select.h1.h1 {
     font-size: max(1rem, var(--font-h1--size));
   }
+
 }
 
 h2,
@@ -3120,6 +3121,7 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
 .shopify-policy__title {
   :is(h1, h2, h3, h4, h5, h6) {
     margin-block: clamp(1.5rem, 1em * 3.3, 2.5rem) var(--font-heading--spacing);
+
   }
 
   :first-child:is(p, h1, h2, h3, h4, h5, h6),
@@ -3173,6 +3175,12 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
     text-align: start;
     padding-inline: var(--padding-md);
     padding-block: var(--padding-sm);
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .shopify-policy__title h1{
+    font-size: 2rem;
   }
 }
 

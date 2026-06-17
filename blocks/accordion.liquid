@@ -82,6 +82,19 @@
     display: none;
   }
 
+  /* Keep toggle icon visual size consistent across open/closed rows */
+  .accordion .details__header .svg-wrapper {
+    flex: 0 0 var(--icon-size-sm);
+    width: var(--icon-size-sm);
+    height: var(--icon-size-sm);
+  }
+
+  .accordion .details__header .svg-wrapper svg {
+    width: 100%;
+    height: 100%;
+    transform-origin: 50% 50%;
+  }
+
   /* because we can't pass apply a specific class on a block based on its parent block setting */
   .accordion .details__header {
     font-family: var(--font-h6--family);

@@ -311,7 +311,7 @@
               If the next bigger font size under the fluid cutoff, we use keep a 4px buffer
             endcomment
             if next_font_size_value_number < fluid_size_cutoff
-              assign fluid_font_size_min = next_font_size_value_number | plus: 1
+              assign fluid_font_size_min = next_font_size_value_number 
               if font_size_value < fluid_font_size_min
                 assign fluid_font_size_min = font_size_value
               endif
