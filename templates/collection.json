@@ -42,7 +42,7 @@
           "type": "text",
           "name": "Description",
           "settings": {
-            "text": "{{ closest.collection.description }}",
+            "text": "{{ closest.collection.description }}<p>eflwef</p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
