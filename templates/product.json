@@ -580,58 +580,6 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "text_ATVyfH": {
-              "type": "text",
-              "name": "t:names.heading",
-              "settings": {
-                "text": "<h2>tasting notes </h2>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "text_CmURFK": {
-              "type": "text",
-              "name": "t:names.text",
-              "settings": {
-                "text": "<p>A revitalising and aromatic beverage with citrus and herbal nuances, complemented by mineral-rich marine notes. The sweetness of honey balances the subtle brininess, while rosemary adds a crisp, woody finish.</p>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
             "text_FYWKR4": {
               "type": "text",
               "name": "t:names.heading",
@@ -685,8 +633,6 @@
             }
           },
           "block_order": [
-            "text_ATVyfH",
-            "text_CmURFK",
             "text_FYWKR4",
             "text_gwBTgz"
           ]
@@ -936,6 +882,64 @@
         "padding-block-end": 48
       }
     },
+    "testimonials_6Wptdr": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial_ELfb8g": {
+          "type": "testimonial",
+          "settings": {
+            "quote_short": "<p>Cala Falcó is a refined, nuanced non-alcoholic aperitivo, crafted with  passion, exclusivity and remarkable botanical complexity.</p>",
+            "cta_label": "Read full testimonial",
+            "cta_link": "",
+            "open_in_new_tab": true,
+            "image": "shopify://shop_images/CalaFalco_25-119_1.jpg",
+            "author": "Theo Hitchcock",
+            "author_title": "Founder of The Travelcohol-Free Club"
+          }
+        },
+        "testimonial_z7HeQE": {
+          "type": "testimonial",
+          "settings": {
+            "quote_short": "<p>Beautifully complex and vibrant, Cala Falcó delivers elegant botanical depth as a sophisticated non-alcoholic aperitivo.</p>",
+            "cta_label": "Read full testimonial",
+            "cta_link": "",
+            "open_in_new_tab": true,
+            "image": "shopify://shop_images/693fea74543b5fdcedb311ba_IMG_9683.jpg",
+            "author": "Claire Warner",
+            "author_title": "Global Non-Alcoholic Drinks Industry Thought Leader"
+          }
+        },
+        "testimonial_iBzqDM": {
+          "type": "testimonial",
+          "settings": {
+            "quote_short": "<p>Cala Falcó is light, crisp and wonderfully thirst-quenching, with beautiful notes of rosemary and a subtle sea-water minerality that captures the essence of the Mediterranean. The perfect alcohol free drink.</p>",
+            "cta_label": "Read full testimonial",
+            "cta_link": "",
+            "open_in_new_tab": true,
+            "image": "shopify://shop_images/693c2ff85d73eb5105da6d85_IMG_9567.jpg",
+            "author": "Emily Horner",
+            "author_title": "Non-Alcoholic Drinks Influencer"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_ELfb8g",
+        "testimonial_z7HeQE",
+        "testimonial_iBzqDM"
+      ],
+      "name": "t:names.testimonials",
+      "settings": {
+        "heading": "Kind Words. Poured Generously",
+        "section_width": "full-width",
+        "color_scheme": "scheme-cfa9c273-456f-45a2-b18d-d73976dc71f5",
+        "corner_radius": 0,
+        "slide_gap": 0,
+        "autoplay": false,
+        "autoplay_speed": 4,
+        "padding-block-start": 60,
+        "padding-block-end": 0
+      }
+    },
     "product_faq_main": {
       "type": "product-faq",
       "name": "t:names.product_faq",
@@ -1037,6 +1041,7 @@
     "main",
     "section_3YqBWc",
     "product_recommendations_qggXJq",
+    "testimonials_6Wptdr",
     "product_faq_main",
     "column_callouts_ErKxaN"
   ]
