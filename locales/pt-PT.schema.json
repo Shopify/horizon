@@ -190,7 +190,8 @@
     "product_sku": "SKU",
     "layered_slideshow": "Apresentação em camadas",
     "drawer": "Gaveta",
-    "cart_drawer": "Painel deslizante do carrinho"
+    "cart_drawer": "Painel deslizante do carrinho",
+    "disclosures": "Divulgações"
   },
   "settings": {
     "alignment": "Alinhamento",
@@ -603,7 +604,9 @@
     "bottom_row_text": "Texto da linha inferior",
     "button_style": "Estilo de botão",
     "input_style": "Estilo do campo",
-    "selected_button_style": "Estilo do botão selecionado"
+    "selected_button_style": "Estilo do botão selecionado",
+    "open_by_default": "Aberto por predefinição",
+    "title_preset": "Predefinição do título"
   },
   "options": {
     "apple": "Maçã",
@@ -1005,6 +1008,8 @@
     "local_pickup_description": "Mostre locais de levantamento próximos quando o levantamento local da loja online estiver configurado. [Saber mais](https://help.shopify.com/en/manual/fulfillment/setup/delivery-methods/pickup-in-store)",
     "local_pickup": "Levantamento local",
     "gift_card_products": "Produtos de cartão de oferta",
+    "disclosures": "Divulgações",
+    "disclosures_metafield_content": "Avisos de segurança e divulgações regulamentares obrigatórios para este produto.",
     "page_text_color_contrast_info": "As secções com uma cor de fundo personalizada apenas utilizam esta cor do texto quando existe contraste de cor suficiente."
   },
   "html_defaults": {
@@ -1099,7 +1104,8 @@
     "shop_the_look": "<h2>Comprar visual semelhante</h2>",
     "bestsellers": "Mais vendidos",
     "featured_collection": "Coleção em destaque",
-    "new_arrivals": "Novidades"
+    "new_arrivals": "Novidades",
+    "disclosures": "Divulgações"
   },
   "info": {
     "video_alt_text": "Descreva o vídeo para utilizadores de tecnologia de apoio",

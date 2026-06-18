@@ -1,0 +1,597 @@
+{% doc %}
+  Renders cart disclosure information for a product in a hover popover and dialog.
+
+  @param {product} product - The product object to display disclosures for
+  @param {string} unique_id - Unique identifier to append to popover ID
+  @param {string} [variant_anchor_name] - Optional CSS anchor name for aligning the popover to the variant row.
+  @param {string} [mode] - Optional render mode. Use 'trigger' for the trigger/popover only, 'dialog' for the modal dialog only, or omit for both.
+
+  @example
+  {% render 'cart-disclosure-tooltip',
+    product: item.product,
+    unique_id: item.index
+  %}
+{% enddoc %}
+
+{%- liquid
+  assign product = product | default: empty
+  assign unique_id = unique_id | default: product.id
+  assign variant_anchor_name = variant_anchor_name | default: blank
+  assign mode = mode | default: 'all'
+-%}
+
+{%- if product != empty -%}
+  {%- liquid
+    assign disclosures = product.metafields.shopify.disclosure.value
+    assign filter_by_cart_surface = true
+    assign cart_disclosure_symbol_aspect_ratio = 1
+  -%}
+
+  {%- for disclosure in disclosures -%}
+    {%- liquid
+      assign render_disclosure = true
+      if filter_by_cart_surface
+        assign render_disclosure = false
+        assign surfaces = disclosure.display_preferences.value.surfaces
+        if surfaces contains 'cart'
+          assign render_disclosure = true
+        endif
+      endif
+
+      assign disclosure_title = disclosure.title.value | default: disclosure.title
+      assign disclosure_message = disclosure.message.value | default: disclosure.message
+      assign disclosure_item_heading = disclosure_title
+      if disclosure_item_heading == blank
+        assign disclosure_item_heading = disclosure_message
+      endif
+      assign disclosure_symbol = disclosure.symbol.value
+      assign disclosure_symbol_aspect_ratio = disclosure_symbol.aspect_ratio | default: 1
+    -%}
+    {%- if render_disclosure and disclosure_item_heading != blank and disclosure_symbol != blank -%}
+      {%- if disclosure_symbol_aspect_ratio > cart_disclosure_symbol_aspect_ratio -%}
+        {%- assign cart_disclosure_symbol_aspect_ratio = disclosure_symbol_aspect_ratio -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- capture disclosure_rows -%}
+    {%- for disclosure in disclosures -%}
+      {%- liquid
+        assign render_disclosure = true
+        if filter_by_cart_surface
+          assign render_disclosure = false
+          assign surfaces = disclosure.display_preferences.value.surfaces
+          if surfaces contains 'cart'
+            assign render_disclosure = true
+          endif
+        endif
+
+        assign disclosure_title = disclosure.title.value | default: disclosure.title
+        if disclosure_title == blank
+          assign disclosure_title = disclosure.message.value | default: disclosure.message
+        endif
+        assign disclosure_symbol = disclosure.symbol.value
+      -%}
+      {%- if render_disclosure and disclosure_title != blank -%}
+        <li class="cart-disclosure-tooltip__row">
+          {%- if disclosure_symbol != blank -%}
+            {{
+              disclosure_symbol
+              | image_url: width: 40
+              | image_tag:
+                class: 'cart-disclosure-tooltip__symbol',
+                loading: 'lazy',
+                alt: '',
+                width: disclosure_symbol.width,
+                height: disclosure_symbol.height
+            }}
+          {%- endif -%}
+          <p class="cart-disclosure-tooltip__title">
+            {{ disclosure_title | escape }}
+          </p>
+        </li>
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endcapture -%}
+
+  {%- capture disclosure_modal_items -%}
+    {%- for disclosure in disclosures -%}
+      {%- liquid
+        assign render_disclosure = true
+        if filter_by_cart_surface
+          assign render_disclosure = false
+          assign surfaces = disclosure.display_preferences.value.surfaces
+          if surfaces contains 'cart'
+            assign render_disclosure = true
+          endif
+        endif
+
+        assign disclosure_title = disclosure.title.value | default: disclosure.title
+        assign disclosure_content = disclosure.content
+        assign disclosure_message = disclosure.message.value | default: disclosure.message
+        assign disclosure_item_heading = disclosure_title
+        assign message_used_as_heading = false
+        if disclosure_item_heading == blank
+          assign disclosure_item_heading = disclosure_message
+          assign message_used_as_heading = true
+        endif
+
+        assign render_message = false
+        if disclosure_content != blank
+          assign render_message = true
+        elsif disclosure_message != blank and message_used_as_heading == false
+          assign render_message = true
+        endif
+        assign disclosure_symbol = disclosure.symbol.value
+      -%}
+      {%- if render_disclosure and disclosure_item_heading != blank -%}
+        <li class="cart-disclosure-modal__item">
+          {%- if disclosure_symbol != blank -%}
+            {{
+              disclosure_symbol
+              | image_url: width: 48
+              | image_tag:
+                class: 'cart-disclosure-modal__symbol',
+                loading: 'lazy',
+                alt: '',
+                width: disclosure_symbol.width,
+                height: disclosure_symbol.height
+            }}
+          {%- endif -%}
+          <div class="cart-disclosure-modal__item-content">
+            <h3 class="cart-disclosure-modal__item-heading">{{ disclosure_item_heading | escape }}</h3>
+            {%- if render_message -%}
+              <div class="cart-disclosure-modal__body">
+                {%- if disclosure_content != blank -%}
+                  {{ disclosure_content | metafield_tag }}
+                {%- else -%}
+                  {{ disclosure_message | escape | newline_to_br }}
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          </div>
+        </li>
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endcapture -%}
+
+  {%- if disclosure_rows != blank -%}
+    {%- liquid
+      assign popover_id = 'CartDisclosureInfo-' | append: unique_id
+      assign dialog_id = 'CartDisclosureDialogModal-' | append: unique_id
+      assign dialog_component_id = 'CartDisclosureDialog-' | append: unique_id
+      assign heading_id = 'CartDisclosureDialogHeading-' | append: unique_id
+      assign anchor_name = '--cart-disclosure-trigger-' | append: unique_id
+      assign render_trigger = true
+      assign render_dialog = true
+
+      if mode == 'trigger'
+        assign render_dialog = false
+      elsif mode == 'dialog'
+        assign render_trigger = false
+      endif
+    -%}
+
+    {%- if render_trigger -%}
+      <anchored-popover-component
+        data-hover-triggered="true"
+        {% if variant_anchor_name != blank %}
+          data-vertical-position-anchor="{{ variant_anchor_name }}"
+        {% endif %}
+        class="cart-disclosure-tooltip"
+        id="cart-disclosure-anchor-{{ popover_id }}"
+        style="--cart-disclosure-symbol-aspect-ratio: {{ cart_disclosure_symbol_aspect_ratio }};"
+      >
+        <button
+          type="button"
+          class="cart-disclosure-tooltip__button button-unstyled"
+          aria-label="{{ 'accessibility.view_disclosure_information_for_product' | t: product_title: product.title | escape }}"
+          aria-haspopup="dialog"
+          aria-controls="{{ dialog_id }}"
+          ref="trigger"
+          popovertarget="{{ popover_id }}"
+          on:click="/openDialog/{{ dialog_component_id }}"
+          style="anchor-name: {{ anchor_name }};"
+        >
+          <span class="svg-wrapper">{{- 'icon-warning.svg' | inline_asset_content -}}</span>
+        </button>
+
+        <div
+          id="{{ popover_id }}"
+          class="cart-disclosure-tooltip__popover color-custom-popover"
+          ref="popover"
+          popover="auto"
+          style="
+            position-anchor: {{ anchor_name }};
+            {%- if variant_anchor_name != blank -%}
+              --cart-disclosure-tooltip-popover-top: anchor(
+                {{ variant_anchor_name }} top,
+                var(--cart-disclosure-tooltip-popover-native-fallback-top)
+              );
+              --cart-disclosure-tooltip-popover-fixed-fallback-top: calc(var(--anchor-top) * 1px);
+            {%- endif -%}
+          "
+        >
+          <ul class="cart-disclosure-tooltip__list list-unstyled">
+            {{- disclosure_rows -}}
+          </ul>
+        </div>
+      </anchored-popover-component>
+    {%- endif -%}
+
+    {%- if render_dialog -%}
+      <dialog-component
+        id="{{ dialog_component_id }}"
+        class="cart-disclosure-tooltip__dialog"
+        style="--cart-disclosure-symbol-aspect-ratio: {{ cart_disclosure_symbol_aspect_ratio }};"
+      >
+        <dialog
+          id="{{ dialog_id }}"
+          ref="dialog"
+          scroll-lock
+          aria-labelledby="{{ heading_id }}"
+          class="cart-disclosure-modal dialog-modal color-custom-popover"
+        >
+          <button
+            type="button"
+            ref="closeButton"
+            on:click="/closeDialog"
+            class="button button-unstyled close-button cart-disclosure-modal__close"
+            aria-label="{{ 'accessibility.close_dialog' | t }}"
+          >
+            {{- 'icon-close.svg' | inline_asset_content -}}
+          </button>
+
+          <div class="cart-disclosure-modal__content">
+            <h2
+              id="{{ heading_id }}"
+              class="cart-disclosure-modal__heading h3"
+            >
+              {{ 'content.product_disclosures' | t }}
+            </h2>
+            <ul class="cart-disclosure-modal__list list-unstyled">
+              {{- disclosure_modal_items -}}
+            </ul>
+          </div>
+        </dialog>
+      </dialog-component>
+    {%- endif -%}
+  {%- endif -%}
+{%- endif -%}
+
+{% stylesheet %}
+  .cart-disclosure-tooltip {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--minimum-touch-target);
+    height: var(--minimum-touch-target);
+    flex-shrink: 0;
+  }
+
+  .cart-disclosure-tooltip__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+    color: var(--color-foreground-secondary);
+    line-height: 1;
+    transition: color var(--animation-speed) var(--animation-easing);
+    cursor: pointer;
+  }
+
+  .cart-items__title-row .cart-disclosure-tooltip {
+    position: static;
+    align-self: flex-start;
+    width: 1em;
+    height: 1em;
+    margin-block-start: calc((1lh - 1em) / 2 + 0.3rem);
+    line-height: calc(var(--font-size--md) * var(--font-paragraph--line-height));
+  }
+
+  .cart-page .cart-items__title-row .cart-disclosure-tooltip {
+    margin-block-start: calc((1lh - 1em) / 2);
+  }
+
+  .cart-items__title-row .cart-disclosure-tooltip__button {
+    position: relative;
+    justify-content: center;
+    width: 1em;
+    height: 1em;
+  }
+
+  .cart-items__title-row .cart-disclosure-tooltip__button::before {
+    content: '';
+    position: absolute;
+    inset-block: calc((1em - var(--minimum-touch-target)) / 2);
+    inset-inline-start: 0;
+    inset-inline-end: calc(1em - var(--minimum-touch-target));
+  }
+
+  .cart-disclosure-tooltip__button:hover {
+    color: var(--color-foreground);
+  }
+
+  .cart-disclosure-tooltip__button .svg-wrapper,
+  .cart-disclosure-tooltip__button .svg-wrapper > svg {
+    width: 1em;
+    height: 1em;
+  }
+
+  .cart-disclosure-tooltip__popover {
+    --cart-disclosure-tooltip-popover-max-width: 280px;
+    --cart-disclosure-tooltip-popover-spacing: 8px;
+    --cart-disclosure-tooltip-popover-offset-block: -4px;
+    --cart-disclosure-tooltip-popover-viewport-margin: 16px;
+    --cart-disclosure-tooltip-symbol-inset-inline: var(--padding-md);
+    --cart-disclosure-tooltip-popover-native-fallback-top: calc(
+      anchor(bottom) + var(--cart-disclosure-tooltip-popover-spacing) +
+        var(--cart-disclosure-tooltip-popover-offset-block)
+    );
+    --cart-disclosure-tooltip-popover-fixed-fallback-top: calc(
+      (var(--anchor-top) + var(--anchor-height)) * 1px + var(--cart-disclosure-tooltip-popover-spacing) +
+        var(--cart-disclosure-tooltip-popover-offset-block)
+    );
+
+    inset: unset;
+    top: var(--cart-disclosure-tooltip-popover-top, var(--cart-disclosure-tooltip-popover-native-fallback-top));
+    left: max(
+      var(--cart-disclosure-tooltip-popover-viewport-margin),
+      min(
+        calc(anchor(left) - var(--cart-disclosure-tooltip-symbol-inset-inline)),
+        calc(
+          100vw - var(--cart-disclosure-tooltip-popover-max-width) -
+            var(--cart-disclosure-tooltip-popover-viewport-margin)
+        )
+      )
+    );
+    min-inline-size: 240px;
+    max-inline-size: var(--cart-disclosure-tooltip-popover-max-width);
+    padding: 0;
+    margin: 0;
+    color: var(--color-foreground);
+    background: var(--color-background);
+    border: var(--style-border-popover);
+    border-radius: var(--style-border-radius-popover, 0);
+    box-shadow: var(--shadow-popover);
+    opacity: 0;
+    transition-property: display, opacity, translate;
+    transition-duration: 0.3s;
+    transition-timing-function: var(--ease-out-quad);
+    transition-behavior: allow-discrete;
+    translate: 0 20px;
+    overflow: hidden;
+  }
+
+  @supports not (position-anchor: --cart-disclosure-trigger) {
+    .cart-disclosure-tooltip__popover {
+      position: fixed;
+      top: var(--cart-disclosure-tooltip-popover-fixed-fallback-top);
+      left: max(
+        var(--cart-disclosure-tooltip-popover-viewport-margin),
+        min(
+          calc((var(--anchor-left) * 1px) - var(--cart-disclosure-tooltip-symbol-inset-inline)),
+          calc(
+            100vw - var(--cart-disclosure-tooltip-popover-max-width) -
+              var(--cart-disclosure-tooltip-popover-viewport-margin)
+          )
+        )
+      );
+    }
+  }
+
+  .cart-disclosure-tooltip__popover:popover-open {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  .cart-disclosure-tooltip__list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cart-disclosure-tooltip__row {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--gap-sm);
+    padding-block: var(--padding-xs);
+    padding-inline: var(--cart-disclosure-tooltip-symbol-inset-inline, var(--padding-md)) var(--padding-md);
+    font-size: var(--font-size--sm);
+    color: var(--color-foreground);
+    background: var(--color-background);
+    overflow-wrap: break-word;
+  }
+
+  .cart-disclosure-tooltip__row:has(> .cart-disclosure-tooltip__symbol) {
+    --cart-disclosure-tooltip-symbol-height: 1em;
+    --cart-disclosure-tooltip-symbol-slot-width: calc(
+      var(--cart-disclosure-tooltip-symbol-height) * var(--cart-disclosure-symbol-aspect-ratio, 1)
+    );
+
+    display: grid;
+    grid-template-columns: var(--cart-disclosure-tooltip-symbol-slot-width) minmax(0, 1fr);
+    min-inline-size: 0;
+  }
+
+  .cart-disclosure-tooltip__symbol {
+    justify-self: center;
+    width: auto;
+    max-inline-size: 100%;
+    height: var(--cart-disclosure-tooltip-symbol-height, 1em);
+    margin: 0;
+    object-fit: contain;
+    translate: 0 1px;
+  }
+
+  .cart-disclosure-tooltip__title {
+    min-width: 0;
+    margin: 0;
+    line-height: var(--line-height--body-tight);
+  }
+
+  .cart-disclosure-tooltip__dialog {
+    display: contents;
+  }
+
+  .cart-disclosure-modal {
+    --cart-disclosure-modal-width: 28rem;
+    --cart-disclosure-modal-max-height: 72dvh;
+    --cart-disclosure-modal-border-radius: min(var(--style-border-radius-popover), 8px);
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: min(var(--cart-disclosure-modal-width), calc(100vw - (var(--padding-2xl) * 2)));
+    max-height: min(var(--cart-disclosure-modal-max-height), calc(100dvh - (var(--padding-2xl) * 2)));
+    padding: 0;
+    margin: 0;
+    color: var(--color-foreground);
+    background: var(--color-background);
+    border: var(--style-border-popover);
+    border-radius: var(--cart-disclosure-modal-border-radius);
+    box-shadow: var(--shadow-popover);
+    overflow: hidden;
+    isolation: isolate;
+    translate: -50% -50%;
+  }
+
+  .cart-disclosure-modal.dialog-modal[open] {
+    animation: modalSlideInTop var(--animation-speed) var(--animation-easing) forwards;
+  }
+
+  .cart-disclosure-modal.dialog-modal.dialog-closing {
+    animation: modalSlideOutTop var(--animation-speed) var(--animation-easing);
+  }
+
+  .cart-disclosure-modal::backdrop {
+    backdrop-filter: brightness(0.65) blur(2px);
+    background: rgb(var(--color-foreground-rgb) / var(--opacity-60));
+  }
+
+  .cart-disclosure-modal__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-xl);
+    max-height: inherit;
+    padding: var(--padding-2xl);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .cart-disclosure-modal .cart-disclosure-modal__heading {
+    margin: 0;
+    padding-inline-end: var(--minimum-touch-target);
+    font-size: var(--font-size--2xl);
+    font-weight: 700;
+    line-height: 1.15;
+    overflow-wrap: break-word;
+  }
+
+  .cart-disclosure-modal__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-xl);
+  }
+
+  .cart-disclosure-modal__item {
+    --cart-disclosure-modal-symbol-height: 1.5em;
+    --cart-disclosure-modal-symbol-slot-width: calc(
+      var(--cart-disclosure-modal-symbol-height) * var(--cart-disclosure-symbol-aspect-ratio, 1)
+    );
+    --cart-disclosure-modal-heading-offset: calc((var(--cart-disclosure-modal-symbol-height) - 1em) / 2);
+
+    display: grid;
+    grid-template-columns: var(--cart-disclosure-modal-symbol-slot-width) minmax(0, 1fr);
+    align-items: flex-start;
+    column-gap: var(--gap-xs);
+    row-gap: var(--gap-xs);
+    min-width: 0;
+    font-size: var(--font-size--md);
+    overflow-wrap: break-word;
+  }
+
+  .cart-disclosure-modal__item:not(:has(> .cart-disclosure-modal__symbol)) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cart-disclosure-modal__symbol {
+    justify-self: center;
+    width: auto;
+    max-inline-size: 100%;
+    height: var(--cart-disclosure-modal-symbol-height);
+    margin: 0;
+    object-fit: contain;
+  }
+
+  .cart-disclosure-modal__item-content {
+    display: contents;
+  }
+
+  .cart-disclosure-modal__item-heading {
+    margin: 0;
+    font-size: inherit;
+    font-weight: 700;
+    line-height: 1;
+    overflow-wrap: break-word;
+  }
+
+  .cart-disclosure-modal__item:has(> .cart-disclosure-modal__symbol) .cart-disclosure-modal__item-heading {
+    grid-column: 2;
+    padding-block-start: var(--cart-disclosure-modal-heading-offset);
+  }
+
+  .cart-disclosure-modal__body {
+    grid-column: 1 / -1;
+    margin: 0;
+    font-size: var(--font-size--sm);
+    line-height: 1.35;
+    overflow-wrap: break-word;
+  }
+
+  .cart-disclosure-modal__body > * {
+    margin-block: 0;
+  }
+
+  .cart-disclosure-modal__close {
+    position: absolute;
+    inset-block-start: var(--padding-sm);
+    inset-inline-end: var(--padding-sm);
+    z-index: var(--layer-raised);
+    overflow: visible;
+  }
+
+  @media screen and (min-width: 750px) {
+    .cart-disclosure-modal__content {
+      padding-block: var(--padding-2xl);
+      padding-inline: var(--padding-2xl);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .cart-disclosure-modal {
+      position: fixed;
+      top: auto;
+      left: 0;
+      inset-block-start: auto;
+      inset-block-end: 0;
+      inset-inline: 0;
+      width: 100%;
+      height: fit-content;
+      max-width: 100%;
+      max-height: 100dvh;
+      margin: auto 0 0;
+      border-start-start-radius: var(--cart-disclosure-modal-border-radius);
+      border-start-end-radius: var(--cart-disclosure-modal-border-radius);
+      border-end-start-radius: 0;
+      border-end-end-radius: 0;
+      overflow: clip;
+      translate: 0 0;
+    }
+
+    .cart-disclosure-modal__content {
+      max-height: min(var(--modal-max-height), 100dvh);
+    }
+  }
+{% endstylesheet %}

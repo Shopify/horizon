@@ -190,7 +190,8 @@
     "product_sku": "SKU",
     "layered_slideshow": "Diaporama superposé",
     "drawer": "Tiroir",
-    "cart_drawer": "Panier coulissant"
+    "cart_drawer": "Panier coulissant",
+    "disclosures": "Divulgations"
   },
   "settings": {
     "autoplay": "Lecture automatique",
@@ -603,7 +604,9 @@
     "bottom_row_text": "Texte de la rangée inférieure",
     "button_style": "Style de bouton",
     "input_style": "Style de champ",
-    "selected_button_style": "Style du bouton sélectionné"
+    "selected_button_style": "Style du bouton sélectionné",
+    "open_by_default": "Ouvert par défaut",
+    "title_preset": "Préréglage du titre"
   },
   "options": {
     "apple": "Pomme",
@@ -1005,6 +1008,8 @@
     "local_pickup_description": "Affichez les points de retrait à proximité lorsque le retrait local de la boutique en ligne est configuré. [En savoir plus](https://help.shopify.com/en/manual/fulfillment/setup/delivery-methods/pickup-in-store)",
     "local_pickup": "Retrait local",
     "gift_card_products": "Produits cartes-cadeaux",
+    "disclosures": "Divulgations",
+    "disclosures_metafield_content": "Avertissements de sécurité obligatoires et informations réglementaires pour ce produit.",
     "page_text_color_contrast_info": "Les sections avec une couleur d’arrière-plan personnalisée utiliseront cette couleur de texte uniquement si le contraste des couleurs est suffisant."
   },
   "html_defaults": {
@@ -1099,7 +1104,8 @@
     "shop_the_look": "<h2>Acheter le style complet</h2>",
     "bestsellers": "Meilleures ventes",
     "featured_collection": "Collection en vedette",
-    "new_arrivals": "Nouveautés"
+    "new_arrivals": "Nouveautés",
+    "disclosures": "Divulgations"
   },
   "info": {
     "carousel_layout_on_mobile": "Le carrousel est toujours utilisé sur mobile",

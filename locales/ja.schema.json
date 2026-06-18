@@ -190,7 +190,8 @@
     "product_sku": "SKU",
     "layered_slideshow": "レイヤースライドショー",
     "drawer": "ドロワー",
-    "cart_drawer": "カートドロワー"
+    "cart_drawer": "カートドロワー",
+    "disclosures": "開示情報"
   },
   "settings": {
     "alignment": "配置",
@@ -603,7 +604,9 @@
     "bottom_border_color": "下部の枠線の色",
     "button_style": "ボタンスタイル",
     "input_style": "入力スタイル",
-    "selected_button_style": "選択したボタンのスタイル"
+    "selected_button_style": "選択したボタンのスタイル",
+    "open_by_default": "デフォルトで開く",
+    "title_preset": "タイトルプリセット"
   },
   "options": {
     "apple": "Apple",
@@ -1005,6 +1008,8 @@
     "local_pickup_description": "オンラインストアのローカルピックアップが設定されている場合、近くの受取場所を表示します。[詳しくはこちら](https://help.shopify.com/en/manual/fulfillment/setup/delivery-methods/pickup-in-store)",
     "local_pickup": "ローカルピックアップ",
     "gift_card_products": "ギフトカード商品",
+    "disclosures": "開示情報",
+    "disclosures_metafield_content": "この商品に必要な安全に関する警告および規制に基づく開示情報です。",
     "page_text_color_contrast_info": "カスタム背景色が設定されたセクションでは、十分な色のコントラストがある場合にのみ、このテキストの配色を使用します。"
   },
   "html_defaults": {
@@ -1099,7 +1104,8 @@
     "shop_the_look": "<h2>このルックを購入</h2>",
     "bestsellers": "ベストセラー",
     "featured_collection": "特集コレクション",
-    "new_arrivals": "新着商品"
+    "new_arrivals": "新着商品",
+    "disclosures": "開示情報"
   },
   "info": {
     "video_alt_text": "支援技術のユーザーのために動画の説明を記述します",

@@ -2609,6 +2609,10 @@ form.payment-terms {
   height: 100%;
 }
 
+.shopify-block:has(> [shopify-block-empty]) {
+  display: none;
+}
+
 .layout-panel-flex--row {
   flex-flow: row var(--flex-wrap);
   justify-content: var(--horizontal-alignment);

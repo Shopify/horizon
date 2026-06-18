@@ -73,7 +73,8 @@
     "featured_product": "特色产品",
     "search_suggestions_available": "针对“{{ query }}”的搜索建议",
     "price_filter_low": "低价",
-    "price_filter_high": "高价"
+    "price_filter_high": "高价",
+    "view_disclosure_information_for_product": "查看 {{ product_title }} 的披露信息"
   },
   "actions": {
     "add_to_cart": "添加到购物车",
@@ -272,7 +273,8 @@
       "one": "1 件商品已加入购物车",
       "other": "{{ count }} 件商品已加入购物车"
     },
-    "quick_order_list": "快速订购列表"
+    "quick_order_list": "快速订购列表",
+    "product_disclosures": "产品披露信息"
   },
   "gift_cards": {
     "issued": {

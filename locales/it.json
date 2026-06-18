@@ -74,7 +74,8 @@
     "featured_product": "Prodotto in primo piano",
     "search_suggestions_available": "Suggerimenti di ricerca per \"{{ query }}\"",
     "price_filter_low": "Prezzo basso",
-    "price_filter_high": "Prezzo alto"
+    "price_filter_high": "Prezzo alto",
+    "view_disclosure_information_for_product": "Visualizza le informative per {{ product_title }}"
   },
   "actions": {
     "add_to_cart": "Aggiungi al carrello",
@@ -278,7 +279,8 @@
       "many": "{{ count }} articoli aggiunti al carrello"
     },
     "item_count_cutoff": "Più di {{ count }} articoli",
-    "quick_order_list": "Elenco per ordine rapido"
+    "quick_order_list": "Elenco per ordine rapido",
+    "product_disclosures": "Informative sul prodotto"
   },
   "gift_cards": {
     "issued": {

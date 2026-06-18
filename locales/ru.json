@@ -75,7 +75,8 @@
     "featured_product": "Рекомендуемый товар",
     "search_suggestions_available": "Доступны поисковые подсказки для \"{{ query }}\"",
     "price_filter_low": "Низкая цена",
-    "price_filter_high": "Высокая цена"
+    "price_filter_high": "Высокая цена",
+    "view_disclosure_information_for_product": "Просмотреть дополнительную информацию о товаре {{ product_title }}"
   },
   "actions": {
     "add_to_cart": "Добавить в корзину",
@@ -284,7 +285,8 @@
     },
     "item_count_cutoff": "Более {{ count }} товаров",
     "price_range": "Ценовой диапазон",
-    "quick_order_list": "Список быстрых заказов"
+    "quick_order_list": "Список быстрых заказов",
+    "product_disclosures": "Дополнительная информация о товаре"
   },
   "gift_cards": {
     "issued": {

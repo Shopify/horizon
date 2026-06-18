@@ -190,7 +190,8 @@
     "product_sku": "SKU",
     "layered_slideshow": "分层幻灯片",
     "drawer": "抽屉",
-    "cart_drawer": "购物车抽屉"
+    "cart_drawer": "购物车抽屉",
+    "disclosures": "披露信息"
   },
   "settings": {
     "alignment": "对齐方式",
@@ -603,7 +604,9 @@
     "bottom_border_color": "下边框颜色",
     "button_style": "按钮样式",
     "input_style": "输入样式",
-    "selected_button_style": "所选按钮样式"
+    "selected_button_style": "所选按钮样式",
+    "open_by_default": "默认展开",
+    "title_preset": "标题预设"
   },
   "options": {
     "apple": "Apple",
@@ -1005,6 +1008,8 @@
     "local_pickup_description": "设置在线商店本地取货后，显示附近的取货地点。[了解更多](https://help.shopify.com/en/manual/fulfillment/setup/delivery-methods/pickup-in-store)",
     "local_pickup": "本地取货",
     "gift_card_products": "礼品卡商品",
+    "disclosures": "披露信息",
+    "disclosures_metafield_content": "此产品所需的安全警告和监管披露信息。",
     "page_text_color_contrast_info": "仅当颜色对比度足够时，具有自定义背景色的分区才会使用此文本颜色。"
   },
   "html_defaults": {
@@ -1099,7 +1104,8 @@
     "shop_the_look": "<h2>整套产品</h2>",
     "bestsellers": "畅销商品",
     "featured_collection": "特色产品系列",
-    "new_arrivals": "新品上架"
+    "new_arrivals": "新品上架",
+    "disclosures": "披露信息"
   },
   "info": {
     "video_alt_text": "为使用辅助技术的用户描述视频",

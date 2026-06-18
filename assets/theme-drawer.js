@@ -1,6 +1,6 @@
 import { Component } from '@theme/component';
 import { trapFocus, removeTrapFocus } from '@theme/focus';
-import { isClickedOutside, onAnimationEnd } from '@theme/utilities';
+import { isClickedOutside, lockScroll, onAnimationEnd, unlockScroll } from '@theme/utilities';
 
 /** Viewport width below which the drawer opens as a modal overlay (no squeeze). */
 const MODAL_BREAKPOINT = 990;
@@ -78,15 +78,17 @@ export class ThemeDrawer extends Component {
    */
   #onRestore() {
     const { panel } = this.refs;
+    if (this.#modalQuery.matches) {
+      lockScroll(panel);
+    }
+
     document.addEventListener('keydown', this.#onKeyDown);
     panel.addEventListener('click', this.#onBackdropClick);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    if (this.isOpen && this.#modalQuery.matches && !document.querySelector('theme-drawer[open]')) {
-      document.documentElement.removeAttribute('scroll-lock');
-    }
+    unlockScroll(this.refs.panel);
     this.#modalQuery.removeEventListener('change', this.#onModalBreakpointChange);
     this.#removeEventListeners();
     removeTrapFocus();
@@ -104,9 +106,25 @@ export class ThemeDrawer extends Component {
     const { panel } = this.refs;
 
     if (isClickedOutside(event, panel)) {
+      if (this.#hasOpenNestedDialog()) return;
+
       this.close();
     }
   };
+
+  /**
+   * @returns {boolean} Whether the drawer panel contains an open dialog other than itself.
+   */
+  #hasOpenNestedDialog() {
+    return this.#getOpenNestedDialog() !== null;
+  }
+
+  /**
+   * @returns {HTMLDialogElement | null} The open dialog nested inside the drawer panel, if any.
+   */
+  #getOpenNestedDialog() {
+    return /** @type {HTMLDialogElement | null} */ (this.refs.panel.querySelector('dialog[open]'));
+  }
 
   /**
    * Switches the dialog between modal and non-modal when the viewport
@@ -116,6 +134,11 @@ export class ThemeDrawer extends Component {
     if (!this.isOpen) return;
 
     const { panel } = this.refs;
+    const nestedDialog = this.#getOpenNestedDialog();
+    const nestedActiveElement =
+      nestedDialog?.contains(document.activeElement) && document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
 
     // Close the current dialog mode and immediately reopen in the new mode.
     // No animation — the drawer stays visually in place.
@@ -123,15 +146,19 @@ export class ThemeDrawer extends Component {
     removeTrapFocus();
 
     if (this.#modalQuery.matches) {
-      document.documentElement.setAttribute('scroll-lock', '');
+      lockScroll(panel);
       panel.showModal();
     } else {
-      document.documentElement.removeAttribute('scroll-lock');
+      unlockScroll(panel);
       panel.show();
       trapFocus(panel);
     }
 
-    this.#focusInitialElement();
+    if (nestedDialog?.open) {
+      this.#bringNestedDialogToFront(nestedDialog, nestedActiveElement);
+    } else {
+      this.#focusInitialElement();
+    }
 
     // Ensure keydown and click listeners are registered. The sessionStorage
     // restore path bypasses open(), so these may not have been added yet.
@@ -189,7 +216,7 @@ export class ThemeDrawer extends Component {
     this.#previouslyFocused = /** @type {HTMLElement | null} */ (document.activeElement);
 
     if (this.#modalQuery.matches) {
-      document.documentElement.setAttribute('scroll-lock', '');
+      lockScroll(panel);
       panel.showModal();
     } else {
       panel.show();
@@ -225,6 +252,7 @@ export class ThemeDrawer extends Component {
     // is ignored — stacking follows showModal() call order. Re-calling
     // showModal() moves this dialog to the top of the stack.
     if (this.#modalQuery.matches && panel.open) {
+      lockScroll(panel);
       panel.close();
       panel.showModal();
     }
@@ -258,6 +286,22 @@ export class ThemeDrawer extends Component {
   }
 
   /**
+   * Reopens a nested modal after the drawer panel changes mode so it remains
+   * above the drawer in the browser top layer.
+   *
+   * @param {HTMLDialogElement} dialog - The nested dialog to restack.
+   * @param {HTMLElement | null} focusTarget - Element to refocus inside the nested dialog.
+   */
+  #bringNestedDialogToFront(dialog, focusTarget) {
+    dialog.close();
+    dialog.showModal();
+
+    if (focusTarget && document.contains(focusTarget) && dialog.contains(focusTarget)) {
+      focusTarget.focus();
+    }
+  }
+
+  /**
    * Slides the drawer out, waits for the animation, then closes the dialog.
    */
   async #closeDialog() {
@@ -273,10 +317,7 @@ export class ThemeDrawer extends Component {
     this.removeAttribute('open');
     this.dispatchEvent(new DrawerCloseEvent());
 
-    // Only remove scroll-lock if this was the last open modal drawer.
-    if (this.#modalQuery.matches && !document.querySelector('theme-drawer[open]')) {
-      document.documentElement.removeAttribute('scroll-lock');
-    }
+    unlockScroll(panel);
 
     if (panel.open) {
       // Cancel any in-progress open animation before starting the close.

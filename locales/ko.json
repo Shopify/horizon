@@ -73,7 +73,8 @@
     "featured_product": "추천 제품",
     "search_suggestions_available": "\"{{ query }}\"에 대한 검색 제안이 있습니다",
     "price_filter_low": "낮은 가격",
-    "price_filter_high": "높은 가격"
+    "price_filter_high": "높은 가격",
+    "view_disclosure_information_for_product": "{{ product_title }}에 대한 고지 정보 보기"
   },
   "actions": {
     "add_to_cart": "카트에 추가",
@@ -272,7 +273,8 @@
       "other": "카트에 {{ count }}개 품목이 추가됨"
     },
     "item_count_cutoff": "{{ count }}개 이상의 품목",
-    "quick_order_list": "빠른 주문 목록"
+    "quick_order_list": "빠른 주문 목록",
+    "product_disclosures": "제품 고지 사항"
   },
   "gift_cards": {
     "issued": {

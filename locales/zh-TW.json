@@ -73,7 +73,8 @@
     "featured_product": "精選商品",
     "search_suggestions_available": "可用於「{{ query }}」的搜尋建議",
     "price_filter_low": "低價",
-    "price_filter_high": "高價"
+    "price_filter_high": "高價",
+    "view_disclosure_information_for_product": "檢視 {{ product_title }} 的揭露資訊"
   },
   "actions": {
     "add_to_cart": "加入購物車",
@@ -272,7 +273,8 @@
       "other": "{{ count }} 個品項已加入購物車"
     },
     "item_count_cutoff": "超過 {{ count }} 個品項",
-    "quick_order_list": "快速訂購清單"
+    "quick_order_list": "快速訂購清單",
+    "product_disclosures": "商品揭露資訊"
   },
   "gift_cards": {
     "issued": {

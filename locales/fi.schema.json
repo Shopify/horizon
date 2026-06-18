@@ -190,7 +190,8 @@
     "product_sku": "SKU-koodi",
     "layered_slideshow": "Kerroksittainen diaesitys",
     "drawer": "Vetolaatikko",
-    "cart_drawer": "Veto-ostoskori"
+    "cart_drawer": "Veto-ostoskori",
+    "disclosures": "Ilmoitukset"
   },
   "settings": {
     "alignment": "Tasaus",
@@ -603,7 +604,9 @@
     "bottom_row_text": "Alarivin teksti",
     "button_style": "Painikkeen tyyli",
     "input_style": "Syöttötyyli",
-    "selected_button_style": "Valitun painikkeen tyyli"
+    "selected_button_style": "Valitun painikkeen tyyli",
+    "open_by_default": "Avoinna oletuksena",
+    "title_preset": "Otsikon esiasetus"
   },
   "options": {
     "apple": "Omena",
@@ -1005,6 +1008,8 @@
     "local_pickup_description": "Näytä lähellä olevat noutopaikat, kun verkkokaupan paikallinen nouto on määritetty. [Lisätietoja](https://help.shopify.com/en/manual/fulfillment/setup/delivery-methods/pickup-in-store)",
     "local_pickup": "Paikallinen nouto",
     "gift_card_products": "Lahjakorttituotteet",
+    "disclosures": "Ilmoitukset",
+    "disclosures_metafield_content": "Tämän tuotteen pakolliset turvallisuusvaroitukset ja säädösten edellyttämät ilmoitukset.",
     "page_text_color_contrast_info": "Osiot, joissa on mukautettu taustaväri, käyttävät tätä tekstin väriä vain, kun värikontrasti on riittävä."
   },
   "html_defaults": {
@@ -1099,7 +1104,8 @@
     "shop_the_look": "<h2>Osta kokonaisuus</h2>",
     "bestsellers": "Myydyimmät",
     "featured_collection": "Esittelykokoelma",
-    "new_arrivals": "Uutuudet"
+    "new_arrivals": "Uutuudet",
+    "disclosures": "Ilmoitukset"
   },
   "info": {
     "carousel_layout_on_mobile": "Mobiilissa käytetään aina karusellia.",

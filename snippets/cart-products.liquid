@@ -183,7 +183,13 @@
                   headers="productInformation"
                 >
                   <div class="cart-items__product-info">
-                    <p>
+                    {%- liquid
+                      assign cart_disclosure_unique_id = 'page-' | append: item.index
+                      if context == 'drawer'
+                        assign cart_disclosure_unique_id = 'drawer-' | append: item.index
+                      endif
+                    -%}
+                    <div class="cart-items__title-row">
                       <a
                         href="{{ item.url }}"
                         class="cart-items__title"
@@ -193,7 +199,12 @@
                       >
                         {{- item.product.title -}}
                       </a>
-                    </p>
+                      {% render 'cart-disclosure-tooltip',
+                        product: item.product,
+                        unique_id: cart_disclosure_unique_id,
+                        mode: 'trigger'
+                      %}
+                    </div>
                     {% if item.product.vendor and block_settings.vendor %}
                       <p>
                         {{ item.product.vendor }}
@@ -394,6 +405,19 @@
             {% endfor %}
           </tbody>
         </table>
+        {% for item in cart.items %}
+          {%- liquid
+            assign cart_disclosure_unique_id = 'page-' | append: item.index
+            if context == 'drawer'
+              assign cart_disclosure_unique_id = 'drawer-' | append: item.index
+            endif
+          -%}
+          {% render 'cart-disclosure-tooltip',
+            product: item.product,
+            unique_id: cart_disclosure_unique_id,
+            mode: 'dialog'
+          %}
+        {% endfor %}
       </div>
     </form>
   {%- endif -%}
@@ -454,6 +478,16 @@
     align-items: start;
     padding-bottom: var(--cart-items-gap);
     margin-bottom: var(--margin-lg);
+  }
+
+  .cart-items__details {
+    grid-area: details;
+    min-width: 0;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
+  }
+
+  .cart-items__product-info {
+    min-width: 0;
   }
 
   /* Cart drawer: separate grid areas for variants and unit price */
@@ -569,11 +603,6 @@
     margin-bottom: 0;
   }
 
-  .cart-items__details {
-    grid-area: details;
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
-  }
-
   .cart-items__details > * + *,
   .cart-items__bundle li {
     margin-block-start: var(--margin-3xs);
@@ -587,12 +616,22 @@
     text-decoration: none;
   }
 
+  .cart-items__title-row {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gap-xs);
+    max-width: 100%;
+    min-width: 0;
+  }
+
   .cart-items__title {
     font-size: var(--font-size--md);
     color: var(--color-foreground);
     text-transform: var(--product-title-case);
     display: block;
-    margin-block-start: calc((var(--font-size--md) - 1lh) / 2);
+    margin-block-start: 0;
+    min-width: 0;
+    overflow-wrap: break-word;
   }
 
   .cart-items__variants {

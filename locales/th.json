@@ -73,7 +73,8 @@
     "featured_product": "สินค้าแนะนำ",
     "search_suggestions_available": "ค้นหาคำแนะนำสำหรับ \"{{ query }}\" ที่พร้อมใช้งาน",
     "price_filter_low": "ราคาประหยัด",
-    "price_filter_high": "ราคาแพง"
+    "price_filter_high": "ราคาแพง",
+    "view_disclosure_information_for_product": "ดูข้อมูลชี้แจงสำหรับ{{ product_title }}"
   },
   "actions": {
     "add_to_cart": "เพิ่มลงในตะกร้าสินค้า",
@@ -272,7 +273,8 @@
       "one": "เพิ่มสินค้า 1 รายการลงในตะกร้าแล้ว",
       "other": "เพิ่มสินค้า {{ count }} รายการลงในตะกร้า"
     },
-    "quick_order_list": "รายการคำสั่งซื้อด่วน"
+    "quick_order_list": "รายการคำสั่งซื้อด่วน",
+    "product_disclosures": "ข้อมูลชี้แจงสินค้า"
   },
   "gift_cards": {
     "issued": {

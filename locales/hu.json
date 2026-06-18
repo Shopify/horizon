@@ -73,7 +73,8 @@
     "featured_product": "Kiemelt termék",
     "search_suggestions_available": "Keresési javaslatok a következőhöz: „{{ query }}”",
     "price_filter_low": "Ár szerint növekvő",
-    "price_filter_high": "Ár szerint csökkenő"
+    "price_filter_high": "Ár szerint csökkenő",
+    "view_disclosure_information_for_product": "Tájékoztató adatok megtekintése a következőhöz: {{ product_title }}"
   },
   "actions": {
     "add_to_cart": "Hozzáadás a kosárhoz",
@@ -272,7 +273,8 @@
       "other": "{{ count }} tétel hozzáadva a kosárhoz"
     },
     "item_count_cutoff": "Több mint {{ count }} tétel",
-    "quick_order_list": "Gyorsrendelési lista"
+    "quick_order_list": "Gyorsrendelési lista",
+    "product_disclosures": "Terméktájékoztatók"
   },
   "gift_cards": {
     "issued": {

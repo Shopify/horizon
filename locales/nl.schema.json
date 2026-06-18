@@ -190,7 +190,8 @@
     "product_sku": "SKU",
     "layered_slideshow": "Gelaagde diavoorstelling",
     "drawer": "Lade",
-    "cart_drawer": "Winkelwagenoptie"
+    "cart_drawer": "Winkelwagenoptie",
+    "disclosures": "Toelichtingen"
   },
   "settings": {
     "autoplay": "Automatisch afspelen",
@@ -603,7 +604,9 @@
     "bottom_border_color": "Onderrandkleur",
     "button_style": "Knopstijl",
     "input_style": "Invoerstijl",
-    "selected_button_style": "Stijl van geselecteerde knop"
+    "selected_button_style": "Stijl van geselecteerde knop",
+    "open_by_default": "Standaard geopend",
+    "title_preset": "Titelvoorinstelling"
   },
   "options": {
     "apple": "Apple",
@@ -1005,6 +1008,8 @@
     "local_pickup_description": "Toon afhaallocaties in de buurt wanneer lokale afhaling in de webshop is ingesteld. [Meer informatie](https://help.shopify.com/en/manual/fulfillment/setup/delivery-methods/pickup-in-store)",
     "local_pickup": "Lokale afhaling",
     "gift_card_products": "Cadeaubonproducten",
+    "disclosures": "Toelichtingen",
+    "disclosures_metafield_content": "Verplichte veiligheidswaarschuwingen en wettelijke vermeldingen voor dit product.",
     "page_text_color_contrast_info": "Secties met een aangepaste achtergrondkleur gebruiken deze tekstkleur alleen als er voldoende kleurcontrast is."
   },
   "html_defaults": {
@@ -1099,7 +1104,8 @@
     "shop_the_look": "<h2>Shop de look</h2>",
     "bestsellers": "Bestsellers",
     "featured_collection": "Uitgelichte collectie",
-    "new_arrivals": "Nieuw binnen"
+    "new_arrivals": "Nieuw binnen",
+    "disclosures": "Toelichtingen"
   },
   "info": {
     "carousel_layout_on_mobile": "Op mobiel wordt altijd een carrousel gebruikt",

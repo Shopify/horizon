@@ -249,8 +249,19 @@
             "buy_buttons_eYQEYi",
             "text_aEtTtq"
           ]
+        },
+        "disclosures": {
+          "type": "disclosures",
+          "settings": {
+            "padding-block-start": 0,
+            "padding-block-end": 0
+          },
+          "blocks": {}
         }
       },
+      "block_order": [
+        "disclosures"
+      ],
       "settings": {
         "content_width": "content-center-aligned",
         "desktop_media_position": "left",
