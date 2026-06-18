@@ -42,7 +42,7 @@
           "type": "text",
           "name": "Description",
           "settings": {
-            "text": "{{ closest.collection.description }}<p>Natural botanical skincare, crafted with hand-picked seasonal ingredients from our wild farm in Mallorca. Rooted in aromachology, each formula nourishes the skin, awakens the senses and elevates your daily wellness ritual.</p>",
+            "text": "{{ closest.collection.description }}<p>Natural wellness products crafted with hand-picked seasonal botanicals from our wild farm in Mallorca, rooted in aromachology to awaken the senses and elevate daily rituals.</p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -57,7 +57,7 @@
             "background": false,
             "background_color": "#00000026",
             "corner_radius": 0,
-            "padding-block-start": 0,
+            "padding-block-start": 20,
             "padding-block-end": 0,
             "padding-inline-start": 0,
             "padding-inline-end": 0
