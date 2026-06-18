@@ -13,6 +13,10 @@
       {%- content_for 'block', id: 'blog-post-details', type: '_blog-post-info-text' %}
     </header>
 
+    {% if section.settings.show_social_share %}
+      {% render 'blog-article-share', article: article %}
+    {% endif %}
+
     {%- if article.image -%}
       {%- content_for 'block', id: 'blog-post-image', type: '_blog-post-featured-image' %}
     {%- endif -%}
@@ -20,10 +24,6 @@
 
     {% comment %} Dynamic area for @app blocks only, at the bottom {% endcomment %}
     {% content_for 'blocks' %}
-
-    {% if section.settings.show_social_share %}
-      {% render 'blog-article-share', article: article %}
-    {% endif %}
 
     {% if blog.comments_enabled? %}
       <div class="blog-post-comments-container">
