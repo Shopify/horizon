@@ -190,7 +190,8 @@
     "product_sku": "SKU",
     "layered_slideshow": "สไลด์โชว์แบบซ้อน",
     "drawer": "ลิ้นชัก",
-    "cart_drawer": "ตะกร้าสินค้าแบบเลื่อนด้านข้าง"
+    "cart_drawer": "ตะกร้าสินค้าแบบเลื่อนด้านข้าง",
+    "disclosures": "การเปิดเผยข้อมูล"
   },
   "settings": {
     "alignment": "การจัดตำแหน่ง",
@@ -603,7 +604,9 @@
     "bottom_row_text": "ข้อความแถวล่าง",
     "button_style": "สไตล์ปุ่ม",
     "input_style": "สไตล์อินพุต",
-    "selected_button_style": "สไตล์ของปุ่มที่เลือก"
+    "selected_button_style": "สไตล์ของปุ่มที่เลือก",
+    "open_by_default": "เปิดตามค่าเริ่มต้น",
+    "title_preset": "พรีเซ็ตชื่อ"
   },
   "options": {
     "apple": "Apple",
@@ -1005,6 +1008,8 @@
     "local_pickup_description": "แสดงตำแหน่งที่รับสินค้าที่อยู่ใกล้เคียงเมื่อมีการตั้งค่าการรับสินค้าในพื้นที่สำหรับร้านค้าออนไลน์ [ดูข้อมูลเพิ่มเติม](https://help.shopify.com/en/manual/fulfillment/setup/delivery-methods/pickup-in-store)",
     "local_pickup": "การรับสินค้าในพื้นที่",
     "gift_card_products": "สินค้าบัตรของขวัญ",
+    "disclosures": "การเปิดเผยข้อมูล",
+    "disclosures_metafield_content": "คำเตือนด้านความปลอดภัยและข้อมูลตามระเบียบข้อบังคับที่ต้องเปิดเผยสำหรับสินค้านี้",
     "page_text_color_contrast_info": "ส่วนที่มีสีพื้นหลังแบบกำหนดเองจะใช้สีตัวอักษรนี้เฉพาะเมื่อมีคอนทราสต์ของสีเพียงพอ"
   },
   "html_defaults": {
@@ -1099,7 +1104,8 @@
     "shop_the_look": "<h2>Shop the Look</h2>",
     "bestsellers": "สินค้าขายดี",
     "featured_collection": "คอลเลกชันเด่น",
-    "new_arrivals": "สินค้ามาใหม่"
+    "new_arrivals": "สินค้ามาใหม่",
+    "disclosures": "การเปิดเผยข้อมูล"
   },
   "info": {
     "video_alt_text": "โปรดอธิบายวิดีโอสำหรับผู้ใช้เทคโนโลยีความช่วยเหลือพิเศษ",

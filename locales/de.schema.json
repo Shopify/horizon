@@ -190,7 +190,8 @@
     "product_sku": "SKU",
     "layered_slideshow": "Überlagerte Slideshow",
     "drawer": "Schublade",
-    "cart_drawer": "Warenkorbeinschub"
+    "cart_drawer": "Warenkorbeinschub",
+    "disclosures": "Pflichtangaben"
   },
   "settings": {
     "autoplay": "Autoplay",
@@ -603,7 +604,9 @@
     "bottom_row_text": "Text der unteren Zeile",
     "button_style": "Schaltflächenstil",
     "input_style": "Eingabestil",
-    "selected_button_style": "Stil für ausgewählte Schaltfläche"
+    "selected_button_style": "Stil für ausgewählte Schaltfläche",
+    "open_by_default": "Standardmäßig geöffnet",
+    "title_preset": "Titelvoreinstellung"
   },
   "options": {
     "apple": "Apfel",
@@ -1005,6 +1008,8 @@
     "local_pickup_description": "Zeige Abholstandorte in der Nähe an, wenn die lokale Abholung im Onlineshop eingerichtet ist. [Mehr erfahren](https://help.shopify.com/en/manual/fulfillment/setup/delivery-methods/pickup-in-store)",
     "local_pickup": "Lokale Abholung",
     "gift_card_products": "Geschenkgutscheinprodukte",
+    "disclosures": "Pflichtangaben",
+    "disclosures_metafield_content": "Erforderliche Sicherheitshinweise und gesetzliche Pflichtangaben für dieses Produkt.",
     "page_text_color_contrast_info": "Abschnitte mit benutzerdefinierter Hintergrundfarbe verwenden diese Textfarbe nur bei ausreichendem Farbkontrast."
   },
   "html_defaults": {
@@ -1099,7 +1104,8 @@
     "shop_the_look": "<h2>Look kaufen</h2>",
     "bestsellers": "Bestseller",
     "featured_collection": "Vorgestellte Kollektion",
-    "new_arrivals": "Neuheiten"
+    "new_arrivals": "Neuheiten",
+    "disclosures": "Pflichtangaben"
   },
   "info": {
     "video_alt_text": "Beschreibe das Video für Benutzer von Hilfstechnologien",

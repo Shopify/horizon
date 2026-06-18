@@ -190,7 +190,8 @@
     "product_sku": "SKU",
     "layered_slideshow": "Katmanlı slayt gösterisi",
     "drawer": "Çekmece",
-    "cart_drawer": "Sepet çekmecesi"
+    "cart_drawer": "Sepet çekmecesi",
+    "disclosures": "Bildirimler"
   },
   "settings": {
     "autoplay": "Otomatik oynatma",
@@ -603,7 +604,9 @@
     "bottom_row_text": "Alt satır metni",
     "button_style": "Düğme stili",
     "input_style": "Giriş stili",
-    "selected_button_style": "Seçili düğme stili"
+    "selected_button_style": "Seçili düğme stili",
+    "open_by_default": "Varsayılan olarak açık",
+    "title_preset": "Başlık ön ayarı"
   },
   "options": {
     "apple": "Apple",
@@ -1005,6 +1008,8 @@
     "local_pickup_description": "Online mağaza yerel teslim alma ayarlandığında yakındaki teslim alma konumlarını gösterin. [Daha fazla bilgi](https://help.shopify.com/en/manual/fulfillment/setup/delivery-methods/pickup-in-store)",
     "local_pickup": "Yerel teslim alma",
     "gift_card_products": "Hediye kartı ürünleri",
+    "disclosures": "Bildirimler",
+    "disclosures_metafield_content": "Bu ürün için zorunlu güvenlik uyarıları ve yasal bildirimler.",
     "page_text_color_contrast_info": "Özel arka plan rengine sahip bölümler, bu metin rengini yalnızca yeterli renk kontrastı olduğunda kullanır."
   },
   "html_defaults": {
@@ -1099,7 +1104,8 @@
     "shop_the_look": "<h2>Görüntüleneni satın al</h2>",
     "bestsellers": "Çok satanlar",
     "featured_collection": "Öne çıkan koleksiyon",
-    "new_arrivals": "Yeni gelenler"
+    "new_arrivals": "Yeni gelenler",
+    "disclosures": "Bildirimler"
   },
   "info": {
     "video_alt_text": "Yardımcı teknoloji kullanıcıları için videoyu açıklayın",

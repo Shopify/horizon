@@ -1,5 +1,5 @@
 import { Component } from '@theme/component';
-import { debounce, isClickedOutside, onAnimationEnd } from '@theme/utilities';
+import { debounce, isClickedOutside, lockScroll, onAnimationEnd, unlockScroll } from '@theme/utilities';
 import { getScrollTop, scrollTo } from '@theme/scroll-container';
 
 /**
@@ -26,6 +26,7 @@ export class DialogComponent extends Component {
     if (this.minWidth || this.maxWidth) {
       window.removeEventListener('resize', this.#handleResize);
     }
+    unlockScroll(this.refs.dialog);
   }
 
   #handleResize = debounce(() => {
@@ -53,7 +54,7 @@ export class DialogComponent extends Component {
 
     // Prevent layout thrashing by separating DOM reads from DOM writes
     requestAnimationFrame(() => {
-      document.documentElement.setAttribute('scroll-lock', '');
+      lockScroll(dialog);
 
       dialog.showModal();
       this.dispatchEvent(new DialogOpenEvent());
@@ -89,7 +90,7 @@ export class DialogComponent extends Component {
       subtree: false,
     });
 
-    document.documentElement.removeAttribute('scroll-lock');
+    unlockScroll(dialog);
     scrollTo({ top: this.#previousScrollY, behavior: 'instant' });
 
     dialog.close();
@@ -178,9 +179,9 @@ document.addEventListener(
       if (event.target.hasAttribute('scroll-lock')) {
         const { open } = event.target;
         if (open) {
-          document.documentElement.setAttribute('scroll-lock', '');
+          lockScroll(event.target);
         } else {
-          document.documentElement.removeAttribute('scroll-lock');
+          unlockScroll(event.target);
         }
       }
     }

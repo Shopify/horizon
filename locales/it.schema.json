@@ -190,7 +190,8 @@
     "product_sku": "SKU",
     "layered_slideshow": "Presentazione a livelli",
     "drawer": "Cassetto",
-    "cart_drawer": "Finestra del carrello"
+    "cart_drawer": "Finestra del carrello",
+    "disclosures": "Informative"
   },
   "settings": {
     "alignment": "Allineamento",
@@ -603,7 +604,9 @@
     "bottom_row_text": "Testo della riga inferiore",
     "button_style": "Stile pulsante",
     "input_style": "Stile campo",
-    "selected_button_style": "Stile pulsante selezionato"
+    "selected_button_style": "Stile pulsante selezionato",
+    "open_by_default": "Aperto per impostazione predefinita",
+    "title_preset": "Preimpostazione titolo"
   },
   "options": {
     "apple": "Mela",
@@ -1005,6 +1008,8 @@
     "local_pickup_description": "Mostra i punti di ritiro nelle vicinanze quando il ritiro locale del negozio online è configurato. [Scopri di più](https://help.shopify.com/en/manual/fulfillment/setup/delivery-methods/pickup-in-store)",
     "local_pickup": "Ritiro locale",
     "gift_card_products": "Prodotti buono regalo",
+    "disclosures": "Informative",
+    "disclosures_metafield_content": "Avvertenze di sicurezza e informative normative obbligatorie per questo prodotto.",
     "page_text_color_contrast_info": "Le sezioni con un colore di sfondo personalizzato useranno questo colore del testo solo se il contrasto cromatico è sufficiente."
   },
   "html_defaults": {
@@ -1099,7 +1104,8 @@
     "shop_the_look": "<h2>Acquista il look</h2>",
     "bestsellers": "Bestseller",
     "featured_collection": "Collezione in evidenza",
-    "new_arrivals": "Nuovi arrivi"
+    "new_arrivals": "Nuovi arrivi",
+    "disclosures": "Informative"
   },
   "info": {
     "carousel_layout_on_mobile": "Sui dispositivi mobili viene sempre utilizzato il carosello.",

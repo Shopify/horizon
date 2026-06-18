@@ -190,7 +190,8 @@
     "product_sku": "SKU",
     "layered_slideshow": "Warstwowy pokaz slajdów",
     "drawer": "Szuflada",
-    "cart_drawer": "Szuflada koszyka"
+    "cart_drawer": "Szuflada koszyka",
+    "disclosures": "Informacje prawne"
   },
   "settings": {
     "autoplay": "Autoodtwarzanie",
@@ -603,7 +604,9 @@
     "bottom_row_text": "Tekst dolnego wiersza",
     "button_style": "Styl przycisku",
     "input_style": "Styl pola",
-    "selected_button_style": "Styl wybranego przycisku"
+    "selected_button_style": "Styl wybranego przycisku",
+    "open_by_default": "Domyślnie otwarte",
+    "title_preset": "Gotowe ustawienie tytułu"
   },
   "options": {
     "apple": "Apple",
@@ -1005,6 +1008,8 @@
     "local_pickup_description": "Wyświetl pobliskie lokalizacje odbioru, gdy skonfigurowano odbiór lokalny w sklepie online. [Dowiedz się więcej](https://help.shopify.com/en/manual/fulfillment/setup/delivery-methods/pickup-in-store)",
     "local_pickup": "Odbiór lokalny",
     "gift_card_products": "Produkty karty prezentowej",
+    "disclosures": "Informacje prawne",
+    "disclosures_metafield_content": "Wymagane ostrzeżenia dotyczące bezpieczeństwa i informacje prawne dla tego produktu.",
     "page_text_color_contrast_info": "Sekcje z niestandardowym kolorem tła będą używać tego koloru tekstu tylko wtedy, gdy kontrast kolorów będzie wystarczający."
   },
   "html_defaults": {
@@ -1099,7 +1104,8 @@
     "shop_the_look": "<h2>Kompletny look</h2>",
     "bestsellers": "Bestsellery",
     "featured_collection": "Polecana kolekcja",
-    "new_arrivals": "Nowości"
+    "new_arrivals": "Nowości",
+    "disclosures": "Informacje prawne"
   },
   "info": {
     "video_alt_text": "Opisz wideo dla użytkowników technologii wspomagających",

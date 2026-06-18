@@ -160,6 +160,8 @@
     "visibility": "Visibility",
     "width": "Width",
     "width_is_automatically_optimized": "Width is automatically optimized for mobile.",
+    "disclosures": "Disclosures",
+    "disclosures_metafield_content": "Required safety warnings and regulatory disclosures for this product.",
     "app_required_for_ratings": "An app is required for product ratings. [Learn more](https://help.shopify.com/manual/apps)",
     "navigation": "Navigation"
   },
@@ -449,6 +451,7 @@
     "video": "Video",
     "video_section": "Video",
     "view_all_button": "View all",
+    "disclosures": "Disclosures",
     "pills": "Pills",
     "comparison_slider": "Comparison slider"
   },
@@ -997,6 +1000,7 @@
     "navigation_bar_background_color": "Navigation bar background color",
     "navigation_bar_text_color": "Navigation bar text color",
     "opacity": "Opacity",
+    "open_by_default": "Open by default",
     "open_new_tab": "Open link in new tab",
     "open_row_by_default": "Open row by default",
     "overlay": "Overlay",
@@ -1153,6 +1157,7 @@
     // Pixel width setting for borders, dividers, or lines
     "thickness": "Thickness",
     "title": "Title",
+    "title_preset": "Title preset",
     // Label for range input controlling top spacing/margin
     "top": "Top",
     "top_level_size": "Top level size",
@@ -1251,6 +1256,7 @@
     "welcome_to_our_store": "Welcome to our store",
     "what_is_return_policy": "What is the return policy?",
     "when_will_order_arrive": "When will I get my order?",
-    "where_are_products_made": "Where are your products manufactured?"
+    "where_are_products_made": "Where are your products manufactured?",
+    "disclosures": "Disclosures"
   }
 }

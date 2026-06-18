@@ -190,7 +190,8 @@
     "product_sku": "SKU",
     "layered_slideshow": "Lagdelt lysbildefremvisning",
     "drawer": "Skuff",
-    "cart_drawer": "Handlekurvskuff"
+    "cart_drawer": "Handlekurvskuff",
+    "disclosures": "Opplysninger"
   },
   "settings": {
     "alignment": "Justering",
@@ -603,7 +604,9 @@
     "bottom_row_text": "Tekst i nederste rad",
     "button_style": "Knappstil",
     "input_style": "Inputstil",
-    "selected_button_style": "Stil for valgt knapp"
+    "selected_button_style": "Stil for valgt knapp",
+    "open_by_default": "Åpen som standard",
+    "title_preset": "Forhåndsinnstilling for tittel"
   },
   "options": {
     "apple": "Eple",
@@ -1005,6 +1008,8 @@
     "local_pickup_description": "Vis hentesteder i nærheten når lokal henting i nettbutikken er konfigurert. [Finn ut mer](https://help.shopify.com/en/manual/fulfillment/setup/delivery-methods/pickup-in-store)",
     "local_pickup": "Lokal henting",
     "gift_card_products": "Gavekortprodukter",
+    "disclosures": "Opplysninger",
+    "disclosures_metafield_content": "Obligatoriske sikkerhetsadvarsler og lovpålagte opplysninger for dette produktet.",
     "page_text_color_contrast_info": "Seksjoner med egendefinert bakgrunnsfarge bruker kun denne tekstfargen når det er tilstrekkelig fargekontrast."
   },
   "html_defaults": {
@@ -1099,7 +1104,8 @@
     "shop_the_look": "<h2>Shop looken</h2>",
     "bestsellers": "Bestselgere",
     "featured_collection": "Utvalgt samling",
-    "new_arrivals": "Nyheter"
+    "new_arrivals": "Nyheter",
+    "disclosures": "Opplysninger"
   },
   "info": {
     "carousel_layout_on_mobile": "Karusell brukes alltid på mobil",

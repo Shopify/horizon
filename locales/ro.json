@@ -74,7 +74,8 @@
     "featured_product": "Produs recomandat",
     "search_suggestions_available": "Sugestii de căutare disponibile pentru „{{ query }}”",
     "price_filter_low": "Preț mic",
-    "price_filter_high": "Preț mare"
+    "price_filter_high": "Preț mare",
+    "view_disclosure_information_for_product": "Vizualizează mențiunile referitoare la produsul {{ product_title }}"
   },
   "actions": {
     "add_to_cart": "Adaugă în coș",
@@ -278,7 +279,8 @@
       "few": "{{ count }} articole au fost adăugate în coș"
     },
     "item_count_cutoff": "Peste {{ count }} articole",
-    "quick_order_list": "Lista comenzilor rapide"
+    "quick_order_list": "Lista comenzilor rapide",
+    "product_disclosures": "Mențiuni referitoare la produs"
   },
   "gift_cards": {
     "issued": {

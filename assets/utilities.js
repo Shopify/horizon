@@ -306,6 +306,57 @@ export function onAnimationEnd(elements, callback, options = { subtree: true }) 
   return Promise.allSettled(animationPromises).then(callback);
 }
 
+/** @type {Set<Element>} */
+const scrollLockOwners = new Set();
+
+/** @type {MutationObserver | undefined} */
+let scrollLockObserver;
+
+function pruneDisconnectedScrollLockOwners() {
+  for (const owner of scrollLockOwners) {
+    if (!owner.isConnected) {
+      scrollLockOwners.delete(owner);
+    }
+  }
+}
+
+function syncScrollLock() {
+  pruneDisconnectedScrollLockOwners();
+
+  if (scrollLockOwners.size > 0) {
+    document.documentElement.setAttribute('scroll-lock', '');
+
+    if (!scrollLockObserver) {
+      scrollLockObserver = new MutationObserver(syncScrollLock);
+      scrollLockObserver.observe(document.documentElement, { childList: true, subtree: true });
+    }
+
+    return;
+  }
+
+  document.documentElement.removeAttribute('scroll-lock');
+  scrollLockObserver?.disconnect();
+  scrollLockObserver = undefined;
+}
+
+/**
+ * Locks root scrolling for an owning element.
+ * @param {Element} owner - The element that owns the scroll lock.
+ */
+export function lockScroll(owner) {
+  scrollLockOwners.add(owner);
+  syncScrollLock();
+}
+
+/**
+ * Unlocks root scrolling for an owning element.
+ * @param {Element} owner - The element that owns the scroll lock.
+ */
+export function unlockScroll(owner) {
+  scrollLockOwners.delete(owner);
+  syncScrollLock();
+}
+
 /**
  * Check if the click is outside the element.
  * @param {MouseEvent} event The mouse event.

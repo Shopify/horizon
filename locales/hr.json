@@ -74,7 +74,8 @@
     "featured_product": "Istaknuti proizvod",
     "search_suggestions_available": "Pretraživanje dostupnih prijedloga za „{{ query }}”",
     "price_filter_low": "Niska cijena",
-    "price_filter_high": "Visoka cijena"
+    "price_filter_high": "Visoka cijena",
+    "view_disclosure_information_for_product": "Prikaži obavijesti o proizvodu {{ product_title }}"
   },
   "actions": {
     "add_to_cart": "Dodaj u košaricu",
@@ -278,7 +279,8 @@
       "other": "Artikala dodano u košaricu: {{ count }}",
       "few": "Artikala dodano u košaricu: {{ count }}"
     },
-    "quick_order_list": "Brzi popis narudžbi"
+    "quick_order_list": "Brzi popis narudžbi",
+    "product_disclosures": "Obavijesti o proizvodu"
   },
   "gift_cards": {
     "issued": {

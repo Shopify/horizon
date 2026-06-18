@@ -73,7 +73,8 @@
     "show_product_details": "Tampilkan detail produk untuk {{ product_name }}",
     "search_suggestions_available": "Cari rekomendasi yang tersedia untuk \"{{ query }}\"",
     "price_filter_low": "Harga rendah",
-    "price_filter_high": "Harga tinggi"
+    "price_filter_high": "Harga tinggi",
+    "view_disclosure_information_for_product": "Lihat informasi pengungkapan untuk {{ product_title }}"
   },
   "actions": {
     "add_to_cart": "Tambahkan ke keranjang",
@@ -272,7 +273,8 @@
       "one": "1 item ditambahkan ke keranjang",
       "other": "{{ count }} item ditambahkan ke keranjang"
     },
-    "quick_order_list": "Daftar pesanan cepat"
+    "quick_order_list": "Daftar pesanan cepat",
+    "product_disclosures": "Pengungkapan produk"
   },
   "gift_cards": {
     "issued": {

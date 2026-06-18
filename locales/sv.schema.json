@@ -190,7 +190,8 @@
     "product_sku": "Lagerhållningsenhet",
     "layered_slideshow": "Bildspel med lager",
     "drawer": "Låda",
-    "cart_drawer": "Varukorgspanel"
+    "cart_drawer": "Varukorgspanel",
+    "disclosures": "Upplysningar"
   },
   "settings": {
     "alignment": "Justering",
@@ -603,7 +604,9 @@
     "bottom_row_text": "Text för nedre rad",
     "button_style": "Knappstil",
     "input_style": "Inmatningsstil",
-    "selected_button_style": "Stil för vald knapp"
+    "selected_button_style": "Stil för vald knapp",
+    "open_by_default": "Öppen som standard",
+    "title_preset": "Förinställning för rubrik"
   },
   "options": {
     "apple": "Apple",
@@ -1005,6 +1008,8 @@
     "local_pickup_description": "Visa närliggande hämtningsplatser när lokal upphämtning i webbutiken har konfigurerats. [Mer information](https://help.shopify.com/en/manual/fulfillment/setup/delivery-methods/pickup-in-store)",
     "local_pickup": "Lokal upphämtning",
     "gift_card_products": "Presentkortsprodukter",
+    "disclosures": "Upplysningar",
+    "disclosures_metafield_content": "Obligatoriska säkerhetsvarningar och lagstadgad information för denna produkt.",
     "page_text_color_contrast_info": "Sektioner med anpassad bakgrundsfärg använder endast den här textfärgen när färgkontrasten är tillräcklig."
   },
   "html_defaults": {
@@ -1099,7 +1104,8 @@
     "shop_the_look": "<h2>Shoppa stilen</h2>",
     "bestsellers": "Bästsäljare",
     "featured_collection": "Utvald produktserie",
-    "new_arrivals": "Nyheter"
+    "new_arrivals": "Nyheter",
+    "disclosures": "Upplysningar"
   },
   "info": {
     "video_alt_text": "Beskriv videon för användare av hjälpmedelsteknik",

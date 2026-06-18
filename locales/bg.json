@@ -73,7 +73,8 @@
     "featured_product": "Представен продукт",
     "search_suggestions_available": "Налични са предложения за търсене за „{{ query }}“",
     "price_filter_low": "Ниска цена",
-    "price_filter_high": "Висока цена"
+    "price_filter_high": "Висока цена",
+    "view_disclosure_information_for_product": "Преглед на оповестената информация за {{ product_title }}"
   },
   "actions": {
     "add_to_cart": "Добавяне към количката",
@@ -272,7 +273,8 @@
       "one": "1 артикул е добавен в количката",
       "other": "{{ count }} артикула са добавени в количката"
     },
-    "quick_order_list": "Бърз списък с поръчки"
+    "quick_order_list": "Бърз списък с поръчки",
+    "product_disclosures": "Оповестявания за продукта"
   },
   "gift_cards": {
     "issued": {

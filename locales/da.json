@@ -73,7 +73,8 @@
     "featured_product": "Udvalgt produkt",
     "search_suggestions_available": "Søgeforslag tilgængelige for \"{{ query }}\"",
     "price_filter_low": "Lav pris",
-    "price_filter_high": "Høj pris"
+    "price_filter_high": "Høj pris",
+    "view_disclosure_information_for_product": "Se deklarationsoplysninger for {{ product_title }}"
   },
   "actions": {
     "add_to_cart": "Læg i indkøbskurven",
@@ -272,7 +273,8 @@
       "other": "{{ count }} varer lagt i indkøbskurven"
     },
     "item_count_cutoff": "Mere end {{ count }} varer",
-    "quick_order_list": "Hurtig ordreliste"
+    "quick_order_list": "Hurtig ordreliste",
+    "product_disclosures": "Produktdeklarationer"
   },
   "gift_cards": {
     "issued": {

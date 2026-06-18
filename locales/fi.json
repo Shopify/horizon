@@ -73,7 +73,8 @@
     "featured_product": "Esittelyssä oleva tuote",
     "search_suggestions_available": "Hakuehdotuksia saatavilla haulle {{ query }}",
     "price_filter_low": "Halpa hinta",
-    "price_filter_high": "Kallis hinta"
+    "price_filter_high": "Kallis hinta",
+    "view_disclosure_information_for_product": "Näytä tuotteen {{ product_title }} ilmoitustiedot"
   },
   "actions": {
     "add_to_cart": "Lisää ostoskoriin",
@@ -272,7 +273,8 @@
       "one": "Yksi tuote lisätty ostoskoriin",
       "other": "{{ count }} tuotetta lisätty ostoskoriin"
     },
-    "quick_order_list": "Pikatilausluettelo"
+    "quick_order_list": "Pikatilausluettelo",
+    "product_disclosures": "Tuoteilmoitukset"
   },
   "gift_cards": {
     "issued": {

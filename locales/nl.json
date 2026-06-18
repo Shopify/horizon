@@ -73,7 +73,8 @@
     "featured_product": "Uitgelicht product",
     "search_suggestions_available": "Zoek naar beschikbare suggesties voor '{{ query }}'",
     "price_filter_low": "Lage prijs",
-    "price_filter_high": "Hoge prijs"
+    "price_filter_high": "Hoge prijs",
+    "view_disclosure_information_for_product": "Informatie over productvermeldingen bekijken voor {{ product_title }}"
   },
   "actions": {
     "add_to_cart": "Aan winkelwagen toevoegen",
@@ -272,7 +273,8 @@
       "other": "{{ count }} artikelen toegevoegd aan winkelwagen"
     },
     "item_count_cutoff": "Meer dan {{ count }} artikelen",
-    "quick_order_list": "Snelle bestellijst"
+    "quick_order_list": "Snelle bestellijst",
+    "product_disclosures": "Productvermeldingen"
   },
   "gift_cards": {
     "issued": {
