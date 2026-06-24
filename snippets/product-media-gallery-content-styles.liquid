@@ -30,6 +30,32 @@
     }
   }
 
+  zoom-dialog dialog {
+    width: 100vw;
+    height: 100vh;
+    border: none;
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    max-height: 100%;
+    background: #fff;
+    opacity: 0;
+    transition: opacity var(--animation-speed) var(--animation-easing);
+    scrollbar-width: none;
+
+    &[open] {
+      opacity: 1;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      scroll-behavior: smooth;
+    }
+
+    &::backdrop {
+      background: transparent;
+    }
+  }
+
   .product-media-container__zoom-button {
     position: absolute;
     width: 100%;

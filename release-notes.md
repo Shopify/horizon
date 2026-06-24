@@ -1,9 +1,10 @@
-# Release Notes - Version 4.1.0
+# Release Notes - Version 4.1.1
 
-This release adds support for product disclosures.
+This release improves storefront navigation for customers using in-app browsers.
 
 ## What's Changed
 
-### Added
+### Fixes and improvements
 
-* New block to display product disclosures in sections and cart items now show an inline disclosures tooltip.
+* Improved storefront navigation compatibility in in-app browsers.
+

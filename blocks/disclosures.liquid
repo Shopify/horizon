@@ -14,6 +14,7 @@
 {%- endif -%}
 <div
   class="disclosures__container"
+  {{ block.shopify_attributes }}
 >
   {%- if has_visible_disclosures -%}
     <script
@@ -26,7 +27,6 @@
       class="disclosures accordion--{{ block.settings.icon }}{% if block.settings.dividers %} accordion--dividers{% endif %} spacing-style"
       data-summary-layout="stacked"
       style="--disclosures-icon-size: calc(var(--font-{{ block.settings.disclosure_heading_preset | default: 'h5' }}--size) * 1.2); --disclosures-symbol-aspect-ratio: {{ disclosures_symbol_aspect_ratio }}; {% render 'spacing-style', settings: block.settings %}{% if block.settings.text_color != blank %} --color: {{ block.settings.text_color }}; --color-rgb: {{ block.settings.text_color.rgb }};{% endif %}{% if block.settings.divider_color != blank %} --color-border: {{ block.settings.divider_color }};{% endif %}"
-      {{ block.shopify_attributes }}
     >
       {%- if block.settings.heading != blank -%}
         <h2 class="disclosures__heading {{ block.settings.heading_preset }}">
