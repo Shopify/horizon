@@ -3519,6 +3519,29 @@ fly-to-cart.fly-to-cart--sticky {
   }
 }
 
+/* ============================================================================
+   Mobile Performance - Disabled Animations Override
+   ============================================================================ */
+@media screen and (max-width: 749px) {
+  body.animations-disabled-mobile * {
+    /* Disable all CSS Scroll-Driven reveals (native feature used heavily in this theme) */
+    animation-timeline: none !important;
+  }
+  
+  body.animations-disabled-mobile .slide__content {
+    /* Specifically prevent the slide reveal animation to load instantly */
+    animation: none !important;
+    opacity: 1 !important;
+    translate: 0 0 !important;
+  }
+
+  /* Disable costly View Transition animations on mobile */
+  body.animations-disabled-mobile::view-transition-old(*),
+  body.animations-disabled-mobile::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
 @keyframes search-element-slide-out-bottom {
   0% {
     transform: translateY(0);

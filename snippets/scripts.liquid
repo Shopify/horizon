@@ -58,10 +58,7 @@
 
 <script
   src="{{ 'view-transitions.js' | asset_url }}"
-  async
-  {% if settings.page_transition_enabled or settings.transition_to_main_product %}
-    blocking="render"
-  {% endif %}
+  defer="defer"
 ></script>
 
 <link
