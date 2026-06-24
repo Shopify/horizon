@@ -98,70 +98,6 @@ select {
   color: currentcolor;
 }
 
-.collection-card,
-.featured-blog-posts-card {
-  width: 100%;
-  position: relative;
-  height: 100%;
-}
-
-/* Editorial layout */
-.resource-list:not(.hidden--desktop) .collection-card--flexible-aspect-ratio,
-.resource-list:not(.hidden--desktop) .blog-post-card--flexible-aspect-ratio {
-  .collection-card__image,
-  .featured-blog-posts-card__image,
-  .blog-placeholder-svg {
-    aspect-ratio: 99;
-    height: 100%;
-  }
-
-  .collection-card__inner,
-  .featured-blog-posts-card__inner {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-
-  .collection-card__content,
-  .featured-blog-posts-card__content {
-    flex-shrink: 0;
-  }
-
-  &:not(.collection-card--image-bg) .collection-card__content,
-  .featured-blog-posts-card__content {
-    height: auto;
-  }
-}
-
-.collection-card__inner,
-.featured-blog-posts-card__inner {
-  width: 100%;
-  overflow: hidden;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  z-index: var(--layer-flat);
-  pointer-events: none;
-}
-
-.collection-card__content,
-.featured-blog-posts-card__content {
-  display: flex;
-  position: relative;
-  height: 100%;
-  width: 100%;
-  gap: var(--gap);
-}
-
-.collection-card__link,
-.featured-blog-posts-card__link {
-  position: absolute;
-  inset: 0;
-
-  /* allows focus outline to have radius in supported browsers */
-  border-radius: var(--border-radius);
-}
-
 .product-card,
 .collection-card,
 .predictive-search-results__card--product,
@@ -973,11 +909,6 @@ body:has(.header[transparent]) #header-group > *:not(.header-section) {
   z-index: calc(var(--layer-menu-drawer) - 1);
 }
 
-/* Featured collection block */
-.featured-collection-block {
-  width: 100%;
-}
-
 /* Product grid */
 .product-grid-container {
   display: block;
@@ -1650,32 +1581,6 @@ media-gallery {
 
   img {
     object-fit: var(--product-media-fit);
-  }
-}
-
-zoom-dialog dialog {
-  width: 100vw;
-  height: 100vh;
-  border: none;
-  margin: 0;
-  padding: 0;
-  max-width: 100%;
-  max-height: 100%;
-  background: #fff;
-  opacity: 0;
-  transition: opacity var(--animation-speed) var(--animation-easing);
-  scrollbar-width: none;
-
-  &[open] {
-    opacity: 1;
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    scroll-behavior: smooth;
-  }
-
-  &::backdrop {
-    background: transparent;
   }
 }
 
@@ -3727,93 +3632,6 @@ fly-to-cart.fly-to-cart--sticky {
   }
 }
 
-.resource-list--carousel-mobile {
-  display: block;
-
-  @media screen and (min-width: 750px) {
-    display: none;
-  }
-}
-
-.resource-list {
-  --resource-list-mobile-gap-max: 9999px;
-  --resource-list-column-gap: min(var(--resource-list-column-gap-desktop), var(--resource-list-mobile-gap-max));
-  --resource-list-row-gap: min(var(--resource-list-row-gap-desktop), var(--resource-list-mobile-gap-max));
-
-  width: 100%;
-
-  @media screen and (max-width: 749px) {
-    --resource-list-mobile-gap-max: 12px;
-  }
-
-  @container resource-list (max-width: 749px) {
-    --resource-list-mobile-gap-max: 12px;
-  }
-}
-
-.resource-list--grid {
-  display: grid;
-  gap: var(--resource-list-row-gap) var(--resource-list-column-gap);
-  grid-template-columns: var(--resource-list-columns-mobile);
-
-  @media screen and (min-width: 750px) {
-    grid-template-columns: var(--resource-list-columns);
-  }
-
-  @container resource-list (max-width: 449px) {
-    grid-template-columns: var(--resource-list-columns-mobile);
-  }
-
-  @container resource-list(min-width: 450px) and (max-width: 749px) {
-    --resource-list-columns-per-row: 3;
-
-    grid-template-columns: repeat(var(--resource-list-columns-per-row), 1fr);
-
-    /* Avoid orphan in last row when there are 4, 7, or 10 items */
-    &:has(.resource-list__item:first-child:nth-last-child(3n + 1)),
-    /* Clean two full rows when there are 8 items */
-    &:has(.resource-list__item:first-child:nth-last-child(8n)) {
-      --resource-list-columns-per-row: 4;
-    }
-  }
-
-  @container resource-list (min-width: 750px) {
-    grid-template-columns: repeat(var(--resource-list-columns-per-row), 1fr);
-
-    &:has(.resource-list__item:first-child:nth-last-child(n + 9)) {
-      --resource-list-columns-per-row: 5;
-    }
-
-    &:has(.resource-list__item:first-child:nth-last-child(n + 7):nth-last-child(-n + 8)) {
-      --resource-list-columns-per-row: 4;
-    }
-
-    &:has(.resource-list__item:first-child:nth-last-child(6)) {
-      --resource-list-columns-per-row: 3;
-    }
-
-    &:has(.resource-list__item:first-child:nth-last-child(5)) {
-      --resource-list-columns-per-row: 5;
-    }
-
-    &:has(.resource-list__item:first-child:nth-last-child(-n + 4)) {
-      --resource-list-columns-per-row: 4;
-    }
-  }
-
-  @container resource-list (min-width: 1200px) {
-    &:has(.resource-list__item:first-child:nth-last-child(6)) {
-      --resource-list-columns-per-row: 6;
-    }
-  }
-}
-
-.resource-list__item {
-  height: 100%;
-  color: var(--color-foreground);
-  text-decoration: none;
-}
-
 /* Base styles */
 .group-block,
 .group-block-content {
@@ -3869,58 +3687,6 @@ fly-to-cart.fly-to-cart--sticky {
 
 .layout-panel-flex--column > .group-block--height-custom {
   flex-basis: var(--size-style-height);
-}
-
-text-component {
-  --shimmer-text-color: rgb(var(--color-foreground-rgb) / var(--opacity-50));
-  --shimmer-color-light: rgb(var(--color-foreground-rgb) / var(--opacity-10));
-  --shimmer-speed: 1.25s;
-
-  display: inline-block;
-  position: relative;
-  transition: color var(--animation-speed-slow) ease;
-  line-height: 1;
-
-  &::after {
-    /* Empty alt text — the pseudo-element is a visual shimmer overlay, not announceable content.
-      Without this, VoiceOver reads attr(value) in addition to the inner text node, doubling the announcement. */
-    content: attr(value) / '';
-    position: absolute;
-    inset: 0;
-    color: transparent;
-    opacity: 0;
-    transition: opacity var(--animation-speed-slow) var(--animation-easing);
-    pointer-events: none;
-    background-image: linear-gradient(
-      -85deg,
-      var(--shimmer-text-color) 10%,
-      var(--shimmer-color-light) 50%,
-      var(--shimmer-text-color) 90%
-    );
-    background-clip: text;
-    background-size: 200% 100%;
-    background-position: 100% 0;
-    place-content: center;
-  }
-
-  &[shimmer] {
-    color: transparent;
-
-    &::after {
-      opacity: 1;
-      animation: text-shimmer var(--shimmer-speed) infinite linear;
-    }
-  }
-}
-
-@keyframes text-shimmer {
-  0% {
-    background-position: 100% 0;
-  }
-
-  100% {
-    background-position: -100% 0;
-  }
 }
 
 /* Animation transitions */
@@ -3993,14 +3759,6 @@ text-component {
   z-index: var(--layer-raised);
   transition: transform var(--hover-transition-duration) var(--hover-transition-timing),
     box-shadow var(--hover-transition-duration) var(--hover-transition-timing);
-}
-
-.predictive-search-results__inner {
-  flex-grow: 1;
-  overflow-y: auto;
-  padding-block: var(--padding-lg);
-  container-type: inline-size;
-  color: var(--color-foreground);
 }
 
 /* Prevent iOS zoom on input focus by ensuring minimum 16px font size on mobile */

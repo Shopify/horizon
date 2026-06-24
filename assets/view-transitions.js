@@ -1,4 +1,12 @@
 (function () {
+  // Reports on Meta's in-app browsers (Facebook, Instagram) that fail to paint during
+  // cross-document (MPA) View Transitions implementation that can freeze or
+  // white-screen the storefront on navigation. June 2026 testing.
+  // Remove check if every resolved.
+  if (isMetaInAppBrowser()) {
+    disableCrossDocumentViewTransitions();
+  }
+
   const viewTransitionRenderBlocker = document.getElementById('view-transition-render-blocker');
   // Remove the view transition render blocker if the user has reduced motion enabled or is on a low power device.
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || isLowPowerDevice()) {
@@ -91,7 +99,46 @@
    * @returns {viewTransition is null}
    */
   function shouldSkipViewTransition(viewTransition) {
-    return !(viewTransition instanceof ViewTransition) || isLowPowerDevice() || prefersReducedMotion();
+    return (
+      !(viewTransition instanceof ViewTransition) ||
+      isLowPowerDevice() ||
+      prefersReducedMotion() ||
+      isMetaInAppBrowser()
+    );
+  }
+
+  /**
+   * Detect Facebook / Instagram in-app browsers (Meta WebView).
+   *
+   * Meta's in-app browsers expose identifying tokens in the user-agent:
+   *   - Facebook: `FBAN`, `FBAV`, `FB_IAB`, `FBIOS`
+   *   - Instagram: `Instagram`
+   *
+   * We can't import this from utilities.js here (this file runs before modules),
+   * so the equivalent `isMetaInAppBrowser()` in utilities.js must be kept in sync.
+   * @param {string} [userAgent=navigator.userAgent] - User-agent string to test.
+   * @returns {boolean} True if running inside a Facebook/Instagram in-app browser.
+   */
+  function isMetaInAppBrowser(userAgent = navigator.userAgent) {
+    return /\b(FBAN|FBAV|FB_IAB|FBIOS|Instagram)\b/i.test(userAgent || '');
+  }
+
+  /**
+   * Disable cross-document (MPA) View Transitions for the current document.
+   *
+   * Overrides the standard `@view-transition { navigation: auto }` CSS opt-in
+   * and drops the render-blocking `<link rel="expect">` so a stalled transition
+   * can never hold first paint (the white-screen symptom).
+   */
+  function disableCrossDocumentViewTransitions() {
+    // 1. Override the standard `@view-transition` opt-in. A later `@view-transition`
+    //    rule wins the cascade, so `navigation: none` here defeats base.css.
+    const style = document.createElement('style');
+    style.textContent = '@view-transition { navigation: none; }';
+    (document.head || document.documentElement).appendChild(style);
+
+    // 2. Never let the render blocker hold first paint on these browsers.
+    document.getElementById('view-transition-render-blocker')?.remove();
   }
 
   /*

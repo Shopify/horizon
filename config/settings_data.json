@@ -88,9 +88,15 @@
   },
   "presets": {
     "Default": {
+      "badge_sold_out_background_color": "{{ settings.color_palette.color2 }}",
+      "palette_input_border": "{{ settings.color_palette.color3 }}",
+      "palette_variant_border": "{{ settings.color_palette.color3 }}",
       "color_palette": {
         "background": "#ffffff",
-        "foreground": "#000000"
+        "foreground": "#000000",
+        "color1": "#333333",
+        "color2": "#EEF1EA",
+        "color3": "#DFDFDF"
       }
     }
   }

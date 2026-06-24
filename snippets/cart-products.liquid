@@ -41,6 +41,8 @@
   fetchpriority="low"
 ></script>
 
+{% render 'text-component-shimmer-styles' %}
+
 <div
   {{ block.shopify_attributes }}
   class="cart-items__wrapper{% if context == 'drawer' and cart.empty? or force_empty %} cart-items__wrapper--drawer-empty{% endif %}"

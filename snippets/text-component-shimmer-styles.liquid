@@ -1,0 +1,60 @@
+{%- doc -%}
+  Shared styles for the text-component shimmer state.
+
+  @example
+  {% render 'text-component-shimmer-styles' %}
+{%- enddoc -%}
+
+{% stylesheet %}
+  text-component {
+    --shimmer-text-color: rgb(var(--color-foreground-rgb) / var(--opacity-50));
+    --shimmer-color-light: rgb(var(--color-foreground-rgb) / var(--opacity-10));
+    --shimmer-speed: 1.25s;
+
+    display: inline-block;
+    position: relative;
+    transition: color var(--animation-speed-slow) ease;
+    line-height: 1;
+
+    &::after {
+      /* Empty alt text: the pseudo-element is a visual shimmer overlay, not announceable content.
+        Without this, VoiceOver reads attr(value) in addition to the inner text node, doubling the announcement. */
+      content: attr(value) / '';
+      position: absolute;
+      inset: 0;
+      color: transparent;
+      opacity: 0;
+      transition: opacity var(--animation-speed-slow) var(--animation-easing);
+      pointer-events: none;
+      background-image: linear-gradient(
+        -85deg,
+        var(--shimmer-text-color) 10%,
+        var(--shimmer-color-light) 50%,
+        var(--shimmer-text-color) 90%
+      );
+      background-clip: text;
+      background-size: 200% 100%;
+      background-position: 100% 0;
+      place-content: center;
+    }
+
+    &[shimmer] {
+      color: transparent;
+
+      &::after {
+        opacity: 1;
+        animation: text-shimmer var(--shimmer-speed) infinite linear;
+      }
+    }
+  }
+
+  @keyframes text-shimmer {
+    0% {
+      background-position: 100% 0;
+    }
+
+    100% {
+      background-position: -100% 0;
+    }
+  }
+{% endstylesheet %}

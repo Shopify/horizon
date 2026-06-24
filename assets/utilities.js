@@ -41,6 +41,25 @@ export function supportsViewTransitions() {
 }
 
 /**
+ * Detect Facebook / Instagram in-app browsers (Meta WebView).
+ *
+ * Reports of Meta's in-app browsers (Facebook, Instagram) that fail to paint during
+ * cross-document (MPA) View Transitions implementation that can freeze or
+ * white-screen the storefront on navigation. June 2026 testing.
+ * Remove check if every resolved.
+ *
+ * Note: the IIFE in view-transitions.js has an inline copy of this logic (it
+ * runs before modules load) — keep the two in sync.
+ * @param {string} [userAgent=navigator.userAgent] - User-agent string to test.
+ *   Defaults to the live `navigator.userAgent`; pass an explicit value to keep
+ *   the function pure and testable without overriding the browser UA.
+ * @returns {boolean} True if running inside a Facebook/Instagram in-app browser.
+ */
+export function isMetaInAppBrowser(userAgent = navigator.userAgent) {
+  return /\b(FBAN|FBAV|FB_IAB|FBIOS|Instagram)\b/i.test(userAgent || '');
+}
+
+/**
  * The current view transition
  * @type {{ current: Promise<void> | undefined }}
  */
@@ -93,7 +112,7 @@ const viewTransitionTypes = {
  */
 export function startViewTransition(callback, types) {
   // Check if the API is supported and transitions are desired
-  if (!supportsViewTransitions() || isLowPowerDevice() || prefersReducedMotion()) {
+  if (!supportsViewTransitions() || isLowPowerDevice() || prefersReducedMotion() || isMetaInAppBrowser()) {
     return Promise.resolve(callback());
   }
 
