@@ -520,6 +520,81 @@ back-to-top svg {
     color: rgb(var(--color-foreground-rgb) / 86%);
 }
 
+/* Alarm Panel collection retrofit chooser */
+[id$="__section_alarm_retrofit_chooser"] .alarm-retrofit-chooser {
+    max-width: 960px;
+    margin-inline: auto;
+    padding: clamp(22px, 3vw, 34px);
+    border: 1px solid rgb(var(--color-foreground-rgb) / 12%);
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--color-background) 94%, var(--color-foreground) 6%);
+}
+
+[id$="__section_alarm_retrofit_chooser"] .alarm-retrofit-chooser__intro {
+    display: grid;
+    gap: 8px;
+    max-width: 720px;
+}
+
+[id$="__section_alarm_retrofit_chooser"] .alarm-retrofit-chooser__kicker {
+    margin: 0;
+    color: rgb(var(--color-foreground-rgb) / 62%);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+[id$="__section_alarm_retrofit_chooser"] h2,
+[id$="__section_alarm_retrofit_chooser"] p {
+    margin: 0;
+}
+
+[id$="__section_alarm_retrofit_chooser"] .alarm-retrofit-chooser__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-block-start: 20px;
+}
+
+[id$="__section_alarm_retrofit_chooser"] .alarm-retrofit-chooser__card {
+    display: grid;
+    gap: 8px;
+    min-width: 0;
+    padding: 14px 16px;
+    color: inherit;
+    text-decoration: none;
+    border: 1px solid rgb(var(--color-foreground-rgb) / 10%);
+    border-radius: 8px;
+    background: rgb(var(--color-background-rgb) / 76%);
+    transition: border-color var(--animation-speed-fast) var(--animation-easing), transform var(--animation-speed-fast) var(--animation-easing);
+}
+
+[id$="__section_alarm_retrofit_chooser"] .alarm-retrofit-chooser__card:hover {
+    border-color: rgb(var(--color-foreground-rgb) / 22%);
+    transform: translateY(-1px);
+}
+
+[id$="__section_alarm_retrofit_chooser"] .alarm-retrofit-chooser__card span {
+    color: rgb(var(--color-foreground-rgb) / 58%);
+    font-size: var(--font-size--sm);
+}
+
+[id$="__section_alarm_retrofit_chooser"] .alarm-retrofit-chooser__card strong {
+    font-weight: 650;
+}
+
+@media screen and (max-width: 989px) {
+    [id$="__section_alarm_retrofit_chooser"] .alarm-retrofit-chooser__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media screen and (max-width: 749px) {
+    [id$="__section_alarm_retrofit_chooser"] .alarm-retrofit-chooser__grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 @media screen and (max-width: 749px) {
     [id$="__section_gdo_buying_guides"] .section-content-wrapper {
         padding: 22px 20px;

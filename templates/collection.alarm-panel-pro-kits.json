@@ -4327,7 +4327,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>Switch to remote smart home monitoring, use the smart home platforms you already love - from SmartThings, Alexa, Home Assistant, and more! Stay updated about your home status <strong>without monthly fees</strong>. New to wired alarm upgrades? Start with the <a href=\"/pages/smart-home-security-system-no-monthly-fee\">no-monthly-fee security system guide</a>.</p>",
+                    "text": "<p>Switch to remote smart home monitoring, use the smart home platforms you already love - from SmartThings, Alexa, Home Assistant, and more! Stay updated about your home status <strong>without monthly fees</strong>. New to wired alarm upgrades? Start with the <a href=\"/pages/smart-home-security-system-no-monthly-fee\">no-monthly-fee security system guide</a>.</p><p>Already have wired alarm sensors in the walls? Read the <a href=\"/pages/reuse-old-wired-alarm-sensors-smart-home\">wired alarm retrofit guide</a>. If you are deciding whether to retire the old board or keep it active, use the <a href=\"/pages/replace-old-alarm-panel-or-keep-it\">replace-or-keep alarm panel guide</a>.</p>",
                     "width": "fit-content",
                     "max_width": "normal",
                     "alignment": "left",
@@ -6870,6 +6870,17 @@
         "add_section_id": false,
         "section_id": ""
       }
+    },
+    "section_alarm_retrofit_chooser": {
+      "type": "custom-liquid",
+      "name": "Alarm retrofit chooser",
+      "settings": {
+        "custom_liquid": "<div class=\"alarm-retrofit-chooser\"><div class=\"alarm-retrofit-chooser__intro\"><p class=\"alarm-retrofit-chooser__kicker\">Already have wired alarm sensors in your walls?</p><h2>Start with the right alarm upgrade path</h2><p>Use this quick guide path to reuse existing sensors, decide whether the old panel stays, compare no-monthly-fee security options, or go straight to the Konnected alarm panel family.</p></div><div class=\"alarm-retrofit-chooser__grid\"><a class=\"alarm-retrofit-chooser__card\" href=\"/pages/reuse-old-wired-alarm-sensors-smart-home\"><span>Want to reuse sensors?</span><strong>Read the wired alarm retrofit guide</strong></a><a class=\"alarm-retrofit-chooser__card\" href=\"/pages/replace-old-alarm-panel-or-keep-it\"><span>Deciding replace vs keep?</span><strong>Choose the right old-panel path</strong></a><a class=\"alarm-retrofit-chooser__card\" href=\"/pages/smart-home-security-system-no-monthly-fee\"><span>Want no monthly fee security?</span><strong>Compare self-monitoring options</strong></a><a class=\"alarm-retrofit-chooser__card\" href=\"/collections/smart-alarm-panels\"><span>Ready to buy?</span><strong>Shop smart alarm panel options</strong></a></div></div>",
+        "color_scheme": "",
+        "section_width": "page-width",
+        "padding-block-start": 28,
+        "padding-block-end": 28
+      }
     }
   },
   "order": [
@@ -6882,6 +6893,7 @@
     "section_fMPXnB",
     "main",
     "section_B7nYQ8",
+    "section_alarm_retrofit_chooser",
     "grid_section_8Rgxip",
     "section_N4fReV",
     "17719574768816ab28",
