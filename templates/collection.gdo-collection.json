@@ -4845,7 +4845,7 @@
                   "type": "custom-liquid",
                   "name": "t:names.custom_liquid",
                   "settings": {
-                    "custom_liquid": "<div class=\"okeQuizModalButton\" style=\"display:flex;\"><a href=\"javascript:void(0)\" onclick=\"okeConnectApi.showQuiz('d515c056-caae-4c7d-8890-d9fcc8947b62', { fullScreen: true })\" class=\"button full-width-mobile\">Take The Quiz</a></div>"
+                    "custom_liquid": "<div class=\"okeQuizModalButton\" style=\"display:flex;\"><a href=\"#\" onclick=\"okeConnectApi.showQuiz('d515c056-caae-4c7d-8890-d9fcc8947b62', '1d0a586e-45b1-4a7e-b30d-539e2e1abc0e')\" class=\"button\">GDO Compatibility Quiz</a></div>"
                   },
                   "blocks": {}
                 },
