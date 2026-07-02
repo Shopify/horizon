@@ -94,6 +94,13 @@
       {%- capture grouped_utilities_markup -%}{%- endcapture -%}
       {% for key in items_array %}
         {% unless key == blank %}
+          {% if render_grouped_utilities and key == 'localization' %}
+            {% capture grouped_utilities_markup %}
+              {{ grouped_utilities_markup }}
+              {{ localization }}
+            {% endcapture %}
+            {% continue %}
+          {% endif %}
           {% if render_grouped_utilities and key == 'search' %}
             {% capture grouped_utilities_markup %}
               {{ grouped_utilities_markup }}
