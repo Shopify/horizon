@@ -263,7 +263,7 @@
                 selected
               {% endif %}
             >
-              {{ language.endonym_name | capitalize }}
+              {{ language.iso_code | upcase }}
             </option>
           {%- endfor -%}
         </select>
