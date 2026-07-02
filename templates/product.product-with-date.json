@@ -171,7 +171,7 @@
             "variant_picker_R3rGDr": {
               "type": "variant-picker",
               "settings": {
-                "variant_style": "buttons",
+                "variant_style": "dropdown",
                 "show_swatches": true,
                 "alignment": "left",
                 "padding-block-start": 0,
@@ -180,6 +180,34 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
+            },
+            "date_picker": {
+              "type": "shopify://apps/cx-elevate-date-time-picker/blocks/product_pickup_date_picker/3613d08c-d180-43c4-8f66-9aca9e0d28fc",
+              "settings": {
+                "style_autoserve_date_picker": "blue-circle",
+                "calendar-border-radius": 8,
+                "aut-delivery-cal-display-style": "on-input",
+                "aut-delivery-cal-alignment": "center",
+                "aut-delivery-date-required": true,
+                "padding_top": 20,
+                "padding_bottom": 20,
+                "aut-delivery-date-heading-text": "¿Qué día lo recogerás?",
+                "aut-delivery-date-heading-color": "#0b078c",
+                "aut-delivery-date-subheading-text": "Selecciona una fecha de recogida entre las opciones disponibles.",
+                "aut-delivery-date-description-text": "Si tu fecha de recogida cae en festivo, llámanos o escríbenos antes para asegurarte de que estaremos abiertos.",
+                "aut-delivery-date-full-width": true,
+                "aut-delivery-date-alignment": "left",
+                "aut-delivery-date-info-message-style": "info",
+                "aut-delivery-date-info-message-title": "",
+                "aut-delivery-date-info-message-content": "",
+                "aut-delivery-date-disable-mon": true,
+                "aut-delivery-date-disable-tues": false,
+                "aut-delivery-date-disable-wed": false,
+                "aut-delivery-date-disable-thu": false,
+                "aut-delivery-date-disable-fri": false,
+                "aut-delivery-date-disable-sat": false,
+                "aut-delivery-date-disable-sun": false
+              }
             },
             "buy_buttons_eYQEYi": {
               "type": "buy-buttons",
@@ -250,6 +278,7 @@
             "group_icgrde",
             "divider_VJhene",
             "variant_picker_R3rGDr",
+            "date_picker",
             "buy_buttons_eYQEYi",
             "delivery_date",
             "text_aEtTtq"

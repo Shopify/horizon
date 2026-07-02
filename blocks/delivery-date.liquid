@@ -1,0 +1,21 @@
+{%- comment -%}
+  Hidden line-item property for the delivery/pickup date apps.
+  Attached to the buy-buttons product form via the HTML form attribute;
+  the form id pattern is defined in blocks/buy-buttons.liquid.
+{%- endcomment -%}
+<input
+  type="hidden"
+  name="properties[Fecha de entrega]"
+  id="delivery_date"
+  form="BuyButtons-ProductForm-{{ section.id }}"
+  {{ block.shopify_attributes }}
+>
+
+{% schema %}
+{
+  "name": "Delivery date",
+  "tag": null,
+  "settings": [],
+  "presets": [{ "name": "Delivery date" }]
+}
+{% endschema %}

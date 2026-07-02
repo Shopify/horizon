@@ -35,6 +35,39 @@
       {%- render 'theme-editor' -%}
     {% endif %}
 
+    <script>
+      (function (h, o, u, n, d) {
+        h = h[d] = h[d] || {
+          q: [],
+          onReady: function (c) {
+            h.q.push(c);
+          },
+        };
+        d = o.createElement(u);
+        d.async = 1;
+        d.src = n;
+        n = o.getElementsByTagName(u)[0];
+        n.parentNode.insertBefore(d, n);
+      })(window, document, 'script', 'https://www.datadoghq-browser-agent.com/eu1/v6/datadog-rum.js', 'DD_RUM');
+      window.DD_RUM.onReady(function () {
+        window.DD_RUM.init({
+          clientToken: 'pub59bd54eb9ba2058b8cefef1f0cf0ed78',
+          applicationId: '3cfcdfbf-c542-4a44-984c-86817696fa70',
+          site: 'datadoghq.eu',
+          service: 'shopify',
+          env: 'production',
+          sessionSampleRate: 100,
+          sessionReplaySampleRate: 0,
+          trackUserInteractions: true,
+          defaultPrivacyLevel: 'mask-user-input',
+        });
+
+        window.DD_RUM.setUser({
+          id: window.ShopifyAnalytics && ShopifyAnalytics.meta.page.customerId,
+        });
+      });
+    </script>
+
     {{ content_for_header }}
   </head>
 

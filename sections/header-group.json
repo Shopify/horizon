@@ -11,38 +11,6 @@
   "type": "header",
   "name": "t:names.header",
   "sections": {
-    "header_announcements_9jGBFp": {
-      "type": "header-announcements",
-      "blocks": {
-        "announcement_BxgCk9": {
-          "type": "_announcement",
-          "settings": {
-            "text": "Welcome to our store",
-            "link": "",
-            "font": "var(--font-subheading--family)",
-            "font_size": "0.75rem",
-            "weight": "",
-            "letter_spacing": "normal",
-            "case": "none",
-            "text_color": ""
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "announcement_BxgCk9"
-      ],
-      "name": "t:names.announcement_bar",
-      "settings": {
-        "speed": 5,
-        "section_width": "page-width",
-        "background_color": "",
-        "divider_width": 1,
-        "divider_color": "{{ settings.color_palette.color3 }}",
-        "padding-block-start": 15,
-        "padding-block-end": 15
-      }
-    },
     "header_section": {
       "type": "header",
       "blocks": {
@@ -66,7 +34,7 @@
             "type_font_primary_size": "0.875rem",
             "menu_font_style": "inverse",
             "type_font_primary_link": "body",
-            "type_case_primary_link": "uppercase",
+            "type_case_primary_link": "none",
             "menu_style": "text",
             "featured_products_aspect_ratio": "4 / 5",
             "featured_collections_aspect_ratio": "16 / 9",
@@ -102,8 +70,8 @@
         "divider_width": 0,
         "divider_size": "page-width",
         "divider_color": "",
-        "border_width": 0,
-        "bottom_border_color": "",
+        "border_width": 1,
+        "bottom_border_color": "{{ settings.color_palette.color3 }}",
         "actions_display_style": "icon",
         "actions_font_size": "0.875rem",
         "actions_font": "body",
@@ -128,7 +96,6 @@
     }
   },
   "order": [
-    "header_announcements_9jGBFp",
     "header_section"
   ]
 }

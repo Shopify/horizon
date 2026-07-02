@@ -171,7 +171,7 @@
             "variant_picker_R3rGDr": {
               "type": "variant-picker",
               "settings": {
-                "variant_style": "buttons",
+                "variant_style": "dropdown",
                 "show_swatches": true,
                 "alignment": "left",
                 "padding-block-start": 0,
@@ -216,9 +216,11 @@
               },
               "block_order": []
             },
-            "delivery_date": {
-              "type": "delivery-date",
-              "settings": {}
+            "gift_message": {
+              "type": "custom-liquid",
+              "settings": {
+                "custom_liquid": "<div id=\"gift-textarea-field\" style=\"display:grid;gap:.5rem\">\n  <label for=\"gift-message-textarea\" style=\"font-weight:600\">Mensaje en la postal (opcional)</label>\n  <textarea\n    id=\"gift-message-textarea\"\n    name=\"properties[Mensaje en la postal]\"\n    rows=\"3\"\n    maxlength=\"250\"\n    placeholder=\"Añade tu dedicatoria aquí…\"\n    style=\"width:100%;padding:.6rem;border:1px solid #ece4d8;border-radius:.5rem\"\n  ></textarea>\n  <small id=\"gift-ta-count\" aria-live=\"polite\">0 / 250</small>\n</div>\n<script>\n  (function () {\n    var ta = document.getElementById('gift-message-textarea');\n    var count = document.getElementById('gift-ta-count');\n    var form = document.querySelector('form[id^=\"BuyButtons-ProductForm-\"]');\n    if (ta && form) ta.setAttribute('form', form.id);\n    if (ta && count) ta.addEventListener('input', function () { count.textContent = ta.value.length + ' / 250'; });\n  })();\n</script>"
+              }
             },
             "text_aEtTtq": {
               "type": "text",
@@ -251,7 +253,7 @@
             "divider_VJhene",
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
-            "delivery_date",
+            "gift_message",
             "text_aEtTtq"
           ]
         },
