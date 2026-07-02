@@ -756,7 +756,7 @@
             %}
             {% capture drawer_localization_markup %}
               {% if show_language and show_country == false %}
-                <div class="menu-drawer__localization color-{{ settings.popover_color_scheme }}">
+                <div class="menu-drawer__localization">
                   {% render 'localization-form',
                     show_country: show_country,
                     show_language: show_language,
@@ -1468,22 +1468,37 @@
   .menu-drawer__utility-actions .menu-drawer__localization {
     display: flex;
     align-items: center;
+    color: #fff;
   }
 
   .menu-drawer__utility-actions .menu-drawer__localization .language-selector {
     width: auto;
     min-height: var(--minimum-touch-target);
     padding: 0 var(--padding-md) 0 0;
+    gap: 4px;
+    font-size: var(--menu-top-level-font-size-desktop);
+    font-family: var(--menu-top-level-font-family);
+    font-weight: var(--menu-top-level-font-weight);
+    text-transform: uppercase;
+    color: #fff;
   }
 
   .menu-drawer__utility-actions .menu-drawer__localization .localization-form__select {
+    color: #fff;
+    background-color: transparent;
     max-width: 8rem;
     text-align: left;
     padding-inline-start: 0;
+    padding-inline-end: calc(var(--icon-size-xs) + var(--padding-3xs));
+    font-size: var(--menu-top-level-font-size-desktop);
+    font-family: var(--menu-top-level-font-family);
+    font-weight: var(--menu-top-level-font-weight);
+    text-transform: uppercase;
   }
 
   .menu-drawer__utility-actions .menu-drawer__localization .language-selector .svg-wrapper.icon-caret {
     right: 0;
+    color: #fff;
   }
 
   .menu-drawer__utility-actions .header-actions__action,
