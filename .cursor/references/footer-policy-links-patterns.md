@@ -23,6 +23,12 @@ Add these settings on the footer section:
   - `menu`: `footer_links_menu` is selected
 - For menu mode iterate `section.settings.footer_links_menu.links`.
 - For policy mode iterate `shop.policies`.
+- Optional footer language selector:
+  - Add section setting `footer_show_language_selector` (checkbox).
+  - Only render when the setting is on **and** `localization.available_languages.size > 1`.
+  - Render with `localization-form` using `show_country: false`, `show_language: true`, `localization_style: 'footer'`.
+  - Insert selector immediately before the first privacy link (`url contains 'privacy'`) in either policy or menu source.
+  - If no privacy link exists, append selector as the last item in the policy-links list.
 
 ## Layout Rules
 

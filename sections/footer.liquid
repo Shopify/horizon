@@ -6,11 +6,17 @@
     assign total_blocks = section.blocks.size
     assign footer_link_source = section.settings.footer_link_source | default: 'policies'
     assign has_footer_links = false
+    assign show_footer_language_selector = false
+    assign footer_language_selector_inserted = false
 
     if footer_link_source == 'menu' and section.settings.footer_links_menu != blank
       assign has_footer_links = true
     elsif footer_link_source == 'policies' and shop.policies.size > 0
       assign has_footer_links = true
+    endif
+
+    if section.settings.footer_show_language_selector and localization.available_languages.size > 1
+      assign show_footer_language_selector = true
     endif
 
     # Grid layout calculations
@@ -76,6 +82,19 @@
         {% content_for 'blocks' %}
       </div>
       {% if has_footer_links %}
+    {% capture footer_language_selector_markup %}
+      {% if show_footer_language_selector %}
+        <li class="footer-shell__policy-localization">
+          {% render 'localization-form',
+            show_country: false,
+            show_language: true,
+            localization_style: 'footer',
+            form_id: section.id
+          %}
+        </li>
+      {% endif %}
+    {% endcapture %}
+
         <div class="footer-shell__policy-links-wrap">
           <ul
             class="footer-shell__policy-links list-unstyled"
@@ -87,6 +106,10 @@
             {% if footer_link_source == 'menu' and section.settings.footer_links_menu != blank %}
               {% for link in section.settings.footer_links_menu.links %}
                 {% if link != blank %}
+                {% if show_footer_language_selector and footer_language_selector_inserted == false and link.url contains 'privacy' %}
+                  {{ footer_language_selector_markup }}
+                  {% assign footer_language_selector_inserted = true %}
+                {% endif %}
                   <li>
                     <a href="{{ link.url }}">{{ link.title | escape }}</a>
                   </li>
@@ -95,12 +118,20 @@
             {% else %}
               {% for policy in shop.policies %}
                 {% if policy != blank %}
+                {% if show_footer_language_selector and footer_language_selector_inserted == false and policy.url contains 'privacy' %}
+                  {{ footer_language_selector_markup }}
+                  {% assign footer_language_selector_inserted = true %}
+                {% endif %}
                   <li>
                     <a href="{{ policy.url }}">{{ policy.title | escape }}</a>
                   </li>
                 {% endif %}
               {% endfor %}
             {% endif %}
+
+          {% if show_footer_language_selector and footer_language_selector_inserted == false %}
+            {{ footer_language_selector_markup }}
+          {% endif %}
           </ul>
           <div
             class="footer-shell__copyright"
@@ -203,6 +234,35 @@ footer{
     font-size: var(--font-size, 0.75rem);
     text-transform: var(--text-transform, none);
     transition: opacity var(--animation-speed) var(--animation-easing);
+  }
+
+  .footer-shell__policy-localization {
+    display: flex;
+    align-items: center;
+  }
+
+  .footer-shell__policy-localization localization-form-component {
+    width: auto;
+  }
+
+  .footer-shell__policy-localization .language-selector {
+    width: auto;
+    padding: 0;
+    gap: var(--gap-2xs);
+  }
+
+  .footer-shell__policy-localization .localization-form__select {
+    color: inherit;
+    background-color: transparent;
+    max-width: none;
+    text-align: left;
+    padding: 0 calc(var(--icon-size-xs) + var(--padding-3xs)) 0 0;
+    font-size: var(--font-size, 0.75rem);
+    text-transform: var(--text-transform, none);
+  }
+
+  .footer-shell__policy-localization .language-selector .svg-wrapper.icon-caret {
+    right: 0;
   }
 
   .footer-shell__policy-links a:hover,
@@ -536,6 +596,12 @@ footer{
         }
       ],
       "default": "policies"
+    },
+    {
+      "type": "checkbox",
+      "id": "footer_show_language_selector",
+      "label": "Show language selector",
+      "default": false
     },
     {
       "type": "link_list",
