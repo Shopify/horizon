@@ -362,7 +362,7 @@
                   "type": "custom-liquid",
                   "name": "t:names.custom_liquid",
                   "settings": {
-                    "custom_liquid": "<div class=\"okeQuizModalButton\" style=\"display:flex;\"><a href=\"javascript:void(0)\" onclick=\"okeConnectApi.showQuiz('b946b895-0e54-4cfb-800b-883a36e1aa89', '1d0a586e-45b1-4a7e-b30d-539e2e1abc0e', { fullScreen: true })\" class=\"button full-width-mobile\">Garage Door Openers</a></div>"
+                    "custom_liquid": "<div class=\"okeQuizModalButton\" style=\"display:flex;\"><a href=\"#\" onclick=\"okeConnectApi.showQuiz('d515c056-caae-4c7d-8890-d9fcc8947b62', '1d0a586e-45b1-4a7e-b30d-539e2e1abc0e')\" class=\"button\">Garage Openers</a></div>"
                   },
                   "blocks": {}
                 },
@@ -370,7 +370,7 @@
                   "type": "custom-liquid",
                   "name": "t:names.custom_liquid",
                   "settings": {
-                    "custom_liquid": "<div class=\"okeQuizModalButton\" style=\"display:flex;\"><a href=\"javascript:void(0)\"  onclick=\"okeConnectApi.showQuiz('901c9f91-5946-4652-bc81-c54be2218530', '1d0a586e-45b1-4a7e-b30d-539e2e1abc0e', { fullScreen: true })\" class=\"button-secondary full-width-mobile\">Alarm Panels</a></div>"
+                    "custom_liquid": "<div class=\"okeQuizModalButton\" style=\"display:flex;\"><a href=\"#\" onclick=\"okeConnectApi.showQuiz('7f8f415c-2756-4637-8119-aa24df66b6b7', '1d0a586e-45b1-4a7e-b30d-539e2e1abc0e')\" class=\"button\">Alarm Panels </a></div>"
                   },
                   "blocks": {}
                 }
