@@ -229,13 +229,3 @@ document.querySelectorAll('.form-opener, .button--quote').forEach(e => {
         }
     })
 })
-
-// Klaviyo trigger
-document.querySelectorAll('[data-klaviyo]').forEach(e=> {
-  e.addEventListener('click', function(evt) {
-    evt.preventDefault()
-
-    window._klOnsite = window._klOnsite || [];
-    window._klOnsite.push(['openForm', e.dataset.klaviyo]);
-  })
-})
