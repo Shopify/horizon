@@ -4,6 +4,8 @@
   assign rating = product.metafields.reviews.rating.value.rating
   assign scale_max = product.metafields.reviews.rating.value.scale_max
   assign rating_count = product.metafields.reviews.rating_count
+  assign half_star_id = 'half-' | append: block.id
+  assign star_id = 'star-' | append: block.id
 
   if request.visual_preview_mode and product == blank
     assign product = collections.all.products.first
@@ -55,12 +57,12 @@
       role="presentation"
     >
       <defs>
-        <linearGradient id="half" x1="0" x2="100%" y1="0" y2="0">
+        <linearGradient id="{{ half_star_id }}" x1="0" x2="100%" y1="0" y2="0">
           <stop offset="50%" stop-color="var(--star-fill-color)"></stop>
           <stop offset="50%" stop-color="{% if block_settings.stars_style == "outline" %}transparent{% else %}rgb(var(--star-fill-color-rgb) / var(--opacity-20){% endif %}"></stop>
         </linearGradient>
 
-        <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" id="star">
+        <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" id="{{ star_id }}">
           <path d="M31.547 12a.848.848 0 00-.677-.577l-9.427-1.376-4.224-8.532a.847.847 0 00-1.516 0l-4.218 8.534-9.427 1.355a.847.847 0 00-.467 1.467l6.823 6.664-1.612 9.375a.847.847 0 001.23.893l8.428-4.434 8.432 4.432a.847.847 0 001.229-.894l-1.615-9.373 6.822-6.665a.845.845 0 00.214-.869z" />
         </symbol>
       </defs>
@@ -77,7 +79,7 @@
           style="--empty-star-fill-color: rgb(var(--star-fill-color-rgb) / var(--opacity-20))"
           role="presentation"
         >
-          <use xlink:href="#star"></use>
+          <use xlink:href="#{{ star_id }}"></use>
         </svg>
       {% else %}
         {%- for star in (1..star_count_rating) -%}
@@ -87,9 +89,9 @@
             style="--empty-star-fill-color:{% if block_settings.stars_style == 'outline' %}transparent{% else %}rgb(var(--star-fill-color-rgb) / var(--opacity-20)){% endif %}"
             role="presentation"
           >
-            <use xlink:href="#star"{% if decimal_rating == 0.5 and star == svg_filled_stars %} fill="url(#half)"{% endif %}></use>
+            <use xlink:href="#{{ star_id }}"{% if decimal_rating == 0.5 and star == svg_filled_stars %} fill="url(#{{ half_star_id }})"{% endif %}></use>
             {% if block_settings.stars_style == "outline" %}
-              <use xlink:href="#star" fill="none" stroke="var(--star-fill-color)" stroke-width="var(--icon-stroke-width)"></use>
+              <use xlink:href="#{{ star_id }}" fill="none" stroke="var(--star-fill-color)" stroke-width="var(--icon-stroke-width)"></use>
             {% endif %}
           </svg>
         {%- endfor -%}
