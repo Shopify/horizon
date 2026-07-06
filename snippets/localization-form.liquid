@@ -35,6 +35,16 @@
 
   assign aliases_us = 'us,usa,america,united states of america'
   assign aliases_uk = 'uk,gb,great britain'
+
+  assign language_display_mode = 'code'
+  if localization_style == 'footer'
+    assign language_display_mode = 'name'
+  endif
+
+  assign show_language_icon = false
+  if localization_style == 'dropdown'
+    assign show_language_icon = true
+  endif
 %}
 <localization-form-component
   ref="localizationForm"
@@ -247,6 +257,11 @@
         {% if show_country == true %}
           <span class="language-selector__label">{{ 'content.language' | t }}</span>
         {% endif %}
+        {% if show_language_icon and show_country == false %}
+          <span class="svg-wrapper language-selector__icon" aria-hidden="true">
+            {{- 'icon-language.svg' | inline_asset_content -}}
+          </span>
+        {% endif %}
         <select
           id="{{ localization_style }}Select"
           class="localization-form__select"
@@ -263,7 +278,11 @@
                 selected
               {% endif %}
             >
-              {{ language.iso_code | upcase }}
+              {%- if language_display_mode == 'name' -%}
+                {{ language.endonym_name | capitalize }}
+              {%- else -%}
+                {{ language.iso_code | upcase }}
+              {%- endif -%}
             </option>
           {%- endfor -%}
         </select>
@@ -440,6 +459,24 @@
   .language-selector__label {
     flex-shrink: 0;
     color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+  }
+
+  .language-selector__icon {
+    width: calc(var(--icon-size-xs) * 1.1);
+    height: calc(var(--icon-size-xs) * 1.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .language-selector__icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .language-selector:has(.language-selector__icon) {
+    gap: 0px;
   }
 
   .localization-form__select {

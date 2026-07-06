@@ -238,6 +238,11 @@
         on:click="/toggleSelector"
         style="{{ localization_font }} {{ localization_font_size }}"
       >
+        {% if show_language %}
+          <span class="svg-wrapper dropdown-localization__icon-language" aria-hidden="true">
+            {{- 'icon-language.svg' | inline_asset_content -}}
+          </span>
+        {% endif %}
         {% if show_country %}
           {% if section.settings.country_selector_style == true %}
             {% liquid
@@ -1127,7 +1132,7 @@
     display: flex;
     position: relative;
     align-items: center;
-    gap: 4px;
+    gap: 2px;
     font-family: var(--menu-localization-font);
     font-size: var(--menu-localization-font-size);
     font-weight: var(--menu-top-level-font-weight);
@@ -1142,6 +1147,20 @@
     top: calc(50% - var(--padding-2xs));
     flex-shrink: 0;
     transition: transform var(--animation-speed) var(--animation-easing);
+  }
+
+  .dropdown-localization__icon-language {
+    width: calc(var(--icon-size-xs) * 1.1);
+    height: calc(var(--icon-size-xs) * 1.1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .dropdown-localization__icon-language svg {
+    width: 100%;
+    height: 100%;
   }
 
   .dropdown-localization__button .icon-flag {

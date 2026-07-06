@@ -27,8 +27,14 @@ Add these settings on the footer section:
   - Add section setting `footer_show_language_selector` (checkbox).
   - Only render when the setting is on **and** `localization.available_languages.size > 1`.
   - Render with `localization-form` using `show_country: false`, `show_language: true`, `localization_style: 'footer'`.
+  - Footer style (`localization_style: 'footer'`) should show full language names (for example `English`).
   - Insert selector immediately before the first privacy link (`url contains 'privacy'`) in either policy or menu source.
   - If no privacy link exists, append selector as the last item in the policy-links list.
+
+## Header Language Selector
+
+- Header dropdown style (`localization_style: 'dropdown'`) should keep compact language codes (for example `EN`).
+- Add a global language icon before the selector text in the header trigger and language-only dropdown selector.
 
 ## Layout Rules
 
