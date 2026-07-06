@@ -1,0 +1,52 @@
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*~
+
+# Editors & IDEs #
+##################
+.idea/
+.vscode/
+*.swp
+*.swo
+.history/
+
+# Node #
+########
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Shopify CLI files #
+#####################
+.shopify/
+.shopify-cli.yml
+# Legacy Theme Kit config — stores the store API password in plain text
+config.yml
+
+# Claude Code local files #
+###########################
+.claude/settings.local.json
+CLAUDE.local.md
+
+# Environment files — never commit secrets #
+############################################
+.env
+.env.*
+!.env.example
+
+# Logs & release files #
+########################
+*.log
+release
+*.zip
