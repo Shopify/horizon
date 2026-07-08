@@ -215,23 +215,13 @@
     assign color_shadow = '--color-shadow: rgb(var(--color-foreground-rgb) / var(--opacity-10-25));'
     assign form_style = localization_font | append: localization_font_size | append: color_shadow
   %}
-  {% if show_language and show_country == false %}
-    <div class="dropdown-localization mobile:hidden">
-      {% render 'localization-form',
-        show_country: show_country,
-        show_language: show_language,
-        localization_style: 'dropdown',
-        form_style: form_style,
-        form_id: section.id
-      %}
-    </div>
-  {% elsif show_country %}
+  {% if show_country or show_language %}
     <dropdown-localization-component
       class="dropdown-localization mobile:hidden"
     >
       <button
         type="button"
-        class="button dropdown-localization__button localization-selector header-actions__action"
+        class="dropdown-localization__button localization-selector header-actions__action"
         aria-expanded="false"
         aria-controls="dropdown-localization-results"
         ref="button"
@@ -275,16 +265,6 @@
         >
           {{- 'accessibility.localization_region_and_language' | t -}}
         </span>
-
-        {%- if show_country and show_language -%}
-          <span>/</span>
-        {%- endif -%}
-
-        {%- if show_language -%}
-          <span>
-            {{ localization.language.iso_code | upcase }}
-          </span>
-        {%- endif -%}
         <span class="svg-wrapper icon-caret">
           {{- 'icon-caret.svg' | inline_asset_content -}}
         </span>
@@ -295,13 +275,40 @@
         hidden
         ref="panel"
       >
-        {% render 'localization-form',
-          show_country: show_country,
-          show_language: show_language,
-          localization_style: 'dropdown',
-          form_style: form_style,
-          form_id: section.id
-        %}
+        {% if show_language and show_country == false %}
+          {% assign header_language_form_label = 'content.language' | t %}
+          {%- form 'localization',
+            id: 'HeaderLanguageForm',
+            class: 'header-language-list',
+            aria-label: header_language_form_label
+          -%}
+            <ul class="header-language-list__items list-unstyled" role="list">
+              {%- for language in localization.available_languages -%}
+                <li>
+                  <button
+                    type="submit"
+                    class="header-language-list__item"
+                    name="language_code"
+                    value="{{ language.iso_code }}"
+                    {% if language.iso_code == localization.language.iso_code %}
+                      aria-current="true"
+                    {% endif %}
+                  >
+                    {{ language.endonym_name | capitalize }}
+                  </button>
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endform -%}
+        {% else %}
+          {% render 'localization-form',
+            show_country: show_country,
+            show_language: show_language,
+            localization_style: 'dropdown',
+            form_style: form_style,
+            form_id: section.id
+          %}
+        {% endif %}
       </div>
     </dropdown-localization-component>
   {% endif %}
@@ -1246,6 +1253,38 @@
     position: absolute;
     top: calc(100% + 10px);
     z-index: calc(var(--layer-header-menu) + 1);
+  }
+
+  .header-language-list {
+    width: 100%;
+    padding: var(--padding-xs);
+  }
+
+  .header-language-list__items {
+    margin: 0;
+    padding: 0;
+  }
+
+  .header-language-list__item {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: var(--color-foreground);
+    text-align: left;
+    padding: var(--padding-sm) var(--padding-md);
+    border-radius: 8px;
+    font: inherit;
+    cursor: pointer;
+    transition: background-color var(--animation-speed) var(--animation-easing);
+  }
+
+  .header-language-list__item:hover,
+  .header-language-list__item:focus-visible {
+    outline: none;
+  }
+
+  .header-language-list__item[aria-current='true'] {
+    font-weight: 500;
   }
 
   dropdown-localization-component .localization-wrapper.right-bound {

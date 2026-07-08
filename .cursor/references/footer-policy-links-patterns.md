@@ -33,8 +33,9 @@ Add these settings on the footer section:
 
 ## Header Language Selector
 
-- Header dropdown style (`localization_style: 'dropdown'`) should keep compact language codes (for example `EN`).
-- Add a global language icon before the selector text in the header trigger and language-only dropdown selector.
+- Header language trigger should be icon-only (globe + caret), with no visible language code/label.
+- For language-only mode in header, clicking the icon should open a direct clickable language list (no nested select control).
+- Keep country/language combined behavior using existing localization form when country selection is enabled.
 
 ## Layout Rules
 
