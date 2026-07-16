@@ -127,10 +127,10 @@ bridge-consumed — it is wired through Shopify's `accent` font slot — but the
 define it so the two systems agree. Today `src/fonts.css` loads Oswald while no token references
 it.
 
-Buttons need **no new tokens**. `dist/tokens.css` already carries everything used:
-`--button-size-{sm,md,lg}-height` (40/48/56), `--button-size-*-padding`, `--button-size-*-font-size`,
-`--button-state-pressed-scale` (0.97), `--button-state-pressed-opacity` (0.92),
-`--button-state-disabled-opacity` (0.5), `--button-base-radius`.
+Buttons need **no tokens at all** — new or existing. See "Buttons" below: the theme's buttons
+inherit their type from the `paragraph` preset and their family from the font slots, so they come
+into alignment without referencing a single `--button-*` token. The design system's `--button-*`
+tokens remain unused by the theme.
 
 ## Mapping
 
@@ -208,14 +208,24 @@ structural, not chromatic — `--with-label`, `--unstyled`, `--full-width`, `--a
 also drag in `brand.tint` / `feedback.danger` / `surface.default`, reopening the colour mapping
 this spec avoids.
 
-The bridge therefore covers buttons only where Horizon already has a slot:
+**Buttons require no bridge work at all.** Verified against `assets/base.css`:
 
-- Type: `--button-font-family-{primary,secondary}` follow the settings font slots; button
-  font-size maps to `--button-size-md-font-size`.
-- States: press scale/opacity and disabled opacity map to the `--button-state-*` tokens.
-- Radius: **no change.** `button_border_radius_{primary,secondary}` is already `100` (pill),
+- **Type: already correct, for free.** `.button` derives font-family/style/weight/size/line-height
+  from `--font-paragraph--*` (base.css:1243–1247), which the bridge already maps to `body-md`.
+  The design system's own `--button-size-md-font-size` resolves to `var(--font-size-md)` — the
+  same 16px. Family comes from `--button-font-family-primary`, which follows the settings font
+  slot. Nothing to override.
+- **Radius: no change.** `button_border_radius_{primary,secondary}` is already `100` (pill),
   matching `--button-base-radius`.
-- Colour: **no change.** The palette already matches the brand.
+- **Colour: no change.** The palette already matches the brand.
+- **States: out of scope.** Horizon has no `:active` press state — `.button` transitions only
+  colour, box-shadow and background. The design system's `--button-state-pressed-scale` (0.97)
+  and `--button-state-pressed-opacity` therefore have no Horizon slot to map into. Introducing a
+  press animation would be new behaviour, not a sync, so it is deliberately excluded. If the
+  press feel is wanted on the storefront, it belongs in its own piece of work.
+
+The practical consequence: buttons come into brand alignment as a side effect of the typography
+bridge and the font settings, and this spec adds no button-specific code.
 
 ## Settings changes (`config/settings_data.json`)
 
@@ -254,8 +264,9 @@ system's stated preference for loud errors over silent fallbacks.
    table, uppercase where specified, in Archivo.
 4. Headings scale fluidly: no horizontal overflow at 375px width.
 5. No network request to `fonts.googleapis.com`.
-6. Primary and secondary buttons keep their pill radius and current colours, and press/disabled
-   states match the `--button-state-*` tokens.
+6. Primary and secondary buttons keep their pill radius and current colours, and their labels
+   render in Archivo at the `body-md` size — inherited from the `paragraph` preset, with no
+   button-specific code.
 
 ## Risks
 
