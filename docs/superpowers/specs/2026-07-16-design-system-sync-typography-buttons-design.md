@@ -118,9 +118,14 @@ bundled-role convention (`type.<role>.<property>` → `--type-<role>-<property>`
 | heading-sm | 18px | 24px | 600 | Archivo | 0.02em | uppercase |
 | body-md | 16px | 24px | 400 | Archivo | 0 | none |
 
-Also required: an Oswald family token (the stamp face). It is **not consumed by typography** in
-this spec — it is wired through Shopify's `accent` font slot — but the design system must define
-it so the two systems agree.
+Only the **font-size, line-height and tracking** columns are consumed by the bridge. The
+`family`, `font-weight` and `case` columns are recorded so the two systems agree on the design;
+in the theme they are delivered through Shopify's font slots and `type_case_*`, not through CSS.
+
+Also required: an Oswald family token (the stamp face). Like the other families it is not
+bridge-consumed — it is wired through Shopify's `accent` font slot — but the design system must
+define it so the two systems agree. Today `src/fonts.css` loads Oswald while no token references
+it.
 
 Buttons need **no new tokens**. `dist/tokens.css` already carries everything used:
 `--button-size-{sm,md,lg}-height` (40/48/56), `--button-size-*-padding`, `--button-size-*-font-size`,
@@ -130,13 +135,31 @@ Buttons need **no new tokens**. `dist/tokens.css` already carries everything use
 ## Mapping
 
 Horizon emits, per preset (`paragraph, h1…h6`), the final variables `--font-<preset>--size`,
-`--line-height`, `--letter-spacing`, `--weight`, `--family`, `--style`, `--case`. The bridge
-overrides them.
+`--line-height`, `--letter-spacing`, `--weight`, `--family`, `--style`, `--case`.
+
+**The bridge overrides exactly three: `--size`, `--line-height`, `--letter-spacing`.** These are
+the only three Shopify settings cannot express:
+
+- `type_size_h*` is an enum (10/12/14/16/18/20/24/32/40/48/56/72…) with no 36/28/22.
+- line-height presets are ratios (1 / 1.1 / 1.2 …) and cannot hit 58/48 or 44/36.
+- letter-spacing presets offer only ±0.03em, where the brand needs 0.02em.
 
 Because the bridge overrides these **final** variables, `config/settings_schema.json` is never
-forked. This matters: Horizon's `type_size_h1` is an enum (10/12/14/16/18/20/24/32/40/48/56/72…)
-that lacks 36/28/22/15/13/11, and its letter-spacing presets offer only ±0.03em where the brand
-needs 0.02em. Overriding downstream sidesteps both limits.
+forked.
+
+**`--family`, `--weight`, `--style` and `--case` are left alone — they come from settings.**
+Overriding `--family` in CSS would hardcode Archivo and defeat the Shopify font-hosting and
+preloading this design deliberately buys. Weight needs no work either: it follows the font slot,
+which already lands on every target value.
+
+| Preset | Slot | Slot font | Weight | Target |
+| --- | --- | --- | --- | --- |
+| h1–h4 | `heading` | `archivo_n7` | 700 | 700 ✓ |
+| h5–h6 | `subheading` | `archivo_n6` | 600 | 600 ✓ |
+| paragraph | `body` | `archivo_n4` | 400 (hardcoded by Horizon) | 400 ✓ |
+
+`type_font_h1`–`h4` are already `heading` and `type_font_h5`–`h6` already `subheading`, so these
+need no settings change — only the font slots themselves are repointed from Inter to Archivo.
 
 | Horizon preset | DS role | Rendered as |
 | --- | --- | --- |
@@ -161,14 +184,16 @@ directly with no `clamp()`.
 For h1, the DS token supplies the **maximum**, preserving Horizon's `clamp(min, vw, max)` shape:
 
 ```css
---font-h1--size: clamp(2.5rem, 4.8vw, var(--type-display-lg-font-size));
+--font-h1--size: clamp(2.75rem, 4.8vw, var(--type-display-lg-font-size));
 ```
 
-The two literals reproduce Horizon's own algorithm for this scale rather than inventing values:
+The two literals reproduce Horizon's own algorithm rather than inventing values. Note the
+algorithm runs over the **configured settings sizes**, which this spec does not change — they
+stay `{16, 18, 24, 32, 40, 48}`:
 
 - `4.8vw` is Horizon's `value × 0.1vw` ratio for a 48px preset.
-- `2.5rem` (40px) is Horizon's derived minimum: the next size down is h2's 36px, which is under
-  the cutoff, so the algorithm takes `36 + 4`.
+- `2.75rem` (44px) is Horizon's derived minimum: the next configured size down from 48 is 40,
+  which is under the 48 cutoff, so the algorithm takes `40 + 4`.
 
 These are computed once and written as literals in the bridge; the theme's own fluid loop is not
 reimplemented. `base.css` independently floors headings with `max(1rem, var(--font-h1--size))`,
@@ -238,6 +263,10 @@ system's stated preference for loud errors over silent fallbacks.
 - **`settings_data.json` is admin-generated.** Until the move to push is complete, a theme-editor
   save can revert the font settings. The bridge (CSS) is unaffected; only the settings half is at
   risk.
+- **The theme editor will display stale sizes.** Because sizes stay in settings while the bridge
+  overrides the rendered value, the editor shows h2/h3/h4 as 40/32/24 while the page renders
+  36/28/22. This is an accepted, inherent cost of choosing the bridge over settings for sizes
+  (the enum cannot hold the real values) — recorded here so it is a known gap, not a surprise.
 - **The type scale changes meaning in the design system.** Existing roles (`display`, `caption`)
   and sizes (`xl` = 32px) shift. That is the other spec's problem to sequence, but it will change
   how existing design-system components render.
