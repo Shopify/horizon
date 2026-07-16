@@ -1,0 +1,78 @@
+{% comment %}
+  Overrides Horizon's final type variables with Mionas design-system tokens from
+  assets/design-tokens.css.
+
+  Rendered AFTER theme-styles-variables so these declarations win the cascade.
+
+  Only size, line-height and letter-spacing are bridged: they are the only three values
+  Shopify settings cannot express (the size enum has no 36/28/22, line-heights are ratios,
+  and tracking is capped at +/-0.03em where the brand needs 0.02em). Family, weight and case
+  come from the theme's font settings so Shopify keeps hosting and preloading the faces.
+
+  Token names are mirrored in scripts/design-tokens-contract.mjs, which fails the sync if any
+  of them stop existing.
+{% endcomment %}
+{% style %}
+  :root {
+    /* h1 -> display-lg. The only preset at Horizon's 48px fluid cutoff, so the only one that
+       keeps a clamp(). The token supplies the maximum; 4.8vw is Horizon's value * 0.1vw ratio
+       for a 48px preset, and 2.75rem (44px) is Horizon's derived minimum for a configured size
+       set of {16,18,24,32,40,48} (next size down is 40, under the cutoff, so 40 + 4). */
+    --font-h1--size: clamp(2.75rem, 4.8vw, var(--text-role-display-lg-font-size));
+    --font-h1--line-height: var(--text-role-display-lg-line-height);
+    --font-h1--letter-spacing: var(--text-role-display-lg-letter-spacing);
+
+    /* h2 -> display-md. Below the fluid cutoff, so fixed. */
+    --font-h2--size: var(--text-role-display-md-font-size);
+    --font-h2--line-height: var(--text-role-display-md-line-height);
+    --font-h2--letter-spacing: var(--text-role-display-md-letter-spacing);
+
+    /* h3 -> heading-lg */
+    --font-h3--size: var(--text-role-heading-lg-font-size);
+    --font-h3--line-height: var(--text-role-heading-lg-line-height);
+    --font-h3--letter-spacing: var(--text-role-heading-lg-letter-spacing);
+
+    /* h4 -> heading-md */
+    --font-h4--size: var(--text-role-heading-md-font-size);
+    --font-h4--line-height: var(--text-role-heading-md-line-height);
+    --font-h4--letter-spacing: var(--text-role-heading-md-letter-spacing);
+
+    /* h5 -> heading-sm */
+    --font-h5--size: var(--text-role-heading-sm-font-size);
+    --font-h5--line-height: var(--text-role-heading-sm-line-height);
+    --font-h5--letter-spacing: var(--text-role-heading-sm-letter-spacing);
+
+    /* h6 -> heading-sm. Intentionally identical to h5: the target design has no sixth heading
+       level, and keeping h6 a true heading beats demoting it to a label. */
+    --font-h6--size: var(--text-role-heading-sm-font-size);
+    --font-h6--line-height: var(--text-role-heading-sm-line-height);
+    --font-h6--letter-spacing: var(--text-role-heading-sm-letter-spacing);
+
+    /* paragraph -> body-md */
+    --font-paragraph--size: var(--text-role-body-md-font-size);
+    --font-paragraph--line-height: var(--text-role-body-md-line-height);
+    --font-paragraph--letter-spacing: var(--text-role-body-md-letter-spacing);
+
+    /* Buttons — Horizon states no height: it derives one from padding-block plus the paragraph
+       line-height (base.css:1255). The design system states height directly (48px) with 24px
+       inline padding. Derive the padding-block that yields the design system's height at the
+       line-height this bridge already set: (48px - 24px) / 2 = 12px. */
+    --button-padding-block: calc(
+      (var(--button-size-md-height) - var(--text-role-body-md-line-height)) / 2
+    );
+    --button-padding-inline: var(--button-size-md-padding);
+  }
+
+  /* Horizon gives button labels the paragraph weight (400, base.css:1245); the design system's
+     buttons are semibold. No Shopify setting exposes button weight, so this needs a rule.
+     Same selector list as base.css:1229-1232, and this snippet renders after base.css, so it
+     wins on source order at equal specificity.
+     .button-unstyled is excluded: it strips padding/background/border to read as plain text
+     (base.css:1361), and must not be bolded. base.css uses this same :not() idiom at line 1265. */
+  .button:not(.button-unstyled),
+  .button-secondary,
+  .button-custom,
+  button.shopify-payment-button__button--unbranded {
+    font-weight: var(--font-weight-semibold);
+  }
+{% endstyle %}

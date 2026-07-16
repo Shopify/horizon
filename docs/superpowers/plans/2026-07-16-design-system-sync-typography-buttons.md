@@ -406,7 +406,7 @@ Expected: no errors for `snippets/design-system-bridge.liquid`, `snippets/styles
 This catches a typo in the bridge that the validator would otherwise not know about:
 
 ```bash
-grep -o '\-\-type-[a-z-]*' snippets/design-system-bridge.liquid | sort -u > /tmp/bridge-tokens.txt
+grep -o -e 'var(--[a-zA-Z0-9-]*)' snippets/design-system-bridge.liquid | sed -e 's/^var(//' -e 's/)$//' | sort -u > /tmp/bridge-tokens.txt
 node -e "import('./scripts/design-tokens-contract.mjs').then(m => console.log(m.REQUIRED_TOKENS.sort().join('\n')))" > /tmp/contract-tokens.txt
 diff /tmp/bridge-tokens.txt /tmp/contract-tokens.txt && echo "BRIDGE MATCHES CONTRACT"
 ```
@@ -474,7 +474,7 @@ Place each `type_case_hN` key alongside the other `hN` keys, keeping the file's 
 `settings_data.json` opens with a comment block, which is legal for Shopify but not for `JSON.parse`. Strip it before checking:
 
 ```bash
-sed '1,10d' config/settings_data.json | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{const j=JSON.parse(s);const c=j.current;console.log([c.type_body_font,c.type_subheading_font,c.type_heading_font,c.type_accent_font].join(' '));console.log([1,2,3,4,5,6].map(n=>c['type_case_h'+n]).join(' '));})"
+sed '1,9d' config/settings_data.json | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{const j=JSON.parse(s);const c=j.current;console.log([c.type_body_font,c.type_subheading_font,c.type_heading_font,c.type_accent_font].join(' '));console.log([1,2,3,4,5,6].map(n=>c['type_case_h'+n]).join(' '));})"
 ```
 
 Expected:

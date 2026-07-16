@@ -1,0 +1,8 @@
+{
+  "name": "horizon-theme",
+  "private": true,
+  "scripts": {
+    "tokens:sync": "node scripts/sync-design-tokens.mjs",
+    "test": "node --test \"scripts/*.test.mjs\""
+  }
+}
