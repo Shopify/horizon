@@ -10,20 +10,22 @@
 
 **Spec:** `docs/superpowers/specs/2026-07-16-design-system-sync-typography-buttons-design.md`
 
-## Prerequisite — this plan is blocked
+## Prerequisite — SATISFIED, this plan is unblocked
 
-**Do not start Task 2 until the design-system extension has shipped.** `../design-system` currently
-cannot express the target: it has no Oswald token, `font-size.xl` is 32px where `display-lg` is
-48px, and it has no per-role `line-height` or `letter-spacing` tokens at all. That extension is a
-separate spec in that repo, governed by `../design-system/CLAUDE.md`.
+The design-system extension **has shipped**. `../design-system` now tokenises Oswald, carries the
+full nine-step size ladder (`font-size.4xl` = 48px), and gives every role its own `line-height` and
+`letter-spacing`. Its build emits all 18 tokens this plan requires, verified by the same contract
+check Task 1 implements.
 
-Task 1 is pure Node and can be completed now. Tasks 2–5 require the extension.
+**One caveat: the extension is uncommitted.** That repo's `CLAUDE.md` forbids commits under this
+workflow, so the work sits in its working tree awaiting review. `npm run tokens:sync` builds the
+sibling repo from disk, so this plan works today — but the tokens are not yet a durable artifact of
+that repo's history.
 
-**Confirm before Task 2:** the design-system spec owns the token *names*. This plan uses the names
-implied by that repo's existing bundled-role convention (`type.<role>.<property>` →
-`--type-<role>-<property>`). If that spec chose different names, change them in **one place** —
-`REQUIRED_TOKENS` in `scripts/design-tokens-contract.mjs` — and in the bridge snippet's `var()`
-references. Nothing else hardcodes a token name.
+**Token names are confirmed and landed.** They follow that repo's bundled-role convention
+(`text-role.<role>.<property>` → `--text-role-<role>-<property>`). If it ever renames them again,
+change them in **one place** — `REQUIRED_TOKENS` in `scripts/design-tokens-contract.mjs` — and in
+the bridge snippet's `var()` references. Nothing else hardcodes a token name.
 
 ## Global Constraints
 
@@ -115,7 +117,7 @@ const cssDeclaring = (names) =>
 
 test("the contract covers six roles across three properties", () => {
   assert.equal(REQUIRED_TOKENS.length, 18);
-  assert.ok(REQUIRED_TOKENS.every((name) => name.startsWith("--type-")));
+  assert.ok(REQUIRED_TOKENS.every((name) => name.startsWith("--text-role-")));
   assert.equal(new Set(REQUIRED_TOKENS).size, 18, "no duplicates");
 });
 
@@ -169,7 +171,7 @@ const ROLES = [
 const PROPERTIES = ["font-size", "line-height", "letter-spacing"];
 
 export const REQUIRED_TOKENS = ROLES.flatMap((role) =>
-  PROPERTIES.map((property) => `--type-${role}-${property}`)
+  PROPERTIES.map((property) => `--text-role-${role}-${property}`)
 );
 
 // Matches a custom-property DECLARATION (`--name:`), not a var() reference, so a token that the
@@ -270,11 +272,11 @@ resolve that in `../design-system` — do not hand-edit `assets/design-tokens.cs
 This proves spec verification item 2. Temporarily corrupt one token name and confirm the script refuses to pass:
 
 ```bash
-sed -i '' 's/--type-display-lg-font-size:/--type-display-lg-fontsize:/' assets/design-tokens.css
+sed -i '' 's/--text-role-display-lg-font-size:/--text-role-display-lg-fontsize:/' assets/design-tokens.css
 node -e "import('./scripts/design-tokens-contract.mjs').then(async (m) => {
   const css = (await import('node:fs')).readFileSync('assets/design-tokens.css', 'utf8');
   const missing = m.findMissingTokens(css);
-  console.log(missing.length === 1 && missing[0] === '--type-display-lg-font-size' ? 'PASS: missing token detected' : 'FAIL: ' + JSON.stringify(missing));
+  console.log(missing.length === 1 && missing[0] === '--text-role-display-lg-font-size' ? 'PASS: missing token detected' : 'FAIL: ' + JSON.stringify(missing));
 })"
 ```
 
@@ -304,7 +306,7 @@ git commit -m "Sync design tokens into theme assets"
 - Modify: `layout/theme.liquid:31`
 
 **Interfaces:**
-- Consumes: the 18 `--type-*` custom properties from `assets/design-tokens.css` (Task 2).
+- Consumes: the 18 `--text-role-*` custom properties from `assets/design-tokens.css` (Task 2).
 - Produces: overridden `--font-<preset>--size`, `--font-<preset>--line-height`, `--font-<preset>--letter-spacing` for `h1`–`h6` and `paragraph`. Nothing later depends on these by name; `assets/base.css` already consumes them.
 
 - [ ] **Step 1: Link the tokens asset**
@@ -345,40 +347,40 @@ Only `--size`, `--line-height` and `--letter-spacing` appear here. `--family`, `
        keeps a clamp(). The token supplies the maximum; 4.8vw is Horizon's value * 0.1vw ratio
        for a 48px preset, and 2.75rem (44px) is Horizon's derived minimum for a configured size
        set of {16,18,24,32,40,48} (next size down is 40, under the cutoff, so 40 + 4). */
-    --font-h1--size: clamp(2.75rem, 4.8vw, var(--type-display-lg-font-size));
-    --font-h1--line-height: var(--type-display-lg-line-height);
-    --font-h1--letter-spacing: var(--type-display-lg-letter-spacing);
+    --font-h1--size: clamp(2.75rem, 4.8vw, var(--text-role-display-lg-font-size));
+    --font-h1--line-height: var(--text-role-display-lg-line-height);
+    --font-h1--letter-spacing: var(--text-role-display-lg-letter-spacing);
 
     /* h2 -> display-md. Below the fluid cutoff, so fixed. */
-    --font-h2--size: var(--type-display-md-font-size);
-    --font-h2--line-height: var(--type-display-md-line-height);
-    --font-h2--letter-spacing: var(--type-display-md-letter-spacing);
+    --font-h2--size: var(--text-role-display-md-font-size);
+    --font-h2--line-height: var(--text-role-display-md-line-height);
+    --font-h2--letter-spacing: var(--text-role-display-md-letter-spacing);
 
     /* h3 -> heading-lg */
-    --font-h3--size: var(--type-heading-lg-font-size);
-    --font-h3--line-height: var(--type-heading-lg-line-height);
-    --font-h3--letter-spacing: var(--type-heading-lg-letter-spacing);
+    --font-h3--size: var(--text-role-heading-lg-font-size);
+    --font-h3--line-height: var(--text-role-heading-lg-line-height);
+    --font-h3--letter-spacing: var(--text-role-heading-lg-letter-spacing);
 
     /* h4 -> heading-md */
-    --font-h4--size: var(--type-heading-md-font-size);
-    --font-h4--line-height: var(--type-heading-md-line-height);
-    --font-h4--letter-spacing: var(--type-heading-md-letter-spacing);
+    --font-h4--size: var(--text-role-heading-md-font-size);
+    --font-h4--line-height: var(--text-role-heading-md-line-height);
+    --font-h4--letter-spacing: var(--text-role-heading-md-letter-spacing);
 
     /* h5 -> heading-sm */
-    --font-h5--size: var(--type-heading-sm-font-size);
-    --font-h5--line-height: var(--type-heading-sm-line-height);
-    --font-h5--letter-spacing: var(--type-heading-sm-letter-spacing);
+    --font-h5--size: var(--text-role-heading-sm-font-size);
+    --font-h5--line-height: var(--text-role-heading-sm-line-height);
+    --font-h5--letter-spacing: var(--text-role-heading-sm-letter-spacing);
 
     /* h6 -> heading-sm. Intentionally identical to h5: the target design has no sixth heading
        level, and keeping h6 a true heading beats demoting it to a label. */
-    --font-h6--size: var(--type-heading-sm-font-size);
-    --font-h6--line-height: var(--type-heading-sm-line-height);
-    --font-h6--letter-spacing: var(--type-heading-sm-letter-spacing);
+    --font-h6--size: var(--text-role-heading-sm-font-size);
+    --font-h6--line-height: var(--text-role-heading-sm-line-height);
+    --font-h6--letter-spacing: var(--text-role-heading-sm-letter-spacing);
 
     /* paragraph -> body-md */
-    --font-paragraph--size: var(--type-body-md-font-size);
-    --font-paragraph--line-height: var(--type-body-md-line-height);
-    --font-paragraph--letter-spacing: var(--type-body-md-letter-spacing);
+    --font-paragraph--size: var(--text-role-body-md-font-size);
+    --font-paragraph--line-height: var(--text-role-body-md-line-height);
+    --font-paragraph--letter-spacing: var(--text-role-body-md-letter-spacing);
   }
 {% endstyle %}
 ```

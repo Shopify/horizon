@@ -105,9 +105,9 @@ snippet reduces the merge surface to a single `{% render %}` line in `theme.liqu
 ## Contract: what the design system must expose
 
 The design-system spec owns the token *names*; it must expose one token per row below. The
-bridge is authored against the names that spec fixes. Expected names follow the repo's existing
-bundled-role convention (`type.<role>.<property>` → `--type-<role>-<property>`), e.g.
-`--type-display-lg-font-size`.
+bridge is authored against the names that spec fixes. Names follow the repo's
+bundled-role convention (`text-role.<role>.<property>` → `--text-role-<role>-<property>`), e.g.
+`--text-role-display-lg-font-size`.
 
 | Role | font-size | line-height | font-weight | family | tracking | case |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -184,7 +184,7 @@ directly with no `clamp()`.
 For h1, the DS token supplies the **maximum**, preserving Horizon's `clamp(min, vw, max)` shape:
 
 ```css
---font-h1--size: clamp(2.75rem, 4.8vw, var(--type-display-lg-font-size));
+--font-h1--size: clamp(2.75rem, 4.8vw, var(--text-role-display-lg-font-size));
 ```
 
 The two literals reproduce Horizon's own algorithm rather than inventing values. Note the
@@ -247,7 +247,7 @@ about the brand's uppercase rule.
 
 ## Failure modes and verification
 
-**The known silent failure is a missing token.** A `var(--type-display-lg-font-size)` that does
+**The known silent failure is a missing token.** A `var(--text-role-display-lg-font-size)` that does
 not exist falls back to unset and the type silently reverts — the same silent class of failure
 `../design-system/CLAUDE.md` documents for stale `var()` references in its own CSS modules.
 
