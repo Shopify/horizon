@@ -41,22 +41,27 @@ export function supportsViewTransitions() {
 }
 
 /**
- * Detect Facebook / Instagram in-app browsers (Meta WebView).
+ * Detect in-app WebViews known to mishandle cross-document view transitions.
  *
- * Reports of Meta's in-app browsers (Facebook, Instagram) that fail to paint during
- * cross-document (MPA) View Transitions implementation that can freeze or
- * white-screen the storefront on navigation. June 2026 testing.
- * Remove check if every resolved.
+ * Reports of in-app browsers WebViews failing to paint during cross-document (MPA) View
+ * Transitions that can freeze or white-screen the storefront on navigation.
+ * June 2026 testing.  The common factor is the Android System WebView (Chromium WebView),
+ * whose UA carries the `; wv)` token inside the platform parenthetical.
+ * Remove check if ever resolved.
  *
  * Note: the IIFE in view-transitions.js has an inline copy of this logic (it
  * runs before modules load) — keep the two in sync.
  * @param {string} [userAgent=navigator.userAgent] - User-agent string to test.
  *   Defaults to the live `navigator.userAgent`; pass an explicit value to keep
  *   the function pure and testable without overriding the browser UA.
- * @returns {boolean} True if running inside a Facebook/Instagram in-app browser.
+ * @returns {boolean} True if running inside an unsupported in-app WebView.
  */
-export function isMetaInAppBrowser(userAgent = navigator.userAgent) {
-  return /\b(FBAN|FBAV|FB_IAB|FBIOS|Instagram)\b/i.test(userAgent || '');
+export function shouldDisableCrossDocumentViewTransitions(userAgent = navigator.userAgent) {
+  const ua = userAgent || '';
+  const androidWebView = /\bAndroid\b/i.test(ua) && /;\s?wv\)/i.test(ua);
+  const knownInAppBrowser =
+    /\b(FBAN|FBAV|FB_IAB|FBIOS|Instagram|musical_ly|Bytedance|BytedanceWebview|trill|TikTok)(?:\b|_)/i.test(ua);
+  return androidWebView || knownInAppBrowser;
 }
 
 /**
@@ -112,7 +117,12 @@ const viewTransitionTypes = {
  */
 export function startViewTransition(callback, types) {
   // Check if the API is supported and transitions are desired
-  if (!supportsViewTransitions() || isLowPowerDevice() || prefersReducedMotion() || isMetaInAppBrowser()) {
+  if (
+    !supportsViewTransitions() ||
+    isLowPowerDevice() ||
+    prefersReducedMotion() ||
+    shouldDisableCrossDocumentViewTransitions()
+  ) {
     return Promise.resolve(callback());
   }
 

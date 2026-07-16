@@ -1,0 +1,95 @@
+{%- doc -%}
+  Shared checkbox component styles used by the checkbox snippet and preloaded by quick add.
+
+  @example
+  {% render 'checkbox-styles' %}
+{%- enddoc -%}
+
+{% stylesheet %}
+  .checkbox {
+    --checkbox-path-opacity: 0;
+    --checkbox-cursor: pointer;
+
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    &.checkbox--disabled {
+      --checkbox-cursor: not-allowed;
+    }
+  }
+
+  .checkbox:has(.checkbox__input:checked) {
+    --checkbox-path-opacity: 1;
+  }
+
+  .checkbox__input {
+    position: absolute;
+    opacity: 0;
+    margin: 0;
+    padding: 0;
+    width: var(--checkbox-size);
+    height: var(--checkbox-size);
+    aspect-ratio: unset;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    appearance: auto;
+    display: block;
+    cursor: pointer;
+
+    /* Outline is on the SVG instead, to allow it to have border-radius */
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
+  .checkbox__label {
+    position: relative;
+    display: inline-flex;
+    cursor: var(--checkbox-cursor);
+    line-height: var(--checkbox-size);
+    min-width: var(--minimum-touch-target);
+  }
+
+  .checkbox .icon-checkmark {
+    height: var(--checkbox-size);
+    width: var(--checkbox-size);
+    flex-shrink: 0;
+    border: var(--checkbox-border);
+    border-radius: var(--checkbox-border-radius);
+    background-color: var(--color-background);
+  }
+
+  .checkbox__input:focus-visible + .checkbox__label .icon-checkmark {
+    outline: var(--focus-outline-width) solid currentcolor;
+    outline-offset: var(--focus-outline-offset);
+  }
+
+  .checkbox__input:checked + .checkbox__label .icon-checkmark {
+    background-color: var(--color-foreground);
+    border-color: var(--color-foreground);
+  }
+
+  .checkbox__input:disabled + .checkbox__label .icon-checkmark {
+    background-color: var(--input-disabled-background-color);
+    border-color: var(--input-disabled-border-color);
+  }
+
+  .checkbox__label-text {
+    padding-inline-start: var(--checkbox-label-padding);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .checkbox .icon-checkmark path {
+    stroke: var(--color-background);
+    opacity: var(--checkbox-path-opacity);
+    transition: opacity var(--animation-speed) var(--animation-easing);
+  }
+
+  .checkbox__input:disabled + .checkbox__label {
+    color: var(--input-disabled-text-color);
+  }
+{% endstylesheet %}

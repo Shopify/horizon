@@ -6,7 +6,10 @@
   {% content_for 'blocks', closest.product: product %}
 {% endcapture %}
 
+{% render 'swatch-styles' %}
+{% render 'quantity-selector-styles' %}
 {% render 'product-card', children: children, product: product, block: block %}
+{% render 'buy-buttons-styles' %}
 
 {% schema %}
 {

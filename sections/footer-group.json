@@ -16,7 +16,6 @@
       "blocks": {
         "group_wErUQf": {
           "type": "group",
-          "name": "Join our email list",
           "settings": {
             "content_direction": "column",
             "vertical_on_mobile": true,
@@ -54,7 +53,7 @@
           "blocks": {
             "text_pF6rVi": {
               "type": "text",
-              "name": "Heading",
+              "name": "t:names.heading",
               "settings": {
                 "text": "<h2>Join our email list</h2>",
                 "width": "100%",
@@ -79,7 +78,7 @@
             },
             "text_HafH7P": {
               "type": "text",
-              "name": "Text",
+              "name": "t:names.text",
               "settings": {
                 "text": "<p>Get exclusive deals and early access to new products.</p>",
                 "width": "100%",
@@ -104,7 +103,7 @@
             },
             "email-signup_HafH7P": {
               "type": "email-signup",
-              "name": "Email Signup",
+              "name": "t:names.email_signup",
               "settings": {
                 "width": "fill",
                 "custom_width": 100,

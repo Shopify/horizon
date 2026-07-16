@@ -1,0 +1,90 @@
+{%- doc -%}
+  Shared styles for the fly-to-cart custom element created by product form and sticky add-to-cart scripts.
+
+  @example
+  {% render 'fly-to-cart-styles' %}
+{%- enddoc -%}
+
+{% stylesheet %}
+  /* Fly to cart animation */
+  fly-to-cart {
+    --offset-y: 10px;
+
+    position: fixed;
+    width: var(--width, 40px);
+    height: var(--height, 40px);
+    left: 0;
+    top: 0;
+    z-index: calc(infinity);
+    pointer-events: none;
+    border-radius: var(--style-border-radius-buttons-primary);
+    overflow: hidden;
+    object-fit: cover;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    background-color: var(--color-foreground);
+    translate: var(--start-x, 0) var(--start-y, 0);
+    transform: translate(-50%, -50%);
+    animation-name: travel-x, travel-y, travel-scale;
+    animation-timing-function: var(--x-timing), var(--y-timing), var(--scale-timing);
+    animation-duration: 0.6s;
+    animation-composition: accumulate;
+    animation-fill-mode: both;
+  }
+
+  fly-to-cart.fly-to-cart--main {
+    --x-timing: cubic-bezier(0.7, -5, 0.98, 0.5);
+    --y-timing: cubic-bezier(0.15, 0.57, 0.9, 1.05);
+    --scale-timing: cubic-bezier(0.85, 0.05, 0.96, 1);
+  }
+
+  fly-to-cart.fly-to-cart--quick {
+    --x-timing: cubic-bezier(0, -0.1, 1, 0.32);
+    --y-timing: cubic-bezier(0, 0.92, 0.92, 1.04);
+    --scale-timing: cubic-bezier(0.86, 0.08, 0.98, 0.98);
+
+    animation-duration: 0.6s;
+  }
+
+  fly-to-cart.fly-to-cart--sticky {
+    --x-timing: cubic-bezier(0.98, -0.8, 0.92, 0.5);
+    --y-timing: cubic-bezier(0.14, 0.56, 0.92, 1.04);
+    --scale-timing: cubic-bezier(0.86, 0.08, 0.98, 0.98);
+    --radius: var(--style-border-radius-buttons-primary);
+
+    @media screen and (max-width: 749px) {
+      --x-timing: cubic-bezier(0.98, -0.1, 0.92, 0.5);
+    }
+
+    animation-duration: 0.8s;
+  }
+
+  @keyframes travel-scale {
+    0% {
+      opacity: var(--start-opacity, 1);
+    }
+
+    5% {
+      opacity: 1;
+    }
+
+    100% {
+      border-radius: 50%;
+      opacity: 1;
+      transform: translate(-50%, calc(-50% + var(--offset-y))) scale(0.25);
+    }
+  }
+
+  @keyframes travel-x {
+    to {
+      translate: var(--travel-x, 0) 0;
+    }
+  }
+
+  @keyframes travel-y {
+    to {
+      translate: 0 var(--travel-y, 0);
+    }
+  }
+{% endstylesheet %}

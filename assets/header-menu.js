@@ -10,6 +10,7 @@ const HOVER_COMMIT_DELAY_MS = 150;
  *
  * @typedef {Object} State
  * @property {HTMLElement | null} activeItem - The currently active menu item.
+ * @property {HTMLElement | null} activeOverflowItem - The overflow item shown when the More trigger is active.
  *
  * @typedef {object} Refs
  * @property {HTMLElement} overflowMenu - The overflow menu.
@@ -65,6 +66,7 @@ class HeaderMenu extends Component {
    */
   #state = {
     activeItem: null,
+    activeOverflowItem: null,
   };
 
   /**
@@ -165,6 +167,15 @@ class HeaderMenu extends Component {
     return this.refs.overflowMenu?.shadowRoot?.querySelector('[part="overflow-list"]')?.matches(':hover') ?? false;
   }
 
+  /**
+   * Find the first overflowing menu item shown by the More trigger.
+   * @returns {HTMLElement | null}
+   */
+  #getFirstOverflowMenuItem() {
+    const menuItem = this.refs.overflowMenu?.querySelector('[slot="overflow"] [ref="menuitem"]');
+    return menuItem instanceof HTMLElement ? menuItem : null;
+  }
+
   get headerComponent() {
     return /** @type {HTMLElement | null} */ (this.closest('header-component'));
   }
@@ -176,7 +187,9 @@ class HeaderMenu extends Component {
   activate = (event) => {
     if (!(event.target instanceof Element) || !this.headerComponent) return;
 
-    let item = findMenuItem(event.target);
+    const isMoreTrigger = event.target.slot === 'more';
+    const item = findMenuItem(event.target);
+    const overflowItem = isMoreTrigger ? this.#getFirstOverflowMenuItem() : null;
 
     if (!item || item == this.#state.activeItem) return;
 
@@ -185,16 +198,25 @@ class HeaderMenu extends Component {
     this.dataset.overflowExpanded = (!isDefaultSlot).toString();
 
     const previouslyActiveItem = this.#state.activeItem;
+    const previouslyActiveOverflowItem = this.#state.activeOverflowItem;
 
     if (previouslyActiveItem) {
       previouslyActiveItem.ariaExpanded = 'false';
     }
+    if (previouslyActiveOverflowItem && previouslyActiveOverflowItem !== previouslyActiveItem) {
+      previouslyActiveOverflowItem.ariaExpanded = 'false';
+    }
 
     this.#state.activeItem = item;
+    this.#state.activeOverflowItem = overflowItem;
     this.ariaExpanded = 'true';
     item.ariaExpanded = 'true';
+    if (overflowItem && overflowItem !== item) {
+      overflowItem.ariaExpanded = 'true';
+    }
 
-    let submenu = findSubmenu(item);
+    const overflowItemSubmenu = isMoreTrigger ? findSubmenu(overflowItem) : null;
+    let submenu = findSubmenu(item) || (overflowItemSubmenu ? this.overflowMenu : null);
     const hasSubmenu = Boolean(submenu);
 
     if (!hasSubmenu && !isDefaultSlot) {
@@ -282,7 +304,7 @@ class HeaderMenu extends Component {
     const isMovingToSubmenu =
       event.relatedTarget instanceof Node && event.type === 'blur' && menu?.contains(event.relatedTarget);
     const isMovingToOverflowMenu =
-      event.relatedTarget instanceof Node && event.relatedTarget.parentElement?.matches('[slot="overflow"]');
+      event.relatedTarget instanceof Element && Boolean(event.relatedTarget.closest('[slot="overflow"]'));
 
     if (isMovingWithinMenu || isMovingToOverflowMenu || isMovingToSubmenu) {
       if (this.#state.activeItem) {
@@ -312,14 +334,19 @@ class HeaderMenu extends Component {
     this.style.setProperty('--submenu-opacity', '0');
     this.dataset.overflowExpanded = 'false';
 
-    const submenu = findSubmenu(item);
+    const submenu = findSubmenu(item) || (item.closest('[slot="more"]') ? this.overflowMenu : null);
+    const activeOverflowItem = this.#state.activeOverflowItem;
 
     document.body.removeEventListener('pointermove', this.#onPointerMove);
     this.#stopPointerTracking(item);
 
     this.#state.activeItem = null;
+    this.#state.activeOverflowItem = null;
     this.ariaExpanded = 'false';
     item.ariaExpanded = 'false';
+    if (activeOverflowItem && activeOverflowItem !== item) {
+      activeOverflowItem.ariaExpanded = 'false';
+    }
 
     // Remove active state from submenu after animation completes
     if (submenu) {
@@ -406,11 +433,6 @@ if (!customElements.get('header-menu')) {
  */
 function findMenuItem(element) {
   if (!(element instanceof Element)) return null;
-
-  if (element?.matches('[slot="more"')) {
-    // Select the first overflowing menu item when hovering over the "More" item
-    return findMenuItem(element.parentElement?.querySelector('[slot="overflow"]'));
-  }
 
   return element?.querySelector('[ref="menuitem"]');
 }

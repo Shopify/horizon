@@ -67,7 +67,7 @@
           "blocks": {
             "group_icgrde": {
               "type": "group",
-              "name": "Header",
+              "name": "t:names.header",
               "settings": {
                 "content_direction": "column",
                 "vertical_on_mobile": true,
@@ -218,14 +218,14 @@
             },
             "text_aEtTtq": {
               "type": "text",
-              "name": "Product description",
+              "name": "t:names.product_description",
               "settings": {
                 "text": "{{ closest.product.description }}",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",
                 "type_preset": "rte",
-                "font": "var(--font-primary--family)",
+                "font": "var(--font-body--family)",
                 "font_size": "",
                 "line_height": "normal",
                 "letter_spacing": "normal",
@@ -284,7 +284,7 @@
             "max_width": "normal",
             "alignment": "left",
             "type_preset": "h4",
-            "font": "var(--font-primary--family)",
+            "font": "var(--font-body--family)",
             "font_size": "",
             "line_height": "normal",
             "letter_spacing": "normal",

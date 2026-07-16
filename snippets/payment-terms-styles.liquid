@@ -1,0 +1,21 @@
+{%- doc -%}
+  Payment terms (Shop Pay installments) styles. Kept in a standalone snippet so they
+  can be rendered into dynamically-injected contexts (the quick-add modal) as well as
+  on normal pages.
+
+  @example
+  {% render 'payment-terms-styles' %}
+{%- enddoc -%}
+
+{% stylesheet %}
+  form.payment-terms {
+    padding-top: 0.5em;
+    font-size: min(0.85em, var(--font-paragraph--size));
+    font-weight: var(--font-paragraph--weight);
+    color: var(--color, rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text)));
+  }
+
+  .installments:not(:has(shopify-payment-terms)) {
+    display: none;
+  }
+{% endstylesheet %}

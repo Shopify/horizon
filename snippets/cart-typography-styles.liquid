@@ -1,0 +1,20 @@
+{% doc %}
+  Shared cart typography styles, used by both cart-products and cart-summary.
+
+  @example
+  {% render 'cart-typography-styles' %}
+{% enddoc %}
+
+{% stylesheet %}
+  .cart-primary-typography {
+    font-family: var(--cart-primary-font-family);
+    font-style: var(--cart-primary-font-style);
+    font-weight: var(--cart-primary-font-weight);
+  }
+
+  .cart-secondary-typography {
+    font-family: var(--cart-secondary-font-family);
+    font-style: var(--cart-secondary-font-style);
+    font-weight: var(--cart-secondary-font-weight);
+  }
+{% endstylesheet %}

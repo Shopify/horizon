@@ -12,6 +12,8 @@
   assign id = 'BuyButtons-ProductSubmitButton-' | append: block.id
 %}
 {% render 'button-custom-styles', block_settings: block.settings, block_id: block.id %}
+{% render 'add-to-cart-button-styles' %}
+{% render 'fly-to-cart-styles' %}
 
 <span
   {{ block.shopify_attributes }}

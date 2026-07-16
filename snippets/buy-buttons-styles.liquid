@@ -105,6 +105,16 @@
     text-transform: var(--button-text-case-secondary);
   }
 
+  shopify-accelerated-checkout {
+    --shopify-accelerated-checkout-button-border-radius: var(--style-border-radius-buttons-primary);
+    --shopify-accelerated-checkout-button-block-size: var(--height-buy-buttons);
+  }
+
+  .product-form-buttons:has(.add-to-cart-button.button-secondary) shopify-accelerated-checkout {
+    --shopify-accelerated-checkout-button-border-radius: var(--style-border-radius-buttons-secondary);
+    --shopify-accelerated-checkout-button-block-size: var(--height-buy-buttons);
+  }
+
   .product-form-text__error {
     display: flex;
     flex: 1 0 100%;

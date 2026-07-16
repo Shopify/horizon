@@ -156,7 +156,13 @@
         on:pointerenter="/activate"
         on:pointerleave="/deactivate"
       >
-        <button role="listitem" class="menu-list__link button-unstyled">
+        <button
+          role="listitem"
+          class="menu-list__link button-unstyled"
+          aria-haspopup="true"
+          aria-expanded="false"
+          ref="menuitem"
+        >
           <span class="menu-list__link-title">{{ 'actions.more' | t }}</span>
         </button>
       </li>
@@ -334,7 +340,7 @@
   .menu-list__list-item:not([slot='overflow']) {
     flex-direction: column;
   }
-  .menu-list__list-item:not([slot='overflow'])::after {
+  .menu-list__list-item[slot='more']:has(.menu-list__link[aria-expanded='true'])::after {
     content: '';
     width: 100%;
     height: var(--header-padding);
@@ -360,7 +366,7 @@
   /* stylelint-disable-next-line selector-max-specificity */
   .menu-list:not(:has(.menu-list__list-item:hover)) .menu-list__link--active,
   .menu-list .menu-list__list-item:where(:hover, :focus-within) .menu-list__link,
-  .menu-list .menu-list__list-item[slot='overflow'] .menu-list__link[aria-expanded='true'] {
+  .menu-list .menu-list__list-item:is([slot='more'], [slot='overflow']) .menu-list__link[aria-expanded='true'] {
     color: var(--menu-top-level-font-color);
   }
 
