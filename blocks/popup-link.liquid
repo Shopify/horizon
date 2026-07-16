@@ -1,4 +1,7 @@
-{% assign block_settings = block.settings %}
+{% liquid
+  assign block_settings = block.settings
+  assign dialog_heading_id = 'popup-dialog-heading-' | append: block.id
+%}
 
 <script
   src="{{ 'dialog.js' | asset_url }}"
@@ -22,10 +25,10 @@
     ref="dialog"
     class="popup-link__content dialog-modal color-custom-popover{% if block_settings.behavior == 'drawer' %} popup-link__content--drawer dialog-drawer{% endif %}"
     scroll-lock
-    aria-labelledby="popup-dialog-heading"
+    aria-labelledby="{{ dialog_heading_id }}"
   >
     <h2
-      id="popup-dialog-heading"
+      id="{{ dialog_heading_id }}"
       class="visually-hidden"
     >
       {{ block_settings.heading }}
