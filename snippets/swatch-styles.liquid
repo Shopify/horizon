@@ -1,0 +1,122 @@
+{%- doc -%}
+  Shared swatch styles used by variant pickers, product-card swatches, filters,
+  and active filter pills.
+
+  @example
+  {% render 'swatch-styles' %}
+{%- enddoc -%}
+
+{% stylesheet %}
+  /* Swatches */
+  .swatch {
+    --color-border: rgb(var(--color-foreground-rgb) / var(--style-border-swatch-opacity));
+    --min-width-unitless: 15.9999; /* want to avoid division by 0 */
+    --min-height-unitless: 15.9999; /* want to avoid division by 0 */
+    --min-height: 16px;
+    --min-width: 16px;
+
+    /* mobile values */
+    --scaling-factor: 0.5;
+    --max-swatch-size: 28px;
+    --max-pill-size: 20px;
+    --max-filter-size: 32px;
+
+    /* From the settings */
+    --offset-swatch-width: calc(var(--variant-picker-swatch-width-unitless) - var(--min-width-unitless));
+    --offset-swatch-height: calc(var(--variant-picker-swatch-height-unitless) - var(--min-height-unitless));
+
+    /**
+    Offset values are obtained from the following formulas:
+      offset-width = width - min-width
+      offset-height = height - min-height
+
+    The offset-scaled-width and heigth are obtained by extending the line from
+    [min,min] to [W,H] and taking the intersection with a square that starts at
+    [min,min] and ends at [max,max].
+
+    The extending line forms right angle triangles with the [min,min]->[max,max]
+    box that enable us to derive the following formulas
+
+    We also want the result to always be smaller than the input (pdp > everywhere else)
+    by some scaling factor.
+  */
+    --offset-scaled-width: calc(
+      var(--scaling-factor) * var(--offset-swatch-width) / var(--offset-swatch-height) * var(--offset-max-swatch-size)
+    );
+    --offset-scaled-height: calc(
+      var(--scaling-factor) * var(--offset-swatch-height) / var(--offset-swatch-width) * var(--offset-max-swatch-size)
+    );
+    --offset-max-swatch-size: calc(var(--max-swatch-size) - var(--min-width));
+
+    /* width = min(m + sU, (m + s * W'/H' * M'), M) */
+    --swatch-width: min(
+      calc(var(--min-width) + var(--scaling-factor) * var(--offset-swatch-width) * 1px),
+      calc(var(--min-width) + var(--offset-scaled-width)),
+      var(--max-swatch-size)
+    );
+
+    /* height = min(m + sV, (m + s * H'/W' * M'), M) */
+    --swatch-height: min(
+      calc(var(--min-height) + var(--scaling-factor) * var(--offset-swatch-height) * 1px),
+      calc(var(--min-height) + var(--offset-scaled-height)),
+      var(--max-swatch-size)
+    );
+
+    display: block;
+    background: var(--swatch-background);
+    background-position: var(--swatch-focal-point, center);
+    border-radius: var(--variant-picker-swatch-radius);
+    border: var(--style-border-swatch-width) var(--style-border-swatch-style) var(--color-border);
+    width: var(--swatch-width);
+    height: var(--swatch-height);
+
+    /* This is different than `background-size: cover` because we use `box-sizing: border-box`,
+   * doing it like makes the background clip under the border without repeating.
+   */
+    background-size: var(--swatch-width) var(--swatch-height);
+
+    &.swatch--unavailable {
+      border-style: dashed;
+    }
+
+    &.swatch--unscaled {
+      /* for when you want fixed sizing (e.g. pdp) */
+      --swatch-width: var(--variant-picker-swatch-width);
+      --swatch-height: var(--variant-picker-swatch-height);
+    }
+
+    &.swatch--filter {
+      --swatch-width: var(--max-filter-size);
+      --swatch-height: var(--max-filter-size);
+
+      border-radius: var(--variant-picker-swatch-radius);
+    }
+
+    &.swatch--pill {
+      --swatch-width: var(--max-pill-size);
+      --swatch-height: var(--max-pill-size);
+
+      border-radius: var(--variant-picker-swatch-radius);
+    }
+
+    /* swatches in filters and pills always have a border  */
+    &.swatch--filter,
+    &.swatch--pill {
+      --style-border-swatch-width: var(--variant-picker-border-width);
+      --style-border-swatch-style: var(--variant-picker-border-style);
+      --color-border: rgb(var(--color-foreground-rgb) / var(--variant-picker-border-opacity));
+    }
+
+    &.swatch--variant-image {
+      background-size: cover;
+    }
+
+    @media screen and (min-width: 750px) {
+      /* desktop values */
+      --max-swatch-size: 32px;
+      --max-pill-size: 16px;
+      --max-filter-size: 28px;
+      --scaling-factor: 0.65;
+    }
+  }
+{% endstylesheet %}

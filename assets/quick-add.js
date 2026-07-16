@@ -1,6 +1,5 @@
 import { Component } from '@theme/component';
 import { morph } from '@theme/morph';
-import { ThemeEvents } from '@theme/events';
 import { DialogComponent, DialogCloseEvent } from '@theme/dialog';
 import { mediaQueryLarge, isMobileBreakpoint, getIOSVersion } from '@theme/utilities';
 import VariantPicker from '@theme/variant-picker';
@@ -16,25 +15,14 @@ export class QuickAddComponent extends Component {
 
   get productPageUrl() {
     const productCard = /** @type {import('./product-card').ProductCard | null} */ (this.closest('product-card'));
+    if (productCard) return productCard.productPageUrl;
+
     const hotspotProduct = /** @type {import('./product-hotspot').ProductHotspotComponent | null} */ (
       this.closest('product-hotspot-component')
     );
-    const productLink = productCard?.getProductCardLink() || hotspotProduct?.getHotspotProductLink();
+    const productLink = hotspotProduct?.getHotspotProductLink();
 
-    if (!productLink?.href) return '';
-
-    const url = new URL(productLink.href);
-
-    if (url.searchParams.has('variant')) {
-      return url.toString();
-    }
-
-    const selectedVariantId = this.#getSelectedVariantId();
-    if (selectedVariantId) {
-      url.searchParams.set('variant', selectedVariantId);
-    }
-
-    return url.toString();
+    return productLink?.href || '';
   }
 
   /**
@@ -43,7 +31,7 @@ export class QuickAddComponent extends Component {
    */
   #getSelectedVariantId() {
     const productCard = /** @type {import('./product-card').ProductCard | null} */ (this.closest('product-card'));
-    return productCard?.getSelectedVariantId() || null;
+    return productCard?.getSelectedVariantId() ?? null;
   }
 
   connectedCallback() {
@@ -72,6 +60,12 @@ export class QuickAddComponent extends Component {
   #handleProductSelectUpdate = (event) => {
     if (!(event.target instanceof HTMLElement)) return;
     if (event.target.closest('product-card') !== this.closest('product-card')) return;
+    if (this.dataset.usesSellingPlans === 'true') return;
+
+    // Only flip choose <-> add when both buttons were rendered.
+    // Otherwise the flip would hide the sole rendered button and reveal nothing.
+    if (this.dataset.rendersBothButtons !== 'true') return;
+
     const productOptionsCount = this.dataset.productOptionsCount;
     const quickAddButton = productOptionsCount === '1' ? 'add' : 'choose';
     this.setAttribute('data-quick-add-button', quickAddButton);
@@ -104,6 +98,11 @@ export class QuickAddComponent extends Component {
     event.preventDefault();
 
     const currentUrl = this.productPageUrl;
+
+    if (this.dataset.usesSellingPlans === 'true') {
+      if (currentUrl) window.location.href = currentUrl;
+      return;
+    }
 
     // Check if we have cached content for this URL
     let productGrid = this.#cachedContent.get(currentUrl);

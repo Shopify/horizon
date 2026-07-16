@@ -238,7 +238,7 @@
     {% endif %}
 
     {% if show_language %}
-      <div class="language-selector{% if show_country %} top-shadow{% else %} language-selector--collapse-space{% endif %}{% if show_country == false and localization_style == 'drawer' %} h5{% endif %}">
+      <div class="language-selector{% if show_country %} language-selector--top-shadow{% else %} language-selector--collapse-space{% endif %}{% if show_country == false and localization_style == 'drawer' %} h5{% endif %}">
         <h2
           class="visually-hidden"
           id="{{ localization_style }}-LanguageLabel"
@@ -436,6 +436,15 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
+  }
+
+  .language-selector--top-shadow::before {
+    content: '';
+    box-shadow: 0 0 10px var(--color-shadow);
+    position: absolute;
+    z-index: var(--layer-lowest);
+    inset: 0;
+    clip-path: inset(-50px 0 0 0); /* stylelint-disable-line */
   }
 
   .language-selector__label {

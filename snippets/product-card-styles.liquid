@@ -1,0 +1,58 @@
+{%- doc -%}
+  Product card layout styles. Kept in a standalone snippet so empty filtered grids
+  can preload the styles before facets morph product cards into the section.
+
+  @example
+  {% render 'product-card-styles' %}
+{%- enddoc -%}
+
+{% stylesheet %}
+  .product-grid__card.product-grid__card {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: var(--product-card-gap);
+    align-items: var(--product-card-alignment);
+    text-decoration: none;
+    color: var(--color, var(--color-foreground));
+    padding-block: var(--padding-block-start) var(--padding-block-end);
+    padding-inline: var(--padding-inline-start) var(--padding-inline-end);
+    overflow: hidden;
+  }
+
+  .product-grid__card .group-block > * {
+    @media screen and (max-width: 749px) {
+      flex-direction: column;
+    }
+  }
+
+  /* Collection and product list cards have equal heights */
+  :is(.product-grid__item, .resource-list__item) .product-card {
+    display: grid;
+    height: 100%;
+  }
+
+  /* Product card title truncation - applied on mobile regardless of view */
+  @media screen and (max-width: 749px) {
+    :is(.product-card, .product-grid__card) :is(h4, .h4) {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -webkit-line-clamp: 3;
+    }
+  }
+
+  .product-card__placeholder-image svg {
+    height: 100%;
+  }
+
+  .product-card__content slideshow-component {
+    --cursor: pointer;
+  }
+
+  @media screen and (max-width: 749px) {
+    .product-card slideshow-arrows .slideshow-control {
+      display: none;
+    }
+  }
+{% endstylesheet %}

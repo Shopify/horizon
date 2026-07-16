@@ -76,6 +76,10 @@ declare global {
 declare module '@shopify/events' {
   interface ProductSelectPayloadDetail {
     optionValueId?: string;
+    /** Synchronous selected variant ID; '' means no variant. Await the promise for full variant data. */
+    variantId?: string;
+    /** Connected product URL for combined-listing selections. */
+    connectedProductUrl?: string;
   }
   interface ProductSelectResultDetail {
     html: Document;

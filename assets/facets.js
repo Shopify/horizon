@@ -859,7 +859,7 @@ class FacetStatusComponent extends Component {
    */
   #updateSwatchSummary(checkedInputElements, checkedInputElementsCount) {
     const { facetStatus } = this.refs;
-    facetStatus.classList.remove('bubble', 'facets__bubble');
+    facetStatus.classList.remove('facets__bubble');
 
     if (checkedInputElementsCount === 0) {
       facetStatus.innerHTML = '';
@@ -868,7 +868,7 @@ class FacetStatusComponent extends Component {
 
     if (checkedInputElementsCount > 3) {
       facetStatus.innerHTML = checkedInputElementsCount.toString();
-      facetStatus.classList.add('bubble', 'facets__bubble');
+      facetStatus.classList.add('facets__bubble');
       return;
     }
 
@@ -892,7 +892,7 @@ class FacetStatusComponent extends Component {
     const { facetStatus } = this.refs;
     const filterStyle = this.dataset.filterStyle;
 
-    facetStatus.classList.remove('bubble', 'facets__bubble');
+    facetStatus.classList.remove('facets__bubble');
 
     if (checkedInputElementsCount === 0) {
       facetStatus.innerHTML = '';
@@ -905,7 +905,7 @@ class FacetStatusComponent extends Component {
     }
 
     facetStatus.innerHTML = checkedInputElementsCount.toString();
-    facetStatus.classList.add('bubble', 'facets__bubble');
+    facetStatus.classList.add('facets__bubble');
   }
 
   /**

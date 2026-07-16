@@ -6,6 +6,8 @@
 
 {% render 'quick-add-styles' %}
 {% render 'quick-add-modal-styles' %}
+{% render 'swatch-styles' %}
+{% render 'quantity-selector-styles' %}
 {% render 'variant-picker-styles' %}
 {% render 'buy-buttons-styles' %}
 {% render 'product-badges-styles' %}
@@ -412,7 +414,7 @@
   }
 
   /* Quick add button */
-  .hotspot-dialog[open] {
+  .hotspot-dialog {
     .quick-add {
       display: flex;
       flex-direction: column;
@@ -423,46 +425,45 @@
       z-index: var(--layer-flat);
     }
 
-    .quick-add__button {
+    .quick-add__button.add-to-cart-button {
+      width: calc(var(--button-size-md) - 8px);
       position: relative;
       padding-block: 0;
-      box-shadow: none;
-      align-items: center;
+      padding-inline-end: var(--padding-sm);
       justify-self: flex-end;
       height: fit-content;
-      translate: var(--padding-2xs) 0;
       border: none;
       color: var(--quick-add-foreground, var(--color-foreground));
       background-color: var(--quick-add-background, var(--color-background));
-      overflow: visible;
       pointer-events: all;
       opacity: 1;
-      animation: elementSlideInTop var(--animation-speed) var(--animation-easing);
-      transition-property: translate;
-      transition-duration: var(--animation-speed);
-      transition-timing-function: var(--ease-out-cubic);
+      overflow: hidden;
+      outline: 2px solid transparent;
 
-      &::before {
-        content: '';
-        position: absolute;
-        inset: -2px;
-        border-radius: calc(50px + 2px);
-        border: 2px solid transparent;
-        pointer-events: none;
-        transition-property: border-color;
-        transition-duration: 0s;
-        transition-timing-function: var(--ease-out-cubic);
+      @media (prefers-reduced-motion: no-preference) {
+        transition: width var(--animation-speed) var(--ease-out-cubic),
+          outline-color var(--animation-speed) var(--ease-out-cubic) var(--animation-speed-slow);
       }
 
-      &:is(:hover, :focus, :focus-visible, :active) {
-        translate: 0 0;
-        transition-delay: var(--animation-speed-slow);
+      &:is(:hover, :active) {
+        outline-color: rgb(var(--color-foreground-rgb) / var(--opacity-15));
+      }
 
-        &::before {
-          border-color: rgb(var(--color-foreground-rgb) / var(--opacity-15));
-          transition-duration: var(--animation-speed);
-          transition-delay: var(--animation-speed-slow);
-        }
+      &:focus-visible {
+        outline-color: currentcolor;
+        transition-delay: 0s;
+      }
+    }
+
+    .quick-add__button.add-to-cart-button[data-added='true'] {
+      color: transparent;
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    .hotspot-dialog {
+      .quick-add__button:is(:hover, :focus-visible) {
+        width: max-content;
       }
     }
   }

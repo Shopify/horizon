@@ -2,14 +2,14 @@
 
 {% capture children %}
   {% unless product == blank %}
-    <div
-      class="product-badges product-badges--{{ settings.badge_position }}"
-      style="
-        --badge-border-radius: {{ settings.badge_corner_radius }}px;
-        --badge-font-family: var(--font-{{ settings.badge_font_family }}--family); --badge-font-weight: var(--font-{{ settings.badge_font_family }}--weight); --badge-text-transform: {{ settings.badge_text_transform }};
-      "
-    >
-      {%- if product.available == false or product.compare_at_price > product.price -%}
+    {%- if product.available == false or product.compare_at_price > product.price -%}
+      <div
+        class="product-badges product-badges--{{ settings.badge_position }}"
+        style="
+            --badge-border-radius: {{ settings.badge_corner_radius }}px;
+            --badge-font-family: var(--font-{{ settings.badge_font_family }}--family); --badge-font-weight: var(--font-{{ settings.badge_font_family }}--weight); --badge-text-transform: {{ settings.badge_text_transform }};
+        "
+      >
         <div
           class="
             product-badges__badge product-badges__badge--rectangle
@@ -22,9 +22,9 @@
             {{ 'content.product_badge_sale' | t }}
           {%- endif -%}
         </div>
-      {%- endif -%}
-    </div>
-    {%  if settings.quick_add or settings.mobile_quick_add %}
+      </div>
+    {%- endif -%}
+    {% if product.available and settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add', product: product, section_id: section.id %}
     {% endif %}
   {% endunless %}
@@ -41,6 +41,7 @@
   {% endif %}
 </div>
 
+{% render 'product-card-gallery-zoom-details-styles' %}
 {% render 'product-badges-styles' %}
 
 {% schema %}

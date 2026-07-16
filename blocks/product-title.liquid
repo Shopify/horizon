@@ -7,7 +7,7 @@
   <a
     class="contents user-select-text"
     ref="productTitleLink"
-    href="{{ closest.product.selected_or_first_available_variant.url }}"
+    href="{{ closest.product.url }}"
   >
     {% render 'text', fallback_text: product_title, block: block %}
   </a>

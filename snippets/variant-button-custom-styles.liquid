@@ -32,7 +32,8 @@
     {% render 'resolve-custom-hover',
       base_bg: effective_background_color,
       base_text: effective_text_color,
-      base_border: effective_border_color
+      base_border: effective_border_color,
+      hover_text: effective_text_color
     %}
   {%- endcapture -%}
   {%- assign u_parts = u_hover | strip | split: '||' -%}
@@ -55,7 +56,8 @@
     {% render 'resolve-custom-hover',
       base_bg: effective_selected_background_color,
       base_text: effective_selected_text_color,
-      base_border: effective_selected_border_color
+      base_border: effective_selected_border_color,
+      hover_text: effective_selected_text_color
     %}
   {%- endcapture -%}
   {%- assign s_parts = s_hover | strip | split: '||' -%}
@@ -83,6 +85,7 @@
     .variant-picker--custom-{{ block_id }} {
       --color-selected-variant-background: rgb({{ effective_selected_background_color.rgba }});
       --color-selected-variant-text: rgb({{ effective_selected_text_color.rgba }});
+      --color-selected-variant-text-rgb: {{ effective_selected_text_color.rgb }};
       --color-selected-variant-border: rgb({{ effective_selected_border_color.rgba }});
       --color-selected-variant-hover-background: {{ s_effective_hover_bg }};
       --color-selected-variant-hover-text: {{ s_effective_hover_text }};

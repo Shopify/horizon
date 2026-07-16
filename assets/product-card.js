@@ -108,19 +108,54 @@ export class ProductCard extends ProductCardLink {
   requiredRefs = ['productCardLink'];
 
   get productPageUrl() {
-    return this.refs.productCardLink.href;
+    const link = this.refs.productCardLink;
+    if (!link.getAttribute('href')) return '';
+
+    const url = new URL(link.href);
+    const variantOverride = this.#getProductPageVariantOverride();
+
+    if (variantOverride?.action === 'set') {
+      url.searchParams.set('variant', variantOverride.variantId);
+    } else if (variantOverride?.action === 'remove') {
+      url.searchParams.delete('variant');
+    }
+
+    return url.toString();
   }
 
   /**
-   * Gets the currently selected variant ID from the product card
-   * @returns {string | null} The variant ID or null if none selected
+   * Gets the user-selected variant ID that still needs to be synced from product-card state.
+   * @returns {string | null} Variant ID or null.
    */
   getSelectedVariantId() {
+    const variantOverride = this.#getProductPageVariantOverride();
+    return variantOverride?.action === 'set' ? variantOverride.variantId : null;
+  }
+
+  /**
+   * Gets the user-selected variant override for product-page URLs.
+   * @returns {{ action: 'set', variantId: string } | { action: 'remove' } | null}
+   */
+  #getProductPageVariantOverride() {
+    const link = this.refs.productCardLink;
+    if (link.getAttribute('href')) {
+      const url = new URL(link.href);
+      if (url.searchParams.has('variant')) return null;
+    }
+
+    const variantId = this.#getCheckedVariantId();
+    if (variantId === undefined) return null;
+
+    return variantId ? { action: 'set', variantId } : { action: 'remove' };
+  }
+
+  /** @returns {string | undefined} */
+  #getCheckedVariantId() {
     const checkedInput = /** @type {HTMLInputElement | null} */ (
       this.querySelector('input[type="radio"]:checked[data-variant-id]')
     );
 
-    return checkedInput?.dataset.variantId || null;
+    return checkedInput?.dataset.variantId;
   }
 
   /**
@@ -159,6 +194,7 @@ export class ProductCard extends ProductCardLink {
 
     const link = this.refs.productCardLink;
     if (!(link instanceof HTMLAnchorElement)) throw new Error('Product card link not found');
+
     this.#handleQuickAdd();
 
     this.addEventListener(StandardEvents.productSelect, this.#handleProductSelect);
@@ -204,9 +240,14 @@ export class ProductCard extends ProductCardLink {
    */
   #handleProductSelect = (event) => {
     // Update variant picker when variant:selected event fires
-    const { optionValueId } = event.detail ?? {};
+    const { optionValueId, variantId, connectedProductUrl } = event.detail ?? {};
     if (optionValueId && event.target !== this.variantPicker) {
       this.variantPicker?.updateSelectedOption(optionValueId);
+    }
+
+    // Empty string removes ?variant=.
+    if (typeof variantId === 'string') {
+      this.applyVariantToLinks(variantId, typeof connectedProductUrl === 'string' ? connectedProductUrl : undefined);
     }
 
     // Wait for variant:update data via promise
@@ -219,7 +260,7 @@ export class ProductCard extends ProductCardLink {
         // Update price, availability, and URL based on new variant
         this.updatePrice(html);
         this.#isUnavailableVariantSelected(html);
-        this.#updateProductUrl(html);
+        this.#updateProductUrl(html, typeof variantId === 'string' ? variantId : undefined);
         this.refs.quickAdd?.fetchProductPage(this.productPageUrl);
 
         if (event.target !== this.variantPicker) {
@@ -278,8 +319,9 @@ export class ProductCard extends ProductCardLink {
   /**
    * Updates the product URL based on the variant update.
    * @param {Document} html - The parsed HTML document with updated variant data.
+   * @param {string} [intendedVariantId] - User-intended variant.
    */
-  #updateProductUrl(html) {
+  #updateProductUrl(html, intendedVariantId) {
     const responseProductCard = html.querySelector('product-card');
     const anchorElement = responseProductCard?.querySelector('a');
     const featuredMediaUrl = responseProductCard?.getAttribute('data-featured-media-url');
@@ -293,16 +335,51 @@ export class ProductCard extends ProductCardLink {
       // If the href is empty, don't update the product URL eg: unavailable variant
       if (anchorElement.getAttribute('href')?.trim() === '') return;
 
-      const productUrl = anchorElement.href;
-      const { productCardLink, productTitleLink, cardGalleryLink } = this.refs;
+      const responseUrl = new URL(anchorElement.href);
+      this.#updateLinks({
+        pathname: responseUrl.pathname,
+        variantId: intendedVariantId ?? responseUrl.searchParams.get('variant'),
+      });
+    }
+  }
 
-      productCardLink.href = productUrl;
-      if (cardGalleryLink instanceof HTMLAnchorElement) {
-        cardGalleryLink.href = productUrl;
+  /**
+   * Applies the given variant ID to the variant param of every link in the card.
+   * Public so the components, namely swatches component can call it.
+   * @param {string | null} variantId - The variant ID to set, or null to remove it.
+   * @param {string} [productUrl] - Product URL path to adopt.
+   */
+  applyVariantToLinks(variantId, productUrl) {
+    let pathname;
+    if (productUrl) {
+      try {
+        pathname = new URL(productUrl, window.location.origin).pathname;
+      } catch (error) {
+        console.warn('[product-card] Invalid product URL:', productUrl, error);
+        return;
       }
-      if (productTitleLink instanceof HTMLAnchorElement) {
-        productTitleLink.href = productUrl;
-      }
+    }
+
+    this.#updateLinks({ pathname, variantId });
+  }
+
+  /**
+   * Updates every link in the card (overlay, gallery, and title) in place, preserving
+   * each link's existing query params so tracking params stay in sync.
+   * Always sets (or removes) the `variant` param; optionally adopts a new pathname (for combined-listing child navigation).
+   * @param {object} options
+   * @param {string} [options.pathname] - New pathname to adopt (combined-listing child navigation). Omit to keep each link's current path.
+   * @param {string | null} [options.variantId] - Variant ID to set, or null/undefined to remove it.
+   */
+  #updateLinks({ pathname, variantId }) {
+    const { productCardLink, productTitleLink, cardGalleryLink } = this.refs;
+    for (const linkEl of [productCardLink, cardGalleryLink, productTitleLink]) {
+      if (!(linkEl instanceof HTMLAnchorElement) || !linkEl.href) continue;
+      const url = new URL(linkEl.href);
+      if (pathname) url.pathname = pathname;
+      if (variantId) url.searchParams.set('variant', variantId);
+      else url.searchParams.delete('variant');
+      linkEl.href = url.toString();
     }
   }
 
@@ -535,38 +612,8 @@ if (!customElements.get('product-card')) {
  * @extends {VariantPicker<SwatchesRefs>}
  */
 class SwatchesVariantPickerComponent extends VariantPicker {
-  connectedCallback() {
-    super.connectedCallback();
-
-    // Cache the parent product card
-    this.parentProductCard = this.closest('product-card');
-
-    // Listen for variant updates to apply pending URL changes
-    this.addEventListener(StandardEvents.productSelect, this.#handleCardProductSelect.bind(this));
-  }
-
   /**
-   * Updates the card URL when a variant is selected.
-   * @param {ProductSelectEvent} event
-   */
-  #handleCardProductSelect(event) {
-    // Handle URL update via promise resolution
-    event.promise
-      .then(() => {
-        if (this.pendingVariantId && this.parentProductCard instanceof ProductCard) {
-          const currentUrl = new URL(this.parentProductCard.refs.productCardLink.href);
-          currentUrl.searchParams.set('variant', this.pendingVariantId);
-          this.parentProductCard.refs.productCardLink.href = currentUrl.toString();
-          this.pendingVariantId = null;
-        }
-      })
-      .catch((error) => {
-        if (error?.name !== 'AbortError') console.warn('[product-card] Event promise rejected:', error);
-      });
-  }
-
-  /**
-   * Override the variantChanged method to handle unavailable swatches with available alternatives.
+   * Handles card swatch changes.
    * @param {Event} event - The variant change event.
    */
   variantChanged(event) {
@@ -575,34 +622,21 @@ class SwatchesVariantPickerComponent extends VariantPicker {
     // Check if this is a swatch input
     const isSwatchInput = event.target instanceof HTMLInputElement && event.target.name?.includes('-swatch');
     const clickedSwatch = event.target;
-    const availableCount = parseInt(clickedSwatch.dataset.availableCount || '0');
+    const hasAvailableVariant = clickedSwatch.dataset.hasAvailableVariant === 'true';
     const firstAvailableVariantId = clickedSwatch.dataset.firstAvailableOrFirstVariantId;
 
-    // For swatch inputs, check if we need special handling
-    if (isSwatchInput && availableCount > 0 && firstAvailableVariantId) {
-      // If this is an unavailable variant but there are available alternatives
-      // Prevent the default handling
+    // Request the first available variant for this swatch.
+    if (isSwatchInput && hasAvailableVariant && firstAvailableVariantId) {
       event.stopPropagation();
-
-      // Update the selected option visually
       this.updateSelectedOption(clickedSwatch);
 
-      // Build request URL with the first available variant
-      const productUrl = this.dataset.productUrl?.split('?')[0];
+      const optionValueId = clickedSwatch.dataset.optionValueId || '';
+      const connectedProductUrl = clickedSwatch.dataset.connectedProductUrl || '';
+      const requestUrl = this.buildRequestUrl(clickedSwatch, 'product-card', [optionValueId]);
 
-      if (!productUrl) return;
-
-      const url = new URL(productUrl, window.location.origin);
-      url.searchParams.set('variant', firstAvailableVariantId);
-      url.searchParams.set('section_id', 'section-rendering-product-card');
-
-      const requestUrl = url.href;
-
-      // Store the variant ID we want to apply to the URL
-      this.pendingVariantId = firstAvailableVariantId;
-
-      // Use parent's fetch method
-      this.fetchUpdatedSection(requestUrl);
+      this.fetchUpdatedSection(requestUrl, {
+        detail: { optionValueId, variantId: firstAvailableVariantId, connectedProductUrl },
+      });
       return;
     }
 

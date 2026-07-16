@@ -14,6 +14,9 @@
   @param {string} [labelRef] - label ref attribute for use with component framework
   @param {boolean} [autofocus] - whether the input should be autofocused
 {%- enddoc -%}
+
+{% render 'checkbox-styles' %}
+
 <div
   class="checkbox{% if disabled %} checkbox--disabled{% endif %}"
   {{ events }}

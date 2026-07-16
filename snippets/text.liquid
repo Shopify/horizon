@@ -13,9 +13,11 @@
   assign visible_text = plain_text | strip_html
   assign text_width = width | default: block_settings.width
 
-  if block_settings.font_size contains 'heading-lg' or block_settings.font_size contains 'heading-xl'
+  assign font_size_value = block_settings.font_size | split: 'rem' | first | times: 1.0
+
+  if block_settings.font_size contains 'heading-lg' or block_settings.font_size contains 'heading-xl' or font_size_value >= 3
     assign type = 'display'
-  elsif block_settings.font_size contains 'heading'
+  elsif block_settings.font_size contains 'heading' or font_size_value >= 1.25
     assign type = 'heading'
   else
     assign type = 'body'

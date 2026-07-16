@@ -16,7 +16,7 @@
     when 'grid'
       assign classes = 'resource-list--grid'
     when 'carousel'
-      assign classes = 'resource-list--carousel'
+      assign classes = 'resource-list__carousel'
   endcase
 
   if block_settings.background_color != blank
@@ -30,9 +30,12 @@
 
 {% render 'quick-add-styles' %}
 {% render 'quick-add-modal-styles' %}
+{% render 'swatch-styles' %}
+{% render 'quantity-selector-styles' %}
 {% render 'variant-picker-styles' %}
 {% render 'product-badges-styles' %}
 {% render 'resource-list-styles' %}
+{% render 'product-recommendations-styles' %}
 <product-recommendations
   id="product-recommendations-{{ block.id }}"
   class="product-recommendations"

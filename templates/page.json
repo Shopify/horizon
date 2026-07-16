@@ -14,14 +14,14 @@
       "blocks": {
         "heading": {
           "type": "text",
-          "name": "Title",
+          "name": "t:names.title",
           "settings": {
             "text": "<h1>{{ closest.page.title }}</h1>",
             "width": "100%",
             "max_width": "normal",
             "alignment": "left",
             "type_preset": "h2",
-            "font": "var(--font-primary--family)",
+            "font": "var(--font-body--family)",
             "font_size": "",
             "line_height": "normal",
             "letter_spacing": "normal",

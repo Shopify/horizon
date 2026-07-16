@@ -76,55 +76,40 @@
   {% if has_volume_pricing %}
     {% comment %} Volume pricing display {% endcomment %}
     {% if show_compare_price %}
-      <span class="price-item__group">
+      <span class="price-item__group compare-at-price">
         <span class="visually-hidden">{{ 'content.price_regular' | t }}&nbsp;</span>
-        <span class="compare-at-price">{{- compare_at_price -}}</span>
+        {{- compare_at_price -}}
       </span>
     {% endif %}
-    <span class="price-item__group">
+    <span class="price-item__group price">
       <span class="visually-hidden">{{ 'content.price_range' | t }}&nbsp;</span>
-      <span class="price">{{ price_min }} - {{ price_max }}</span>
+      {{ price_min }} - {{ price_max }}
     </span>
   {% else %}
-    {% comment %} Standard pricing display {% endcomment %}
-    <div
-      class="
-        price__regular
-        {% if show_compare_price %}
-          price__hidden
-        {% endif %}
-      "
-    >
-      <span class="price">{{ price | default: '&nbsp;' }}</span>
-    </div>
-    <div
-      class="
-        price__sale
-        {% unless show_compare_price %}
-          price__hidden
-        {% endunless %}
-      "
-    >
+    {% comment %} Standard pricing display: render only the active branch (regular or sale) {% endcomment %}
+    {% if show_compare_price %}
       {% if show_sale_price_first %}
-        <span class="price-item__group">
+        <span class="price-item__group price">
           <span class="visually-hidden">{{ 'content.price_sale' | t }}&nbsp;</span>
-          <span class="price-item--sale price">{{ price | default: '&nbsp;' }}</span>
+          {{ price | default: '&nbsp;' }}
         </span>
-        <span class="price-item__group">
+        <span class="price-item__group price-item--regular compare-at-price">
           <span class="visually-hidden">{{ 'content.price_regular' | t }}&nbsp;</span>
-          <span class="price-item--regular compare-at-price">{{- compare_at_price -}}</span>
+          {{- compare_at_price -}}
         </span>
       {% else %}
-        <span class="price-item__group">
+        <span class="price-item__group price-item--regular compare-at-price">
           <span class="visually-hidden">{{ 'content.price_regular' | t }}&nbsp;</span>
-          <span class="price-item--regular compare-at-price">{{- compare_at_price -}}</span>
+          {{- compare_at_price -}}
         </span>
-        <span class="price-item__group">
+        <span class="price-item__group price">
           <span class="visually-hidden">{{ 'content.price_sale' | t }}&nbsp;</span>
-          <span class="price-item--sale price">{{ price | default: '&nbsp;' }}</span>
+          {{ price | default: '&nbsp;' }}
         </span>
       {% endif %}
-    </div>
+    {% else %}
+      <span class="price">{{ price | default: '&nbsp;' }}</span>
+    {% endif %}
   {% endif %}
   {%- if selected_variant.unit_price and show_unit_price %}
     {%- liquid

@@ -11,6 +11,8 @@
   {% render 'cart-products', force_empty: true %}
 {% enddoc %}
 
+{% render 'cart-typography-styles' %}
+
 {% liquid
   assign block_settings = block.settings
 %}
@@ -866,18 +868,6 @@
     }
   }
 
-  .cart-primary-typography {
-    font-family: var(--cart-primary-font-family);
-    font-style: var(--cart-primary-font-style);
-    font-weight: var(--cart-primary-font-weight);
-  }
-
-  .cart-secondary-typography {
-    font-family: var(--cart-secondary-font-family);
-    font-style: var(--cart-secondary-font-style);
-    font-weight: var(--cart-secondary-font-weight);
-  }
-
   .cart__ctas {
     width: 100%;
     display: grid;
@@ -893,6 +883,7 @@
   shopify-accelerated-checkout-cart {
     --shopify-accelerated-checkout-inline-alignment: center;
     --shopify-accelerated-checkout-button-border-radius: var(--style-border-radius-buttons-primary);
+    --shopify-accelerated-checkout-button-block-size: var(--height-buy-buttons);
     --shopify-accelerated-checkout-row-gap: var(--checkout-button-gap, 10px);
   }
 
