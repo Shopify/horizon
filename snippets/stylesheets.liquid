@@ -1,2 +1,4 @@
 {{ 'overflow-list.css' | asset_url | preload_tag: as: 'style' }}
-{{ 'base.css' | asset_url | stylesheet_tag: preload: true }}
+<link rel="preload" href="{{ 'base.css' | asset_url }}" as="style">
+<link rel="stylesheet" href="{{ 'base.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>{{ 'base.css' | asset_url | stylesheet_tag }}</noscript>
