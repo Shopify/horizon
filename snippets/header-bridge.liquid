@@ -1,0 +1,53 @@
+{% comment %}
+  Brings the header nav to the Mionas design system's label-lg role, using tokens from
+  assets/design-tokens.css.
+
+  Rendered from theme.liquid AFTER design-system-bridge.
+
+  WHY THIS DECLARES VARIABLES RATHER THAN font-size/color:
+  blocks/_header-menu.liquid emits its {% style %} in the BODY, i.e. later in the document
+  than this snippet, which renders in <head>. At equal specificity those rules would win.
+  Horizon sets its --menu-top-level-* variables inline on the parent <nav class="menu-list">,
+  so the link inherits them; declaring the same variables directly on .menu-list__link beats
+  inheritance regardless of stylesheet order. letter-spacing is the one exception - Horizon
+  derives no variable for it and sets no competing rule, so it is set as a property.
+
+  WHY ONLY THE -desktop SIZE VARIABLE:
+  --menu-top-level-font-size is shared with the mobile drawer, which deliberately renders at
+  --menu-font-2xl--size (snippets/menu-font-styles.liquid:17). Overriding it would shrink the
+  drawer's nav to 15px. Desktop links read --menu-top-level-font-size-desktop instead, inside a
+  min-width:750px query (blocks/_header-menu.liquid:323).
+
+  The two are otherwise cleanly separated: .menu-list__link does not appear in
+  header-drawer.liquid at all (the drawer uses .menu-drawer__menu-item--mainlist), so the
+  declarations above cannot leak into mobile.
+
+  WEIGHT AND FAMILY ARE DELIBERATELY ABSENT:
+  they come from the subheading font slot (type_font_primary_link in header-group.json), so
+  Shopify keeps hosting and preloading a real Archivo 600 face. Archivo 500 is never loaded, so
+  a CSS font-weight:500 would match the 400 face and render lighter than intended.
+{% endcomment %}
+{% style %}
+  /* Top-level nav links -> label-lg (15 / 20 / 0.02em). Weight 600 comes from the slot. */
+  .menu-list__link {
+    --menu-top-level-font-size-desktop: var(--text-role-label-lg-font-size);
+    --menu-top-level-font-line-height: var(--text-role-label-lg-line-height);
+
+    letter-spacing: var(--text-role-label-lg-letter-spacing);
+  }
+
+  /* Horizon has no menu hover-colour setting. It applies
+     `color: var(--menu-top-level-font-color)` on :hover, so re-pointing the variable on the
+     hovered element is enough - no need to out-specify its colour rule. */
+  .menu-list__link:hover,
+  .menu-list__link:focus {
+    --menu-top-level-font-color: var(--color-blau-sitges);
+  }
+
+  /* Drawer main-list items share the nav's tracking. Size is deliberately untouched: the
+     drawer renders at --menu-font-2xl--size by Horizon's design and the prototype has no
+     mobile reference to match. */
+  .menu-drawer__menu-item--mainlist {
+    letter-spacing: var(--text-role-label-lg-letter-spacing);
+  }
+{% endstyle %}
