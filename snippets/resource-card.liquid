@@ -19,7 +19,7 @@
     assign ratio = image_aspect_ratio
   endif
   assign image_width = image_width | default: 1200
-  assign widths = '240, 352, 832, 1200'
+  assign widths = '165, 360, 535, 750, 1070, 1500'
   assign image_sizes = image_sizes | default: 'auto'
   assign single_thumbnail_collection = false
   if resource_type == 'collection' and collection_thumbnails != 'multiple'
