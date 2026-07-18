@@ -11,7 +11,6 @@
   "sections": {
     "hero": {
       "type": "section",
-      "name": "Hero",
       "blocks": {
         "split_hero": {
           "type": "split-hero",
@@ -25,72 +24,159 @@
             "cta_link": "/pages/empresas#pressupost",
             "secondary_label": "WhatsApp",
             "secondary_link": ""
-          }
+          },
+          "blocks": {}
         }
       },
-      "block_order": ["split_hero"],
+      "block_order": [
+        "split_hero"
+      ],
+      "name": "Hero",
       "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
         "section_width": "full-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
         "padding-block-start": 0,
         "padding-block-end": 0
       }
     },
     "ofertes": {
       "type": "section",
-      "name": "Què fem",
       "blocks": {
         "offer_events": {
           "type": "corporate-offer-card",
           "settings": {
             "heading": "Esdeveniments i càtering",
-            "description": "Eventos, convenciones"
-          }
+            "description": "Eventos, convenciones",
+            "link": ""
+          },
+          "blocks": {}
         },
         "offer_gifts": {
           "type": "corporate-offer-card",
           "settings": {
             "heading": "Regals d'empresa",
-            "description": "Logo cookies, lotes Nadal, welcome kits"
-          }
+            "description": "Logo cookies, lotes Nadal, welcome kits",
+            "link": ""
+          },
+          "blocks": {}
         },
         "offer_wholesale": {
           "type": "corporate-offer-card",
           "settings": {
             "heading": "Oficines i wholesale",
-            "description": "Subscripciones, cafés, hoteles"
-          }
+            "description": "Subscripciones, cafés, hoteles",
+            "link": ""
+          },
+          "blocks": {}
         },
         "offer_teambuilding": {
           "type": "corporate-offer-card",
           "settings": {
             "heading": "Team building",
-            "description": "Workshops de cookies"
-          }
+            "description": "Workshops de cookies",
+            "link": ""
+          },
+          "blocks": {}
         }
       },
-      "block_order": ["offer_events", "offer_gifts", "offer_wholesale", "offer_teambuilding"],
+      "block_order": [
+        "offer_events",
+        "offer_gifts",
+        "offer_wholesale",
+        "offer_teambuilding"
+      ],
+      "name": "Què fem",
       "settings": {
         "content_direction": "row",
         "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
         "vertical_alignment": "flex-start",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
         "gap": 24,
         "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
         "padding-block-start": 32,
         "padding-block-end": 32
       }
     },
     "pressupost": {
       "type": "section",
-      "name": "Pressupost",
       "blocks": {
         "left_column": {
           "type": "group",
           "settings": {
             "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 24,
             "width": "custom",
             "custom_width": 50,
             "width_mobile": "fill",
-            "gap": 24
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "background_media": "none",
+            "background_color": "",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
           },
           "blocks": {
             "credibility_heading": {
@@ -98,46 +184,82 @@
               "settings": {
                 "text": "<h2>Com treballem</h2>",
                 "width": "100%",
+                "max_width": "normal",
                 "alignment": "left",
-                "type_preset": "h3"
-              }
+                "type_preset": "h3",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "text_color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
             },
             "figure_response": {
               "type": "corporate-figure",
               "settings": {
                 "figure": "24h",
                 "caption": "respuesta"
-              }
+              },
+              "blocks": {}
             },
             "step_1": {
               "type": "corporate-figure",
               "settings": {
                 "figure": "1",
                 "caption": "Cuéntanos qué necesitas"
-              }
+              },
+              "blocks": {}
             },
             "step_2": {
               "type": "corporate-figure",
               "settings": {
                 "figure": "2",
                 "caption": "Propuesta y precio en 24h"
-              }
+              },
+              "blocks": {}
             },
             "step_3": {
               "type": "corporate-figure",
               "settings": {
                 "figure": "3",
                 "caption": "Producción y entrega coordinada"
-              }
+              },
+              "blocks": {}
             },
             "recurring_note": {
               "type": "text",
               "settings": {
                 "text": "<p>Recurrentes: factura con IVA desglosado, pedidos periódicos y persona de contacto fija.</p>",
                 "width": "100%",
+                "max_width": "normal",
                 "alignment": "left",
-                "type_preset": "rte"
-              }
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "text_color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
             }
           },
           "block_order": [
@@ -151,23 +273,59 @@
         },
         "quote_form": {
           "type": "corporate-quote-form",
-          "settings": {}
+          "settings": {
+            "heading": "Formulari de pressupost",
+            "label_service": "Què necessites?",
+            "select_placeholder": "Selecciona…",
+            "service_options": "Esdeveniments i càtering\nRegals d'empresa\nSubscripció / wholesale\nTeam building",
+            "label_company": "Empresa",
+            "label_email": "Email",
+            "label_phone": "Teléfono (opcional)",
+            "label_volume": "Fecha / volumen",
+            "volume_placeholder": "p.ej. 150 uds, 12 dic",
+            "submit_label": "Demanar pressupost",
+            "response_note": "Respuesta en 24h laborables",
+            "success_text": "Hem rebut la teva sol·licitud. Respuesta en 24h laborables."
+          },
+          "blocks": {}
         }
       },
-      "block_order": ["left_column", "quote_form"],
+      "block_order": [
+        "left_column",
+        "quote_form"
+      ],
+      "name": "Pressupost",
       "settings": {
         "content_direction": "row",
         "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
         "vertical_alignment": "flex-start",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
         "gap": 40,
         "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
         "padding-block-start": 32,
         "padding-block-end": 32
       }
     },
     "contacte": {
       "type": "section",
-      "name": "Contacte",
       "blocks": {
         "contact_text": {
           "type": "text",
@@ -176,28 +334,82 @@
             "width": "100%",
             "max_width": "narrow",
             "alignment": "center",
-            "type_preset": "rte"
-          }
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "text_color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
         },
         "contact_cta": {
           "type": "button",
           "settings": {
             "label": "WhatsApp",
             "link": "",
-            "style_class": "button-secondary"
-          }
+            "open_in_new_tab": false,
+            "style_class": "button-secondary",
+            "custom_button_background": "{{ settings.color_palette.foreground }}",
+            "custom_button_text": "{{ settings.color_palette.background }}",
+            "custom_button_border": "{{ settings.color_palette.background }}",
+            "link_text_color": "",
+            "width": "fit-content",
+            "custom_width": 100,
+            "width_mobile": "fit-content",
+            "custom_width_mobile": 100
+          },
+          "blocks": {}
         }
       },
-      "block_order": ["contact_text", "contact_cta"],
+      "block_order": [
+        "contact_text",
+        "contact_cta"
+      ],
+      "name": "Contacte",
       "settings": {
         "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
         "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
         "gap": 16,
         "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
         "padding-block-start": 32,
         "padding-block-end": 64
       }
     }
   },
-  "order": ["hero", "ofertes", "pressupost", "contacte"]
+  "order": [
+    "hero",
+    "ofertes",
+    "pressupost",
+    "contacte"
+  ]
 }
