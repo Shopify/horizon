@@ -1,0 +1,154 @@
+{%- comment -%}
+  One B2B offer: image, heading, description, optional link.
+
+  Four instances sit in the corporate page's "Que hacemos" section. The card becomes an <a> only
+  when a link is set, so an unlinked card stays a plain <div> rather than an empty anchor.
+{%- endcomment -%}
+{% liquid
+  assign block_settings = block.settings
+  assign card_alt = block_settings.image.alt | default: block_settings.heading
+%}
+
+{% capture card_inner %}
+  {%- if block_settings.image != blank -%}
+    {{
+      block_settings.image
+      | image_url: width: 1200
+      | image_tag:
+        widths: '240, 352, 540, 832, 1200',
+        sizes: '(min-width: 750px) 25vw, 100vw',
+        class: 'corporate-offer-card__image',
+        alt: card_alt
+    }}
+  {%- else -%}
+    <div class="corporate-offer-card__placeholder">
+      {{ 'detailed-apparel-1' | placeholder_svg_tag: 'corporate-offer-card__placeholder-svg' }}
+    </div>
+  {%- endif -%}
+
+  <div class="corporate-offer-card__body">
+    {%- if block_settings.heading != blank -%}
+      <h3 class="corporate-offer-card__heading">{{ block_settings.heading }}</h3>
+    {%- endif -%}
+    {%- if block_settings.description != blank -%}
+      <p class="corporate-offer-card__description">{{ block_settings.description }}</p>
+    {%- endif -%}
+  </div>
+{% endcapture %}
+
+{%- if block_settings.link == blank -%}
+  <div class="corporate-offer-card" {{ block.shopify_attributes }}>
+    {{ card_inner }}
+  </div>
+{%- else -%}
+  <a
+    href="{{ block_settings.link }}"
+    class="corporate-offer-card corporate-offer-card--linked"
+    {{ block.shopify_attributes }}
+  >
+    {{ card_inner }}
+  </a>
+{%- endif -%}
+
+{% stylesheet %}
+  .corporate-offer-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: var(--card-base-background);
+    border: var(--card-base-border-width) solid var(--card-base-border-color);
+    border-radius: var(--card-base-radius);
+    box-shadow: var(--card-base-shadow);
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+  }
+
+  @media screen and (min-width: 750px) {
+    .corporate-offer-card {
+      /* Row-direction sections give custom blocks no flex basis of their own (no size-style
+         class here), so with unequal content the four cards size to their content and come
+         out uneven. flex: 1 1 0 shares the row evenly; min-width: 0 lets a card shrink below
+         its content's intrinsic width. */
+      flex: 1 1 0;
+      min-width: 0;
+
+      /* The row section aligns items flex-start (no cross-axis stretch), so the card opts
+         itself into stretch to get equal heights across the four cards. */
+      align-self: stretch;
+    }
+  }
+
+  .corporate-offer-card__image,
+  .corporate-offer-card__placeholder {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .corporate-offer-card__placeholder-svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .corporate-offer-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+    padding: var(--card-base-padding);
+  }
+
+  .corporate-offer-card__heading {
+    margin: 0;
+  }
+
+  .corporate-offer-card__description {
+    margin: 0;
+    color: var(--color-neutral-400);
+    font-size: var(--font-size-xs);
+    line-height: 1.5;
+  }
+
+  .corporate-offer-card--linked:hover .corporate-offer-card__heading {
+    text-decoration: underline;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "B2B offer card",
+  "tag": null,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Esdeveniments i càtering"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description",
+      "default": "Eventos, convenciones"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "t:settings.link",
+      "info": "Optional. The whole card becomes a link when set."
+    }
+  ],
+  "presets": [
+    {
+      "name": "B2B offer card",
+      "category": "t:categories.basic"
+    }
+  ]
+}
+{% endschema %}

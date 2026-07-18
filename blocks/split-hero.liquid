@@ -1,0 +1,382 @@
+{%- comment -%}
+  A full-bleed colour panel: copy on one side, an image on the other.
+
+  Replaces the corporate page's native hero + text + button stack, which cannot express the
+  prototype's blue panel, eyebrow stamp, inverse button or edge-to-edge image. See
+  docs/superpowers/specs/2026-07-17-split-hero-block-design.md.
+
+  Named for the layout, not the page, so it ports: the same panel is the Home hero (image left,
+  beige) and the Home campaign band. It deliberately does NOT serve Regalos, whose split swaps the
+  CTAs for an icon row and boxes the image -- see the spec, "Regalos is a split, but is not covered
+  by v1".
+
+  MUST sit in a `section` (sections/section.liquid) set to section_width: full-width with zero block
+  padding. This block owns the panel, the grid and the inner max-width; the section owns only the
+  bleed, via `.section--full-width > * { grid-column: 1 / -1 }` in base.css. sections/hero.liquid is
+  the wrong wrapper -- it is a background-media hero that hardcodes its own full-width container and
+  applies section_width to an inner content wrapper instead.
+{%- endcomment -%}
+{% liquid
+  assign block_settings = block.settings
+  assign media_alt = block_settings.image.alt | default: block_settings.heading
+%}
+
+<div
+  class="split-hero split-hero--{{ block_settings.panel_color }} split-hero--media-{{ block_settings.media_position }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="split-hero__inner">
+    <div class="split-hero__copy">
+      {%- if block_settings.eyebrow != blank -%}
+        <span class="split-hero__eyebrow">{{ block_settings.eyebrow }}</span>
+      {%- endif -%}
+
+      {%- if block_settings.heading != blank -%}
+        <h1 class="split-hero__heading">{{ block_settings.heading }}</h1>
+      {%- endif -%}
+
+      {%- if block_settings.description != blank -%}
+        <div class="split-hero__description">{{ block_settings.description }}</div>
+      {%- endif -%}
+
+      {%- comment -%}
+        href is omitted, not defaulted to '#', when a link is unset. An <a href="#"> is a live link
+        that scrolls to the top -- on a "WhatsApp" CTA that reads as working and does nothing, which
+        is worse than inert. An <a> with no href is non-focusable and announced as text, which is
+        what an unwired CTA honestly is.
+      {%- endcomment -%}
+      {%- if block_settings.cta_label != blank or block_settings.secondary_label != blank -%}
+        <div class="split-hero__actions">
+          {%- if block_settings.cta_label != blank -%}
+            <a
+              {% if block_settings.cta_link != blank %}
+                href="{{ block_settings.cta_link }}"
+              {% endif %}
+              class="button split-hero__cta"
+            >
+              {{- block_settings.cta_label -}}
+            </a>
+          {%- endif -%}
+
+          {%- if block_settings.secondary_label != blank -%}
+            <a
+              {% if block_settings.secondary_link != blank %}
+                href="{{ block_settings.secondary_link }}"
+              {% endif %}
+              class="split-hero__secondary"
+            >
+              {{- block_settings.secondary_label -}}
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="split-hero__media">
+      {%- if block_settings.image != blank -%}
+        {{
+          block_settings.image
+          | image_url: width: 1600
+          | image_tag:
+            widths: '400, 600, 800, 1200, 1600',
+            sizes: '(min-width: 750px) 50vw, 100vw',
+            class: 'split-hero__image',
+            alt: media_alt
+        }}
+      {%- else -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'split-hero__placeholder' }}
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .split-hero {
+    /* The only two colours in this block that are not tokens, and deliberately so. Neither exists in
+       ../design-system/dist/tokens.flat.css, which assets/design-tokens.css is generated from: the
+       beige panel is the design system's --beige-vainilla (the theme's nearest, --surface-paper, is
+       the visibly greyer gris-calid -- not a substitute), and the eyebrow-on-dark colour exists in no
+       token file anywhere. The prototype inlines the latter because .mi-stamp fixes the eyebrow at
+       stamp-red, which is unreadable on blue.
+
+       Declared once here, not inlined at each use site, so that when ../design-system emits the
+       tokens each becomes a one-line swap. scripts/split-hero-contract.test.mjs enforces the
+       single-declaration rule -- which is also why this comment names the tokens rather than
+       repeating their hex values. See the spec, "The two colours with no token". */
+    --split-hero-panel-beige: #f7f2e3;
+    --split-hero-eyebrow-on-dark: #ffd9b0;
+  }
+
+  /* Horizon does NOT make a block a direct child of .section. The real chain is
+     .section--full-width > .custom-section-content (this is what receives grid-column: 1 / -1)
+     > .spacing-style.layout-panel-flex > the block. That panel is display:flex with
+     flex-direction:column and align-items:flex-start, so in a column flex container align-items
+     governs the HORIZONTAL axis and flex-start means "do not stretch": the block shrink-wraps to its
+     content's max-width (1180px) and pins left, while the section around it is genuinely full-width.
+     The bleed looks broken but the section setting is fine -- the block just never fills it.
+
+     align-self:stretch is a per-item opt-in rather than a specificity fight, and is the same fix
+     blocks/corporate-offer-card.liquid already documents for the same cause. */
+  .split-hero {
+    align-self: stretch;
+  }
+
+  .split-hero--blue {
+    background-color: var(--color-blau-sitges);
+    color: var(--color-white);
+  }
+
+  .split-hero--beige {
+    background-color: var(--split-hero-panel-beige);
+    color: var(--text-color-primary);
+  }
+
+  .split-hero__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    max-width: 1180px;
+    margin-inline: auto;
+  }
+
+  .split-hero__copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-md);
+    padding: 56px 40px;
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  .split-hero__media {
+    position: relative;
+    overflow: hidden;
+    min-height: 300px;
+    background-color: var(--surface-paper);
+    grid-row: 1;
+    grid-column: 2;
+  }
+
+  .split-hero--media-left .split-hero__copy {
+    grid-column: 2;
+  }
+
+  .split-hero--media-left .split-hero__media {
+    grid-column: 1;
+  }
+
+  .split-hero__image,
+  .split-hero__placeholder {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .split-hero__eyebrow {
+    /* Family and weight come from the theme's font settings, so Shopify hosts and preloads the face
+       (settings.type_accent_font is oswald_n6). Size, line-height and tracking come from the design
+       system's stamp role. This split mirrors snippets/design-system-bridge.liquid, which takes
+       size/line-height/letter-spacing from --text-role-* while leaving families to the theme.
+
+       Tracking must NOT spend --letter-spacing-md: upstream Horizon redeclares that name as 0.13em
+       at theme-styles-variables.liquid:156, in an inline <style> that renders after
+       design-tokens.css, so upstream wins and the eyebrow would get 2.6x the design's tracking. The
+       --text-role-* namespace is not declared upstream. See the spec and Task 0. */
+    font-family: var(--font-accent--family);
+    font-weight: var(--font-accent--weight);
+    font-size: var(--text-role-stamp-font-size);
+    line-height: var(--text-role-stamp-line-height);
+    letter-spacing: var(--text-role-stamp-letter-spacing);
+    text-transform: uppercase;
+    color: var(--color-vermell-segell);
+  }
+
+  .split-hero--blue .split-hero__eyebrow {
+    color: var(--split-hero-eyebrow-on-dark);
+  }
+
+  .split-hero__heading {
+    margin: 0;
+    font-size: var(--text-role-hero-font-size);
+    line-height: var(--text-role-hero-line-height);
+    font-weight: var(--text-role-hero-font-weight);
+    letter-spacing: var(--text-role-hero-letter-spacing);
+    text-transform: uppercase;
+    color: inherit;
+  }
+
+  .split-hero__description {
+    font-size: var(--text-role-body-font-size);
+    line-height: var(--text-role-body-line-height);
+    max-width: 420px;
+    color: var(--text-color-secondary);
+  }
+
+  /* richtext wraps its content in <p>, which carries the theme's own margins. */
+  .split-hero__description > * {
+    margin: 0;
+  }
+
+  .split-hero--blue .split-hero__description {
+    color: inherit;
+    opacity: 0.85;
+  }
+
+  .split-hero__actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-2xs);
+  }
+
+  /* The CTA carries the theme's own .button class and overrides only the design system's two inverse
+     colours, so it inherits the 999px radius, --button-size-md-* sizing and disabled state rather
+     than drifting into a button that merely resembles the theme's.
+
+     It sets the VARIABLES the theme's .button reads (base.css:1239,1241), not the raw properties.
+     Overriding the properties directly would sever the indirection the theme's own states run
+     through.
+
+     There is deliberately no hover: the design system defines no hover state at all
+     (src/components/buttons/button.json specifies only `pressed` and `disabled`), so an inverse
+     button that does not repaint on hover IS the design system's behaviour. Winning at (0,3,0) means
+     .button:hover (0,2,0) cannot reassign the variable, which enforces that rather than leaving it
+     to stylesheet load order. Pressed feedback (scale .97 / opacity .92) stays excluded per the
+     standing decision that it is new motion, not a sync. */
+  .split-hero.split-hero--blue .split-hero__cta {
+    --button-background-color: var(--button-inverse-primary-background);
+    --button-color: var(--button-inverse-primary-foreground);
+  }
+
+  .split-hero__secondary {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .split-hero__secondary:hover {
+    text-decoration: underline;
+  }
+
+  @media screen and (max-width: 749px) {
+    .split-hero__inner {
+      grid-template-columns: 1fr;
+    }
+
+    /* The image leads on mobile regardless of media_position: a hero image sitting below its own
+       copy reads as belonging to the next section. */
+    .split-hero__media,
+    .split-hero--media-left .split-hero__media {
+      grid-row: 1;
+      grid-column: 1;
+      min-height: 220px;
+    }
+
+    .split-hero__copy,
+    .split-hero--media-left .split-hero__copy {
+      grid-row: 2;
+      grid-column: 1;
+      padding: 32px 20px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Split hero",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "B2B · pressupost en 24h",
+      "info": "Optional. The stamp line above the heading."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Mionas per a empreses"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Cookies para tus eventos, tus clientes y tu equipo. Facturación, pedidos recurrentes y un contacto fijo.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image"
+    },
+    {
+      "type": "select",
+      "id": "media_position",
+      "label": "Image position",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "right",
+      "info": "The image always leads on mobile, whichever side it takes on desktop."
+    },
+    {
+      "type": "select",
+      "id": "panel_color",
+      "label": "Panel color",
+      "options": [
+        {
+          "value": "blue",
+          "label": "Blau Sitges"
+        },
+        {
+          "value": "beige",
+          "label": "Beige vainilla"
+        }
+      ],
+      "default": "blue",
+      "info": "Sets the panel, text, eyebrow and button colours together, so every pairing stays legible."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "Demanar pressupost",
+      "info": "Optional. The button is omitted when blank."
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Secondary link label",
+      "info": "Optional. Renders as a text link beside the button."
+    },
+    {
+      "type": "url",
+      "id": "secondary_link",
+      "label": "Secondary link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Split hero",
+      "category": "t:categories.basic"
+    }
+  ]
+}
+{% endschema %}

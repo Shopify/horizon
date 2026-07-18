@@ -1,0 +1,67 @@
+{%- comment -%}
+  A figure and its caption.
+
+  Deliberately serves two zones of the corporate page that look different but are structurally
+  identical: credibility stats ("24h" / "respuesta") and process steps ("1" / "Cuentanos que
+  necesitas"). See docs/superpowers/specs/2026-07-17-empresas-b2b-page-design.md,
+  "Why three blocks and not four".
+
+  Layout and gap come from the parent section or group. This block sets neither.
+{%- endcomment -%}
+<div class="corporate-figure" {{ block.shopify_attributes }}>
+  {%- if block.settings.figure != blank -%}
+    <span class="corporate-figure__figure">{{ block.settings.figure }}</span>
+  {%- endif -%}
+  {%- if block.settings.caption != blank -%}
+    <span class="corporate-figure__caption">{{ block.settings.caption }}</span>
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .corporate-figure {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xs);
+  }
+
+  .corporate-figure__figure {
+    color: var(--color-blau-sitges);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.2;
+  }
+
+  .corporate-figure__caption {
+    color: var(--color-neutral-400);
+    font-size: var(--font-size-xs);
+    line-height: 1.4;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "B2B figure",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "figure",
+      "label": "Figure",
+      "default": "24h",
+      "info": "A short lead token: a number, a duration, or a step number."
+    },
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "Caption",
+      "default": "respuesta"
+    }
+  ],
+  "presets": [
+    {
+      "name": "B2B figure",
+      "category": "t:categories.basic"
+    }
+  ]
+}
+{% endschema %}

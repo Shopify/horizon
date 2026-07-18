@@ -1,5 +1,5 @@
 {% comment %}
-  Brings the header nav to the Mionas design system's label-lg role, using tokens from
+  Brings the header nav to the Mionas design system's label role, using tokens from
   assets/design-tokens.css.
 
   Rendered from theme.liquid AFTER design-system-bridge.
@@ -28,12 +28,13 @@
   a CSS font-weight:500 would match the 400 face and render lighter than intended.
 {% endcomment %}
 {% style %}
-  /* Top-level nav links -> label-lg (15 / 20 / 0.02em). Weight 600 comes from the slot. */
+  /* Top-level nav links -> label (13 / 18 / 0.02em). Weight 600 comes from the slot.
+     Was label-lg (15 / 20) before the design system collapsed the label sizes into one role. */
   .menu-list__link {
-    --menu-top-level-font-size-desktop: var(--text-role-label-lg-font-size);
-    --menu-top-level-font-line-height: var(--text-role-label-lg-line-height);
+    --menu-top-level-font-size-desktop: var(--text-role-label-font-size);
+    --menu-top-level-font-line-height: var(--text-role-label-line-height);
 
-    letter-spacing: var(--text-role-label-lg-letter-spacing);
+    letter-spacing: var(--text-role-label-letter-spacing);
   }
 
   /* Horizon has no menu hover-colour setting. It applies
@@ -48,6 +49,6 @@
      drawer renders at --menu-font-2xl--size by Horizon's design and the prototype has no
      mobile reference to match. */
   .menu-drawer__menu-item--mainlist {
-    letter-spacing: var(--text-role-label-lg-letter-spacing);
+    letter-spacing: var(--text-role-label-letter-spacing);
   }
 {% endstyle %}

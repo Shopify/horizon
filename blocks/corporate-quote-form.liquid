@@ -1,0 +1,312 @@
+{%- comment -%}
+  B2B quote request form.
+
+  One {% form 'contact' %}: Shopify emails every contact[*] pair to the store, so this needs no app
+  and no CRM. The field keys are human-worded because Shopify prints the raw key as the label in
+  that email -- see the spec, "Field naming is load-bearing".
+
+  The "Servicio" select carries four pipelines through one form; the merchant filters the inbox on
+  its value.
+
+  Mirrors blocks/contact-form.liquid for the form_id / error / success pattern.
+
+  Known platform limitation: Shopify's form object only echoes back name, email, phone and body, so
+  the custom fields are not repopulated after a validation error. Do not work around this.
+{%- endcomment -%}
+{% liquid
+  assign block_settings = block.settings
+  assign form_id = block.id | prepend: 'B2BQuoteForm-'
+  assign service_options = block_settings.service_options | newline_to_br | split: '<br />'
+%}
+
+<div class="corporate-quote-form" id="pressupost" {{ block.shopify_attributes }}>
+  {%- if block_settings.heading != blank -%}
+    <h2 class="corporate-quote-form__heading">{{ block_settings.heading }}</h2>
+  {%- endif -%}
+
+  {%- form 'contact', id: form_id, class: 'corporate-quote-form__form' -%}
+    <input name="contact[id]" type="hidden" value="{{ form_id }}">
+
+    {% liquid
+      assign form_matches = false
+      if form.id == form_id or form.id == blank
+        assign form_matches = true
+      endif
+    %}
+
+    {%- if form.errors and form_matches -%}
+      <div class="corporate-quote-form__error" tabindex="-1" autofocus>
+        {{- 'icon-error.svg' | inline_asset_content -}}
+        {{- form.errors.translated_fields.email | capitalize }}
+        {{ form.errors.messages.email -}}
+      </div>
+    {%- endif -%}
+
+    {%- if form.posted_successfully? and form_matches -%}
+      <div class="corporate-quote-form__success" tabindex="-1" autofocus>
+        {{- 'icon-checkmark.svg' | inline_asset_content -}}
+        {{ block_settings.success_text }}
+      </div>
+    {%- endif -%}
+
+    <div class="corporate-quote-form__field">
+      <label class="corporate-quote-form__label" for="{{ form_id }}-servicio">
+        {{- block_settings.label_service -}}
+        <span aria-hidden="true">*</span>
+      </label>
+      <select
+        id="{{ form_id }}-servicio"
+        class="corporate-quote-form__input"
+        name="contact[Servicio]"
+        required
+        aria-required="true"
+      >
+        <option value="" disabled selected>{{ block_settings.select_placeholder }}</option>
+        {%- for service_option in service_options -%}
+          {%- assign service_label = service_option | strip_html | strip -%}
+          {%- if service_label != blank -%}
+            <option value="{{ service_label | escape }}">{{ service_label }}</option>
+          {%- endif -%}
+        {%- endfor -%}
+      </select>
+    </div>
+
+    <div class="corporate-quote-form__field">
+      <label class="corporate-quote-form__label" for="{{ form_id }}-empresa">
+        {{- block_settings.label_company -}}
+        <span aria-hidden="true">*</span>
+      </label>
+      <input
+        type="text"
+        id="{{ form_id }}-empresa"
+        class="corporate-quote-form__input"
+        name="contact[Empresa]"
+        autocomplete="organization"
+        required
+        aria-required="true"
+      >
+    </div>
+
+    <div class="corporate-quote-form__field">
+      <label class="corporate-quote-form__label" for="{{ form_id }}-email">
+        {{- block_settings.label_email -}}
+        <span aria-hidden="true">*</span>
+      </label>
+      <input
+        type="email"
+        id="{{ form_id }}-email"
+        class="corporate-quote-form__input"
+        name="contact[email]"
+        autocomplete="email"
+        spellcheck="false"
+        autocapitalize="off"
+        required
+        aria-required="true"
+        value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+        {% if form.errors contains 'email' and form_matches %}
+          aria-invalid="true"
+        {% endif %}
+      >
+    </div>
+
+    <div class="corporate-quote-form__field">
+      <label class="corporate-quote-form__label" for="{{ form_id }}-telefon">
+        {{- block_settings.label_phone -}}
+      </label>
+      <input
+        type="tel"
+        id="{{ form_id }}-telefon"
+        class="corporate-quote-form__input"
+        name="contact[phone]"
+        autocomplete="tel"
+        value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+      >
+    </div>
+
+    <div class="corporate-quote-form__field">
+      <label class="corporate-quote-form__label" for="{{ form_id }}-volum">
+        {{- block_settings.label_volume -}}
+      </label>
+      <input
+        type="text"
+        id="{{ form_id }}-volum"
+        class="corporate-quote-form__input"
+        name="contact[Fecha y volumen]"
+        placeholder="{{ block_settings.volume_placeholder }}"
+      >
+    </div>
+
+    <button type="submit" class="button corporate-quote-form__submit">
+      {{- block_settings.submit_label -}}
+    </button>
+
+    {%- if block_settings.response_note != blank -%}
+      <p class="corporate-quote-form__note">{{ block_settings.response_note }}</p>
+    {%- endif -%}
+  {%- endform -%}
+</div>
+
+{% stylesheet %}
+  .corporate-quote-form {
+    /* The block renders no size-style, so it has no --size-style-width. flex-basis: auto (via
+       width: 100%) keeps the form from collapsing vertically when the section stacks to a
+       column on mobile. On desktop this basis resolves to the form's own 100% width, which
+       out-competes the sibling group's 50% basis and skews the row to ~33/67 -- see the
+       desktop override below, which zeroes the basis so the row splits evenly.
+       min-width: 0 stops long option text from forcing an overflow. */
+    flex: 1 1 auto;
+    min-width: 0;
+    background-color: var(--card-base-background);
+    border: var(--card-base-border-width) solid var(--card-base-border-color);
+    border-radius: var(--card-base-radius);
+    box-shadow: var(--card-base-shadow);
+    padding: var(--space-lg);
+    width: 100%;
+    scroll-margin-top: var(--header-height, 80px);
+  }
+
+  @media screen and (min-width: 750px) {
+    .corporate-quote-form {
+      /* Zero the flex-basis so it no longer resolves to the form's 100% width, which let it
+         out-grow the sibling group's 50% basis. Mobile keeps flex-basis: auto (above) so the
+         form doesn't collapse vertically when the section stacks to a column. */
+      flex-basis: 0;
+    }
+  }
+
+  .corporate-quote-form__heading {
+    margin: 0 0 var(--space-md);
+  }
+
+  .corporate-quote-form__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-md);
+  }
+
+  .corporate-quote-form__field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+  }
+
+  .corporate-quote-form__label {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .corporate-quote-form__input {
+    width: 100%;
+    padding: var(--padding-lg) var(--padding-xl);
+    color: var(--color-input-text);
+    background-color: var(--color-input-background);
+    border: var(--style-border-width-inputs) solid var(--color-input-border);
+    border-radius: var(--style-border-radius-inputs);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .corporate-quote-form__submit {
+    align-self: flex-start;
+  }
+
+  .corporate-quote-form__note {
+    margin: 0;
+    color: var(--color-neutral-400);
+    font-size: var(--font-size-xs);
+  }
+
+  .corporate-quote-form__error,
+  .corporate-quote-form__success {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-xs);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "B2B quote form",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Formulari de pressupost"
+    },
+    {
+      "type": "text",
+      "id": "label_service",
+      "label": "Service label",
+      "default": "Què necessites?"
+    },
+    {
+      "type": "text",
+      "id": "select_placeholder",
+      "label": "Select placeholder",
+      "default": "Selecciona…"
+    },
+    {
+      "type": "textarea",
+      "id": "service_options",
+      "label": "Service options",
+      "info": "One per line. Each becomes a dropdown option, and its text appears in the enquiry email.",
+      "default": "Esdeveniments i càtering\nRegals d'empresa\nSubscripció / wholesale\nTeam building"
+    },
+    {
+      "type": "text",
+      "id": "label_company",
+      "label": "Company label",
+      "default": "Empresa"
+    },
+    {
+      "type": "text",
+      "id": "label_email",
+      "label": "Email label",
+      "default": "Email"
+    },
+    {
+      "type": "text",
+      "id": "label_phone",
+      "label": "Phone label",
+      "default": "Teléfono (opcional)"
+    },
+    {
+      "type": "text",
+      "id": "label_volume",
+      "label": "Date / volume label",
+      "default": "Fecha / volumen"
+    },
+    {
+      "type": "text",
+      "id": "volume_placeholder",
+      "label": "Date / volume placeholder",
+      "default": "p.ej. 150 uds, 12 dic"
+    },
+    {
+      "type": "text",
+      "id": "submit_label",
+      "label": "Submit label",
+      "default": "Demanar pressupost"
+    },
+    {
+      "type": "text",
+      "id": "response_note",
+      "label": "Response note",
+      "default": "Respuesta en 24h laborables"
+    },
+    {
+      "type": "text",
+      "id": "success_text",
+      "label": "Success message",
+      "default": "Hem rebut la teva sol·licitud. Respuesta en 24h laborables."
+    }
+  ],
+  "presets": [
+    {
+      "name": "B2B quote form",
+      "category": "t:categories.forms"
+    }
+  ]
+}
+{% endschema %}
