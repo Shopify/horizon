@@ -14,72 +14,99 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        "logo_Bpnzhp": {
-          "type": "logo",
-          "name": "t:names.logo",
+        "group_GbLjqM": {
+          "type": "group",
+          "name": "t:names.group",
           "settings": {
-            "inverse": true,
-            "font": "heading",
-            "text_color": "",
-            "unit": "pixel",
-            "percent_width": 100,
-            "pixel_height": 64,
-            "custom_mobile_size": false,
-            "unit_mobile": "percent",
-            "percent_width_mobile": 100,
-            "pixel_height_mobile": 120,
+            "content_direction": "column",
+            "vertical_on_mobile": false,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 20,
+            "width": "fit-content",
+            "custom_width": 100,
+            "width_mobile": "fit-content",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "background_media": "none",
+            "background_color": "",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
-          "blocks": {}
-        },
-        "menu_footer": {
-          "type": "menu",
-          "settings": {
-            "menu": "footer-menu-tienda",
-            "heading": "TIENDA",
-            "menu_spacing": 12,
-            "show_as_accordion": false,
-            "accordion_icon": "plus",
-            "accordion_dividers": false,
-            "background_color": "",
-            "text_color": "",
-            "heading_preset": "paragraph",
-            "link_preset": "paragraph",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
+          "blocks": {
+            "logo_CxJhqh": {
+              "type": "logo",
+              "name": "t:names.logo",
+              "settings": {
+                "inverse": true,
+                "font": "heading",
+                "text_color": "",
+                "unit": "pixel",
+                "percent_width": 100,
+                "pixel_height": 48,
+                "custom_mobile_size": false,
+                "unit_mobile": "percent",
+                "percent_width_mobile": 100,
+                "pixel_height_mobile": 120,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "text_role_iU3M77": {
+              "type": "text-role",
+              "name": "Text Role",
+              "settings": {
+                "text": "Especialidad en cookies",
+                "role": "stamp",
+                "variant": "accent-inverse",
+                "tag": "p"
+              },
+              "blocks": {}
+            }
           },
-          "blocks": {}
+          "block_order": [
+            "logo_CxJhqh",
+            "text_role_iU3M77"
+          ]
         },
-        "menu_main": {
-          "type": "menu",
+        "text_role_a9LbRq": {
+          "type": "text-role",
+          "name": "Text Role",
           "settings": {
-            "menu": "footer-menu-mas",
-            "heading": "MÁS",
-            "menu_spacing": 12,
-            "show_as_accordion": false,
-            "accordion_icon": "plus",
-            "accordion_dividers": false,
-            "background_color": "",
-            "text_color": "",
-            "heading_preset": "paragraph",
-            "link_preset": "paragraph",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "text": "",
+            "role": "label",
+            "variant": "inverse-primary",
+            "tag": "div"
           },
           "blocks": {}
         }
       },
       "block_order": [
-        "logo_Bpnzhp",
-        "menu_footer",
-        "menu_main"
+        "group_GbLjqM",
+        "text_role_a9LbRq"
       ],
       "name": "t:names.footer",
       "settings": {
