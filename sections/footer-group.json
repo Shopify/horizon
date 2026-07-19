@@ -20,11 +20,12 @@
           "settings": {
             "thickness": 1,
             "corner_radius": "square",
-            "divider_color": "rgba(255, 255, 255, 0.12)",
+            "divider_color": "#ffffff1f",
             "width_percent": 100,
             "padding-block-start": 0,
             "padding-block-end": 24
-          }
+          },
+          "blocks": {}
         },
         "menu_footer": {
           "type": "menu",
@@ -35,30 +36,36 @@
             "show_as_accordion": false,
             "accordion_icon": "plus",
             "accordion_dividers": false,
+            "background_color": "",
+            "text_color": "",
             "heading_preset": "paragraph",
             "link_preset": "paragraph",
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
             "padding-inline-end": 0
-          }
+          },
+          "blocks": {}
         },
         "menu_main": {
           "type": "menu",
           "settings": {
-            "menu": "main-menu",
-            "heading": "",
+            "menu": "footer-menu-mas",
+            "heading": "MÁS",
             "menu_spacing": 12,
             "show_as_accordion": false,
             "accordion_icon": "plus",
             "accordion_dividers": false,
+            "background_color": "",
+            "text_color": "",
             "heading_preset": "paragraph",
             "link_preset": "paragraph",
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
             "padding-inline-end": 0
-          }
+          },
+          "blocks": {}
         }
       },
       "block_order": [
@@ -82,23 +89,40 @@
           "type": "footer-copyright",
           "settings": {
             "show_powered_by": true,
+            "text_color": "",
             "font_size": "0.75rem",
             "case": "none"
-          }
+          },
+          "blocks": {}
         },
         "policy_list": {
           "type": "footer-policy-list",
           "settings": {
+            "text_color": "",
             "font_size": "0.75rem",
             "case": "none"
-          }
+          },
+          "blocks": {}
         },
         "social_icons": {
           "type": "social-links",
           "settings": {
+            "icon_color": "",
+            "facebook_url": "",
             "instagram_url": "https://instagram.com/mionasbakery_sitges",
-            "tiktok_url": "https://tiktok.com/@mionasbakery_sitges"
-          }
+            "youtube_url": "",
+            "tiktok_url": "https://tiktok.com/@mionasbakery_sitges",
+            "twitter_url": "",
+            "threads_url": "",
+            "linkedin_url": "",
+            "bluesky_url": "",
+            "snapchat_url": "",
+            "pinterest_url": "",
+            "tumblr_url": "",
+            "vimeo_url": "",
+            "custom_url": ""
+          },
+          "blocks": {}
         }
       },
       "block_order": [
@@ -110,8 +134,8 @@
         "section_width": "page-width",
         "gap": 24,
         "background_color": "{{ settings.color_palette.foreground }}",
-        "divider_color": "rgba(255, 255, 255, 0.12)",
         "divider_thickness": 1,
+        "divider_color": "#ffffff1f",
         "padding-block-start": 12,
         "padding-block-end": 16
       }
