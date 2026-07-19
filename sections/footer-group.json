@@ -14,24 +14,32 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        "divider_top": {
-          "type": "_divider",
-          "name": "t:names.divider",
+        "logo_Bpnzhp": {
+          "type": "logo",
+          "name": "t:names.logo",
           "settings": {
-            "thickness": 1,
-            "corner_radius": "square",
-            "divider_color": "#ffffff1f",
-            "width_percent": 100,
+            "inverse": true,
+            "font": "heading",
+            "text_color": "",
+            "unit": "pixel",
+            "percent_width": 100,
+            "pixel_height": 64,
+            "custom_mobile_size": false,
+            "unit_mobile": "percent",
+            "percent_width_mobile": 100,
+            "pixel_height_mobile": 120,
             "padding-block-start": 0,
-            "padding-block-end": 24
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
           },
           "blocks": {}
         },
         "menu_footer": {
           "type": "menu",
           "settings": {
-            "menu": "footer",
-            "heading": "",
+            "menu": "footer-menu-tienda",
+            "heading": "TIENDA",
             "menu_spacing": 12,
             "show_as_accordion": false,
             "accordion_icon": "plus",
@@ -69,7 +77,7 @@
         }
       },
       "block_order": [
-        "divider_top",
+        "logo_Bpnzhp",
         "menu_footer",
         "menu_main"
       ],
