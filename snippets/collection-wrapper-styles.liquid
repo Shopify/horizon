@@ -1,0 +1,112 @@
+{%- doc -%}
+  Shared collection wrapper layout styles for collection and search results pages.
+
+  @example
+  {% render 'collection-wrapper-styles' %}
+{%- enddoc -%}
+
+{% stylesheet %}
+  /* ------------------------------------------------------------------------------ */
+
+  /* Collection Wrapper - Shared layout CSS for collection and search pages */
+
+  /* ------------------------------------------------------------------------------ */
+
+  .collection-wrapper {
+    @media screen and (min-width: 750px) {
+      --facets-vertical-col-width: 6;
+
+      grid-template-columns:
+        1fr repeat(
+          var(--centered-column-number),
+          minmax(0, calc((var(--page-width) - var(--page-margin) * 2) / var(--centered-column-number)))
+        )
+        1fr;
+    }
+
+    @media screen and (min-width: 990px) {
+      --facets-vertical-col-width: 5;
+    }
+  }
+
+  .collection-wrapper:has(.facets-block-wrapper--full-width),
+  .collection-wrapper:has(.collection-wrapper--full-width) {
+    @media screen and (min-width: 750px) {
+      grid-column: 1 / -1;
+      grid-template-columns:
+        minmax(var(--page-margin), 1fr) repeat(
+          var(--centered-column-number),
+          minmax(0, calc((var(--page-width) - var(--page-margin) * 2) / var(--centered-column-number)))
+        )
+        minmax(var(--page-margin), 1fr);
+    }
+  }
+
+  .collection-wrapper:has(.facets--vertical) .facets-block-wrapper--vertical:not(.hidden) ~ .main-collection-grid {
+    @media screen and (min-width: 750px) {
+      grid-column: var(--facets-vertical-col-width) / var(--full-width-column-number);
+    }
+  }
+
+  .collection-wrapper:has(.facets-block-wrapper--vertical:not(#filters-drawer)):has(.collection-wrapper--full-width) {
+    @media screen and (min-width: 750px) {
+      grid-column: 1 / -1;
+      grid-template-columns: 0fr repeat(var(--centered-column-number), minmax(0, 1fr)) 0fr;
+    }
+  }
+
+  :is(.collection-wrapper--full-width, .collection-wrapper--full-width-on-mobile)
+    [product-grid-view='default']
+    .product-grid__card {
+    @media screen and (max-width: 749px) {
+      padding-inline-start: max(var(--padding-xs), var(--padding-inline-start));
+      padding-inline-end: max(var(--padding-xs), var(--padding-inline-end));
+    }
+  }
+
+  :is(.collection-wrapper--full-width, .collection-wrapper--full-width-on-mobile)
+    [product-grid-view='mobile-single']
+    .product-grid__card {
+    @media screen and (max-width: 749px) {
+      padding-inline-start: max(var(--padding-xs), var(--padding-inline-start));
+      padding-inline-end: max(var(--padding-xs), var(--padding-inline-end));
+    }
+  }
+
+  /* Make product media go edge-to-edge by using negative margins */
+  :is(.collection-wrapper--full-width) .card-gallery,
+  :is(.collection-wrapper--full-width-on-mobile) .card-gallery {
+    @media screen and (max-width: 749px) {
+      margin-inline-start: calc(-1 * max(var(--padding-xs), var(--padding-inline-start)));
+      margin-inline-end: calc(-1 * max(var(--padding-xs), var(--padding-inline-end)));
+    }
+  }
+
+  .collection-wrapper--full-width .main-collection-grid__title {
+    margin-left: var(--page-margin);
+  }
+
+  .collection-wrapper--full-width-on-mobile .main-collection-grid__title {
+    @media screen and (max-width: 749px) {
+      margin-left: var(--page-margin);
+    }
+  }
+
+  .collection-wrapper--grid-full-width .facets--vertical:not(.facets--drawer) {
+    @media screen and (min-width: 750px) {
+      padding-inline-start: max(var(--padding-sm), var(--padding-inline-start));
+    }
+  }
+
+  .collection-wrapper:has(.product-grid-mobile--large) .facets-mobile-wrapper.facets-controls-wrapper {
+    @media screen and (max-width: 749px) {
+      display: none;
+    }
+  }
+
+  .collection-wrapper:has(> .facets--horizontal) .facets__panel[open] {
+    @media screen and (min-width: 750px) {
+      z-index: var(--facets-open-z-index);
+    }
+  }
+{% endstylesheet %}

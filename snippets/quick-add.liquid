@@ -13,101 +13,144 @@
   # Logic to determine which variant to use (matching swatch selection logic from product-card)
   assign variant = product.selected_or_first_available_variant
 
+  assign uses_selling_plans = false
+  if product.requires_selling_plan or product.selling_plan_groups.size > 0
+    assign uses_selling_plans = true
+  endif
+
   if variant.available
     assign can_add_to_cart = true
   else
     assign can_add_to_cart = false
   endif
 
-  assign quick_add_button = 'choose'
-  if product.variants_count == 1 or product.options.size == 1 and product.selected_variant
-    assign quick_add_button = 'add'
+  # Both buttons are rendered together only for single-option swatch products - the one
+  # case where a card swatch click resolves the variant, so JS can flip choose -> add
+  # without navigating. Every other shape is fixed at render, so it gets just one button.
+  # Selling plans always go to the PDP, since subscription widgets only run there.
+  assign initial_button = 'choose'
+  assign render_add = false
+  assign render_choose = false
+
+  if product.variants_count == 1
+    assign initial_button = 'add'
+    assign render_add = true
+  elsif product.options.size == 1
+    assign first_option = product.options_with_values | first
+    assign swatch_count = first_option.values | map: 'swatch' | compact | size
+    assign render_choose = true
+    if product.selected_variant
+      assign initial_button = 'add'
+      assign render_add = true
+    elsif swatch_count > 0
+      assign render_add = true
+    endif
+  else
+    assign render_choose = true
+  endif
+
+  if uses_selling_plans
+    assign initial_button = 'choose'
+    assign render_add = false
+    assign render_choose = true
   endif
 %}
 
+{% render 'fly-to-cart-styles' %}
+
+{% comment %}
+  Only the button(s) a card can actually use are rendered in the DOM (gated by render_add / render_choose).
+  When both are rendered, only one is shown at a time based on the data-quick-add-button attribute.
+
+  Logic for Add vs. Choose buttons:
+    Display "Add" button and add directly to cart if:
+      - There is only one variant on the product
+      - There is only one product option, and it is displayed as swatches on the product card, and a swatch is selected
+    Display "Choose" button and show the quick-add modal if:
+      - There is only one product option, and it is displayed as swatches on the product card, and no swatch is selected
+      - There is more than one product option
+
+  Both buttons are only rendered together for a single-option product with interactive swatches, because
+  that is the only shape whose data-quick-add-button can flip live (choose -> add) when a swatch is selected.
+
+  The add-to-cart form (product-form-component + hidden inputs + live region) is only rendered when the
+  card can add to cart directly (render_add). The Choose button never submits a form - it opens the
+  quick-add modal via quick-add-component/handleClick - so it lives outside the form.
+{% endcomment %}
 <quick-add-component
   class="quick-add custom-color-quick-add"
   ref="quickAdd"
   data-product-title="{{ product.title }}"
-  data-quick-add-button="{{ quick_add_button }}"
+  data-product-id="{{ product.id }}"
+  data-quick-add-button="{{ initial_button }}"
   data-product-options-count="{{ product.options.size }}"
+  data-uses-selling-plans="{{ uses_selling_plans }}"
+  data-renders-both-buttons="{% if render_add and render_choose %}true{% endif %}"
 >
-  <product-form-component
-    data-section-id="{{ section_id }}"
-    data-product-id="{{ product.id }}"
-    on:submit="/handleSubmit"
-    class="quick-add__product-form-component"
-  >
-    <div
-      class="visually-hidden"
-      aria-live="assertive"
-      role="status"
-      aria-atomic="true"
-      ref="liveRegion"
-    ></div>
-    {%- form 'product', product, id: product_form_id, novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
-      <input
-        type="hidden"
-        name="id"
-        ref="variantId"
-        value="{{ variant.id }}"
-        {% if variant.available == false %}
-          disabled
-        {% endif %}
-      >
-      <input
-        type="hidden"
-        name="quantity"
-        value="{% if variant.quantity_rule.min %}{{ variant.quantity_rule.min }}{% else %}1{% endif %}"
-      >
-      {% comment %}
-        Both Add and Choose buttons are rendered in the DOM, but only one is shown based on the data-quick-add-button attribute.
-
-        Logic for Add vs. Choose buttons:
-          Display "Add" button and add directly to cart if:
-            - There is only one variant on the product
-            - There is only one product option, and it is displayed as swatches on the product card, and a swatch is selected
-          Display "Choose" button and show the quick-add modal if:
-            - There is only one product option, and it is displayed as swatches on the product card, and no swatch is selected
-            - There is more than one product option
-      {% endcomment %}
-      {% render 'add-to-cart-button',
-        add_to_cart_text: add_to_cart_text,
-        class: 'button quick-add__button quick-add__button--add add-to-cart-button',
-        can_add_to_cart: can_add_to_cart,
-        icon_only_on_mobile: true,
-        product: product
-      %}
-
-      <button
-        class="button quick-add__button quick-add__button--choose add-to-cart-button"
-        {% comment %} type="submit" is the default, so we explicitly set it to "button" to prevent the ProductFormComponent.handleSubmit from being triggered {% endcomment %}
-        type="button"
-        name="add"
-        on:click="quick-add-component/handleClick"
-      >
-        <span
-          class="add-to-cart-text"
+  {% if render_add %}
+    <product-form-component
+      data-section-id="{{ section_id }}"
+      data-product-id="{{ product.id }}"
+      on:submit="/handleSubmit"
+      class="quick-add__product-form-component"
+    >
+      <div
+        class="visually-hidden"
+        aria-live="assertive"
+        role="status"
+        aria-atomic="true"
+        ref="liveRegion"
+      ></div>
+      {%- form 'product', product, id: product_form_id, novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+        <input
+          type="hidden"
+          name="id"
+          ref="variantId"
+          value="{{ variant.id }}"
+          {% if variant.available == false %}
+            disabled
+          {% endif %}
         >
-          {% comment %} split the icon and the text with a grid transition {% endcomment %}
-          <span
-            aria-hidden="true"
-            class="svg-wrapper add-to-cart-icon"
-          >
-            {{- 'icon-add-to-cart.svg' | inline_asset_content -}}
-          </span>
-          <span class="add-to-cart-text__content is-visually-hidden-mobile">
-            <span>
-              {% comment %} use a double-nested span to bake the padding into the text {% endcomment %}
-              <span>
-                {{ choose_options_text }}
-              </span>
-            </span>
-          </span>
-        </span>
-      </button>
-    {%- endform -%}
-  </product-form-component>
+        <input
+          type="hidden"
+          name="quantity"
+          value="{% if variant.quantity_rule.min %}{{ variant.quantity_rule.min }}{% else %}1{% endif %}"
+        >
+        {% render 'add-to-cart-button',
+          add_to_cart_text: add_to_cart_text,
+          class: 'quick-add__button quick-add__button--add add-to-cart-button',
+          can_add_to_cart: can_add_to_cart,
+          product: product
+        %}
+      {%- endform -%}
+    </product-form-component>
+  {% endif %}
+
+  {% if render_choose %}
+    <button
+      class="button quick-add__button quick-add__button--choose add-to-cart-button"
+      {% comment %} type="submit" is the default, so we explicitly set it to "button" to prevent the ProductFormComponent.handleSubmit from being triggered {% endcomment %}
+      type="button"
+      name="add"
+      on:click="quick-add-component/handleClick"
+    >
+      <span
+        aria-hidden="true"
+        class="svg-wrapper add-to-cart-icon"
+      >
+        {{- 'icon-add-to-cart.svg' | inline_asset_content -}}
+      </span>
+      {{- choose_options_text -}}
+    </button>
+  {% endif %}
 </quick-add-component>
 
+{% render 'add-to-cart-button-styles' %}
+{% render 'checkbox-styles' %}
+{% if render_choose %}
+  {% render 'variant-picker-styles' %}
+{% endif %}
 {% render 'quick-add-styles' %}
+{% render 'video-background-styles' %}
+{% render 'video-placeholder-styles' %}
+{% render 'deferred-media-product-model-styles' %}

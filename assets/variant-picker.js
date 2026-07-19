@@ -86,12 +86,13 @@ export default class VariantPicker extends Component {
       ? 'featured-product-information'
       : undefined;
 
-    const optionValueId = selectedOption.dataset.optionValueId ?? '';
-    this.fetchUpdatedSection(this.buildRequestUrl(selectedOption), morphElementSelector, optionValueId);
+    const { optionValueId = '', variantId = '', connectedProductUrl = '' } = selectedOption.dataset;
+    this.fetchUpdatedSection(this.buildRequestUrl(selectedOption), {
+      morphElementSelector,
+      detail: { optionValueId, variantId, connectedProductUrl },
+    });
 
     const url = new URL(window.location.href);
-
-    const variantId = selectedOption.dataset.variantId || null;
 
     if (isOnProductPage) {
       if (variantId) {
@@ -301,10 +302,12 @@ export default class VariantPicker extends Component {
   /**
    * Fetches the updated section.
    * @param {string} requestUrl - The request URL.
-   * @param {string} [morphElementSelector] - The selector of the element to be morphed. By default, only the variant picker is morphed.
-   * @param {string} [optionValueId] - The selected option value ID for event detail.
+   * @param {object} [options] - Request options.
+   * @param {string} [options.morphElementSelector] - The selector of the element to be morphed. By default, only the variant picker is morphed.
+   * @param {{ optionValueId?: string, variantId?: string, connectedProductUrl?: string }} [options.detail] - Synchronous product select event detail.
    */
-  fetchUpdatedSection(requestUrl, morphElementSelector, optionValueId = '') {
+  fetchUpdatedSection(requestUrl, { morphElementSelector, detail = {} } = {}) {
+    const { optionValueId = '', variantId, connectedProductUrl = '' } = detail;
     // We use this to abort the previous fetch request if it's still pending.
     this.#abortController?.abort();
     this.#abortController = new AbortController();
@@ -322,6 +325,8 @@ export default class VariantPicker extends Component {
         selectedOptions,
         detail: {
           optionValueId,
+          variantId,
+          connectedProductUrl,
         },
         promise: deferredEventPromise.promise,
       })

@@ -35,7 +35,7 @@
   assign product_card_id = 'product-card-link-' | append: block.id | append: '-' | append: product.id
   assign product_card_gap_value = product_card_gap | default: block_settings.product_card_gap
 
-  # Logic to determine which variant URL to use (matching swatch selection logic)
+  # variant_to_link drives the featured image used by the main-product view transition.
   assign variant_to_link = product.selected_or_first_available_variant
 
   if settings.transition_to_main_product
@@ -81,15 +81,13 @@
   <a
     id="{{ product_card_id | md5 }}"
     {% unless onboarding %}
-      href="{{ variant_to_link.url }}"
+      {% # Link to product.url so algorithmic variant relevance and tracking params are maintained. %}
+      href="{{ product.url }}"
     {% endunless %}
     class="product-card__link"
     ref="productCardLink"
-  >
-    <span class="visually-hidden">
-      {{ product.title }}
-    </span>
-  </a>
+    aria-label="{{ product.title | escape }}"
+  ></a>
   <div
     class="
       product-card__content
@@ -119,18 +117,4 @@
   </div>
 </product-card>
 
-{% stylesheet %}
-  .product-card__placeholder-image svg {
-    height: 100%;
-  }
-
-  .product-card__content slideshow-component {
-    --cursor: pointer;
-  }
-
-  @media screen and (max-width: 749px) {
-    .product-card slideshow-arrows .slideshow-control {
-      display: none;
-    }
-  }
-{% endstylesheet %}
+{% render 'product-card-styles' %}

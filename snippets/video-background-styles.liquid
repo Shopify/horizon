@@ -1,0 +1,33 @@
+{%- doc -%}
+  Video background styles. Kept in a standalone snippet so they can be rendered
+  into dynamically-injected contexts (the quick-add modal) as well as on normal pages.
+
+  @example
+  {% render 'video-background-styles' %}
+{%- enddoc -%}
+
+{% stylesheet %}
+  .video-background,
+  .video-background * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .video-background--cover * {
+    object-fit: cover;
+  }
+
+  .video-background--contain * {
+    object-fit: contain;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    video-background-component video {
+      display: none;
+    }
+  }
+{% endstylesheet %}

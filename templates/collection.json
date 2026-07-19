@@ -14,14 +14,14 @@
       "blocks": {
         "text_tqQTNE": {
           "type": "text",
-          "name": "Title",
+          "name": "t:names.title",
           "settings": {
             "text": "<h1>{{ closest.collection.title }}</h1>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
             "type_preset": "h2",
-            "font": "var(--font-primary--family)",
+            "font": "var(--font-body--family)",
             "font_size": "",
             "line_height": "normal",
             "letter_spacing": "normal",
@@ -40,14 +40,14 @@
         },
         "text_twGGkJ": {
           "type": "text",
-          "name": "Description",
+          "name": "t:names.description",
           "settings": {
             "text": "{{ closest.collection.description }}",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
             "type_preset": "rte",
-            "font": "var(--font-primary--family)",
+            "font": "var(--font-body--family)",
             "font_size": "",
             "line_height": "normal",
             "letter_spacing": "normal",
@@ -69,7 +69,7 @@
         "text_tqQTNE",
         "text_twGGkJ"
       ],
-      "name": "Collection heading",
+      "name": "t:names.heading",
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,

@@ -20,6 +20,9 @@
   {% content_for 'blocks' %}
 {% endcapture %}
 
+{% render 'deferred-media-product-model-styles' %}
+{% render 'deferred-media-video-styles' %}
+
 <featured-product-information id="{{ section.id }}">
   <h2 class="visually-hidden">{{ 'accessibility.featured_product' | t }}</h2>
   {% render 'product-information-content',

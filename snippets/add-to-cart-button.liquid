@@ -4,7 +4,6 @@
   @param {boolean} can_add_to_cart - Whether the product can be added to the cart.
   @param {string} add_to_cart_text - The text to display on the button.
   @param {object} product - The product object to be added to the cart.
-  @param {boolean} [icon_only_on_mobile] - If `true`, only the icon is shown on mobile devices.
   @param {string} [class] - Additional CSS classes to apply to the button.
   @param {string} [id] - The ID attribute for the button.
   @param {string} [data_testid] - The data-testid attribute for testing.
@@ -39,25 +38,15 @@
       disabled
     {% endunless %}
   >
-    <span
-      class="add-to-cart-text"
-    >
-      {% if can_add_to_cart %}
-        <span
-          aria-hidden="true"
-          class="svg-wrapper add-to-cart-icon"
-        >
-          {{- 'icon-add-to-cart.svg' | inline_asset_content -}}
-        </span>
-      {% endif %}
-      <span class="add-to-cart-text__content{% if icon_only_on_mobile %} is-visually-hidden-mobile{% endif %}">
-        <span>
-          <span>
-            {{- add_to_cart_text | default: default_add_to_cart_text -}}
-          </span>
-        </span>
+    {% if can_add_to_cart %}
+      <span
+        aria-hidden="true"
+        class="svg-wrapper add-to-cart-icon"
+      >
+        {{- 'icon-add-to-cart.svg' | inline_asset_content -}}
       </span>
-    </span>
+    {% endif %}
+    {{- add_to_cart_text | default: default_add_to_cart_text -}}
     {% comment %} checkmark burst markup {% endcomment %}
     <span class="add-to-cart__added">
       <span class="svg-wrapper add-to-cart__added-icon">
