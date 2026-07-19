@@ -9,6 +9,59 @@
  */
 {
   "sections": {
+    "section_QnDXRF": {
+      "type": "section",
+      "blocks": {
+        "split_hero_CUcG47": {
+          "type": "split-hero",
+          "settings": {
+            "eyebrow": "Especialitat en cookies",
+            "heading": "Cookies acabades de fer, directes a casa teva",
+            "description": "<p>Cookies para tus eventos, tus clientes y tu equipo. Facturación, pedidos recurrentes y un contacto fijo.</p>",
+            "image": "shopify://shop_images/DSC_0008_resize.jpg",
+            "media_position": "left",
+            "panel_color": "beige",
+            "cta_label": "Demanar pressupost",
+            "cta_link": "/pages/empresas#pressupost",
+            "secondary_label": "WhatsApp",
+            "secondary_link": ""
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "split_hero_CUcG47"
+      ],
+      "name": "Hero",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "full-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
     "product_list_fa6P9H": {
       "type": "product-list",
       "blocks": {
@@ -524,6 +577,7 @@
     }
   },
   "order": [
+    "section_QnDXRF",
     "product_list_fa6P9H",
     "product_list_cajas",
     "newsletter"
