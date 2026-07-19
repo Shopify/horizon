@@ -1,0 +1,201 @@
+{%- comment -%}
+  Mirrors ../design-system/src/react/Text/Text.tsx: a single text node whose typography role and
+  colour variant come straight from the design system's --text-role-* / --text-color-* tokens.
+
+  A different file, blocks/text.liquid, is Horizon's built-in "Text" block (t:names.text) -- an
+  editorial rich-text block with its own custom-size typography system flowing through
+  snippets/design-system-bridge.liquid. This block does not touch that one -- it exposes the
+  design system's fixed role/variant vocabulary directly, the way split-hero.liquid exposes the
+  stamp role for its eyebrow. This block is named "Text Role" in the block picker to distinguish
+  it from "Text" (Role/Color/HTML tag settings here, vs. Type preset there). See
+  docs/superpowers/specs/2026-07-20-text-role-block-design.md.
+
+  `tag` and `role` are independent settings, same as Text.tsx's `as` and `role` props -- a
+  label-styled span or an h2 with hero styling are both valid.
+{%- endcomment -%}
+{% liquid
+  assign block_settings = block.settings
+  assign tag = block_settings.tag | default: 'p'
+%}
+
+{%- if block_settings.text != blank -%}
+  {%- case tag -%}
+    {%- when 'span' -%}
+      <span class="text-role text-role--{{ block_settings.role }} text-role--{{ block_settings.variant }}" {{ block.shopify_attributes }}>{{- block_settings.text -}}</span>
+    {%- when 'div' -%}
+      <div class="text-role text-role--{{ block_settings.role }} text-role--{{ block_settings.variant }}" {{ block.shopify_attributes }}>{{- block_settings.text -}}</div>
+    {%- when 'h1' -%}
+      <h1 class="text-role text-role--{{ block_settings.role }} text-role--{{ block_settings.variant }}" {{ block.shopify_attributes }}>{{- block_settings.text -}}</h1>
+    {%- when 'h2' -%}
+      <h2 class="text-role text-role--{{ block_settings.role }} text-role--{{ block_settings.variant }}" {{ block.shopify_attributes }}>{{- block_settings.text -}}</h2>
+    {%- when 'h3' -%}
+      <h3 class="text-role text-role--{{ block_settings.role }} text-role--{{ block_settings.variant }}" {{ block.shopify_attributes }}>{{- block_settings.text -}}</h3>
+    {%- when 'h4' -%}
+      <h4 class="text-role text-role--{{ block_settings.role }} text-role--{{ block_settings.variant }}" {{ block.shopify_attributes }}>{{- block_settings.text -}}</h4>
+    {%- when 'h5' -%}
+      <h5 class="text-role text-role--{{ block_settings.role }} text-role--{{ block_settings.variant }}" {{ block.shopify_attributes }}>{{- block_settings.text -}}</h5>
+    {%- when 'h6' -%}
+      <h6 class="text-role text-role--{{ block_settings.role }} text-role--{{ block_settings.variant }}" {{ block.shopify_attributes }}>{{- block_settings.text -}}</h6>
+    {%- else -%}
+      <p class="text-role text-role--{{ block_settings.role }} text-role--{{ block_settings.variant }}" {{ block.shopify_attributes }}>{{- block_settings.text -}}</p>
+  {%- endcase -%}
+{%- endif -%}
+
+{% stylesheet %}
+  .text-role {
+    margin: 0;
+    font-family: var(--font-body--family);
+  }
+
+  .text-role--hero {
+    font-size: var(--text-role-hero-font-size);
+    line-height: var(--text-role-hero-line-height);
+    font-weight: var(--text-role-hero-font-weight);
+    letter-spacing: var(--text-role-hero-letter-spacing);
+  }
+
+  .text-role--title {
+    font-size: var(--text-role-title-font-size);
+    line-height: var(--text-role-title-line-height);
+    font-weight: var(--text-role-title-font-weight);
+    letter-spacing: var(--text-role-title-letter-spacing);
+  }
+
+  .text-role--heading {
+    font-size: var(--text-role-heading-font-size);
+    line-height: var(--text-role-heading-line-height);
+    font-weight: var(--text-role-heading-font-weight);
+    letter-spacing: var(--text-role-heading-letter-spacing);
+  }
+
+  .text-role--subheading {
+    font-size: var(--text-role-subheading-font-size);
+    line-height: var(--text-role-subheading-line-height);
+    font-weight: var(--text-role-subheading-font-weight);
+    letter-spacing: var(--text-role-subheading-letter-spacing);
+  }
+
+  .text-role--body {
+    font-size: var(--text-role-body-font-size);
+    line-height: var(--text-role-body-line-height);
+    font-weight: var(--text-role-body-font-weight);
+    letter-spacing: var(--text-role-body-letter-spacing);
+  }
+
+  .text-role--label {
+    font-size: var(--text-role-label-font-size);
+    line-height: var(--text-role-label-line-height);
+    font-weight: var(--text-role-label-font-weight);
+    letter-spacing: var(--text-role-label-letter-spacing);
+  }
+
+  /* Family and transform, not just size/weight/spacing, because Text.module.css's .stamp is the one
+     role that departs from the shared .root font-family. Family comes from the theme's loaded
+     accent font setting, not the design system's --font-family-oswald string -- that token loads no
+     font file. See docs/superpowers/specs/2026-07-20-text-role-block-design.md, "Typography". */
+  .text-role--stamp {
+    font-size: var(--text-role-stamp-font-size);
+    line-height: var(--text-role-stamp-line-height);
+    font-weight: var(--text-role-stamp-font-weight);
+    letter-spacing: var(--text-role-stamp-letter-spacing);
+    font-family: var(--font-accent--family);
+    text-transform: uppercase;
+  }
+
+  .text-role--default {
+    color: var(--text-color-default);
+  }
+
+  .text-role--primary {
+    color: var(--text-color-primary);
+  }
+
+  .text-role--inverse-primary {
+    color: var(--text-color-inverse-primary);
+  }
+
+  .text-role--inverse-primary-muted {
+    color: var(--text-color-inverse-primary-muted);
+  }
+
+  .text-role--accent {
+    color: var(--text-color-accent);
+  }
+
+  .text-role--accent-inverse {
+    color: var(--text-color-accent-inverse);
+  }
+
+  .text-role--tint {
+    color: var(--text-color-tint);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Text Role",
+  "tag": null,
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "Text"
+    },
+    {
+      "type": "select",
+      "id": "role",
+      "label": "Role",
+      "options": [
+        { "value": "hero", "label": "Hero" },
+        { "value": "title", "label": "Title" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "body", "label": "Body" },
+        { "value": "label", "label": "Label" },
+        { "value": "stamp", "label": "Stamp" }
+      ],
+      "default": "body"
+    },
+    {
+      "type": "select",
+      "id": "variant",
+      "label": "Color",
+      "options": [
+        { "value": "default", "label": "Default" },
+        { "value": "primary", "label": "Primary" },
+        { "value": "inverse-primary", "label": "Inverse primary" },
+        { "value": "inverse-primary-muted", "label": "Inverse primary (muted)" },
+        { "value": "accent", "label": "Accent" },
+        { "value": "accent-inverse", "label": "Accent (inverse)" },
+        { "value": "tint", "label": "Tint" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "select",
+      "id": "tag",
+      "label": "HTML tag",
+      "options": [
+        { "value": "p", "label": "p" },
+        { "value": "span", "label": "span" },
+        { "value": "div", "label": "div" },
+        { "value": "h1", "label": "h1" },
+        { "value": "h2", "label": "h2" },
+        { "value": "h3", "label": "h3" },
+        { "value": "h4", "label": "h4" },
+        { "value": "h5", "label": "h5" },
+        { "value": "h6", "label": "h6" }
+      ],
+      "default": "p",
+      "info": "Pick the semantic level; it doesn't have to match Role."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text Role",
+      "category": "t:categories.basic"
+    }
+  ]
+}
+{% endschema %}

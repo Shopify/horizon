@@ -77,13 +77,6 @@
   --form-label-base-padding: 16px;
   --form-label-state-focused-foreground: #0b078c;
   --form-label-state-error-foreground: #af200b;
-  --header-base-background: #fff8f0;
-  --header-base-border-color: rgba(17, 24, 28, 0.08);
-  --header-base-border-width: 1px;
-  --header-base-padding-inline: 24px;
-  --header-base-padding-block: 12px;
-  --header-base-gap: 24px;
-  --header-base-nav-gap: 16px;
   --icon-button-base-size: 40px;
   --icon-button-base-radius: 999px;
   --icon-button-base-background: #f2f4f8;
@@ -101,8 +94,8 @@
   --list-base-border-width: 1px;
   --nav-link-base-foreground: #101413;
   --nav-link-state-hover-foreground: #0b078c;
-  --nav-link-state-current-foreground: #0b078c;
-  --nav-link-state-current-font-weight: 600;
+  --nav-link-state-active-foreground: #0b078c;
+  --nav-base-gap: 16px;
   --product-card-base-media-height: 200px;
   --product-card-base-gap: 8px;
   --product-card-base-padding-inline: 16px;
