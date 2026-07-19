@@ -10,14 +10,14 @@ import {
 const cssDeclaring = (names) =>
   `:root {\n${names.map((n) => `  ${n}: 1px;`).join("\n")}\n}\n`;
 
-test("the contract covers six type roles across three properties, plus three button tokens", () => {
-  assert.equal(REQUIRED_TOKENS.length, 21);
+test("the contract covers seven type roles (one with an extra font-weight property) across three properties, plus three button tokens", () => {
+  assert.equal(REQUIRED_TOKENS.length, 25);
   assert.ok(
     REQUIRED_TOKENS.every(
       (name) => name.startsWith("--text-role-") || name.startsWith("--button-") || name === "--font-weight-semibold"
     )
   );
-  assert.equal(new Set(REQUIRED_TOKENS).size, 21, "no duplicates");
+  assert.equal(new Set(REQUIRED_TOKENS).size, 25, "no duplicates");
 });
 
 test("returns nothing when every required token is declared", () => {
@@ -41,9 +41,11 @@ test("tolerates the design system's real formatting", () => {
   assert.deepEqual(findMissingTokens(css, REQUIRED_TOKENS), []);
 });
 
-test("EXPECTED_TOKENS has 21 entries and REQUIRED_TOKENS is derived from it", () => {
-  assert.equal(Object.keys(EXPECTED_TOKENS).length, 21);
-  assert.equal(REQUIRED_TOKENS.length, 21);
+test("EXPECTED_TOKENS has 25 entries and REQUIRED_TOKENS is derived from it", () => {
+  // 22 type-role entries (7 roles) + 3 button/font entries. Was 28 when the scale carried a
+  // size axis (13 roles); the design system collapsed it, so a size step now earns its own role.
+  assert.equal(Object.keys(EXPECTED_TOKENS).length, 25);
+  assert.equal(REQUIRED_TOKENS.length, 25);
   assert.deepEqual(REQUIRED_TOKENS, Object.keys(EXPECTED_TOKENS));
 });
 
@@ -57,22 +59,23 @@ test("findWrongValues returns nothing when every value matches", () => {
 test("findWrongValues reports a token whose value has drifted", () => {
   const css = `:root {\n${Object.entries(EXPECTED_TOKENS)
     .map(([name, value]) =>
-      name === "--text-role-heading-lg-letter-spacing"
+      name === "--text-role-heading-letter-spacing"
         ? `  ${name}: 0.06em;`
         : `  ${name}: ${value};`
     )
     .join("\n")}\n}\n`;
   assert.deepEqual(findWrongValues(css), [
-    { token: "--text-role-heading-lg-letter-spacing", expected: "0.02em", actual: "0.06em" },
+    { token: "--text-role-heading-letter-spacing", expected: "0.02em", actual: "0.06em" },
   ]);
 });
 
 test("regression: a var() reference in place of the literal value is reported", () => {
   // This is the exact bug that shipped: the design system emitted var(--letter-spacing-sm) for
-  // --text-role-heading-lg-letter-spacing and the theme declared that name with its own value.
+  // the heading role's letter-spacing (then named --text-role-heading-lg-letter-spacing, before
+  // the design system collapsed the size axis) and the theme declared that name with its own value.
   const css = `:root {\n${Object.entries(EXPECTED_TOKENS)
     .map(([name, value]) =>
-      name === "--text-role-heading-lg-letter-spacing"
+      name === "--text-role-heading-letter-spacing"
         ? `  ${name}: var(--letter-spacing-sm);`
         : `  ${name}: ${value};`
     )
@@ -80,7 +83,7 @@ test("regression: a var() reference in place of the literal value is reported", 
   const wrong = findWrongValues(css);
   assert.equal(wrong.length, 1);
   assert.deepEqual(wrong[0], {
-    token: "--text-role-heading-lg-letter-spacing",
+    token: "--text-role-heading-letter-spacing",
     expected: "0.02em",
     actual: "var(--letter-spacing-sm)",
   });
@@ -88,7 +91,7 @@ test("regression: a var() reference in place of the literal value is reported", 
 
 test("findWrongValues does not report a token that is absent", () => {
   const entries = Object.entries(EXPECTED_TOKENS).filter(
-    ([name]) => name !== "--text-role-heading-lg-letter-spacing"
+    ([name]) => name !== "--text-role-heading-letter-spacing"
   );
   const css = `:root {\n${entries.map(([name, value]) => `  ${name}: ${value};`).join("\n")}\n}\n`;
   assert.deepEqual(findWrongValues(css), []);
