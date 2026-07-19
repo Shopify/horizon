@@ -20,7 +20,7 @@
           "settings": {
             "hide_logo_on_home_page": false,
             "padding-block-start": 0,
-            "padding-block-end": 0
+            "padding-block-end": 8
           },
           "blocks": {}
         },
@@ -34,7 +34,7 @@
             "type_font_primary_size": "1.125rem",
             "menu_font_style": "inverse",
             "type_font_primary_link": "heading",
-            "type_case_primary_link": "none",
+            "type_case_primary_link": "uppercase",
             "menu_style": "collection_images",
             "featured_products_aspect_ratio": "4 / 5",
             "featured_collections_aspect_ratio": "16 / 9",
@@ -42,9 +42,9 @@
             "navigation_bar": false,
             "background_color_navigation_bar": "{{ settings.color_palette.background }}",
             "text_color_navigation_bar": "",
-            "drawer_accordion": true,
+            "drawer_accordion": false,
             "drawer_accordion_expand_first": true,
-            "drawer_dividers": true
+            "drawer_dividers": false
           },
           "blocks": {}
         }
