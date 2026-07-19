@@ -1,0 +1,47 @@
+{
+  "skill_name": "design-system-sync",
+  "evals": [
+    {
+      "id": 0,
+      "name": "plain-resync",
+      "prompt": "Pull the latest design system tokens into the theme and make sure everything is still in order.",
+      "expected_output": "Runs npm run tokens:sync (which builds the design system, validates the contract, and copies dist/tokens.flat.css to assets/design-tokens.css verbatim), runs npm test, and reports a clean sync without hand-editing any generated file.",
+      "files": [],
+      "assertions": [
+        "assets/design-tokens.css is byte-identical to ../design-system/dist/tokens.flat.css (synced verbatim, no hand edits)",
+        "scripts/design-tokens-contract.mjs left unchanged",
+        "snippets/design-system-bridge.liquid left unchanged",
+        "blocks/split-hero.liquid left unchanged",
+        "npm test passes in the theme"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "upstream-revalue-heading",
+      "prompt": "We bumped the heading text role's font size to 24px in the design system. Update the theme so it picks that up.",
+      "expected_output": "Runs the sync, sees the contract fail with a wrong-value error (expected 22px, got 24px), updates the expected value in scripts/design-tokens-contract.mjs to 24px, re-syncs so assets/design-tokens.css carries the 24px literal, and passes npm test. Does not hand-edit design-tokens.css and does not revert the design system.",
+      "files": [],
+      "assertions": [
+        "assets/design-tokens.css is byte-identical to ../design-system/dist/tokens.flat.css (synced verbatim, no hand edits)",
+        "contract expects 24px for --text-role-heading-font-size",
+        "assets/design-tokens.css declares --text-role-heading-font-size: 24px as a literal",
+        "design system source still says 24px (source of truth was not reverted)",
+        "npm test passes in the theme"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "upstream-rename-hero",
+      "prompt": "The design system renamed the `hero` text role to `display`. Sync the theme with that change.",
+      "expected_output": "Updates the four hero entries in scripts/design-tokens-contract.mjs to the display names, re-points the h1 mapping in snippets/design-system-bridge.liquid at --text-role-display-*, greps the whole theme for stale var(--text-role-hero-*) references and updates blocks/split-hero.liquid too, re-syncs successfully, and passes npm test. The block update is the discriminating step: the contract alone does not guard block-spent tokens.",
+      "files": [],
+      "assertions": [
+        "assets/design-tokens.css is byte-identical to ../design-system/dist/tokens.flat.css (synced verbatim, no hand edits)",
+        "contract lists the four --text-role-display-* tokens and no --text-role-hero-*",
+        "bridge maps h1 to --text-role-display-* with no stale hero references",
+        "blocks/split-hero.liquid updated to --text-role-display-* with no stale --text-role-hero-* (a stale var() is silent)",
+        "npm test passes in the theme"
+      ]
+    }
+  ]
+}

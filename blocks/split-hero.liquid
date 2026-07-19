@@ -11,7 +11,7 @@
   by v1".
 
   MUST sit in a `section` (sections/section.liquid) set to section_width: full-width with zero block
-  padding. This block owns the panel, the grid and the inner max-width; the section owns only the
+  padding. This block owns the panel and the grid, both full-bleed; the section owns only the
   bleed, via `.section--full-width > * { grid-column: 1 / -1 }` in base.css. sections/hero.liquid is
   the wrong wrapper -- it is a background-media hero that hardcodes its own full-width container and
   applies section_width to an inner content wrapper instead.
@@ -109,16 +109,26 @@
 
   /* Horizon does NOT make a block a direct child of .section. The real chain is
      .section--full-width > .custom-section-content (this is what receives grid-column: 1 / -1)
-     > .spacing-style.layout-panel-flex > the block. That panel is display:flex with
-     flex-direction:column and align-items:flex-start, so in a column flex container align-items
-     governs the HORIZONTAL axis and flex-start means "do not stretch": the block shrink-wraps to its
-     content's max-width (1180px) and pins left, while the section around it is genuinely full-width.
-     The bleed looks broken but the section setting is fine -- the block just never fills it.
+     > .spacing-style.layout-panel-flex > the block. That panel is display:flex, direction set by
+     the section's content_direction setting.
 
-     align-self:stretch is a per-item opt-in rather than a specificity fight, and is the same fix
-     blocks/corporate-offer-card.liquid already documents for the same cause. */
+     In a COLUMN flex container, align-items governs the HORIZONTAL axis, and Horizon's default of
+     flex-start means "do not stretch": the block shrink-wraps to its content's width and pins left.
+     align-self:stretch is a per-item opt-in fix for that axis -- a specificity-free alternative also
+     used by blocks/corporate-offer-card.liquid for the same cause.
+
+     In a ROW flex container (e.g. the Home hero, which sets content_direction: row), align-self
+     instead governs the VERTICAL axis, so align-self:stretch here gives the block full height, not
+     full width. Width on the row's main axis is a flex-grow question, not an align question -- see
+     the .layout-panel-flex--row > .split-hero rule below, which mirrors how native group blocks
+     opt into filling a row via .group-block--width-fill (assets/base.css). Either way the bleed
+     itself is fine -- the section is genuinely full-width -- the block just never filled it. */
   .split-hero {
     align-self: stretch;
+  }
+
+  .layout-panel-flex--row > .split-hero {
+    flex: 1;
   }
 
   .split-hero--blue {
@@ -135,8 +145,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: stretch;
-    max-width: 1180px;
-    margin-inline: auto;
+    height: 100%;
   }
 
   .split-hero__copy {

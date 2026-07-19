@@ -20,7 +20,7 @@
           "settings": {
             "thickness": 1,
             "corner_radius": "square",
-            "divider_color": "{{ settings.color_palette.color3 }}",
+            "divider_color": "rgba(255, 255, 255, 0.12)",
             "width_percent": 100,
             "padding-block-start": 0,
             "padding-block-end": 24
@@ -70,7 +70,7 @@
       "settings": {
         "section_width": "page-width",
         "gap": 40,
-        "background_color": "{{ settings.color_palette.background }}",
+        "background_color": "{{ settings.color_palette.foreground }}",
         "padding-block-start": 36,
         "padding-block-end": 36
       }
@@ -109,8 +109,8 @@
       "settings": {
         "section_width": "page-width",
         "gap": 24,
-        "background_color": "{{ settings.color_palette.background }}",
-        "divider_color": "{{ settings.color_palette.color3 }}",
+        "background_color": "{{ settings.color_palette.foreground }}",
+        "divider_color": "rgba(255, 255, 255, 0.12)",
         "divider_thickness": 1,
         "padding-block-start": 12,
         "padding-block-end": 16

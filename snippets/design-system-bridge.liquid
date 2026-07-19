@@ -78,4 +78,15 @@
   button.shopify-payment-button__button--unbranded {
     font-weight: var(--font-weight-semibold);
   }
+
+  /* Footer tagline — a merchant-added `text` block inside the footer group, set to
+     type_preset "custom" with font "Accent" (Oswald), reads as the design system's tagline line
+     (e.g. "Bakery & specialty coffee · Sitges"). `text.liquid`/`typography-style.liquid` always
+     emit `--font-family: var(--font-accent--family);` inline plus a `custom-typography` class for
+     that combination, so this targets it directly rather than adding a dedicated Horizon block
+     type. Scoped to the real `<footer>` element `theme.liquid` wraps the footer-group render in,
+     so it can't affect accent-font custom text elsewhere on the page. */
+  footer .custom-typography[style*='--font-family: var(--font-accent--family)'] {
+    color: var(--footer-tagline-foreground);
+  }
 {% endstyle %}
