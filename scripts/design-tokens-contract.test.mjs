@@ -10,14 +10,14 @@ import {
 const cssDeclaring = (names) =>
   `:root {\n${names.map((n) => `  ${n}: 1px;`).join("\n")}\n}\n`;
 
-test("the contract covers seven type roles (one with an extra font-weight property) across three properties, plus three button tokens", () => {
-  assert.equal(REQUIRED_TOKENS.length, 25);
+test("the contract covers five type roles (one with an extra font-weight property) across three properties, plus three button tokens", () => {
+  assert.equal(REQUIRED_TOKENS.length, 19);
   assert.ok(
     REQUIRED_TOKENS.every(
       (name) => name.startsWith("--text-role-") || name.startsWith("--button-") || name === "--font-weight-semibold"
     )
   );
-  assert.equal(new Set(REQUIRED_TOKENS).size, 25, "no duplicates");
+  assert.equal(new Set(REQUIRED_TOKENS).size, 19, "no duplicates");
 });
 
 test("returns nothing when every required token is declared", () => {
@@ -41,11 +41,12 @@ test("tolerates the design system's real formatting", () => {
   assert.deepEqual(findMissingTokens(css, REQUIRED_TOKENS), []);
 });
 
-test("EXPECTED_TOKENS has 25 entries and REQUIRED_TOKENS is derived from it", () => {
-  // 22 type-role entries (7 roles) + 3 button/font entries. Was 28 when the scale carried a
-  // size axis (13 roles); the design system collapsed it, so a size step now earns its own role.
-  assert.equal(Object.keys(EXPECTED_TOKENS).length, 25);
-  assert.equal(REQUIRED_TOKENS.length, 25);
+test("EXPECTED_TOKENS has 19 entries and REQUIRED_TOKENS is derived from it", () => {
+  // 16 type-role entries (5 roles the bridge actually spends) + 3 button/font entries. The design
+  // system also defines label and stamp roles, but design-system-bridge.liquid doesn't consume
+  // them, so they are deliberately excluded here.
+  assert.equal(Object.keys(EXPECTED_TOKENS).length, 19);
+  assert.equal(REQUIRED_TOKENS.length, 19);
   assert.deepEqual(REQUIRED_TOKENS, Object.keys(EXPECTED_TOKENS));
 });
 

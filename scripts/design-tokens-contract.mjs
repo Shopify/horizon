@@ -25,13 +25,11 @@ export const EXPECTED_TOKENS = {
   "--text-role-body-font-size": "16px",
   "--text-role-body-line-height": "24px",
   "--text-role-body-letter-spacing": "0",
-  "--text-role-label-font-size": "13px",
-  "--text-role-label-line-height": "18px",
-  "--text-role-label-letter-spacing": "0.02em",
-  "--text-role-stamp-font-size": "13px",
-  "--text-role-stamp-line-height": "18px",
-  "--text-role-stamp-letter-spacing": "0.05em",
-  // The three below serve buttons, not type presets; everything above serves the seven type roles.
+  // The three below serve buttons, not type presets; everything above serves the five type roles
+  // snippets/design-system-bridge.liquid actually consumes (hero, title, heading, subheading,
+  // body). The design system also defines label and stamp roles, but nothing in the theme bridges
+  // them, so they are deliberately left out of this contract -- add them back only once the bridge
+  // spends them.
   "--button-size-md-height": "48px",
   "--button-size-md-padding": "24px",
   "--font-weight-semibold": "600",
