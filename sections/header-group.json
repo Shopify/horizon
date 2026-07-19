@@ -28,7 +28,7 @@
           "type": "_header-menu",
           "static": true,
           "settings": {
-            "menu": "header-menu",
+            "menu": "",
             "background_color": "{{ settings.color_palette.background }}",
             "text_color": "",
             "type_font_primary_size": "0.875rem",
@@ -71,7 +71,7 @@
         "divider_size": "page-width",
         "divider_color": "",
         "border_width": 1,
-        "bottom_border_color": "{{ settings.color_palette.color3 }}",
+        "bottom_border_color": "#F7F2E3",
         "actions_display_style": "icon",
         "actions_font_size": "0.875rem",
         "actions_font": "body",
