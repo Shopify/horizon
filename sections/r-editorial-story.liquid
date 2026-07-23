@@ -1,0 +1,287 @@
+{% comment %}
+  Section: Rocky — Editorial story (WS10)
+
+  The PDP storytelling stage: an editor-driven collage builder. Blocks
+  (r-story-media / r-story-text / r-story-custom) place themselves on a
+  dual grid — 12 columns on desktop, 6 on mobile — via inline custom
+  properties emitted by snippets/r-story-item-style.liquid. Overlap is
+  expressed by overlapping row/column ranges plus a per-item layer value.
+
+  Media motion (fade-rise, blur-up, parallax, ken-burns) is delivered by the
+  WS9 r-media framework inside each media block. Text/custom reveals are
+  driven here by <r-editorial-story> (assets/r-editorial-story.js), following
+  the same armed / reduced-motion / morph-safe contract.
+
+  Per-product arrangements live in per-product alternate templates
+  (templates/product.r-{handle}.json) — see the WS10 plan.
+{% endcomment %}
+
+<script src="{{ 'r-editorial-story.js' | asset_url }}" type="module"></script>
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div
+  class="section section--{{ section.settings.section_width }} r-editorial-story color-{{ section.settings.color_scheme }} spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <r-editorial-story class="r-story-stage">
+    {% content_for 'blocks' %}
+  </r-editorial-story>
+</div>
+
+{% stylesheet %}
+  .r-editorial-story {
+    /* Fluid stage tokens — everything interpolates with the viewport; the
+       only discrete jump is the 750px grid re-placement. */
+    --r-story-gap: clamp(12px, 1.6vw, 24px);
+    --r-story-row-gap: clamp(24px, 4.5vw, 72px);
+
+    /* Fluid type scale consumed by r-story-text roles. */
+    --r-story-type-eyebrow: clamp(0.6875rem, 0.64rem + 0.24vw, 0.8125rem);
+    --r-story-type-headline: clamp(1.875rem, 1.2rem + 2.7vw, 3.75rem);
+    --r-story-type-body: clamp(0.9375rem, 0.89rem + 0.24vw, 1.125rem);
+    --r-story-type-pullquote: clamp(1.625rem, 1.05rem + 2.9vw, 3.5rem);
+    --r-story-type-caption: clamp(0.6875rem, 0.66rem + 0.16vw, 0.8125rem);
+
+    /* Nudged / scaled items may reach past the viewport — never let them
+       mint a horizontal scrollbar. Vertical overflow stays visible. */
+    overflow-x: clip;
+  }
+
+  .r-story-stage {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    column-gap: var(--r-story-gap);
+    row-gap: var(--r-story-row-gap);
+    align-items: start;
+  }
+
+  @media screen and (min-width: 750px) {
+    .r-story-stage {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+  }
+
+  /* ---- Item placement — the vars arrive inline per item (Liquid cannot
+     run inside a stylesheet); see snippets/r-story-item-style.liquid.
+     Nudge/scale ride the `transform` property so the reveal below can own
+     the individual `translate` property without conflict. ---- */
+
+  .r-story-stage > .r-story-item {
+    position: relative;
+    min-width: 0;
+    grid-column: var(--r-si-mc, 1) / span var(--r-si-mcs, 6);
+    grid-row: var(--r-si-mr, auto) / span var(--r-si-mrs, 1);
+    z-index: var(--r-si-mz, 1);
+    align-self: var(--r-si-align, start);
+    transform: translate(
+      calc(var(--r-si-mx, 0) * var(--spacing-scale, 1) * 1px),
+      calc(var(--r-si-my, 0) * var(--spacing-scale, 1) * 1px)
+    );
+  }
+
+  @media screen and (min-width: 750px) {
+    .r-story-stage > .r-story-item {
+      grid-column: var(--r-si-c, 1) / span var(--r-si-cs, 12);
+      grid-row: var(--r-si-r, auto) / span var(--r-si-rs, 1);
+      z-index: var(--r-si-z, 1);
+      transform: translate(
+          calc(var(--r-si-x, 0) * var(--spacing-scale, 1) * 1px),
+          calc(var(--r-si-y, 0) * var(--spacing-scale, 1) * 1px)
+        )
+        scale(calc(var(--r-si-scale, 100) / 100));
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .r-story-item--hide-mobile {
+      display: none;
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    .r-story-item--hide-desktop {
+      display: none;
+    }
+  }
+
+  /* ---- Text/custom reveal — armed by <r-editorial-story> only when JS is
+     driving and motion is allowed; the end-state derives from the
+     data-r-visible attribute alone (never transition completion). Media
+     items reveal via r-media's own fade-rise instead. ---- */
+
+  @media (prefers-reduced-motion: no-preference) {
+    r-editorial-story[data-r-armed] > .r-story-item[data-r-reveal] {
+      transition:
+        opacity var(--r-motion-duration-reveal, 750ms) var(--r-motion-ease-drift, ease-out),
+        translate var(--r-motion-duration-reveal, 750ms) var(--r-motion-ease-drift, ease-out);
+      transition-delay: var(--r-story-reveal-delay, 0ms);
+    }
+
+    r-editorial-story[data-r-armed] > .r-story-item[data-r-reveal]:not([data-r-visible]) {
+      opacity: 0;
+      translate: 0 var(--r-motion-rise-distance, 1.5rem);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.r_editorial_story",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "blocks": [
+    {
+      "type": "r-story-media"
+    },
+    {
+      "type": "r-story-text"
+    },
+    {
+      "type": "r-story-custom"
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.section_layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:settings.section_width",
+      "options": [
+        {
+          "value": "page-width",
+          "label": "t:options.page"
+        },
+        {
+          "value": "full-width",
+          "label": "t:options.full"
+        }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-3"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.r_editorial_story",
+      "category": "Rocky — PDP",
+      "settings": {
+        "section_width": "page-width",
+        "color_scheme": "scheme-3",
+        "padding-block-start": 64,
+        "padding-block-end": 64
+      },
+      "blocks": {
+        "headline": {
+          "type": "r-story-text",
+          "settings": {
+            "role": "headline",
+            "text": "The future is solid",
+            "d_col_start": 1,
+            "d_col_span": 4,
+            "d_row_start": 1,
+            "m_row_start": 1
+          }
+        },
+        "lede": {
+          "type": "r-story-text",
+          "settings": {
+            "role": "body",
+            "content": "<p>This formula was years in the making. Backed by extensive research and over 100 prototypes, we crafted a bar rich in vitamins and proteins, made with just 11 ultra-concentrated, high-performance ingredients.</p>",
+            "reveal_delay": 150,
+            "d_col_start": 1,
+            "d_col_span": 3,
+            "d_row_start": 2,
+            "m_row_start": 2
+          }
+        },
+        "media-forest": {
+          "type": "r-story-media",
+          "settings": {
+            "effect_parallax": true,
+            "d_col_start": 4,
+            "d_col_span": 5,
+            "d_row_start": 1,
+            "d_row_span": 2,
+            "m_row_start": 3
+          }
+        },
+        "media-portrait": {
+          "type": "r-story-media",
+          "settings": {
+            "aspect": "4 / 5",
+            "d_col_start": 8,
+            "d_col_span": 4,
+            "d_row_start": 2,
+            "d_row_span": 2,
+            "d_z": 2,
+            "d_nudge_y": -40,
+            "m_col_start": 2,
+            "m_col_span": 5,
+            "m_row_start": 4
+          }
+        },
+        "pullquote": {
+          "type": "r-story-text",
+          "settings": {
+            "role": "pullquote",
+            "text": "One Hair Bar = 35–45 washes, that's equivalent to about 1.5 of our liquid 360 mL bottles.",
+            "d_col_start": 2,
+            "d_col_span": 6,
+            "d_row_start": 3,
+            "m_row_start": 5
+          }
+        },
+        "howto": {
+          "type": "r-story-text",
+          "settings": {
+            "role": "body",
+            "content": "<p><strong>How to use:</strong> Wet your hair and the bar, then massage from roots to ends. Rinse with warm water.</p>",
+            "reveal_delay": 300,
+            "d_col_start": 9,
+            "d_col_span": 4,
+            "d_row_start": 3,
+            "m_row_start": 6
+          }
+        }
+      },
+      "block_order": ["headline", "lede", "media-forest", "media-portrait", "pullquote", "howto"]
+    }
+  ]
+}
+{% endschema %}

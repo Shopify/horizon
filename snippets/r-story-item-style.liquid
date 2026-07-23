@@ -1,0 +1,57 @@
+{%- doc -%}
+  Echoes the inline custom-property style string that places a story item on
+  the r-editorial-story stage (WS10). The stage stylesheet maps these
+  variables to grid placement — Liquid cannot run inside {% stylesheet %},
+  so per-item geometry always travels inline (the product-hotspots /
+  r-inflow-card idiom).
+
+  Mobile grid: 6 columns (vars --r-si-m*). Desktop grid: 12 columns.
+  A row start of 0 means "auto flow" — the variable is simply not emitted,
+  so the CSS falls back to `auto`.
+
+  @param {object} settings - Block settings carrying the placement ids
+    (m_col_start, m_col_span, m_row_start, m_row_span, m_z, m_nudge_x,
+    m_nudge_y, d_col_start, d_col_span, d_row_start, d_row_span, d_z,
+    d_nudge_x, d_nudge_y, d_scale, align_self)
+
+  @example
+  <div class="r-story-item" style="{% render 'r-story-item-style', settings: block.settings %}">
+{%- enddoc -%}
+{%- liquid
+  assign s = settings
+
+  echo '--r-si-mc: ' | append: s.m_col_start | append: ';'
+  echo ' --r-si-mcs: ' | append: s.m_col_span | append: ';'
+  if s.m_row_start > 0
+    echo ' --r-si-mr: ' | append: s.m_row_start | append: ';'
+  endif
+  echo ' --r-si-mrs: ' | append: s.m_row_span | append: ';'
+  echo ' --r-si-mz: ' | append: s.m_z | append: ';'
+  if s.m_nudge_x != 0
+    echo ' --r-si-mx: ' | append: s.m_nudge_x | append: ';'
+  endif
+  if s.m_nudge_y != 0
+    echo ' --r-si-my: ' | append: s.m_nudge_y | append: ';'
+  endif
+
+  echo ' --r-si-c: ' | append: s.d_col_start | append: ';'
+  echo ' --r-si-cs: ' | append: s.d_col_span | append: ';'
+  if s.d_row_start > 0
+    echo ' --r-si-r: ' | append: s.d_row_start | append: ';'
+  endif
+  echo ' --r-si-rs: ' | append: s.d_row_span | append: ';'
+  echo ' --r-si-z: ' | append: s.d_z | append: ';'
+  if s.d_nudge_x != 0
+    echo ' --r-si-x: ' | append: s.d_nudge_x | append: ';'
+  endif
+  if s.d_nudge_y != 0
+    echo ' --r-si-y: ' | append: s.d_nudge_y | append: ';'
+  endif
+  if s.d_scale != 100
+    echo ' --r-si-scale: ' | append: s.d_scale | append: ';'
+  endif
+
+  if s.align_self != blank and s.align_self != 'start'
+    echo ' --r-si-align: ' | append: s.align_self | append: ';'
+  endif
+-%}

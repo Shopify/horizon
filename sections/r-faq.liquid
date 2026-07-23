@@ -1,0 +1,166 @@
+{% comment %}
+  Section: Rocky — FAQ (WS10)
+
+  A titled accordion band for PDP storytelling templates. Deliberately thin:
+  the rows are the upstream `accordion` block + `_accordion-row` children
+  (accordion-custom-component behaviour and a11y come for free — do not
+  rebuild). Per-product Q&A lives in each product's alternate template JSON.
+{% endcomment %}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div
+  class="section section--page-width r-faq color-{{ section.settings.color_scheme }} spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="r-faq__inner{% if section.settings.narrow %} r-faq__inner--narrow{% endif %}">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="r-faq__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    {% content_for 'blocks' %}
+  </div>
+</div>
+
+{% stylesheet %}
+  .r-faq__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--r-space-lg, 32px);
+  }
+
+  .r-faq__inner--narrow {
+    width: 100%;
+    max-width: 50rem;
+    margin-inline: auto;
+  }
+
+  .r-faq__heading {
+    margin: 0;
+    font-family: var(--r-font-display, inherit);
+    font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.5rem);
+    letter-spacing: var(--r-tracking-tight, -0.01em);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.r_faq",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "blocks": [
+    {
+      "type": "accordion"
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "FAQ"
+    },
+    {
+      "type": "checkbox",
+      "id": "narrow",
+      "label": "t:settings.r_faq_narrow",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:content.section_layout"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.r_faq",
+      "category": "Rocky — PDP",
+      "settings": {
+        "heading": "FAQ",
+        "narrow": true,
+        "color_scheme": "scheme-1"
+      },
+      "blocks": {
+        "accordion": {
+          "type": "accordion",
+          "settings": {
+            "icon": "caret",
+            "dividers": true,
+            "type_preset": "h6"
+          },
+          "blocks": {
+            "row-1": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "How long does one bar last?",
+                "icon": "none"
+              },
+              "blocks": {
+                "text-1": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>One bar equals 35–45 washes — about 1.5 of our liquid 360 mL bottles.</p>",
+                    "width": "100%"
+                  }
+                }
+              },
+              "block_order": ["text-1"]
+            },
+            "row-2": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Is it suitable for all hair types?",
+                "icon": "none"
+              },
+              "blocks": {
+                "text-1": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Yes — the formula is balanced for daily use on every hair type.</p>",
+                    "width": "100%"
+                  }
+                }
+              },
+              "block_order": ["text-1"]
+            }
+          },
+          "block_order": ["row-1", "row-2"]
+        }
+      },
+      "block_order": ["accordion"]
+    }
+  ]
+}
+{% endschema %}
