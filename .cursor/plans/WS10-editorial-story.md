@@ -23,11 +23,17 @@ product unless a design exceeds the controls (then: the custom block).
 
 ## The model
 
-- **Dual grid.** Stage = CSS grid, `repeat(12, 1fr)` ≥750px / `repeat(6, 1fr)`
-  below. Every block carries two placement panels (Desktop layout / Mobile
-  layout): column start/span, row start/span (0 = auto flow), z-layer,
-  nudge X/Y, scale (desktop), align, hide-per-viewport. Overlap = overlapping
-  row/col ranges + z-index.
+- **Dual grid.** Editor semantics: 12 columns ≥750px / 6 below, with
+  **half-column precision** (range step 0.5 — Shopify range steps must divide
+  by 0.1, so 0.25 is rejected by ValidSchema). The stage actually renders a
+  quadrupled track grid (`repeat(48, 1fr)` / `repeat(24, 1fr)`);
+  `snippets/r-story-item-style.liquid` converts column values to integer
+  track lines (track = (col − 1) × 4 + 1), so whole-number arrangements keep
+  exact geometry and no CSS calc() is needed. Every block carries two
+  placement panels (Desktop layout / Mobile layout): column start/span, row
+  start/span (0 = auto flow), z-layer, nudge X/Y (±100px, 2px steps), scale
+  (desktop), align, hide-per-viewport. Overlap = overlapping row/col ranges +
+  z-index.
 - **Inline custom props.** Liquid cannot run inside `{% stylesheet %}`, so
   placement travels as `--r-si-*` vars on each item
   (`snippets/r-story-item-style.liquid`); the section stylesheet maps them

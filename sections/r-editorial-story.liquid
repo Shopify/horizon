@@ -47,9 +47,12 @@
     overflow-x: clip;
   }
 
+  /* Quadrupled track grids (6 and 12 editor "columns" at quarter-column
+     precision). Placement vars arrive as integer TRACK values — the
+     column -> track math lives in snippets/r-story-item-style.liquid. */
   .r-story-stage {
     display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-columns: repeat(24, minmax(0, 1fr));
     column-gap: var(--r-story-gap);
     row-gap: var(--r-story-row-gap);
     align-items: start;
@@ -57,7 +60,7 @@
 
   @media screen and (min-width: 750px) {
     .r-story-stage {
-      grid-template-columns: repeat(12, minmax(0, 1fr));
+      grid-template-columns: repeat(48, minmax(0, 1fr));
     }
   }
 
@@ -69,7 +72,7 @@
   .r-story-stage > .r-story-item {
     position: relative;
     min-width: 0;
-    grid-column: var(--r-si-mc, 1) / span var(--r-si-mcs, 6);
+    grid-column: var(--r-si-mc, 1) / span var(--r-si-mcs, 24);
     grid-row: var(--r-si-mr, auto) / span var(--r-si-mrs, 1);
     z-index: var(--r-si-mz, 1);
     align-self: var(--r-si-align, start);
@@ -81,7 +84,7 @@
 
   @media screen and (min-width: 750px) {
     .r-story-stage > .r-story-item {
-      grid-column: var(--r-si-c, 1) / span var(--r-si-cs, 12);
+      grid-column: var(--r-si-c, 1) / span var(--r-si-cs, 24);
       grid-row: var(--r-si-r, auto) / span var(--r-si-rs, 1);
       z-index: var(--r-si-z, 1);
       transform: translate(

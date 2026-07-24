@@ -5,7 +5,12 @@
   so per-item geometry always travels inline (the product-hotspots /
   r-inflow-card idiom).
 
-  Mobile grid: 6 columns (vars --r-si-m*). Desktop grid: 12 columns.
+  Mobile grid: 6 columns (vars --r-si-m*). Desktop grid: 12 columns. Column
+  settings accept half-column steps (e.g. start 4.5, span 5.5 — Shopify
+  range steps must divide by 0.1, so 0.5 is the floor); the stage renders a
+  quadrupled track grid (24 mobile / 48 desktop), and this snippet converts
+  column values to integer track lines — track = (col − 1) × 4 + 1 — so
+  whole-number arrangements keep their exact geometry.
   A row start of 0 means "auto flow" — the variable is simply not emitted,
   so the CSS falls back to `auto`.
 
@@ -20,8 +25,14 @@
 {%- liquid
   assign s = settings
 
-  echo '--r-si-mc: ' | append: s.m_col_start | append: ';'
-  echo ' --r-si-mcs: ' | append: s.m_col_span | append: ';'
+  # Column -> track conversion (quarter-column precision, always integers).
+  assign m_track = s.m_col_start | minus: 1 | times: 4 | plus: 1 | round
+  assign m_track_span = s.m_col_span | times: 4 | round
+  assign d_track = s.d_col_start | minus: 1 | times: 4 | plus: 1 | round
+  assign d_track_span = s.d_col_span | times: 4 | round
+
+  echo '--r-si-mc: ' | append: m_track | append: ';'
+  echo ' --r-si-mcs: ' | append: m_track_span | append: ';'
   if s.m_row_start > 0
     echo ' --r-si-mr: ' | append: s.m_row_start | append: ';'
   endif
@@ -34,8 +45,8 @@
     echo ' --r-si-my: ' | append: s.m_nudge_y | append: ';'
   endif
 
-  echo ' --r-si-c: ' | append: s.d_col_start | append: ';'
-  echo ' --r-si-cs: ' | append: s.d_col_span | append: ';'
+  echo ' --r-si-c: ' | append: d_track | append: ';'
+  echo ' --r-si-cs: ' | append: d_track_span | append: ';'
   if s.d_row_start > 0
     echo ' --r-si-r: ' | append: s.d_row_start | append: ';'
   endif
