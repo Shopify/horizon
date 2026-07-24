@@ -35,12 +35,14 @@
     --r-story-gap: clamp(12px, 1.6vw, 24px);
     --r-story-row-gap: clamp(24px, 4.5vw, 72px);
 
-    /* Fluid type scale consumed by r-story-text roles. */
-    --r-story-type-eyebrow: clamp(0.6875rem, 0.64rem + 0.24vw, 0.8125rem);
-    --r-story-type-headline: clamp(1.875rem, 1.2rem + 2.7vw, 3.75rem);
-    --r-story-type-body: clamp(0.9375rem, 0.89rem + 0.24vw, 1.125rem);
-    --r-story-type-pullquote: clamp(1.625rem, 1.05rem + 2.9vw, 3.5rem);
-    --r-story-type-caption: clamp(0.6875rem, 0.66rem + 0.16vw, 0.8125rem);
+    /* Type scale consumed by r-story-text roles — brand-specified fixed
+       sizes (2026-07: headline 18 / body 13 / pullquote 24; eyebrow and
+       caption sit below body). rem so user zoom still scales them. */
+    --r-story-type-eyebrow: 0.6875rem; /* 11px */
+    --r-story-type-headline: 1.125rem; /* 18px */
+    --r-story-type-body: 0.8125rem; /* 13px */
+    --r-story-type-pullquote: 1.5rem; /* 24px */
+    --r-story-type-caption: 0.6875rem; /* 11px */
 
     /* Nudged / scaled items may reach past the viewport — never let them
        mint a horizontal scrollbar. Vertical overflow stays visible. */

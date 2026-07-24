@@ -52,8 +52,10 @@ product unless a design exceeds the controls (then: the custom block).
   (`snippets/r-story-item-style.liquid`); the section stylesheet maps them
   once, Liquid-free. Nudge/scale ride `transform`; the reveal owns the
   individual `translate` property — they never conflict.
-- **Fluidity.** Type roles (eyebrow/headline/body/pullquote/caption) map to
-  `--r-story-type-*` clamp() tokens on the stage; gaps clamp too. The only
+- **Type scale.** Roles (eyebrow/headline/body/pullquote/caption) map to
+  `--r-story-type-*` tokens on the stage — brand-fixed sizes since 2026-07:
+  headline 18px / body 13px / pullquote 24px / eyebrow + caption 11px (rem
+  units so user zoom scales). Stage gaps stay fluid clamp(); the only
   discrete jump is the 750px grid re-placement.
 - **Motion.** Media effects (fade-rise, blur-up, parallax w/ per-block depth,
   ken-burns) are r-media's (WS9) — the media block just builds the `effect`

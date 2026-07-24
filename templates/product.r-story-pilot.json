@@ -598,6 +598,7 @@
         "heading"
       ],
       "settings": {
+        "video": "shopify://files/videos/Desktop Homepage 1.3 c25.mp4",
         "autoplay": true,
         "height": "80svh",
         "toggle_overlay": true,
@@ -607,8 +608,8 @@
         "content_vertical": "flex-end",
         "content_horizontal": "flex-start",
         "section_width": "full-width",
-        "color_scheme": "scheme-2",
-        "padding-block-start": 0,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 38,
         "padding-block-end": 0
       }
     },
@@ -659,8 +660,8 @@
             "reveal": true,
             "reveal_delay": 150,
             "d_col_start": 1,
-            "d_col_span": 3,
-            "d_row_start": 1.5,
+            "d_col_span": 4,
+            "d_row_start": 1.8,
             "d_row_span": 1,
             "d_z": 2,
             "d_nudge_x": 0,
@@ -820,7 +821,7 @@
       ],
       "settings": {
         "section_width": "page-width",
-        "color_scheme": "scheme-3",
+        "color_scheme": "scheme-1",
         "padding-block-start": 64,
         "padding-block-end": 64
       }
