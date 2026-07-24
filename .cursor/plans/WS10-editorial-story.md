@@ -33,10 +33,17 @@ product unless a design exceeds the controls (then: the custom block).
   bug shipped briefly and presented as items landing at 102%+ left).
   `snippets/r-story-item-style.liquid` clamps values and converts columns to
   integer track lines (track = (value − 1) × 10 + 1) → 0.1-column effective
-  precision, no CSS calc() in placement. **Rows stay integer content-sized
-  shelves** — fractional shelves are ill-defined when rows auto-size, so
-  decimal row inputs round and fine vertical placement is nudge Y (free
-  decimal px). Each block: two placement panels (Desktop/Mobile): column
+  precision, no CSS calc() in placement. **Rows use the same ×10 micro-track
+  conversion** (row 2.5 → track 16) — but `row-gap` cannot survive the
+  multiplication (it compounds per micro-row, and empty micro-rows still
+  accumulate gaps), so the stage sets `row-gap: 0` and the between-band
+  rhythm is a `margin-block-end: var(--r-story-row-gap)` on every item
+  (sizes into each band exactly like the old shelf gap; a negative stage
+  margin trims the trailing band). Caveat: micro-rows within a band share
+  its content-driven height distribution, so fractional row starts move
+  continuously with every 0.1 step but interpolate *non-linearly* when a
+  band holds mixed-height content — nudge Y (free decimal px) remains the
+  exact control. Each block: two placement panels (Desktop/Mobile): column
   start/span (decimal), row start/span (0 = auto flow), z-layer, nudge X/Y
   (decimal px), scale (desktop), align, hide-per-viewport. Overlap =
   overlapping row/col ranges + z-index.
