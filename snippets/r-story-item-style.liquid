@@ -5,14 +5,20 @@
   so per-item geometry always travels inline (the product-hotspots /
   r-inflow-card idiom).
 
-  Mobile grid: 6 columns (vars --r-si-m*). Desktop grid: 12 columns. Column
-  settings accept half-column steps (e.g. start 4.5, span 5.5 — Shopify
-  range steps must divide by 0.1, so 0.5 is the floor); the stage renders a
-  quadrupled track grid (24 mobile / 48 desktop), and this snippet converts
-  column values to integer track lines — track = (col − 1) × 4 + 1 — so
-  whole-number arrangements keep their exact geometry.
-  A row start of 0 means "auto flow" — the variable is simply not emitted,
-  so the CSS falls back to `auto`.
+  Editor semantics: 6 columns on mobile (vars --r-si-m*), 12 on desktop.
+  Placement settings are free-form number inputs — any decimal is accepted
+  (e.g. column start 4.37). Columns render on ×10 micro-track grids
+  (60 mobile / 120 desktop; the stage divides its column gap by the same
+  factor), and this snippet converts column values to integer track lines —
+  track = (value − 1) × 10 + 1 — so precision resolves to 0.1 column and
+  whole-number arrangements keep their geometry. Values are clamped to the
+  grid bounds.
+
+  Rows are integer content-sized shelves: decimal row values round to the
+  nearest whole row (fractional shelves are ill-defined when rows size to
+  their content) — fine vertical placement is nudge Y, which accepts any
+  decimal px. A row start of 0 (or blank/negative) means "auto flow" — the
+  variable is simply not emitted, so the CSS falls back to `auto`.
 
   @param {object} settings - Block settings carrying the placement ids
     (m_col_start, m_col_span, m_row_start, m_row_span, m_z, m_nudge_x,
@@ -25,37 +31,46 @@
 {%- liquid
   assign s = settings
 
-  # Column -> track conversion (quarter-column precision, always integers).
-  assign m_track = s.m_col_start | minus: 1 | times: 4 | plus: 1 | round
-  assign m_track_span = s.m_col_span | times: 4 | round
-  assign d_track = s.d_col_start | minus: 1 | times: 4 | plus: 1 | round
-  assign d_track_span = s.d_col_span | times: 4 | round
+  # Value -> micro-track conversion (0.1 precision, always integers).
+  assign m_col = s.m_col_start | default: 1 | at_least: 1 | at_most: 6
+  assign m_track = m_col | minus: 1 | times: 10 | plus: 1 | round
+  assign m_span = s.m_col_span | default: 6 | at_least: 0.1 | at_most: 6
+  assign m_track_span = m_span | times: 10 | round
+  assign d_col = s.d_col_start | default: 1 | at_least: 1 | at_most: 12
+  assign d_track = d_col | minus: 1 | times: 10 | plus: 1 | round
+  assign d_span = s.d_col_span | default: 6 | at_least: 0.1 | at_most: 12
+  assign d_track_span = d_span | times: 10 | round
+
+  assign m_row_span = s.m_row_span | default: 1 | at_least: 1 | at_most: 12 | round
+  assign d_row_span = s.d_row_span | default: 1 | at_least: 1 | at_most: 12 | round
 
   echo '--r-si-mc: ' | append: m_track | append: ';'
   echo ' --r-si-mcs: ' | append: m_track_span | append: ';'
-  if s.m_row_start > 0
-    echo ' --r-si-mr: ' | append: s.m_row_start | append: ';'
+  if s.m_row_start != blank and s.m_row_start > 0
+    assign m_row = s.m_row_start | at_most: 30 | round | at_least: 1
+    echo ' --r-si-mr: ' | append: m_row | append: ';'
   endif
-  echo ' --r-si-mrs: ' | append: s.m_row_span | append: ';'
+  echo ' --r-si-mrs: ' | append: m_row_span | append: ';'
   echo ' --r-si-mz: ' | append: s.m_z | append: ';'
-  if s.m_nudge_x != 0
+  if s.m_nudge_x != blank and s.m_nudge_x != 0
     echo ' --r-si-mx: ' | append: s.m_nudge_x | append: ';'
   endif
-  if s.m_nudge_y != 0
+  if s.m_nudge_y != blank and s.m_nudge_y != 0
     echo ' --r-si-my: ' | append: s.m_nudge_y | append: ';'
   endif
 
   echo ' --r-si-c: ' | append: d_track | append: ';'
   echo ' --r-si-cs: ' | append: d_track_span | append: ';'
-  if s.d_row_start > 0
-    echo ' --r-si-r: ' | append: s.d_row_start | append: ';'
+  if s.d_row_start != blank and s.d_row_start > 0
+    assign d_row = s.d_row_start | at_most: 30 | round | at_least: 1
+    echo ' --r-si-r: ' | append: d_row | append: ';'
   endif
-  echo ' --r-si-rs: ' | append: s.d_row_span | append: ';'
+  echo ' --r-si-rs: ' | append: d_row_span | append: ';'
   echo ' --r-si-z: ' | append: s.d_z | append: ';'
-  if s.d_nudge_x != 0
+  if s.d_nudge_x != blank and s.d_nudge_x != 0
     echo ' --r-si-x: ' | append: s.d_nudge_x | append: ';'
   endif
-  if s.d_nudge_y != 0
+  if s.d_nudge_y != blank and s.d_nudge_y != 0
     echo ' --r-si-y: ' | append: s.d_nudge_y | append: ';'
   endif
   if s.d_scale != 100
