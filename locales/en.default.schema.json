@@ -797,7 +797,7 @@
     "r_story_col_span": "Column span",
     "r_story_col_step_info": "Any decimal — e.g. 4.37. Rendered at 0.1-column precision.",
     "r_story_row_start": "Row start",
-    "r_story_row_start_info": "0 = automatic flow (item stacks in order). Rows are whole content-sized bands — use Nudge Y (any decimal px) for fine vertical shifts.",
+    "r_story_row_start_info": "0 = automatic flow (item stacks in order). Decimals position within the row band — e.g. 2.5 starts halfway through row 2. Nudge Y gives exact px control.",
     "r_story_row_span": "Row span",
     "r_story_z": "Layer (z-index)",
     "r_story_nudge_x": "Nudge X (px)",

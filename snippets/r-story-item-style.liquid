@@ -14,10 +14,11 @@
   whole-number arrangements keep their geometry. Values are clamped to the
   grid bounds.
 
-  Rows are integer content-sized shelves: decimal row values round to the
-  nearest whole row (fractional shelves are ill-defined when rows size to
-  their content) — fine vertical placement is nudge Y, which accepts any
-  decimal px. A row start of 0 (or blank/negative) means "auto flow" — the
+  Rows use the same ×10 micro-track conversion: a row start of 2.5 begins
+  proportionally halfway through row 2's content-sized band (micro-rows
+  within a band share its height evenly, so fractional starts are
+  approximate when bands hold uneven content — nudge Y remains the exact
+  px control). A row start of 0 (or blank/negative) means "auto flow" — the
   variable is simply not emitted, so the CSS falls back to `auto`.
 
   @param {object} settings - Block settings carrying the placement ids
@@ -41,13 +42,13 @@
   assign d_span = s.d_col_span | default: 6 | at_least: 0.1 | at_most: 12
   assign d_track_span = d_span | times: 10 | round
 
-  assign m_row_span = s.m_row_span | default: 1 | at_least: 1 | at_most: 12 | round
-  assign d_row_span = s.d_row_span | default: 1 | at_least: 1 | at_most: 12 | round
+  assign m_row_span = s.m_row_span | default: 1 | at_least: 0.1 | at_most: 12 | times: 10 | round
+  assign d_row_span = s.d_row_span | default: 1 | at_least: 0.1 | at_most: 12 | times: 10 | round
 
   echo '--r-si-mc: ' | append: m_track | append: ';'
   echo ' --r-si-mcs: ' | append: m_track_span | append: ';'
   if s.m_row_start != blank and s.m_row_start > 0
-    assign m_row = s.m_row_start | at_most: 30 | round | at_least: 1
+    assign m_row = s.m_row_start | at_least: 1 | at_most: 30 | minus: 1 | times: 10 | plus: 1 | round
     echo ' --r-si-mr: ' | append: m_row | append: ';'
   endif
   echo ' --r-si-mrs: ' | append: m_row_span | append: ';'
@@ -62,7 +63,7 @@
   echo ' --r-si-c: ' | append: d_track | append: ';'
   echo ' --r-si-cs: ' | append: d_track_span | append: ';'
   if s.d_row_start != blank and s.d_row_start > 0
-    assign d_row = s.d_row_start | at_most: 30 | round | at_least: 1
+    assign d_row = s.d_row_start | at_least: 1 | at_most: 30 | minus: 1 | times: 10 | plus: 1 | round
     echo ' --r-si-r: ' | append: d_row | append: ';'
   endif
   echo ' --r-si-rs: ' | append: d_row_span | append: ';'

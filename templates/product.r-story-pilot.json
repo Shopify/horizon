@@ -1,34 +1,14 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "video_hero": {
-      "type": "r-video-hero",
-      "blocks": {
-        "heading": {
-          "type": "text",
-          "settings": {
-            "text": "<h2>Made wild, made well</h2>",
-            "type_preset": "h2"
-          }
-        }
-      },
-      "block_order": [
-        "heading"
-      ],
-      "settings": {
-        "autoplay": true,
-        "height": "80svh",
-        "toggle_overlay": true,
-        "overlay_color": "#00000040",
-        "overlay_style": "gradient",
-        "gradient_direction": "to top",
-        "content_vertical": "flex-end",
-        "content_horizontal": "flex-start",
-        "section_width": "full-width",
-        "color_scheme": "scheme-2",
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      }
-    },
     "main": {
       "type": "product-information",
       "blocks": {
@@ -84,6 +64,27 @@
             "padding-inline-end": 0
           },
           "blocks": {
+            "breadcrumbs": {
+              "type": "r-pdp-breadcrumbs",
+              "settings": {
+                "source": "both",
+                "ancestor_depth": 1,
+                "separator": "—",
+                "inherit_color_scheme": true,
+                "color_scheme": ""
+              },
+              "blocks": {}
+            },
+            "badge": {
+              "type": "r-pdp-badge",
+              "settings": {
+                "tag": "best-sellers",
+                "label": "Best Seller",
+                "inherit_color_scheme": true,
+                "color_scheme": ""
+              },
+              "blocks": {}
+            },
             "header": {
               "type": "group",
               "name": "Header",
@@ -92,6 +93,7 @@
                 "vertical_on_mobile": true,
                 "horizontal_alignment": "flex-start",
                 "vertical_alignment": "center",
+                "align_baseline": false,
                 "horizontal_alignment_flex_direction_column": "flex-start",
                 "vertical_alignment_flex_direction_column": "center",
                 "gap": 12,
@@ -100,9 +102,23 @@
                 "width_mobile": "fill",
                 "custom_width_mobile": 100,
                 "height": "fit",
+                "custom_height": 100,
                 "inherit_color_scheme": true,
+                "color_scheme": "",
                 "background_media": "none",
+                "video_position": "cover",
+                "background_image_position": "cover",
                 "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "link": "",
+                "open_in_new_tab": false,
+                "placeholder": "",
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
@@ -118,6 +134,16 @@
                     "max_width": "normal",
                     "alignment": "left",
                     "type_preset": "h4",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
                     "padding-block-start": 0,
                     "padding-block-end": 0,
                     "padding-inline-start": 0,
@@ -131,7 +157,8 @@
                     "option_name": "Scent",
                     "metafield_namespace": "rocky",
                     "metafield_key": "scent",
-                    "inherit_color_scheme": true
+                    "inherit_color_scheme": true,
+                    "color_scheme": ""
                   },
                   "blocks": {}
                 }
@@ -149,6 +176,7 @@
                 "vertical_on_mobile": false,
                 "horizontal_alignment": "flex-start",
                 "vertical_alignment": "flex-start",
+                "align_baseline": false,
                 "horizontal_alignment_flex_direction_column": "flex-start",
                 "vertical_alignment_flex_direction_column": "flex-start",
                 "gap": 32,
@@ -157,9 +185,23 @@
                 "width_mobile": "fill",
                 "custom_width_mobile": 100,
                 "height": "fit",
+                "custom_height": 100,
                 "inherit_color_scheme": true,
+                "color_scheme": "",
                 "background_media": "none",
+                "video_position": "cover",
+                "background_image_position": "cover",
                 "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "link": "",
+                "open_in_new_tab": false,
+                "placeholder": "",
                 "padding-block-start": 8,
                 "padding-block-end": 8,
                 "padding-inline-start": 0,
@@ -174,6 +216,7 @@
                     "vertical_on_mobile": false,
                     "horizontal_alignment": "flex-start",
                     "vertical_alignment": "flex-start",
+                    "align_baseline": false,
                     "horizontal_alignment_flex_direction_column": "flex-start",
                     "vertical_alignment_flex_direction_column": "flex-start",
                     "gap": 24,
@@ -182,9 +225,23 @@
                     "width_mobile": "custom",
                     "custom_width_mobile": 56,
                     "height": "fit",
+                    "custom_height": 100,
                     "inherit_color_scheme": true,
+                    "color_scheme": "",
                     "background_media": "none",
+                    "video_position": "cover",
+                    "background_image_position": "cover",
                     "border": "none",
+                    "border_width": 1,
+                    "border_opacity": 100,
+                    "border_radius": 0,
+                    "toggle_overlay": false,
+                    "overlay_color": "#00000026",
+                    "overlay_style": "solid",
+                    "gradient_direction": "to top",
+                    "link": "",
+                    "open_in_new_tab": false,
+                    "placeholder": "",
                     "padding-block-start": 0,
                     "padding-block-end": 0,
                     "padding-inline-start": 0,
@@ -200,6 +257,12 @@
                         "type_preset": "paragraph",
                         "width": "100%",
                         "alignment": "left",
+                        "font": "var(--font-body--family)",
+                        "font_size": "1rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "color": "var(--color-foreground)",
                         "padding-block-start": 0,
                         "padding-block-end": 0,
                         "padding-inline-start": 0,
@@ -226,6 +289,7 @@
                     "vertical_on_mobile": false,
                     "horizontal_alignment": "flex-start",
                     "vertical_alignment": "flex-start",
+                    "align_baseline": false,
                     "horizontal_alignment_flex_direction_column": "flex-start",
                     "vertical_alignment_flex_direction_column": "flex-start",
                     "gap": 24,
@@ -234,9 +298,23 @@
                     "width_mobile": "custom",
                     "custom_width_mobile": 38,
                     "height": "fit",
+                    "custom_height": 100,
                     "inherit_color_scheme": true,
+                    "color_scheme": "",
                     "background_media": "none",
+                    "video_position": "cover",
+                    "background_image_position": "cover",
                     "border": "none",
+                    "border_width": 1,
+                    "border_opacity": 100,
+                    "border_radius": 0,
+                    "toggle_overlay": false,
+                    "overlay_color": "#00000026",
+                    "overlay_style": "solid",
+                    "gradient_direction": "to top",
+                    "link": "",
+                    "open_in_new_tab": false,
+                    "placeholder": "",
                     "padding-block-start": 0,
                     "padding-block-end": 0,
                     "padding-inline-start": 24,
@@ -265,7 +343,8 @@
                         "value_field": "label",
                         "fallback_namespace": "rocky",
                         "fallback_key": "made_with",
-                        "inherit_color_scheme": true
+                        "inherit_color_scheme": true,
+                        "color_scheme": ""
                       },
                       "blocks": {}
                     }
@@ -291,6 +370,21 @@
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "skin-type": {
+              "type": "r-pdp-attribute",
+              "settings": {
+                "heading": "Skin type",
+                "layout": "inline",
+                "namespace": "shopify",
+                "key": "suitable-for-skin-type",
+                "value_field": "label",
+                "fallback_namespace": "rocky",
+                "fallback_key": "skin_type",
+                "inherit_color_scheme": true,
+                "color_scheme": ""
               },
               "blocks": {}
             },
@@ -329,6 +423,14 @@
               },
               "block_order": []
             },
+            "guarantees": {
+              "type": "r-pdp-guarantees",
+              "settings": {
+                "inherit_color_scheme": true,
+                "color_scheme": ""
+              },
+              "blocks": {}
+            },
             "r-pdp-accordion": {
               "type": "accordion",
               "name": "Rocky — Product accordion",
@@ -337,7 +439,11 @@
                 "dividers": true,
                 "type_preset": "h6",
                 "inherit_color_scheme": true,
+                "color_scheme": "",
                 "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
                 "padding-block-start": 8,
                 "padding-block-end": 8,
                 "padding-inline-start": 0,
@@ -349,14 +455,16 @@
                   "settings": {
                     "heading": "Ingredients",
                     "open_by_default": false,
-                    "icon": "none"
+                    "icon": "none",
+                    "width": 20
                   },
                   "blocks": {
                     "content": {
                       "type": "r-pdp-ingredients",
                       "settings": {
                         "show_footnote": true
-                      }
+                      },
+                      "blocks": {}
                     }
                   },
                   "block_order": [
@@ -368,12 +476,14 @@
                   "settings": {
                     "heading": "Sustainability",
                     "open_by_default": false,
-                    "icon": "none"
+                    "icon": "none",
+                    "width": 20
                   },
                   "blocks": {
                     "content": {
                       "type": "r-pdp-sustainability",
-                      "settings": {}
+                      "settings": {},
+                      "blocks": {}
                     }
                   },
                   "block_order": [
@@ -385,12 +495,14 @@
                   "settings": {
                     "heading": "How To Use",
                     "open_by_default": false,
-                    "icon": "none"
+                    "icon": "none",
+                    "width": 20
                   },
                   "blocks": {
                     "content": {
                       "type": "r-pdp-how-to-use",
-                      "settings": {}
+                      "settings": {},
+                      "blocks": {}
                     }
                   },
                   "block_order": [
@@ -402,14 +514,17 @@
                   "settings": {
                     "heading": "Find in Store",
                     "open_by_default": false,
-                    "icon": "map_pin"
+                    "icon": "map_pin",
+                    "width": 20
                   },
                   "blocks": {
                     "content": {
                       "type": "r-pdp-find-in-store",
                       "settings": {
-                        "store_locator_url": "/pages/store-locator"
-                      }
+                        "store_locator_url": "/pages/store-locator",
+                        "worker_url_override": ""
+                      },
+                      "blocks": {}
                     }
                   },
                   "block_order": [
@@ -423,46 +538,6 @@
                 "row-how-to-use",
                 "row-find-in-store"
               ]
-            },
-            "breadcrumbs": {
-              "type": "r-pdp-breadcrumbs",
-              "settings": {
-                "source": "both",
-                "ancestor_depth": 1,
-                "separator": "—",
-                "inherit_color_scheme": true
-              },
-              "blocks": {}
-            },
-            "badge": {
-              "type": "r-pdp-badge",
-              "settings": {
-                "tag": "best-sellers",
-                "label": "Best Seller",
-                "inherit_color_scheme": true
-              },
-              "blocks": {}
-            },
-            "skin-type": {
-              "type": "r-pdp-attribute",
-              "settings": {
-                "heading": "Skin type",
-                "layout": "inline",
-                "namespace": "shopify",
-                "key": "suitable-for-skin-type",
-                "value_field": "label",
-                "fallback_namespace": "rocky",
-                "fallback_key": "skin_type",
-                "inherit_color_scheme": true
-              },
-              "blocks": {}
-            },
-            "guarantees": {
-              "type": "r-pdp-guarantees",
-              "settings": {
-                "inherit_color_scheme": true
-              },
-              "blocks": {}
             }
           },
           "block_order": [
@@ -484,7 +559,55 @@
         "equal_columns": false,
         "limit_details_width": false,
         "gap": 48,
+        "enable_sticky_add_to_cart": true,
         "color_scheme": "",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "video_hero": {
+      "type": "r-video-hero",
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>Made wild, made well</h2>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h2",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "heading"
+      ],
+      "settings": {
+        "autoplay": true,
+        "height": "80svh",
+        "toggle_overlay": true,
+        "overlay_color": "#00000040",
+        "overlay_style": "gradient",
+        "gradient_direction": "to top",
+        "content_vertical": "flex-end",
+        "content_horizontal": "flex-start",
+        "section_width": "full-width",
+        "color_scheme": "scheme-2",
         "padding-block-start": 0,
         "padding-block-end": 0
       }
@@ -496,72 +619,195 @@
           "type": "r-story-text",
           "settings": {
             "role": "headline",
+            "text": "The future is solid",
+            "content": "<p>Tell this product's story.</p>",
+            "alignment": "start",
+            "max_width": 0,
+            "text_color": "default",
+            "reveal": true,
+            "reveal_delay": 0,
             "d_col_start": 1,
             "d_col_span": 4,
             "d_row_start": 1,
-            "m_row_start": 1
-          }
+            "d_row_span": 1,
+            "d_z": 2,
+            "d_nudge_x": 0,
+            "d_nudge_y": 0,
+            "d_scale": 100,
+            "align_self": "start",
+            "hide_on_desktop": false,
+            "m_col_start": 1,
+            "m_col_span": 6,
+            "m_row_start": 1,
+            "m_row_span": 1,
+            "m_z": 2,
+            "m_nudge_x": 0,
+            "m_nudge_y": 0,
+            "hide_on_mobile": false
+          },
+          "blocks": {}
         },
         "lede": {
           "type": "r-story-text",
           "settings": {
             "role": "body",
+            "text": "The future is solid",
             "content": "<p>This formula was years in the making. Backed by extensive research and over 100 prototypes, we crafted a bar rich in vitamins and proteins, made with just 11 ultra-concentrated, high-performance ingredients.</p>",
+            "alignment": "start",
+            "max_width": 0,
+            "text_color": "default",
+            "reveal": true,
             "reveal_delay": 150,
             "d_col_start": 1,
             "d_col_span": 3,
-            "d_row_start": 2,
-            "m_row_start": 2
-          }
+            "d_row_start": 1.5,
+            "d_row_span": 1,
+            "d_z": 2,
+            "d_nudge_x": 0,
+            "d_nudge_y": 0,
+            "d_scale": 100,
+            "align_self": "start",
+            "hide_on_desktop": false,
+            "m_col_start": 1,
+            "m_col_span": 6,
+            "m_row_start": 2,
+            "m_row_span": 1,
+            "m_z": 2,
+            "m_nudge_x": 0,
+            "m_nudge_y": 0,
+            "hide_on_mobile": false
+          },
+          "blocks": {}
         },
         "media-forest": {
           "type": "r-story-media",
           "settings": {
+            "aspect": "",
+            "autoplay": true,
+            "loop": true,
+            "effect_fade_rise": true,
+            "effect_blur_up": true,
             "effect_parallax": true,
+            "parallax_depth": "medium",
+            "effect_ken_burns": false,
+            "effect_repeat": false,
             "d_col_start": 4,
             "d_col_span": 5,
             "d_row_start": 1,
             "d_row_span": 2,
-            "m_row_start": 3
-          }
+            "d_z": 1,
+            "d_nudge_x": 0,
+            "d_nudge_y": 0,
+            "d_scale": 100,
+            "align_self": "start",
+            "hide_on_desktop": false,
+            "m_col_start": 1,
+            "m_col_span": 6,
+            "m_row_start": 3,
+            "m_row_span": 1,
+            "m_z": 1,
+            "m_nudge_x": 0,
+            "m_nudge_y": 0,
+            "hide_on_mobile": false
+          },
+          "blocks": {}
         },
         "media-portrait": {
           "type": "r-story-media",
           "settings": {
             "aspect": "4 / 5",
+            "autoplay": true,
+            "loop": true,
+            "effect_fade_rise": true,
+            "effect_blur_up": true,
+            "effect_parallax": false,
+            "parallax_depth": "medium",
+            "effect_ken_burns": false,
+            "effect_repeat": false,
             "d_col_start": 8,
             "d_col_span": 4,
             "d_row_start": 2,
             "d_row_span": 2,
             "d_z": 2,
+            "d_nudge_x": 0,
             "d_nudge_y": -40,
+            "d_scale": 100,
+            "align_self": "start",
+            "hide_on_desktop": false,
             "m_col_start": 2,
             "m_col_span": 5,
-            "m_row_start": 4
-          }
+            "m_row_start": 4,
+            "m_row_span": 1,
+            "m_z": 1,
+            "m_nudge_x": 0,
+            "m_nudge_y": 0,
+            "hide_on_mobile": false
+          },
+          "blocks": {}
         },
         "pullquote": {
           "type": "r-story-text",
           "settings": {
             "role": "pullquote",
             "text": "One Hair Bar = 35–45 washes, that's equivalent to about 1.5 of our liquid 360 mL bottles.",
+            "content": "<p>Tell this product's story.</p>",
+            "alignment": "start",
+            "max_width": 0,
+            "text_color": "default",
+            "reveal": true,
+            "reveal_delay": 0,
             "d_col_start": 2,
             "d_col_span": 6,
             "d_row_start": 3,
-            "m_row_start": 5
-          }
+            "d_row_span": 1,
+            "d_z": 2,
+            "d_nudge_x": 0,
+            "d_nudge_y": 0,
+            "d_scale": 100,
+            "align_self": "start",
+            "hide_on_desktop": false,
+            "m_col_start": 1,
+            "m_col_span": 6,
+            "m_row_start": 5,
+            "m_row_span": 1,
+            "m_z": 2,
+            "m_nudge_x": 0,
+            "m_nudge_y": 0,
+            "hide_on_mobile": false
+          },
+          "blocks": {}
         },
         "howto": {
           "type": "r-story-text",
           "settings": {
             "role": "body",
+            "text": "The future is solid",
             "content": "<p><strong>How to use:</strong> Wet your hair and the bar, then massage from roots to ends. Rinse with warm water.</p>",
+            "alignment": "start",
+            "max_width": 0,
+            "text_color": "default",
+            "reveal": true,
             "reveal_delay": 300,
             "d_col_start": 9,
             "d_col_span": 4,
             "d_row_start": 3,
-            "m_row_start": 6
-          }
+            "d_row_span": 1,
+            "d_z": 2,
+            "d_nudge_x": 0,
+            "d_nudge_y": 0,
+            "d_scale": 100,
+            "align_self": "start",
+            "hide_on_desktop": false,
+            "m_col_start": 1,
+            "m_col_span": 6,
+            "m_row_start": 6,
+            "m_row_span": 1,
+            "m_z": 2,
+            "m_nudge_x": 0,
+            "m_nudge_y": 0,
+            "hide_on_mobile": false
+          },
+          "blocks": {}
         }
       },
       "block_order": [
@@ -587,22 +833,52 @@
           "settings": {
             "icon": "caret",
             "dividers": true,
-            "type_preset": "h6"
+            "type_preset": "h6",
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
           },
           "blocks": {
             "row-1": {
               "type": "_accordion-row",
               "settings": {
                 "heading": "How long does one bar last?",
-                "icon": "none"
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
               },
               "blocks": {
                 "text-1": {
                   "type": "text",
                   "settings": {
                     "text": "<p>One bar equals 35–45 washes — about 1.5 of our liquid 360 mL bottles.</p>",
-                    "width": "100%"
-                  }
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
                 }
               },
               "block_order": [
@@ -613,15 +889,35 @@
               "type": "_accordion-row",
               "settings": {
                 "heading": "Is it suitable for all hair types?",
-                "icon": "none"
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
               },
               "blocks": {
                 "text-1": {
                   "type": "text",
                   "settings": {
                     "text": "<p>Yes — the formula is balanced for daily use on every hair type.</p>",
-                    "width": "100%"
-                  }
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
                 }
               },
               "block_order": [
@@ -655,8 +951,23 @@
           "settings": {
             "text": "<h3>You may also like</h3>",
             "width": "fit-content",
+            "max_width": "normal",
             "alignment": "left",
-            "type_preset": "h4"
+            "type_preset": "h4",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
           },
           "blocks": {}
         },
@@ -665,7 +976,18 @@
           "name": "Product card",
           "static": true,
           "settings": {
-            "product_card_gap": 4
+            "product_card_gap": 4,
+            "inherit_color_scheme": true,
+            "hide_quick_add": false,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
           },
           "blocks": {
             "product-card-gallery": {
@@ -681,7 +1003,8 @@
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
-              }
+              },
+              "blocks": {}
             },
             "product_title": {
               "type": "product-title",
@@ -705,7 +1028,8 @@
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
-              }
+              },
+              "blocks": {}
             },
             "price": {
               "type": "price",
@@ -727,7 +1051,8 @@
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
-              }
+              },
+              "blocks": {}
             }
           },
           "block_order": [
@@ -761,8 +1086,8 @@
     }
   },
   "order": [
-    "video_hero",
     "main",
+    "video_hero",
     "story",
     "faq",
     "product_recommendations"

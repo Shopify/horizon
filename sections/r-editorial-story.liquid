@@ -47,21 +47,29 @@
     overflow-x: clip;
   }
 
-  /* Micro-track columns: the 6 / 12 editor "columns" render as ×10 tracks,
-     giving 0.1-column placement precision from free-form decimal inputs.
-     The column gap is divided by the same factor — gap count scales with
-     track count, so this keeps the total gutter budget (and therefore
-     whole-number geometry) intact; a full-size gap × 119 tracks would
-     swallow the stage and collapse every 1fr track to zero. Rows stay
-     integer content-sized shelves (fractional shelves are ill-defined —
-     fine vertical placement is Nudge Y). Placement vars arrive as integer
-     TRACK values — the math lives in snippets/r-story-item-style.liquid. */
+  /* Micro-track grids: the 6 / 12 editor "columns" AND the content-sized
+     rows both render as ×10 tracks, giving 0.1 placement precision from
+     free-form decimal inputs (row 2.5 starts proportionally halfway
+     through row 2's band). The column gap divides by the same factor —
+     gap count scales with track count, so this keeps the total gutter
+     budget (and therefore whole-number geometry) intact; a full-size gap
+     × 119 tracks would swallow the stage and collapse every 1fr track to
+     zero. Rows CANNOT use row-gap at all for the same reason (and empty
+     micro-rows would still accumulate gaps): the vertical rhythm between
+     row bands comes from a per-item block-end margin instead, which sizes
+     into each band exactly like the old between-shelf gap. Placement vars
+     arrive as integer TRACK values — the math lives in
+     snippets/r-story-item-style.liquid. */
   .r-story-stage {
     display: grid;
     grid-template-columns: repeat(60, minmax(0, 1fr));
     column-gap: calc(var(--r-story-gap) / 10);
-    row-gap: var(--r-story-row-gap);
+    row-gap: 0;
     align-items: start;
+
+    /* The rhythm margin on the last band adds trailing space the old
+       row-gap never had — pull it back. */
+    margin-block-end: calc(-1 * var(--r-story-row-gap));
   }
 
   @media screen and (min-width: 750px) {
@@ -78,8 +86,9 @@
   .r-story-stage > .r-story-item {
     position: relative;
     min-width: 0;
+    margin-block-end: var(--r-story-row-gap);
     grid-column: var(--r-si-mc, 1) / span var(--r-si-mcs, 60);
-    grid-row: var(--r-si-mr, auto) / span var(--r-si-mrs, 1);
+    grid-row: var(--r-si-mr, auto) / span var(--r-si-mrs, 10);
     z-index: var(--r-si-mz, 1);
     align-self: var(--r-si-align, start);
     transform: translate(
@@ -91,7 +100,7 @@
   @media screen and (min-width: 750px) {
     .r-story-stage > .r-story-item {
       grid-column: var(--r-si-c, 1) / span var(--r-si-cs, 60);
-      grid-row: var(--r-si-r, auto) / span var(--r-si-rs, 1);
+      grid-row: var(--r-si-r, auto) / span var(--r-si-rs, 10);
       z-index: var(--r-si-z, 1);
       transform: translate(
           calc(var(--r-si-x, 0) * var(--spacing-scale, 1) * 1px),
