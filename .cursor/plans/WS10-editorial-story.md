@@ -85,3 +85,13 @@ a bootstrap. Section/block/asset code keeps shipping normally on deploy.
   settings — presets only apply when adding via the editor.
 - Don't rebuild media handling or accordions: r-media (WS9) and the upstream
   `accordion` block are the substrate.
+- **Editor + `theme dev` concurrency.** Editing the development theme in the
+  admin editor while `shopify theme dev` re-uploads files can poison the
+  editor session: its `previewPath` picks up a serialized click event
+  (`?_reactName=onClick&…`) and every preview reload then fails with "page is
+  not compatible with the editor / redirecting to an unsupported URL". Fix:
+  reopen the editor with a clean URL (unsaved edits recover via the "Restore
+  last session" banner). Prevent: pause `theme dev` during editor sessions,
+  or run `shopify theme dev --theme-editor-sync` — which also pulls editor
+  arrangements back into the local JSON instead of clobbering them on the
+  next local file touch.
