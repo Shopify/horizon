@@ -1,0 +1,405 @@
+{% comment %}
+  Block: Rocky — Story media (WS10)
+
+  A placeable collage media item for the r-editorial-story stage. Thin
+  wrapper over the WS9 r-media framework: image XOR Shopify-hosted video
+  (video wins), art-directed mobile crop, width srcset sized from the grid
+  span, and the motion vocabulary (fade-rise / blur-up / parallax /
+  ken-burns) — all delivered by snippets/r-media.liquid.
+
+  Placement travels as inline custom properties via
+  snippets/r-story-item-style.liquid; the stage stylesheet maps them.
+{% endcomment %}
+
+{%- liquid
+  assign s = block.settings
+
+  assign is_video = false
+  if s.video != blank
+    assign is_video = true
+  endif
+
+  assign effects = ''
+  if s.effect_fade_rise
+    assign effects = effects | append: ' fade-rise'
+  endif
+  if s.effect_blur_up
+    assign effects = effects | append: ' blur-up'
+  endif
+  if s.effect_parallax
+    assign effects = effects | append: ' parallax'
+  endif
+  if s.effect_ken_burns and is_video == false
+    assign effects = effects | append: ' ken-burns'
+  endif
+  assign effects = effects | strip
+
+  # Approximate the item's viewport share from its grid span — close enough
+  # for srcset selection without reproducing gutter math.
+  assign d_vw = s.d_col_span | times: 100 | divided_by: 12
+  assign m_vw = s.m_col_span | times: 100 | divided_by: 6
+  assign sizes = '(min-width: 750px) ' | append: d_vw | append: 'vw, ' | append: m_vw | append: 'vw'
+  assign sizes_mobile = m_vw | append: 'vw'
+
+  assign parallax_range = ''
+  if s.effect_parallax
+    case s.parallax_depth
+      when 'small'
+        assign parallax_range = '4%'
+      when 'large'
+        assign parallax_range = '10%'
+      else
+        assign parallax_range = '6%'
+    endcase
+  endif
+
+  assign classes = 'r-story-item r-story-item--media'
+  if s.aspect != blank
+    assign classes = classes | append: ' r-story-item--media-cropped'
+  endif
+  if s.hide_on_mobile
+    assign classes = classes | append: ' r-story-item--hide-mobile'
+  endif
+  if s.hide_on_desktop
+    assign classes = classes | append: ' r-story-item--hide-desktop'
+  endif
+-%}
+
+<div
+  class="{{ classes }}"
+  style="{% render 'r-story-item-style', settings: s %}{% if s.aspect != blank %} --r-story-media-aspect: {{ s.aspect }};{% endif %}{% if parallax_range != blank %} --r-media-parallax-range: {{ parallax_range }};{% endif %}"
+  {{ block.shopify_attributes }}
+>
+  {%- if is_video -%}
+    {% render 'r-media',
+      video: s.video,
+      aspect: 'natural',
+      sizes: sizes,
+      sizes_mobile: sizes_mobile,
+      effect: effects,
+      effect_repeat: s.effect_repeat,
+      autoplay: s.autoplay,
+      loop: s.loop,
+      section: section
+    %}
+  {%- elsif s.image != blank -%}
+    {% render 'r-media',
+      image: s.image,
+      mobile_image: s.mobile_image,
+      aspect: 'natural',
+      sizes: sizes,
+      sizes_mobile: sizes_mobile,
+      effect: effects,
+      effect_repeat: s.effect_repeat,
+      section: section
+    %}
+  {%- else -%}
+    <div class="r-story-media__placeholder">
+      {{ 'hero-apparel-1' | placeholder_svg_tag: 'r-story-media__placeholder-svg' }}
+    </div>
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .r-story-item--media > .r-media {
+    width: 100%;
+  }
+
+  /* An explicit crop overrides r-media's natural ratio; the poster/video
+     layers cover the new box (object-fit: cover). Higher specificity than
+     .r-media--natural — no !important needed. */
+  .r-story-item--media-cropped > .r-media {
+    aspect-ratio: var(--r-story-media-aspect);
+  }
+
+  .r-story-media__placeholder {
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background-color: var(--r-surface-subtle, rgb(var(--color-foreground-rgb) / 6%));
+  }
+
+  .r-story-media__placeholder svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.r_story_media",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.media"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "t:settings.r_story_mobile_image"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "t:settings.video",
+      "info": "t:settings.r_story_video_info"
+    },
+    {
+      "type": "select",
+      "id": "aspect",
+      "label": "t:settings.r_story_aspect",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.auto"
+        },
+        {
+          "value": "1 / 1",
+          "label": "1:1"
+        },
+        {
+          "value": "4 / 5",
+          "label": "4:5"
+        },
+        {
+          "value": "3 / 4",
+          "label": "3:4"
+        },
+        {
+          "value": "2 / 3",
+          "label": "2:3"
+        },
+        {
+          "value": "16 / 9",
+          "label": "16:9"
+        }
+      ],
+      "default": ""
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "t:settings.r_story_autoplay",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "loop",
+      "label": "t:settings.r_story_loop",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:content.r_story_motion"
+    },
+    {
+      "type": "checkbox",
+      "id": "effect_fade_rise",
+      "label": "t:settings.r_story_fade_rise",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "effect_blur_up",
+      "label": "t:settings.r_story_blur_up",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "effect_parallax",
+      "label": "t:settings.r_story_parallax",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "parallax_depth",
+      "label": "t:settings.r_story_parallax_depth",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:options.small"
+        },
+        {
+          "value": "medium",
+          "label": "t:options.medium"
+        },
+        {
+          "value": "large",
+          "label": "t:options.large"
+        }
+      ],
+      "default": "medium",
+      "visible_if": "{{ block.settings.effect_parallax }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "effect_ken_burns",
+      "label": "t:settings.r_story_ken_burns",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "effect_repeat",
+      "label": "t:settings.r_story_effect_repeat",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:content.r_story_layout_desktop"
+    },
+    {
+      "type": "number",
+      "id": "d_col_start",
+      "label": "t:settings.r_story_col_start",
+      "info": "t:settings.r_story_col_step_info",
+      "default": 1
+    },
+    {
+      "type": "number",
+      "id": "d_col_span",
+      "label": "t:settings.r_story_col_span",
+      "info": "t:settings.r_story_col_step_info",
+      "default": 6
+    },
+    {
+      "type": "number",
+      "id": "d_row_start",
+      "label": "t:settings.r_story_row_start",
+      "info": "t:settings.r_story_row_start_info",
+      "default": 0
+    },
+    {
+      "type": "number",
+      "id": "d_row_span",
+      "label": "t:settings.r_story_row_span",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "d_z",
+      "label": "t:settings.r_story_z",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "number",
+      "id": "d_nudge_x",
+      "label": "t:settings.r_story_nudge_x",
+      "info": "t:settings.r_story_nudge_info",
+      "default": 0
+    },
+    {
+      "type": "number",
+      "id": "d_nudge_y",
+      "label": "t:settings.r_story_nudge_y",
+      "info": "t:settings.r_story_nudge_info",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "d_scale",
+      "label": "t:settings.r_story_scale",
+      "min": 10,
+      "max": 150,
+      "step": 2,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "select",
+      "id": "align_self",
+      "label": "t:settings.r_story_align",
+      "options": [
+        {
+          "value": "start",
+          "label": "t:settings.r_story_align_start"
+        },
+        {
+          "value": "center",
+          "label": "t:settings.r_story_align_center"
+        },
+        {
+          "value": "end",
+          "label": "t:settings.r_story_align_end"
+        }
+      ],
+      "default": "start"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_desktop",
+      "label": "t:settings.r_story_hide_desktop",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:content.r_story_layout_mobile"
+    },
+    {
+      "type": "number",
+      "id": "m_col_start",
+      "label": "t:settings.r_story_col_start",
+      "info": "t:settings.r_story_col_step_info",
+      "default": 1
+    },
+    {
+      "type": "number",
+      "id": "m_col_span",
+      "label": "t:settings.r_story_col_span",
+      "info": "t:settings.r_story_col_step_info",
+      "default": 6
+    },
+    {
+      "type": "number",
+      "id": "m_row_start",
+      "label": "t:settings.r_story_row_start",
+      "info": "t:settings.r_story_row_start_info",
+      "default": 0
+    },
+    {
+      "type": "number",
+      "id": "m_row_span",
+      "label": "t:settings.r_story_row_span",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "m_z",
+      "label": "t:settings.r_story_z",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "number",
+      "id": "m_nudge_x",
+      "label": "t:settings.r_story_nudge_x",
+      "info": "t:settings.r_story_nudge_info",
+      "default": 0
+    },
+    {
+      "type": "number",
+      "id": "m_nudge_y",
+      "label": "t:settings.r_story_nudge_y",
+      "info": "t:settings.r_story_nudge_info",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_mobile",
+      "label": "t:settings.r_story_hide_mobile",
+      "default": false
+    }
+  ]
+}
+{% endschema %}

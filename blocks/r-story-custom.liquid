@@ -1,0 +1,221 @@
+{% comment %}
+  Block: Rocky — Story custom liquid (WS10)
+
+  The escape hatch for the r-editorial-story stage: hand-coded Liquid (and,
+  if needed, a scoped <style> tag) inside a normally-placed grid item. Use
+  when a design detail exceeds the media/text block controls — the item
+  still participates in the dual grid, layering, and reveal system.
+{% endcomment %}
+
+{%- liquid
+  assign s = block.settings
+
+  assign classes = 'r-story-item r-story-item--custom'
+  if s.hide_on_mobile
+    assign classes = classes | append: ' r-story-item--hide-mobile'
+  endif
+  if s.hide_on_desktop
+    assign classes = classes | append: ' r-story-item--hide-desktop'
+  endif
+
+  assign reveal = false
+  if s.reveal and request.visual_preview_mode != true
+    assign reveal = true
+  endif
+-%}
+
+<div
+  class="{{ classes }}"
+  style="{% render 'r-story-item-style', settings: s %}{% if reveal and s.reveal_delay > 0 %} --r-story-reveal-delay: {{ s.reveal_delay }}ms;{% endif %}"
+  {% if reveal %}
+    data-r-reveal
+  {% endif %}
+  {{ block.shopify_attributes }}
+>
+  {{ s.custom_liquid }}
+</div>
+
+{% schema %}
+{
+  "name": "t:names.r_story_custom",
+  "tag": null,
+  "settings": [
+    {
+      "type": "liquid",
+      "id": "custom_liquid",
+      "label": "t:names.custom_liquid"
+    },
+    {
+      "type": "header",
+      "content": "t:content.r_story_motion"
+    },
+    {
+      "type": "checkbox",
+      "id": "reveal",
+      "label": "t:settings.r_story_reveal",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "reveal_delay",
+      "label": "t:settings.r_story_reveal_delay",
+      "min": 0,
+      "max": 800,
+      "step": 50,
+      "unit": "ms",
+      "default": 0,
+      "visible_if": "{{ block.settings.reveal }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.r_story_layout_desktop"
+    },
+    {
+      "type": "number",
+      "id": "d_col_start",
+      "label": "t:settings.r_story_col_start",
+      "info": "t:settings.r_story_col_step_info",
+      "default": 1
+    },
+    {
+      "type": "number",
+      "id": "d_col_span",
+      "label": "t:settings.r_story_col_span",
+      "info": "t:settings.r_story_col_step_info",
+      "default": 6
+    },
+    {
+      "type": "number",
+      "id": "d_row_start",
+      "label": "t:settings.r_story_row_start",
+      "info": "t:settings.r_story_row_start_info",
+      "default": 0
+    },
+    {
+      "type": "number",
+      "id": "d_row_span",
+      "label": "t:settings.r_story_row_span",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "d_z",
+      "label": "t:settings.r_story_z",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "number",
+      "id": "d_nudge_x",
+      "label": "t:settings.r_story_nudge_x",
+      "info": "t:settings.r_story_nudge_info",
+      "default": 0
+    },
+    {
+      "type": "number",
+      "id": "d_nudge_y",
+      "label": "t:settings.r_story_nudge_y",
+      "info": "t:settings.r_story_nudge_info",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "d_scale",
+      "label": "t:settings.r_story_scale",
+      "min": 90,
+      "max": 115,
+      "step": 1,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "select",
+      "id": "align_self",
+      "label": "t:settings.r_story_align",
+      "options": [
+        {
+          "value": "start",
+          "label": "t:settings.r_story_align_start"
+        },
+        {
+          "value": "center",
+          "label": "t:settings.r_story_align_center"
+        },
+        {
+          "value": "end",
+          "label": "t:settings.r_story_align_end"
+        }
+      ],
+      "default": "start"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_desktop",
+      "label": "t:settings.r_story_hide_desktop",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:content.r_story_layout_mobile"
+    },
+    {
+      "type": "number",
+      "id": "m_col_start",
+      "label": "t:settings.r_story_col_start",
+      "info": "t:settings.r_story_col_step_info",
+      "default": 1
+    },
+    {
+      "type": "number",
+      "id": "m_col_span",
+      "label": "t:settings.r_story_col_span",
+      "info": "t:settings.r_story_col_step_info",
+      "default": 6
+    },
+    {
+      "type": "number",
+      "id": "m_row_start",
+      "label": "t:settings.r_story_row_start",
+      "info": "t:settings.r_story_row_start_info",
+      "default": 0
+    },
+    {
+      "type": "number",
+      "id": "m_row_span",
+      "label": "t:settings.r_story_row_span",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "m_z",
+      "label": "t:settings.r_story_z",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "number",
+      "id": "m_nudge_x",
+      "label": "t:settings.r_story_nudge_x",
+      "info": "t:settings.r_story_nudge_info",
+      "default": 0
+    },
+    {
+      "type": "number",
+      "id": "m_nudge_y",
+      "label": "t:settings.r_story_nudge_y",
+      "info": "t:settings.r_story_nudge_info",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_mobile",
+      "label": "t:settings.r_story_hide_mobile",
+      "default": false
+    }
+  ]
+}
+{% endschema %}

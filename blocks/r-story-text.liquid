@@ -1,0 +1,374 @@
+{% comment %}
+  Block: Rocky — Story text (WS10)
+
+  A placeable text item for the r-editorial-story stage. The role select
+  maps to the fluid type tokens (--r-story-type-*) defined on the stage, so
+  every size interpolates with the viewport. Reveal-on-scroll is driven by
+  <r-editorial-story> via the data-r-reveal contract.
+{% endcomment %}
+
+{%- liquid
+  assign s = block.settings
+  assign role = s.role | default: 'body'
+
+  assign classes = 'r-story-item r-story-item--text'
+  if s.hide_on_mobile
+    assign classes = classes | append: ' r-story-item--hide-mobile'
+  endif
+  if s.hide_on_desktop
+    assign classes = classes | append: ' r-story-item--hide-desktop'
+  endif
+
+  # Editor preview cards render without the reveal driver — never hide there.
+  assign reveal = false
+  if s.reveal and request.visual_preview_mode != true
+    assign reveal = true
+  endif
+-%}
+
+<div
+  class="{{ classes }}"
+  style="{% render 'r-story-item-style', settings: s %}{% if s.max_width > 0 %} --r-story-text-max: {{ s.max_width }}ch;{% endif %}{% if s.alignment != blank and s.alignment != 'start' %} --r-story-text-align: {{ s.alignment }};{% endif %}{% if s.text_color == 'primary' %} --r-story-text-color: var(--r-color-brand-primary);{% elsif s.text_color == 'accent' %} --r-story-text-color: var(--r-color-brand-accent);{% endif %}{% if reveal and s.reveal_delay > 0 %} --r-story-reveal-delay: {{ s.reveal_delay }}ms;{% endif %}"
+  {% if reveal %}
+    data-r-reveal
+  {% endif %}
+  {{ block.shopify_attributes }}
+>
+  {%- case role -%}
+    {%- when 'eyebrow' -%}
+      <p class="r-story-text r-story-text--eyebrow">{{ s.text }}</p>
+    {%- when 'headline' -%}
+      <h2 class="r-story-text r-story-text--headline">{{ s.text }}</h2>
+    {%- when 'pullquote' -%}
+      <blockquote class="r-story-text r-story-text--pullquote">{{ s.text }}</blockquote>
+    {%- when 'caption' -%}
+      <p class="r-story-text r-story-text--caption">{{ s.text }}</p>
+    {%- else -%}
+      <div class="r-story-text r-story-text--body rte">{{ s.content }}</div>
+  {%- endcase -%}
+</div>
+
+{% stylesheet %}
+  .r-story-text {
+    margin: 0;
+    max-width: var(--r-story-text-max, none);
+    text-align: var(--r-story-text-align, start);
+    color: var(--r-story-text-color, currentColor);
+  }
+
+  .r-story-text--eyebrow {
+    font-size: var(--r-story-type-eyebrow);
+    letter-spacing: var(--r-tracking-wide, 0.12em);
+    text-transform: uppercase;
+  }
+
+  .r-story-text--headline {
+    font-family: var(--r-font-display, inherit);
+    font-size: var(--r-story-type-headline);
+    line-height: 1.05;
+    letter-spacing: var(--r-tracking-tight, -0.01em);
+  }
+
+  .r-story-text--body {
+    font-size: var(--r-story-type-body);
+    line-height: 1.6;
+  }
+
+  .r-story-text--body > :first-child {
+    margin-block-start: 0;
+  }
+
+  .r-story-text--body > :last-child {
+    margin-block-end: 0;
+  }
+
+  .r-story-text--pullquote {
+    font-family: var(--r-font-display, inherit);
+    font-size: var(--r-story-type-pullquote);
+    line-height: 1.15;
+    letter-spacing: var(--r-tracking-tight, -0.01em);
+  }
+
+  .r-story-text--caption {
+    font-size: var(--r-story-type-caption);
+    line-height: 1.4;
+    color: var(--r-story-text-color, var(--color-foreground-muted, currentColor));
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.r_story_text",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.content"
+    },
+    {
+      "type": "select",
+      "id": "role",
+      "label": "t:settings.r_story_role",
+      "info": "t:settings.r_story_role_info",
+      "options": [
+        {
+          "value": "eyebrow",
+          "label": "t:settings.r_story_role_eyebrow"
+        },
+        {
+          "value": "headline",
+          "label": "t:settings.r_story_role_headline"
+        },
+        {
+          "value": "body",
+          "label": "t:settings.r_story_role_body"
+        },
+        {
+          "value": "pullquote",
+          "label": "t:settings.r_story_role_pullquote"
+        },
+        {
+          "value": "caption",
+          "label": "t:settings.r_story_role_caption"
+        }
+      ],
+      "default": "body"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "text",
+      "label": "t:settings.r_story_text",
+      "default": "The future is solid",
+      "visible_if": "{{ block.settings.role != 'body' }}"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "t:settings.r_story_content",
+      "default": "<p>Tell this product's story.</p>",
+      "visible_if": "{{ block.settings.role == 'body' }}"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "t:settings.alignment",
+      "options": [
+        {
+          "value": "start",
+          "label": "t:options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "end",
+          "label": "t:options.right"
+        }
+      ],
+      "default": "start"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "t:settings.r_story_max_width",
+      "info": "t:settings.r_story_max_width_info",
+      "min": 0,
+      "max": 70,
+      "step": 5,
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "text_color",
+      "label": "t:settings.r_story_text_color",
+      "options": [
+        {
+          "value": "default",
+          "label": "t:options.default"
+        },
+        {
+          "value": "primary",
+          "label": "t:settings.r_story_color_primary"
+        },
+        {
+          "value": "accent",
+          "label": "t:settings.r_story_color_accent"
+        }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "header",
+      "content": "t:content.r_story_motion"
+    },
+    {
+      "type": "checkbox",
+      "id": "reveal",
+      "label": "t:settings.r_story_reveal",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "reveal_delay",
+      "label": "t:settings.r_story_reveal_delay",
+      "min": 0,
+      "max": 800,
+      "step": 50,
+      "unit": "ms",
+      "default": 0,
+      "visible_if": "{{ block.settings.reveal }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.r_story_layout_desktop"
+    },
+    {
+      "type": "number",
+      "id": "d_col_start",
+      "label": "t:settings.r_story_col_start",
+      "info": "t:settings.r_story_col_step_info",
+      "default": 1
+    },
+    {
+      "type": "number",
+      "id": "d_col_span",
+      "label": "t:settings.r_story_col_span",
+      "info": "t:settings.r_story_col_step_info",
+      "default": 6
+    },
+    {
+      "type": "number",
+      "id": "d_row_start",
+      "label": "t:settings.r_story_row_start",
+      "info": "t:settings.r_story_row_start_info",
+      "default": 0
+    },
+    {
+      "type": "number",
+      "id": "d_row_span",
+      "label": "t:settings.r_story_row_span",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "d_z",
+      "label": "t:settings.r_story_z",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "number",
+      "id": "d_nudge_x",
+      "label": "t:settings.r_story_nudge_x",
+      "info": "t:settings.r_story_nudge_info",
+      "default": 0
+    },
+    {
+      "type": "number",
+      "id": "d_nudge_y",
+      "label": "t:settings.r_story_nudge_y",
+      "info": "t:settings.r_story_nudge_info",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "d_scale",
+      "label": "t:settings.r_story_scale",
+      "min": 90,
+      "max": 115,
+      "step": 1,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "select",
+      "id": "align_self",
+      "label": "t:settings.r_story_align",
+      "options": [
+        {
+          "value": "start",
+          "label": "t:settings.r_story_align_start"
+        },
+        {
+          "value": "center",
+          "label": "t:settings.r_story_align_center"
+        },
+        {
+          "value": "end",
+          "label": "t:settings.r_story_align_end"
+        }
+      ],
+      "default": "start"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_desktop",
+      "label": "t:settings.r_story_hide_desktop",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:content.r_story_layout_mobile"
+    },
+    {
+      "type": "number",
+      "id": "m_col_start",
+      "label": "t:settings.r_story_col_start",
+      "info": "t:settings.r_story_col_step_info",
+      "default": 1
+    },
+    {
+      "type": "number",
+      "id": "m_col_span",
+      "label": "t:settings.r_story_col_span",
+      "info": "t:settings.r_story_col_step_info",
+      "default": 6
+    },
+    {
+      "type": "number",
+      "id": "m_row_start",
+      "label": "t:settings.r_story_row_start",
+      "info": "t:settings.r_story_row_start_info",
+      "default": 0
+    },
+    {
+      "type": "number",
+      "id": "m_row_span",
+      "label": "t:settings.r_story_row_span",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "m_z",
+      "label": "t:settings.r_story_z",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "number",
+      "id": "m_nudge_x",
+      "label": "t:settings.r_story_nudge_x",
+      "info": "t:settings.r_story_nudge_info",
+      "default": 0
+    },
+    {
+      "type": "number",
+      "id": "m_nudge_y",
+      "label": "t:settings.r_story_nudge_y",
+      "info": "t:settings.r_story_nudge_info",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_mobile",
+      "label": "t:settings.r_story_hide_mobile",
+      "default": false
+    }
+  ]
+}
+{% endschema %}

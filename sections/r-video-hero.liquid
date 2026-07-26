@@ -1,0 +1,302 @@
+{% comment %}
+  Section: Rocky — Video hero (WS10)
+
+  Full-bleed ambient video band for PDP storytelling templates. The media
+  layer is the WS9 r-media framework in fill mode — autoplay ladder, poster,
+  WCAG pause control, and reduced-motion behaviour all come from r-media.
+  Shopify-hosted video only (YouTube/Vimeo stays on the click-to-play
+  `video` snippet path). Content blocks (@theme) float over the media.
+{% endcomment %}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div
+  class="section section--{{ section.settings.section_width }} r-video-hero color-{{ section.settings.color_scheme }} spacing-style"
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    --r-video-hero-h: {{ section.settings.height }};
+    --r-video-hero-justify: {{ section.settings.content_vertical }};
+    --r-video-hero-align: {{ section.settings.content_horizontal }};
+  "
+>
+  <div class="r-video-hero__frame">
+    {%- if section.settings.video != blank -%}
+      {% render 'r-media',
+        video: section.settings.video,
+        aspect: 'fill',
+        decorative: true,
+        autoplay: section.settings.autoplay,
+        class: 'r-video-hero__media',
+        section: section
+      %}
+    {%- else -%}
+      <div class="r-video-hero__media r-video-hero__placeholder">
+        {{ 'hero-apparel-2' | placeholder_svg_tag: 'r-video-hero__placeholder-svg' }}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.toggle_overlay -%}
+      {% render 'overlay', settings: section.settings, layer: 'var(--layer-flat)' %}
+    {%- endif -%}
+
+    <div class="r-video-hero__content">
+      {% content_for 'blocks' %}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .r-video-hero__frame {
+    position: relative;
+    display: grid;
+    min-height: var(--r-video-hero-h, 80svh);
+    overflow: hidden;
+  }
+
+  /* r-media fill mode covers an externally sized frame — this is the
+     external sizing. */
+  .r-video-hero__frame > .r-video-hero__media {
+    position: absolute;
+    inset: 0;
+  }
+
+  .r-video-hero__placeholder {
+    background-color: var(--r-surface-subtle, rgb(var(--color-foreground-rgb) / 6%));
+  }
+
+  .r-video-hero__placeholder svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .r-video-hero__content {
+    position: relative;
+    z-index: var(--layer-raised, 2);
+    display: flex;
+    flex-direction: column;
+    gap: var(--r-space-sm, 16px);
+    justify-content: var(--r-video-hero-justify, flex-end);
+    align-items: var(--r-video-hero-align, flex-start);
+    padding: var(--r-space-2xl, 48px) var(--page-margin, 20px);
+    pointer-events: none;
+  }
+
+  /* Let clicks reach real content (buttons/links) but fall through the
+     empty flex area to the r-media pause control underneath. */
+  .r-video-hero__content > * {
+    pointer-events: auto;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.r_video_hero",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "blocks": [
+    {
+      "type": "@theme"
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.media"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "t:settings.video"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "t:settings.r_story_autoplay",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "t:settings.height",
+      "options": [
+        {
+          "value": "60svh",
+          "label": "t:options.medium"
+        },
+        {
+          "value": "80svh",
+          "label": "t:options.large"
+        },
+        {
+          "value": "100svh",
+          "label": "t:options.full_screen"
+        }
+      ],
+      "default": "80svh"
+    },
+    {
+      "type": "checkbox",
+      "id": "toggle_overlay",
+      "label": "t:settings.media_overlay"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "t:settings.overlay_color",
+      "alpha": true,
+      "default": "#00000040",
+      "visible_if": "{{ section.settings.toggle_overlay }}"
+    },
+    {
+      "type": "select",
+      "id": "overlay_style",
+      "label": "t:settings.overlay_style",
+      "options": [
+        {
+          "value": "solid",
+          "label": "t:options.solid"
+        },
+        {
+          "value": "gradient",
+          "label": "t:options.gradient"
+        }
+      ],
+      "default": "solid",
+      "visible_if": "{{ section.settings.toggle_overlay }}"
+    },
+    {
+      "type": "select",
+      "id": "gradient_direction",
+      "label": "t:settings.gradient_direction",
+      "options": [
+        {
+          "value": "to top",
+          "label": "t:options.up"
+        },
+        {
+          "value": "to bottom",
+          "label": "t:options.down"
+        }
+      ],
+      "default": "to top",
+      "visible_if": "{{ section.settings.toggle_overlay and section.settings.overlay_style == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.content"
+    },
+    {
+      "type": "select",
+      "id": "content_vertical",
+      "label": "t:settings.r_video_hero_vertical",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "t:settings.r_story_align_start"
+        },
+        {
+          "value": "center",
+          "label": "t:settings.r_story_align_center"
+        },
+        {
+          "value": "flex-end",
+          "label": "t:settings.r_story_align_end"
+        }
+      ],
+      "default": "flex-end"
+    },
+    {
+      "type": "select",
+      "id": "content_horizontal",
+      "label": "t:settings.r_video_hero_horizontal",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "t:options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        }
+      ],
+      "default": "flex-start"
+    },
+    {
+      "type": "header",
+      "content": "t:content.section_layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:settings.section_width",
+      "options": [
+        {
+          "value": "page-width",
+          "label": "t:options.page"
+        },
+        {
+          "value": "full-width",
+          "label": "t:options.full"
+        }
+      ],
+      "default": "full-width"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-2"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.r_video_hero",
+      "category": "Rocky — PDP",
+      "settings": {
+        "height": "80svh",
+        "section_width": "full-width",
+        "color_scheme": "scheme-2"
+      },
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>Made wild, made well</h2>",
+            "type_preset": "h2"
+          }
+        }
+      },
+      "block_order": ["heading"]
+    }
+  ]
+}
+{% endschema %}
