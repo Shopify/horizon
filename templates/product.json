@@ -310,7 +310,7 @@
                 "inherit_color_scheme": true,
                 "border": "none",
                 "padding-block-start": 8,
-                "padding-block-end": 8,
+                "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
               },
@@ -367,32 +367,12 @@
                   "block_order": [
                     "content"
                   ]
-                },
-                "row-find-in-store": {
-                  "type": "_accordion-row",
-                  "settings": {
-                    "heading": "Find in Store",
-                    "open_by_default": false,
-                    "icon": "map_pin"
-                  },
-                  "blocks": {
-                    "content": {
-                      "type": "r-pdp-find-in-store",
-                      "settings": {
-                        "store_locator_url": "/pages/store-locator"
-                      }
-                    }
-                  },
-                  "block_order": [
-                    "content"
-                  ]
                 }
               },
               "block_order": [
                 "row-ingredients",
                 "row-sustainability",
-                "row-how-to-use",
-                "row-find-in-store"
+                "row-how-to-use"
               ]
             },
             "breadcrumbs": {
@@ -434,6 +414,14 @@
                 "inherit_color_scheme": true
               },
               "blocks": {}
+            },
+            "find-in-store": {
+              "type": "r-pdp-find-in-store",
+              "settings": {
+                "heading": "Find in Store",
+                "store_locator_url": "/pages/store-locator"
+              },
+              "blocks": {}
             }
           },
           "block_order": [
@@ -445,7 +433,8 @@
             "skin-type",
             "buy-buttons",
             "guarantees",
-            "r-pdp-accordion"
+            "r-pdp-accordion",
+            "find-in-store"
           ]
         }
       },

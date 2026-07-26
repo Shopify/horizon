@@ -1,4 +1,14 @@
 {%- liquid
+  # Rocky PDP find-in-store. Was an accordion row (`_accordion-row` > this block);
+  # now a trigger row that opens the shared Rocky right-side drawer
+  # (snippets/r-side-drawer.liquid) — same setup as r-pdp-guarantees, so it uses
+  # Horizon's <dialog-component> engine with no bespoke drawer JS.
+  #
+  # <r-pdp-find-in-store> deliberately lives INSIDE the drawer body rather than
+  # wrapping it: Component refs only bind to the nearest `*-component` ancestor
+  # (assets/component.js #isDescendant), so wrapping the drawer would leave
+  # ref="list" / ref="error" owned by <dialog-component> and unreachable here.
+  # r-pdp-find-in-store.js lazy-fetches on `dialog:open` instead of details toggle.
   assign product = closest.product
   assign variant = product.selected_or_first_available_variant
   assign worker_url = settings.rocky_locator_worker_url | default: block.settings.worker_url_override
@@ -8,6 +18,14 @@
   if product.type == 'Gift Card' or product.type == 'sunscreen'
     assign hidden_for_type = true
   endif
+
+  assign heading = block.settings.heading | strip
+  if heading == blank
+    assign heading = 'rocky.pdp_find_in_store.heading' | t
+  endif
+
+  assign locator_url = block.settings.store_locator_url | default: '/pages/store-locator'
+  assign drawer_id = 'pdp-find-in-store-' | append: block.id
 -%}
 
 {%- unless hidden_for_type -%}
@@ -21,39 +39,141 @@
     }
   {%- endcapture -%}
 
-  <r-pdp-find-in-store
-    class="r-pdp-find-in-store"
-    data-worker-url="{{ worker_url | escape }}"
-    data-product-type="{{ product.type | escape }}"
-    data-initial-variant-id="{{ variant.id }}"
-    data-initial-variant-title="{{ variant.title | escape }}"
-    data-feature-enabled="{{ feature_enabled }}"
-    data-variant-titles="{{ variant_titles_json | escape }}"
-    data-store-locator-url="{{ block.settings.store_locator_url | default: '/pages/store-locator' | escape }}"
-    {{ block.shopify_attributes }}
-  >
-    <ul class="r-pdp-find-in-store__list" ref="list">
-      <li class="r-pdp-find-in-store__loading" ref="loading">
-        {{- 'rocky.pdp_find_in_store.loading' | t -}}
-      </li>
-    </ul>
-
-    <p class="r-pdp-find-in-store__error" ref="error" hidden>
-      {{- 'rocky.pdp_find_in_store.error' | t -}}
-    </p>
-
-    <a
-      href="{{ block.settings.store_locator_url | default: '/pages/store-locator' }}"
-      target="_blank"
-      rel="noopener"
-      class="r-pdp-find-in-store__cta"
+  {%- capture find_in_store_trigger -%}
+    <button
+      type="button"
+      class="r-pdp-find-in-store__trigger"
+      on:click="/showDialog"
+      aria-haspopup="dialog"
     >
-      {{- 'rocky.pdp_find_in_store.view_all' | t -}}
-    </a>
-  </r-pdp-find-in-store>
+      <svg
+        class="r-pdp-find-in-store__trigger-icon"
+        aria-hidden="true"
+        focusable="false"
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 20 20"
+      >
+        {%- render 'icon', icon: 'map_pin' -%}
+      </svg>
+      <span class="r-pdp-find-in-store__trigger-label">{{ heading }}</span>
+      <span class="svg-wrapper r-pdp-find-in-store__trigger-caret">
+        {{- 'icon-caret.svg' | inline_asset_content -}}
+      </span>
+    </button>
+  {%- endcapture -%}
+
+  {%- capture find_in_store_body -%}
+    <r-pdp-find-in-store
+      class="r-pdp-find-in-store"
+      data-worker-url="{{ worker_url | escape }}"
+      data-product-type="{{ product.type | escape }}"
+      data-initial-variant-id="{{ variant.id }}"
+      data-initial-variant-title="{{ variant.title | escape }}"
+      data-feature-enabled="{{ feature_enabled }}"
+      data-variant-titles="{{ variant_titles_json | escape }}"
+      data-store-locator-url="{{ locator_url | escape }}"
+    >
+      <ul class="r-pdp-find-in-store__list" ref="list">
+        <li class="r-pdp-find-in-store__loading" ref="loading">
+          {{- 'rocky.pdp_find_in_store.loading' | t -}}
+        </li>
+      </ul>
+
+      <p class="r-pdp-find-in-store__error" ref="error" hidden>
+        {{- 'rocky.pdp_find_in_store.error' | t -}}
+      </p>
+
+      <a
+        href="{{ locator_url }}"
+        target="_blank"
+        rel="noopener"
+        class="r-pdp-find-in-store__cta"
+      >
+        {{- 'rocky.pdp_find_in_store.view_all' | t -}}
+      </a>
+    </r-pdp-find-in-store>
+  {%- endcapture -%}
+
+  <div class="r-pdp-find-in-store-row" {{ block.shopify_attributes }}>
+    {% render 'r-side-drawer',
+      id: drawer_id,
+      heading: heading,
+      trigger: find_in_store_trigger,
+      content: find_in_store_body
+    %}
+  </div>
 {%- endunless -%}
 
 {% stylesheet %}
+  /* ---- Trigger row -------------------------------------------------------
+     The last row of the PDP option table. Mirrors the accordion rows above it,
+     which in turn mirror SIZE / SCENT / QTY — see the
+     `.product-details .accordion .details__header` block in r-base.css. Keep
+     the two in step: uppercase micro-label, `--r-pdp-option-pad` block padding,
+     `--r-pdp-option-rule` hairline. */
+  .r-pdp-find-in-store-row > dialog-component {
+    display: block;
+  }
+
+  .r-pdp-find-in-store__trigger {
+    display: flex;
+    align-items: center;
+    gap: var(--r-space-2xs, 8px);
+    width: 100%;
+    min-height: var(--minimum-touch-target, 44px);
+    padding: 0;
+    padding-block: var(--r-pdp-option-pad, 0.85rem);
+    border: none;
+    border-block-end: var(--r-pdp-option-rule, 1px solid rgb(var(--color-foreground-rgb) / 0.14));
+    background: transparent;
+    cursor: pointer;
+    /* <button> does not inherit font by default; r-base.css resets that, but
+       state it here too so the row can't silently drop out of the brand face. */
+    font-family: inherit;
+    font-size: var(--r-pdp-label-size, var(--font-size--2xs, 0.75rem));
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgb(var(--color-foreground-rgb) / 0.55);
+    text-align: start;
+  }
+
+  .r-pdp-find-in-store__trigger-icon {
+    flex: 0 0 auto;
+    fill: currentcolor;
+  }
+
+  .r-pdp-find-in-store__trigger-label {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  /* Caret points at the drawer's edge (right) rather than down, since this
+     opens a panel instead of expanding in place. */
+  .r-pdp-find-in-store__trigger-caret {
+    flex: 0 0 auto;
+    display: inline-flex;
+    width: var(--icon-size-2xs, 0.6rem);
+    height: var(--icon-size-2xs, 0.6rem);
+    transform: rotate(-90deg);
+    color: rgb(var(--color-foreground-rgb) / 0.6);
+  }
+
+  .r-pdp-find-in-store__trigger:focus-visible {
+    outline: var(--focus-outline-width, 2px) solid var(--color-foreground);
+    outline-offset: 2px;
+  }
+
+  /* Sit flush under the accordion — cancel the product-details column gap so the
+     row's rule continues the accordion's divider stack. Mirrors the same trick
+     used by `.product-details .r-pdp-attribute--inline` in r-base.css. */
+  .product-details .r-pdp-find-in-store-row {
+    margin-block-start: calc(var(--r-pdp-block-gap, 28px) * -1);
+  }
+
+  /* ---- Drawer body ------------------------------------------------------- */
   .r-pdp-find-in-store {
     display: block;
     min-height: 100px;
@@ -152,6 +272,12 @@
   "name": "t:names.r_pdp_find_in_store",
   "tag": null,
   "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "Find in Store"
+    },
     {
       "type": "text",
       "id": "store_locator_url",

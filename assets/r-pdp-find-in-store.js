@@ -3,7 +3,7 @@ import { ThemeEvents } from '@theme/events';
 
 // Bump the version suffix whenever the worker's response shape or filtering
 // changes — every browser will then treat the old entry as nonexistent and
-// fall through to a fresh fetch on the next accordion open.
+// fall through to a fresh fetch on the next drawer open.
 const STORES_CACHE_KEY = 'rmsc_locator_stores_v3';      // v3: PDP hits ?location_type=rocky_store explicitly
 const INVENTORY_CACHE_KEY = 'rmsc_locator_inventory_v1';
 const STORES_TTL_MS = 60 * 60 * 1000;     // 1 h — store list is near-static
@@ -101,13 +101,17 @@ class RPdpFindInStore extends Component {
 
     document.addEventListener(ThemeEvents.variantUpdate, this.#handleVariantUpdate, { signal });
 
-    const details = this.closest('details');
-    if (details) {
-      details.addEventListener('toggle', this.#handleToggle, { signal });
-      // If the accordion row is open by default, kick off a fetch.
-      if (details.open) this.#refresh();
+    // The element now lives inside the Rocky side drawer (r-side-drawer.liquid),
+    // so the lazy-fetch trigger is dialog.js's DialogOpenEvent instead of the old
+    // accordion `toggle`. That event does not bubble, so listen on the
+    // <dialog-component> itself.
+    const dialogComponent = this.closest('dialog-component');
+    if (dialogComponent) {
+      dialogComponent.addEventListener('dialog:open', this.#handleDialogOpen, { signal });
+      // Guard against being connected while the drawer is already open (morph).
+      if (this.#isPanelOpen()) this.#refresh();
     } else {
-      // No accordion wrapper — just fetch immediately.
+      // Rendered outside a drawer — just fetch immediately.
       this.#refresh();
     }
   }
@@ -120,9 +124,14 @@ class RPdpFindInStore extends Component {
 
   // ── event handlers ──────────────────────────────────────────────────────────
 
-  #handleToggle = (event) => {
-    const open = event.currentTarget?.open;
-    if (open && this.#currentVariantId && !this.#fetchedVariants.has(this.#currentVariantId)) {
+  /** True when the enclosing drawer panel is showing (or there is no drawer). */
+  #isPanelOpen() {
+    const dialog = this.closest('dialog');
+    return dialog ? dialog.open : true;
+  }
+
+  #handleDialogOpen = () => {
+    if (this.#currentVariantId && !this.#fetchedVariants.has(this.#currentVariantId)) {
       this.#refresh();
     }
   };
@@ -140,9 +149,7 @@ class RPdpFindInStore extends Component {
 
     if (this.#variantDebounce) clearTimeout(this.#variantDebounce);
     this.#variantDebounce = setTimeout(() => {
-      const details = this.closest('details');
-      const accordionOpen = details ? details.open : true;
-      if (accordionOpen) {
+      if (this.#isPanelOpen()) {
         this.#refresh();
       } else if (!this.#fetchedVariants.has(id)) {
         this.#renderLoading();

@@ -299,6 +299,21 @@ body[class*='page-width-'] {
   --r-cart-reward-accent: oklch(68% 0.15 65);   /* deeper amber for the editorial palette */
 }
 
+/* -----------------------------------------------------------------------------
+   Form controls inherit the brand face.
+   Browsers do NOT inherit font on <button>/<input>/<select>/<textarea> — the UA
+   sheet hard-sets its own (Arial on macOS Chrome). Any Rocky control that styles
+   font-size but forgets font-family silently drops out of RockyAptaPro; that is
+   how the PDP "Find in Store" trigger shipped in Arial. Inheriting here makes
+   the brand face the default and the exception explicit.
+   --------------------------------------------------------------------------- */
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
 /* =============================================================================
    Rocky Shared Component CSS
    Add component CSS here only when identical styles appear in 2+ Rocky files.
@@ -637,11 +652,40 @@ r-cart-bumpers[hidden],
   margin-block-start: var(--r-space-md, 24px);
 }
 
-/* Accordion row headings — the theme's `h6` preset renders them at 12px, out of
-   step with the pane. Pull to the value tier (14px); keep the preset's weight
-   (500) as a subtle section-header cue. Beats accordion.liquid's (0,2,0) rule. */
+/* Accordion rows join the option-row table above Add to bag. Same uppercase
+   micro-label, same hairline rule, same row padding as SIZE / SCENT / QTY, so
+   the details column reads as one continuous table rather than two components
+   stacked. Beats accordion.liquid's (0,2,0) `.accordion .details__header` rule.
+   The Find in Store trigger below the accordion mirrors this exactly — see
+   `blocks/r-pdp-find-in-store.liquid`. */
 .product-details .accordion .details__header {
-  font-size: var(--r-pdp-value-size);
+  min-height: var(--minimum-touch-target);
+  padding-block: var(--r-pdp-option-pad);
+  font-size: var(--r-pdp-label-size);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(var(--color-foreground-rgb) / 0.55);
+}
+
+/* Dividers: the accordion's own are `--color-border` (near-black at 6%), out of
+   key with the brand-green option rules directly above. Recolour to the shared
+   token. The extra `.accordion` class out-specifies accordion.liquid's own
+   (0,3,1) `:first-child` / `:not(:first-child)` / `:last-child` divider rules. */
+.product-details .accordion.accordion--dividers accordion-custom .details {
+  border-block-start: var(--r-pdp-option-rule);
+}
+
+.product-details .accordion.accordion--dividers accordion-custom:last-child .details {
+  border-block-end: var(--r-pdp-option-rule);
+}
+
+/* Row caret — match the SCENT row's caret rather than the accordion's larger
+   `--icon-size-xs`, and mute it to the label colour. */
+.product-details .accordion .details__header .svg-wrapper {
+  width: var(--icon-size-2xs);
+  height: var(--icon-size-2xs);
+  color: rgb(var(--color-foreground-rgb) / 0.6);
 }
 
 /* SIZE and SCENT are one block (variant-picker) so they sit flush; SKIN TYPE and
