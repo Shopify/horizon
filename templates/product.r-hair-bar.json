@@ -7,7 +7,7 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
-{
+ {
   "sections": {
     "main": {
       "type": "product-information",
@@ -669,7 +669,7 @@
             "d_nudge_x": 0,
             "d_nudge_y": 40,
             "d_scale": 100,
-            "align_self": "end",
+            "align_self": "center",
             "hide_on_desktop": false,
             "m_col_start": 1,
             "m_col_span": 6,
@@ -703,7 +703,7 @@
             "d_scale": 100,
             "align_self": "start",
             "hide_on_desktop": false,
-            "m_col_start": 1,
+            "m_col_start": 1.2,
             "m_col_span": 6,
             "m_row_start": 2,
             "m_row_span": 1,

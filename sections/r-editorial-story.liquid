@@ -25,6 +25,16 @@
 >
   <r-editorial-story class="r-story-stage">
     {% content_for 'blocks' %}
+    {%- if request.design_mode and section.settings.show_grid -%}
+      <div class="r-story-grid-overlay" aria-hidden="true">
+        {%- for i in (1..12) -%}
+          <div
+            class="r-story-grid-overlay__col{% if i > 6 %} r-story-grid-overlay__col--desktop{% endif %}"
+            data-col="{{ i }}"
+          ></div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
   </r-editorial-story>
 </div>
 
@@ -34,6 +44,12 @@
        only discrete jump is the 750px grid re-placement. */
     --r-story-gap: clamp(12px, 1.6vw, 24px);
     --r-story-row-gap: clamp(24px, 4.5vw, 72px);
+
+    /* Nudge reference width (unitless): a nudge value renders as exact px
+       when the stage is this wide — 390 viewport − gutters on mobile, the
+       150rem shell max on desktop — and scales proportionally everywhere
+       else via the cqi conversion on the items below. */
+    --r-story-nudge-ref: 358;
 
     /* Type scale consumed by r-story-text roles — brand-specified fixed
        sizes (2026-07: headline 18 / body 13 / pullquote 24; eyebrow and
@@ -47,6 +63,12 @@
     /* Nudged / scaled items may reach past the viewport — never let them
        mint a horizontal scrollbar. Vertical overflow stays visible. */
     overflow-x: clip;
+  }
+
+  @media screen and (min-width: 750px) {
+    .r-editorial-story {
+      --r-story-nudge-ref: 1500;
+    }
   }
 
   /* Micro-track grids: the 6 / 12 editor "columns" AND the content-sized
@@ -69,6 +91,12 @@
     row-gap: 0;
     align-items: start;
 
+    /* Inline-size container: item nudges are written in cqi so offsets stay
+       proportional to the stage at every viewport; the design-mode overlay
+       anchors to it too. */
+    container-type: inline-size;
+    position: relative;
+
     /* The rhythm margin on the last band adds trailing space the old
        row-gap never had — pull it back. */
     margin-block-end: calc(-1 * var(--r-story-row-gap));
@@ -83,7 +111,9 @@
   /* ---- Item placement — the vars arrive inline per item (Liquid cannot
      run inside a stylesheet); see snippets/r-story-item-style.liquid.
      Nudge/scale ride the `transform` property so the reveal below can own
-     the individual `translate` property without conflict. ---- */
+     the individual `translate` property without conflict. Nudges convert
+     px → cqi against the reference width, so an arrangement keeps its
+     shape as the stage narrows instead of drifting off-composition. ---- */
 
   .r-story-stage > .r-story-item {
     position: relative;
@@ -94,8 +124,8 @@
     z-index: var(--r-si-mz, 1);
     align-self: var(--r-si-align, start);
     transform: translate(
-      calc(var(--r-si-mx, 0) * var(--spacing-scale, 1) * 1px),
-      calc(var(--r-si-my, 0) * var(--spacing-scale, 1) * 1px)
+      calc(var(--r-si-mx, 0) * 100cqi / var(--r-story-nudge-ref, 358)),
+      calc(var(--r-si-my, 0) * 100cqi / var(--r-story-nudge-ref, 358))
     );
   }
 
@@ -105,8 +135,8 @@
       grid-row: var(--r-si-r, auto) / span var(--r-si-rs, 10);
       z-index: var(--r-si-z, 1);
       transform: translate(
-          calc(var(--r-si-x, 0) * var(--spacing-scale, 1) * 1px),
-          calc(var(--r-si-y, 0) * var(--spacing-scale, 1) * 1px)
+          calc(var(--r-si-x, 0) * 100cqi / var(--r-story-nudge-ref, 1500)),
+          calc(var(--r-si-y, 0) * 100cqi / var(--r-story-nudge-ref, 1500))
         )
         scale(calc(var(--r-si-scale, 100) / 100));
     }
@@ -122,6 +152,68 @@
     .r-story-item--hide-desktop {
       display: none;
     }
+  }
+
+  /* ---- Design-mode placement guides — the overlay markup renders only in
+     the theme editor with the section's "Show placement grid" on; the
+     storefront never sees it. It mirrors the stage's micro-track geometry
+     exactly (same template + micro-gap), so guide edges sit on true column
+     lines; the faint inner line marks each half column. ---- */
+
+  .r-story-grid-overlay {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(60, minmax(0, 1fr));
+    column-gap: calc(var(--r-story-gap) / 10);
+    z-index: 20;
+    pointer-events: none;
+  }
+
+  @media screen and (min-width: 750px) {
+    .r-story-grid-overlay {
+      grid-template-columns: repeat(120, minmax(0, 1fr));
+    }
+  }
+
+  .r-story-grid-overlay__col {
+    grid-row: 1;
+    grid-column: span 10;
+    background:
+      linear-gradient(
+        to right,
+        transparent calc(50% - 0.5px),
+        rgb(var(--color-foreground-rgb) / 12%) calc(50% - 0.5px),
+        rgb(var(--color-foreground-rgb) / 12%) calc(50% + 0.5px),
+        transparent calc(50% + 0.5px)
+      ),
+      rgb(var(--color-foreground-rgb) / 5%);
+    box-shadow:
+      inset 1px 0 rgb(var(--color-foreground-rgb) / 30%),
+      inset -1px 0 rgb(var(--color-foreground-rgb) / 30%);
+  }
+
+  .r-story-grid-overlay__col::before {
+    content: attr(data-col);
+    display: block;
+    padding-block-start: 4px;
+    font-size: 0.625rem;
+    line-height: 1;
+    text-align: center;
+    color: rgb(var(--color-foreground-rgb) / 50%);
+  }
+
+  @media screen and (max-width: 749px) {
+    .r-story-grid-overlay__col--desktop {
+      display: none;
+    }
+  }
+
+  /* Outline every item while the guides are up — the overlay div itself is
+     the design-mode signal, so no extra state travels to the storefront. */
+  .r-story-stage:has(> .r-story-grid-overlay) > .r-story-item {
+    outline: 1px dashed rgb(var(--color-foreground-rgb) / 35%);
+    outline-offset: -1px;
   }
 
   /* ---- Text/custom reveal — armed by <r-editorial-story> only when JS is
@@ -190,6 +282,13 @@
       "id": "color_scheme",
       "label": "t:settings.color_scheme",
       "default": "scheme-3"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_grid",
+      "label": "t:settings.r_story_show_grid",
+      "info": "t:settings.r_story_show_grid_info",
+      "default": false
     },
     {
       "type": "header",

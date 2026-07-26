@@ -42,11 +42,33 @@ product unless a design exceeds the controls (then: the custom block).
   margin trims the trailing band). Caveat: micro-rows within a band share
   its content-driven height distribution, so fractional row starts move
   continuously with every 0.1 step but interpolate *non-linearly* when a
-  band holds mixed-height content — nudge Y (free decimal px) remains the
-  exact control. Each block: two placement panels (Desktop/Mobile): column
-  start/span (decimal), row start/span (0 = auto flow), z-layer, nudge X/Y
-  (decimal px), scale (desktop), align, hide-per-viewport. Overlap =
-  overlapping row/col ranges + z-index.
+  band holds mixed-height content — nudge Y (free decimal) remains the
+  fine control. **Spans of 0/blank/negative fall back to their defaults**,
+  never to the 0.1 minimum — a one-micro-track row span concentrates the
+  item's whole height in one track and skews fractional placement for
+  every other item in the band (this shipped briefly; the pilot's
+  `d_row_span: 0` entries triggered it). Column spans additionally clamp
+  to fit (start + span ≤ end line) — overshoot minted zero-width implicit
+  tracks and silently shrank the item instead of bleeding it. Each block:
+  two placement panels (Desktop/Mobile): column start/span (decimal), row
+  start (0 = auto flow) / row span (0 = default), z-layer, nudge X/Y
+  (decimal, proportional — next bullet), scale (desktop), align,
+  hide-per-viewport. Overlap = overlapping row/col ranges + z-index.
+- **Proportional nudges.** The stage is an inline-size container and item
+  nudges are written in `cqi`: the entered value renders as exact px at
+  the reference stage width (`--r-story-nudge-ref`, unitless: 358 below
+  750px ≈ a 390 viewport minus gutters; 1500 at/above = the 150rem shell
+  max) and scales with the stage everywhere else, so a tuned arrangement
+  holds its composition at in-between viewports instead of drifting.
+  `--spacing-scale` no longer multiplies nudges (the grid never responded
+  to it either).
+- **Placement grid overlay.** Section setting "Show placement grid"
+  renders editor-only authoring guides (`request.design_mode` — the
+  storefront never sees the markup): numbered column bands mirrored on
+  the real micro-track geometry (so edges sit on true column lines), a
+  half-column center line per column, and a dashed outline on every
+  placed item (via `:has` on the overlay — no state leaks to the
+  storefront).
 - **Inline custom props.** Liquid cannot run inside `{% stylesheet %}`, so
   placement travels as `--r-si-*` vars on each item
   (`snippets/r-story-item-style.liquid`); the section stylesheet maps them

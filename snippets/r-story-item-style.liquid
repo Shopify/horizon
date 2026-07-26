@@ -18,8 +18,15 @@
   proportionally halfway through row 2's content-sized band (micro-rows
   within a band share its height evenly, so fractional starts are
   approximate when bands hold uneven content — nudge Y remains the exact
-  px control). A row start of 0 (or blank/negative) means "auto flow" — the
+  control). A row start of 0 (or blank/negative) means "auto flow" — the
   variable is simply not emitted, so the CSS falls back to `auto`.
+
+  Spans of 0 (or blank/negative) fall back to their DEFAULT, never to the
+  0.1 minimum: a 0.1-row span would concentrate the item's whole height in
+  one micro-track, skewing fractional placement for every other item in
+  the band. Column spans additionally clamp to fit the grid (start + span
+  ≤ end line) — overshooting would mint zero-width implicit tracks and
+  silently shrink the item rather than bleed it.
 
   @param {object} settings - Block settings carrying the placement ids
     (m_col_start, m_col_span, m_row_start, m_row_span, m_z, m_nudge_x,
@@ -33,17 +40,38 @@
   assign s = settings
 
   # Value -> micro-track conversion (0.1 precision, always integers).
+  # Spans <= 0 mean "default" (see doc above); column spans clamp to fit.
   assign m_col = s.m_col_start | default: 1 | at_least: 1 | at_most: 6
   assign m_track = m_col | minus: 1 | times: 10 | plus: 1 | round
-  assign m_span = s.m_col_span | default: 6 | at_least: 0.1 | at_most: 6
-  assign m_track_span = m_span | times: 10 | round
+  assign m_span = s.m_col_span | default: 6
+  if m_span <= 0
+    assign m_span = 6
+  endif
+  assign m_span = m_span | at_least: 0.1 | at_most: 6
+  assign m_track_max = 61 | minus: m_track
+  assign m_track_span = m_span | times: 10 | round | at_most: m_track_max
+
   assign d_col = s.d_col_start | default: 1 | at_least: 1 | at_most: 12
   assign d_track = d_col | minus: 1 | times: 10 | plus: 1 | round
-  assign d_span = s.d_col_span | default: 6 | at_least: 0.1 | at_most: 12
-  assign d_track_span = d_span | times: 10 | round
+  assign d_span = s.d_col_span | default: 6
+  if d_span <= 0
+    assign d_span = 6
+  endif
+  assign d_span = d_span | at_least: 0.1 | at_most: 12
+  assign d_track_max = 121 | minus: d_track
+  assign d_track_span = d_span | times: 10 | round | at_most: d_track_max
 
-  assign m_row_span = s.m_row_span | default: 1 | at_least: 0.1 | at_most: 12 | times: 10 | round
-  assign d_row_span = s.d_row_span | default: 1 | at_least: 0.1 | at_most: 12 | times: 10 | round
+  assign m_row_span = s.m_row_span | default: 1
+  if m_row_span <= 0
+    assign m_row_span = 1
+  endif
+  assign m_row_span = m_row_span | at_least: 0.1 | at_most: 12 | times: 10 | round
+
+  assign d_row_span = s.d_row_span | default: 1
+  if d_row_span <= 0
+    assign d_row_span = 1
+  endif
+  assign d_row_span = d_row_span | at_least: 0.1 | at_most: 12 | times: 10 | round
 
   echo '--r-si-mc: ' | append: m_track | append: ';'
   echo ' --r-si-mcs: ' | append: m_track_span | append: ';'
