@@ -1,0 +1,34 @@
+[
+  {% assign ymp_bundle_sep = '' %}
+  {% for item in cart.items %}
+    {% if item.item_components.size > 0 %}
+    {{ ymp_bundle_sep }}
+    {
+      "variant_id": {{ item.variant_id | json }},
+      "product_id": {{ item.product_id | json }},
+      "quantity": {{ item.quantity | json }},
+      "original_price": {{ item.original_price | json }},
+      "final_price": {{ item.final_price | json }},
+      "original_line_price": {{ item.original_line_price | json }},
+      "final_line_price": {{ item.final_line_price | json }},
+      "components": [
+        {% assign ymp_comp_sep = '' %}
+        {% for component in item.item_components %}
+          {{ ymp_comp_sep }}
+          {
+            "variant_id": {{ component.variant_id | json }},
+            "product_id": {{ component.product_id | json }},
+            "quantity": {{ component.quantity | default: 1 | json }},
+            "original_price": {{ component.original_price | json }},
+            "final_price": {{ component.final_price | json }},
+            "original_line_price": {{ component.original_line_price | json }},
+            "final_line_price": {{ component.final_line_price | json }}
+          }
+          {% assign ymp_comp_sep = ',' %}
+        {% endfor %}
+      ]
+    }
+    {% assign ymp_bundle_sep = ',' %}
+    {% endif %}
+  {% endfor %}
+]
