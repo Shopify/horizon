@@ -1,13 +1,21 @@
+{% liquid
+  assign custom_color = false
+  if section.settings.background_color != blank or section.settings.text_color != blank
+    assign custom_color = true
+    render 'contrast-override', background_color: section.settings.background_color, text_color: section.settings.text_color, section_id: section.id
+  endif
+%}
+
 {% comment %}
   ASE Featured Products - Hand-pick specific products to display
 {% endcomment %}
 
-<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div class="section-background{% if custom_color %} color-custom-{{ section.id }}{% endif %}"></div>
 <div
   class="
     section
     section--{{ section.settings.section_width }}
-    color-{{ section.settings.color_scheme }}
+    {% if custom_color %}color-custom-{{ section.id }}{% endif %}
     spacing-style
   "
   style="
@@ -153,10 +161,16 @@
       "default": "page-width"
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "Color scheme",
-      "default": "scheme-1"
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "placeholder": "t:settings.default"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:settings.text_color",
+      "placeholder": "t:settings.default"
     },
     {
       "type": "header",

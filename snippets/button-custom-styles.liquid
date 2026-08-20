@@ -1,0 +1,65 @@
+{% doc %}
+  Outputs scoped CSS custom properties for the button-custom style class and
+  direct color overrides for the button-unstyled (link) style.
+
+  @param {object} block_settings - The block's settings object
+  @param {string} block_id - The block ID used to scope the CSS
+
+  @example
+  {% render 'button-custom-styles', block_settings: block_settings, block_id: block.id %}
+{% enddoc %}
+
+{% if block_settings.style_class == 'button-unstyled' and block_settings.link_text_color != blank %}
+  {% style %}
+    .button-unstyled--{{ block_id }},
+    .email-signup__button.button-unstyled.button-unstyled--{{ block_id }} {
+      color: rgb({{ block_settings.link_text_color.rgba }});
+    }
+
+    .button-unstyled--{{ block_id }}:hover,
+    .email-signup__button.button-unstyled.button-unstyled--{{ block_id }}:hover {
+      color: rgb({{ block_settings.link_text_color.rgb }} / var(--opacity-70));
+    }
+  {% endstyle %}
+{% endif %}
+
+{% if block_settings.style_class == 'button-custom' %}
+  {%- assign effective_background_color = block_settings.custom_button_background
+    | default: settings.palette_primary_button_background
+  %}
+  {%- assign effective_text_color = block_settings.custom_button_text
+    | default: settings.palette_primary_button_text
+  -%}
+  {%- assign effective_border_color = block_settings.custom_button_border
+    | default: settings.palette_primary_button_border
+  -%}
+  {%- if effective_background_color.alpha == 0 -%}
+    {%- assign effective_focus_outline_color = effective_text_color -%}
+  {%- else -%}
+    {%- assign effective_focus_outline_color = effective_background_color -%}
+  {%- endif -%}
+  {%- capture hover_resolved -%}
+    {% render 'resolve-custom-hover',
+      base_bg: effective_background_color,
+      base_text: effective_text_color,
+      base_border: effective_border_color
+    %}
+  {%- endcapture -%}
+  {%- assign hover_parts = hover_resolved | strip | split: '||' -%}
+  {%- assign effective_hover_bg = hover_parts[0] -%}
+  {%- assign effective_hover_text = hover_parts[1] -%}
+  {%- assign effective_hover_border = hover_parts[2] -%}
+  {% style %}
+    .button-custom--{{ block_id }} {
+      --button-background-color: rgb({{ effective_background_color.rgba }});
+      --button-color: rgb({{ effective_text_color.rgba }});
+      --button-border-color: rgb({{ effective_border_color.rgba }});
+      --button-focus-outline-color: rgb({{ effective_focus_outline_color.rgb }});
+    }
+    .button-custom--{{ block_id }}:hover {
+      --button-background-color: {{ effective_hover_bg }};
+      --button-color: {{ effective_hover_text }};
+      --button-border-color: {{ effective_hover_border }};
+    }
+  {% endstyle %}
+{% endif %}

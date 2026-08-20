@@ -27,7 +27,7 @@
             "letter_spacing": "normal",
             "case": "none",
             "wrap": "pretty",
-            "color": "",
+            "text_color": "",
             "background": false,
             "background_color": "#00000026",
             "corner_radius": 0,
@@ -51,13 +51,268 @@
       "settings": {
         "content_direction": "column",
         "gap": 32,
-        "color_scheme": "",
         "padding-block-start": 40,
-        "padding-block-end": 80
+        "padding-block-end": 0
+      }
+    },
+    "gallery_76PPx8": {
+      "type": "gallery",
+      "blocks": {
+        "image_EXA4ax": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_20190108_105046860.jpg",
+            "alt_text": "Figure Skating Dress",
+            "link": ""
+          }
+        },
+        "image_VeKFLN": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_20190308_073803429.jpg",
+            "alt_text": "Figure Skating Dress",
+            "link": ""
+          }
+        },
+        "image_6mdajY": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/PXL_20221025_150422714.jpg",
+            "alt_text": "Figure Skating Dress",
+            "link": ""
+          }
+        },
+        "image_XmTXhF": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/PXL_20221031_151509898.jpg",
+            "alt_text": "Dress",
+            "link": ""
+          }
+        },
+        "image_V4jdTT": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/PXL_20211007_155218089.jpg",
+            "alt_text": "Figure Skating Dress",
+            "link": ""
+          }
+        },
+        "image_yAdNy6": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Isabella_2.jpg",
+            "alt_text": "Figure Skating Dress",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_EXA4ax",
+        "image_VeKFLN",
+        "image_6mdajY",
+        "image_XmTXhF",
+        "image_V4jdTT",
+        "image_yAdNy6"
+      ],
+      "name": "Gallery",
+      "settings": {
+        "minimum_column_width": 200,
+        "gap": 10,
+        "aspect_ratio": "1",
+        "object_fit": "cover",
+        "border_radius": 0,
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_sides": 0
+      }
+    },
+    "gallery_VBeXdT": {
+      "type": "gallery",
+      "blocks": {
+        "image_zpNPmG": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Olga_Shiryeva_for_site.png",
+            "alt_text": "Figure Skating Dress",
+            "link": ""
+          }
+        },
+        "image_GmXDKY": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Nancy_Rodriguez_for_site.png",
+            "alt_text": "Figure Skating Dress",
+            "link": ""
+          }
+        },
+        "image_wDde4x": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Susan_Riddell_for_site.png",
+            "alt_text": "Figure Skating Dress",
+            "link": ""
+          }
+        },
+        "image_CxJiXV": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Malika_Vainer_fpr_site_9b58d645-d650-411e-bce2-09bbe1f53cf0.png",
+            "alt_text": "Figure Skating Dress",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_zpNPmG",
+        "image_GmXDKY",
+        "image_wDde4x",
+        "image_CxJiXV"
+      ],
+      "name": "Gallery",
+      "settings": {
+        "minimum_column_width": 200,
+        "gap": 10,
+        "aspect_ratio": "1",
+        "object_fit": "cover",
+        "border_radius": 0,
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_sides": 0
+      }
+    },
+    "gallery_HP3hDJ": {
+      "type": "gallery",
+      "blocks": {
+        "image_WpFxzg": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Nancy_Rodriguez_1_for_site.png",
+            "alt_text": "Figure Skating Dress",
+            "link": ""
+          }
+        },
+        "image_hL8zrC": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Kayla_Halliday_for_site.png",
+            "alt_text": "Figure Skating Dress",
+            "link": ""
+          }
+        },
+        "image_G8Yzbz": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Katerynn_Petrak_for_site.png",
+            "alt_text": "Figure Skating Dress",
+            "link": ""
+          }
+        },
+        "image_hUqKiC": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Nancy_Rodriguez_2_for-site.png",
+            "alt_text": "Figure Skating Dress",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_WpFxzg",
+        "image_hL8zrC",
+        "image_G8Yzbz",
+        "image_hUqKiC"
+      ],
+      "name": "Gallery",
+      "settings": {
+        "minimum_column_width": 200,
+        "gap": 10,
+        "aspect_ratio": "1",
+        "object_fit": "cover",
+        "border_radius": 0,
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_sides": 0
+      }
+    },
+    "gallery_Ur6nbz": {
+      "type": "gallery",
+      "blocks": {
+        "image_PaeXwC": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/PHOTO-2024-10-14-13-30-42_2.jpg",
+            "alt_text": "",
+            "link": ""
+          }
+        },
+        "image_Jy7rwg": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_0367.jpg",
+            "alt_text": "Figure Skater",
+            "link": ""
+          }
+        },
+        "image_aNVWXj": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_0368.jpg",
+            "alt_text": "Figure Skater",
+            "link": ""
+          }
+        },
+        "image_RrtpeR": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/PHOTO-2024-10-14-13-30-42_1.jpg",
+            "alt_text": "",
+            "link": ""
+          }
+        },
+        "image_QYi6EN": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Bluedress.png",
+            "alt_text": "Figure Skater",
+            "link": ""
+          }
+        },
+        "image_TTWKqc": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/greendress.png",
+            "alt_text": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_PaeXwC",
+        "image_Jy7rwg",
+        "image_aNVWXj",
+        "image_RrtpeR",
+        "image_QYi6EN",
+        "image_TTWKqc"
+      ],
+      "name": "Gallery",
+      "settings": {
+        "minimum_column_width": 200,
+        "gap": 10,
+        "aspect_ratio": "1",
+        "object_fit": "cover",
+        "border_radius": 0,
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_sides": 0
       }
     }
   },
   "order": [
-    "main"
+    "main",
+    "gallery_76PPx8",
+    "gallery_VBeXdT",
+    "gallery_HP3hDJ",
+    "gallery_Ur6nbz"
   ]
 }

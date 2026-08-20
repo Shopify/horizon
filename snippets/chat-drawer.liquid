@@ -1,0 +1,123 @@
+{% doc %}
+  Chat Drawer
+
+  Renders a theme-drawer host for `<shopify-chat>`. The markup is always
+  present — when the Inbox app is installed it registers the custom element
+  and the chat activates. Without Inbox the element is inert.
+
+  @example
+  {% render 'chat-drawer' %}
+{% enddoc %}
+
+<theme-drawer id="chat-drawer">
+  <dialog
+    ref="panel"
+    class="theme-drawer__dialog chat-drawer"
+  >
+    <shopify-chat
+      mode="standalone"
+      mode-switch
+    ></shopify-chat>
+  </dialog>
+</theme-drawer>
+
+<script type="module">
+  const chatDrawer = document.querySelector('#chat-drawer');
+  const shopifyChat = document.querySelector('shopify-chat');
+
+  document.addEventListener('theme-drawer:open', (event) => {
+    if (/** @type {Element} */ (event.target).id !== 'chat-drawer') return;
+    shopifyChat?.setAttribute('mode', 'managed');
+  });
+
+  document.addEventListener('theme-drawer:close', (event) => {
+    if (/** @type {Element} */ (event.target).id !== 'chat-drawer') return;
+    // If mode is still managed, this is a theme-initiated close (backdrop /
+    // Escape) — close the chat so the FAB appears. If mode is already
+    // standalone, the close was triggered by an undock (enter-standalone sets
+    // mode before closing the drawer) — leave the chat open as a floating panel.
+    if (shopifyChat?.getAttribute('mode') === 'managed') {
+      shopifyChat?.removeAttribute('open');
+    }
+    shopifyChat?.setAttribute('mode', 'standalone');
+  });
+
+  document.addEventListener('shopify-chat:enter-managed', () => {
+    // Captured at event-fire time — the dock-transition animation hint below
+    // depends on state as it was when the event was dispatched.
+    const isStandaloneAndOpen = shopifyChat?.hasAttribute('open') && shopifyChat?.getAttribute('mode') === 'standalone';
+
+    // The activator-click path (FAB click on desktop with stored
+    // preferredMode=managed) dispatches enter-managed *before* calling show(),
+    // so the chat's `open` attribute at event time understates the imminent
+    // outcome. Defer to a microtask: by then show() (if any) has run, and we
+    // can distinguish the viewport-driven mobile→desktop transition that left
+    // a minimized FAB (chat stays closed → don't open an empty drawer) from
+    // an activator click (chat just opened → open the drawer).
+    queueMicrotask(() => {
+      if (!shopifyChat?.hasAttribute('open') && !chatDrawer?.hasAttribute('open')) {
+        return;
+      }
+      chatDrawer?.open?.(isStandaloneAndOpen ? { enter: 'inline-start' } : undefined);
+    });
+  });
+
+  document.addEventListener('shopify-chat:enter-standalone', () => {
+    shopifyChat?.setAttribute('mode', 'standalone');
+    chatDrawer?.close?.();
+  });
+
+  document.addEventListener('shopify-chat:close', () => {
+    if (shopifyChat?.getAttribute('mode') === 'managed') {
+      chatDrawer?.close?.();
+    }
+  });
+
+  document.addEventListener('megaMenu:hover', () => {
+    if (shopifyChat?.hasAttribute('open') && shopifyChat?.getAttribute('mode') === 'standalone') {
+      shopifyChat?.removeAttribute('open');
+    }
+  });
+
+  // After the chat upgrades it self-restores its preferred mode from
+  // sessionStorage. Reconcile any mismatch with the theme-drawer's state
+  // — the drawer is the source of truth for which mode the chat should
+  // be in (open → managed, closed → standalone).
+  customElements.whenDefined('shopify-chat').then(() => {
+    const mode = chatDrawer?.hasAttribute('open') ? 'managed' : 'standalone';
+    if (shopifyChat?.getAttribute('mode') !== mode) {
+      // When switching managed → standalone (e.g. narrow viewport skipped
+      // drawer restore), also close the chat so it renders as the FAB
+      // rather than an open standalone panel.
+      if (mode === 'standalone' && shopifyChat?.hasAttribute('open')) {
+        shopifyChat?.removeAttribute('open');
+      }
+      shopifyChat?.setAttribute('mode', mode);
+    }
+  });
+</script>
+
+{% stylesheet %}
+  /* Pin the chat's mobile/desktop boundary so the theme and the chat agree
+     on where standalone mode kicks in. Must stay in sync with the @media
+     query below — @shopify/storefront-components reads this value once at
+     init and uses it to decide when to force standalone mode. */
+  shopify-chat {
+    --shopify-chat-breakpoint: 768px;
+  }
+
+  shopify-chat[mode='managed'] {
+    position: static;
+    height: 100%;
+  }
+
+  .theme-drawer__dialog:has(shopify-chat[mode='standalone'][open]) {
+    z-index: calc(var(--layer-menu-drawer) + 1);
+  }
+
+  /* Keep the panel rendered while closed so <shopify-chat>'s position-fixed
+     "Ask anything" launcher stays visible. */
+  .theme-drawer__dialog.chat-drawer:has(shopify-chat:defined) {
+    display: flex;
+  }
+{% endstylesheet %}

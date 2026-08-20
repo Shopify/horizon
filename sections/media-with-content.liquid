@@ -10,9 +10,17 @@
   endif
 %}
 
-<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+{% liquid
+  if section.settings.background_color != blank
+    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  endif
+%}
+
 <div
-  class="section section--{{ section.settings.section_width }} disable-section-top-offset media-with-content color-{{ section.settings.color_scheme }} spacing-style {{ media_class_modifier }}"
+  class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+></div>
+<div
+  class="section section--{{ section.settings.section_width }} disable-section-top-offset media-with-content{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %} spacing-style {{ media_class_modifier }}"
   data-testid="media-with-content"
   style="
     {%- render 'spacing-style', settings: section.settings %}
@@ -290,10 +298,10 @@
       "visible_if": "{{ section.settings.section_width == 'page-width' }}"
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:settings.color_scheme",
-      "default": "scheme-3"
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "placeholder": "t:settings.default"
     },
     {
       "type": "header",
@@ -326,8 +334,7 @@
       "category": "t:categories.storytelling",
       "settings": {
         "media_width": "medium",
-        "media_height": "60svh",
-        "color_scheme": "scheme-4"
+        "media_height": "60svh"
       },
       "blocks": {
         "media": {
@@ -380,7 +387,7 @@
               "settings": {
                 "label": "t:text_defaults.shop_now_button_label",
                 "link": "shopify://collections/all",
-                "style_class": "link"
+                "style_class": "button-unstyled"
               }
             }
           },
@@ -394,8 +401,7 @@
       "settings": {
         "media_position": "right",
         "media_width": "medium",
-        "media_height": "60svh",
-        "color_scheme": "scheme-3"
+        "media_height": "60svh"
       },
       "blocks": {
         "media": {

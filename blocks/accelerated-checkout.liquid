@@ -38,27 +38,7 @@
   </div>
 {% endif %}
 
-{% stylesheet %}
-  .accelerated-checkout-block[data-shopify-visual-preview] {
-    width: 300px;
-  }
-
-  more-payment-options-link {
-    font-size: smaller;
-  }
-
-  more-payment-options-link a {
-    --button-color: var(--color-primary);
-  }
-
-  more-payment-options-link a:hover {
-    --button-color: var(--color-primary-hover);
-  }
-
-  .shopify-payment-button__more-options[aria-hidden='true'] {
-    display: none;
-  }
-{% endstylesheet %}
+{% render 'buy-buttons-styles' %}
 
 {% schema %}
 {

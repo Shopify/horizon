@@ -1,0 +1,182 @@
+{%- doc -%}
+  Quick-add styles consolidated into a single snippet.
+
+  @example
+  {% render 'quick-add-styles' %}
+{%- enddoc -%}
+
+{% stylesheet %}
+  /* Quick Add */
+  .quick-add {
+    --quick-add-offset: var(--padding-sm);
+    --quick-add-right: calc(var(--quick-add-offset) + var(--padding-inline-end));
+    --quick-add-bottom: calc(var(--quick-add-offset) + var(--padding-block-end));
+    --quick-add-inset-inline-end: max(
+      var(--quick-add-right),
+      calc((var(--border-radius) + var(--quick-add-right)) * (1 - cos(45deg)))
+    );
+    --quick-add-inset-block-end: max(
+      var(--quick-add-bottom),
+      calc((var(--border-radius) + var(--quick-add-bottom)) * (1 - cos(45deg)))
+    );
+
+    position: absolute;
+    inset: 0;
+    z-index: var(--layer-raised);
+    pointer-events: none;
+
+    @media screen and (min-width: 750px) {
+      --quick-add-offset: var(--padding-md);
+    }
+  }
+
+  .quick-add .variant-option__button-label input[data-option-available='false'] {
+    cursor: not-allowed;
+  }
+
+  /* Hide "Add" button when "Choose" button is shown */
+  [data-quick-add-button='choose'] add-to-cart-component {
+    display: none;
+  }
+
+  /* Hide "Choose" button when "Add" button is shown */
+  [data-quick-add-button='add'] .quick-add__button--choose {
+    display: none;
+  }
+
+  product-card:is(:hover, :focus-within) .quick-add__button {
+    opacity: 1;
+
+    &:disabled {
+      opacity: var(--opacity-muted-text);
+    }
+  }
+
+  button.quick-add__button {
+    --quick-add-collapsed-width: var(--button-size-md);
+    --quick-add-icon-width: calc(var(--button-size-md) - 4px);
+    --quick-add-expanded-width: max-content;
+
+    display: var(--quick-add-mobile-display, none);
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0;
+    background: linear-gradient(var(--quick-add-background, var(--color-background)) 0 100%) padding-box;
+    padding: 0;
+    border-radius: 50px;
+    border: 2px solid hsl(0 0% 0% / 0.15);
+    height: var(--button-size-md);
+    width: var(--quick-add-collapsed-width);
+    cursor: pointer;
+    opacity: var(--quick-add-mobile-opacity, 0);
+    overflow: hidden;
+    color: var(--quick-add-foreground, var(--color-foreground));
+    pointer-events: all;
+    position: absolute;
+    inset-inline-end: var(--quick-add-inset-inline-end);
+    inset-block-end: var(--quick-add-inset-block-end);
+    max-inline-size: calc(100% - var(--quick-add-inset-inline-end));
+    min-inline-size: 0;
+    white-space: nowrap;
+    backdrop-filter: blur(20px) saturate(180%);
+    interpolate-size: allow-keywords;
+
+    &:hover {
+      scale: 1.03;
+
+      /* Hover stabilizer: extends hit area to maintain hover state */
+      &::before {
+        content: '';
+        position: absolute;
+        inset: -10px;
+        z-index: -1;
+      }
+    }
+
+    &:active {
+      scale: 0.99;
+    }
+
+    .quick-add[stay-visible] & {
+      display: flex;
+    }
+
+    @media screen and (min-width: 750px) {
+      display: var(--quick-add-display, flex);
+      opacity: 0;
+
+      /* Explicit "disabled" rule is needed to beat the `.button:disabled { opacity: 0.5 }` rule in base.css */
+      &:disabled {
+        opacity: 0;
+      }
+    }
+  }
+
+  .quick-add__button.add-to-cart-button {
+    height: var(--button-size-md);
+  }
+
+  .quick-add__button .svg-wrapper .checkmark-burst {
+    width: 22px;
+    height: 22px;
+  }
+
+  .quick-add__button > .add-to-cart-icon {
+    flex-shrink: 0;
+    width: var(--quick-add-icon-width);
+    height: 100%;
+  }
+
+  .quick-add__product-form-component {
+    height: 100%;
+  }
+
+  .quick-add__product-form-component .shopify-product-form {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    container-type: inline-size;
+    height: 100%;
+  }
+
+  .quick-add-modal .product-media {
+    width: 100%;
+    height: 100%;
+  }
+
+  .quick-add-modal deferred-media {
+    display: none;
+  }
+
+  .quick-add-modal .media-gallery--carousel slideshow-component {
+    --cursor: default;
+  }
+
+  @media screen and (min-width: 750px) {
+    .quick-add__button:is(:hover, :focus-visible) {
+      width: var(--quick-add-expanded-width);
+      padding-inline-end: var(--padding-sm);
+    }
+  }
+
+  .quick-add__button[data-added='true'] {
+    width: var(--quick-add-collapsed-width);
+    color: transparent;
+  }
+
+  .quick-add__button[data-added='true'] > .add-to-cart-icon {
+    opacity: 0;
+  }
+
+  .quick-add__button[data-added='true'] .add-to-cart__added {
+    color: var(--quick-add-foreground, var(--color-foreground));
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    button.quick-add__button {
+      transition-property: scale, translate, opacity, width;
+      transition-duration: var(--animation-speed);
+      transition-timing-function: var(--ease-out-cubic);
+    }
+  }
+{% endstylesheet %}

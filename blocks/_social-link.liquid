@@ -1,3 +1,11 @@
+{% if block.settings.icon_color != blank %}
+  {% style %}
+    .social-icon--{{ block.id }} {
+      color: {{ block.settings.icon_color }};
+    }
+  {% endstyle %}
+{% endif %}
+
 {% liquid
   assign block_settings = block.settings
 
@@ -22,7 +30,7 @@
 {% endcomment %}
 {% if request.design_mode or has_profile %}
   <div
-    class="social-icons__icon-wrapper{% unless has_profile %} social-icons__icon-wrapper--disabled{% endunless %}"
+    class="social-icons__icon-wrapper social-icon--{{ block.id }}{% unless has_profile %} social-icons__icon-wrapper--disabled{% endunless %}"
     {{ block.shopify_attributes }}
   >
     <a
@@ -102,6 +110,12 @@
       "type": "url",
       "id": "link",
       "label": "t:settings.link"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "t:settings.color",
+      "placeholder": "t:settings.default"
     }
   ],
   "presets": [

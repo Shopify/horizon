@@ -1,0 +1,36 @@
+---
+description: Writing commit messages
+globs:
+alwaysApply: true
+---
+
+# Commit Messages
+
+All commits must follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification.
+
+## Format
+
+```
+<type>[optional scope][!]: <description>
+```
+
+## Allowed types
+
+`feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`
+
+## Examples
+
+- `feat: add product quick-view modal`
+- `fix(cart): prevent double-submit on checkout`
+- `docs: update component API reference`
+- `refactor!: rewrite media gallery component` (breaking change)
+
+## Enforcement
+
+- A local `commit-msg` hook rejects non-conforming messages (auto-installed via `pnpm install`).
+- A CI workflow validates every commit in a PR.
+- A CI workflow validates that PR titles also follow Conventional Commits format.
+- Merge, revert, `fixup!`, and `squash!` commits are automatically skipped.
+- PRs from the `translation-platform` bot are exempt from both CI checks.
+
+See `codex/README.md` § "Commit messages" for full documentation and `scripts/validate-commit-msg.sh` for the validation logic.

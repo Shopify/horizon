@@ -1,5 +1,5 @@
-import { DialogCloseEvent } from './dialog.js';
-import { clamp, preventDefault, isMobileBreakpoint } from './utilities.js';
+import { DialogCloseEvent } from '@theme/dialog';
+import { clamp, preventDefault, isMobileBreakpoint } from '@theme/utilities';
 import { Component } from '@theme/component';
 
 const MIN_ZOOM = 1;
@@ -9,7 +9,14 @@ const DOUBLE_TAP_DELAY = 300;
 const DOUBLE_TAP_DISTANCE = 50;
 const DRAG_THRESHOLD = 10;
 
+/**
+ * @typedef {object} Refs
+ * @property {HTMLImageElement} image - The image element to zoom and drag.
+ */
+
+/** @extends {Component<Refs>} */
 export class DragZoomWrapper extends Component {
+  requiredRefs = ['image'];
   #controller = new AbortController();
   /** @type {number} */
   #scale = DEFAULT_ZOOM;
@@ -41,7 +48,7 @@ export class DragZoomWrapper extends Component {
   #hasManualZoom = false;
 
   get #image() {
-    return this.querySelector('img');
+    return this.refs.image;
   }
 
   connectedCallback() {

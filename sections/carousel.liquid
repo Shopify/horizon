@@ -1,9 +1,17 @@
-<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+{% liquid
+  if section.settings.background_color != blank
+    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  endif
+%}
+
+<div
+  class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+></div>
 <div
   class="
     section
     section--{{ section.settings.section_width }}
-    color-{{ section.settings.color_scheme }}
+    {% if section.settings.background_color != blank %}color-custom-{{ section.id }}{% endif %}
     section-carousel
     spacing-style
     gap-style
@@ -78,10 +86,10 @@
       "default": 8
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:settings.color_scheme",
-      "default": "scheme-1"
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "placeholder": "t:settings.default"
     },
     {
       "type": "header",
@@ -191,8 +199,6 @@
             "custom_width_mobile": 100,
             "height": "fit",
             "custom_height": 100,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
             "background_media": "none",
             "video_position": "cover",
             "background_image_position": "cover",
@@ -227,8 +233,6 @@
           "name": "t:names.carousel_content",
           "static": true,
           "settings": {
-            "inherit_color_scheme": true,
-            "color_scheme": "",
             "position": "top",
             "border": "none",
             "border_width": 1,

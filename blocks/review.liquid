@@ -13,6 +13,17 @@
   endif
 -%}
 
+{% if block_settings.text_color != blank %}
+  {% style %}
+    .rating-wrapper-{{ block.id }} {
+      --star-fill-color: {{ block_settings.text_color }};
+      --star-fill-color-rgb: {{ block_settings.text_color.rgb }};
+      --color: {{ block_settings.text_color }};
+      --color-rgb: {{ block_settings.text_color.rgb }};
+    }
+  {% endstyle %}
+{% endif %}
+
 {%- if rating != blank -%}
   {% liquid
     assign star_count_rating = scale_max
@@ -32,7 +43,7 @@
   %}
 
   <div
-    class="rating-wrapper rating-color--{{ block_settings.rating_color }} justify-{{ block_settings.alignment }} size-style"
+    class="rating-wrapper rating-wrapper-{{ block.id }} justify-{{ block_settings.alignment }} size-style"
     style="{% render 'size-style', settings: block_settings %}"
     {{ block.shopify_attributes }}
   >
@@ -104,20 +115,12 @@
 
 {% stylesheet %}
   .rating-wrapper {
-    gap: var(--gap-xs);
-    min-width: fit-content;
-  }
-
-  .rating-color--primary {
-    --star-fill-color: var(--color-primary);
-    --star-fill-color-rgb: var(--color-primary-rgb);
-    --color: var(--color-primary);
-  }
-
-  .rating-color--foreground {
     --star-fill-color: var(--color-foreground);
     --star-fill-color-rgb: var(--color-foreground-rgb);
     --color: var(--color-foreground);
+    --color-rgb: var(--color-foreground-rgb);
+    gap: var(--gap-xs);
+    min-width: fit-content;
   }
 
   .rating-wrapper,
@@ -197,20 +200,10 @@
       "default": true
     },
     {
-      "type": "select",
-      "id": "rating_color",
-      "label": "t:settings.color",
-      "options": [
-        {
-          "value": "foreground",
-          "label": "t:options.text"
-        },
-        {
-          "value": "primary",
-          "label": "t:options.link"
-        }
-      ],
-      "default": "primary"
+      "type": "color",
+      "id": "text_color",
+      "label": "t:settings.text_color",
+      "placeholder": "t:settings.default"
     },
     {
       "type": "header",

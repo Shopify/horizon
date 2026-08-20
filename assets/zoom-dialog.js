@@ -101,6 +101,7 @@ export class ZoomDialog extends Component {
     newImage.className = image.className;
     newImage.alt = image.alt;
     newImage.setAttribute('data_max_resolution', highResolutionUrl);
+    newImage.setAttribute('ref', 'image');
 
     // When the high-resolution image loads, replace the existing image
     newImage.onload = () => {

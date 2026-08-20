@@ -1,21 +1,32 @@
 {% assign block_settings = block.settings %}
+{% liquid
+  assign custom_color = false
+  if block_settings.background_color != blank or block_settings.text_color != blank
+    assign custom_color = true
+    render 'contrast-override', background_color: block_settings.background_color, text_color: block_settings.text_color, section_id: block.id
+  endif
+%}
+
 {%- capture cart_summary_inner_class -%}
   cart-summary__inner
-  {% if block_settings.extend_summary == false and block_settings.inherit_color_scheme == false -%}
-    color-{{ block_settings.color_scheme }} inherit-parent-scheme--mobile
-  {%- endif %}
-  {% if block_settings.extend_summary == false and block_settings.border_radius > 0 -%}
-    has-border-radius
-  {%- endif -%}
+  {% if block_settings.extend_summary == false and custom_color %} color-custom-{{ block.id }} inherit-parent-scheme--mobile{% endif %}
+  {% if block_settings.extend_summary == false and block_settings.border_radius > 0 %} has-border-radius{% endif %}
 {%- endcapture -%}
 
 {% if block_settings.extend_summary %}
   <div
-    class="section-background {% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }} inherit-parent-scheme--mobile{% endif %}"
+    class="section-background{% if custom_color %} color-custom-{{ block.id }} inherit-parent-scheme--mobile{% endif %}"
   ></div>
 {% endif %}
 <div
-  class="cart-summary border-style{% if block_settings.extend_summary == true %} cart-summary--extend {% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }} inherit-parent-scheme--mobile{% endif %}{% endif %}{% if block_settings.border_radius > 0 %} has-border-radius{% endif %}"
+  class="
+    cart-summary border-style
+    {% if block_settings.extend_summary == true %}
+      cart-summary--extend
+      {% if custom_color %} color-custom-{{ block.id }} inherit-parent-scheme--mobile{% endif %}
+    {% endif %}
+    {% if block_settings.border_radius > 0 %} has-border-radius{% endif %}
+  "
   style="{% render 'border-override', settings: block_settings %}"
   {{ block.shopify_attributes }}
 >
@@ -42,7 +53,7 @@
     }
   }
 
-  body:has(> #header-group .header[sticky]) .cart-summary__inner {
+  body:has(#header-group header-component[sticky]) .cart-summary__inner {
     top: var(--header-height, 0);
   }
 
@@ -56,11 +67,6 @@
       grid-template-rows: subgrid;
       grid-row: 1 / -1;
     }
-  }
-
-  .cart-summary:not(.cart-summary--extend),
-  .cart-summary:not(.cart-summary--extend) .cart-summary__inner {
-    height: auto;
   }
 
   .cart-summary--extend {
@@ -82,12 +88,9 @@
   }
 
   .cart-summary--extend .cart-summary__inner {
-    height: 100%;
-    padding: var(--padding-md) 0 var(--padding-4xl);
-
     @media screen and (min-width: 750px) {
       grid-row: 2 / -1;
-      padding-inline: var(--page-margin);
+      padding: var(--padding-md) var(--page-margin) var(--padding-4xl);
       width: var(--sidebar-width);
     }
   }
@@ -97,21 +100,21 @@
     border-radius: var(--border-radius);
   }
 
+  /* On mobile, drop the summary's custom palette and inherit from the cart
+     section so the summary visually merges with the rest of the cart page. */
   @media screen and (max-width: 749px) {
-    .inherit-parent-scheme--mobile {
+    :is(.section-background, .cart-summary, .cart-summary__inner).inherit-parent-scheme--mobile {
+      --color: inherit;
+      --color-rgb: inherit;
       --color-background: inherit;
       --color-background-rgb: inherit;
       --color-foreground: inherit;
       --color-foreground-rgb: inherit;
-      --color-primary: inherit;
-      --color-primary-rgb: inherit;
-      --color-primary-hover: inherit;
-      --color-primary-hover-rgb: inherit;
+      --color-foreground-subdued: inherit;
       --color-border: inherit;
       --color-border-rgb: inherit;
       --color-shadow: inherit;
       --color-shadow-rgb: inherit;
-      --color-foreground-heading: inherit;
       --color-primary-button-text: inherit;
       --color-primary-button-background: inherit;
       --color-primary-button-border: inherit;
@@ -127,6 +130,7 @@
       --color-input-text: inherit;
       --color-input-text-rgb: inherit;
       --color-input-background: inherit;
+      --opacity-10-25: inherit;
     }
   }
 {% endstylesheet %}
@@ -143,17 +147,24 @@
       "default": true
     },
     {
-      "type": "checkbox",
-      "id": "inherit_color_scheme",
-      "label": "t:settings.inherit_color_scheme",
-      "default": false
+      "type": "header",
+      "content": "t:content.appearance"
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:settings.color_scheme",
-      "default": "scheme-3",
-      "visible_if": "{{ block.settings.inherit_color_scheme == false }}"
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "placeholder": "t:settings.default"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:settings.text_color",
+      "placeholder": "t:settings.default"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:content.cart_summary_mobile_colors"
     },
     {
       "type": "header",
@@ -195,6 +206,13 @@
       "unit": "%",
       "label": "t:settings.opacity",
       "default": 100,
+      "visible_if": "{{ block.settings.border != 'none' }}"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "t:settings.color",
+      "placeholder": "t:settings.default",
       "visible_if": "{{ block.settings.border != 'none' }}"
     },
     {

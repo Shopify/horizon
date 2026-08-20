@@ -5,7 +5,10 @@
     custom-typography
     {% if block_settings.font_size != "" %}custom-font-size{% endif %}
   "
-  style="{% render 'typography-style', preset: 'custom', settings: block_settings %}"
+  style="
+    {% render 'typography-style', preset: 'custom', settings: block_settings %}
+    {% if block_settings.text_color != blank %}--color-utilities: {{ block_settings.text_color }};{% endif %}
+  "
   {{ block.shopify_attributes }}
 >
   <span class="footer-utilities__text">
@@ -16,6 +19,12 @@
     {%- endif -%}
   </span>
 </div>
+
+{% stylesheet %}
+  .footer-utilities__group-copyright {
+    color: var(--color-utilities, var(--color-foreground-muted));
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
@@ -31,6 +40,16 @@
     {
       "type": "paragraph",
       "content": "t:content.manage_store_name"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:settings.text_color",
+      "placeholder": "t:settings.default"
     },
     {
       "type": "select",

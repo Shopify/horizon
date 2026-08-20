@@ -6,7 +6,6 @@
 
 {% render 'text', width: '100%', block: block, fallback_text: text %}
 
-{% # theme-check-disable %}
 {% schema %}
 {
   "name": "t:names.heading",
@@ -239,27 +238,6 @@
       "visible_if": "{{ block.settings.type_preset == 'custom' }}"
     },
     {
-      "type": "select",
-      "id": "color",
-      "label": "t:settings.color",
-      "options": [
-        {
-          "value": "var(--color-foreground)",
-          "label": "t:options.text"
-        },
-        {
-          "value": "var(--color-foreground-heading)",
-          "label": "t:options.heading"
-        },
-        {
-          "value": "var(--color-primary)",
-          "label": "t:options.link"
-        }
-      ],
-      "default": "var(--color-foreground)",
-      "visible_if": "{{ block.settings.type_preset != 'rte' }}"
-    },
-    {
       "type": "richtext",
       "id": "text",
       "label": "t:settings.text",
@@ -285,6 +263,12 @@
       "label": "t:settings.show_alignment",
       "default": true,
       "visible_if": "{{ false }}"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:settings.text_color",
+      "placeholder": "t:settings.default"
     },
     {
       "type": "header",
@@ -333,4 +317,3 @@
   ]
 }
 {% endschema %}
-{% # theme-check-enable %}

@@ -9,6 +9,7 @@
 {%- enddoc -%}
 
 {% assign block_settings = block.settings %}
+{% render 'button-custom-styles', block_settings: block_settings, block_id: block.id %}
 
 <a
   {% if link == blank %}
@@ -31,15 +32,3 @@
 >
   {{ block_settings.label }}
 </a>
-
-{% stylesheet %}
-  .link {
-    text-decoration: none;
-    text-decoration-color: currentcolor;
-
-    &:hover {
-      color: var(--color-primary-hover);
-      text-decoration-color: transparent;
-    }
-  }
-{% endstylesheet %}

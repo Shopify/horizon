@@ -16,69 +16,83 @@ filters:
     pattern: "\\.(vue|jsx|tsx|html|liquid|php|js|ts|css|scss|sass|less)$"
 
 actions:
-  - type: enforce
+
+- type: enforce
     conditions:
-      # Positive tabindex values (should not be used)
-      - pattern: "tabindex=\"[1-9]\""
+
+    # Positive tabindex values (should not be used)
+
+  - pattern: "tabindex=\"[1-9]\""
         message: "Positive tabindex values create illogical focus order. Use DOM order instead or tabindex=\"0\" for custom focusable elements."
 
-      # Missing focus styles (outline: 0 or outline: none)
-      - pattern: "outline:\\s*0|outline:\\s*none"
+    # Missing focus styles (outline: 0 or outline: none)
+
+  - pattern: "outline:\\s*0|outline:\\s*none"
         message: "Focus styles should not be removed. Use custom focus indicators that meet WCAG contrast requirements."
 
-      # Focus styles with insufficient contrast (light colors)
-      - pattern: "outline.*#[89abcdefABCDEF]{6}|outline.*#[cdefCDEF]{3,6}"
+    # Focus styles with insufficient contrast (light colors)
+
+  - pattern: "outline.*#[89abcdefABCDEF]{6}|outline.*#[cdefCDEF]{3,6}"
         message: "Light focus outline colors may not meet 3:1 contrast ratio requirement for UI component identification."
 
-      # Missing focus-visible implementation
-      - pattern: ":focus\\s*\\{"
+    # Missing focus-visible implementation
+
+  - pattern: ":focus\\s*\\{"
         pattern_negate: ":focus-visible|:focus:not\\(:focus-visible\\)"
         message: "Consider implementing :focus-visible for better keyboard-only focus indication."
 
-      # Focus styles that may be obscured
-      - pattern: "outline-offset:\\s*-?0\\.?0*px|outline-offset:\\s*0"
+    # Focus styles that may be obscured
+
+  - pattern: "outline-offset:\\s*-?0\\.?0*px|outline-offset:\\s*0"
         message: "Consider using positive outline-offset to prevent focus indicators from being obscured by adjacent elements."
 
-      # Missing forced-colors media query for Windows High Contrast
-      - pattern: "@media\\s*\\(forced-colors:\\s*active\\)"
+    # Missing forced-colors media query for Windows High Contrast
+
+  - pattern: "@media\\s*\\(forced-colors:\\s*active\\)"
         pattern_negate: "outline.*transparent"
         message: "Windows High Contrast Mode requires transparent outline for native focus appearance."
 
-      # Custom focusable elements without proper tabindex
-      - pattern: "<(div|span|button)[^>]*onclick|onkeydown|onkeypress"
+    # Custom focusable elements without proper tabindex
+
+  - pattern: "<(div|span|button)[^>]*onclick|onkeydown|onkeypress"
         pattern_negate: "tabindex=\"[0-9]\"|role=\"button\"|role=\"link\""
         message: "Custom interactive elements should have tabindex=\"0\" or appropriate ARIA role for keyboard accessibility."
 
-      # Focus styles with insufficient area
-      - pattern: "outline-width:\\s*1px|outline-width:\\s*0\\.1rem"
+    # Focus styles with insufficient area
+
+  - pattern: "outline-width:\\s*1px|outline-width:\\s*0\\.1rem"
         message: "Thin focus outlines may not meet WCAG 2.4.13 Focus Appearance requirements for minimum area."
 
-      # Focus styles that blend with background
-      - pattern: "outline.*rgba\\([^)]*0\\.1[^)]*\\)|outline.*rgba\\([^)]*0\\.2[^)]*\\)"
+    # Focus styles that blend with background
+
+  - pattern: "outline.*rgba\\([^)]*0\\.1[^)]*\\)|outline.*rgba\\([^)]*0\\.2[^)]*\\)"
         message: "Very transparent focus outlines may not provide sufficient contrast for visibility."
 
-      # Missing focus styles on interactive elements
-      - pattern: "<(button|a|input|select|textarea)[^>]*>"
+    # Missing focus styles on interactive elements
+
+  - pattern: "<(button|a|input|select|textarea)[^>]*>"
         pattern_negate: ":focus|:focus-visible|tabindex"
         message: "Interactive elements should have visible focus styles for keyboard navigation accessibility."
 
-      # Dynamic content removal without focus management
-      - pattern: "\\.remove\\(\\)|removeChild|innerHTML\\s*="
+    # Dynamic content removal without focus management
+
+  - pattern: "\\.remove\\(\\)|removeChild|innerHTML\\s*="
         pattern_negate: "focus\\(|focus\\(\\)"
         message: "When removing dynamic content, ensure proper focus management by restoring focus to a logical location."
 
-  - type: suggest
+- type: suggest
     message: |
       **WCAG Focus Order and Focus Styles Requirements:**
 
       **Focus Order Requirements:**
 
       **1. Logical DOM Order:**
-      - **Default:** Focus order follows DOM element order
-      - **Navigation:** Tab key moves forward, Shift+Tab moves backward
-      - **Avoid:** Positive tabindex values (1, 2, 3, etc.)
+  - **Default:** Focus order follows DOM element order
+  - **Navigation:** Tab key moves forward, Shift+Tab moves backward
+  - **Avoid:** Positive tabindex values (1, 2, 3, etc.)
 
       **2. Tabindex Usage:**
+
       ```html
       <!-- Good: Use DOM order (default) -->
       <button>First Button</button>
@@ -105,24 +119,25 @@ actions:
       **Focus Styles Requirements:**
 
       **1. WCAG 2.4.7 Focus Visible (Level A):**
-      - **Requirement:** Focus indicator must exist
-      - **Purpose:** Keyboard users need visible focus indication
+  - **Requirement:** Focus indicator must exist
+  - **Purpose:** Keyboard users need visible focus indication
 
       **2. WCAG 1.4.11 Non-Text Contrast (Level AA):**
-      - **Requirement:** Minimum 3:1 contrast ratio for UI components
-      - **Applies to:** Focus indicators, borders, focus outlines
+  - **Requirement:** Minimum 3:1 contrast ratio for UI components
+  - **Applies to:** Focus indicators, borders, focus outlines
 
       **3. WCAG 2.4.13 Focus Appearance (Level AAA):**
-      - **Requirement:** Minimum area and contrast for focus indicators
-      - **Area:** Focus indicator should be clearly visible
+  - **Requirement:** Minimum area and contrast for focus indicators
+  - **Area:** Focus indicator should be clearly visible
 
       **4. WCAG 2.4.11 Focus Not Obscured (Level AA):**
-      - **Requirement:** Focused element not hidden by other content
-      - **Solution:** Use outline-offset to prevent overlap
+  - **Requirement:** Focused element not hidden by other content
+  - **Solution:** Use outline-offset to prevent overlap
 
       **Focus Styles Implementation:**
 
       **1. Basic Focus Styles:**
+
       ```css
       /* Good: Visible focus indicator */
       button:focus {
@@ -139,6 +154,7 @@ actions:
       ```
 
       **2. Focus-Visible Implementation:**
+
       ```css
       /* Default focus styles */
       button:focus {
@@ -161,12 +177,13 @@ actions:
       ```
 
       **3. High Contrast Focus Styles:**
+
       ```css
       /* Default focus styles */
       *:focus-visible {
-        outline: 0.2rem solid rgba(var(--color-foreground), 0.5);
+        outline: 0.2rem solid rgba(var(--color-foreground-rgb), 0.5);
         outline-offset: -0.2rem;
-        box-shadow: 0 0 0.2rem rgba(var(--color-foreground), 0.3);
+        box-shadow: 0 0 0.2rem rgba(var(--color-foreground-rgb), 0.3);
       }
 
       /* Windows High Contrast Mode */
@@ -178,6 +195,7 @@ actions:
       ```
 
       **4. Component-Specific Focus Styles:**
+
       ```css
       /* Form inputs */
       input:focus-visible,
@@ -206,6 +224,7 @@ actions:
       **Focus Order Best Practices:**
 
       **1. Logical Content Flow:**
+
       ```html
       <!-- Good: Logical reading and focus order -->
       <header>
@@ -232,6 +251,7 @@ actions:
       ```
 
       **2. Custom Interactive Elements:**
+
       ```html
       <!-- Good: Proper focusable custom element -->
       <div role="button"
@@ -251,6 +271,7 @@ actions:
       ```
 
       **3. Skip Links and Focus Management:**
+
       ```html
       <!-- Skip link for main content -->
       <a href="#main-content" class="skip-link">
@@ -285,16 +306,17 @@ actions:
       **Focus Styles Guidelines:**
 
       **1. Contrast Requirements:**
-      - **Minimum:** 3:1 contrast ratio for focus indicators
-      - **Recommended:** 4.5:1 or higher for better visibility
-      - **Test:** Against adjacent colors and backgrounds
+  - **Minimum:** 3:1 contrast ratio for focus indicators
+  - **Recommended:** 4.5:1 or higher for better visibility
+  - **Test:** Against adjacent colors and backgrounds
 
       **2. Size and Visibility:**
-      - **Outline width:** Minimum 2px for visibility
-      - **Outline offset:** Use positive values to prevent overlap
-      - **Area:** Focus indicator should be clearly visible
+  - **Outline width:** Minimum 2px for visibility
+  - **Outline offset:** Use positive values to prevent overlap
+  - **Area:** Focus indicator should be clearly visible
 
       **3. Color Selection:**
+
       ```css
       /* High contrast focus colors */
       :focus-visible {
@@ -315,6 +337,7 @@ actions:
       ```
 
       **4. Focus Not Obscured:**
+
       ```css
       /* Prevent focus indicator overlap */
       button:focus-visible {
@@ -330,6 +353,7 @@ actions:
       ```
 
       **5. Dynamic Content Focus Management:**
+
       ```javascript
       // Focus management best practices
       class FocusManager {
@@ -428,60 +452,61 @@ actions:
       **Testing and Validation:**
 
       **1. Keyboard Navigation Testing:**
-      - Navigate using Tab and Shift+Tab
-      - Verify focus order is logical
-      - Check that focus indicators are visible
-      - Test with different focus styles
+  - Navigate using Tab and Shift+Tab
+  - Verify focus order is logical
+  - Check that focus indicators are visible
+  - Test with different focus styles
 
       **2. Contrast Testing:**
-      - Use browser dev tools for contrast ratios
-      - Test against different backgrounds
-      - Verify 3:1 minimum contrast requirement
-      - Test with color blindness simulators
+  - Use browser dev tools for contrast ratios
+  - Test against different backgrounds
+  - Verify 3:1 minimum contrast requirement
+  - Test with color blindness simulators
 
       **3. Focus Visibility Testing:**
-      - Test with screen readers
-      - Verify focus indicators are not obscured
-      - Check focus styles in different themes
-      - Test Windows High Contrast Mode
+  - Test with screen readers
+  - Verify focus indicators are not obscured
+  - Check focus styles in different themes
+  - Test Windows High Contrast Mode
 
       **4. Dynamic Content Focus Testing:**
-      - Test focus management when adding new content
-      - Verify focus moves to first interactive element in new content
-      - Test focus restoration when removing content
-      - Ensure focus returns to logical location
-      - Test focus management with multiple dynamic elements
-      - Verify focus history is maintained correctly
+  - Test focus management when adding new content
+  - Verify focus moves to first interactive element in new content
+  - Test focus restoration when removing content
+  - Ensure focus returns to logical location
+  - Test focus management with multiple dynamic elements
+  - Verify focus history is maintained correctly
 
       **Common Mistakes to Avoid:**
 
       **1. Focus Order Issues:**
-      - Using positive tabindex values
-      - Skipping focusable elements
-      - Illogical DOM structure
-      - Missing focusable elements
+  - Using positive tabindex values
+  - Skipping focusable elements
+  - Illogical DOM structure
+  - Missing focusable elements
 
       **2. Focus Style Problems:**
-      - Removing focus styles with `outline: none`
-      - Insufficient contrast ratios
-      - Focus indicators that are too small
-      - Focus styles that blend with background
+  - Removing focus styles with `outline: none`
+  - Insufficient contrast ratios
+  - Focus indicators that are too small
+  - Focus styles that blend with background
 
       **3. Implementation Issues:**
-      - Missing focus-visible implementation
-      - Not testing with keyboard navigation
-      - Ignoring Windows High Contrast Mode
-      - Focus indicators that are obscured
+  - Missing focus-visible implementation
+  - Not testing with keyboard navigation
+  - Ignoring Windows High Contrast Mode
+  - Focus indicators that are obscured
 
       **4. Accessibility Violations:**
-      - No visible focus indicators
-      - Focus order that doesn't match reading order
-      - Custom elements without proper focus management
-      - Missing keyboard event handlers
+  - No visible focus indicators
+  - Focus order that doesn't match reading order
+  - Custom elements without proper focus management
+  - Missing keyboard event handlers
 
       **Advanced Focus Management:**
 
       **1. Programmatic Focus Control:**
+
       ```javascript
       // Focus management for modals
       function openModal() {
@@ -521,6 +546,7 @@ actions:
       ```
 
       **2. Dynamic Focus Management:**
+
       ```javascript
       // Focus restoration after dynamic content
       function loadContent() {
@@ -544,6 +570,7 @@ actions:
       ```
 
       **3. Focus Indicators for Complex Components:**
+
       ```css
       /* Multi-state focus indicators */
       .accordion-item:focus-visible {
@@ -571,6 +598,7 @@ actions:
       ```
 
       **4. Dynamic Content Focus Management:**
+
       ```javascript
       // When adding content: focus first interactive element
       function addDynamicContent() {

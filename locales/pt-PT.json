@@ -65,14 +65,24 @@
     "nested_product": "{{ product_title }} para {{ parent_title }}",
     "remove": "Remover",
     "view_pricing_info": "Ver informações sobre preços",
-    "open_hotspot": "Hotspot aberto",
-    "slideshow": "Apresentação de diapositivos"
+    "slideshow": "Apresentação de diapositivos",
+    "header_navigation_label": "Principal",
+    "home_logo_alt": "{{ store_name }} - Início",
+    "active_filters": "Filtros ativos:",
+    "featured_product": "Produto em destaque",
+    "product_details": "Detalhes do produto",
+    "show_product_details": "Mostrar detalhes do produto para {{ product_name }}",
+    "search_suggestions_available": "Sugestões de pesquisa disponíveis para \"{{ query }}\"",
+    "price_filter_low": "Preço baixo",
+    "price_filter_high": "Preço elevado",
+    "view_disclosure_information_for_product": "Ver informações de divulgação de {{ product_title }}",
+    "show_submenu": "Mostrar submenu de {{ title }}"
   },
   "actions": {
     "add_to_cart": "Adicionar ao carrinho",
     "clear_all": "Limpar tudo",
     "remove": "Remover",
-    "view_in_your_space": "Ver no seu espaço",
+    "view_in_your_space": "Ver no espaço",
     "show_filters": "Filtrar",
     "clear": "Limpar",
     "continue_shopping": "Continuar a comprar",
@@ -107,7 +117,10 @@
     "sign_up": "Registar-se",
     "sort": "Ordenar",
     "show_all_options": "Mostrar todas as opções",
-    "open": "Abrir"
+    "open": "Abrir",
+    "back_to": "Regressar a {{ title }}",
+    "zoom_media": "Ampliar conteúdo multimédia {{ index }}",
+    "back_to_main_menu": "Voltar ao menu principal"
   },
   "content": {
     "reviews": "avaliações",
@@ -207,7 +220,7 @@
     "taxes_included_shipping_at_checkout_with_policy_without_discounts_html": "Impostos incluídos. Os portes são calculados na finalização da compra.",
     "taxes_included_shipping_at_checkout_without_policy_without_discounts": "Impostos incluídos. Os portes são calculados na finalização da compra.",
     "wrong_password": "Palavra-passe incorreta",
-    "view_more_details": "Ver mais informações",
+    "view_more_details": "Ver mais detalhes",
     "page_placeholder_title": "Título da página",
     "page_placeholder_content": "Selecione uma página para apresentar o conteúdo.",
     "powered_by": "Esta loja terá tecnologia",
@@ -239,7 +252,7 @@
     "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }} caracteres utilizados",
     "terms_and_policies": "Termos e políticas",
     "pagination": {
-      "nav_label": "Navegação por paginação",
+      "nav_label": "Paginação",
       "previous": "Anterior",
       "next": "Seguinte",
       "page": "Página {{ page }}"
@@ -267,7 +280,9 @@
       "one": "1 item adicionado ao carrinho",
       "other": "{{ count }} itens adicionados ao carrinho",
       "many": "{{ count }} itens adicionados ao carrinho"
-    }
+    },
+    "quick_order_list": "Lista de encomendas rápidas",
+    "product_disclosures": "Divulgações do produto"
   },
   "gift_cards": {
     "issued": {

@@ -79,7 +79,15 @@
     .card-gallery,
     slideshow-component,
     slideshow-container,
-    slideshow-slides {
+    slideshow-slides,
+    .product-media__image {
+      height: 100%;
+    }
+
+    /* Single-media cards skip the slideshow wrappers, so stretch the plain
+     * media container directly to fill the editorial cell. The multi-media
+     * container sits under slideshow-component and is unaffected. */
+    .card-gallery > a > .product-media-container {
       height: 100%;
     }
   }

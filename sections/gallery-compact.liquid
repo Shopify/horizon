@@ -1,3 +1,11 @@
+{% liquid
+  assign custom_color = false
+  if section.settings.background_color != blank or section.settings.text_color != blank
+    assign custom_color = true
+    render 'contrast-override', background_color: section.settings.background_color, text_color: section.settings.text_color, section_id: section.id
+  endif
+%}
+
 {{ 'gallery.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
@@ -102,7 +110,7 @@
   }
 {%- endstyle -%}
 
-<div class="gallery-compact-section--{{ section.id }} gradient color-{{ section.settings.color_scheme }}">
+<div class="gallery-compact-section--{{ section.id }} gradient{% if custom_color %} color-custom-{{ section.id }}{% endif %}">
   {% if section.blocks.size > 0 %}
     <div class="gallery-container">
       {% for block in section.blocks %}
@@ -287,15 +295,16 @@
       "content": "Styling"
     },
     {
-      "type": "select",
-      "id": "color_scheme",
-      "label": "Color scheme",
-      "options": [
-        { "value": "accent-1", "label": "Accent 1" },
-        { "value": "accent-2", "label": "Accent 2" },
-        { "value": "accent-3", "label": "Accent 3" }
-      ],
-      "default": "accent-1"
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "placeholder": "t:settings.default"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:settings.text_color",
+      "placeholder": "t:settings.default"
     },
     {
       "type": "header",

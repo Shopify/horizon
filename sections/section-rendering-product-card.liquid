@@ -28,15 +28,19 @@
   assign sku = product.selected_or_first_available_variant.sku
 %}
 
-{%- if settings.transition_to_main_product -%}
-  <product-card-link
-    data-product-id="{{ product.id }}"
-    data-featured-media-url="{{ featured_media_url }}"
-    data-product-transition="{{ settings.transition_to_main_product }}"
-  >
-{%- endif -%}
-
-<product-card>
+<product-card
+  data-product-id="{{ product.id }}"
+  {% # theme-check-disable UnknownFilter %}
+  view-event-payload="{{ product | standard_event_data: 'view' | escape }}"
+  {% # theme-check-enable UnknownFilter %}
+  {% if settings.transition_to_main_product %}
+    data-product-transition="true"
+    {% if featured_media_url != blank %}
+      data-featured-media-url="{{ featured_media_url }}"
+    {% endif %}
+    on:click="/handleViewTransition"
+  {% endif %}
+>
   <a
     href="{{ url }}"
     ref="productCardLink"
@@ -60,9 +64,6 @@
     </product-sku-component>
   </a>
 </product-card>
-{%- if settings.transition_to_main_product -%}
-  </product-card-link>
-{%- endif -%}
 
 {% schema %}
 {

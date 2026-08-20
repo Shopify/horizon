@@ -1,5 +1,6 @@
 import { Component } from '@theme/component';
-import { ThemeEvents, VariantUpdateEvent } from '@theme/events';
+import { ThemeEvents } from '@theme/events';
+import { StandardEvents, ProductSelectEvent } from '@shopify/events';
 
 /**
  * A custom element that displays a product SKU.
@@ -21,44 +22,50 @@ class ProductSkuComponent extends Component {
     super.connectedCallback();
     const target = this.closest('[id*="ProductInformation-"], [id*="QuickAdd-"], product-card');
     if (!target) return;
-    target.addEventListener(ThemeEvents.variantUpdate, this.updateSku);
+    target.addEventListener(StandardEvents.productSelect, this.#handleProductSelect);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
     const target = this.closest('[id*="ProductInformation-"], [id*="QuickAdd-"], product-card');
     if (!target) return;
-    target.removeEventListener(ThemeEvents.variantUpdate, this.updateSku);
+    target.removeEventListener(StandardEvents.productSelect, this.#handleProductSelect);
   }
 
   /**
-   * Updates the SKU.
-   * @param {VariantUpdateEvent} event - The variant update event.
+   * Handles product select event and updates the SKU.
+   * @param {ProductSelectEvent} event - The product select event.
    */
-  updateSku = (event) => {
-    if (event.detail.data.newProduct) {
-      this.dataset.productId = event.detail.data.newProduct.id;
-    }
+  #handleProductSelect = (event) => {
+    event.promise
+      .then(({ detail }) => {
+        if (!detail) return;
 
-    if (event.target instanceof HTMLElement && event.target.dataset.productId !== this.dataset.productId) {
-      return;
-    }
+        const { newProduct, resource } = detail;
+        if (newProduct) {
+          this.dataset.productId = newProduct.id;
+        }
 
-    // Use the variant data from the event
-    // The variant is in event.detail.resource
-    if (event.detail.resource) {
-      const variantSku = event.detail.resource.sku || '';
+        if (detail.productId && detail.productId !== this.dataset.productId) {
+          return;
+        }
+        if (resource) {
+          const variantSku = resource.sku || '';
 
-      if (variantSku) {
-        // Show the component and update the SKU
-        this.style.display = 'block';
-        this.refs.sku.textContent = variantSku;
-      } else {
-        // Hide the entire component when SKU is empty
-        this.style.display = 'none';
-        this.refs.sku.textContent = '';
-      }
-    }
+          if (variantSku) {
+            // Show the component and update the SKU
+            this.style.display = 'block';
+            this.refs.sku.textContent = variantSku;
+          } else {
+            // Hide the entire component when SKU is empty
+            this.style.display = 'none';
+            this.refs.sku.textContent = '';
+          }
+        }
+      })
+      .catch((error) => {
+        if (error?.name !== 'AbortError') console.warn('[product-sku] Event promise rejected:', error);
+      });
   };
 }
 

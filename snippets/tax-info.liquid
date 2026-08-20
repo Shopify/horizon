@@ -1,9 +1,9 @@
-{%- comment -%}
+{%- doc -%}
+  Renders tax and shipping information text based on the cart's tax and duties state.
   Intended for use in a block similar to the text block.
 
-  Accepts:
-    has_discounts_enabled: {boolean} - whether discounts are enabled
-{%- endcomment -%}
+  @param {boolean} [has_discounts_enabled] - Whether discounts are enabled, used to display alternate tax/duty text.
+{%- enddoc -%}
 
 <small>
   {%- if cart.duties_included and cart.taxes_included -%}

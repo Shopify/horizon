@@ -5,7 +5,8 @@
   @param {number} [minimum-items] - The minimum number of items to show in the overflow list.
   @param {string} [ref] - The ref that is set on the overflow-list element.
   @param {string} [data-testid] - The data-testid attribute that is set on the overflow-list element.
-  @param {string} [more-attributes] - The attributes that are applied on the more button.
+  @param {string} [more-attributes] - The attributes that are applied on the more button slot.
+  @param {string} [more-button-attributes] - The attributes that are applied directly on the more button element.
 {%- enddoc -%}
 
 <overflow-list
@@ -45,6 +46,9 @@
             class="button"
             type="button"
             tabindex="0"
+            {% if more-button-attributes %}
+              {{ more-button-attributes }}
+            {% endif %}
           >
             {{ 'actions.more' | t }}
           </button>

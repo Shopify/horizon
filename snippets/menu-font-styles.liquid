@@ -1,9 +1,9 @@
-{%- comment -%}
+{%- doc -%}
   Derives CSS variables from the menu typography settings for 1st level/main menu items.
-  Accepts:
-     settings {block.settings}
-     menu_type {string}: 'drawer' or 'mega_menu'
-{%- endcomment -%}
+
+  @param {object} settings - The block settings object containing typography settings.
+  @param {string} menu_type - The menu type: 'drawer' or 'mega_menu'.
+{%- enddoc -%}
 
 --menu-top-level-font-family: var(--font-{{ settings.type_font_primary_link }}--family);
 --menu-top-level-font-size-desktop: {{ settings.type_font_primary_size }}; --menu-top-level-font-style: var(--font-

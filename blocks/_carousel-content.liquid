@@ -2,9 +2,10 @@
   assign slide_count = block.blocks.size
   assign icons_style = section.settings.icons_style
 
-  assign color_scheme_class = ''
-  if block.settings.inherit_color_scheme == false
-    assign color_scheme_class = 'color-' | append: block.settings.color_scheme
+  assign slideshow_class = 'carousel-content spacing-style '
+  if block.settings.background_color != blank
+    render 'contrast-override', background_color: block.settings.background_color, section_id: block.id
+    assign slideshow_class = slideshow_class | append: ' color-custom-' | append: block.id
   endif
 
   if section.settings.section_width == 'page-width'
@@ -38,7 +39,6 @@
   {% render 'border-override', settings: block.settings %}
 {% endcapture %}
 
-{% assign slideshow_class = 'carousel-content spacing-style ' | append: color_scheme_class %}
 <div
   class="force-full-width"
   style="{{ gutter_style }}"
@@ -106,17 +106,10 @@
   "tag": null,
   "settings": [
     {
-      "type": "checkbox",
-      "id": "inherit_color_scheme",
-      "label": "t:settings.inherit_color_scheme",
-      "default": true
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:settings.color_scheme",
-      "default": "scheme-1",
-      "visible_if": "{{ block.settings.inherit_color_scheme == false }}"
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "placeholder": "t:settings.default"
     },
     {
       "type": "select",
@@ -195,6 +188,13 @@
       "unit": "%",
       "label": "t:settings.opacity",
       "default": 100,
+      "visible_if": "{{ block.settings.border != 'none' }}"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "t:settings.color",
+      "placeholder": "t:settings.default",
       "visible_if": "{{ block.settings.border != 'none' }}"
     },
     {

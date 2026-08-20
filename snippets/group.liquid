@@ -6,10 +6,20 @@
   @param {string} shopify_attributes - String with Shopify attributes for the editor.
   @param {string} [class] - Custom classes for the group block.
   @param {string} [style] - Custom inline styles for the group block.
+  @param {string} [background_color] - The background color of the group block.
+  @param {string} [block_id] - The ID of the group block.
 
   @example
   {% render 'group', children: children, settings: block.settings, shopify_attributes: block.shopify_attributes %}
 {%- enddoc -%}
+
+{% liquid
+  assign skip_contrast = false
+  if settings.background_media != blank and settings.background_media != 'none'
+    assign skip_contrast = true
+  endif
+%}
+{% render 'contrast-override', background_color: background_color, section_id: block_id, skip_contrast: skip_contrast %}
 
 <div
   class="
@@ -19,8 +29,8 @@
     border-style
     spacing-style
     size-style
-    {% if settings.inherit_color_scheme == false %} color-{{ settings.color_scheme }}{% endif %}
     {{ class }}
+    {% if background_color != blank %} color-custom-{{ block_id }}{% endif %}
   "
   style="
     {% render 'border-override', settings: settings %}

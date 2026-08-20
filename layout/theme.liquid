@@ -14,8 +14,19 @@
       >
     {%- endif -%}
 
-    {% comment %} This a way to wait for main content to load when navigating to a new page so that the view transitions can work consistently {% endcomment %}
+    {% comment %}
+      Opt into cross-document (MPA) view transitions and hold first paint until #MainContent
+      parses, so the transition runs consistently.
+      Both are gated on the same settings as the view-transitions.js opt-out switch (see snippets/scripts.liquid).
+    {% endcomment %}
     {% if settings.transition_to_main_product or settings.page_transition_enabled %}
+      {% style %}
+        @media (prefers-reduced-motion: no-preference) {
+          @view-transition {
+            navigation: auto;
+          }
+        }
+      {% endstyle %}
       <link
         rel="expect"
         href="#MainContent"
@@ -26,10 +37,11 @@
 
     {%- render 'meta-tags' -%}
     {%- render 'stylesheets' -%}
+    {%- render 'card-hover-effect-styles' -%}
     {%- render 'fonts' -%}
     {%- render 'scripts' -%}
     {%- render 'theme-styles-variables' -%}
-    {%- render 'color-schemes' -%}
+    {%- render 'color-palette' -%}
 
     {% if request.design_mode %}
       {%- render 'theme-editor' -%}
@@ -40,83 +52,139 @@
 
   <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
     {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
-    <div id="header-group">
-      {% sections 'header-group' %}
-    </div>
 
-    <script>
-      // Inline header height and menu style calculations to prevent layout shift
-      // Note: Updates in calculateHeaderGroupHeight(), updateTransparentHeaderOffset() and setHeaderMenuStyle() utilities.js should be kept in sync with this function
-      (function setHeaderHeighCustomProperties() {
-        /*
-         * Header calculation functions for maintaining CSS variables
-         * Mimic calculateHeaderGroupHeight() in utilities.js
+    {% render 'chat-drawer' %}
+
+    <div class="page-wrapper">
+      <div id="header-group">
+        {% sections 'header-group' %}
+      </div>
+
+      <script>
+        /**
+         * Sets `--header-height` and `--header-group-height` to measured values before first paint.
+         *
+         * A few CSS rules position content relative to the header at first paint — a hero sized to
+         * the remaining viewport, a transparent header's negative margin. Without a measured value
+         * those rules use the `60px` fallback from `sections/header.liquid`, and the content visibly
+         * jumps once `header.js` corrects the values after load.
+         *
+         * Measuring forces layout mid-parse, so it only runs where a consuming rule exists.
+         * Callers opt in: the transparent-header branch below, or `snippets/measure-header-heights.liquid`,
+         * which any new first-paint consumer must render too.
+         *
+         * Measures once per page; after load, header.js's ResizeObservers keep the values fresh.
+         * The group-height walk mimics calculateHeaderGroupHeight() in utilities.js — keep them
+         * in sync.
          */
-        const header = document.querySelector('header-component');
-        const headerGroup = document.querySelector('#header-group');
-        const hasHeaderSection = headerGroup?.querySelector('.header-section');
+        window.measureHeaderHeights = (function () {
+          let measured = false;
 
-        if (!header || !headerGroup) return;
+          return function measureHeaderHeights() {
+            if (measured) return;
 
-        const headerHeight = header.offsetHeight;
+            const header = document.querySelector('#header-component');
+            const headerGroup = document.querySelector('#header-group');
 
-        // Calculate the total height of the header group
-        let headerGroupHeight = 0;
-        const children = headerGroup.children;
-        for (let i = 0; i < children.length; i++) {
-          const element = children[i];
-          if (element === header || !(element instanceof HTMLElement)) continue;
-          headerGroupHeight += element.offsetHeight;
-        }
+            if (!header || !headerGroup) return;
+            measured = true;
 
-        // Check for transparent header special case
-        if (header.hasAttribute('transparent') && header.parentElement?.nextElementSibling) {
-          headerGroupHeight += headerHeight;
-        }
+            const headerHeight = header.offsetHeight;
 
-        // Set CSS variables
-        document.body.style.setProperty('--header-height', `${headerHeight}px`);
-        document.body.style.setProperty('--header-group-height', `${headerGroupHeight}px`);
+            let headerGroupHeight = 0;
+            for (const element of headerGroup.children) {
+              if (element instanceof HTMLElement) headerGroupHeight += element.offsetHeight;
+            }
+
+            /**
+             * A transparent header is absolutely positioned, so the loop above counts its section
+             * wrapper as 0px. When a section follows it in the group, header.liquid pushes that
+             * section down by the header's height using a margin, which offsetHeight also
+             * excludes — so the header's height has to be added back manually.
+             */
+            if (header.hasAttribute('transparent') && header.parentElement?.nextElementSibling) {
+              headerGroupHeight += headerHeight;
+            }
+
+            document.body.style.setProperty('--header-height', `${headerHeight}px`);
+            document.body.style.setProperty('--header-group-height', `${headerGroupHeight}px`);
+          };
+        })();
 
         /**
-         * Updates CSS custom properties for transparent header offset calculation
-         * Mimic updateTransparentHeaderOffset() in utilities.js
+         * Transparent-header rules consume the measured heights at first paint on every
+         * template, so the transparent case opts in globally here instead of per-section.
          */
-
-        if (!hasHeaderSection || !header?.hasAttribute('transparent')) {
-          document.body.style.setProperty('--transparent-header-offset-boolean', '0');
-          return;
+        if (document.querySelector('#header-component')?.hasAttribute('transparent')) {
+          measureHeaderHeights();
         }
 
-        const hasImmediateSection = hasHeaderSection.nextElementSibling?.classList.contains('shopify-section');
+        /**
+         * Sets `--top-row-height`, consumed by the header underlays and submenus. Deferred to a
+         * rAF so the `offsetHeight` read doesn't force layout mid-parse, and scoped to the
+         * header, where all consumers live, so the write only invalidates the header subtree.
+         * Mimics the `--top-row-height` write in updateHeaderHeights() in utilities.js
+         */
+        (function setTopRowHeight() {
+          const header = document.querySelector('#header-component');
+          const headerTopRow = header?.querySelector('.header__row--top');
+          if (!headerTopRow) return;
 
-        const shouldApplyOffset = !hasImmediateSection ? '1' : '0';
-        document.body.style.setProperty('--transparent-header-offset-boolean', shouldApplyOffset);
-      })();
+          window.requestAnimationFrame(function () {
+            header.style.setProperty('--top-row-height', `${headerTopRow.offsetHeight}px`);
+          });
+        })();
 
-      (function setHeaderMenuStyle() {
-        const headerComponent = document.querySelector('#header-component');
-        if (headerComponent) {
-          const isTouchDevice = 'ontouchstart' in window && navigator.maxTouchPoints > 0;
-          const overflowList = headerComponent?.querySelector('overflow-list');
-          const hasReachedMinimum = overflowList && overflowList.hasAttribute('minimum-reached');
-          headerComponent.dataset.menuStyle = isTouchDevice || hasReachedMinimum ? 'drawer' : 'menu';
-        }
-      })();
-    </script>
+        /**
+         * Sets `--transparent-header-offset-boolean` when the first section must offset itself
+         * under a transparent header. The non-offset case relies on the `0` default declared in
+         * sections/header.liquid — unlike updateTransparentHeaderOffset() in utilities.js, which
+         * re-runs on editor changes and must write '0' to reset a previously written '1'.
+         */
+        (function updateTransparentHeaderOffset() {
+          const header = document.querySelector('#header-component');
+          const headerSection = document.querySelector('#header-group .header-section');
+          if (!headerSection || !header?.hasAttribute('transparent')) return;
 
-    <main
-      id="MainContent"
-      class="content-for-layout"
-      role="main"
-      data-page-transition-enabled="{{ settings.page_transition_enabled }}"
-      data-product-transition="{{ settings.transition_to_main_product }}"
-      data-template="{{ template }}"
-    >
-      {{ content_for_layout }}
-    </main>
+          const hasImmediateSection = headerSection.nextElementSibling?.classList.contains('shopify-section');
+          if (!hasImmediateSection) {
+            document.body.style.setProperty('--transparent-header-offset-boolean', '1');
+          }
+        })();
 
-    {% sections 'footer-group' %}
+        /**
+         * Sets the initial menu style (inline menu vs. drawer) on the header component.
+         * Mimics setHeaderMenuStyle() in utilities.js
+         */
+        (function setHeaderMenuStyle() {
+          const headerComponent = document.querySelector('#header-component');
+          if (headerComponent) {
+            const isTouchDevice = 'ontouchstart' in window && navigator.maxTouchPoints > 0;
+            const overflowList = headerComponent.querySelector('overflow-list');
+            const hasReachedMinimum = overflowList && overflowList.hasAttribute('minimum-reached');
+            headerComponent.dataset.menuStyle = isTouchDevice || hasReachedMinimum ? 'drawer' : 'menu';
+          }
+        })();
+      </script>
+
+      <main
+        id="MainContent"
+        class="content-for-layout"
+        role="main"
+        data-page-transition-enabled="{{ settings.page_transition_enabled }}"
+        data-product-transition="{{ settings.transition_to_main_product }}"
+        data-template="{{ template }}"
+      >
+        {{ content_for_layout }}
+      </main>
+
+      <footer>
+        {% sections 'footer-group' %}
+      </footer>
+    </div>
+
+    {% render 'cart-drawer', render_wrapper: true %}
+    {% render 'theme-drawer' %}
 
     {% render 'search-modal' %}
 

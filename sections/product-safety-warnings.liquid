@@ -1,4 +1,12 @@
 {% liquid
+  assign custom_color = false
+  if section.settings.background_color != blank or section.settings.text_color != blank
+    assign custom_color = true
+    render 'contrast-override', background_color: section.settings.background_color, text_color: section.settings.text_color, section_id: section.id
+  endif
+%}
+
+{% liquid
   assign show_warning = false
 
   if section.settings.show_for_all_products
@@ -22,9 +30,9 @@
 %}
 
 {% if show_warning %}
-  <div class="section-background color-{{ section.settings.color_scheme }}"></div>
+  <div class="section-background{% if custom_color %} color-custom-{{ section.id }}{% endif %}"></div>
   <div
-    class="section section--{{ section.settings.section_width }} spacing-style color-{{ section.settings.color_scheme }}"
+    class="section section--{{ section.settings.section_width }} spacing-style{% if custom_color %} color-custom-{{ section.id }}{% endif %}"
     style="{% render 'spacing-padding', settings: section.settings %}"
   >
     <div class="safety-warning">
@@ -177,10 +185,16 @@
       "default": 14
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "Color scheme",
-      "default": "scheme-1"
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "placeholder": "t:settings.default"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:settings.text_color",
+      "placeholder": "t:settings.default"
     },
     {
       "type": "select",

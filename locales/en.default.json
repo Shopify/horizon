@@ -10,27 +10,34 @@
 {
   "accessibility": {
     "account": "Account",
+    "active_filters": "Active filters:",
     "cart": "Cart",
     "cart_count": "Total items in cart",
     "close_dialog": "Close dialog",
     "country_region": "Country/Region",
     "country_results_count": "{{ count }} results",
+    "product_details": "Product details",
+    "show_product_details": "Show product details for {{ product_name }}",
+    "show_submenu": "Show {{ title }} submenu",
     "decrease_quantity": "Decrease quantity",
     "discount": "Apply a discount code",
     "discount_menu": "Discount Codes",
     "discount_applied": "Applied discount code: {{ code }}",
+    "featured_product": "Featured product",
     "filters": "Filters",
     "filter_count": {
       "one": "{{ count }} filter applied",
       "other": "{{ count }} filters applied"
     },
+    "home_logo_alt": "{{ store_name }} - Home",
     "increase_quantity": "Increase quantity",
     "inventory_status": "Inventory status",
     "localization_region_and_language": "Region and language selector",
     "menu": "Menu",
+    // This is the label for the header navigation menu when using screen readers, it will read "Primary navigation"
+    "header_navigation_label": "Primary",
     "nested_product": "{{ product_title }} for {{ parent_title }}",
     "new_window": "Opens in a new window.",
-    "open_hotspot": "Open hotspot",
     "quantity": "Quantity",
     "pause_video": "Pause video",
     "play_model": "Play 3D model",
@@ -43,6 +50,7 @@
     "scroll_to": "Scroll to {{ title }}",
     "search_results_count": "{{ count }} search results found for \"{{ query }}\"",
     "search_results_no_results": "No results found for \"{{ query }}\"",
+    "search_suggestions_available": "Search suggestions available for \"{{ query }}\"",
     "skip_to_product_info": "Skip to product information",
     "skip_to_results_list": "Skip to results list",
     "skip_to_text": "Skip to content",
@@ -54,7 +62,10 @@
     "slideshow_previous": "Previous slide",
     "unit_price": "Unit price",
     "find_country": "Find country",
-    "view_pricing_info": "View pricing information"
+    "view_disclosure_information_for_product": "View disclosure information for {{ product_title }}",
+    "view_pricing_info": "View pricing information",
+    "price_filter_low": "Low price",
+    "price_filter_high": "High price"
   },
   "actions": {
     // Quick add button on product cards, shortened version of add to cart
@@ -65,6 +76,8 @@
     // Button to apply discount code to cart
     "apply": "Apply",
     "back": "Back",
+    "back_to": "Back to {{ title }}",
+    "back_to_main_menu": "Back to main menu",
     "choose": "Choose",
     // Button to reset current selection or input
     "clear": "Clear",
@@ -99,6 +112,7 @@
     "view_all": "View all",
     "more": "More",
     "zoom": "Zoom",
+    "zoom_media": "Zoom media {{ index }}",
     "close_dialog": "Close dialog",
     // Button to clear search filter and restore default view
     "reset": "Reset",
@@ -204,7 +218,7 @@
     "page_placeholder_title": "Page title",
     "page_placeholder_content": "Select a page to display its content.",
     "pagination": {
-      "nav_label": "Pagination navigation",
+      "nav_label": "Pagination",
       "previous": "Previous",
       "next": "Next",
       "page": "Page {{ page }}"
@@ -222,6 +236,7 @@
     "price_filter_html": "The highest price is {{ price }}",
     "product_image": "Product image",
     "product_information": "Product information",
+    "product_disclosures": "Product disclosures",
     "product_subtotal": "Product subtotal",
     "product_total": "Product total",
     "product_badge_sold_out": "Sold out",
@@ -230,6 +245,7 @@
     "placeholder_image": "Placeholder image",
     "quantity": "Quantity",
     "quantity_per_item": "/ea",
+    "quick_order_list": "Quick order list",
     "recently_viewed_products": "Recently viewed",
     "remove_all": "Remove all",
     "remove_all_items_confirmation": "Remove all {{ count }} items from your cart?",

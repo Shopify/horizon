@@ -1,7 +1,6 @@
 {%- doc -%}
   Renders media block contents (used in _media and _media-without-appearance blocks)
 
-  @param {string} section_id - The section ID
   @param {object} [block] - The block object
   @param {boolean} [unset_image_tag] - if true, ignores the image focal point in the image
 {%- enddoc -%}
@@ -10,6 +9,10 @@
   assign block_settings = block.settings
   assign show_image = false
   assign show_video = false
+
+  if block_settings.background_color != blank
+    render 'contrast-override', background_color: block_settings.background_color, section_id: block.id
+  endif
 
   if block_settings.media_type == 'image'
     assign show_image = true
@@ -24,7 +27,7 @@
   class="
     media-block
     spacing-style
-    {% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %}
+    {% if block_settings.background_color != blank %} color-custom-{{ block.id }}{% endif %}
     {% if show_image and block_settings.image_position == 'contain' or show_video and block_settings.video_position == 'contain' %}
       media-block--contain
     {% endif %}
@@ -47,7 +50,7 @@
         %}
       {% else %}
         <div class="media-block__media border-style">
-          {{ 'detailed-apparel-1' | placeholder_svg_tag: 'hero__media' }}
+          {{ 'detailed-apparel-1' | placeholder_svg_tag: 'media-block__placeholder' }}
         </div>
       {% endif %}
     {% endcapture %}
@@ -67,8 +70,7 @@
       video: block_settings.video,
       video_autoplay: block_settings.video_autoplay,
       video_loop: block_settings.video_loop,
-      video_class: 'media-block__media media-block__media--video border-style',
-      section_id: section_id
+      video_class: 'media-block__media media-block__media--video border-style'
     %}
   {%- else -%}
     <div class="media-block__media border-style">
@@ -105,6 +107,15 @@
   }
 
   /* This is to support corner radius on video and align the video to the center of the block */
+  .media-block__placeholder {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center center;
+    overflow: hidden;
+    position: relative;
+  }
+
   .media-block__media--video {
     display: flex;
     align-items: center;

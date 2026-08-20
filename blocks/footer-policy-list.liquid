@@ -7,13 +7,16 @@
       popovertarget="terms-policies-popover"
       popovertargetaction="toggle"
       ref="trigger"
-      style="{% render 'typography-style', preset: 'custom', settings: block.settings %}"
+      style="
+        {% render 'typography-style', preset: 'custom', settings: block.settings %}
+        {% if block.settings.text_color != blank %}--color-utilities: {{ block.settings.text_color }};{% endif %}
+      "
       {{ block.shopify_attributes }}
     >
       {{ 'content.terms_and_policies' | t }}
     </button>
     <div
-      class="terms-policies-popover color-{{ settings.popover_color_scheme }}"
+      class="terms-policies-popover color-custom-popover"
       id="terms-policies-popover"
       popover="auto"
       ref="popover"
@@ -148,6 +151,16 @@
     {
       "type": "paragraph",
       "content": "t:content.manage_policies"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:settings.text_color",
+      "placeholder": "t:settings.default"
     },
     {
       "type": "select",

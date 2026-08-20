@@ -24,6 +24,14 @@
   endcapture
 %}
 
+{% render 'quick-add-styles' %}
+{% render 'quick-add-modal-styles' %}
+{% render 'swatch-styles' %}
+{% render 'quantity-selector-styles' %}
+{% render 'variant-picker-styles' %}
+{% render 'product-badges-styles' %}
+{% render 'resource-list-styles' %}
+{% render 'product-recommendations-styles' %}
 <product-recommendations
   id="product-recommendations-{{ section.id }}"
   class="product-recommendations"
@@ -33,14 +41,23 @@
   data-intent="{{ section.settings.recommendation_type }}"
   data-testid="product-recommendations-section"
   data-recommendations-performed="{{ recommendations.performed }}"
+  data-hydration-key="product-recommendations-{{ section.id }}"
   {{ section.shopify_attributes }}
 >
-  <div class="section-background color-{{ section.settings.color_scheme }}"></div>
+  {% liquid
+    if section.settings.background_color != blank
+      render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+    endif
+  %}
+
+  <div
+    class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+  ></div>
   <div
     class="
       section
       section--{{ section.settings.section_width }}
-      color-{{ section.settings.color_scheme }}
+      {% if section.settings.background_color != blank %}color-custom-{{ section.id }}{% endif %}
       section-resource-list
       spacing-style
       gap-style
@@ -80,7 +97,12 @@
       {% capture list_items %}
         {% for product in products limit: section.settings.max_products %}
           <div class="resource-list__item">
-            {% content_for 'block', type: '_product-card', id: 'static-product-card', closest.product: product %}
+            {% content_for 'block',
+              type: '_product-card',
+              id: 'static-product-card',
+              closest.product: product,
+              product_view_context: 'recommendation'
+            %}
           </div>
           {% unless forloop.last %}
             <!--@list/split-->
@@ -401,10 +423,10 @@
       "default": 12
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:settings.color_scheme",
-      "default": "scheme-1"
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "placeholder": "t:settings.default"
     },
     {
       "type": "header",
@@ -449,7 +471,6 @@
         "icons_shape": "none",
         "section_width": "page-width",
         "gap": 28,
-        "color_scheme": "scheme-1",
         "padding-block-start": 48,
         "padding-block-end": 48
       },
@@ -458,7 +479,8 @@
           "type": "text",
           "name": "t:names.header",
           "settings": {
-            "text": "t:html_defaults.related_product"
+            "text": "t:html_defaults.related_product",
+            "type_preset": "h3"
           }
         },
         "static-product-card": {
@@ -491,14 +513,13 @@
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
-                "type_preset": "rte",
+                "type_preset": "paragraph",
                 "font": "var(--font-body--family)",
                 "font_size": "1rem",
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
                 "wrap": "pretty",
-                "color": "var(--color-foreground)",
                 "background": false,
                 "background_color": "#00000026",
                 "corner_radius": 0,
@@ -523,7 +544,6 @@
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
-                "color": "var(--color-foreground)",
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,

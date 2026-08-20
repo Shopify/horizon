@@ -38,14 +38,12 @@
     endif
   %}
 
-  {% # theme-check-disable UnclosedHTMLElement %}
   {% if forloop.first or item_modulo == 1 %}
     <div
       class="bento-box bento-box--items-{{ box_item_count }}"
       data-testid="bento-box"
     >
   {% endif %}
-  {% # theme-check-disable UnclosedHTMLElement %}
 
   <div class="bento-box__item">
     {{ item }}

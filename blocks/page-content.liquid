@@ -1,10 +1,38 @@
-<rte-formatter>
-  {{ page.content }}
-</rte-formatter>
+<div
+  class="page-content"
+  style="
+    {% if block.settings.text_color != blank %}
+      --color: {{ block.settings.text_color }};
+      --color-rgb: {{ block.settings.text_color.rgb }};
+    {% endif %}
+  "
+>
+  <rte-formatter>
+    {{ page.content }}
+  </rte-formatter>
+</div>
+
+{% stylesheet %}
+  .page-content {
+    color: var(--color, inherit);
+  }
+
+  .page-content a {
+    color: currentcolor;
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
   "name": "t:names.page_content",
-  "class": "rte"
+  "class": "rte",
+  "settings": [
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:settings.text_color",
+      "placeholder": "t:settings.default"
+    }
+  ]
 }
 {% endschema %}

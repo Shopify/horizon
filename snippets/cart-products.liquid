@@ -4,14 +4,29 @@
   Renders the cart products list or empty cart state.
 
   @param {boolean} [force_empty] - Force render empty cart state
+  @param {block} [block] - The block object providing settings and editor attributes.
+  @param {string} [context] - Render context — pass `'drawer'` when rendered inside the cart drawer to enable drawer-specific styles.
 
   @example
   {% render 'cart-products', force_empty: true %}
 {% enddoc %}
 
+{% render 'cart-typography-styles' %}
+{% render 'price-styles' %}
+
 {% liquid
   assign block_settings = block.settings
 %}
+
+{%- if block_settings.input_style == 'custom' -%}
+  {%- capture custom_style -%}
+    {%- render 'input-custom-styles', block_settings: block_settings -%}
+    --style-border-width-inputs: {{ block_settings.border_width }}px;
+    --style-border-radius-inputs: {{ block_settings.border_radius }}px;
+    --style-border-radius-buttons-primary: {{ block_settings.border_radius }}px;
+    --style-border-radius-buttons-secondary: {{ block_settings.border_radius }}px;
+  {%- endcapture -%}
+{%- endif -%}
 
 <script
   src="{{ 'component-cart-items.js' | asset_url }}"
@@ -29,12 +44,18 @@
   fetchpriority="low"
 ></script>
 
+{% render 'text-component-shimmer-styles' %}
+
 <div
   {{ block.shopify_attributes }}
-  class="cart-items__wrapper"
-  {% if settings.product_title_case == 'uppercase' %}
-    style="--product-title-case: uppercase;"
+  class="cart-items__wrapper{% if context == 'drawer' and cart.empty? or force_empty %} cart-items__wrapper--drawer-empty{% endif %}"
+  {% if context == 'drawer' and cart.empty? or force_empty %}
+    data-cart-drawer-empty
   {% endif %}
+  style="
+    {%- if settings.product_title_case == 'uppercase' -%}--product-title-case: uppercase;{%- endif -%}
+    {{- custom_style -}}
+  "
 >
   {% if cart.empty? or force_empty %}
     {%- if shop.customer_accounts_enabled and customer == null -%}
@@ -67,7 +88,7 @@
     >
       <div
         class="cart-items spacing-style{% if block_settings.dividers %} cart-items--dividers{% endif %}"
-        style="{%  render 'spacing-style', settings: block_settings %} --cart-items-gap:{{ block_settings.gap | append: "px" }};"
+        style="{% render 'spacing-style', settings: block_settings %} --cart-items-gap:{{ block_settings.gap | append: "px" }};"
       >
         <table
           class="cart-items__table"
@@ -123,8 +144,9 @@
           <tbody role="rowgroup">
             {% for item in cart.items %}
               <tr
+                id="CartItem-{{ item.key }}"
                 role="row"
-                class="cart-items__table-row{% if item.parent_relationship.parent != null %} cart-items__nested-line{% endif %}"
+                class="cart-items__table-row{% if item.parent_relationship.parent != null %} cart-items__nested-line{% endif %}{% if context == 'drawer' %}{% unless item.unit_price_measurement %} cart-items__table-row--full-width-variants{% endunless %}{% endif %}"
                 ref="cartItemRows[]"
                 data-parent-key="{{ item.parent_relationship.parent.key }}"
                 data-key="{{ item.key }}"
@@ -165,112 +187,143 @@
                   role="cell"
                   headers="productInformation"
                 >
-                  <p>
-                    <a
-                      href="{{ item.url }}"
-                      class="cart-items__title"
-                      {% if item.parent_relationship.parent != null %}
-                        aria-label="{{ 'accessibility.nested_product' | t: product_title: item.product.title, parent_title: item.parent_relationship.parent.title | escape }}"
-                      {% endif %}
-                    >
-                      {{- item.product.title -}}
-                    </a>
-                  </p>
-                  {% if item.product.vendor and block_settings.vendor %}
-                    <p>
-                      {{ item.product.vendor }}
-                    </p>
-                  {% endif %}
+                  <div class="cart-items__product-info">
+                    {%- liquid
+                      assign cart_disclosure_unique_id = 'page-' | append: item.index
+                      if context == 'drawer'
+                        assign cart_disclosure_unique_id = 'drawer-' | append: item.index
+                      endif
+                    -%}
+                    <div class="cart-items__title-row">
+                      <a
+                        href="{{ item.url }}"
+                        class="cart-items__title"
+                        {% if item.parent_relationship.parent != null %}
+                          aria-label="{{ 'accessibility.nested_product' | t: product_title: item.product.title, parent_title: item.parent_relationship.parent.title | escape }}"
+                        {% endif %}
+                      >
+                        {{- item.product.title -}}
+                      </a>
+                      {% render 'cart-disclosure-tooltip',
+                        product: item.product,
+                        unique_id: cart_disclosure_unique_id,
+                        mode: 'trigger'
+                      %}
+                    </div>
+                    {% if item.product.vendor and block_settings.vendor %}
+                      <p>
+                        {{ item.product.vendor }}
+                      </p>
+                    {% endif %}
 
-                  {%- if item.item_components.size != 0 -%}
-                    <ul class="cart-items__bundle list-unstyled">
-                      {%- for component in item.item_components -%}
-                        <li>
-                          {{- component.title -}}
-                          {%- if component.quantity > 1 -%}
-                            <span> × {{ component.quantity }}</span>
-                          {%- endif -%}
-                        </li>
-                      {%- endfor -%}
-                    </ul>
-                  {%- endif -%}
-
-                  {%- if item.product.has_only_default_variant == false
-                    or item.properties.size != 0
-                    or item.selling_plan_allocation != null
-                  -%}
-                    <dl class="cart-items__variants">
-                      {%- if item.product.has_only_default_variant == false and item.item_components.size == 0 -%}
-                        {%- for option in item.options_with_values -%}
-                          <div class="cart-items__variant">
-                            <dt class="visually-hidden">{{ option.name }}:</dt>
-                            <dd>
-                              {{- option.value -}}
-                              {%- if forloop.last != true %},&nbsp;{% endif -%}
-                            </dd>
-                          </div>
+                    {%- if item.item_components.size != 0 -%}
+                      <ul class="cart-items__bundle list-unstyled">
+                        {%- for component in item.item_components -%}
+                          <li>
+                            {{- component.title -}}
+                            {%- if component.quantity > 1 -%}
+                              <span> × {{ component.quantity }}</span>
+                            {%- endif -%}
+                          </li>
                         {%- endfor -%}
+                      </ul>
+                    {%- endif -%}
+                  </div>
+
+                  <div class="cart-items__variants-wrapper">
+                    {%- if item.product.has_only_default_variant == false
+                      or item.properties.size != 0
+                      or item.selling_plan_allocation != null
+                    -%}
+                      {%- if item.product.has_only_default_variant == false and item.item_components.size == 0 -%}
+                        <dl class="cart-items__variants">
+                          {%- for option in item.options_with_values -%}
+                            <div class="cart-items__variant">
+                              <dt class="visually-hidden">{{ option.name }}:</dt>
+                              <dd>
+                                {{- option.value -}}
+                                {%- if forloop.last != true %},&nbsp;{% endif -%}
+                              </dd>
+                            </div>
+                          {%- endfor -%}
+                        </dl>
                       {%- endif -%}
 
-                      {%- for property in item.properties -%}
-                        {%- assign property_first_char = property.first | slice: 0 -%}
-                        {%- if property.last != blank and property_first_char != '_' -%}
-                          <div class="cart-items__properties">
-                            <dt>{{ property.first }}:</dt>
-                            <dd>
-                              {%- if property.last contains '/uploads/' -%}
-                                <a href="{{ property.last }}">{{ property.last | split: '/' | last }}</a>
-                              {%- else -%}
-                                {{ property.last }}
-                              {%- endif -%}
-                            </dd>
-                          </div>
-                        {%- endif -%}
-                      {%- endfor -%}
-                    </dl>
+                      {%- liquid
+                        assign has_visible_properties = false
+                        for property in item.properties
+                          assign property_first_char = property.first | slice: 0
+                          if property.last != blank and property_first_char != '_'
+                            assign has_visible_properties = true
+                            break
+                          endif
+                        endfor
+                      -%}
+                      {%- if has_visible_properties -%}
+                        <dl class="cart-items__properties">
+                          {%- for property in item.properties -%}
+                            {%- assign property_first_char = property.first | slice: 0 -%}
+                            {%- if property.last != blank and property_first_char != '_' -%}
+                              <div class="cart-items__property">
+                                <dt>{{ property.first }}:</dt>
+                                <dd>
+                                  {%- if property.last contains '/uploads/' -%}
+                                    <a href="{{ property.last }}">{{ property.last | split: '/' | last }}</a>
+                                  {%- else -%}
+                                    {{ property.last }}
+                                  {%- endif -%}
+                                </dd>
+                              </div>
+                            {%- endif -%}
+                          {%- endfor -%}
+                        </dl>
+                      {%- endif -%}
 
-                    {% if item.selling_plan_allocation %}
-                      <p>{{ item.selling_plan_allocation.selling_plan.name }}</p>
-                    {% endif %}
-                  {%- endif -%}
+                      {%- if item.selling_plan_allocation -%}
+                        <p>{{ item.selling_plan_allocation.selling_plan.name }}</p>
+                      {%- endif -%}
 
-                  {% if item.line_level_discount_allocations.size > 0 %}
-                    <ul
-                      class="list-unstyled"
-                      role="list"
-                    >
-                      {%- for discount in item.line_level_discount_allocations -%}
-                        <li>{{ discount.discount_application.title | escape }}</li>
-                      {%- endfor -%}
-                    </ul>
-                  {% endif %}
+                      {%- if item.line_level_discount_allocations.size > 0 -%}
+                        <ul
+                          class="list-unstyled"
+                          role="list"
+                        >
+                          {%- for discount in item.line_level_discount_allocations -%}
+                            <li>{{ discount.discount_application.title | escape }}</li>
+                          {%- endfor -%}
+                        </ul>
+                      {%- endif -%}
+                    {%- endif -%}
+                  </div>
 
-                  <div>
-                    {% if item.original_price != item.final_price %}
-                      <span class="visually-hidden">{{ 'content.price_sale' | t }}</span>
-                      <span>{{ item.final_price | money }}</span>
-                      <span class="visually-hidden">{{ 'content.price_regular' | t }}</span>
-                      <s class="compare-at-price">
-                        {% if item.variant.compare_at_price > item.original_price %}
-                          {{ item.variant.compare_at_price | money }}
-                        {% else %}
-                          {{ item.original_price | money }}
-                        {% endif %}
-                      </s>
-                    {% else %}
-                      {% if item.variant.compare_at_price > item.original_price %}
+                  <div class="cart-items__unit-price-wrapper">
+                    <div>
+                      {% if item.original_price != item.final_price %}
                         <span class="visually-hidden">{{ 'content.price_sale' | t }}</span>
-                      {% else %}
-                        <span class="visually-hidden">{{ 'content.price' | t }}</span>
-                      {% endif %}
-
-                      <span>{{ item.original_price | money }}</span>
-
-                      {% if item.variant.compare_at_price > item.original_price %}
+                        <span>{{ item.final_price | money }}</span>
                         <span class="visually-hidden">{{ 'content.price_regular' | t }}</span>
-                        <s class="compare-at-price">{{ item.variant.compare_at_price | money }}</s>
+                        <s class="compare-at-price">
+                          {% if item.variant.compare_at_price > item.original_price %}
+                            {{ item.variant.compare_at_price | money }}
+                          {% else %}
+                            {{ item.original_price | money }}
+                          {% endif %}
+                        </s>
+                      {% else %}
+                        {% if item.variant.compare_at_price > item.original_price %}
+                          <span class="visually-hidden">{{ 'content.price_sale' | t }}</span>
+                        {% else %}
+                          <span class="visually-hidden">{{ 'content.price' | t }}</span>
+                        {% endif %}
+
+                        <span>{{ item.original_price | money }}</span>
+
+                        {% if item.variant.compare_at_price > item.original_price %}
+                          <span class="visually-hidden">{{ 'content.price_regular' | t }}</span>
+                          <s class="compare-at-price">{{ item.variant.compare_at_price | money }}</s>
+                        {% endif %}
                       {% endif %}
-                    {% endif %}
+                    </div>
                   </div>
                 </td>
                 <td
@@ -332,20 +385,20 @@
                     ></small>
                   </div>
                 </td>
+                {%- liquid
+                  if settings.currency_code_enabled_cart_items
+                    assign price = item.final_line_price | money_with_currency
+                    assign unit_price = item.unit_price | money_with_currency
+                  else
+                    assign price = item.final_line_price | money
+                    assign unit_price = item.unit_price | money
+                  endif
+                -%}
                 <td
                   class="cart-items__price cart-secondary-typography"
                   role="cell"
                   headers="productTotal"
                 >
-                  {%- liquid
-                    if settings.currency_code_enabled_cart_items
-                      assign price = item.final_line_price | money_with_currency
-                      assign unit_price = item.unit_price | money_with_currency
-                    else
-                      assign price = item.final_line_price | money
-                      assign unit_price = item.unit_price | money
-                    endif
-                  -%}
                   <text-component value="{{ price | strip_html }}">{{ price }}</text-component>
                   {%- if item.unit_price_measurement -%}
                     <div class="cart-items__price-unit cart-secondary-typography">
@@ -357,6 +410,19 @@
             {% endfor %}
           </tbody>
         </table>
+        {% for item in cart.items %}
+          {%- liquid
+            assign cart_disclosure_unique_id = 'page-' | append: item.index
+            if context == 'drawer'
+              assign cart_disclosure_unique_id = 'drawer-' | append: item.index
+            endif
+          -%}
+          {% render 'cart-disclosure-tooltip',
+            product: item.product,
+            unique_id: cart_disclosure_unique_id,
+            mode: 'dialog'
+          %}
+        {% endfor %}
       </div>
     </form>
   {%- endif -%}
@@ -376,15 +442,18 @@
     pointer-events: none;
   }
 
-  .cart-page--empty .cart-items__wrapper {
+  .cart-items__wrapper {
     display: flex;
     flex-direction: column;
+  }
+
+  .cart-page--empty .cart-items__wrapper {
     align-items: center;
     margin-block-start: 0;
     text-align: center;
   }
 
-  .cart-drawer:not(:has(.cart-form)) .cart-items__wrapper {
+  .cart-items__wrapper--drawer-empty {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -414,6 +483,58 @@
     align-items: start;
     padding-bottom: var(--cart-items-gap);
     margin-bottom: var(--margin-lg);
+  }
+
+  .cart-items__details {
+    grid-area: details;
+    min-width: 0;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
+  }
+
+  .cart-items__product-info {
+    min-width: 0;
+  }
+
+  /* Cart drawer: separate grid areas for variants and unit price */
+  .cart-items__table-row--full-width-variants {
+    grid-template-columns: clamp(2.5rem, 15cqi, 7.5rem) minmax(0, 1fr) auto;
+    grid-template-rows: repeat(4, min-content) 1fr;
+    grid-template-areas:
+      'media details price'
+      'media variants variants'
+      'media unit_price unit_price'
+      'media quantity quantity'
+      'media error error';
+
+    .cart-items__details {
+      display: contents;
+    }
+
+    .cart-items__product-info {
+      grid-area: details;
+    }
+
+    .cart-items__variants-wrapper {
+      grid-area: variants;
+
+      &:empty {
+        display: none;
+      }
+
+      p {
+        margin: 0;
+      }
+    }
+
+    .cart-items__unit-price-wrapper {
+      grid-area: unit_price;
+      font-size: var(--font-size--sm);
+    }
+
+    .cart-items__price {
+      min-width: auto;
+      width: max-content;
+    }
   }
 
   .cart-items__table-row.cart-items__nested-line td:first-child {
@@ -446,12 +567,33 @@
     }
   }
 
+  .cart-items__table-row.adding {
+    interpolate-size: allow-keywords;
+    overflow: hidden;
+    animation: addRow calc(var(--animation-speed) * 2) var(--animation-easing) forwards;
+  }
+
+  @keyframes addRow {
+    0% {
+      opacity: 0;
+      height: 0;
+      padding-bottom: 0;
+      margin-bottom: 0;
+      border-color: transparent;
+    }
+
+    100% {
+      opacity: 1;
+      height: auto;
+    }
+  }
+
   .cart-items__table-row:last-child {
     padding-bottom: 0;
   }
 
   .cart-items--dividers .cart-items__table-row {
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-10-25));
     margin-bottom: var(--cart-items-gap);
   }
 
@@ -460,15 +602,10 @@
     margin-bottom: 0;
   }
 
-  .cart-items--dividers .cart-items__table-row:last-child {
+  .cart-items--dividers .cart-items__table-row:last-of-type {
     border-block-end: none;
     padding-block-end: 0;
     margin-bottom: 0;
-  }
-
-  .cart-items__details {
-    grid-area: details;
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
   }
 
   .cart-items__details > * + *,
@@ -484,14 +621,36 @@
     text-decoration: none;
   }
 
+  .cart-items__title-row {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gap-xs);
+    max-width: 100%;
+    min-width: 0;
+  }
+
   .cart-items__title {
     font-size: var(--font-size--md);
     color: var(--color-foreground);
     text-transform: var(--product-title-case);
+    display: block;
+    margin-block-start: 0;
+    min-width: 0;
+    overflow-wrap: break-word;
+  }
+
+  .cart-items__variants {
+    display: block;
   }
 
   .cart-items__variant {
-    display: inline-block;
+    display: inline;
+  }
+
+  .cart-items__variant dt,
+  .cart-items__variant dd {
+    display: inline;
+    margin: 0;
   }
 
   .cart-items__quantity {
@@ -544,10 +703,12 @@
     text-align: end;
     display: block;
     font-size: var(--font-size--sm);
+    line-height: var(--line-height);
   }
 
   .cart-items__price-unit {
     font-size: var(--font-size--xs);
+    padding-block-start: var(--padding-2xs);
   }
 
   .cart-items__media-container {
@@ -568,6 +729,7 @@
 
   .cart-items__empty-button {
     margin-top: var(--margin-md);
+    margin-inline: auto;
     padding-inline: var(--padding-4xl);
     padding-block: var(--padding-lg);
   }
@@ -608,6 +770,7 @@
   }
 
   @container cart-items (min-width: 720px) {
+    /* Cart page: original layout */
     .cart-items__table-row {
       --cart-item-price-width: 6rem;
 
@@ -632,6 +795,21 @@
       display: flex;
       flex-direction: column;
       align-items: flex-end;
+    }
+
+    /* Cart drawer: separate areas for variants and unit price */
+    .cart-items__table-row--full-width-variants {
+      grid-template-rows: min-content min-content min-content 1fr;
+      grid-template-areas:
+        'media details quantity price'
+        'media variants variants variants'
+        'media unit_price unit_price unit_price'
+        'media error error error';
+
+      .cart-items__quantity,
+      .cart-items__price {
+        grid-area: initial;
+      }
     }
   }
 
@@ -691,18 +869,6 @@
     }
   }
 
-  .cart-primary-typography {
-    font-family: var(--cart-primary-font-family);
-    font-style: var(--cart-primary-font-style);
-    font-weight: var(--cart-primary-font-weight);
-  }
-
-  .cart-secondary-typography {
-    font-family: var(--cart-secondary-font-family);
-    font-style: var(--cart-secondary-font-style);
-    font-weight: var(--cart-secondary-font-weight);
-  }
-
   .cart__ctas {
     width: 100%;
     display: grid;
@@ -718,6 +884,7 @@
   shopify-accelerated-checkout-cart {
     --shopify-accelerated-checkout-inline-alignment: center;
     --shopify-accelerated-checkout-button-border-radius: var(--style-border-radius-buttons-primary);
+    --shopify-accelerated-checkout-button-block-size: var(--height-buy-buttons);
     --shopify-accelerated-checkout-row-gap: var(--checkout-button-gap, 10px);
   }
 
@@ -758,10 +925,32 @@
     margin-block-start: var(--margin-2xs);
   }
 
+  .cart-items__property {
+    display: block;
+  }
+
   .cart-items__properties dt,
   .cart-items__properties dd {
     display: inline;
+    margin: 0;
     overflow-wrap: break-word;
+  }
+
+  @media screen and (min-width: 750px) {
+    .cart-items .quantity-selector {
+      --quantity-selector-width: 105px;
+      height: var(--button-size-md);
+      width: var(--quantity-selector-width);
+    }
+
+    .cart-items .quantity-selector button {
+      width: var(--button-size-md);
+      height: var(--button-size-md);
+    }
+
+    .cart-items .quantity-selector input {
+      max-width: calc(var(--quantity-selector-width) - var(--button-size-md) * 2);
+    }
   }
 
   @media screen and (prefers-reduced-motion: no-preference) {

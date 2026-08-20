@@ -1,0 +1,39 @@
+{%- doc -%}
+  Shared icon styles for theme `summary` elements.
+
+  Files that emit summary icons should render this snippet unless they render
+  `accordion-custom-component`, which includes these styles for them.
+
+  @example
+  {% render 'summary-icon-styles' %}
+{%- enddoc -%}
+
+{% stylesheet %}
+  details[open] > summary .icon-animated > svg {
+    transform: rotate(180deg);
+  }
+
+  summary .svg-wrapper {
+    margin-inline-start: auto;
+    height: var(--icon-size-xs);
+    width: var(--icon-size-xs);
+    transition: transform var(--animation-speed) var(--animation-easing);
+  }
+
+  /* Shared plus/minus icon animations */
+  summary .icon-plus :is(.horizontal, .vertical) {
+    transition: transform var(--animation-speed) var(--animation-easing);
+    transform: rotate(0deg);
+    transform-origin: 50% 50%;
+    opacity: 1;
+  }
+
+  details[open] > summary .icon-plus .horizontal {
+    transform: rotate(90deg);
+  }
+
+  details[open] > summary .icon-plus .vertical {
+    transform: rotate(90deg);
+    opacity: 0;
+  }
+{% endstylesheet %}

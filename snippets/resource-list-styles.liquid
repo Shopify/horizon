@@ -1,0 +1,87 @@
+{%- doc -%}
+  Shared resource list grid styles used by resource-list snippets and product recommendations markup.
+
+  @example
+  {% render 'resource-list-styles' %}
+{%- enddoc -%}
+
+{% stylesheet %}
+  .resource-list {
+    --resource-list-mobile-gap-max: 9999px;
+    --resource-list-column-gap: min(var(--resource-list-column-gap-desktop), var(--resource-list-mobile-gap-max));
+    --resource-list-row-gap: min(var(--resource-list-row-gap-desktop), var(--resource-list-mobile-gap-max));
+
+    width: 100%;
+
+    @media screen and (max-width: 749px) {
+      --resource-list-mobile-gap-max: 12px;
+    }
+
+    @container resource-list (max-width: 749px) {
+      --resource-list-mobile-gap-max: 12px;
+    }
+  }
+
+  .resource-list--grid {
+    display: grid;
+    gap: var(--resource-list-row-gap) var(--resource-list-column-gap);
+    grid-template-columns: var(--resource-list-columns-mobile);
+
+    @media screen and (min-width: 750px) {
+      grid-template-columns: var(--resource-list-columns);
+    }
+
+    @container resource-list (max-width: 449px) {
+      grid-template-columns: var(--resource-list-columns-mobile);
+    }
+
+    @container resource-list(min-width: 450px) and (max-width: 749px) {
+      --resource-list-columns-per-row: 3;
+
+      grid-template-columns: repeat(var(--resource-list-columns-per-row), 1fr);
+
+      /* Avoid orphan in last row when there are 4, 7, or 10 items */
+      &:has(.resource-list__item:first-child:nth-last-child(3n + 1)),
+      /* Clean two full rows when there are 8 items */
+      &:has(.resource-list__item:first-child:nth-last-child(8n)) {
+        --resource-list-columns-per-row: 4;
+      }
+    }
+
+    @container resource-list (min-width: 750px) {
+      grid-template-columns: repeat(var(--resource-list-columns-per-row), 1fr);
+
+      &:has(.resource-list__item:first-child:nth-last-child(n + 9)) {
+        --resource-list-columns-per-row: 5;
+      }
+
+      &:has(.resource-list__item:first-child:nth-last-child(n + 7):nth-last-child(-n + 8)) {
+        --resource-list-columns-per-row: 4;
+      }
+
+      &:has(.resource-list__item:first-child:nth-last-child(6)) {
+        --resource-list-columns-per-row: 3;
+      }
+
+      &:has(.resource-list__item:first-child:nth-last-child(5)) {
+        --resource-list-columns-per-row: 5;
+      }
+
+      &:has(.resource-list__item:first-child:nth-last-child(-n + 4)) {
+        --resource-list-columns-per-row: 4;
+      }
+    }
+
+    @container resource-list (min-width: 1200px) {
+      &:has(.resource-list__item:first-child:nth-last-child(6)) {
+        --resource-list-columns-per-row: 6;
+      }
+    }
+  }
+
+  .resource-list__item {
+    height: 100%;
+    color: var(--color-foreground);
+    text-decoration: none;
+  }
+{% endstylesheet %}

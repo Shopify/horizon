@@ -1,0 +1,238 @@
+{% doc %}
+  Outputs CSS custom property declarations for the color palette defined in theme settings.
+{% enddoc %}
+
+{% comment %} Compute palette lightest & darkest once for smart contrast {% endcomment %}
+{% liquid
+  assign palette_lightest = '#ffffff'
+  assign palette_lightest_brightness = -1
+  assign palette_darkest = '#000000'
+  assign palette_darkest_brightness = 256
+
+  for palette_color in settings.color_palette
+    if palette_color != blank and palette_color.alpha == 1
+      assign b = palette_color | color_brightness
+      if b > palette_lightest_brightness
+        assign palette_lightest = palette_color
+        assign palette_lightest_brightness = b
+      endif
+      if b < palette_darkest_brightness
+        assign palette_darkest = palette_color
+        assign palette_darkest_brightness = b
+      endif
+    endif
+  endfor
+%}
+
+{% comment %} Primary button effective values {% endcomment %}
+{% liquid
+  if settings.palette_primary_button_background.alpha == 0
+    assign effective_primary_button_focus_outline = settings.palette_primary_button_text
+  else
+    assign effective_primary_button_focus_outline = settings.palette_primary_button_background
+  endif
+
+  capture effective_primary_button_hover_background
+    render 'util-palette-hover-shift', color: settings.palette_primary_button_background
+  endcapture
+  if settings.palette_primary_button_background.alpha == 1
+    assign primary_hover_background_has_alpha = false
+  else
+    assign primary_hover_background_has_alpha = true
+  endif
+
+  assign primary_hover_brightness = effective_primary_button_hover_background | color_brightness
+  if primary_hover_brightness > 128
+    assign primary_button_hover_contrast = palette_darkest
+  else
+    assign primary_button_hover_contrast = palette_lightest
+  endif
+
+  if primary_hover_background_has_alpha
+    assign effective_primary_button_hover_text = settings.palette_primary_button_text
+  else
+    assign effective_primary_button_hover_text = primary_button_hover_contrast
+  endif
+
+  if settings.palette_primary_button_border == settings.palette_primary_button_background
+    assign effective_primary_button_hover_border = effective_primary_button_hover_background
+  else
+    capture effective_primary_button_hover_border
+      render 'util-palette-hover-shift', color: settings.palette_primary_button_border
+    endcapture
+  endif
+%}
+
+{% comment %} Secondary button hover effective values {% endcomment %}
+{% liquid
+  capture effective_secondary_button_hover_background
+    render 'util-palette-hover-shift', color: settings.palette_secondary_button_background
+  endcapture
+  if settings.palette_secondary_button_background.alpha == 1
+    assign secondary_hover_background_has_alpha = false
+  else
+    assign secondary_hover_background_has_alpha = true
+  endif
+
+  assign secondary_hover_brightness = effective_secondary_button_hover_background | color_brightness
+  if secondary_hover_brightness > 128
+    assign secondary_button_hover_contrast = palette_darkest
+  else
+    assign secondary_button_hover_contrast = palette_lightest
+  endif
+
+  if secondary_hover_background_has_alpha
+    assign effective_secondary_button_hover_text = settings.palette_secondary_button_text
+  else
+    assign effective_secondary_button_hover_text = secondary_button_hover_contrast
+  endif
+
+  if settings.palette_secondary_button_border == settings.palette_secondary_button_background
+    assign effective_secondary_button_hover_border = effective_secondary_button_hover_background
+  else
+    capture effective_secondary_button_hover_border
+      render 'util-palette-hover-shift', color: settings.palette_secondary_button_border
+    endcapture
+  endif
+%}
+
+{% comment %} Variant hover effective values (smart contrast for fallback text/border) {% endcomment %}
+{% liquid
+  capture effective_variant_hover_background
+    render 'util-palette-hover-shift', color: settings.palette_variant_background
+  endcapture
+
+  if settings.palette_variant_background.alpha == 1
+    assign variant_hover_background_has_alpha = false
+  else
+    assign variant_hover_background_has_alpha = true
+  endif
+
+  assign variant_hover_brightness = effective_variant_hover_background | color_brightness
+  if variant_hover_brightness > 128
+    assign variant_hover_contrast = palette_darkest
+  else
+    assign variant_hover_contrast = palette_lightest
+  endif
+
+  if variant_hover_background_has_alpha
+    assign effective_variant_hover_text = settings.palette_variant_text
+  else
+    assign effective_variant_hover_text = variant_hover_contrast
+  endif
+
+  if settings.palette_variant_border == settings.palette_variant_background
+    assign effective_variant_hover_border = effective_variant_hover_background
+  else
+    capture effective_variant_hover_border
+      render 'util-palette-hover-shift', color: settings.palette_variant_border
+    endcapture
+  endif
+%}
+{% comment %} Selected variant hover effective values (smart contrast for fallback text/border) {% endcomment %}
+{% liquid
+  capture effective_selected_variant_hover_background
+    render 'util-palette-hover-shift', color: settings.palette_selected_variant_background
+  endcapture
+  if settings.palette_selected_variant_background.alpha == 1
+    assign selected_variant_hover_background_has_alpha = false
+  else
+    assign selected_variant_hover_background_has_alpha = true
+  endif
+
+  assign sel_variant_hover_brightness = effective_selected_variant_hover_background | color_brightness
+  if sel_variant_hover_brightness > 128
+    assign selected_variant_hover_contrast = palette_darkest
+  else
+    assign selected_variant_hover_contrast = palette_lightest
+  endif
+
+  if selected_variant_hover_background_has_alpha
+    assign effective_selected_variant_hover_text = settings.palette_selected_variant_text
+  else
+    assign effective_selected_variant_hover_text = selected_variant_hover_contrast
+  endif
+
+  if settings.palette_selected_variant_border == settings.palette_selected_variant_background
+    assign effective_selected_variant_hover_border = effective_selected_variant_hover_background
+  else
+    capture effective_selected_variant_hover_border
+      render 'util-palette-hover-shift', color: settings.palette_selected_variant_border
+    endcapture
+  endif
+%}
+
+{% style %}
+  /* Palette colors */
+  :root {
+    --color-background: {{ settings.page_background_color }};
+    --color-background-rgb: {{ settings.page_background_color.rgb }};
+    --color-foreground: {{ settings.page_text_color }};
+    --color-foreground-rgb: {{ settings.page_text_color.rgb }};
+    --color-border: {{ settings.page_text_color }};
+    --color-border-rgb: {{ settings.page_text_color.rgb }};
+    --palette-lightest: {{ palette_lightest }};
+    --palette-lightest-rgb: {{ palette_lightest.rgb }};
+    --palette-darkest: {{ palette_darkest }};
+    --palette-darkest-rgb: {{ palette_darkest.rgb }};
+    {% render 'brightness-opacities', background: settings.page_background_color %}
+
+    --color-primary-button-text: rgb({{ settings.palette_primary_button_text.rgba }});
+    --color-primary-button-background: rgb({{ settings.palette_primary_button_background.rgba }});
+    --color-primary-button-border: rgb({{ settings.palette_primary_button_border.rgba }});
+    --color-primary-button-focus-outline: rgb({{ effective_primary_button_focus_outline.rgb }});
+    --color-primary-button-hover-text: rgb({{ effective_primary_button_hover_text.rgba }});
+    --color-primary-button-hover-background: {{ effective_primary_button_hover_background }};
+    --color-primary-button-hover-border: {{ effective_primary_button_hover_border }};
+
+    --color-secondary-button-text: rgb({{ settings.palette_secondary_button_text.rgba }});
+    --color-secondary-button-background: rgb({{ settings.palette_secondary_button_background.rgba }});
+    --color-secondary-button-border: rgb({{ settings.palette_secondary_button_border.rgba }});
+    --color-secondary-button-hover-text: rgb({{ effective_secondary_button_hover_text.rgba }});
+    --color-secondary-button-hover-background: {{ effective_secondary_button_hover_background }};
+    --color-secondary-button-hover-border: {{ effective_secondary_button_hover_border }};
+
+    --color-input-background: rgb({{ settings.palette_input_background.rgba }});
+    --color-input-text: rgb({{ settings.palette_input_text.rgba }});
+    --color-input-text-rgb: {{ settings.palette_input_text.rgb }};
+    --color-input-border: rgb({{ settings.palette_input_border.rgba }});
+
+    --color-variant-background: rgb({{ settings.palette_variant_background.rgba }});
+    --color-variant-border: rgb({{ settings.palette_variant_border.rgba }});
+    --color-variant-text: rgb({{ settings.palette_variant_text.rgba }});
+    --color-variant-text-rgb: {{ settings.palette_variant_text.rgb }};
+    --color-variant-hover-background: {{ effective_variant_hover_background }};
+    --color-variant-hover-text: rgb({{ effective_variant_hover_text.rgba }});
+    --color-variant-hover-border: {{ effective_variant_hover_border }};
+
+    --color-selected-variant-background: rgb({{ settings.palette_selected_variant_background.rgba }});
+    --color-selected-variant-border: rgb({{ settings.palette_selected_variant_border.rgba }});
+    --color-selected-variant-text: rgb({{ settings.palette_selected_variant_text.rgba }});
+    --color-selected-variant-text-rgb: {{ settings.palette_selected_variant_text.rgb }};
+    --color-selected-variant-hover-background: {{ effective_selected_variant_hover_background }};
+    --color-selected-variant-hover-text: rgb({{ effective_selected_variant_hover_text.rgba }});
+    --color-selected-variant-hover-border: {{ effective_selected_variant_hover_border }};
+
+    --input-disabled-background-color: rgb(var(--color-foreground-rgb) / var(--opacity-10));
+    --input-disabled-border-color: rgb(var(--color-foreground-rgb) / var(--opacity-5-15));
+    --input-disabled-text-color: rgb(var(--color-foreground-rgb) / var(--opacity-50));
+    --color-foreground-muted: rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-muted-text));
+    --color-foreground-subdued: rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-subdued-text));
+    --color-drawer-shadow-rgb: {{ settings.drawer_shadow_color.rgb }};
+    --color-popover-shadow-rgb: {{ settings.popover_shadow_color.rgb }};
+
+    /* Shadows */
+    {% if settings.drawer_drop_shadow %}
+      --shadow-drawer: 0px 4px 20px rgb(var(--color-drawer-shadow-rgb) / var(--opacity-15));
+    {% endif %}
+    {% if settings.popover_drop_shadow %}
+      --shadow-blur: 20px;
+      --shadow-popover: 0px 4px 20px rgb(var(--color-popover-shadow-rgb) / var(--opacity-15));
+    {% endif %}
+  }
+
+  body {
+    color: var(--color-foreground);
+    background-color: var(--color-background);
+  }
+{% endstyle %}

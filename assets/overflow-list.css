@@ -34,6 +34,7 @@
 slot[name='more']:not([hidden]) {
   display: flex;
   height: 100%;
+  align-items: center;
 }
 
 slot[name='more'] .button {
@@ -47,6 +48,7 @@ slot[name='more'] .button {
   text-transform: var(--text-transform);
   color: currentcolor;
   text-align: start;
+  -webkit-font-smoothing: antialiased;
 }
 
 [part='overflow'] {

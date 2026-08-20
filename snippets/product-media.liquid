@@ -7,10 +7,10 @@
   @param {string} [sizes] - Image sizes for responsive images.
   @param {string} [loading] - The loading attribute for the image.
   @param {object} [block] - The block object.
-  @param {object} [section] - The section object.
   @param {object} [selected_product] - The currently selected product.
   @param {boolean} [first_3d_model] - Indicates if this is the first 3D model.
   @param {boolean} [is_main_product_media] - Indicates if this is the main product image.
+  @param {string} [image_ref] - Optional ref attribute for the image element.
 
   @example
   {% render 'product-media', media: media, preview_image_only: false, loading: 'lazy' %}
@@ -18,6 +18,10 @@
 
 {% liquid
   assign widths = widths | default: '240, 352, 832, 1200, 1600, 1920, 2560, 3840'
+  assign ref_image_to_transition = ''
+  if settings.transition_to_main_product
+    assign ref_image_to_transition = 'imagesToTransition[]'
+  endif
 %}
 
 <div
@@ -42,10 +46,11 @@
       sizes: sizes,
       loading: loading,
       class: 'product-media__image',
-      transitionToProduct: settings.transition_to_main_product,
+      ref: ref_image_to_transition,
       data_max_resolution: high_res_url,
       fetchpriority: fetch_priority,
-      style: focal_point_style
+      style: focal_point_style,
+      ref: image_ref
   }}
 
   {% unless preview_image_only %}
@@ -125,84 +130,10 @@
           widths: widths,
           sizes: sizes,
           loading: loading,
-          disable_controls: true,
-          section_id: section.id
+          disable_controls: true
         -%}
     {% endcase %}
   {% endunless %}
 </div>
 
-{% stylesheet %}
-  .product-media {
-    aspect-ratio: var(--gallery-aspect-ratio, var(--ratio));
-    min-height: 0;
-    min-width: 0;
-  }
-
-  .product-media__image {
-    object-position: var(--focal-point, center center);
-  }
-
-  /*** Media border-radius feature ****/
-  @media screen and (min-width: 750px) {
-    .media-gallery--carousel slideshow-container,
-    .media-gallery--grid .product-media > * {
-      border-radius: var(--media-radius, 0);
-      overflow: hidden;
-    }
-
-    /* When the CAROUSEL is on the LEFT side */
-    .product-information:not(.product-information--media-right)
-      .media-gallery--carousel.media-gallery--extend
-      slideshow-container {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-
-    /* When the CAROUSEL is on the RIGHT side */
-    .product-information.product-information--media-right
-      .media-gallery--carousel.media-gallery--extend
-      slideshow-container {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-
-    /* When the GRID is on the LEFT side */
-    .product-information:not(.product-information--media-right) {
-      /* One column */
-      .media-gallery--grid.media-gallery--extend:not(.media-gallery--two-column) .product-media > *,
-      /* Two column, small first image */
-      .media-gallery--grid.media-gallery--extend.media-gallery--two-column:not(.media-gallery--large-first-image)
-        .product-media-container:nth-of-type(odd)
-        .product-media
-        > *,
-      /* Two column, large first image */
-      .media-gallery--grid.media-gallery--extend.media-gallery--two-column.media-gallery--large-first-image
-        .product-media-container:is(:first-of-type, :nth-of-type(even))
-        .product-media
-        > * {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-      }
-    }
-
-    /* When the GRID is on the RIGHT side */
-    .product-information.product-information--media-right {
-      /* One column */
-      .media-gallery--grid.media-gallery--extend:not(.media-gallery--two-column) .product-media > *,
-      /* Two column, small first image */
-      .media-gallery--grid.media-gallery--extend.media-gallery--two-column:not(.media-gallery--large-first-image)
-        .product-media-container:nth-of-type(even)
-        .product-media
-        > *,
-      /* Two column, large first image */
-      .media-gallery--grid.media-gallery--extend.media-gallery--two-column.media-gallery--large-first-image
-        .product-media-container:is(:first-of-type, :nth-of-type(odd))
-        .product-media
-        > * {
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-      }
-    }
-  }
-{% endstylesheet %}
+{% render 'deferred-media-product-model-styles' %}

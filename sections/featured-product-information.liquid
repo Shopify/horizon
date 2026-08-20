@@ -20,9 +20,13 @@
   {% content_for 'blocks' %}
 {% endcapture %}
 
+{% render 'deferred-media-product-model-styles' %}
+{% render 'deferred-media-video-styles' %}
+
 <featured-product-information id="{{ section.id }}">
+  <h2 class="visually-hidden">{{ 'accessibility.featured_product' | t }}</h2>
   {% render 'product-information-content',
-    product_media_size: section.settings.product.media.size,
+    product: section.settings.product,
     section_id: section.id,
     settings: section.settings,
     media_gallery: media_gallery,
@@ -35,6 +39,9 @@
 {
   "name": "t:names.featured_product_information",
   "blocks": [
+    {
+      "type": "@theme"
+    },
     {
       "type": "@app"
     }
@@ -108,10 +115,10 @@
       "default": 16
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:settings.color_scheme",
-      "default": "scheme-1"
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "placeholder": "t:settings.default"
     },
     {
       "type": "header",
@@ -185,12 +192,16 @@
                   "type": "product-title",
                   "name": "t:names.title",
                   "settings": {
-                    "type_preset": "h3"
+                    "type_preset": "rte"
                   }
                 },
                 "price": {
                   "type": "price",
-                  "name": "t:names.product_price"
+                  "name": "t:names.product_price",
+                  "settings": {
+                    "show_installments": true,
+                    "show_tax_info": true
+                  }
                 }
               },
               "block_order": ["title", "price"]

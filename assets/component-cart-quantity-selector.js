@@ -7,7 +7,7 @@ import { QuantitySelectorComponent } from '@theme/component-quantity-selector';
  *
  * @extends {QuantitySelectorComponent}
  */
-class CartQuantitySelectorComponent extends QuantitySelectorComponent {
+export class CartQuantitySelectorComponent extends QuantitySelectorComponent {
   /**
    * Gets the effective maximum value for cart quantity selector
    * Cart page: uses absolute max (how much can be in cart total)

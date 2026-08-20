@@ -1,8 +1,8 @@
 import { Component } from '@theme/component';
 import { morphSection } from '@theme/section-renderer';
-import { DiscountUpdateEvent } from '@theme/events';
 import { fetchConfig } from '@theme/utilities';
 import { cartPerformance } from '@theme/performance';
+import { CartDiscountUpdateEvent, CartErrorEvent } from '@shopify/events';
 
 /**
  * A custom element that applies a discount to the cart.
@@ -52,17 +52,27 @@ class CartDiscount extends Component {
 
     const abortController = this.#createAbortController();
 
+    const existingDiscounts = this.#existingDiscounts();
+    if (existingDiscounts.includes(discountCodeValue)) return;
+
+    cartDiscountError.classList.add('hidden');
+    cartDiscountErrorDiscountCode.classList.add('hidden');
+    cartDiscountErrorShipping.classList.add('hidden');
+
+    const allDiscountCodes = [...existingDiscounts, discountCodeValue];
+    const deferredPromise = CartDiscountUpdateEvent.createPromise();
+
+    this.dispatchEvent(
+      new CartDiscountUpdateEvent({
+        discountCodes: allDiscountCodes.map((code) => ({ code })),
+        promise: deferredPromise.promise,
+      })
+    );
+
     try {
-      const existingDiscounts = this.#existingDiscounts();
-      if (existingDiscounts.includes(discountCodeValue)) return;
-
-      cartDiscountError.classList.add('hidden');
-      cartDiscountErrorDiscountCode.classList.add('hidden');
-      cartDiscountErrorShipping.classList.add('hidden');
-
       const config = fetchConfig('json', {
         body: JSON.stringify({
-          discount: [...existingDiscounts, discountCodeValue].join(','),
+          discount: allDiscountCodes.join(','),
           sections: [this.dataset.sectionId],
         }),
       });
@@ -81,6 +91,9 @@ class CartDiscount extends Component {
       ) {
         discountCode.value = '';
         this.#handleDiscountError('discount_code');
+        deferredPromise.resolve({
+          cart: CartDiscountUpdateEvent.createCartFromAjaxResponse(data),
+        });
         return;
       }
 
@@ -104,13 +117,31 @@ class CartDiscount extends Component {
         ) {
           this.#handleDiscountError('shipping');
           discountCode.value = '';
+          deferredPromise.resolve({
+            cart: CartDiscountUpdateEvent.createCartFromAjaxResponse(data),
+          });
           return;
         }
       }
 
-      document.dispatchEvent(new DiscountUpdateEvent(data, this.id));
-      morphSection(this.dataset.sectionId, newHtml);
+      deferredPromise.resolve({
+        cart: CartDiscountUpdateEvent.createCartFromAjaxResponse(data),
+      });
+      // Clear the input explicitly: data-skip-node-update on <input name="discount"> means
+      // morphSection no longer syncs the input value from the server-rendered empty state,
+      // so without this the user's typed code stays in the field after a successful apply.
+      discountCode.value = '';
+      morphSection(this.dataset.sectionId, newHtml, { mode: this.closest('theme-drawer') ? 'hydration' : 'full' });
     } catch (error) {
+      deferredPromise.reject(error);
+      if (error instanceof Error && error.name !== 'AbortError') {
+        this.dispatchEvent(
+          new CartErrorEvent({
+            error: error.message || 'Failed to apply discount',
+            code: 'SERVICE_UNAVAILABLE',
+          })
+        );
+      }
     } finally {
       this.#activeFetch = null;
       cartPerformance.measureFromEvent('discount-update:user-action', event);
@@ -147,6 +178,14 @@ class CartDiscount extends Component {
     existingDiscounts.splice(index, 1);
 
     const abortController = this.#createAbortController();
+    const deferredPromise = CartDiscountUpdateEvent.createPromise();
+
+    this.dispatchEvent(
+      new CartDiscountUpdateEvent({
+        discountCodes: existingDiscounts.map((code) => ({ code })),
+        promise: deferredPromise.promise,
+      })
+    );
 
     try {
       const config = fetchConfig('json', {
@@ -160,9 +199,23 @@ class CartDiscount extends Component {
 
       const data = await response.json();
 
-      document.dispatchEvent(new DiscountUpdateEvent(data, this.id));
-      morphSection(this.dataset.sectionId, data.sections[this.dataset.sectionId]);
+      deferredPromise.resolve({
+        cart: CartDiscountUpdateEvent.createCartFromAjaxResponse(data),
+      });
+
+      morphSection(this.dataset.sectionId, data.sections[this.dataset.sectionId], {
+        mode: this.closest('theme-drawer') ? 'hydration' : 'full',
+      });
     } catch (error) {
+      deferredPromise.reject(error);
+      if (error instanceof Error && error.name !== 'AbortError') {
+        this.dispatchEvent(
+          new CartErrorEvent({
+            error: error.message || 'Failed to remove discount',
+            code: 'SERVICE_UNAVAILABLE',
+          })
+        );
+      }
     } finally {
       this.#activeFetch = null;
     }
@@ -178,6 +231,14 @@ class CartDiscount extends Component {
     const target = type === 'discount_code' ? cartDiscountErrorDiscountCode : cartDiscountErrorShipping;
     cartDiscountError.classList.remove('hidden');
     target.classList.remove('hidden');
+
+    const errorMessage = type === 'discount_code' ? 'Invalid discount code' : 'Discount not applicable for shipping';
+    this.dispatchEvent(
+      new CartErrorEvent({
+        error: errorMessage,
+        code: 'VALIDATION_CUSTOM',
+      })
+    );
   }
 
   /**

@@ -1,0 +1,105 @@
+{%- doc -%}
+  Shared quantity selector styles used by product forms, cart, quick order list,
+  and quick-add-capable product surfaces.
+
+  @example
+  {% render 'quantity-selector-styles' %}
+{%- enddoc -%}
+
+{% stylesheet %}
+  /* Quantity selector */
+  .quantity-selector {
+    --quantity-selector-width: 124px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--color-input-text);
+    background-color: var(--color-input-background);
+    border: var(--style-border-width-inputs) solid var(--color-input-border);
+    border-radius: var(--style-border-radius-inputs);
+    flex: 1 1 var(--quantity-selector-width);
+    align-self: stretch;
+  }
+
+  .product-form-buttons:has(.add-to-cart-button.button-secondary) .quantity-selector {
+    border-radius: var(--style-border-radius-buttons-secondary);
+  }
+
+  .quantity-selector :is(.quantity-minus, .quantity-plus) {
+    /* Unset button styles */
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    width: var(--minimum-touch-target);
+    height: var(--minimum-touch-target);
+    flex-shrink: 0;
+    color: var(--color-input-text);
+  }
+
+  .quantity-selector .quantity-minus {
+    border-start-start-radius: var(--style-border-radius-inputs);
+    border-end-start-radius: var(--style-border-radius-inputs);
+  }
+
+  .quantity-selector .quantity-plus {
+    border-start-end-radius: var(--style-border-radius-inputs);
+    border-end-end-radius: var(--style-border-radius-inputs);
+  }
+
+  .product-details .quantity-selector,
+  .quick-add-modal .quantity-selector {
+    border-radius: var(--style-border-radius-buttons-primary);
+  }
+
+  .product-details .quantity-selector .quantity-minus,
+  .quick-add-modal .quantity-selector .quantity-minus {
+    border-start-start-radius: var(--style-border-radius-buttons-primary);
+    border-end-start-radius: var(--style-border-radius-buttons-primary);
+  }
+
+  .product-details .quantity-selector .quantity-plus,
+  .quick-add-modal .quantity-selector .quantity-plus {
+    border-start-end-radius: var(--style-border-radius-buttons-primary);
+    border-end-end-radius: var(--style-border-radius-buttons-primary);
+  }
+
+  .quantity-selector .svg-wrapper {
+    transition: transform var(--animation-speed) var(--animation-easing);
+  }
+
+  .quantity-selector svg {
+    width: var(--icon-size-xs);
+    height: var(--icon-size-xs);
+  }
+
+  :is(.quantity-minus, .quantity-plus):active .svg-wrapper {
+    transform: scale(0.9);
+  }
+
+  .quantity-selector input[type='number'] {
+    margin: 0;
+    text-align: center;
+    border: none;
+    appearance: none;
+    max-width: calc(var(--quantity-selector-width) - var(--minimum-touch-target) * 2);
+    border-radius: var(--style-border-radius-buttons);
+    color: var(--color-input-text);
+    background-color: transparent;
+  }
+
+  /* Chrome, Safari, Edge, Opera */
+  .quantity-selector input[type='number']::-webkit-inner-spin-button,
+  .quantity-selector input[type='number']::-webkit-outer-spin-button {
+    appearance: none;
+  }
+
+  /* Firefox */
+  .quantity-selector input[type='number'] {
+    appearance: textfield;
+  }
+{% endstylesheet %}

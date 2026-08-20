@@ -1,0 +1,67 @@
+{%- doc -%}
+  Global card hover effect styles.
+
+  Rendered from the layout because these styles apply across multiple card surfaces,
+  including product cards, collection cards, and predictive search result cards.
+  A snippet's stylesheet is only collected when that snippet renders, so keeping this
+  in the always-present layout prevents missing hover styles on global surfaces like search.
+
+  @example
+  {% render 'card-hover-effect-styles' %}
+{%- enddoc -%}
+
+{% liquid
+  assign active_hover_effect = settings.card_hover_effect | default: 'none'
+%}
+
+{% if active_hover_effect != 'none' %}
+  {% style %}
+    :root {
+      --hover-lift-amount: 4px;
+      --hover-scale-amount: 1.03;
+      --hover-subtle-zoom-amount: 1.015;
+    }
+
+    @media (any-pointer: fine) and (prefers-reduced-motion: no-preference) {
+      {% if active_hover_effect == 'lift' %}
+        .card-hover-effect-lift .product-card:hover,
+        .card-hover-effect-lift .collection-card:hover,
+        .card-hover-effect-lift .predictive-search-results__card:hover {
+          transform: translateY(calc(-1 * var(--hover-lift-amount)));
+        }
+      {% endif %}
+
+      {% if active_hover_effect == 'scale' %}
+        .card-hover-effect-scale .product-card:hover,
+        .card-hover-effect-scale .collection-card:hover,
+        .card-hover-effect-scale .predictive-search-results__card:hover {
+          transform: scale(var(--hover-scale-amount));
+        }
+      {% endif %}
+
+      {% if active_hover_effect == 'subtle-zoom' %}
+        .card-hover-effect-subtle-zoom .card-gallery,
+        .card-hover-effect-subtle-zoom .collection-card__image,
+        .card-hover-effect-subtle-zoom .product-card__image {
+          overflow: hidden;
+          transition: transform var(--hover-transition-duration) var(--hover-transition-timing);
+        }
+
+        .card-hover-effect-subtle-zoom .product-card:hover .card-gallery,
+        .card-hover-effect-subtle-zoom .collection-card:hover .collection-card__image,
+        .card-hover-effect-subtle-zoom .product-card:hover .product-card__image,
+        .card-hover-effect-subtle-zoom .predictive-search-results__card:hover {
+          transform: scale(var(--hover-subtle-zoom-amount));
+        }
+      {% endif %}
+    }
+  {% endstyle %}
+{% endif %}
+
+{% stylesheet %}
+  .product-card:hover,
+  .collection-card:hover,
+  .predictive-search-results__card:hover {
+    z-index: var(--layer-raised);
+  }
+{% endstylesheet %}

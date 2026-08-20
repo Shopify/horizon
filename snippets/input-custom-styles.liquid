@@ -1,0 +1,46 @@
+{%- doc -%}
+  Emits --color-input-* declarations for a `style=""` attribute. Blank settings are
+  skipped so the palette cascades.
+
+  @param {object} block_settings - Block settings with input_background_color, input_text_color, input_border_color.
+
+  @example
+  <div style="{% render 'input-custom-styles', block_settings: block.settings %}">
+{%- enddoc -%}
+{%- liquid
+  assign background_color = block_settings.input_background_color | default: settings.palette_input_background
+  assign text_color = block_settings.input_text_color
+  assign border = block_settings.input_border_color
+  assign page_text_contrast = background_color | color_contrast: settings.page_text_color
+
+  assign bg_brightness = background_color | color_brightness
+  if bg_brightness > 128
+    assign contrast_var = 'var(--palette-darkest)'
+    assign contrast_var_rgb = 'var(--palette-darkest-rgb)'
+  else
+    assign contrast_var = 'var(--palette-lightest)'
+    assign contrast_var_rgb = 'var(--palette-lightest-rgb)'
+  endif
+
+  if background_color != blank
+    echo '--color-input-background: [background_color];' | replace: '[background_color]', background_color
+  endif
+
+  if text_color != blank
+    assign effective_text_color = text_color
+    assign effective_text_color_rgb = text_color.rgb
+  elsif page_text_contrast >= 4.5
+    assign effective_text_color = settings.page_text_color
+    assign effective_text_color_rgb = settings.page_text_color.rgb
+  else
+    assign effective_text_color = contrast_var
+    assign effective_text_color_rgb = contrast_var_rgb
+  endif
+
+  echo ' --color-input-text: [text_color];' | replace: '[text_color]', effective_text_color
+  echo ' --color-input-text-rgb: [text_color_rgb];' | replace: '[text_color_rgb]', effective_text_color_rgb
+
+  if border != blank
+    echo ' --color-input-border: [border];' | replace: '[border]', border
+  endif
+-%}

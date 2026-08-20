@@ -1,0 +1,117 @@
+{%- doc -%}
+  Shared base styles for elements that emit `.text-block` directly.
+
+  This owns base `.text-block` sizing, text-wrap, heading/paragraph spacing,
+  edge-margin resets, and helper classes like `.text-block--align-*`,
+  `.text-block--background`, and `.custom-color`. `snippets/text.liquid` keeps
+  only its text-snippet-specific flex and child layout rules.
+
+  Files that directly emit `.text-block` should render this snippet unless they
+  render `snippets/text.liquid`, which renders it for them. Dynamic entry points
+  that can inject product content without injecting response stylesheets, like
+  Quick Add and empty product grids, should preload it too.
+
+  @example
+  {% render 'text-block-styles' %}
+{%- enddoc -%}
+
+{% stylesheet %}
+  .text-block {
+    width: var(--width, 100%);
+  }
+
+  .text-block--align-center,
+  .text-block--align-center > * {
+    margin-inline: auto;
+  }
+
+  .text-block--align-right,
+  .text-block--align-right > * {
+    margin-inline-start: auto;
+  }
+
+  .text-block--background {
+    background-color: var(--text-background-color);
+    border-radius: var(--text-corner-radius);
+
+    /* To avoid text being cropped when using a border radius we add a minimum padding. */
+    padding-block-start: max(var(--text-padding), var(--padding-block-start, 0));
+    padding-block-end: max(var(--text-padding), var(--padding-block-end, 0));
+    padding-inline-start: max(var(--text-padding), var(--padding-inline-start, 0));
+    padding-inline-end: max(var(--text-padding), var(--padding-inline-end, 0));
+  }
+
+  .custom-color,
+  .custom-color > :is(h1, h2, h3, h4, h5, h6, p, *) {
+    color: var(--color);
+  }
+
+  .text-block:not(.text-block--full-width).rte,
+  .text-block:not(.text-block--full-width).paragraph {
+    /* Safari doesn't support pretty, so fallback to balance */
+    text-wrap: balance;
+    text-wrap: pretty;
+  }
+
+  .text-block:not(.text-block--full-width):is(.h1, .h2, .h3, .h4, .h5, .h6) {
+    text-wrap: balance;
+  }
+
+  /* Hide underline unless text is using paragraph styles. The doubled class beats the global paragraph-link styles in base.css. */
+  .text-block.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) a {
+    text-decoration-line: none;
+    color: currentColor;
+
+    &:hover {
+      text-decoration-line: none;
+      color: currentColor;
+    }
+  }
+
+  .text-block h1,
+  .text-block.h1 > * {
+    margin-block: var(--font-h1--spacing);
+  }
+
+  .text-block h2,
+  .text-block.h2 > * {
+    margin-block: var(--font-h2--spacing);
+  }
+
+  .text-block h3,
+  .text-block.h3 > * {
+    margin-block: var(--font-h3--spacing);
+  }
+
+  .text-block h4,
+  .text-block.h4 > * {
+    margin-block: var(--font-h4--spacing);
+  }
+
+  .text-block h5,
+  .text-block.h5 > * {
+    margin-block: var(--font-h5--spacing);
+  }
+
+  .text-block h6,
+  .text-block.h6 > * {
+    margin-block: var(--font-h6--spacing);
+  }
+
+  .text-block p,
+  .text-block.p > * {
+    margin-block: var(--font-paragraph--spacing);
+  }
+
+  /* The doubled class lets these edge resets beat heading/paragraph margins without relying on source order. */
+  .text-block.text-block > *:last-child,
+  .text-block.text-block > *:has(+ *:last-child:empty) {
+    margin-block-end: 0;
+  }
+
+  .text-block.text-block > style + *,
+  .text-block.text-block > *:first-child,
+  .text-block.text-block > *:first-child:empty + * {
+    margin-block-start: 0;
+  }
+{% endstylesheet %}

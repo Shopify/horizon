@@ -2,11 +2,11 @@
   assign block_settings = block.settings
   assign use_inverse_logo = false
 
-  if section.settings.enable_transparent_header_home and template.name == 'index' and section.settings.home_color_scheme == 'inverse'
+  if section.settings.enable_transparent_header_home and template.name == 'index' and section.settings.home_inverse_logo == true
     assign use_inverse_logo = true
-  elsif section.settings.enable_transparent_header_product and template.name == 'product' and section.settings.product_color_scheme == 'inverse'
+  elsif section.settings.enable_transparent_header_product and template.name == 'product' and section.settings.product_inverse_logo == true
     assign use_inverse_logo = true
-  elsif section.settings.enable_transparent_header_collection and template.name == 'collection' and section.settings.collection_color_scheme == 'inverse'
+  elsif section.settings.enable_transparent_header_collection and template.name == 'collection' and section.settings.collection_inverse_logo == true
     assign use_inverse_logo = true
   endif
 
@@ -17,6 +17,8 @@
       assign inverse_logo = settings.logo
     endif
   endif
+
+  assign alt_text_fallback = 'accessibility.home_logo_alt' | t: store_name: shop.name
 %}
 
 {% comment %}
@@ -48,13 +50,16 @@
   %}
 
   <span
-    class="header-logo__image-container header-logo__image-container--original"
+    {% if use_inverse_logo %}
+      class="header-logo__solid-header-image-container"
+    {% endif %}
     data-testid="header-logo"
   >
     {% render 'image',
       image: settings.logo,
       class: 'header-logo__image',
       height: settings.logo_height,
+      alt_text_fallback: alt_text_fallback,
       text_fallback: shop.name,
       style: logo_style
     %}
@@ -62,13 +67,14 @@
 
   {% if use_inverse_logo %}
     <span
-      class="header-logo__image-container header-logo__image-container--inverse"
+      class="header-logo__transparent-header-image-container"
       data-testid="header-logo-inverse"
     >
       {% render 'image',
         image: inverse_logo,
         class: 'header-logo__image',
         height: settings.logo_height,
+        alt_text_fallback: alt_text_fallback,
         text_fallback: shop.name,
         style: inverse_logo_style
       %}
@@ -88,9 +94,6 @@
     justify-content: center;
     align-items: center;
     text-decoration: none;
-
-    /* Make sure the logo visually hugs the left edge of the column when it is the first item in the left column */
-    margin-inline: calc(-1 * var(--padding-inline-start));
 
     &[data-hidden-on-home-page] {
       display: none;
@@ -128,11 +131,11 @@
     }
   }
 
-  .header-logo:has(.header-logo__image-container--inverse) .header-logo__image-container--original {
+  .header-logo__solid-header-image-container {
     display: var(--header-logo-display, block);
   }
 
-  .header-logo__image-container--inverse {
+  .header-logo__transparent-header-image-container {
     display: var(--header-logo-inverse-display, none);
   }
 {% endstylesheet %}
@@ -175,26 +178,6 @@
       "type": "range",
       "id": "padding-block-end",
       "label": "t:settings.bottom",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "padding-inline-start",
-      "label": "t:settings.left",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "padding-inline-end",
-      "label": "t:settings.right",
       "min": 0,
       "max": 100,
       "step": 1,

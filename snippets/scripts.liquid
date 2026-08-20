@@ -1,11 +1,18 @@
+{% doc %}
+  Renders all global scripts, module preloads, and importmaps for the theme.
+
+  @param {object} [product] - The product object, available on product pages.
+{% enddoc %}
+
 <script type="importmap">
   {
     "imports": {
       "@theme/overflow-list": "{{ 'overflow-list.js' | asset_url }}",
-      "@theme/product-title": "{{ 'product-title-truncation.js' | asset_url }}",
       "@theme/component": "{{ 'component.js' | asset_url }}",
       "@theme/dialog": "{{ 'dialog.js' | asset_url }}",
       "@theme/events": "{{ 'events.js' | asset_url }}",
+      "@shopify/events": "https://cdn.shopify.com/storefront/standard-events.js",
+      "@theme/view-event-elements": "{{ 'view-event-elements.js' | asset_url }}",
       "@theme/focus": "{{ 'focus.js' | asset_url }}",
       "@theme/morph": "{{ 'morph.js' | asset_url }}",
       "@theme/paginated-list": "{{ 'paginated-list.js' | asset_url }}",
@@ -18,6 +25,7 @@
       "@theme/money-formatting": "{{ 'money-formatting.js' | asset_url }}",
       "@theme/utilities": "{{ 'utilities.js' | asset_url }}",
       "@theme/variant-picker": "{{ 'variant-picker.js' | asset_url }}",
+      "@theme/variant-resolution": "{{ 'variant-resolution.js' | asset_url }}",
       "@theme/media-gallery": "{{ 'media-gallery.js' | asset_url }}",
       "@theme/quick-add": "{{ 'quick-add.js' | asset_url }}",
       "@theme/paginated-list-aspect-ratio": "{{ 'paginated-list-aspect-ratio.js' | asset_url }}",
@@ -25,10 +33,29 @@
       "@theme/component-quantity-selector": "{{ 'component-quantity-selector.js' | asset_url }}",
       "@theme/comparison-slider": "{{ 'comparison-slider.js' | asset_url }}",
       "@theme/sticky-add-to-cart": "{{ 'sticky-add-to-cart.js' | asset_url }}",
-      "@theme/fly-to-cart": "{{ 'fly-to-cart.js' | asset_url }}"
+      "@theme/fly-to-cart": "{{ 'fly-to-cart.js' | asset_url }}",
+      "@theme/scroll-container": "{{ 'scroll-container.js' | asset_url }}",
+      "@theme/theme-drawer": "{{ 'theme-drawer.js' | asset_url }}"
     }
   }
 </script>
+
+{%- comment -%}
+  Registers Horizon's cart-drawer behaviour against the standard-actions
+  bundle (loaded separately into <head>). Module scripts execute in
+  document order, so this runs after the bundle regardless of where it
+  lands in <head>.
+{%- endcomment -%}
+<script
+  src="{{ 'standard-actions-override.js' | asset_url }}"
+  type="module"
+></script>
+
+<script
+  src="{{ 'page-view-event.js' | asset_url }}"
+  type="module"
+  defer
+></script>
 
 <script
   src="{{ 'view-transitions.js' | asset_url }}"
@@ -73,12 +100,6 @@
   <link
     rel="modulepreload"
     href="{{ 'paginated-list.js' | asset_url }}"
-    fetchpriority="low"
-  >
-
-  <link
-    rel="modulepreload"
-    href="{{ 'product-title-truncation.js' | asset_url }}"
     fetchpriority="low"
   >
 {% endif %}
@@ -172,11 +193,6 @@
   fetchpriority="low"
 ></script>
 <script
-  src="{{ 'product-title-truncation.js' | asset_url }}"
-  type="module"
-  fetchpriority="low"
-></script>
-<script
   src="{{ 'product-inventory.js' | asset_url }}"
   type="module"
   fetchpriority="low"
@@ -252,11 +268,6 @@
 
 {% if template == 'product' or template.name == 'product' or request.page_type == 'product' %}
   <script
-    src="{{ 'fly-to-cart.js' | asset_url }}"
-    type="module"
-    fetchpriority="low"
-  ></script>
-  <script
     src="{{ 'sticky-add-to-cart.js' | asset_url }}"
     type="module"
     fetchpriority="low"
@@ -265,14 +276,6 @@
     import { RecentlyViewed } from '@theme/recently-viewed-products';
     RecentlyViewed.addProduct('{{ product.id }}');
   </script>
-{% endif %}
-
-{% if settings.transition_to_main_product %}
-  <script
-    src="{{ 'product-card-link.js' | asset_url }}"
-    type="module"
-    fetchpriority="low"
-  ></script>
 {% endif %}
 
 <script
@@ -290,6 +293,7 @@
       recipient_form_error: `{{ 'content.recipient_form_error' | t }}`,
       items_added_to_cart_one: `{{ 'content.items_added_to_cart.one' | t }}`,
       items_added_to_cart_other: `{{ 'content.items_added_to_cart.other' | t }}`,
+      cart_count: `{{ 'accessibility.cart_count' | t }}`,
     },
     routes: {
       cart_add_url: '{{ routes.cart_add_url | append: '.js' }}',

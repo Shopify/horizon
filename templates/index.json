@@ -39,7 +39,6 @@
         "gap": 16,
         "image_ratio": "adapt",
         "section_width": "page-width",
-        "color_scheme": "",
         "padding-block-start": 0,
         "padding-block-end": 0
       }
@@ -56,8 +55,6 @@
             "horizontal_alignment": "flex-start",
             "vertical_alignment": "center",
             "collection_card_gap": 8,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
@@ -78,7 +75,7 @@
                 "letter_spacing": "normal",
                 "case": "none",
                 "wrap": "pretty",
-                "color": "var(--color-foreground)",
+                "text_color": "",
                 "background": false,
                 "background_color": "#00000026",
                 "corner_radius": 0,
@@ -149,7 +146,6 @@
         "icons_shape": "circle",
         "section_width": "page-width",
         "gap": 12,
-        "color_scheme": "",
         "padding-block-start": 48,
         "padding-block-end": 48
       }

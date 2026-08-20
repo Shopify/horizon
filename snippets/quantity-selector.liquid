@@ -9,6 +9,8 @@
   @param {string} [class] - custom class for the quantity selector, optional
   @param {boolean} [can_update_quantity] - whether the quantity can be updated, defaults to true
   @param {number} [min] - override the minimum quantity (e.g., 0 for quick order list)
+  @param {block} [block] - The block object, used for Shopify editor attributes.
+  @param {string} [wrapper_class] - Extra class for the wrapper, used to scope block-level CSS variable overrides so surface-level styles (e.g. quick-add modal) can override them.
 {%- enddoc -%}
 
 {% liquid
@@ -30,7 +32,7 @@
 %}
 
 <div
-  class="quantity-selector-wrapper"
+  class="quantity-selector-wrapper{% if wrapper_class %} {{ wrapper_class }}{% endif %}"
   ref="quantitySelectorWrapper"
 >
   <{{ component_name }}
@@ -68,6 +70,7 @@
       on:blur="/setQuantity"
       on:focus="/selectInputValue"
       ref="quantityInput"
+      aria-live="polite"
       aria-label="{{ 'accessibility.quantity' | t }}"
       {% if line_index %}
         data-cart-line="{{ line_index | plus: 1 }}"
@@ -160,6 +163,8 @@
     {%- endif -%}
   {%- endif -%}
 </div>
+
+{% render 'quantity-selector-styles' %}
 
 {% stylesheet %}
   .quantity-selector-wrapper {

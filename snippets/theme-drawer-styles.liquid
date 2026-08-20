@@ -1,0 +1,188 @@
+{% doc %}
+  Theme Drawer Styles
+
+  Styles-only snippet extracted from theme-drawer.liquid. Renders the shared
+  structural CSS for theme-drawer dialogs without the accompanying scripts,
+  so it can be included from contexts that need the classes in scope without
+  duplicating the drawer behaviour.
+
+  @example
+  {% render 'theme-drawer-styles' %}
+{% enddoc %}
+
+{% stylesheet %}
+  theme-drawer {
+    display: contents;
+  }
+
+  .theme-drawer__dialog {
+    --theme-drawer-padding: var(--padding-xl);
+
+    z-index: calc(var(--layer-sticky) + var(--drawer-stack-order, 0));
+    position: fixed;
+    inset: unset;
+    top: 0;
+    right: calc(-1 * var(--theme-drawer-width, var(--sidebar-width)));
+    flex-direction: column;
+    width: var(--theme-drawer-width, var(--sidebar-width));
+    max-width: 100%;
+    max-height: none;
+    height: 100dvh;
+    padding: 0;
+    border: none;
+    border-left: var(--style-border-drawer);
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  .theme-drawer__dialog[open] {
+    display: flex;
+    right: 0;
+  }
+
+  .theme-drawer__dialog--opening {
+    animation: drawer-slide-in var(--animation-speed) var(--animation-timing-fade-in);
+  }
+
+  .theme-drawer__dialog--opening-inline-start {
+    animation: drawer-slide-in-inline-start var(--animation-speed) var(--animation-timing-fade-in);
+  }
+
+  .theme-drawer__dialog--closing {
+    animation: drawer-slide-out var(--animation-speed) var(--animation-timing-fade-out) forwards;
+  }
+
+  .theme-drawer__dialog-instant {
+    animation: none;
+  }
+
+  @keyframes drawer-slide-in {
+    from {
+      right: calc(-1 * var(--theme-drawer-width, var(--sidebar-width)));
+    }
+  }
+
+  @keyframes drawer-slide-in-inline-start {
+    from {
+      right: calc(var(--theme-drawer-width, var(--sidebar-width)) / 2);
+    }
+  }
+
+  @keyframes drawer-slide-out {
+    to {
+      right: calc(-1 * var(--theme-drawer-width, var(--sidebar-width)));
+    }
+  }
+
+  .theme-drawer__dialog::backdrop {
+    background: rgb(var(--backdrop-color-rgb) / var(--backdrop-opacity));
+  }
+
+  /* Exclude open drawers from the page navigation cross-fade so they
+     stay frozen (visually unchanged) while the rest of the page transitions. */
+  html:active-view-transition-type(page-navigation) .theme-drawer__dialog[open] {
+    view-transition-name: theme-drawer;
+  }
+
+  ::view-transition-old(theme-drawer),
+  ::view-transition-new(theme-drawer) {
+    animation: none;
+  }
+
+  .theme-drawer__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--theme-drawer-padding);
+    flex-shrink: 0;
+    color: var(--color-foreground);
+  }
+
+  .theme-drawer__title {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-xs);
+    margin: 0;
+  }
+
+  .theme-drawer__badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    border-radius: var(--style-border-radius-lg);
+    background-color: rgb(var(--color-foreground-rgb) / 0.1);
+    font-family: var(--font-paragraph--family);
+    font-weight: var(--font-paragraph--weight);
+    color: var(--color-foreground);
+    font-size: clamp(var(--font-size--3xs), 0.75em, var(--font-size--xs));
+    padding-inline: 0.5em;
+    line-height: 1;
+  }
+
+  .theme-drawer__badge[data-maintain-ratio] {
+    aspect-ratio: 1 / 1;
+    padding-inline: 0.2em;
+  }
+
+  .theme-drawer__close-button {
+    --private-button-size: 34px;
+    --private-focus-ring-size: 2px;
+    --private-motion-speed: 150ms;
+    --private-motion-ease: cubic-bezier(0.25, 0, 0.1, 1);
+    --private-border-width: 1px;
+    --private-button-border-color: rgb(0, 0, 0, 0.06);
+    --private-button-shadow: 0 2px 6px 0 var(--private-button-border-color);
+
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-inline-start: auto;
+    width: var(--private-button-size);
+    height: var(--private-button-size);
+    border-radius: var(--private-button-size);
+    background-color: var(--color-background);
+    outline: var(--private-focus-ring-size) solid transparent;
+    outline-offset: var(--private-focus-ring-size);
+    transition-property: color, outline-color, background-color;
+    transition-duration: var(--private-motion-speed);
+    transition-timing-function: var(--private-motion-ease);
+
+    /* Legacy non-contrast-aware color scheme */
+    --button-icon-opacity: 0.8;
+    color: var(--color-foreground);
+    border: var(--private-border-width) solid var(--private-button-border-color);
+    box-shadow: var(--private-button-shadow);
+
+    &:hover:not(:active) {
+      /* Legacy non-contrast-aware color scheme */
+      --button-icon-opacity: 1;
+    }
+
+    &:focus-visible {
+      outline-color: var(--color-foreground);
+    }
+  }
+
+  @supports (color: oklch(from red l c h)) {
+    .theme-drawer__close-button {
+      --contrast-color: oklch(from var(--color-background) clamp(0, (0.6 / l - 1) * infinity, 1) 0 0);
+      --button-icon-opacity: 1;
+      --private-button-border-color: color-mix(in srgb, var(--contrast-color) 6%, transparent);
+      --private-button-shadow: 0 2px 6px 0 var(--private-button-border-color);
+
+      color: color-mix(in srgb, var(--contrast-color) 50%, transparent);
+
+      &:hover:not(:active) {
+        color: color-mix(in srgb, var(--contrast-color) 70%, transparent);
+      }
+    }
+
+    .theme-drawer__close-button:hover:not(:active) {
+      background-color: color-mix(in srgb, var(--contrast-color) 6%, var(--color-background));
+    }
+  }
+{% endstylesheet %}

@@ -1,0 +1,75 @@
+{% doc %}
+  Resolves hover background / text / border for a "custom" button group,
+  filling in smart defaults when an explicit value isn't provided.
+
+  Outputs `background||text||border` so callers can `split: '||'` the result.
+
+  @param {color} base_bg - The base background color (required).
+  @param {color} [base_border] - The base border color. Used for the border == bg short-circuit and for the bucket shift when an explicit `hover_border` is not provided.
+  @param {color} [base_text] - The base text color. Used as the fallback hover text when the effective hover background is translucent.
+  @param {color} [hover_bg] - Explicit hover background. Blank → bucket-shifted base bg.
+  @param {color} [hover_text] - Explicit hover text. Blank → palette-extreme contrast.
+  @param {color} [hover_border] - Explicit hover border. Blank → equality short-circuit against base_bg, otherwise bucket-shifted base_border.
+
+  @example
+  {% capture resolved %}
+    {% render 'resolve-custom-hover',
+      base_bg: background_color,
+      base_border: border_color,
+      hover_bg: hover_background_color,
+      hover_text: hover_text_color,
+      hover_border: hover_border_color
+    %}
+  {% endcapture %}
+  {% assign parts = resolved | strip | split: '||' %}
+  {% assign effective_hover_bg = parts[0] %}
+  {% assign effective_hover_text = parts[1] %}
+  {% assign effective_hover_border = parts[2] %}
+{% enddoc %}
+
+{%- liquid
+  if hover_bg != blank
+    assign effective_hover_bg = hover_bg
+    if hover_bg.alpha == 1
+      assign hover_bg_has_alpha = false
+    else
+      assign hover_bg_has_alpha = true
+    endif
+  else
+    capture effective_hover_bg
+      render 'util-palette-hover-shift', color: base_bg
+    endcapture
+    if base_bg.alpha == 1
+      assign hover_bg_has_alpha = false
+    else
+      assign hover_bg_has_alpha = true
+    endif
+  endif
+
+  if hover_text != blank
+    assign effective_hover_text = hover_text
+  elsif hover_bg_has_alpha and base_text != blank
+    assign effective_hover_text = base_text
+  else
+    assign hover_bg_brightness = effective_hover_bg | color_brightness
+    if hover_bg_brightness > 128
+      assign effective_hover_text = 'var(--palette-darkest)'
+    else
+      assign effective_hover_text = 'var(--palette-lightest)'
+    endif
+  endif
+
+  if hover_border != blank
+    assign effective_hover_border = hover_border
+  else
+    if base_border == base_bg
+      assign effective_hover_border = effective_hover_bg
+    else
+      capture effective_hover_border
+        render 'util-palette-hover-shift', color: base_border
+      endcapture
+    endif
+  endif
+-%}
+{%- comment -%} Output: bg||text||border, parsed by the caller via split: '||'. {%- endcomment -%}
+{{- effective_hover_bg }}||{{ effective_hover_text }}||{{ effective_hover_border -}}

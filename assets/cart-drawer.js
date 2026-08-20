@@ -1,55 +1,117 @@
-import { DialogComponent, DialogOpenEvent } from '@theme/dialog';
-import { CartAddEvent } from '@theme/events';
+import { Component } from '@theme/component';
+import { StandardEvents } from '@shopify/events';
+import { DrawerOpenEvent } from '@theme/theme-drawer';
 
 /**
- * A custom element that manages a cart drawer.
+ * A custom element that manages cart drawer behavior within a `<theme-drawer>`.
  *
- * @typedef {object} Refs
- * @property {HTMLDialogElement} dialog - The dialog element.
+ * Dialog lifecycle (open/close, squeeze, history, animations) is owned by `<theme-drawer>`.
+ * The `cart:view` event is auto-dispatched by `CartItemsComponent` via the
+ * `view-event-trigger="dialog"` attribute (see `snippets/cart-items-component.liquid`).
+ * Cart count announcements are owned by `<header-actions>`.
+ * This component handles the remaining cart-specific concerns: auto-open on add-to-cart,
+ * sticky summary layout, and the installments CTA close-on-click.
  *
- * @extends {DialogComponent}
+ * @extends {Component}
  */
-class CartDrawerComponent extends DialogComponent {
+class CartDrawerComponent extends Component {
   /** @type {number} */
   #summaryThreshold = 0.5;
 
+  /** @type {import('@theme/theme-drawer').ThemeDrawer | null} */
+  get #themeDrawer() {
+    return /** @type {import('@theme/theme-drawer').ThemeDrawer | null} */ (this.closest('theme-drawer'));
+  }
+
+  /** @type {HTMLDialogElement | null} */
+  get #dialog() {
+    return this.closest('dialog');
+  }
+
   connectedCallback() {
     super.connectedCallback();
-    document.addEventListener(CartAddEvent.eventName, this.#handleCartAdd);
-    this.addEventListener(DialogOpenEvent.eventName, this.#updateStickyState);
+    document.addEventListener(StandardEvents.cartLinesUpdate, this.#handleCartLinesUpdate);
+    this.#themeDrawer?.addEventListener(DrawerOpenEvent.eventName, this.#handleDrawerOpen);
+
+    // The restore path sets [open] before this module loads, so the
+    // theme-drawer:open event will have already fired. Use the attribute
+    // check so this works even before <theme-drawer> upgrades.
+    if (this.#themeDrawer?.hasAttribute('open')) {
+      this.#handleDrawerOpen();
+    }
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    document.removeEventListener(CartAddEvent.eventName, this.#handleCartAdd);
-    this.removeEventListener(DialogOpenEvent.eventName, this.#updateStickyState);
+    document.removeEventListener(StandardEvents.cartLinesUpdate, this.#handleCartLinesUpdate);
+    this.#themeDrawer?.removeEventListener(DrawerOpenEvent.eventName, this.#handleDrawerOpen);
   }
 
-  #handleCartAdd = () => {
-    if (this.hasAttribute('auto-open')) {
-      this.showDialog();
-    }
+  /**
+   * Handles the theme-drawer opening — updates sticky state and wires up the installments CTA.
+   */
+  #handleDrawerOpen = () => {
+    this.#updateStickyState();
+
+    // Close cart drawer when installments CTA is clicked to avoid overlapping dialogs.
+    // Re-queried on every open so it survives cart content re-renders that
+    // replace the shopify-payment-terms shadow root.
+    customElements.whenDefined('shopify-payment-terms').then(() => {
+      const cta = this.querySelector('shopify-payment-terms')?.shadowRoot?.querySelector('#shopify-installments-cta');
+      cta?.addEventListener('click', () => this.#themeDrawer?.close(), { once: true });
+    });
   };
 
-  open() {
-    this.showDialog();
+  /**
+   * @param {import('@shopify/events').CartLinesUpdateEvent} event
+   */
+  #handleCartLinesUpdate = (event) => {
+    const shouldAutoOpen = this.hasAttribute('auto-open') && event.action === 'add' && !this.#themeDrawer?.isOpen;
 
-    /**
-     * Close cart drawer when installments CTA is clicked to avoid overlapping dialogs
-     */
-    customElements.whenDefined('shopify-payment-terms').then(() => {
-      const installmentsContent = document.querySelector('shopify-payment-terms')?.shadowRoot;
-      const cta = installmentsContent?.querySelector('#shopify-installments-cta');
-      cta?.addEventListener('click', this.closeDialog, { once: true });
-    });
-  }
+    // When the event originates inside an open MODAL <dialog> (e.g. quick-add),
+    // defer the auto-open until that dialog's native `close` fires so its focus
+    // restoration runs first — otherwise we'd capture the wrong
+    // `#previouslyFocused`. Non-modal dialogs (e.g. the hotspot preview) don't
+    // close on add and don't move focus, so `:modal` excludes them.
+    const sourceModal = /** @type {HTMLDialogElement | null} */ (
+      event.target instanceof Element ? event.target.closest('dialog:modal') : null
+    );
 
-  close() {
-    this.closeDialog();
+    if (shouldAutoOpen && !sourceModal && !this.#isCartEmpty()) {
+      this.#themeDrawer?.open();
+    }
+
+    event.promise
+      ?.then(({ detail }) => {
+        const settle = () => requestAnimationFrame(() => this.#updateStickyState());
+
+        if (!shouldAutoOpen || detail?.didError) {
+          settle();
+          return;
+        }
+
+        const openAndSettle = () => {
+          if (!this.#themeDrawer?.isOpen) this.#themeDrawer?.open();
+          settle();
+        };
+
+        if (sourceModal?.open) {
+          sourceModal.addEventListener('close', openAndSettle, { once: true });
+        } else {
+          openAndSettle();
+        }
+      })
+      .catch((error) => {
+        if (error?.name !== 'AbortError') console.warn('[cart-drawer] Event promise rejected:', error);
+      });
+  };
+
+  #isCartEmpty() {
+    return Boolean(this.querySelector('.cart-drawer--empty'));
   }
 
   #updateStickyState() {
-    const { dialog } = /** @type {Refs} */ (this.refs);
+    const dialog = this.#dialog;
     if (!dialog) return;
 
     // Refs do not cross nested `*-component` boundaries (e.g., `cart-items-component`), so we query within the dialog.
