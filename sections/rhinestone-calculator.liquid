@@ -2,8 +2,10 @@
   Rhinestone Calculator - estimates how many rhinestones (and gross) are
   needed to cover an area or run a single row, for a given SS stone size.
 
-  Stone diameters use the standard SS sizing chart. Coverage assumes stones
-  are laid edge to edge, plus the optional gap set by the merchant:
+  Stone diameters use the LOWER bound of each SS tolerance range, so counts
+  lean high (a smaller stone covers less, so more are needed) and you are
+  unlikely to under-order. Stones are assumed laid edge to edge, plus the
+  merchant's gap:
 
     pitch            = stone diameter + gap
     square set  /in2 = (25.4 / pitch)^2
@@ -19,7 +21,7 @@
     render 'contrast-override', background_color: section.settings.background_color, text_color: section.settings.text_color, section_id: section.id
   endif
 
-  assign ss_chart = '5:1.8,6:2.0,7:2.2,9:2.6,10:2.8,12:3.1,16:3.9,20:4.7,30:6.4,34:7.2,40:8.5' | split: ','
+  assign ss_chart = '5:1.7,6:1.9,7:2.1,9:2.5,10:2.7,12:3.0,16:3.8,20:4.6,30:6.3,34:7.0,40:8.4' | split: ','
 %}
 
 <div class="section-background{% if custom_color %} color-custom-{{ section.id }}{% endif %}"></div>
@@ -29,7 +31,7 @@
 >
   <div class="rsc" data-rsc="{{ section.id }}" data-gap="{{ section.settings.stone_gap }}">
     {% if section.settings.heading != blank %}
-      <h2 class="rsc__heading">{{ section.settings.heading }}</h2>
+      <h2 class="rsc__heading">{{ section.settings.heading | escape }}</h2>
     {% endif %}
     {% if section.settings.intro != blank %}
       <div class="rsc__intro">{{ section.settings.intro }}</div>
@@ -39,7 +41,7 @@
       {% comment %} ---------- Area calculator ---------- {% endcomment %}
       <section class="rsc__card" aria-labelledby="rsc-area-title-{{ section.id }}">
         <h3 class="rsc__card-title" id="rsc-area-title-{{ section.id }}">
-          {{ section.settings.area_title | default: 'Area coverage' }}
+          {{ section.settings.area_title | escape | default: 'Area coverage' }}
         </h3>
 
         <div class="rsc__fields">
@@ -109,7 +111,7 @@
       {% comment %} ---------- Single row calculator ---------- {% endcomment %}
       <section class="rsc__card" aria-labelledby="rsc-row-title-{{ section.id }}">
         <h3 class="rsc__card-title" id="rsc-row-title-{{ section.id }}">
-          {{ section.settings.row_title | default: 'Single row' }}
+          {{ section.settings.row_title | escape | default: 'Single row' }}
         </h3>
 
         <div class="rsc__fields">
@@ -193,9 +195,12 @@
     {% endif %}
 
     <p class="rsc__disclaimer">
-      Estimates only. 1 gross = 144 rhinestones. Interlaced (offset) placement packs
-      about 15% more stones into the same area than square placement. Always allow a
-      margin for breakage and spares.
+      Estimates only. Totals are broken down into packaging units: 
+      1 gross = 144 stones, 1 dozen = 12
+      with the leftover shown as loose stones. 
+      Stone sizes use the smallest diameter in each SS range, so counts run slightly high rather than short.
+      Interlaced (offset) placement packs about 15% more stones into the same area than square placement. 
+      Always allow a margin for breakage and spares.
     </p>
   </div>
 </div>
@@ -210,12 +215,43 @@
     const gap = parseFloat(root.dataset.gap) || 0;
 
     const $ = (sel) => root.querySelector(sel);
+    // Non-numeric, negative and absurd values all collapse to a safe number so
+    // the arithmetic can never produce NaN or Infinity.
+    const MAX_INPUT = 100000;
     const num = (el) => {
       const v = parseFloat(el && el.value);
-      return isFinite(v) && v > 0 ? v : 0;
+      if (!isFinite(v) || v <= 0) return 0;
+      return Math.min(v, MAX_INPUT);
     };
     const fmt = (n) =>
       n.toLocaleString(undefined, { maximumFractionDigits: n < 10 ? 1 : 0 });
+
+    // Break a stone count into packaging denominations, like making change:
+    // 305 -> "2 gross + 1 dozen + 5", 4468 -> "31 gross + 4".
+    const DENOMINATIONS = [
+      { size: GROSS, label: 'gross' },
+      { size: 12, label: 'dozen' },
+    ];
+
+    function breakdown(stones) {
+      if (!stones) return '';
+      const parts = [];
+      let remainder = stones;
+
+      DENOMINATIONS.forEach(function (denom) {
+        const count = Math.floor(remainder / denom.size);
+        if (count > 0) {
+          parts.push(fmt(count) + ' ' + denom.label);
+          remainder -= count * denom.size;
+        }
+      });
+
+      if (remainder > 0 || parts.length === 0) {
+        parts.push(fmt(remainder) + (parts.length === 0 ? ' stones' : ''));
+      }
+
+      return parts.join(' + ');
+    }
 
     function pitch(mm) {
       return mm + gap;
@@ -249,10 +285,10 @@
       const square = Math.ceil(areaMm2 * perMm2);
       const interlaced = Math.ceil(square * INTERLACED_FACTOR);
 
-      squareGrossEl.textContent = fmt(Math.ceil(square / GROSS)) + ' gross';
-      squareStonesEl.textContent = fmt(square) + ' stones';
-      interGrossEl.textContent = fmt(Math.ceil(interlaced / GROSS)) + ' gross';
-      interStonesEl.textContent = fmt(interlaced) + ' stones';
+      squareGrossEl.textContent = fmt(square) + ' stones';
+      squareStonesEl.textContent = breakdown(square);
+      interGrossEl.textContent = fmt(interlaced) + ' stones';
+      interStonesEl.textContent = breakdown(interlaced);
     }
 
     function updateRow() {
@@ -281,7 +317,7 @@
 
       const stones = Math.ceil(lengthMm / p);
       stonesEl.textContent = fmt(stones);
-      grossEl.textContent = fmt(Math.ceil(stones / GROSS)) + ' gross';
+      grossEl.textContent = breakdown(stones);
     }
 
     function updateChart() {
