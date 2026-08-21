@@ -189,6 +189,52 @@
     color: #128C7E;
   }
 
+  /* The mobile header is a 5-column grid - leftA leftB center rightA rightB -
+     with 44px bookends, and it packs <header-actions> into the single rightB
+     track. With the WhatsApp link there are three 44px items in that flex
+     container, so it needs 132px and overflowed leftward onto the logo.
+
+     At 360px the header is 4px over budget:
+       44 (menu) + 44 (search) + 140 (logo) + 132 (actions) + 4 (padding) = 364
+     Wider phones have slack, which is why only the narrowest viewport showed it.
+
+     So: collapse the two right bookends into one content-sized track, let the
+     centre track shrink below its content, and let the logo scale into what is
+     left. The logo carries a fixed width, so max-width is required or it would
+     simply overflow its own track instead.
+
+     Scoped to the same two triggers upstream uses for the 5-column grid -
+     the mobile breakpoint and the drawer menu - because setting
+     --header-template-columns unconditionally would clobber the 3-column
+     desktop layout. .header__columns is repeated to outrank upstream. */
+  @media screen and (max-width: 749px) {
+    #header-component .header__columns.header__columns:has(.header-actions__whatsapp) {
+      --header-template-columns: var(--header-mobile-bookend) var(--header-mobile-bookend)
+        minmax(0, 1fr) auto;
+
+      grid-template-areas: 'leftA leftB center rightB';
+    }
+
+    #header-component .header__columns:has(.header-actions__whatsapp) .header-logo img {
+      max-width: 100%;
+    }
+  }
+
+  #header-component[data-menu-style='drawer']
+    .header__columns.header__columns:has(.header-actions__whatsapp) {
+    --header-template-columns: var(--header-mobile-bookend) var(--header-mobile-bookend)
+      minmax(0, 1fr) auto;
+
+    grid-template-areas: 'leftA leftB center rightB';
+  }
+
+  #header-component[data-menu-style='drawer']
+    .header__columns:has(.header-actions__whatsapp)
+    .header-logo img {
+    max-width: 100%;
+  }
+
+
   .header {
     --account-offset-top: calc(
       var(--header-group-height) + (var(--header-height) * var(--transparent-header-offset-boolean))
