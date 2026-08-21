@@ -164,8 +164,13 @@
     </div>
 
     {% if section.settings.show_chart %}
-      <details class="rsc__chart">
-        <summary>Stone size reference chart</summary>
+      <details class="rsc__chart" open>
+        <summary class="rsc__chart-summary">
+          <span>Stone size reference chart</span>
+          <span class="rsc__chart-chevron svg-wrapper">
+            {{- 'icon-caret.svg' | inline_asset_content -}}
+          </span>
+        </summary>
         <div class="rsc__chart-scroll">
           <table class="rsc__table">
             <thead>
@@ -476,9 +481,41 @@
     max-width: 70ch;
   }
 
-  .rsc__chart summary {
+  .rsc__chart-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
     cursor: pointer;
     font-size: 0.9375rem;
+    padding-block: 0.25rem;
+    list-style: none;
+  }
+
+  /* Hide the native disclosure triangle in favour of the caret. */
+  .rsc__chart-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .rsc__chart-summary:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  .rsc__chart-chevron {
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s ease;
+  }
+
+  .rsc__chart:not([open]) .rsc__chart-chevron {
+    transform: rotate(-90deg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rsc__chart-chevron {
+      transition: none;
+    }
   }
 
   .rsc__chart-scroll {

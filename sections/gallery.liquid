@@ -108,33 +108,21 @@
   }
 {%- endstyle -%}
 
-<div class="gallery-section gradient{% if custom_color %} color-custom-{{ section.id }}{% endif %}">
-  <div class="page-width">
-    {% if section.blocks.size > 0 %}
-      <div class="gallery-container">
-        {% for block in section.blocks %}
-          <div
-            class="gallery-item"
-            {{ block.shopify_attributes }}
-            {% if block.settings.link == blank and block.settings.image != blank %}
-              data-lightbox
-              data-lightbox-src="{{ block.settings.image | image_url: width: 2400 }}"
-              data-lightbox-alt="{{ block.settings.alt_text | escape }}"
-            {% endif %}
-          >
-            {% if block.settings.link != blank %}
-              <a href="{{ block.settings.link }}">
-                {% if block.settings.image != blank %}
-                  {{
-                    block.settings.image
-                    | image_url: width: 1200
-                    | image_tag: alt: block.settings.alt_text, loading: 'lazy'
-                  }}
-                {% else %}
-                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-                {% endif %}
-              </a>
-            {% else %}
+<div class="gallery-section section section--page-width gradient{% if custom_color %} color-custom-{{ section.id }}{% endif %}">
+  {% if section.blocks.size > 0 %}
+    <div class="gallery-container">
+      {% for block in section.blocks %}
+        <div
+          class="gallery-item"
+          {{ block.shopify_attributes }}
+          {% if block.settings.link == blank and block.settings.image != blank %}
+            data-lightbox
+            data-lightbox-src="{{ block.settings.image | image_url: width: 2400 }}"
+            data-lightbox-alt="{{ block.settings.alt_text | escape }}"
+          {% endif %}
+        >
+          {% if block.settings.link != blank %}
+            <a href="{{ block.settings.link }}">
               {% if block.settings.image != blank %}
                 {{
                   block.settings.image
@@ -144,16 +132,26 @@
               {% else %}
                 {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
               {% endif %}
+            </a>
+          {% else %}
+            {% if block.settings.image != blank %}
+              {{
+                block.settings.image
+                | image_url: width: 1200
+                | image_tag: alt: block.settings.alt_text, loading: 'lazy'
+              }}
+            {% else %}
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
             {% endif %}
-          </div>
-        {% endfor %}
-      </div>
-    {% else %}
-      <div style="text-align: center; padding: 60px 20px;">
-        <p>Add images to your gallery</p>
-      </div>
-    {% endif %}
-  </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div style="text-align: center; padding: 60px 20px;">
+      <p>Add images to your gallery</p>
+    </div>
+  {% endif %}
 </div>
 
 {%- comment -%} Lightbox overlay (shared per section) {%- endcomment -%}
