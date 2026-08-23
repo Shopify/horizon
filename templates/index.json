@@ -39,6 +39,8 @@
         "gap": 16,
         "image_ratio": "adapt",
         "section_width": "page-width",
+        "background_color": "",
+        "text_color": "",
         "padding-block-start": 0,
         "padding-block-end": 0
       }
@@ -55,9 +57,11 @@
             "horizontal_alignment": "flex-start",
             "vertical_alignment": "center",
             "collection_card_gap": 8,
+            "background_color": "",
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
+            "border_color": "",
             "border_radius": 0
           },
           "blocks": {
@@ -75,9 +79,9 @@
                 "letter_spacing": "normal",
                 "case": "none",
                 "wrap": "pretty",
-                "text_color": "",
                 "background": false,
                 "background_color": "#00000026",
+                "text_color": "",
                 "corner_radius": 0,
                 "padding-block-start": 0,
                 "padding-block-end": 0,
@@ -99,6 +103,7 @@
                 "border": "none",
                 "border_width": 1,
                 "border_opacity": 100,
+                "border_color": "",
                 "border_radius": 14
               },
               "blocks": {}
@@ -112,7 +117,6 @@
       "name": "t:names.collections_carousel",
       "settings": {
         "collection_list": [
-          "fabric",
           "spandex",
           "lining",
           "mesh",
@@ -146,6 +150,7 @@
         "icons_shape": "circle",
         "section_width": "page-width",
         "gap": 12,
+        "background_color": "",
         "padding-block-start": 48,
         "padding-block-end": 48
       }
