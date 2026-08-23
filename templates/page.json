@@ -16,7 +16,7 @@
           "type": "text",
           "name": "Title",
           "settings": {
-            "text": "<h1>{{ closest.page.title }}</h1>",
+            "text": "<h4>Near Metro Vancouver and want to view or purchase in person? Call or text us to book an appointment.</h4>",
             "width": "100%",
             "max_width": "normal",
             "alignment": "center",
@@ -38,19 +38,49 @@
           },
           "blocks": {}
         },
+        "text_ntzybp": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "center",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "text_color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
         "page-content": {
           "type": "page-content",
-          "settings": {},
+          "settings": {
+            "text_color": ""
+          },
           "blocks": {}
         }
       },
       "block_order": [
         "heading",
+        "text_ntzybp",
         "page-content"
       ],
       "settings": {
         "content_direction": "column",
         "gap": 32,
+        "background_color": "",
         "padding-block-start": 40,
         "padding-block-end": 80
       }
