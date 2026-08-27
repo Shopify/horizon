@@ -31,6 +31,9 @@
   -%}
 
   {%- for disclosure in disclosures -%}
+    {%- capture disclosure_visible -%}
+      {%- render 'disclosure-jurisdiction-match', disclosure: disclosure -%}
+    {%- endcapture -%}
     {%- liquid
       assign render_disclosure = true
       if filter_by_cart_surface
@@ -39,6 +42,9 @@
         if surfaces contains 'cart'
           assign render_disclosure = true
         endif
+      endif
+      if disclosure_visible == blank
+        assign render_disclosure = false
       endif
 
       assign disclosure_title = disclosure.title.value | default: disclosure.title
@@ -59,6 +65,9 @@
 
   {%- capture disclosure_rows -%}
     {%- for disclosure in disclosures -%}
+      {%- capture disclosure_visible -%}
+        {%- render 'disclosure-jurisdiction-match', disclosure: disclosure -%}
+      {%- endcapture -%}
       {%- liquid
         assign render_disclosure = true
         if filter_by_cart_surface
@@ -67,6 +76,9 @@
           if surfaces contains 'cart'
             assign render_disclosure = true
           endif
+        endif
+        if disclosure_visible == blank
+          assign render_disclosure = false
         endif
 
         assign disclosure_title = disclosure.title.value | default: disclosure.title
@@ -99,6 +111,9 @@
 
   {%- capture disclosure_modal_items -%}
     {%- for disclosure in disclosures -%}
+      {%- capture disclosure_visible -%}
+        {%- render 'disclosure-jurisdiction-match', disclosure: disclosure -%}
+      {%- endcapture -%}
       {%- liquid
         assign render_disclosure = true
         if filter_by_cart_surface
@@ -107,6 +122,9 @@
           if surfaces contains 'cart'
             assign render_disclosure = true
           endif
+        endif
+        if disclosure_visible == blank
+          assign render_disclosure = false
         endif
 
         assign disclosure_title = disclosure.title.value | default: disclosure.title

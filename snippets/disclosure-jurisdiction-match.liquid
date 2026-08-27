@@ -1,0 +1,97 @@
+{% doc %}
+  Decides whether one disclosure applies to the current buyer's jurisdiction.
+
+  Outputs the string `visible` when the disclosure applies, and nothing when it does not. Liquid has
+  no return value and `render` isolates scope, so callers capture the output and test it against
+  `blank`:
+
+  @param {object} disclosure - A disclosure metaobject from `product.metafields.shopify.disclosure.value`
+
+  @example
+  {%- capture disclosure_visible -%}
+    {%- render 'disclosure-jurisdiction-match', disclosure: disclosure -%}
+  {%- endcapture -%}
+  {%- if disclosure_visible != blank -%}
+    ...
+  {%- endif -%}
+
+  Matching is country-first and fails open, so a disclosure is shown whenever the theme cannot prove
+  it does not apply:
+
+  | Disclosure jurisdiction | Buyer country / subdivision | Result  |
+  | ----------------------- | --------------------------- | ------- |
+  | `All`                   | anything                    | visible |
+  | `US`                    | `US` / nil                  | visible |
+  | `US`                    | `US` / `CA`                 | visible |
+  | `US-CA`                 | `US` / nil                  | visible |
+  | `US-CA`                 | `US` / `CA`                 | visible |
+  | `US-CA`                 | `US` / `TX`                 | hidden  |
+  | `US-CA`                 | `CA` / `BC`                 | hidden  |
+  | `US`                    | `CA` / nil                  | hidden  |
+  | anything                | unknown country             | visible |
+  | unrecognised code       | anything                    | visible |
+
+  `localization.country` never returns blank. When the buyer's country cannot be resolved the
+  storefront substitutes the shop's backup region, so an unresolved buyer is matched as a buyer in the
+  shop's home country. That is the intended fallback, and it means the "unknown country" row above is
+  reached only when `localization.country.iso_code` is genuinely empty.
+
+  Requires `localization.subdivision`, which is not available in Liquid yet. Without it every
+  subdivision-scoped jurisdiction such as `US-CA` matches on country alone, which is the fail-open
+  row of the table.
+{% enddoc %}
+
+{%- liquid
+  assign jurisdiction_match = ''
+  assign buyer_country = localization.country.iso_code | upcase
+  assign buyer_subdivision = localization.subdivision | upcase
+  assign jurisdictions = disclosure.jurisdictions.value
+
+  if jurisdictions == blank
+    assign jurisdiction_match = 'visible'
+  elsif buyer_country == blank
+    assign jurisdiction_match = 'visible'
+  else
+    assign matched = false
+    assign recognised = false
+
+    for jurisdiction in jurisdictions
+      assign code = jurisdiction | strip | upcase
+
+      if code == 'ALL'
+        assign recognised = true
+        assign matched = true
+        continue
+      endif
+
+      assign code_parts = code | split: '-'
+      assign code_country = code_parts[0]
+      assign code_subdivision = code_parts[1]
+
+      if code_country.size != 2
+        continue
+      endif
+
+      assign recognised = true
+
+      if code_country != buyer_country
+        continue
+      endif
+
+      if code_subdivision == blank
+        assign matched = true
+      elsif buyer_subdivision == blank
+        assign matched = true
+      elsif code_subdivision == buyer_subdivision
+        assign matched = true
+      endif
+    endfor
+
+    if recognised == false
+      assign jurisdiction_match = 'visible'
+    elsif matched
+      assign jurisdiction_match = 'visible'
+    endif
+  endif
+-%}
+{{- jurisdiction_match -}}

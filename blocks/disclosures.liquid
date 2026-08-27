@@ -3,7 +3,10 @@
 {%- assign disclosures_symbol_aspect_ratio = 1 -%}
 {%- if disclosures != blank -%}
   {%- for disclosure in disclosures -%}
-    {%- if disclosure.display_preferences.value.surfaces contains 'product_page' -%}
+    {%- capture disclosure_visible -%}
+      {%- render 'disclosure-jurisdiction-match', disclosure: disclosure -%}
+    {%- endcapture -%}
+    {%- if disclosure_visible != blank and disclosure.display_preferences.value.surfaces contains 'product_page' -%}
       {%- assign has_visible_disclosures = true -%}
       {%- assign symbol_aspect_ratio = disclosure.symbol.value.aspect_ratio | default: 1 -%}
       {%- if symbol_aspect_ratio > disclosures_symbol_aspect_ratio -%}
@@ -38,7 +41,10 @@
         <span class="disclosures__summary-item">
           {%- assign visible_disclosure_index = 0 -%}
           {%- for disclosure in disclosures -%}
-            {%- if disclosure.display_preferences.value.surfaces contains 'product_page' -%}
+            {%- capture disclosure_visible -%}
+              {%- render 'disclosure-jurisdiction-match', disclosure: disclosure -%}
+            {%- endcapture -%}
+            {%- if disclosure_visible != blank and disclosure.display_preferences.value.surfaces contains 'product_page' -%}
               {%- assign title = disclosure.title.value -%}
               {%- assign img = disclosure.symbol.value -%}
               {%- capture row_content -%}
@@ -75,7 +81,10 @@
       {%- assign details_html = '' -%}
       {%- assign visible_disclosure_index = 0 -%}
       {%- for disclosure in disclosures -%}
-        {%- if disclosure.display_preferences.value.surfaces contains 'product_page' -%}
+        {%- capture disclosure_visible -%}
+          {%- render 'disclosure-jurisdiction-match', disclosure: disclosure -%}
+        {%- endcapture -%}
+        {%- if disclosure_visible != blank and disclosure.display_preferences.value.surfaces contains 'product_page' -%}
           {%- assign title = disclosure.title.value -%}
           {%- assign img = disclosure.symbol.value -%}
           {%- assign content = disclosure.content -%}
