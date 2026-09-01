@@ -85,7 +85,9 @@ Horizon runs [Theme Check](#Theme-Check) on every commit via [Shopify/theme-chec
 
 ## Contributing
 
-We are not accepting contributions to Horizon at this time.
+Contributions are welcome! If you've found a bug, have an idea for an improvement, or want to add something new, feel free to open an issue or submit a pull request.
+
+Please take a moment to review any open issues before starting work, to avoid duplicating effort. For larger changes, opening an issue first to discuss the approach is appreciated.
 
 ## License
 
