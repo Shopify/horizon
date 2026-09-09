@@ -1,0 +1,945 @@
+{% comment %}
+  Rhinestone Calculator - estimates how many rhinestones (and gross) are
+  needed to cover an area or run a single row, for a given SS stone size.
+
+  Diameters have two layers. The merchant sets a default per SS size in theme
+  settings; a visitor can then override any of them in the reference chart,
+  within +/-20% of that default. The chart is the source of truth at runtime -
+  editing a row feeds both calculators.
+
+  Defaults are the LOWER bound of each published tolerance, so counts lean high
+  (a smaller stone covers less, so more are needed) and you are unlikely to
+  under-order. Stones are assumed laid edge to edge, plus the merchant's gap:
+
+    pitch            = stone diameter + gap
+    square set  /in2 = (25.4 / pitch)^2
+    interlaced  /in2 = square set * 1.1547   (hexagonal packing is ~15.47%
+                                              denser, so it needs more stones)
+    1 gross          = 144 rhinestones
+{% endcomment %}
+
+{% liquid
+  assign custom_color = false
+  if section.settings.background_color != blank or section.settings.text_color != blank
+    assign custom_color = true
+    render 'contrast-override', background_color: section.settings.background_color, text_color: section.settings.text_color, section_id: section.id
+  endif
+%}
+
+{%- comment -%}
+  Diameters come from the settings below so they can be matched to the stock
+  actually being sold. Everything downstream — the chart, both calculators —
+  reads this one list.
+{%- endcomment -%}
+{%- capture ss_chart_raw -%}
+5:{{ section.settings.mm_ss5 }},6:{{ section.settings.mm_ss6 }},7:{{ section.settings.mm_ss7 }},9:{{ section.settings.mm_ss9 }},10:{{ section.settings.mm_ss10 }},12:{{ section.settings.mm_ss12 }},16:{{ section.settings.mm_ss16 }},20:{{ section.settings.mm_ss20 }},30:{{ section.settings.mm_ss30 }},34:{{ section.settings.mm_ss34 }},40:{{ section.settings.mm_ss40 }}
+{%- endcapture -%}
+{%- assign ss_chart = ss_chart_raw | strip | split: ',' -%}
+
+<div class="section-background{% if custom_color %} color-custom-{{ section.id }}{% endif %}"></div>
+<div
+  class="section section--{{ section.settings.section_width }} spacing-style{% if custom_color %} color-custom-{{ section.id }}{% endif %}"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="rsc" data-rsc="{{ section.id }}" data-gap="{{ section.settings.stone_gap }}">
+    {% if section.settings.heading != blank %}
+      <h2 class="rsc__heading">{{ section.settings.heading | escape }}</h2>
+    {% endif %}
+    {% if section.settings.intro != blank %}
+      <div class="rsc__intro">{{ section.settings.intro }}</div>
+    {% endif %}
+
+    <div class="rsc__grid">
+      {% comment %} ---------- Area calculator ---------- {% endcomment %}
+      <section class="rsc__card" aria-labelledby="rsc-area-title-{{ section.id }}">
+        <h3 class="rsc__card-title" id="rsc-area-title-{{ section.id }}">
+          {{ section.settings.area_title | escape | default: 'Area coverage' }}
+        </h3>
+
+        <div class="rsc__fields">
+          <div class="rsc__field">
+            <label for="rsc-length-{{ section.id }}">Length</label>
+            <input
+              type="number"
+              id="rsc-length-{{ section.id }}"
+              data-rsc-length
+              min="0"
+              step="any"
+              inputmode="decimal"
+              value="10"
+            >
+          </div>
+          <div class="rsc__field">
+            <label for="rsc-width-{{ section.id }}">Width</label>
+            <input
+              type="number"
+              id="rsc-width-{{ section.id }}"
+              data-rsc-width
+              min="0"
+              step="any"
+              inputmode="decimal"
+              value="10"
+            >
+          </div>
+          <div class="rsc__field">
+            <label for="rsc-unit-{{ section.id }}">Units</label>
+            <select id="rsc-unit-{{ section.id }}" data-rsc-unit>
+              <option value="25.4">Inches</option>
+              <option value="10">Centimetres</option>
+              <option value="1">Millimetres</option>
+            </select>
+          </div>
+          <div class="rsc__field">
+            <label for="rsc-ss-{{ section.id }}">Stone size</label>
+            <select id="rsc-ss-{{ section.id }}" data-rsc-ss>
+              {% for entry in ss_chart %}
+                {% assign parts = entry | split: ':' %}
+                <option
+                  value="{{ parts[1] }}"
+                  data-ss="{{ parts[0] }}"
+                  {% if parts[0] == '16' %}
+                    selected
+                  {% endif %}
+                >
+                  SS{{ parts[0] }} &middot; {{ parts[1] }}mm
+                </option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="rsc__results" aria-live="polite">
+          <div class="rsc__result">
+            <span class="rsc__result-label">Square set</span>
+            <span class="rsc__result-value" data-rsc-square-total>&mdash;</span>
+            <span class="rsc__result-sub" data-rsc-square-breakdown></span>
+          </div>
+          <div class="rsc__result rsc__result--accent">
+            <span class="rsc__result-label">Interlaced set</span>
+            <span class="rsc__result-value" data-rsc-inter-total>&mdash;</span>
+            <span class="rsc__result-sub" data-rsc-inter-breakdown></span>
+          </div>
+        </div>
+
+        <p class="rsc__note">
+          Have a total area already? Enter it as the length and use 1 as the width.
+        </p>
+      </section>
+
+      {% comment %} ---------- Single row calculator ---------- {% endcomment %}
+      <section class="rsc__card" aria-labelledby="rsc-row-title-{{ section.id }}">
+        <h3 class="rsc__card-title" id="rsc-row-title-{{ section.id }}">
+          {{ section.settings.row_title | escape | default: 'Single row' }}
+        </h3>
+
+        <div class="rsc__fields">
+          <div class="rsc__field">
+            <label for="rsc-rowlen-{{ section.id }}">Length</label>
+            <input
+              type="number"
+              id="rsc-rowlen-{{ section.id }}"
+              data-rsc-rowlen
+              min="0"
+              step="any"
+              inputmode="decimal"
+              value="10"
+            >
+          </div>
+          <div class="rsc__field">
+            <label for="rsc-rowunit-{{ section.id }}">Units</label>
+            <select id="rsc-rowunit-{{ section.id }}" data-rsc-rowunit>
+              <option value="25.4" data-single="inch">Inches</option>
+              <option value="10" data-single="cm">Centimetres</option>
+              <option value="1" data-single="mm">Millimetres</option>
+            </select>
+          </div>
+          <div class="rsc__field">
+            <label for="rsc-rowss-{{ section.id }}">Stone size</label>
+            <select id="rsc-rowss-{{ section.id }}" data-rsc-rowss>
+              {% for entry in ss_chart %}
+                {% assign parts = entry | split: ':' %}
+                <option
+                  value="{{ parts[1] }}"
+                  data-ss="{{ parts[0] }}"
+                  {% if parts[0] == '16' %}
+                    selected
+                  {% endif %}
+                >
+                  SS{{ parts[0] }} &middot; {{ parts[1] }}mm
+                </option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="rsc__results" aria-live="polite">
+          <div class="rsc__result rsc__result--accent">
+            <span class="rsc__result-label">Stones needed</span>
+            <span class="rsc__result-value" data-rsc-row-stones>&mdash;</span>
+            <span class="rsc__result-sub" data-rsc-row-breakdown></span>
+          </div>
+          <div class="rsc__result">
+            <span class="rsc__result-label">Stones per unit</span>
+            <span class="rsc__result-value" data-rsc-row-density>&mdash;</span>
+            <span class="rsc__result-sub" data-rsc-row-densitysub></span>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    {% if section.settings.show_chart %}
+      <details class="rsc__chart" open>
+        <summary class="rsc__chart-summary">
+          <span>Stone size reference chart</span>
+          <span class="rsc__chart-chevron svg-wrapper">
+            {{- 'icon-caret.svg' | inline_asset_content -}}
+          </span>
+        </summary>
+        <div class="rsc__chart-scroll">
+          <table class="rsc__table">
+            <thead>
+              <tr>
+                <th scope="col">Size</th>
+                <th scope="col">Diameter (mm)</th>
+                <th scope="col">Per inch</th>
+                <th scope="col">Per in&sup2; (square)</th>
+                <th scope="col">Per in&sup2; (interlaced)</th>
+              </tr>
+            </thead>
+            <tbody data-rsc-chart-body>
+              {% for entry in ss_chart %}
+                {% liquid
+                  assign parts = entry | split: ':'
+                  assign mm_default = parts[1] | times: 1.0
+                  assign mm_min = mm_default | times: 0.8 | round: 1
+                  assign mm_max = mm_default | times: 1.2 | round: 1
+                %}
+                <tr data-ss="{{ parts[0] }}" data-mm="{{ parts[1] }}" data-default-mm="{{ parts[1] }}">
+                  <th scope="row">SS{{ parts[0] }}</th>
+                  <td>
+                    <input
+                      type="number"
+                      class="rsc__mm-input"
+                      data-rsc-mm
+                      value="{{ parts[1] }}"
+                      min="{{ mm_min }}"
+                      max="{{ mm_max }}"
+                      step="0.1"
+                      inputmode="decimal"
+                      aria-label="SS{{ parts[0] }} diameter in millimetres, between {{ mm_min }} and {{ mm_max }}"
+                      title="SS{{ parts[0] }}: {{ mm_min }}mm to {{ mm_max }}mm"
+                    >
+                  </td>
+                  <td data-cell="per-inch">&mdash;</td>
+                  <td data-cell="sq">&mdash;</td>
+                  <td data-cell="inter">&mdash;</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="rsc__chart-actions">
+          <p class="rsc__note">
+            Stones vary between suppliers. Edit any diameter to match yours &mdash; the table
+            and both calculators update as you type.
+          </p>
+          <button type="button" class="rsc__reset" data-rsc-reset>Reset to defaults</button>
+        </div>
+      </details>
+    {% endif %}
+
+    <p class="rsc__disclaimer">
+      Estimates only. Totals are broken down into packaging units: 
+      1 gross = 144 stones, 1 dozen = 12
+      with the leftover shown as loose stones. 
+      Stone sizes use the smallest diameter in each SS range, so counts run slightly high rather than short.
+      Interlaced (offset) placement packs about 15% more stones into the same area than square placement. 
+      Always allow a margin for breakage and spares.
+    </p>
+  </div>
+</div>
+
+<script>
+  (function () {
+    const root = document.querySelector('[data-rsc="{{ section.id }}"]');
+    if (!root) return;
+
+    const GROSS = 144;
+    const INTERLACED_FACTOR = 2 / Math.sqrt(3); // ~1.1547, hexagonal packing
+    const gap = parseFloat(root.dataset.gap) || 0;
+
+    const $ = (sel) => root.querySelector(sel);
+    // Non-numeric, negative and absurd values all collapse to a safe number so
+    // the arithmetic can never produce NaN or Infinity.
+    const MAX_INPUT = 100000;
+    const num = (el) => {
+      const v = parseFloat(el && el.value);
+      if (!isFinite(v) || v <= 0) return 0;
+      return Math.min(v, MAX_INPUT);
+    };
+    const fmt = (n) =>
+      n.toLocaleString(undefined, { maximumFractionDigits: n < 10 ? 1 : 0 });
+
+    // Break a stone count into packaging denominations, like making change:
+    // 305 -> "2 gross + 1 dozen + 5", 4468 -> "31 gross + 4".
+    const DENOMINATIONS = [
+      { size: GROSS, label: 'gross' },
+      { size: 12, label: 'dozen' },
+    ];
+
+    function breakdown(stones) {
+      if (!stones) return '';
+      const parts = [];
+      let remainder = stones;
+
+      DENOMINATIONS.forEach(function (denom) {
+        const count = Math.floor(remainder / denom.size);
+        if (count > 0) {
+          parts.push(fmt(count) + ' ' + denom.label);
+          remainder -= count * denom.size;
+        }
+      });
+
+      if (remainder > 0 || parts.length === 0) {
+        parts.push(fmt(remainder) + (parts.length === 0 ? ' stones' : ''));
+      }
+
+      return parts.join(' + ');
+    }
+
+    function pitch(mm) {
+      return mm + gap;
+    }
+
+    // The chart's diameter inputs are the source of truth. When one changes we
+    // push the new value into both stone-size dropdowns (matched on SS number)
+    // so the calculators stay in step with the table.
+
+    // Each row carries its own bounds (default +/-20%), so a visitor can match
+    // their own stock but cannot make SS5 larger than SS40. The HTML min/max
+    // are the authority; this re-checks them because attributes are editable
+    // in devtools and `type="number"` is not enforced on paste.
+    const MM_FLOOR = 0.1;
+    const MM_CEILING = 30;
+
+    function readMm(input) {
+      const v = parseFloat(input.value);
+      if (!isFinite(v) || v <= 0) return null;
+
+      let lo = parseFloat(input.min);
+      let hi = parseFloat(input.max);
+      if (!isFinite(lo) || lo <= 0) lo = MM_FLOOR;
+      if (!isFinite(hi) || hi <= lo) hi = MM_CEILING;
+
+      return Math.min(Math.max(v, lo), hi);
+    }
+
+    function syncDiameter(ss, mm) {
+      const row = root.querySelector('tr[data-ss="' + ss + '"]');
+      if (row) row.dataset.mm = mm;
+
+      root.querySelectorAll('option[data-ss="' + ss + '"]').forEach(function (option) {
+        option.value = mm;
+        option.textContent = 'SS' + ss + ' · ' + mm + 'mm';
+      });
+    }
+
+    function onDiameterInput(input) {
+      const row = input.closest('tr');
+      if (!row) return;
+      const mm = readMm(input);
+      // Ignore mid-typing junk; the row keeps its last good value until valid.
+      if (mm === null) return;
+      syncDiameter(row.dataset.ss, mm);
+    }
+
+    function resetDiameters() {
+      root.querySelectorAll('[data-rsc-mm]').forEach(function (input) {
+        const row = input.closest('tr');
+        if (!row) return;
+        input.value = row.dataset.defaultMm;
+        syncDiameter(row.dataset.ss, row.dataset.defaultMm);
+      });
+    }
+
+    function updateArea() {
+      const lengthEl = $('[data-rsc-length]');
+      const widthEl = $('[data-rsc-width]');
+      const unit = parseFloat($('[data-rsc-unit]').value);
+      const mm = parseFloat($('[data-rsc-ss]').value);
+
+      const lengthMm = num(lengthEl) * unit;
+      const widthMm = num(widthEl) * unit;
+      const areaMm2 = lengthMm * widthMm;
+
+      const squareTotalEl = $('[data-rsc-square-total]');
+      const squareBreakdownEl = $('[data-rsc-square-breakdown]');
+      const interTotalEl = $('[data-rsc-inter-total]');
+      const interBreakdownEl = $('[data-rsc-inter-breakdown]');
+
+      if (!areaMm2) {
+        squareTotalEl.textContent = '—';
+        interTotalEl.textContent = '—';
+        squareBreakdownEl.textContent = '';
+        interBreakdownEl.textContent = '';
+        return;
+      }
+
+      const p = pitch(mm);
+      const perMm2 = 1 / (p * p);
+      const square = Math.ceil(areaMm2 * perMm2);
+      const interlaced = Math.ceil(square * INTERLACED_FACTOR);
+
+      squareTotalEl.textContent = fmt(square) + ' stones';
+      squareBreakdownEl.textContent = breakdown(square);
+      interTotalEl.textContent = fmt(interlaced) + ' stones';
+      interBreakdownEl.textContent = breakdown(interlaced);
+    }
+
+    function updateRow() {
+      const unitEl = $('[data-rsc-rowunit]');
+      const unit = parseFloat(unitEl.value);
+      const mm = parseFloat($('[data-rsc-rowss]').value);
+      const lengthMm = num($('[data-rsc-rowlen]')) * unit;
+
+      const stonesEl = $('[data-rsc-row-stones]');
+      const breakdownEl = $('[data-rsc-row-breakdown]');
+      const densityEl = $('[data-rsc-row-density]');
+      const densitySubEl = $('[data-rsc-row-densitysub]');
+
+      const p = pitch(mm);
+      const perUnit = unit / p;
+      const unitLabel = unitEl.options[unitEl.selectedIndex].dataset.single || 'unit';
+
+      densityEl.textContent = fmt(perUnit);
+      densitySubEl.textContent = 'per ' + unitLabel;
+
+      if (!lengthMm) {
+        stonesEl.textContent = '—';
+        breakdownEl.textContent = '';
+        return;
+      }
+
+      const stones = Math.ceil(lengthMm / p);
+      stonesEl.textContent = fmt(stones);
+      breakdownEl.textContent = breakdown(stones);
+    }
+
+    function updateChart() {
+      const rows = root.querySelectorAll('[data-rsc-chart-body] tr');
+      rows.forEach(function (tr) {
+        const p = pitch(parseFloat(tr.dataset.mm));
+        const perInch = 25.4 / p;
+        const sq = perInch * perInch;
+        tr.querySelector('[data-cell="per-inch"]').textContent = fmt(perInch);
+        tr.querySelector('[data-cell="sq"]').textContent = fmt(sq);
+        tr.querySelector('[data-cell="inter"]').textContent = fmt(sq * INTERLACED_FACTOR);
+      });
+    }
+
+    function updateAll() {
+      updateArea();
+      updateRow();
+    }
+
+    function handle(event) {
+      // A diameter edit must propagate to the dropdowns before anything recalculates.
+      if (event.target.matches('[data-rsc-mm]')) {
+        onDiameterInput(event.target);
+        updateChart();
+      }
+      updateAll();
+    }
+
+    root.addEventListener('input', handle);
+    root.addEventListener('change', handle);
+
+    root.addEventListener('click', function (event) {
+      if (!event.target.closest('[data-rsc-reset]')) return;
+      resetDiameters();
+      updateChart();
+      updateAll();
+    });
+
+    updateAll();
+    updateChart();
+  })();
+</script>
+
+{% stylesheet %}
+  .rsc {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .rsc__heading {
+    margin: 0;
+  }
+
+  .rsc__intro {
+    max-width: 60ch;
+    opacity: 0.85;
+  }
+
+  .rsc__intro > *:first-child {
+    margin-top: 0;
+  }
+
+  .rsc__intro > *:last-child {
+    margin-bottom: 0;
+  }
+
+  .rsc__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: 1.5rem;
+  }
+
+  .rsc__card {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 1.5rem;
+    border: 1px solid rgb(var(--color-border-rgb) / 0.15);
+    border-radius: var(--style-border-radius-popover, 12px);
+  }
+
+  .rsc__card-title {
+    margin: 0;
+    font-size: 1.125rem;
+  }
+
+  .rsc__fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
+    gap: 1rem;
+  }
+
+  .rsc__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    min-width: 0;
+  }
+
+  .rsc__field label {
+    font-size: 0.8125rem;
+    opacity: 0.75;
+  }
+
+  .rsc__field input,
+  .rsc__field select {
+    width: 100%;
+    min-width: 0;
+    padding: 0.625rem 0.75rem;
+    font: inherit;
+    font-size: 0.9375rem;
+    color: inherit;
+    background: transparent;
+    border: 1px solid rgb(var(--color-border-rgb) / 0.3);
+    border-radius: var(--style-border-radius-buttons-primary, 8px);
+  }
+
+  .rsc__field input:focus-visible,
+  .rsc__field select:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 1px;
+  }
+
+  .rsc__results {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr));
+    gap: 0.75rem;
+    margin-top: auto;
+  }
+
+  .rsc__result {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    padding: 0.875rem 1rem;
+    border-radius: var(--style-border-radius-buttons-primary, 8px);
+    background: rgb(var(--color-foreground-rgb) / 0.04);
+  }
+
+  .rsc__result--accent {
+    background: rgb(var(--color-foreground-rgb) / 0.08);
+  }
+
+  .rsc__result-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.7;
+  }
+
+  .rsc__result-value {
+    font-size: 1.5rem;
+    line-height: 1.15;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .rsc__result-sub {
+    font-size: 0.8125rem;
+    opacity: 0.7;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .rsc__note,
+  .rsc__disclaimer {
+    margin: 0;
+    font-size: 0.8125rem;
+    opacity: 0.7;
+  }
+
+  .rsc__disclaimer {
+    max-width: 70ch;
+  }
+
+  .rsc__chart-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    cursor: pointer;
+    font-size: 0.9375rem;
+    padding-block: 0.25rem;
+    list-style: none;
+  }
+
+  /* Hide the native disclosure triangle in favour of the caret. */
+  .rsc__chart-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .rsc__chart-summary:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  .rsc__chart-chevron {
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s ease;
+  }
+
+  .rsc__chart:not([open]) .rsc__chart-chevron {
+    transform: rotate(-90deg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rsc__chart-chevron {
+      transition: none;
+    }
+  }
+
+  .rsc__mm-input {
+    width: 5.5rem;
+    padding: 0.3rem 0.4rem;
+    font: inherit;
+    font-size: 0.875rem;
+    text-align: right;
+    color: inherit;
+    background: transparent;
+    border: 1px solid rgb(var(--color-border-rgb) / 0.3);
+    border-radius: var(--style-border-radius-buttons-primary, 6px);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* The spinner sits inside the content box directly after the digits, so it
+     needs its own margin — padding on the input would move both together. */
+  .rsc__mm-input::-webkit-inner-spin-button,
+  .rsc__mm-input::-webkit-outer-spin-button {
+    margin-left: 0.5rem;
+  }
+
+  .rsc__mm-input:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 1px;
+  }
+
+  .rsc__chart-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: 0.875rem;
+  }
+
+  .rsc__reset {
+    padding: 0.4rem 0.75rem;
+    font: inherit;
+    font-size: 0.8125rem;
+    color: inherit;
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid rgb(var(--color-border-rgb) / 0.3);
+    border-radius: var(--style-border-radius-buttons-primary, 6px);
+  }
+
+  .rsc__reset:hover {
+    background: rgb(var(--color-foreground-rgb) / 0.06);
+  }
+
+  .rsc__reset:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  .rsc__chart-scroll {
+    overflow-x: auto;
+    margin-top: 1rem;
+  }
+
+  .rsc__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .rsc__table th,
+  .rsc__table td {
+    padding: 0.5rem 0.75rem;
+    text-align: right;
+    white-space: nowrap;
+    border-bottom: 1px solid rgb(var(--color-border-rgb) / 0.12);
+  }
+
+  .rsc__table th[scope='row'],
+  .rsc__table thead th:first-child {
+    text-align: left;
+  }
+
+  .rsc__table thead th {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.7;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Rhinestone calculator",
+  "enabled_on": {
+    "templates": ["page"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Rhinestone calculator"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Intro text",
+      "default": "<p>Estimate how many rhinestones you need to cover an area or run a single row. Choose your stone size and enter your measurements.</p>"
+    },
+    {
+      "type": "text",
+      "id": "area_title",
+      "label": "Area calculator title",
+      "default": "Area coverage"
+    },
+    {
+      "type": "text",
+      "id": "row_title",
+      "label": "Row calculator title",
+      "default": "Single row"
+    },
+    {
+      "type": "header",
+      "content": "Stone diameters",
+      "info": "Set each size to match the stock you sell. The chart and both calculators follow these values."
+    },
+    {
+      "type": "range",
+      "id": "mm_ss5",
+      "label": "SS5",
+      "min": 1.5,
+      "max": 2.1,
+      "step": 0.1,
+      "unit": "mm",
+      "default": 1.7
+    },
+    {
+      "type": "range",
+      "id": "mm_ss6",
+      "label": "SS6",
+      "min": 1.7,
+      "max": 2.3,
+      "step": 0.1,
+      "unit": "mm",
+      "default": 1.9
+    },
+    {
+      "type": "range",
+      "id": "mm_ss7",
+      "label": "SS7",
+      "min": 1.9,
+      "max": 2.5,
+      "step": 0.1,
+      "unit": "mm",
+      "default": 2.1
+    },
+    {
+      "type": "range",
+      "id": "mm_ss9",
+      "label": "SS9",
+      "min": 2.3,
+      "max": 2.9,
+      "step": 0.1,
+      "unit": "mm",
+      "default": 2.5
+    },
+    {
+      "type": "range",
+      "id": "mm_ss10",
+      "label": "SS10",
+      "min": 2.5,
+      "max": 3.1,
+      "step": 0.1,
+      "unit": "mm",
+      "default": 2.7
+    },
+    {
+      "type": "range",
+      "id": "mm_ss12",
+      "label": "SS12",
+      "min": 2.8,
+      "max": 3.4,
+      "step": 0.1,
+      "unit": "mm",
+      "default": 3.0
+    },
+    {
+      "type": "range",
+      "id": "mm_ss16",
+      "label": "SS16",
+      "min": 3.6,
+      "max": 4.2,
+      "step": 0.1,
+      "unit": "mm",
+      "default": 3.8
+    },
+    {
+      "type": "range",
+      "id": "mm_ss20",
+      "label": "SS20",
+      "min": 4.4,
+      "max": 5.0,
+      "step": 0.1,
+      "unit": "mm",
+      "default": 4.6
+    },
+    {
+      "type": "range",
+      "id": "mm_ss30",
+      "label": "SS30",
+      "min": 6.1,
+      "max": 6.7,
+      "step": 0.1,
+      "unit": "mm",
+      "default": 6.3
+    },
+    {
+      "type": "range",
+      "id": "mm_ss34",
+      "label": "SS34",
+      "min": 6.8,
+      "max": 7.4,
+      "step": 0.1,
+      "unit": "mm",
+      "default": 7.0
+    },
+    {
+      "type": "range",
+      "id": "mm_ss40",
+      "label": "SS40",
+      "min": 8.2,
+      "max": 8.8,
+      "step": 0.1,
+      "unit": "mm",
+      "default": 8.4
+    },
+    {
+      "type": "range",
+      "id": "stone_gap",
+      "label": "Gap between stones",
+      "info": "Added to the stone diameter. 0 assumes stones touch edge to edge. Increase this if your results come out higher than real-world usage.",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "mm",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "show_chart",
+      "label": "Show stone size reference chart",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "placeholder": "t:settings.default"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:settings.text_color",
+      "placeholder": "t:settings.default"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        { "value": "page-width", "label": "Page" },
+        { "value": "full-width", "label": "Full" }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rhinestone calculator"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,227 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "ase-page",
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "name": "Title",
+          "settings": {
+            "text": "<h1>{{ closest.page.title }}</h1>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "center",
+            "type_preset": "h2",
+            "font": "var(--font-primary--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "text_color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "about_row": {
+          "type": "group",
+          "settings": {
+            "content_direction": "row",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "center",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 32,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "background_media": "none",
+            "background_color": "",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "image_cMpWxF": {
+              "type": "image",
+              "name": "t:names.image",
+              "settings": {
+                "image": "shopify://shop_images/authorized_reseller_certificate.jpg",
+                "link": "",
+                "image_ratio": "adapt",
+                "width": "custom",
+                "custom_width": 50,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_color": "",
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "page-content": {
+              "type": "page-content",
+              "settings": {
+                "text_color": ""
+              },
+              "blocks": {}
+            },
+            "image_9iRdqH": {
+              "type": "image",
+              "name": "t:names.image",
+              "settings": {
+                "image": "shopify://shop_images/moms_profile.png",
+                "link": "",
+                "image_ratio": "adapt",
+                "width": "custom",
+                "custom_width": 50,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_color": "",
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 35,
+                "padding-inline-end": 35
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "image_cMpWxF",
+            "page-content",
+            "image_9iRdqH"
+          ]
+        },
+        "testimonials_D38gLT": {
+          "type": "testimonials",
+          "name": "Testimonials",
+          "settings": {
+            "title": "",
+            "subtitle": "Testimonials and Reviews from our customers",
+            "columns": 3,
+            "card_gap": 40,
+            "card_bg_color": "#ffffff",
+            "card_border_color": "#e5e5e5",
+            "card_border_radius": 8,
+            "card_padding": 24,
+            "star_color": "#ffb800",
+            "star_empty_color": "#d4d4d4",
+            "title_color": "#121212",
+            "title_size": 28,
+            "title_spacing": 10,
+            "subtitle_color": "#555555",
+            "subtitle_size": 16,
+            "subtitle_spacing": 25,
+            "review_text_color": "#333333",
+            "review_font_size": 14,
+            "name_color": "#121212",
+            "name_font_size": 14,
+            "padding_top": 40,
+            "padding_bottom": 40,
+            "padding_horizontal": 20
+          },
+          "blocks": {
+            "testimonial_card_CrnNc8": {
+              "type": "_testimonial-card",
+              "settings": {
+                "review_text": "High quality service & rhinestones. Highly recommend.",
+                "reviewer_name": "Marcelle B.",
+                "rating": 5,
+                "source": "google"
+              },
+              "blocks": {}
+            },
+            "testimonial_card_jU4Pnb": {
+              "type": "_testimonial-card",
+              "settings": {
+                "review_text": "Excellent customer service, help and fast shipping! So easy to work with to get everything I need. Highly recommend.",
+                "reviewer_name": "Justin R.",
+                "rating": 5,
+                "source": "facebook"
+              },
+              "blocks": {}
+            },
+            "testimonial_card_xcKe7a": {
+              "type": "_testimonial-card",
+              "settings": {
+                "review_text": "Amazing customer service. This vendor is in the market for more than a decade. I highly recommend to shop from ASE Crystals!",
+                "reviewer_name": "Asset M.",
+                "rating": 5,
+                "source": "google"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "testimonial_card_CrnNc8",
+            "testimonial_card_jU4Pnb",
+            "testimonial_card_xcKe7a"
+          ]
+        }
+      },
+      "block_order": [
+        "heading",
+        "about_row",
+        "testimonials_D38gLT"
+      ],
+      "settings": {
+        "section_width": "section--page-width",
+        "content_direction": "column",
+        "gap": 32,
+        "background_color": "",
+        "padding-block-start": 40,
+        "padding-block-end": 80
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -9,8 +9,10 @@
  */
 {
   "current": {
-    "logo_height": 36,
-    "logo_height_mobile": 28,
+    "logo": "shopify://shop_images/logo_210_60.svg",
+    "favicon": "shopify://shop_images/favicon.svg",
+    "logo_height": 50,
+    "logo_height_mobile": 40,
     "type_body_font": "inter_n4",
     "type_subheading_font": "inter_n5",
     "type_heading_font": "inter_n7",
@@ -76,9 +78,10 @@
     "badge_sold_out_background_color": "{{ settings.color_palette.color2 }}",
     "palette_input_border": "{{ settings.color_palette.color3 }}",
     "palette_variant_border": "{{ settings.color_palette.color3 }}",
+    "page_text_color": "#121212cf",
     "color_palette": {
       "background": "#ffffff",
-      "foreground": "#000000",
+      "foreground": "#121212",
       "color1": "#333333",
       "color2": "#EEF1EA",
       "color3": "#DFDFDF"

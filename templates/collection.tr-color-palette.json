@@ -12,21 +12,22 @@
     "section": {
       "type": "section",
       "blocks": {
-        "text_tqQTNE": {
+        "text_title": {
           "type": "text",
-          "name": "t:names.title",
+          "name": "Title",
           "settings": {
             "text": "<h1>{{ closest.collection.title }}</h1>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
             "type_preset": "h2",
-            "font": "var(--font-body--family)",
+            "font": "var(--font-primary--family)",
             "font_size": "",
             "line_height": "normal",
             "letter_spacing": "normal",
             "case": "none",
             "wrap": "pretty",
+            "text_color": "",
             "background": false,
             "background_color": "#00000026",
             "corner_radius": 0,
@@ -37,21 +38,22 @@
           },
           "blocks": {}
         },
-        "text_twGGkJ": {
+        "text_desc": {
           "type": "text",
-          "name": "t:names.description",
+          "name": "Description",
           "settings": {
             "text": "{{ closest.collection.description }}",
             "width": "fit-content",
             "max_width": "none",
             "alignment": "left",
             "type_preset": "rte",
-            "font": "var(--font-body--family)",
+            "font": "var(--font-primary--family)",
             "font_size": "",
             "line_height": "normal",
             "letter_spacing": "normal",
             "case": "none",
             "wrap": "pretty",
+            "text_color": "",
             "background": false,
             "background_color": "#00000026",
             "corner_radius": 0,
@@ -64,10 +66,10 @@
         }
       },
       "block_order": [
-        "text_tqQTNE",
-        "text_twGGkJ"
+        "text_title",
+        "text_desc"
       ],
-      "name": "t:names.heading",
+      "name": "Collection heading",
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -83,16 +85,31 @@
         "background_media": "none",
         "video_position": "cover",
         "background_image_position": "cover",
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
         "border": "none",
         "border_width": 1,
         "border_opacity": 100,
         "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
         "padding-block-start": 48,
         "padding-block-end": 48
+      }
+    },
+    "color_grid": {
+      "type": "tr-color-palette",
+      "settings": {
+        "filter_option": "Color",
+        "heading": "Filter by color",
+        "heading_font_size": 16,
+        "show_all_label": "All",
+        "show_labels": true,
+        "swatch_size": 28,
+        "swatch_gap": 10,
+        "section_width": "page-width",
+        "padding-block-start": 0,
+        "padding-block-end": 16
       }
     },
     "main": {
@@ -149,20 +166,21 @@
               },
               "blocks": {}
             },
-            "product_title_4nY4eT": {
+            "product_title": {
               "type": "product-title",
               "name": "t:names.product_title",
               "settings": {
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",
-                "type_preset": "paragraph",
+                "type_preset": "rte",
                 "font": "var(--font-body--family)",
                 "font_size": "1rem",
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
                 "wrap": "pretty",
+                "text_color": "",
                 "background": false,
                 "background_color": "#00000026",
                 "corner_radius": 0,
@@ -173,7 +191,7 @@
               },
               "blocks": {}
             },
-            "price_EzJzMm": {
+            "price": {
               "type": "price",
               "settings": {
                 "show_sale_price_first": true,
@@ -187,6 +205,7 @@
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
+                "text_color": "",
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
@@ -211,8 +230,8 @@
           },
           "block_order": [
             "card-gallery",
-            "product_title_4nY4eT",
-            "price_EzJzMm",
+            "product_title",
+            "price",
             "swatches"
           ]
         }
@@ -236,6 +255,7 @@
   },
   "order": [
     "section",
+    "color_grid",
     "main"
   ]
 }

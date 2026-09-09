@@ -1,0 +1,380 @@
+{% assign block_id = block.id | replace: '_', '' | downcase %}
+{% assign s = block.settings %}
+
+{% style %}
+  .testimonials-{{ block_id }} {
+    padding: {{ s.padding_top }}px {{ s.padding_horizontal }}px {{ s.padding_bottom }}px;
+    text-align: center;
+  }
+
+  .testimonials__title-{{ block_id }} {
+    margin: 0 0 {{ s.title_spacing }}px;
+    color: {{ s.title_color }};
+    font-size: {{ s.title_size }}px;
+    font-weight: 700;
+  }
+
+  .testimonials__subtitle-{{ block_id }} {
+    margin: 0 0 {{ s.subtitle_spacing }}px;
+    color: {{ s.subtitle_color }};
+    font-size: {{ s.subtitle_size }}px;
+  }
+
+  .testimonials__grid-{{ block_id }} {
+    display: grid;
+    grid-template-columns: repeat({{ s.columns }}, 1fr);
+    gap: {{ s.card_gap }}px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .testimonials__grid-{{ block_id }} .testimonial-card {
+    background: {{ s.card_bg_color }};
+    border: 1px solid {{ s.card_border_color }};
+    border-radius: {{ s.card_border_radius }}px;
+    padding: {{ s.card_padding }}px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: left;
+  }
+
+  .testimonials__grid-{{ block_id }} .testimonial-card__stars {
+    display: flex;
+    gap: 2px;
+  }
+
+  .testimonials__grid-{{ block_id }} .testimonial-card__star {
+    fill: {{ s.star_empty_color }};
+  }
+
+  .testimonials__grid-{{ block_id }} .testimonial-card__star--filled {
+    fill: {{ s.star_color }};
+  }
+
+  .testimonials__grid-{{ block_id }} .testimonial-card__text {
+    margin: 0;
+    font-size: {{ s.review_font_size }}px;
+    line-height: 1.6;
+    color: {{ s.review_text_color }};
+    font-style: italic;
+  }
+
+  .testimonials__grid-{{ block_id }} .testimonial-card__footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: auto;
+  }
+
+  .testimonials__grid-{{ block_id }} .testimonial-card__name {
+    font-weight: 600;
+    font-size: {{ s.name_font_size }}px;
+    color: {{ s.name_color }};
+  }
+
+  .testimonials__grid-{{ block_id }} .testimonial-card__source {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    opacity: 0.7;
+    color: {{ s.review_text_color }};
+  }
+
+  @media screen and (max-width: 749px) {
+    .testimonials__grid-{{ block_id }} {
+      grid-template-columns: 1fr;
+    }
+
+    .testimonials__title-{{ block_id }} {
+      font-size: {{ s.title_size | times: 0.8 }}px;
+    }
+
+    .testimonials-{{ block_id }} {
+      padding: {{ s.padding_top | times: 0.7 }}px {{ s.padding_horizontal | times: 0.7 }}px {{ s.padding_bottom | times: 0.7 }}px;
+    }
+  }
+
+  @media screen and (min-width: 750px) and (max-width: 989px) {
+    .testimonials__grid-{{ block_id }} {
+      grid-template-columns: repeat({{ s.columns | at_most: 2 }}, 1fr);
+    }
+  }
+{% endstyle %}
+
+<div class="testimonials-{{ block_id }}" {{ block.shopify_attributes }}>
+  {% if s.title != blank %}
+    <h2 class="testimonials__title-{{ block_id }}">{{ s.title }}</h2>
+  {% endif %}
+
+  {% if s.subtitle != blank %}
+    <p class="testimonials__subtitle-{{ block_id }}">{{ s.subtitle }}</p>
+  {% endif %}
+
+  <div class="testimonials__grid-{{ block_id }}">
+    {% content_for 'blocks' %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "_testimonial-card"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "What Our Customers Say"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Real reviews from our happy customers"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Columns (desktop)",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Gap between cards",
+      "min": 8,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card border color",
+      "default": "#E5E5E5"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Card border radius",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "card_padding",
+      "label": "Card padding",
+      "min": 12,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Stars"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Filled star color",
+      "default": "#FFB800"
+    },
+    {
+      "type": "color",
+      "id": "star_empty_color",
+      "label": "Empty star color",
+      "default": "#D4D4D4"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#121212"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title size",
+      "min": 16,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "title_spacing",
+      "label": "Title spacing below",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle color",
+      "default": "#555555"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "label": "Subtitle size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "subtitle_spacing",
+      "label": "Subtitle spacing below",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 25
+    },
+    {
+      "type": "color",
+      "id": "review_text_color",
+      "label": "Review text color",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "review_font_size",
+      "label": "Review text size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "name_color",
+      "label": "Reviewer name color",
+      "default": "#121212"
+    },
+    {
+      "type": "range",
+      "id": "name_font_size",
+      "label": "Reviewer name size",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "label": "Padding horizontal",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "_testimonial-card",
+          "settings": {
+            "review_text": "The crystals are absolutely stunning. Quality is unmatched and shipping was fast!",
+            "reviewer_name": "Sarah M.",
+            "rating": 5,
+            "source": "google"
+          }
+        },
+        {
+          "type": "_testimonial-card",
+          "settings": {
+            "review_text": "Best crystal shop I've found. The selection is incredible and prices are fair.",
+            "reviewer_name": "James K.",
+            "rating": 5,
+            "source": "facebook"
+          }
+        },
+        {
+          "type": "_testimonial-card",
+          "settings": {
+            "review_text": "I keep coming back! Every order has been perfect. Highly recommend ASE Crystals.",
+            "reviewer_name": "Emily R.",
+            "rating": 5,
+            "source": "google"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

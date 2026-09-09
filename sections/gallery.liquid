@@ -1,0 +1,406 @@
+{% liquid
+  assign custom_color = false
+  if section.settings.background_color != blank or section.settings.text_color != blank
+    assign custom_color = true
+    render 'contrast-override', background_color: section.settings.background_color, text_color: section.settings.text_color, section_id: section.id
+  endif
+%}
+
+{{ 'gallery.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .gallery-section {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    padding-left: {{ section.settings.padding_sides }}px;
+    padding-right: {{ section.settings.padding_sides }}px;
+  }
+
+  .gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax({{ section.settings.minimum_column_width }}px, 1fr));
+    gap: {{ section.settings.gap }}px;
+    width: 100%;
+  }
+
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: {{ section.settings.border_radius }}px;
+    aspect-ratio: {{ section.settings.aspect_ratio }};
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: {{ section.settings.object_fit }};
+    object-position: center;
+    display: block;
+  }
+
+  .gallery-item a {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Lightbox overlay */
+  .gallery-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.85);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    cursor: zoom-out;
+  }
+
+  .gallery-lightbox--open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .gallery-lightbox__img {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.4);
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+  }
+
+  .gallery-lightbox--open .gallery-lightbox__img {
+    transform: scale(1);
+  }
+
+  .gallery-lightbox__close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 8px;
+    line-height: 0;
+  }
+
+  .gallery-item[data-lightbox] {
+    cursor: zoom-in;
+  }
+
+  @media screen and (max-width: 749px) {
+    .gallery-section {
+      padding-top: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px;
+      padding-left: {{ section.settings.padding_sides | times: 0.5 | round: 0 }}px;
+      padding-right: {{ section.settings.padding_sides | times: 0.5 | round: 0 }}px;
+    }
+
+    .gallery-container {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+  }
+{%- endstyle -%}
+
+<div class="gallery-section section section--page-width gradient{% if custom_color %} color-custom-{{ section.id }}{% endif %}">
+  {% if section.blocks.size > 0 %}
+    <div class="gallery-container">
+      {% for block in section.blocks %}
+        <div
+          class="gallery-item"
+          {{ block.shopify_attributes }}
+          {% if block.settings.link == blank and block.settings.image != blank %}
+            data-lightbox
+            data-lightbox-src="{{ block.settings.image | image_url: width: 2400 }}"
+            data-lightbox-alt="{{ block.settings.alt_text | escape }}"
+          {% endif %}
+        >
+          {% if block.settings.link != blank %}
+            <a href="{{ block.settings.link }}">
+              {% if block.settings.image != blank %}
+                {{
+                  block.settings.image
+                  | image_url: width: 1200
+                  | image_tag: alt: block.settings.alt_text, loading: 'lazy'
+                }}
+              {% else %}
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              {% endif %}
+            </a>
+          {% else %}
+            {% if block.settings.image != blank %}
+              {{
+                block.settings.image
+                | image_url: width: 1200
+                | image_tag: alt: block.settings.alt_text, loading: 'lazy'
+              }}
+            {% else %}
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div style="text-align: center; padding: 60px 20px;">
+      <p>Add images to your gallery</p>
+    </div>
+  {% endif %}
+</div>
+
+{%- comment -%} Lightbox overlay (shared per section) {%- endcomment -%}
+<div class="gallery-lightbox" data-gallery-lightbox="{{ section.id }}" aria-hidden="true">
+  <button class="gallery-lightbox__close" aria-label="Close" data-lightbox-close>
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  </button>
+  {% # theme-check-disable ImgWidthAndHeight %}
+  {% comment %} Dimensions are set at runtime by the lightbox script. {% endcomment %}
+  <img class="gallery-lightbox__img" src="" alt="" />
+  {% # theme-check-enable ImgWidthAndHeight %}
+</div>
+
+<script>
+  (function () {
+    const section = document.getElementById('shopify-section-{{ section.id }}');
+    if (!section) return;
+
+    const overlay = section.querySelector('[data-gallery-lightbox="{{ section.id }}"]');
+    if (!overlay) return;
+
+    const overlayImg = overlay.querySelector('.gallery-lightbox__img');
+
+    function openLightbox(src, alt) {
+      overlayImg.src = src;
+      overlayImg.alt = alt || '';
+      overlay.classList.add('gallery-lightbox--open');
+      overlay.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      overlay.classList.remove('gallery-lightbox--open');
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    // Click on gallery items with lightbox data
+    section.querySelectorAll('[data-lightbox]').forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        openLightbox(item.dataset.lightboxSrc, item.dataset.lightboxAlt);
+      });
+    });
+
+    // Close on overlay click
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay || e.target.closest('[data-lightbox-close]')) {
+        closeLightbox();
+      }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Gallery",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "minimum_column_width",
+      "min": 100,
+      "max": 600,
+      "step": 50,
+      "unit": "px",
+      "label": "Minimum column width",
+      "default": 200
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "label": "Gap between images",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Image settings"
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "label": "Aspect ratio",
+      "options": [
+        {
+          "value": "auto",
+          "label": "Adapt to image"
+        },
+        {
+          "value": "1",
+          "label": "Square (1:1)"
+        },
+        {
+          "value": "16/9",
+          "label": "Landscape (16:9)"
+        },
+        {
+          "value": "4/3",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "3/4",
+          "label": "Portrait (3:4)"
+        },
+        {
+          "value": "9/16",
+          "label": "Portrait (9:16)"
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "select",
+      "id": "object_fit",
+      "label": "Image fit",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Cover (crop to fit)"
+        },
+        {
+          "value": "contain",
+          "label": "Contain (fit entire image)"
+        },
+        {
+          "value": "fill",
+          "label": "Fill (stretch to fit)"
+        }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Styling"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "placeholder": "t:settings.default"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:settings.text_color",
+      "placeholder": "t:settings.default"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_sides",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Side padding",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "alt_text",
+          "label": "Alt text (for accessibility)",
+          "placeholder": "Describe the image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Gallery",
+      "blocks": [
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

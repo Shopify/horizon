@@ -11,34 +11,49 @@
   "type": "header",
   "name": "t:names.header",
   "sections": {
-    "header_announcements_9jGBFp": {
+    "header_announcements_cA9VrL": {
       "type": "header-announcements",
       "blocks": {
-        "announcement_BxgCk9": {
+        "announcement_kTNgBf": {
           "type": "_announcement",
           "settings": {
-            "text": "Welcome to our store",
+            "text": "Artistic Sports Essentials and Crystals since 2014. We ship to Canada and the US. || ☎ +1 604-782-5025",
             "link": "",
-            "font": "var(--font-subheading--family)",
-            "font_size": "0.75rem",
+            "font": "var(--font-body--family)",
+            "font_size": "0.875rem",
             "weight": "",
-            "letter_spacing": "normal",
-            "case": "none"
+            "letter_spacing": "loose",
+            "case": "none",
+            "text_color": ""
           },
           "blocks": {}
         }
       },
       "block_order": [
-        "announcement_BxgCk9"
+        "announcement_kTNgBf"
       ],
       "name": "t:names.announcement_bar",
       "settings": {
-        "speed": 5,
+        "speed": 2,
         "section_width": "page-width",
-        "divider_width": 1,
-        "padding-block-start": 15,
-        "padding-block-end": 15,
-        "divider_color": "{{ settings.color_palette.color3 }}"
+        "background_color": "#4e6b9e",
+        "divider_width": 0,
+        "divider_color": "{{ settings.color_palette.color3 }}",
+        "padding-block-start": 20,
+        "padding-block-end": 20,
+        "facebook_url": "https://www.facebook.com/asecrystals/",
+        "instagram_url": "https://www.instagram.com/asecrystals",
+        "youtube_url": "",
+        "tiktok_url": "https://www.tiktok.com/@ase.crystals",
+        "twitter_url": "",
+        "threads_url": "",
+        "linkedin_url": "",
+        "bluesky_url": "",
+        "snapchat_url": "",
+        "pinterest_url": "",
+        "tumblr_url": "",
+        "vimeo_url": "",
+        "whatsapp_url": "https://wa.me/16047825025"
       }
     },
     "header_section": {
@@ -59,6 +74,8 @@
           "static": true,
           "settings": {
             "menu": "main-menu",
+            "background_color": "{{ settings.color_palette.background }}",
+            "text_color": "",
             "type_font_primary_size": "0.875rem",
             "menu_font_style": "inverse",
             "type_font_primary_link": "body",
@@ -68,6 +85,8 @@
             "featured_collections_aspect_ratio": "16 / 9",
             "image_border_radius": 0,
             "navigation_bar": false,
+            "background_color_navigation_bar": "{{ settings.color_palette.background }}",
+            "text_color_navigation_bar": "",
             "drawer_accordion": false,
             "drawer_accordion_expand_first": false,
             "drawer_dividers": false
@@ -79,6 +98,7 @@
         "logo_position": "left",
         "menu_position": "left",
         "menu_row": "top",
+        "customer_account_menu": "customer-account-main-menu",
         "show_search": true,
         "search_position": "right",
         "search_row": "top",
@@ -94,15 +114,50 @@
         "enable_sticky_header": "always",
         "divider_width": 0,
         "divider_size": "page-width",
+        "divider_color": "",
         "border_width": 0,
+        "bottom_border_color": "",
+        "actions_display_style": "icon",
+        "actions_font_size": "0.875rem",
+        "actions_font": "body",
+        "actions_text_case": "none",
+        "background_color_top": "",
+        "text_color_top": "",
+        "background_color_bottom": "",
+        "text_color_bottom": "",
+        "bubble_style": "default",
+        "bubble_background_color": "",
+        "bubble_text_color": "",
         "enable_transparent_header_home": false,
+        "home_inverse_logo": false,
+        "text_color_transparent_home": "",
         "enable_transparent_header_product": false,
-        "enable_transparent_header_collection": false
+        "product_inverse_logo": false,
+        "text_color_transparent_product": "",
+        "enable_transparent_header_collection": false,
+        "collection_inverse_logo": false,
+        "text_color_transparent_collection": ""
+      }
+    },
+    "divider_bVTdVf": {
+      "type": "divider",
+      "name": "t:names.divider_section",
+      "settings": {
+        "background_color": "",
+        "divider_color": "{{ settings.color_palette.color3 }}",
+        "section_width": "full-width",
+        "thickness": 1,
+        "corner_radius": "square",
+        "width_percent": 100,
+        "alignment_horizontal": "center",
+        "padding-block-start": 16,
+        "padding-block-end": 16
       }
     }
   },
   "order": [
-    "header_announcements_9jGBFp",
-    "header_section"
+    "header_announcements_cA9VrL",
+    "header_section",
+    "divider_bVTdVf"
   ]
 }

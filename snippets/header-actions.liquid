@@ -63,6 +63,27 @@
   {% endif %}
   {{- block.shopify_attributes -}}
 >
+  <a
+    href="https://wa.me/16047825025"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="header-actions__action header-actions__whatsapp desktop:hidden"
+    aria-label="WhatsApp"
+  >
+    <svg
+      class="header-actions__whatsapp-icon"
+      aria-hidden="true"
+      focusable="false"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
+      width="22"
+      height="22"
+      fill="currentColor"
+    >
+      {%- render 'icon', icon: 'whatsapp' -%}
+    </svg>
+  </a>
+
   {% if shop.customer_accounts_enabled %}
     {% liquid
       assign account_actions_style = ''
@@ -152,6 +173,68 @@
 ></script>
 
 {% stylesheet %}
+  .header-actions__whatsapp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #25D366;
+    text-decoration: none;
+    padding: 0;
+    min-width: var(--minimum-touch-target);
+    min-height: var(--minimum-touch-target);
+    order: -1;
+  }
+
+  .header-actions__whatsapp:hover {
+    color: #128C7E;
+  }
+
+  /* The mobile header is a 5-column grid - leftA leftB center rightA rightB -
+     with 44px bookends, and it packs <header-actions> into the single rightB
+     track. With the WhatsApp link there are three 44px items in that flex
+     container, so it needs 132px and overflowed leftward onto the logo.
+
+     At 360px the header is 4px over budget:
+       44 (menu) + 44 (search) + 140 (logo) + 132 (actions) + 4 (padding) = 364
+     Wider phones have slack, which is why only the narrowest viewport showed it.
+
+     So: collapse the two right bookends into one content-sized track, let the
+     centre track shrink below its content, and let the logo scale into what is
+     left. The logo carries a fixed width, so max-width is required or it would
+     simply overflow its own track instead.
+
+     Scoped to the same two triggers upstream uses for the 5-column grid -
+     the mobile breakpoint and the drawer menu - because setting
+     --header-template-columns unconditionally would clobber the 3-column
+     desktop layout. .header__columns is repeated to outrank upstream. */
+  @media screen and (max-width: 749px) {
+    #header-component .header__columns.header__columns:has(.header-actions__whatsapp) {
+      --header-template-columns: var(--header-mobile-bookend) var(--header-mobile-bookend)
+        minmax(0, 1fr) auto;
+
+      grid-template-areas: 'leftA leftB center rightB';
+    }
+
+    #header-component .header__columns:has(.header-actions__whatsapp) .header-logo img {
+      max-width: 100%;
+    }
+  }
+
+  #header-component[data-menu-style='drawer']
+    .header__columns.header__columns:has(.header-actions__whatsapp) {
+    --header-template-columns: var(--header-mobile-bookend) var(--header-mobile-bookend)
+      minmax(0, 1fr) auto;
+
+    grid-template-areas: 'leftA leftB center rightB';
+  }
+
+  #header-component[data-menu-style='drawer']
+    .header__columns:has(.header-actions__whatsapp)
+    .header-logo img {
+    max-width: 100%;
+  }
+
+
   .header {
     --account-offset-top: calc(
       var(--header-group-height) + (var(--header-height) * var(--transparent-header-offset-boolean))

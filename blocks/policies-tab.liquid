@@ -1,0 +1,277 @@
+{% assign block_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .policies-tab-{{ block_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: {{ block.settings.padding_top }}px {{ block.settings.padding_horizontal }}px {{ block.settings.padding_bottom }}px;
+    background-color: {{ block.settings.background_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+    text-align: center;
+  }
+
+  .policies-tab__title-{{ block_id }} {
+    margin: 0 0 {{ block.settings.title_spacing }}px;
+    color: {{ block.settings.title_color }};
+    font-size: {{ block.settings.title_size }}px;
+    font-weight: 700;
+  }
+
+  .policies-tab__list-{{ block_id }} {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: {{ block.settings.link_spacing }}px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .policies-tab__link-{{ block_id }} {
+    color: {{ block.settings.link_color }};
+    font-size: {{ block.settings.link_size }}px;
+    text-decoration: {{ block.settings.link_underline }};
+    transition: color 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .policies-tab__link-{{ block_id }}:hover {
+    color: {{ block.settings.link_hover_color }};
+  }
+
+  .policies-tab__empty-{{ block_id }} {
+    color: {{ block.settings.title_color }};
+    opacity: 0.6;
+    font-size: {{ block.settings.link_size }}px;
+    font-style: italic;
+  }
+
+  @media screen and (max-width: 749px) {
+    .policies-tab-{{ block_id }} {
+      padding: {{ block.settings.padding_top | times: 0.7 }}px {{ block.settings.padding_horizontal | times: 0.7 }}px {{ block.settings.padding_bottom | times: 0.7 }}px;
+    }
+
+    .policies-tab__title-{{ block_id }} {
+      font-size: {{ block.settings.title_size | times: 0.8 }}px;
+    }
+
+    .policies-tab__link-{{ block_id }} {
+      font-size: {{ block.settings.link_size | times: 0.9 }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="policies-tab-{{ block_id }}" {{ block.shopify_attributes }}>
+  <h2 class="policies-tab__title-{{ block_id }}">{{ block.settings.title }}</h2>
+
+  {% liquid
+    assign menu = block.settings.menu
+    assign has_menu = false
+    if menu != blank and menu.links.size > 0
+      assign has_menu = true
+    endif
+  %}
+
+  {% if has_menu %}
+    <ul class="policies-tab__list-{{ block_id }}">
+      {% for link in menu.links %}
+        <li>
+          <a href="{{ link.url }}" class="policies-tab__link-{{ block_id }}">
+            {{ link.title }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% elsif shop.policies.size > 0 %}
+    <ul class="policies-tab__list-{{ block_id }}">
+      {%- for policy in shop.policies -%}
+        {%- if policy != blank -%}
+          <li>
+            <a href="{{ policy.url }}" class="policies-tab__link-{{ block_id }}">
+              {{ policy.title }}
+            </a>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  {% else %}
+    <p class="policies-tab__empty-{{ block_id }}">
+      No policies found. Select a menu or add policies in your store settings.
+    </p>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Policies",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Policies"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "footer",
+      "info": "Select a navigation menu for policy links. Falls back to store policies if empty."
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "label": "Padding horizontal",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Title"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color",
+      "default": "#121212"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Size",
+      "min": 16,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "title_spacing",
+      "label": "Spacing below",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 25
+    },
+    {
+      "type": "header",
+      "content": "Links"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "link_hover_color",
+      "label": "Hover color",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "link_size",
+      "label": "Size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "link_underline",
+      "label": "Underline",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "underline",
+          "label": "Underline"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "link_spacing",
+      "label": "Spacing between",
+      "min": 5,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "Policies"
+    }
+  ]
+}
+{% endschema %}
