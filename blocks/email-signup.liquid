@@ -92,7 +92,13 @@
         <span class="svg-wrapper icon-success">
           {{ 'icon-checkmark.svg' | inline_asset_content }}
         </span>
-        <p class="email-signup__message-text">{{ 'blocks.email_signup.success' | t }}</p>
+        <p class="email-signup__message-text">
+          {%- if section.id contains '__footer' -%}
+            Thanks! New subscribers: check your inbox for “Confirm Your Subscription” from Combustion to finish signing up.
+          {%- else -%}
+            {{ 'blocks.email_signup.success' | t }}
+          {%- endif -%}
+        </p>
       </div>
     {%- endif -%}
   {% endform %}
