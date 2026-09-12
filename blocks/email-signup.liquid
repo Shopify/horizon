@@ -10,6 +10,9 @@
     </div>
   {% endif %}
   {%- form 'customer', class: 'email-signup__form spacing-style' %}
+    {%- if section.id contains '__footer' -%}
+      <input type="hidden" name="contact[tags]" value="newsletter,source:shopify-footer">
+    {%- endif -%}
     <div
       class="email-signup__input-group {% if block_settings.integrated_button and block_settings.border_style != 'underline' %}email-signup__input-group--integrated{% endif %} {% if block_settings.border_style == 'underline' %}email-signup__input-group--underline{% endif %} {% if block_settings.border_style == 'none' %}email-signup__input-group--no-border{% endif %} {% if block_settings.display_type == 'arrow' %}email-signup__input-group--arrow{% endif %} {% if block_settings.inherit_color_scheme == false %}color-{{ block_settings.color_scheme }}{% endif %}"
       style="--border-width: {{ block_settings.border_width }}px; --border-radius: {{ block_settings.border_radius }}px;"
