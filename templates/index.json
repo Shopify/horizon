@@ -1805,7 +1805,7 @@
               "settings": {
                 "thickness": 1,
                 "corner_radius": "square",
-                "divider_color": "#DFDFDF",
+                "divider_color": "#dfdfdf",
                 "width_percent": 100,
                 "padding-block-start": 0,
                 "padding-block-end": 0
@@ -2412,7 +2412,8 @@
         ".button-secondary .add-to-cart-icon {display: none;}",
         "rte-formatter p {font-weight: 500;}",
         "h3 {font-weight: bold;}",
-        ".quick-add__button {right: 0;}"
+        ".quick-add__button {right: 0;}",
+        "@media screen and (min-width: 750px) {.card-gallery:not(:has(slideshow-arrows)) {pointer-events: none; } .card-gallery a {pointer-events: auto; }}"
       ],
       "name": "✅ Starter Kits",
       "settings": {
@@ -3905,8 +3906,6 @@
             "custom_width_mobile": 100,
             "height": "fill",
             "custom_height": 66,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
             "background_media": "none",
             "background_color": "",
             "video_position": "cover",
@@ -5256,8 +5255,6 @@
             "custom_width_mobile": 100,
             "height": "fill",
             "custom_height": 99,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
             "background_media": "none",
             "background_color": "",
             "video_position": "cover",
