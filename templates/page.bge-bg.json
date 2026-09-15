@@ -27,7 +27,7 @@
             "letter_spacing": "normal",
             "case": "none",
             "wrap": "pretty",
-            "color": "",
+            "text_color": "",
             "background": false,
             "background_color": "#00000026",
             "corner_radius": 0,
@@ -53,7 +53,7 @@
             "letter_spacing": "normal",
             "case": "none",
             "wrap": "pretty",
-            "color": "",
+            "text_color": "",
             "background": false,
             "background_color": "#00000026",
             "corner_radius": 0,
@@ -72,7 +72,7 @@
       "settings": {
         "content_direction": "column",
         "gap": 32,
-        "color_scheme": "scheme-49e1d817-004d-4dc3-a9b8-2a41d3b594ee",
+        "background_color": "{{ settings.color_palette.color4 }}",
         "padding-block-start": 28,
         "padding-block-end": 28
       }
