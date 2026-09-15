@@ -5,6 +5,9 @@
   @param {string} [section_id] - The section ID for cart discount component.
 {%- enddoc -%}
 
+{% render 'text-component-shimmer-styles' %}
+{% render 'cart-typography-styles' %}
+
 <div class="cart-totals">
   {% # We need to keep this node in place to allow morphing to work properly # %}
   <div class="cart-totals__original-container cart-primary-typography">
@@ -49,7 +52,6 @@
         <cart-note style="display: flex;">
           {% capture cart_note_accordion_children %}
             <details
-              class="details"
               {% if settings.cart_note_open_by_default %}
                 open
               {% endif %}
@@ -77,6 +79,7 @@
                   id="cart-note"
                   class="cart-note__instructions"
                   name="note"
+                  data-skip-node-update
                 >{{ cart.note }}</textarea>
               </div>
             </details>
@@ -115,7 +118,6 @@
 
         {% capture cart_discount_accordion_children %}
           <details
-            class="details"
             {% if disclosure_expanded %}
               open
             {% endif %}
@@ -155,6 +157,7 @@
                         size="8"
                         placeholder="{{ 'content.discount_code' | t }}"
                         required
+                        data-skip-node-update
                       >
                       <button
                         type="submit"
@@ -211,10 +214,7 @@
             </div>
           </details>
         {% endcapture %}
-        {% render 'accordion-custom-component',
-          children: cart_discount_accordion_children,
-          class: 'cart-discount'
-        %}
+        {% render 'accordion-custom-component', children: cart_discount_accordion_children, class: 'cart-discount' %}
       {% endif %}
     </div>
   {% endif %}
@@ -290,18 +290,18 @@
     display: flex;
     flex-direction: column;
     gap: 0;
-    border-block: 1px solid var(--color-border);
+    border-block: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-10-25));
     padding-block: 0;
     margin-block-start: var(--margin-3xs);
   }
 
   .cart-actions__divider {
-    border-block-start: 1px solid var(--color-border);
+    border-block-start: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-10-25));
   }
 
   .cart-totals:not(:has(.cart-actions)) {
     margin-block-start: var(--margin-3xs);
-    border-block-start: 1px solid var(--color-border);
+    border-block-start: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-10-25));
     padding-block-start: var(--margin-xl);
   }
 
@@ -312,7 +312,17 @@
   }
 
   .cart-totals__tax-note {
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+    color: var(--color-foreground-subdued);
+  }
+
+  .cart-totals__tax-note a {
+    color: var(--color-foreground-subdued);
+    text-decoration-line: underline;
+    text-decoration-color: currentColor;
+
+    &:hover {
+      text-decoration-color: transparent;
+    }
   }
 
   .cart-totals__tax-note small {
@@ -428,7 +438,7 @@
   }
 
   .cart-note__summary:hover {
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+    color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-subdued-text));
   }
 
   .cart-note__label {
@@ -474,7 +484,7 @@
   }
 
   .cart-drawer__summary .cart-totals:not(:has(.cart-totals__original-container:empty)) {
-    border-block-start: var(--style-border-width) solid var(--color-border);
+    border-block-start: var(--style-border-width) solid rgb(var(--color-foreground-rgb) / var(--opacity-10-25));
     padding-block-start: var(--padding-2xl);
   }
 
@@ -589,7 +599,7 @@
   }
 
   .cart-discount__summary:hover {
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+    color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-subdued-text));
   }
 
   .cart-discount__label {

@@ -10,6 +10,8 @@
   @param {boolean} [in_drawer] - Whether the filter is in a drawer
 {%- enddoc -%}
 
+{% render 'variant-picker-styles' %}
+
 {% liquid
   assign is_swatch = false
   assign swatch_index = filter.values | find_index: 'swatch'
@@ -55,7 +57,7 @@
             facet-type="swatches"
           >
             <span
-              class="facets__swatch-wrapper{% if active_value_count > 3 %} bubble facets__bubble{% endif %}"
+              class="facets__swatch-wrapper{% if active_value_count > 3 %} facets__bubble{% endif %}"
               ref="facetStatus"
             >
               {%- liquid
@@ -79,11 +81,11 @@
               class="
                 {%- if filter_style == 'horizontal' -%}
                   {%- if active_value_count > 1 -%}
-                    bubble facets__bubble
+                    facets__bubble
                   {%- endif -%}
                 {%- else -%}
                   {%- if active_value_count > 0 -%}
-                    bubble facets__bubble
+                    facets__bubble
                   {%- endif -%}
                 {%- endif %}
                 hide-when-empty
@@ -109,7 +111,7 @@
       {% unless filter_style == 'vertical' %}
         data-close-on-resize
       {% endunless %}
-      class="facets__inputs facets__panel-content details-content{% if filter_style == 'horizontal' %} color-{{ settings.popover_color_scheme }}{% endif %}"
+      class="facets__inputs facets__panel-content details-content{% if filter_style == 'horizontal' %} color-custom-popover{% endif %}"
       id="facet-inputs-{{ filter.param_name | escape | replace: '.', '-' }}"
     >
       <facet-inputs-component
@@ -282,6 +284,7 @@
                       class="variant-option__button-label variant-option__button-label--has-swatch"
                       on:pointerenter="/prefetchPage"
                       on:pointerleave="/cancelPrefetchPage"
+                      on:pointerdown="/prefetchPageImmediate"
                     >
                       <div
                         class="variant-option__swatch-wrapper"
@@ -373,7 +376,7 @@
                       id: input_id,
                       disabled: is_disabled,
                       inputRef: 'facetInputs[]',
-                      events: 'on:pointerenter="/prefetchPage" on:pointerleave="/cancelPrefetchPage"'
+                      events: 'on:pointerenter="/prefetchPage" on:pointerleave="/cancelPrefetchPage" on:pointerdown="/prefetchPageImmediate"'
                     %}
                   {% endif %}
                 {% endif %}
@@ -412,7 +415,7 @@
                 type="button"
                 on:click="/clearFilter"
                 on:keydown="/clearFilter"
-                class="clear-filter button button-secondary"
+                class="clear-filter button button-unstyled"
               >
                 {{- 'actions.clear' | t -}}
               </button>
@@ -435,6 +438,69 @@
 %}
 
 {% stylesheet %}
+  .facets__bubble {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(var(--variant-picker-swatch-height) / 1.5);
+    min-width: 20px;
+    padding: 0 6px;
+    border-radius: 20px;
+    font-family: var(--font-paragraph--family);
+    font-size: var(--font-size--xs);
+    font-weight: var(--font-paragraph--weight);
+    color: var(--color-foreground);
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-10-25));
+  }
+
+  .facets__bubble svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .show-more__button {
+    color: var(--color-foreground);
+    cursor: pointer;
+  }
+
+  .show-more__button:hover {
+    @media screen and (min-width: 750px) {
+      color: rgb(var(--color-foreground-rgb) / var(--opacity-80));
+    }
+  }
+
+  .show-more__label {
+    text-align: start;
+    font-size: var(--font-size--body-md);
+    font-family: var(--font-paragraph--family);
+  }
+
+  .show-more__button .svg-wrapper {
+    width: var(--icon-size-xs);
+    height: var(--icon-size-xs);
+  }
+
+  .show-more[data-expanded='true'] .show-more__label--more,
+  .show-more[data-expanded='false'] .show-more__label--less {
+    display: none;
+  }
+
+  .show-more__button .icon-plus :is(.horizontal, .vertical) {
+    transition: transform var(--animation-speed) var(--animation-easing);
+    transform: rotate(0deg);
+    transform-origin: 50% 50%;
+    opacity: 1;
+  }
+
+  .show-more:where([data-expanded='true']) .show-more__button .icon-plus .horizontal {
+    transform: rotate(90deg);
+  }
+
+  .show-more:where([data-expanded='true']) .show-more__button .icon-plus .vertical {
+    transform: rotate(90deg);
+    opacity: 0;
+  }
+
   .facets input:checked + label {
     font-weight: 500;
   }
@@ -450,11 +516,14 @@
 
   /* Hover state for checked checkboxes - targeting via adjacent sibling */
   .facets .checkbox:not(.checkbox--disabled):hover .checkbox__input:checked + .checkbox__label .icon-checkmark {
-    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-85));
+    background-color: var(--color-foreground-subdued);
   }
 
+  .facets .checkbox:not(.checkbox--disabled) .checkbox__label-text {
+    color: var(--color-foreground-subdued);
+  }
   .facets .checkbox:not(.checkbox--disabled):hover .checkbox__label-text {
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-90));
+    color: var(--color-foreground-rgb);
   }
 
   .facets .checkbox .checkbox__label-text {
@@ -493,6 +562,11 @@
     &:hover {
       --pill-label-border-opacity: 100%;
     }
+  }
+
+  .facets__pill-input:not(:checked) + .facets__pill-label:hover {
+    --pill-label-color-rgb: var(--color-foreground-rgb);
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-5));
   }
 
   .facets__pill-input {

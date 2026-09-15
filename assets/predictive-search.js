@@ -4,6 +4,7 @@ import { sectionRenderer } from '@theme/section-renderer';
 import { morph } from '@theme/morph';
 import { RecentlyViewed } from '@theme/recently-viewed-products';
 import { DialogCloseEvent, DialogOpenEvent, DialogComponent } from '@theme/dialog';
+import { SearchUpdateEvent } from '@shopify/events';
 
 /**
  * A custom element that allows the user to search for resources available on the store.
@@ -321,18 +322,40 @@ class PredictiveSearchComponent extends Component {
 
     const abortController = this.#createAbortController();
 
+    const deferredPromise = SearchUpdateEvent.createPromise();
+
+    this.dispatchEvent(
+      new SearchUpdateEvent({
+        search: {
+          query: searchTerm,
+        },
+        promise: deferredPromise.promise,
+      })
+    );
+
     sectionRenderer
       .getSectionHTML(this.dataset.sectionId, false, url)
       .then((resultsMarkup) => {
-        if (!resultsMarkup) return;
+        if (!resultsMarkup) {
+          deferredPromise.resolve({ totalCount: 0 });
+          return;
+        }
 
-        if (abortController.signal.aborted) return;
+        if (abortController.signal.aborted) {
+          deferredPromise.reject(new Error('Fetch aborted by user'));
+          return;
+        }
 
         morph(predictiveSearchResults, resultsMarkup);
 
         this.#resetScrollPositions();
+
+        // Count all result items (products, collections, pages, articles, queries)
+        const resultCount = predictiveSearchResults.querySelectorAll('[ref="resultsItems[]"]').length;
+        deferredPromise.resolve({ totalCount: resultCount });
       })
       .catch((error) => {
+        deferredPromise.reject(error);
         if (abortController.signal.aborted) return;
         throw error;
       });

@@ -172,6 +172,7 @@
     padding: var(--padding-xl) var(--padding-sm);
     margin-top: var(--padding-xl);
     position: relative;
+    isolation: isolate;
   }
 
   .pagination__list {
@@ -295,7 +296,8 @@
     }
 
     .pagination__list:has(
-        .pagination__link:is(:hover, :focus-visible):not(.pagination__link--gap, .pagination__link--disabled))::before {
+        .pagination__link:is(:hover, :focus-visible):not(.pagination__link--gap, .pagination__link--disabled)
+      )::before {
       opacity: 1;
     }
 
@@ -311,7 +313,8 @@
 
     .pagination__list
       .pagination__item:has(
-        .pagination__link:is(:hover, :focus-visible):not(.pagination__link--gap, .pagination__link--disabled)) {
+        .pagination__link:is(:hover, :focus-visible):not(.pagination__link--gap, .pagination__link--disabled)
+      ) {
       anchor-name: --pagination-hover;
     }
 

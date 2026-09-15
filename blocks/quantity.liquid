@@ -1,8 +1,93 @@
-{% render 'quantity-selector', product: closest.product %}
+{%- if block.settings.input_style == 'custom' -%}
+  {%- capture wrapper_class -%}quantity-selector-wrapper--block-{{ block.id }}{%- endcapture -%}
+  {% style %}
+    .{{ wrapper_class }} {
+      {%- render 'input-custom-styles', block_settings: block.settings -%}
+      --style-border-width-inputs: {{ block.settings.border_width }}px;
+      --style-border-radius-inputs: {{ block.settings.border_radius }}px;
+      --style-border-radius-buttons-primary: {{ block.settings.border_radius }}px;
+      --style-border-radius-buttons-secondary: {{ block.settings.border_radius }}px;
+    }
+  {% endstyle %}
+{%- endif -%}
+
+{% render 'quantity-selector', product: closest.product, block: block, wrapper_class: wrapper_class %}
 
 {% schema %}
 {
   "name": "t:names.quantity",
-  "tag": null
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.input"
+    },
+    {
+      "type": "select",
+      "id": "input_style",
+      "label": "t:settings.style",
+      "options": [
+        {
+          "value": "default",
+          "label": "t:options.default"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "default",
+      "info": "t:info.edit_input_field_in_theme_settings"
+    },
+    {
+      "type": "color",
+      "id": "input_background_color",
+      "label": "t:settings.background",
+      "default": "{{ settings.color_palette.background }}",
+      "visible_if": "{{ block.settings.input_style == \"custom\" }}"
+    },
+    {
+      "type": "color",
+      "id": "input_text_color",
+      "label": "t:settings.text",
+      "default": "{{ settings.color_palette.foreground }}",
+      "visible_if": "{{ block.settings.input_style == \"custom\" }}"
+    },
+    {
+      "type": "color",
+      "id": "input_border_color",
+      "label": "t:settings.borders",
+      "default": "{{ settings.color_palette.foreground }}",
+      "visible_if": "{{ block.settings.input_style == \"custom\" }}"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "t:settings.border_width",
+      "min": 0,
+      "max": 4,
+      "step": 0.5,
+      "unit": "px",
+      "default": 1,
+      "visible_if": "{{ block.settings.input_style == \"custom\" }}"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.input_style == \"custom\" }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.quantity",
+      "category": "t:categories.product"
+    }
+  ]
 }
 {% endschema %}

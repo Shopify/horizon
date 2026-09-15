@@ -1,0 +1,70 @@
+{%- doc -%}
+  Shared product media container styles used by product media gallery and product card gallery markup.
+
+  @example
+  {% render 'product-media-container-styles' %}
+{%- enddoc -%}
+
+{% stylesheet %}
+  :where(:not(.dialog-zoomed-gallery)) > .product-media-container {
+    --slide-width: 100%;
+
+    display: flex;
+    aspect-ratio: var(--gallery-aspect-ratio, var(--media-preview-ratio));
+    max-height: var(--constrained-height);
+    width: var(--slide-width, 100%);
+
+    /* Relative position needed for video and 3d models */
+    position: relative;
+    overflow: hidden;
+
+    &:where(.constrain-height) {
+      /* arbitrary offset value based on average theme spacing and header height */
+      --viewport-offset: 400px;
+      --constrained-min-height: 300px;
+      --constrained-height: max(var(--constrained-min-height), calc(100vh - var(--viewport-offset)));
+
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+    @supports (--test: round(up, 100%, 1px)) {
+      /* width and overflow forces children to shrink to parent width */
+      --slide-width: round(up, 100%, 1px);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .product-media-container.constrain-height {
+      max-height: none;
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    .product-media-container.constrain-height {
+      --viewport-offset: var(--header-height, 100px);
+      --constrained-min-height: 500px;
+    }
+
+    body:has(header-component[transparent]) .product-media-container.constrain-height {
+      --viewport-offset: 0px;
+    }
+  }
+
+  .product-media-container img {
+    aspect-ratio: inherit;
+    object-fit: contain;
+  }
+
+  .product-media-container.media-fit-contain img {
+    object-position: center center;
+  }
+
+  .product-media-container.media-fit {
+    --product-media-fit: cover;
+
+    img {
+      object-fit: var(--product-media-fit);
+    }
+  }
+{% endstylesheet %}

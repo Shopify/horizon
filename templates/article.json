@@ -7,28 +7,26 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
+{
   "sections": {
     "section": {
       "type": "main-blog-post",
       "blocks": {
         "blog-post-title": {
           "type": "text",
-          "name": "Title",
-          "static": true,
+          "name": "t:names.title",
           "settings": {
             "text": "<h1>{{ article.title }}</h1>",
             "width": "100%",
             "max_width": "normal",
             "alignment": "center",
             "type_preset": "h2",
-            "font": "var(--font-primary--family)",
+            "font": "var(--font-body--family)",
             "font_size": "",
             "line_height": "normal",
             "letter_spacing": "normal",
             "case": "none",
             "wrap": "pretty",
-            "color": "",
             "background": false,
             "background_color": "#00000026",
             "corner_radius": 0,
@@ -41,23 +39,21 @@
         },
         "blog-post-details": {
           "type": "_blog-post-info-text",
-          "name": "Details",
-          "static": true,
+          "name": "t:names.details",
           "settings": {
             "show_date": true,
             "show_author": false,
             "type_preset": "",
             "alignment": "center",
             "show_alignment": true,
-            "padding-block-start": 24,
+            "padding-block-start": 0,
             "padding-block-end": 0
           },
           "blocks": {}
         },
         "blog-post-image": {
           "type": "_blog-post-featured-image",
-          "name": "Featured image",
-          "static": true,
+          "name": "t:names.featured_image",
           "settings": {
             "image_ratio": "landscape",
             "width": "fill",
@@ -78,15 +74,19 @@
         },
         "blog-post-content": {
           "type": "_blog-post-content",
-          "static": true,
           "settings": {},
           "blocks": {}
         }
       },
+      "block_order": [
+        "blog-post-title",
+        "blog-post-details",
+        "blog-post-image",
+        "blog-post-content"
+      ],
       "settings": {
         "content_direction": "column",
         "gap": 32,
-        "color_scheme": "",
         "padding-block-start": 40,
         "padding-block-end": 80
       }

@@ -1,0 +1,610 @@
+{%- assign disclosures = closest.product.metafields.shopify.disclosure.value -%}
+{%- assign has_visible_disclosures = false -%}
+{%- assign disclosures_symbol_aspect_ratio = 1 -%}
+{%- if disclosures != blank -%}
+  {%- for disclosure in disclosures -%}
+    {%- if disclosure.display_preferences.value.surfaces contains 'product_page' -%}
+      {%- assign has_visible_disclosures = true -%}
+      {%- assign symbol_aspect_ratio = disclosure.symbol.value.aspect_ratio | default: 1 -%}
+      {%- if symbol_aspect_ratio > disclosures_symbol_aspect_ratio -%}
+        {%- assign disclosures_symbol_aspect_ratio = symbol_aspect_ratio -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+<div
+  class="disclosures__container"
+  {{ block.shopify_attributes }}
+>
+  {%- if has_visible_disclosures -%}
+    <script
+      src="{{ 'disclosures-summary-fit.js' | asset_url }}"
+      type="module"
+      fetchpriority="low"
+    ></script>
+
+    <disclosures-summary-fit
+      class="disclosures accordion--{{ block.settings.icon }}{% if block.settings.dividers %} accordion--dividers{% endif %} spacing-style"
+      data-summary-layout="stacked"
+      style="--disclosures-icon-size: calc(var(--font-{{ block.settings.disclosure_heading_preset | default: 'h5' }}--size) * 1.2); --disclosures-symbol-aspect-ratio: {{ disclosures_symbol_aspect_ratio }}; {% render 'spacing-style', settings: block.settings %}{% if block.settings.text_color != blank %} --color: {{ block.settings.text_color }}; --color-rgb: {{ block.settings.text_color.rgb }};{% endif %}{% if block.settings.divider_color != blank %} --color-border: {{ block.settings.divider_color }};{% endif %}"
+    >
+      {%- if block.settings.heading != blank -%}
+        <h2 class="disclosures__heading {{ block.settings.heading_preset }}">
+          {{ block.settings.heading | escape }}
+        </h2>
+      {%- endif -%}
+
+      {%- capture summary_html -%}
+        <span class="disclosures__summary-item">
+          {%- assign visible_disclosure_index = 0 -%}
+          {%- for disclosure in disclosures -%}
+            {%- if disclosure.display_preferences.value.surfaces contains 'product_page' -%}
+              {%- assign title = disclosure.title.value -%}
+              {%- assign img = disclosure.symbol.value -%}
+              {%- capture row_content -%}
+                <span class="disclosures__summary-item-row">
+                  {%- if img != blank -%}
+                    {{-
+                      img
+                      | image_url: width: 200
+                      | image_tag:
+                        class: 'details__icon',
+                        widths: '20, 40, 80',
+                        width: img.width,
+                        height: img.height,
+                        alt: title
+                    -}}
+                  {%- endif -%}
+                  <span class="disclosures__summary-item-title {{ block.settings.disclosure_heading_preset }}">{{ title }}</span>
+                </span>
+              {%- endcapture -%}
+              {%- if visible_disclosure_index == 0 -%}
+                {{ row_content }}
+              {%- else -%}
+                <span class="disclosures__summary-item-extra">
+                  <span class="disclosures__separator {{ block.settings.disclosure_heading_preset }}">&bull;</span>
+                  {{ row_content }}
+                </span>
+              {%- endif -%}
+              {%- assign visible_disclosure_index = visible_disclosure_index | plus: 1 -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </span>
+      {%- endcapture -%}
+
+      {%- assign details_html = '' -%}
+      {%- assign visible_disclosure_index = 0 -%}
+      {%- for disclosure in disclosures -%}
+        {%- if disclosure.display_preferences.value.surfaces contains 'product_page' -%}
+          {%- assign title = disclosure.title.value -%}
+          {%- assign img = disclosure.symbol.value -%}
+          {%- assign content = disclosure.content -%}
+          {%- capture details_item -%}
+            <div class="disclosures__item">
+              <div class="disclosures__item-left">
+                {%- if visible_disclosure_index != 0 -%}
+                  {%- if title != blank or img != blank -%}
+                    <div class="disclosures__item-header">
+                      {%- if img != blank -%}
+                        {{-
+                          img
+                          | image_url: width: 200
+                          | image_tag:
+                            class: 'details__icon',
+                            widths: '20, 40, 80',
+                            width: img.width,
+                            height: img.height,
+                            alt: title
+                        -}}
+                      {%- endif -%}
+                      {%- if title != blank -%}
+                        <h3 class="disclosures__item-title {{ block.settings.disclosure_heading_preset }}">{{ title }}</h3>
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+                {%- endif -%}
+                <div class="disclosures__item-content">
+                  {{ content | metafield_tag }}
+                </div>
+              </div>
+              <div class="disclosures__item-right" data-accordion-close></div>
+            </div>
+          {%- endcapture -%}
+          {%- capture details_html -%}{{ details_html }}{{ details_item }}{%- endcapture -%}
+          {%- assign visible_disclosure_index = visible_disclosure_index | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- capture disclosures_accordion_children -%}
+        <details
+          class="details"
+          data-testid="accordion-details"
+          {% if block.settings.open_by_default %}
+            open
+          {% endif %}
+        >
+          <summary class="details__header">
+            <div class="disclosures__summary-content">
+              {{ summary_html }}
+            </div>
+            <span class="svg-wrapper icon-caret icon-animated">
+              {{- 'icon-caret.svg' | inline_asset_content -}}
+            </span>
+            <span class="svg-wrapper icon-plus">
+              {{- 'icon-plus.svg' | inline_asset_content -}}
+            </span>
+          </summary>
+
+          <div class="details-content disclosures__details-content">
+            {{ details_html }}
+          </div>
+        </details>
+      {%- endcapture -%}
+      {% render 'accordion-custom-component',
+        children: disclosures_accordion_children,
+        close_with_escape: true,
+        open_by_default_on_desktop: block.settings.open_by_default,
+        open_by_default_on_mobile: block.settings.open_by_default
+      %}
+    </disclosures-summary-fit>
+  {%- else -%}
+    <div
+      hidden
+      shopify-block-empty
+    ></div>
+  {%- endif -%}
+
+  {% render 'accordion-styles' %}
+  {% stylesheet %}
+    .disclosures__container {
+      width: 100%;
+    }
+
+    .disclosures__container:has(> [shopify-block-empty]) {
+      display: none;
+    }
+
+    .disclosures {
+      --disclosures-symbol-width: calc(var(--disclosures-icon-size) * var(--disclosures-symbol-aspect-ratio, 1));
+
+      display: block;
+      color: var(--color, inherit);
+      width: 100%;
+      container-type: inline-size;
+    }
+
+    .disclosures.accordion--dividers accordion-custom:first-child .details {
+      border-block-start: var(--style-border-width) solid var(--color-border);
+    }
+
+    .disclosures.accordion--dividers accordion-custom:last-child .details {
+      border-block-end: var(--style-border-width) solid var(--color-border);
+    }
+
+    .disclosures__heading {
+      margin-block-end: var(--margin-lg);
+    }
+
+    .disclosures .details__header {
+      padding-block: var(--padding-xl);
+      display: flex;
+      align-items: flex-start;
+      gap: var(--gap-xs);
+    }
+
+    .disclosures .details__header > .svg-wrapper {
+      margin-block-start: calc((var(--disclosures-icon-size) - var(--icon-size-xs)) / 2);
+    }
+
+    .disclosures details[open] .details__header {
+      padding-block-end: var(--padding-xs);
+    }
+
+    .disclosures__summary-content {
+      flex: 1 1 0%;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      row-gap: var(--gap-xs);
+      min-width: 0;
+    }
+
+    .disclosures__summary-item {
+      display: flex;
+      flex-direction: column;
+      row-gap: var(--gap-xs);
+      min-width: 0;
+      overflow-wrap: break-word;
+    }
+
+    .disclosures__summary-item--measure {
+      position: fixed;
+      inset-block-start: 0;
+      inset-inline-start: 0;
+      display: block;
+      width: max-content;
+      max-width: none;
+      visibility: hidden;
+      white-space: nowrap;
+      pointer-events: none;
+      contain: layout style;
+    }
+
+    .disclosures__summary-item-row {
+      display: flex;
+      align-items: center;
+      gap: var(--padding-2xs);
+      min-width: 0;
+      vertical-align: middle;
+    }
+
+    .disclosures__summary-item-title {
+      font-weight: var(--font-weight-normal, normal);
+      overflow-wrap: break-word;
+    }
+
+    .disclosures__summary-item--measure .disclosures__summary-item-title {
+      white-space: nowrap;
+      overflow-wrap: normal;
+    }
+
+    .disclosures .details__icon {
+      display: inline-block;
+      flex-shrink: 0;
+      width: auto;
+      max-inline-size: 100%;
+      height: var(--disclosures-icon-size);
+      margin: 0;
+      object-fit: contain;
+      vertical-align: middle;
+    }
+
+    .disclosures__summary-item-row:has(> .details__icon) {
+      display: grid;
+      grid-template-columns: var(--disclosures-symbol-width) minmax(0, 1fr);
+      align-items: center;
+      column-gap: var(--padding-2xs);
+      min-inline-size: 0;
+    }
+
+    .disclosures__summary-item-row:has(> .details__icon) > .details__icon {
+      grid-column: 1;
+      justify-self: center;
+    }
+
+    .disclosures__summary-item-row:has(> .details__icon) > .disclosures__summary-item-title {
+      grid-column: 2;
+    }
+
+    .disclosures details[open] > summary .disclosures__summary-item-title {
+      font-weight: var(--font-weight-bold, bold);
+    }
+
+    .disclosures__summary-item-extra {
+      display: block;
+    }
+
+    .disclosures__separator {
+      display: none;
+      flex-shrink: 0;
+      padding-inline: var(--padding-xs);
+      line-height: 1;
+    }
+
+    @container (min-width: 701px) {
+      .disclosures:where([data-summary-layout='inline']) .details__header {
+        align-items: center;
+      }
+
+      .disclosures:where([data-summary-layout='inline']) .details__header > .svg-wrapper {
+        margin-block-start: 0;
+      }
+
+      .disclosures:where([data-summary-layout='inline']) .disclosures__summary-item {
+        display: block;
+      }
+
+      .disclosures:where([data-summary-layout='inline']) .disclosures__summary-item-row {
+        display: inline-flex;
+      }
+
+      .disclosures:where([data-summary-layout='inline']) .disclosures__summary-item-row:has(> .details__icon) {
+        display: inline-grid;
+      }
+
+      .disclosures:where([data-summary-layout='inline']) .disclosures__summary-item-extra {
+        display: inline-flex;
+        align-items: center;
+      }
+
+      .disclosures:where([data-summary-layout='inline']) .disclosures__separator {
+        display: inline-block;
+      }
+    }
+
+    .disclosures__summary-item--measure .disclosures__summary-item-row {
+      display: inline-flex;
+      white-space: nowrap;
+    }
+
+    .disclosures__summary-item--measure .disclosures__summary-item-row:has(> .details__icon) {
+      display: inline-grid;
+    }
+
+    .disclosures__summary-item--measure .disclosures__summary-item-extra {
+      display: inline-flex;
+      align-items: center;
+      white-space: nowrap;
+    }
+
+    .disclosures__summary-item--measure .disclosures__separator {
+      display: inline-block;
+    }
+
+    .disclosures details[open] .disclosures__summary-item-extra {
+      display: none;
+    }
+
+    .disclosures__item {
+      display: flex;
+    }
+
+    .disclosures__item + .disclosures__item {
+      margin-block-start: var(--spacing-lg);
+    }
+
+    .disclosures__item-left {
+      flex: 0 1 auto;
+      min-width: 0;
+      cursor: default;
+    }
+
+    .disclosures__item-right {
+      flex: 1;
+      cursor: pointer;
+    }
+
+    .disclosures__item-header {
+      display: flex;
+      align-items: center;
+      gap: var(--padding-2xs);
+      margin-block-end: var(--spacing-xs);
+      padding-block-end: var(--padding-xs);
+    }
+
+    .disclosures__item-title {
+      margin: 0;
+    }
+
+    .disclosures__item-header:has(> .details__icon) {
+      display: grid;
+      grid-template-columns: var(--disclosures-symbol-width) minmax(0, 1fr);
+      align-items: center;
+      column-gap: var(--padding-2xs);
+      min-inline-size: 0;
+    }
+
+    .disclosures__item-header:has(> .details__icon) > .details__icon {
+      grid-column: 1;
+      justify-self: center;
+    }
+
+    .disclosures__item-header:has(> .details__icon) > .disclosures__item-title {
+      grid-column: 2;
+    }
+
+    .disclosures details[open] .disclosures__item-title {
+      font-weight: var(--font-weight-bold, bold);
+    }
+
+    .disclosures__item-content {
+      max-width: var(--normal-content-width);
+      padding-block-end: var(--padding-2xl);
+    }
+
+    .disclosures details[open] .details-content {
+      padding-block-end: 0;
+    }
+  {% endstylesheet %}
+</div>
+
+{% schema %}
+{
+  "name": "t:names.disclosures",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "t:content.disclosures_metafield_content"
+    },
+    {
+      "type": "header",
+      "content": "t:content.heading"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "t:text_defaults.disclosures"
+    },
+    {
+      "type": "select",
+      "id": "heading_preset",
+      "label": "t:settings.heading_preset",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.default"
+        },
+        {
+          "value": "paragraph",
+          "label": "t:options.paragraph"
+        },
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:options.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.h6"
+        }
+      ],
+      "default": "h4",
+      "info": "t:info.edit_presets_in_theme_settings"
+    },
+    {
+      "type": "header",
+      "content": "t:content.disclosures"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_by_default",
+      "label": "t:settings.open_by_default",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "icon",
+      "label": "t:settings.icon",
+      "options": [
+        {
+          "value": "caret",
+          "label": "t:options.caret"
+        },
+        {
+          "value": "plus",
+          "label": "t:options.plus"
+        }
+      ],
+      "default": "caret"
+    },
+    {
+      "type": "select",
+      "id": "disclosure_heading_preset",
+      "label": "t:settings.title_preset",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.default"
+        },
+        {
+          "value": "paragraph",
+          "label": "t:options.paragraph"
+        },
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:options.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.h6"
+        }
+      ],
+      "default": "h5",
+      "info": "t:info.edit_presets_in_theme_settings"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:settings.text_color"
+    },
+    {
+      "type": "checkbox",
+      "id": "dividers",
+      "label": "t:settings.dividers",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "t:settings.divider_color",
+      "visible_if": "{{ block.settings.dividers }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.disclosures",
+      "category": "t:categories.product"
+    }
+  ]
+}
+{% endschema %}

@@ -3,14 +3,16 @@
 {% endcapture %}
 
 <div
-  class="
-    contact-form
-    spacing-style size-style
-    {% if block.settings.inherit_color_scheme == false %}color-{{ block.settings.color_scheme }}{% endif %}
-  "
+  class="contact-form spacing-style size-style"
   style="
     {% render 'spacing-style', settings: block.settings %}
     {% render 'size-style', settings: block.settings %}
+    {% if block.settings.background_color != blank %}background-color: {{ block.settings.background_color }};{% endif %}
+    {% if block.settings.input_style == 'custom' %}
+      {% render 'input-custom-styles', block_settings: block.settings %}
+      --style-border-width-inputs: {{ block.settings.border_width }}px;
+      --style-border-radius-inputs: {{ block.settings.border_radius }}px;
+    {% endif %}
   "
   {{ block.shopify_attributes }}
 >
@@ -22,7 +24,14 @@
       value="{{ form_id }}"
     >
 
-    {%- if form.errors and form.id == form_id -%}
+    {% liquid
+      assign form_matches = false
+      if form.id == form_id or form.id == blank
+        assign form_matches = true
+      endif
+    %}
+
+    {%- if form.errors and form_matches -%}
       <div
         class="contact-form__error"
         tabindex="-1"
@@ -35,7 +44,7 @@
       </div>
     {%- endif -%}
 
-    {%- if form.posted_successfully? and form.id == form_id -%}
+    {%- if form.posted_successfully? and form_matches -%}
       <div
         class="contact-form__success"
         tabindex="-1"
@@ -80,7 +89,7 @@
         autocapitalize="off"
         value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
         aria-required="true"
-        {% if form.errors contains 'email' and form.id == form_id %}
+        {% if form.errors contains 'email' and form_matches %}
           aria-invalid="true"
           aria-describedby="ContactForm-email-error"
         {% endif %}
@@ -228,17 +237,78 @@
       "visible_if": "{{ block.settings.width_mobile == 'custom' }}"
     },
     {
-      "type": "checkbox",
-      "id": "inherit_color_scheme",
-      "label": "t:settings.inherit_color_scheme",
-      "default": true
+      "type": "header",
+      "content": "t:content.appearance"
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:settings.color_scheme",
-      "default": "scheme-1",
-      "visible_if": "{{ block.settings.inherit_color_scheme == false }}"
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "placeholder": "t:settings.default"
+    },
+    {
+      "type": "header",
+      "content": "t:content.input"
+    },
+    {
+      "type": "select",
+      "id": "input_style",
+      "label": "t:settings.style",
+      "options": [
+        {
+          "value": "default",
+          "label": "t:options.default"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "default",
+      "info": "t:info.edit_input_field_in_theme_settings"
+    },
+    {
+      "type": "color",
+      "id": "input_background_color",
+      "label": "t:settings.background",
+      "default": "{{ settings.color_palette.background }}",
+      "visible_if": "{{ block.settings.input_style == \"custom\" }}"
+    },
+    {
+      "type": "color",
+      "id": "input_text_color",
+      "label": "t:settings.text",
+      "default": "{{ settings.color_palette.foreground }}",
+      "visible_if": "{{ block.settings.input_style == \"custom\" }}"
+    },
+    {
+      "type": "color",
+      "id": "input_border_color",
+      "label": "t:settings.borders",
+      "default": "{{ settings.color_palette.foreground }}",
+      "visible_if": "{{ block.settings.input_style == \"custom\" }}"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "t:settings.border_width",
+      "min": 0,
+      "max": 4,
+      "step": 0.5,
+      "unit": "px",
+      "default": 1,
+      "visible_if": "{{ block.settings.input_style == \"custom\" }}"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.input_style == \"custom\" }}"
     },
     {
       "type": "header",

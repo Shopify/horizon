@@ -2,34 +2,51 @@
   Renders the blog post image block.
 
   @param {object} article - The article object
+  @param {string} [image_sizes] - The responsive sizes value for this image (defaults to '100vw')
+  @param {string} [image_loading] - The loading strategy for this image (defaults to 'eager')
+  @param {string} [image_fetch_priority] - The fetch priority for this image (defaults to 'auto')
 {%- enddoc -%}
 
-{%- assign image = article.image -%}
+{% liquid
+  assign image = article.image
+  assign block_settings = block.settings
+  assign sizes = image_sizes | default: '100vw'
+  assign loading = image_loading | default: 'eager'
+  assign fetch_priority = image_fetch_priority | default: 'auto'
 
-{%- assign block_settings = block.settings -%}
-<div class="blog-post-card__image-container">
+  if loading == 'lazy'
+    assign sizes = 'auto, ' | append: sizes
+  endif
+
+  # Blog cards max out at 983px, so 2000px covers high-density displays.
+  # resource-image.liquid and _blog-post-featured-image.liquid use larger widths for larger layouts.
+  assign widths = '400, 640, 832, 1000, 1500, 2000'
+  assign image_class = 'border-style blog-post-card__image blog-post-card__image--' | append: block_settings.height
+%}
+
+{%- capture image_border_style -%}
+  {% render 'border-override', settings: block_settings %}
+{%- endcapture -%}
+
+<div
+  class="blog-post-card__image-container"
+  {{ block.shopify_attributes }}
+>
   <a href="{{ article.url }}">
-    <img
-      srcset="
-        {% if image.width >= 350 %}{{ image | image_url: width: 350 }} 350w,{% endif %}
-        {% if image.width >= 750 %}{{ image | image_url: width: 750 }} 750w,{% endif %}
-        {% if image.width >= 1100 %}{{ image | image_url: width: 1100 }} 1100w,{% endif %}
-        {% if image.width >= 1500 %}{{ image | image_url: width: 1500 }} 1500w,{% endif %}
-        {{ image | image_url }} {{ image.width }}w
-      "
-      src="{{ image | image_url: width: 1100 }}"
-      loading="eager"
-      fetchpriority="high"
-      width="{{ image.width }}"
-      height="{{ image.height }}"
-      alt="{{ image.alt | escape }}"
-      class="
-        border-style
-        blog-post-card__image
-        blog-post-card__image--{{ block_settings.height }}
-      "
-      style="{% render 'border-override', settings: block_settings %}"
-    >
+    {{
+      image
+      | image_url: width: 2000
+      | image_tag:
+        width: image.width,
+        widths: widths,
+        height: image.height,
+        sizes: sizes,
+        loading: loading,
+        fetchpriority: fetch_priority,
+        alt: image.alt,
+        class: image_class,
+        style: image_border_style
+    }}
   </a>
 </div>
 
@@ -57,6 +74,7 @@
 {% schema %}
 {
   "name": "t:names.image",
+  "tag": null,
   "blocks": [],
   "settings": [
     {
@@ -118,9 +136,16 @@
       "visible_if": "{{ block.settings.border != 'none' }}"
     },
     {
+      "type": "color",
+      "id": "border_color",
+      "label": "t:settings.color",
+      "placeholder": "t:settings.default",
+      "visible_if": "{{ block.settings.border != 'none' }}"
+    },
+    {
       "type": "range",
       "id": "border_radius",
-      "label": "t:settings.corner_radius",
+      "label": "t:settings.border_radius",
       "min": 0,
       "max": 100,
       "step": 1,

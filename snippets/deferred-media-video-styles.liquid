@@ -1,0 +1,137 @@
+{%- doc -%}
+  Shared deferred media video styles used by video markup and featured product
+  media swaps that can morph in video media after the initial page load.
+
+  @example
+  {% render 'deferred-media-video-styles' %}
+{%- enddoc -%}
+
+{% stylesheet %}
+  .product-media deferred-media {
+    position: absolute;
+  }
+
+  /* If the product media is already providing an image cover, hide images provided by sibling deferred-media */
+  .product-media__image ~ deferred-media .deferred-media__poster-image {
+    display: none;
+  }
+
+  /* If the product media video is playing, hide the preview image */
+  .product-media-container:has(deferred-media .deferred-media__playing) .product-media__image {
+    opacity: 0;
+    transition: opacity var(--animation-speed) var(--animation-easing);
+  }
+
+  deferred-media {
+    /* Height needed to make sure when it's set to be stretched, it takes the full height */
+    height: 100%;
+    width: 100%;
+    position: relative;
+
+    /* The overflow hidden in the deferred-media won't let the button show the focus ring */
+    &:has(:focus-visible) {
+      outline: var(--focus-outline-width) solid currentcolor;
+      outline-offset: var(--focus-outline-offset);
+    }
+
+    @supports not selector(:focus-visible) {
+      &:has(:focus) {
+        outline: var(--focus-outline-width) solid currentcolor;
+        outline-offset: var(--focus-outline-offset);
+      }
+    }
+  }
+
+  /* Media that have a poster button sibling providing the size should be absolute-positioned.
+  Otherwise, it should be a block to rely on its own size */
+  deferred-media > .deferred-media__poster-button ~ *:not(template) {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    /* Required to make sure the absolute position respects the padding of the wrapper: */
+    padding: inherit;
+  }
+
+  deferred-media.border-style {
+    /* Apply the border radius to the video */
+    overflow: hidden;
+  }
+
+  deferred-media > .deferred-media__poster-button {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: var(--video-aspect-ratio, auto);
+  }
+
+  deferred-media > .deferred-media__poster-button.deferred-media__playing {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  deferred-media img {
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+  }
+
+  deferred-media iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: none;
+    aspect-ratio: var(--size-style-aspect-ratio, auto);
+  }
+
+  deferred-media[data-media-loaded] img {
+    opacity: 0;
+  }
+
+  deferred-media .deferred-media__poster-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  deferred-media .deferred-media__poster-icon svg {
+    width: var(--button-size);
+    height: var(--button-size);
+    color: var(--color-white);
+    filter: drop-shadow(var(--shadow-button));
+
+    &:hover {
+      color: rgb(var(--color-white-rgb) / var(--opacity-80));
+    }
+
+    @media screen and (min-width: 750px) {
+      width: 4rem;
+      height: 4rem;
+    }
+  }
+
+  deferred-media[class] :is(.deferred-media__poster-button img, .deferred-media__poster-button ~ video) {
+    /* only apply this on the video block not product media */
+    object-fit: cover;
+    height: 100%;
+    aspect-ratio: var(--size-style-aspect-ratio, auto);
+  }
+
+  .video-interaction-hint {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: var(--layer-flat);
+  }
+
+  .video-interaction-hint:hover {
+    opacity: 1;
+  }
+{% endstylesheet %}

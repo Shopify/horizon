@@ -124,11 +124,17 @@
   %}
 
   :root {
+    /* Safe area insets — non-zero on notched devices because meta-tags.liquid sets viewport-fit=cover */
+    --safe-area-inset-top: env(safe-area-inset-top, 0px);
+    --safe-area-inset-right: env(safe-area-inset-right, 0px);
+    --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-area-inset-left: env(safe-area-inset-left, 0px);
+
     /* Page Layout */
     --sidebar-width: 25rem;
+    --theme-drawer-width: 30rem;
     --narrow-content-width: 36rem;
     --normal-content-width: 42rem;
-    --wide-content-width: 46rem;
     --narrow-page-width: 90rem;
     --normal-page-width: 120rem;
     --wide-page-width: 150rem;
@@ -152,7 +158,6 @@
 
     /* Letter spacing */
     --letter-spacing-sm: 0.06em;
-    --letter-spacing-md: 0.13em;
 
     /* Font families */
     --font-body--family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
@@ -177,14 +182,6 @@
     --font-h5--spacing: var(--font-heading--spacing);
     --font-h6--spacing: var(--font-heading--spacing);
     --font-paragraph--spacing: 0.5em;
-
-    /* Heading colors */
-    --font-h1--color: var(--color-foreground-heading);
-    --font-h2--color: var(--color-foreground-heading);
-    --font-h3--color: var(--color-foreground-heading);
-    --font-h4--color: var(--color-foreground-heading);
-    --font-h5--color: var(--color-foreground-heading);
-    --font-h6--color: var(--color-foreground-heading);
 
     /** Z-Index / Layering */
     --layer-section-background: -2;
@@ -328,10 +325,8 @@
           assign preset_style = '--font-body--style'
           assign preset_weight = '400'
           assign preset_case = '--font-body--case'
-          assign preset_letter_spacing = 'body-normal'
 
           echo '--font-[preset_name]--weight: [preset_weight];' | replace: '[preset_name]', preset_name | replace: '[preset_weight]', preset_weight
-          echo '--font-[preset_name]--letter-spacing: var(--letter-spacing--[preset_letter_spacing]);' | replace: '[preset_name]', preset_name | replace: '[preset_letter_spacing]', preset_letter_spacing
         else
           assign preset_font_id = 'type_font_[preset_name]' | replace: '[preset_name]', preset_name
           assign preset_font = '--font-[preset_font]--family' | replace: '[preset_font]', settings[preset_font_id]
@@ -371,8 +366,6 @@
     --menu-font-sm--line-height: calc(1.1 + 0.5 * min(16 / 14));
     --menu-font-md--size: 1rem;
     --menu-font-md--line-height: calc(1.1 + 0.5 * min(16 / 16));
-    --menu-font-lg--size: 1.125rem;
-    --menu-font-lg--line-height: calc(1.1 + 0.5 * min(16 / 18));
     --menu-font-xl--size: 1.25rem;
     --menu-font-xl--line-height: calc(1.1 + 0.5 * min(16 / 20));
     --menu-font-2xl--size: 1.75rem;
@@ -383,7 +376,6 @@
     --color-success: #006400;
     --color-white: #FFFFFF;
     --color-white-rgb: 255 255 255;
-    --color-black: #000000;
     --color-instock: #3ED660;
     --color-lowstock: #EE9441;
     --color-outofstock: #C8C8C8;
@@ -403,7 +395,8 @@
     --opacity-80: 0.8;
     --opacity-85: 0.85;
     --opacity-90: 0.9;
-    --opacity-subdued-text: var(--opacity-70);
+    --opacity-subdued-text: 0.8;
+    --opacity-muted-text: 0.6;
 
     --shadow-button: 0 2px 3px rgb(0 0 0 / 20%);
     --gradient-image-overlay: linear-gradient(to top, rgb(0 0 0 / 0.5), transparent);
@@ -417,12 +410,9 @@
     --margin-lg: 1rem;
     --margin-xl: 1.25rem;
     --margin-2xl: 1.5rem;
-    --margin-3xl: 1.75rem;
     --margin-4xl: 2rem;
-    --margin-5xl: 3rem;
     --margin-6xl: 5rem;
 
-    --scroll-margin: 50px;
 
     --padding-3xs: 0.125rem;
     --padding-2xs: 0.25rem;
@@ -447,7 +437,6 @@
     --gap-2xl: 2rem;
     --gap-3xl: 3rem;
 
-    --spacing-scale-sm: 0.6;
     --spacing-scale-md: 0.7;
     --spacing-scale-default: 1.0;
 
@@ -469,8 +458,8 @@
     --style-border-width-secondary: {{ settings.secondary_button_border_width }}px;
     --style-border-width-inputs: {{ settings.input_border_width }}px;
     --style-border-radius-popover: {{ settings.popover_border_radius }}px;
-    --style-border-popover: {{ settings.popover_border_width }}px {{ settings.popover_border }} rgb(var(--color-border-rgb) / {{ settings.popover_border_opacity }}%);
-    --style-border-drawer: {{ settings.drawer_border_width }}px {{ settings.drawer_border }} rgb(var(--color-border-rgb) / {{ settings.drawer_border_opacity }}%);
+    --style-border-popover: {{ settings.popover_border_width }}px solid {{ settings.popover_border_color }};
+    --style-border-drawer: 1px solid {{ settings.drawer_border_color }};
     --style-border-swatch-opacity: {{ settings.variant_swatch_border_opacity }}%;
     --style-border-swatch-width: {{ settings.variant_swatch_border_width }}px;
     --style-border-swatch-style: {{ settings.variant_swatch_border_style }};
@@ -478,18 +467,13 @@
     /* Animation */
     --ease-out-cubic: cubic-bezier(0.33, 1, 0.68, 1);
     --ease-out-quad: cubic-bezier(0.32, 0.72, 0, 1);
-    --ease-in-out-quad: cubic-bezier(0.455, 0.03, 0.515, 0.955);
     --animation-speed-fast: 0.0625s;
     --animation-speed: 0.125s;
     --animation-speed-slow: 0.2s;
     --animation-speed-medium: 0.15s;
     --animation-easing: ease-in-out;
-    --animation-slideshow-easing: cubic-bezier(0.4, 0, 0.2, 1);
     --drawer-animation-speed: 0.2s;
-    --animation-values-slow: var(--animation-speed-slow) var(--animation-easing);
     --animation-values: var(--animation-speed) var(--animation-easing);
-    --animation-values-fast: var(--animation-speed-fast) var(--animation-easing);
-    --animation-values-allow-discrete: var(--animation-speed) var(--animation-easing) allow-discrete;
     --animation-timing-hover: cubic-bezier(0.25, 0.46, 0.45, 0.94);
     --animation-timing-active: cubic-bezier(0.5, 0, 0.75, 0);
     --animation-timing-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -501,8 +485,6 @@
     --spring-d300-b0-duration: 0.4980s;
     --spring-d280-b0-easing: linear(0, 0.0044, 0.0164 1.85%, 0.085 4.63%, 0.4571 14.81%, 0.575 18.52%, 0.6505, 0.7148 24.07%, 0.7849, 0.8393, 0.8809 35.18%, 0.9189, 0.9453 44.44%, 0.9662, 0.9793 55.55%, 0.9894 62.95%, 0.995 71.28%, 0.9982 82.39%, 0.9997 99.98%);
     --spring-d280-b0-duration: 0.4648s;
-    --spring-d260-b0-easing: linear(0, 0.0058, 0.0216 2.15%, 0.0748 4.29%, 0.4646 15.03%, 0.5673, 0.655, 0.7279, 0.7872, 0.8349, 0.8727 34.36%, 0.9107, 0.9379 42.95%, 0.9609 48.31%, 0.9778 54.76%, 0.9887 62.27%, 0.9948 70.86%, 0.9983 82.67%, 0.9997 99.85%);
-    --spring-d260-b0-duration: 0.4316s;
     --spring-d220-b0-easing: linear(
       0,
       0.0093 1.37%,
@@ -538,13 +520,9 @@
     --focus-outline-offset: 0.2em;
 
     /* Badges */
-    --badge-blob-padding-block: 1px;
-    --badge-blob-padding-inline: 12px 8px;
     --badge-rectangle-padding-block: 1px;
     --badge-rectangle-padding-inline: 6px;
     @media screen and (min-width: 750px) {
-      --badge-blob-padding-block: 4px;
-      --badge-blob-padding-inline: 16px 12px;
       --badge-rectangle-padding-block: 4px;
       --badge-rectangle-padding-inline: 10px;
     }
@@ -558,8 +536,6 @@
     --icon-stroke-width: {% if settings.icon_stroke == 'thin' %}1px{% elsif settings.icon_stroke == 'heavy' %}2px{% else %}1.5px{% endif %};
 
     /* Input */
-    --input-email-min-width: 200px;
-    --input-search-max-width: 650px;
     --input-padding-y: 0.8rem;
     --input-padding-x: 0.8rem;
     --input-padding: var(--input-padding-y) var(--input-padding-x);
@@ -584,7 +560,6 @@
     }
 
     /* Button size */
-    --button-size-sm: 30px;
     --button-size-md: 36px;
     --button-size: var(--minimum-touch-target);
     --button-padding-inline: 24px;
@@ -595,22 +570,15 @@
     --button-font-family-secondary: var(--font-{{ settings.type_font_button_secondary }}--family);
 
     /* Button text case */
-    --button-text-case: {{ settings.button_text_case }};
     --button-text-case-primary: {{ settings.button_text_case_primary }};
     --button-text-case-secondary: {{ settings.button_text_case_secondary }};
 
     /* Borders */
     --border-color: rgb(var(--color-border-rgb) / var(--opacity-50));
     --border-width-sm: 1px;
-    --border-width-md: 2px;
-    --border-width-lg: 5px;
     --border-radius-sm: 0.25rem;
 
     /* Drawers */
-    --drawer-inline-padding: 25px;
-    --drawer-menu-inline-padding: 2.5rem;
-    --drawer-header-block-padding: 20px;
-    --drawer-content-block-padding: 10px;
     --drawer-header-desktop-top: 0rem;
     --drawer-padding: calc(var(--padding-sm) + 7px);
     --drawer-height: 100dvh;
@@ -630,9 +598,9 @@
     /* Variant Picker Buttons */
     --variant-picker-button-radius: {{ settings.variant_button_radius | append: 'px' }};
     --variant-picker-button-border-width: {{ settings.variant_button_border_width | append: 'px' }};
+    --variant-option-label-color: var(--color, var(--color-foreground));
 
     /* Slideshow */
-    --slideshow-controls-size: 3.5rem;
     --slideshow-controls-icon: 2rem;
     --peek-next-slide-size: 3rem;
 
@@ -644,10 +612,6 @@
     --skeleton-opacity: 0.025;
 
     /* Shapes */
-    --shape--circle: circle(50% at center);
-    --shape--sunburst: polygon(100% 50%,94.62% 55.87%,98.3% 62.94%,91.57% 67.22%,93.3% 75%,85.7% 77.39%,85.36% 85.36%,77.39% 85.7%,75% 93.3%,67.22% 91.57%,62.94% 98.3%,55.87% 94.62%,50% 100%,44.13% 94.62%,37.06% 98.3%,32.78% 91.57%,25% 93.3%,22.61% 85.7%,14.64% 85.36%,14.3% 77.39%,6.7% 75%,8.43% 67.22%,1.7% 62.94%,5.38% 55.87%,0% 50%,5.38% 44.13%,1.7% 37.06%,8.43% 32.78%,6.7% 25%,14.3% 22.61%,14.64% 14.64%,22.61% 14.3%,25% 6.7%,32.78% 8.43%,37.06% 1.7%,44.13% 5.38%,50% 0%,55.87% 5.38%,62.94% 1.7%,67.22% 8.43%,75% 6.7%,77.39% 14.3%,85.36% 14.64%,85.7% 22.61%,93.3% 25%,91.57% 32.78%,98.3% 37.06%,94.62% 44.13%);
-    --shape--diamond: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-    --shape--blob: polygon(85.349% 11.712%, 87.382% 13.587%, 89.228% 15.647%, 90.886% 17.862%, 92.359% 20.204%, 93.657% 22.647%, 94.795% 25.169%, 95.786% 27.752%, 96.645% 30.382%, 97.387% 33.048%, 98.025% 35.740%, 98.564% 38.454%, 99.007% 41.186%, 99.358% 43.931%, 99.622% 46.685%, 99.808% 49.446%, 99.926% 52.210%, 99.986% 54.977%, 99.999% 57.744%, 99.975% 60.511%, 99.923% 63.278%, 99.821% 66.043%, 99.671% 68.806%, 99.453% 71.565%, 99.145% 74.314%, 98.724% 77.049%, 98.164% 79.759%, 97.433% 82.427%, 96.495% 85.030%, 95.311% 87.529%, 93.841% 89.872%, 92.062% 91.988%, 89.972% 93.796%, 87.635% 95.273%, 85.135% 96.456%, 82.532% 97.393%, 79.864% 98.127%, 77.156% 98.695%, 74.424% 99.129%, 71.676% 99.452%, 68.918% 99.685%, 66.156% 99.844%, 63.390% 99.942%, 60.624% 99.990%, 57.856% 99.999%, 55.089% 99.978%, 52.323% 99.929%, 49.557% 99.847%, 46.792% 99.723%, 44.031% 99.549%, 41.273% 99.317%, 38.522% 99.017%, 35.781% 98.639%, 33.054% 98.170%, 30.347% 97.599%, 27.667% 96.911%, 25.024% 96.091%, 22.432% 95.123%, 19.907% 93.994%, 17.466% 92.690%, 15.126% 91.216%, 12.902% 89.569%, 10.808% 87.761%, 8.854% 85.803%, 7.053% 83.703%, 5.418% 81.471%, 3.962% 79.119%, 2.702% 76.656%, 1.656% 74.095%, 0.846% 71.450%, 0.294% 68.740%, 0.024% 65.987%, 0.050% 63.221%, 0.343% 60.471%, 0.858% 57.752%, 1.548% 55.073%, 2.370% 52.431%, 3.283% 49.819%, 4.253% 47.227%, 5.249% 44.646%, 6.244% 42.063%, 7.211% 39.471%, 8.124% 36.858%, 8.958% 34.220%, 9.711% 31.558%, 10.409% 28.880%, 11.083% 26.196%, 11.760% 23.513%, 12.474% 20.839%, 13.259% 18.186%, 14.156% 15.569%, 15.214% 13.012%, 16.485% 10.556%, 18.028% 8.261%, 19.883% 6.211%, 22.041% 4.484%, 24.440% 3.110%, 26.998% 2.057%, 29.651% 1.275%, 32.360% 0.714%, 35.101% 0.337%, 37.859% 0.110%, 40.624% 0.009%, 43.391% 0.016%, 46.156% 0.113%, 48.918% 0.289%, 51.674% 0.533%, 54.425% 0.837%, 57.166% 1.215%, 59.898% 1.654%, 62.618% 2.163%, 65.322% 2.750%, 68.006% 3.424%, 70.662% 4.197%, 73.284% 5.081%, 75.860% 6.091%, 78.376% 7.242%, 80.813% 8.551%, 83.148% 10.036%, 85.349% 11.712%);
 
     /* Buy buttons */
     --height-buy-buttons: calc(var(--padding-lg) * 2 + var(--icon-size-sm));
@@ -656,20 +620,20 @@
     --card-width-small: 10rem;
 
     --height-small: 10rem;
-    --height-medium: 11.5rem;
-    --height-large: 13rem;
-    --height-full: 100vh;
 
     @media screen and (min-width: 750px) {
       --height-small: 17.5rem;
-      --height-medium: 21.25rem;
-      --height-large: 25rem;
     }
 
     /* Modal */
     --modal-max-height: 65dvh;
     --quick-add-modal-height: min(38.5rem, 96vh);
-    --quick-add-modal-width: min(54rem, 96vw);
+    /* Centered dialog: reserve the larger side inset on both edges so a landscape
+       notch cannot cover the close button. 2vw keeps the original 96vw gutter. */
+    --quick-add-modal-width: min(
+      54rem,
+      calc(100vw - 2 * max(2vw, var(--safe-area-inset-left), var(--safe-area-inset-right)))
+    );
     --quick-add-modal-gallery-width: 24rem;
 
     /* Card styles for search */
@@ -685,4 +649,39 @@
     --cart-secondary-font-style: var(--font-{{ settings.cart_price_font }}--style);
     --cart-secondary-font-weight: var(--font-{{ settings.cart_price_font }}--weight);
   }
+
+  .custom-color-quick-add {
+    --quick-add-background: {{ settings.quick_add_background }};
+    --quick-add-foreground: {{ settings.quick_add_text }};
+  }
 {% endstyle %}
+
+{% render 'contrast-override',
+  background_color: settings.popover_background_color,
+  text_color: settings.popover_text_color,
+  border_color: settings.popover_border_color,
+  section_id: 'popover',
+  preset: 'ui'
+%}
+
+{% render 'contrast-override',
+  background_color: settings.drawer_background_color,
+  text_color: settings.drawer_text_color,
+  border_color: settings.drawer_border_color,
+  section_id: 'drawer',
+  preset: 'ui'
+%}
+
+{% render 'contrast-override',
+  background_color: settings.badge_sale_background_color,
+  text_color: settings.badge_sale_text_color,
+  section_id: 'badge-sale',
+  preset: 'ui'
+%}
+
+{% render 'contrast-override',
+  background_color: settings.badge_sold_out_background_color,
+  text_color: settings.badge_sold_out_text_color,
+  section_id: 'badge-sold-out',
+  preset: 'ui'
+%}

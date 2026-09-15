@@ -8,10 +8,11 @@
   {
     "imports": {
       "@theme/overflow-list": "{{ 'overflow-list.js' | asset_url }}",
-      "@theme/product-title": "{{ 'product-title-truncation.js' | asset_url }}",
       "@theme/component": "{{ 'component.js' | asset_url }}",
       "@theme/dialog": "{{ 'dialog.js' | asset_url }}",
       "@theme/events": "{{ 'events.js' | asset_url }}",
+      "@shopify/events": "https://cdn.shopify.com/storefront/standard-events.js",
+      "@theme/view-event-elements": "{{ 'view-event-elements.js' | asset_url }}",
       "@theme/focus": "{{ 'focus.js' | asset_url }}",
       "@theme/morph": "{{ 'morph.js' | asset_url }}",
       "@theme/paginated-list": "{{ 'paginated-list.js' | asset_url }}",
@@ -24,25 +25,45 @@
       "@theme/money-formatting": "{{ 'money-formatting.js' | asset_url }}",
       "@theme/utilities": "{{ 'utilities.js' | asset_url }}",
       "@theme/variant-picker": "{{ 'variant-picker.js' | asset_url }}",
+      "@theme/variant-resolution": "{{ 'variant-resolution.js' | asset_url }}",
       "@theme/media-gallery": "{{ 'media-gallery.js' | asset_url }}",
       "@theme/quick-add": "{{ 'quick-add.js' | asset_url }}",
       "@theme/paginated-list-aspect-ratio": "{{ 'paginated-list-aspect-ratio.js' | asset_url }}",
-      "@theme/popover-polyfill": "{{ 'popover-polyfill.js' | asset_url }}",
       "@theme/component-quantity-selector": "{{ 'component-quantity-selector.js' | asset_url }}",
       "@theme/comparison-slider": "{{ 'comparison-slider.js' | asset_url }}",
       "@theme/sticky-add-to-cart": "{{ 'sticky-add-to-cart.js' | asset_url }}",
-      "@theme/fly-to-cart": "{{ 'fly-to-cart.js' | asset_url }}"
+      "@theme/fly-to-cart": "{{ 'fly-to-cart.js' | asset_url }}",
+      "@theme/scroll-container": "{{ 'scroll-container.js' | asset_url }}",
+      "@theme/theme-drawer": "{{ 'theme-drawer.js' | asset_url }}"
     }
   }
 </script>
 
+{%- comment -%}
+  Registers Horizon's cart-drawer behaviour against the standard-actions
+  bundle (loaded separately into <head>). Module scripts execute in
+  document order, so this runs after the bundle regardless of where it
+  lands in <head>.
+{%- endcomment -%}
 <script
-  src="{{ 'view-transitions.js' | asset_url }}"
-  async
-  {% if settings.page_transition_enabled or settings.transition_to_main_product %}
-    blocking="render"
-  {% endif %}
+  src="{{ 'standard-actions-override.js' | asset_url }}"
+  type="module"
 ></script>
+
+<script
+  src="{{ 'page-view-event.js' | asset_url }}"
+  type="module"
+  defer
+></script>
+
+{% if settings.transition_to_main_product or settings.page_transition_enabled %}
+  {%- comment -%}
+    Inlined to avoid a network round trip for a render blocking asset.
+  {%- endcomment -%}
+  <script>
+    {{- 'view-transitions.js' | inline_asset_content -}}
+  </script>
+{% endif %}
 
 <link
   rel="modulepreload"
@@ -81,12 +102,6 @@
     href="{{ 'paginated-list.js' | asset_url }}"
     fetchpriority="low"
   >
-
-  <link
-    rel="modulepreload"
-    href="{{ 'product-title-truncation.js' | asset_url }}"
-    fetchpriority="low"
-  >
 {% endif %}
 
 <link
@@ -109,11 +124,6 @@
   href="{{ 'events.js' | asset_url }}"
   fetchpriority="low"
 >
-<script
-  src="{{ 'popover-polyfill.js' | asset_url }}"
-  type="module"
-  fetchpriority="low"
-></script>
 <script
   src="{{ 'overflow-list.js' | asset_url }}"
   type="module"
@@ -174,11 +184,6 @@
 ></script>
 <script
   src="{{ 'product-sku.js' | asset_url }}"
-  type="module"
-  fetchpriority="low"
-></script>
-<script
-  src="{{ 'product-title-truncation.js' | asset_url }}"
   type="module"
   fetchpriority="low"
 ></script>
@@ -258,11 +263,6 @@
 
 {% if template == 'product' or template.name == 'product' or request.page_type == 'product' %}
   <script
-    src="{{ 'fly-to-cart.js' | asset_url }}"
-    type="module"
-    fetchpriority="low"
-  ></script>
-  <script
     src="{{ 'sticky-add-to-cart.js' | asset_url }}"
     type="module"
     fetchpriority="low"
@@ -279,7 +279,12 @@
 ></script>
 
 <script>
+  const supportsNativePopover = 'popover' in HTMLElement.prototype;
   const Theme = {
+    supportsNativePopover,
+    popoverPolyfillReady: supportsNativePopover
+      ? Promise.resolve()
+      : import("{{ 'popover-polyfill.js' | asset_url }}").then(() => {}),
     translations: {
       placeholder_image: `{{ 'content.placeholder_image' | t }}`,
       added: `{{ 'actions.added' | t }}`,

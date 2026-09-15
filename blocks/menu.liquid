@@ -2,7 +2,6 @@
   assign block_settings = block.settings
   assign menu = block_settings.menu
   assign heading = block_settings.heading
-  assign color_scheme = block_settings.color_scheme
   assign show_as_accordion = block_settings.show_as_accordion
   if show_as_accordion == true and block_settings.accordion_dividers == true
     assign dividers_enabled = true
@@ -10,6 +9,11 @@
 %}
 
 {% if menu != blank or heading != blank %}
+  {% render 'contrast-override',
+    background_color: block_settings.background_color,
+    text_color: block_settings.text_color,
+    section_id: block.id
+  %}
   {%- liquid
     assign menu_class = 'menu'
     if show_as_accordion == true
@@ -30,7 +34,7 @@
       class="
         menu__details
         spacing-style
-        {% if block_settings.inherit_color_scheme == false %} color-{{ color_scheme }}{% endif %}
+        {% if block_settings.background_color != blank or block_settings.text_color != blank %} color-custom-{{ block.id }}{% endif %}
       "
       data-testid="menu-details"
       style="
@@ -69,7 +73,7 @@
             {% for link in menu.links %}
               <li class="menu__item {{ block_settings.link_preset }}">
                 <a href="{{ link.url }}">
-                  {{ link.title }}
+                  {{ link.title }}{% if link.data_sharing_opt_out_icon %}{{ link.data_sharing_opt_out_icon }}{% endif %}
                 </a>
               </li>
             {% endfor %}
@@ -206,17 +210,16 @@
       "visible_if": "{{ block.settings.show_as_accordion == true }}"
     },
     {
-      "type": "checkbox",
-      "id": "inherit_color_scheme",
-      "label": "t:settings.inherit_color_scheme",
-      "default": true
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "placeholder": "t:settings.default"
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:settings.color_scheme",
-      "default": "scheme-1",
-      "visible_if": "{{ block.settings.inherit_color_scheme == false }}"
+      "type": "color",
+      "id": "text_color",
+      "label": "t:settings.text_color",
+      "placeholder": "t:settings.default"
     },
     {
       "type": "header",

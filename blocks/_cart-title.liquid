@@ -11,10 +11,13 @@
 
 {% liquid
   assign block_settings = block.settings
+  if block_settings.text_color != blank
+    render 'contrast-override', background_color: '', text_color: block_settings.text_color, section_id: block.id
+  endif
 %}
 
 <div
-  class="cart-title spacing-style text-{{ block_settings.alignment }}"
+  class="cart-title spacing-style text-{{ block_settings.alignment }}{% if block_settings.text_color != blank %} color-custom-{{ block.id }}{% endif %}"
   style="{% render 'spacing-style', settings: block_settings %}"
   {{ block.shopify_attributes }}
 >
@@ -41,7 +44,6 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: var(--style-border-radius-buttons-primary);
     aspect-ratio: auto;
     padding: var(--cart-padding);
   }
@@ -130,6 +132,16 @@
       "id": "alignment",
       "label": "t:settings.alignment",
       "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:settings.text_color",
+      "placeholder": "t:settings.default"
     },
     {
       "type": "header",

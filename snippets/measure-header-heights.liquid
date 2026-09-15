@@ -1,0 +1,35 @@
+{% doc %}
+  Triggers the pre-paint header measurement (`window.measureHeaderHeights` in
+  layout/theme.liquid) so `--header-height` and `--header-group-height` hold
+  measured values instead of their fallbacks at first paint.
+
+  Render it from any section or block whose CSS consumes these variables at
+  first paint, before the consuming markup. Measurement forces layout at parse
+  time, so guard the render with the narrowest Liquid condition that covers the
+  consumer, and pass the matching gate parameter (at most one).
+
+  @param {boolean} [only_when_first_section] - Pass true when the consuming CSS rule only applies to the first section of the page, like the hero's `.hero-wrapper:first-child`
+  @param {boolean} [only_on_desktop] - Pass true when the consuming CSS rule only applies at 750px and up
+
+  @example
+  {% render 'measure-header-heights', only_on_desktop: true %}
+{% enddoc %}
+
+{% if only_when_first_section %}
+  <script>
+    const section = document.currentScript.closest('.shopify-section');
+    if (section && section === section.closest('#MainContent')?.firstElementChild) {
+      window.measureHeaderHeights?.();
+    }
+  </script>
+{% elsif only_on_desktop %}
+  <script>
+    if (window.matchMedia('(min-width: 750px)').matches) {
+      window.measureHeaderHeights?.();
+    }
+  </script>
+{% else %}
+  <script>
+    window.measureHeaderHeights?.();
+  </script>
+{% endif %}

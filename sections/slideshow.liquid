@@ -59,9 +59,21 @@
   endif
 %}
 
-<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+{% liquid
+  if section.settings.background_color != blank
+    assign skip_section_contrast = false
+    if section.settings.content_position == 'on-media'
+      assign skip_section_contrast = true
+    endif
+    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id, skip_contrast: skip_section_contrast
+  endif
+%}
+
 <div
-  class="slideshow-section spacing-style section {{ section_width_class }} color-{{ section.settings.color_scheme }} disable-section-top-offset"
+  class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+></div>
+<div
+  class="slideshow-section spacing-style section {{ section_width_class }}{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %} disable-section-top-offset"
   style="{% render 'spacing-padding', settings: section.settings %}; --slideshow-gap: {{ section.settings.slideshow_gap }}px;{% if rounded_slide_corners %} --corner-radius: {{ section.settings.corner_radius }}px;{% endif %}"
 >
   <h2 class="visually-hidden">{{ 'accessibility.slideshow' | t }}</h2>
@@ -283,10 +295,10 @@
       "default": "on-media"
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:settings.color_scheme",
-      "default": "primary"
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "placeholder": "t:settings.default"
     },
     {
       "type": "header",
@@ -413,8 +425,6 @@
           "type": "_slide",
           "settings": {
             "horizontal_alignment_flex_direction_column": "center",
-            "inherit_color_scheme": false,
-            "color_scheme": "scheme-6",
             "padding-inline-start": 48,
             "padding-inline-end": 48,
             "padding-block-start": 48,
@@ -449,8 +459,6 @@
           "type": "_slide",
           "settings": {
             "horizontal_alignment_flex_direction_column": "center",
-            "inherit_color_scheme": false,
-            "color_scheme": "scheme-6",
             "padding-inline-start": 48,
             "padding-inline-end": 48,
             "padding-block-start": 48,
@@ -492,7 +500,6 @@
           "type": "_slide",
           "settings": {
             "horizontal_alignment_flex_direction_column": "center",
-            "inherit_color_scheme": true,
             "padding-inline-start": 48,
             "padding-inline-end": 48,
             "padding-block-start": 48,
@@ -527,7 +534,6 @@
           "type": "_slide",
           "settings": {
             "horizontal_alignment_flex_direction_column": "center",
-            "inherit_color_scheme": true,
             "padding-inline-start": 48,
             "padding-inline-end": 48,
             "padding-block-start": 48,

@@ -66,29 +66,31 @@
     "remove": "Ukloni",
     "view_pricing_info": "Prikaži informacije o cijeni",
     "slideshow": "Prezentacija",
-    "header_navigation_label": "Primarna",
-    "home_logo_alt": "{{ store_name }} – Početna stranica",
+    "header_navigation_label": "Glavna",
+    "home_logo_alt": "{{ store_name }} – Početna",
     "active_filters": "Aktivni filtri:",
     "product_details": "Pojedinosti o proizvodu",
     "show_product_details": "Prikaži pojedinosti za proizvod {{ product_name }}",
     "featured_product": "Istaknuti proizvod",
     "search_suggestions_available": "Pretraživanje dostupnih prijedloga za „{{ query }}”",
     "price_filter_low": "Niska cijena",
-    "price_filter_high": "Visoka cijena"
+    "price_filter_high": "Visoka cijena",
+    "view_disclosure_information_for_product": "Prikaži obavijesti o proizvodu {{ product_title }}",
+    "show_submenu": "Prikaži podizbornik {{ title }}"
   },
   "actions": {
     "add_to_cart": "Dodaj u košaricu",
     "clear_all": "Očisti sve",
     "remove": "Ukloni",
-    "view_in_your_space": "Pogledajte u svojem prostoru",
+    "view_in_your_space": "Prikaži u svom prostoru",
     "show_filters": "Filtriraj",
     "clear": "Očisti",
-    "continue_shopping": "Nastavi s kupovinom",
+    "continue_shopping": "Nastavi s kupnjom",
     "log_in_html": "Imate li račun? <a href=\"{{ link }}\">Prijavite se</a> za brži završetak kupovine.",
     "see_items": {
       "one": "Pogledaj sljedeći broj artikala: {{ count }}",
-      "other": "Pogledaj sljedeći broj artikala: {{ count }}",
-      "few": "Pogledaj sljedeći broj artikala: {{ count }}"
+      "other": "Prikaži stavke: {{ count }}",
+      "few": "Prikaži stavke: {{ count }}"
     },
     "view_all": "Prikaži sve",
     "add": "Dodaj",
@@ -100,7 +102,7 @@
     "more": "Više",
     "zoom": "Uvećaj",
     "close_dialog": "Zatvori dijaloški okvir",
-    "reset": "Resetiraj",
+    "reset": "Ponovno postavi",
     "back": "Natrag",
     "log_in": "Prijava",
     "log_out": "Odjava",
@@ -117,7 +119,8 @@
     "show_all_options": "Prikaži sve opcije",
     "open": "Otvori",
     "back_to": "Natrag na {{ title }}",
-    "zoom_media": "Zoom medijskog sadržaja {{ index }}"
+    "zoom_media": "Zoom medijskog sadržaja {{ index }}",
+    "back_to_main_menu": "Natrag na glavni izbornik"
   },
   "content": {
     "reviews": "recenzije",
@@ -278,7 +281,8 @@
       "other": "Artikala dodano u košaricu: {{ count }}",
       "few": "Artikala dodano u košaricu: {{ count }}"
     },
-    "quick_order_list": "Brzi popis narudžbi"
+    "quick_order_list": "Brzi popis narudžbi",
+    "product_disclosures": "Obavijesti o proizvodu"
   },
   "gift_cards": {
     "issued": {

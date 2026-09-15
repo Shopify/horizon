@@ -67,7 +67,7 @@
     "remove": "Odebrat",
     "view_pricing_info": "Zobrazit informace o cenách",
     "slideshow": "Prezentace",
-    "header_navigation_label": "Hlavní",
+    "header_navigation_label": "Primární",
     "home_logo_alt": "{{ store_name }} – Domů",
     "active_filters": "Aktivní filtry:",
     "featured_product": "Doporučený produkt",
@@ -75,7 +75,9 @@
     "show_product_details": "Zobrazit podrobnosti o produktu {{ product_name }}",
     "search_suggestions_available": "Vyhledat dostupné návrhy pro výraz „{{ query }}“",
     "price_filter_low": "Nízká cena",
-    "price_filter_high": "Vysoká cena"
+    "price_filter_high": "Vysoká cena",
+    "view_disclosure_information_for_product": "Zobrazit povinné informace o produktu {{ product_title }}",
+    "show_submenu": "Zobrazit podnabídku {{ title }}"
   },
   "actions": {
     "add_to_cart": "Přidat do košíku",
@@ -88,14 +90,14 @@
     "log_in_html": "Máte účet? <a href=\"{{ link }}\">Přihlaste se</a>, abyste urychlili zaplacení.",
     "see_items": {
       "one": "Viz {{ count }} položka",
-      "other": "Viz {{ count }} položek",
-      "few": "Viz {{ count }} položek",
-      "many": "Viz {{ count }} položek"
+      "other": "Zobrazit {{ count }} položek",
+      "few": "Zobrazit {{ count }} položek",
+      "many": "Zobrazit {{ count }} položek"
     },
     "view_all": "Zobrazit vše",
     "add": "Přidat",
     "choose": "Vybrat",
-    "added": "Přidáni",
+    "added": "Přidáno",
     "show_less": "Zobrazit méně",
     "show_more": "Zobrazit více",
     "close": "Zavřít",
@@ -119,7 +121,8 @@
     "show_all_options": "Zobrazit všechny možnosti",
     "open": "Otevřít",
     "back_to": "Zpět na {{ title }}",
-    "zoom_media": "Přiblížit média {{ index }}"
+    "zoom_media": "Přiblížit média {{ index }}",
+    "back_to_main_menu": "Zpět do hlavní nabídky"
   },
   "content": {
     "reviews": "recen.",
@@ -133,7 +136,7 @@
     "quantity": "Množství",
     "product_total": "Celkem kusů produktu",
     "cart_estimated_total": "Odhadovaný součet",
-    "seller_note": "Zvláštní pokyny",
+    "seller_note": "Speciální pokyny",
     "cart_subtotal": "Mezisoučet",
     "discounts": "Slevy",
     "discount": "Sleva",
@@ -239,7 +242,7 @@
     "shipping_discount_error": "Slevy na dopravu se zobrazí při placení po přidání adresy.",
     "discount_code_error": "Slevový kód nelze na váš košík uplatnit",
     "shipping_policy": "Cena za dopravu se vypočítá u pokladny.",
-    "recipient_form_send_to": "Odeslat na",
+    "recipient_form_send_to": "Příjemce",
     "recipient_form_email_label": "E-mail příjemce",
     "recipient_form_email_label_my_email": "Můj e-mail",
     "recipient_form_email_address": "E-mailová adresa příjemce",
@@ -284,7 +287,8 @@
       "many": "Počet položek přidaných do košíku: {{ count }}"
     },
     "item_count_cutoff": "Počet položek: více než {{ count }}",
-    "quick_order_list": "Seznam pro rychlou objednávku"
+    "quick_order_list": "Seznam pro rychlou objednávku",
+    "product_disclosures": "Povinné informace o produktu"
   },
   "gift_cards": {
     "issued": {

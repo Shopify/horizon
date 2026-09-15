@@ -16,8 +16,12 @@
     when 'grid'
       assign classes = 'resource-list--grid'
     when 'carousel'
-      assign classes = 'resource-list--carousel'
+      assign classes = 'resource-list__carousel'
   endcase
+
+  if block_settings.background_color != blank
+    render 'contrast-override', background_color: block_settings.background_color, section_id: block.id
+  endif
 %}
 
 {% comment %}
@@ -26,7 +30,12 @@
 
 {% render 'quick-add-styles' %}
 {% render 'quick-add-modal-styles' %}
+{% render 'swatch-styles' %}
+{% render 'quantity-selector-styles' %}
+{% render 'variant-picker-styles' %}
 {% render 'product-badges-styles' %}
+{% render 'resource-list-styles' %}
+{% render 'product-recommendations-styles' %}
 <product-recommendations
   id="product-recommendations-{{ block.id }}"
   class="product-recommendations"
@@ -44,7 +53,7 @@
 >
   <div
     class="
-      {% if block_settings.inherit_color_scheme == false %}color-{{ block_settings.color_scheme }}{% endif %}
+      {% if block_settings.background_color != blank %}color-custom-{{ block.id }}{% endif %}
       block-resource-list
       spacing-style
       gap-style
@@ -368,17 +377,10 @@
       "default": 0
     },
     {
-      "type": "checkbox",
-      "id": "inherit_color_scheme",
-      "label": "t:settings.inherit_color_scheme",
-      "default": true
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:settings.color_scheme",
-      "default": "scheme-1",
-      "visible_if": "{{ block.settings.inherit_color_scheme == false }}"
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "placeholder": "t:settings.default"
     },
     {
       "type": "header",
@@ -477,7 +479,6 @@
                 "letter_spacing": "normal",
                 "case": "none",
                 "wrap": "pretty",
-                "color": "var(--color-foreground)",
                 "background": false,
                 "background_color": "#00000026",
                 "corner_radius": 0,
@@ -502,7 +503,6 @@
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
-                "color": "var(--color-foreground)",
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,

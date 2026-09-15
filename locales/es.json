@@ -67,19 +67,21 @@
     "view_pricing_info": "Ver la información de fijación de precios",
     "slideshow": "Presentación de diapositivas",
     "header_navigation_label": "Principal",
-    "home_logo_alt": "{{ store_name }} – Inicio",
+    "home_logo_alt": "{{ store_name }} - Inicio",
     "active_filters": "Filtros activos:",
     "product_details": "Detalles del producto",
     "show_product_details": "Mostrar detalles del producto para {{ product_name }}",
     "featured_product": "Producto destacado",
     "search_suggestions_available": "Buscar sugerencias disponibles de \"{{ query }}\"",
     "price_filter_low": "Precio bajo",
-    "price_filter_high": "Precio alto"
+    "price_filter_high": "Precio alto",
+    "view_disclosure_information_for_product": "Ver los avisos sobre el producto de {{ product_title }}",
+    "show_submenu": "Mostrar submenú de {{ title }}"
   },
   "actions": {
     "add_to_cart": "Agregar al carrito",
     "clear_all": "Borrar todo",
-    "remove": "Quitar",
+    "remove": "Eliminar",
     "view_in_your_space": "Ver en tu espacio",
     "show_filters": "Filtro",
     "clear": "Borrar",
@@ -91,9 +93,9 @@
       "many": "Ver {{ count }} artículos"
     },
     "view_all": "Ver todo",
-    "add": "Añadir",
+    "add": "Agregar",
     "choose": "Elegir",
-    "added": "Agregada",
+    "added": "Agregado",
     "show_less": "Mostrar menos",
     "show_more": "Mostrar más",
     "close": "Cerrar",
@@ -117,7 +119,8 @@
     "show_all_options": "Mostrar todas las opciones",
     "open": "Abrir",
     "back_to": "Volver a {{ title }}",
-    "zoom_media": "Ampliar {{ index }} multimedia"
+    "zoom_media": "Ampliar {{ index }} multimedia",
+    "back_to_main_menu": "Volver al menú principal"
   },
   "content": {
     "reviews": "reseñas",
@@ -217,7 +220,7 @@
     "taxes_included_shipping_at_checkout_with_policy_without_discounts_html": "Impuestos incluidos. Los gastos de envío se calculan en la página de pago.",
     "taxes_included_shipping_at_checkout_without_policy_without_discounts": "Impuestos incluidos. Los gastos de envío se calculan en la página de pago.",
     "wrong_password": "Contraseña incorrecta",
-    "view_more_details": "Ver más información",
+    "view_more_details": "Ver más detalles",
     "page_placeholder_title": "Título de la página",
     "page_placeholder_content": "Selecciona una página para mostrar su contenido.",
     "placeholder_image": "Imagen marcadora de posición",
@@ -278,7 +281,8 @@
       "other": "Se agregaron {{ count }} artículos al carrito",
       "many": "Se agregaron {{ count }} artículos al carrito"
     },
-    "quick_order_list": "Lista de pedidos rápidos"
+    "quick_order_list": "Lista de pedidos rápidos",
+    "product_disclosures": "Avisos sobre el producto"
   },
   "gift_cards": {
     "issued": {

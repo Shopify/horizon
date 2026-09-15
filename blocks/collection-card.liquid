@@ -122,22 +122,19 @@
       "content": "t:content.appearance"
     },
     {
-      "type": "checkbox",
-      "id": "inherit_color_scheme",
-      "label": "t:settings.inherit_color_scheme",
-      "default": true
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "placeholder": "t:settings.default"
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:settings.color_scheme",
-      "default": "scheme-1",
-      "visible_if": "{{ block.settings.inherit_color_scheme == false }}"
+      "type": "header",
+      "content": "t:content.borders"
     },
     {
       "type": "select",
       "id": "border",
-      "label": "t:settings.borders",
+      "label": "t:settings.style",
       "options": [
         {
           "value": "none",
@@ -154,10 +151,10 @@
       "type": "range",
       "id": "border_width",
       "min": 0,
-      "max": 10,
-      "step": 0.5,
+      "max": 100,
+      "step": 1,
       "unit": "px",
-      "label": "t:settings.border_width",
+      "label": "t:settings.thickness",
       "default": 1,
       "visible_if": "{{ block.settings.border != 'none' }}"
     },
@@ -168,8 +165,15 @@
       "max": 100,
       "step": 1,
       "unit": "%",
-      "label": "t:settings.border_opacity",
+      "label": "t:settings.opacity",
       "default": 100,
+      "visible_if": "{{ block.settings.border != 'none' }}"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "t:settings.color",
+      "placeholder": "t:settings.default",
       "visible_if": "{{ block.settings.border != 'none' }}"
     },
     {

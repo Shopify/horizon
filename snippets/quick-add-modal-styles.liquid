@@ -5,9 +5,29 @@
   {% render 'quick-add-modal-styles' %}
 {%- enddoc -%}
 
+{% comment %}Include shared dialog styles for Quick Add render paths.{% endcomment %}
+{% render 'dialog-styles' %}
+
 {% stylesheet %}
   #quick-add-dialog {
     display: contents;
+  }
+
+  /* Inputs inside the quick-add modal use the global Input Fields settings,
+     not any per-block overrides set on the product page. */
+  .quick-add-modal .quantity-selector-wrapper {
+    --color-input-background: inherit;
+    --color-input-text: inherit;
+    --color-input-text-rgb: inherit;
+    --color-input-border: inherit;
+    --style-border-width-inputs: inherit;
+    --style-border-radius-inputs: inherit;
+    --style-border-radius-buttons-primary: var(--style-border-radius-inputs);
+    --style-border-radius-buttons-secondary: var(--style-border-radius-inputs);
+  }
+
+  .quick-add-modal .product-details .quantity-selector {
+    border-radius: var(--style-border-radius-inputs);
   }
 
   @media screen and (min-width: 750px) {
@@ -32,6 +52,10 @@
       border-radius: 0;
       overflow: clip;
       height: fit-content;
+
+      /* Bottom sheet touches the physical bottom edge (viewport-fit=cover); keep the
+         buy buttons above the home indicator while the background fills the safe area */
+      padding-block-end: var(--safe-area-inset-bottom);
     }
   }
 

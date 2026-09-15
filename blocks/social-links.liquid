@@ -1,7 +1,14 @@
 <div
-  class="social-icons__wrapper"
+  class="social-icons__wrapper social-icons__wrapper--{{ block.id }}"
   {{ block.shopify_attributes }}
 >
+  {% if block.settings.icon_color != blank %}
+    {% style %}
+      .social-icons__wrapper--{{ block.id }} {
+        --color-utilities: {{ block.settings.icon_color }};
+      }
+    {% endstyle %}
+  {% endif %}
   {% liquid
     assign social_links = 'facebook_url,instagram_url,youtube_url,tiktok_url,twitter_url,threads_url,linkedin_url,bluesky_url,snapchat_url,pinterest_url,tumblr_url,vimeo_url,custom_url' | split: ','
   %}
@@ -164,6 +171,20 @@
   "name": "t:names.social_media_links",
   "tag": null,
   "settings": [
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "t:settings.color",
+      "placeholder": "t:settings.default"
+    },
+    {
+      "type": "header",
+      "content": "t:content.links"
+    },
     {
       "type": "url",
       "id": "facebook_url",

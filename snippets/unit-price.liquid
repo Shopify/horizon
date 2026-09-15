@@ -6,10 +6,12 @@
 
   @example
   {% render 'unit-price', price: variant.unit_price, measurement: variant.unit_price_measurement %}
-
   @example
   {% render 'unit-price', price: line_item.unit_price | money_with_currency, measurement: line_item.unit_price_measurement }
 {%- enddoc -%}
+
+{% render 'price-styles' %}
+
 <small class="unit-price">
   <span class="visually-hidden">{{ 'accessibility.unit_price' | t }}</span>
   {{ price | unit_price_with_measurement: measurement }}

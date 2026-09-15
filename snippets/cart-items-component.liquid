@@ -18,8 +18,12 @@
   class="cart-items-component"
   {% if is_drawer %}
     data-drawer
+    view-event-trigger="dialog"
   {% endif %}
   data-section-id="{{ section_id }}"
+  {% # theme-check-disable UnknownFilter %}
+  view-event-payload="{{ cart | standard_event_data: 'view' | escape  }}"
+  {% # theme-check-enable UnknownFilter %}
 >
   {{ children }}
 </cart-items-component>
@@ -33,7 +37,8 @@
   }
 
   @media screen and (prefers-reduced-motion: no-preference) {
-    html:active-view-transition-type(empty-cart-drawer) {
+    html:active-view-transition-type(empty-cart-drawer),
+    html:active-view-transition-type(fill-cart-drawer) {
       .cart-items-component {
         view-transition-name: cart-drawer-content;
       }

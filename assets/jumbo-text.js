@@ -1,5 +1,6 @@
 import { ResizeNotifier, prefersReducedMotion, yieldToMainThread } from '@theme/utilities';
 import { Component } from '@theme/component';
+import { getScrollContainer, getScrollTop } from '@theme/scroll-container';
 
 /**
  * A custom element that automatically sizes text to fit its container width.
@@ -179,8 +180,8 @@ class JumboText extends Component {
     // Check if jumbo text is close to the bottom of the page. If it is, then use `cap text` instead of `cap alphabetic`.
     // This reserves space for descender characters so they don't overflow and cause extra space at the bottom of the page.
     const rect = this.getBoundingClientRect();
-    const bottom = rect.bottom + window.scrollY;
-    const distanceFromBottom = document.documentElement.offsetHeight - bottom;
+    const bottom = rect.bottom + getScrollTop();
+    const distanceFromBottom = getScrollContainer().scrollHeight - bottom;
     this.dataset.capText = (distanceFromBottom <= 100).toString();
   };
 

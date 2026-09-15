@@ -33,11 +33,11 @@
     >
     <meta
       name="viewport"
-      content="width=device-width,initial-scale=1"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
     >
     <meta
       name="theme-color"
-      content="{{ settings.color_schemes.scheme-1.settings.background }}"
+      content="{{ settings.color_palette.background }}"
     >
     <link
       rel="canonical"
@@ -106,7 +106,7 @@
     {%- endunless -%}
     {% # theme-check-enable AssetPreload %}
     {%- render 'theme-styles-variables' -%}
-    {%- render 'color-schemes' -%}
+    {%- render 'color-palette' -%}
   </head>
 
   <body class="gift-card">

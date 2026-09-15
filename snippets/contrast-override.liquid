@@ -1,0 +1,198 @@
+{% doc %}
+  Smart Color Contrast Override System
+
+  When a custom background color is set:
+  - check if the global settings.page_text_color provides sufficient contrast against the background,
+    - if yes, use it as the text color
+    - if no, use the palette extreme (lightest or darkest) that best contrasts the background
+
+  Effective text colors are exposed as CSS custom properties in color-palette.liquid.
+
+  Presets control which token categories of CSS variables are emitted:
+  - 'content' (default) — base + text + border + form-disabled + accent
+                          (the original content-rich behaviour used by sections/blocks)
+  - 'ui'                — base + text + border + form-disabled
+                          (lightweight UI surfaces: popover, drawer, badges)
+
+  Form tokens that exist only on .color-custom-{id} (never on .text-block prose
+  containers): --input-disabled-*, --checkbox-border.
+
+  Input chrome (--color-input-*) is not emitted by this snippet — inputs use the
+  global Input Fields settings defined in color-palette.liquid across all surfaces.
+
+  @param {string} [background_color] - Custom background color. Nothing is output when blank or fully transparent (alpha == 0).
+  @param {string} [text_color] - Explicit text color. Skips smart contrast when provided.
+  @param {string} [border_color] - Optional border color to override if contrast is insufficient.
+  @param {string} section_id - Unique identifier for scoping the CSS variables.
+  @param {boolean} [skip_contrast] - When true, apply only the background color without any contrast overrides.
+  @param {string} [preset] - One of 'content' (default) or 'ui'. Controls which token categories are emitted.
+
+  @example
+  {% render 'contrast-override',
+    background_color: block.settings.background_color,
+    text_color: block.settings.text_color,
+    border_color: block.settings.border_color,
+    section_id: section_id
+  %}
+  @example
+  {% render 'contrast-override',
+    background_color: settings.popover_background_color,
+    text_color: settings.popover_text_color,
+    border_color: settings.popover_border_color,
+    section_id: 'popover',
+    preset: 'ui'
+  %}
+{% enddoc %}
+
+{% liquid
+  assign skip_contrast = skip_contrast | default: false, allow_false: true
+  assign preset = preset | default: 'content'
+
+  assign has_background = false
+  if background_color != blank and background_color.alpha != 0
+    assign has_background = true
+  endif
+
+  if has_background and skip_contrast == false
+    # Pick the palette extreme with better contrast based on background brightness.
+    # The actual lightest/darkest values live in CSS vars set by color-palette.liquid.
+    assign bg_brightness = background_color | color_brightness
+    if bg_brightness > 128
+      assign contrast_var = 'var(--palette-darkest)'
+      assign contrast_rgb_var = 'var(--palette-darkest-rgb)'
+    else
+      assign contrast_var = 'var(--palette-lightest)'
+      assign contrast_rgb_var = 'var(--palette-lightest-rgb)'
+    endif
+
+    # --- Effective foreground text color ---
+    # 1. Explicit text_color wins.
+    # 2. Else, use settings.page_text_color if it contrasts (>= 4.5).
+    # 3. Else, fall back to the brightness-based palette extreme (contrast_var).
+    if text_color != blank
+      assign effective_text_color = text_color
+      assign effective_text_color_rgb = text_color.rgb
+    else
+      assign page_text_contrast = background_color | color_contrast: settings.page_text_color
+      if page_text_contrast >= 4.5
+        assign effective_text_color = settings.page_text_color
+        assign effective_text_color_rgb = settings.page_text_color.rgb
+      else
+        assign effective_text_color = contrast_var
+        assign effective_text_color_rgb = contrast_rgb_var
+      endif
+    endif
+
+    # --- Effective border color ---
+    # When no explicit border_color is provided:
+    # - 'ui' preset falls back to the effective text color (preserves legacy
+    #   contrast-override-ui behaviour: border tracks text on UI surfaces).
+    # - Other presets fall back to the brightness-based palette extreme.
+    if border_color != blank
+      assign effective_border_color = border_color
+      assign effective_border_color_rgb = border_color.rgb
+    elsif preset == 'ui'
+      assign effective_border_color = effective_text_color
+      assign effective_border_color_rgb = effective_text_color_rgb
+    else
+      assign effective_border_color = contrast_var
+      assign effective_border_color_rgb = contrast_rgb_var
+    endif
+  endif
+%}
+
+{% if has_background %}
+  {% style %}
+    .color-custom-{{ section_id }},
+    .color-custom-{{ section_id }} .text-block {
+      /* Background */
+      --color-background: {{ background_color }};
+      --color-background-rgb: {{ background_color.rgb }};
+
+      /* Opacity values adjusted for background brightness */
+      {% render 'brightness-opacities', background: background_color %}
+
+      {% unless skip_contrast %}
+        /* Foreground / text — explicit or smart-contrasted */
+        --color: {{ effective_text_color }};
+        --color-rgb: {{ effective_text_color_rgb }};
+        --color-foreground: {{ effective_text_color }};
+        --color-foreground-rgb: {{ effective_text_color_rgb }};
+        --color-foreground-muted: rgb({{ effective_text_color_rgb }} / var(--opacity-muted-text));
+        --color-foreground-subdued: rgb({{ effective_text_color_rgb }} / var(--opacity-subdued-text));
+        --color-border: {{ effective_border_color }};
+        --color-border-rgb: {{ effective_border_color_rgb }};
+      {% endunless %}
+    }
+
+    {% unless skip_contrast %}
+      .color-custom-{{ section_id }} {
+        /* Form-related tokens stay on .color-custom only — .text-block is a prose
+           container (text/announcement/inline-text/blog-post-description/
+           collection-link/price/sku) and never holds form inputs. */
+        --input-disabled-background-color: rgb({{ effective_text_color_rgb }} / var(--opacity-10));
+        --input-disabled-border-color: rgb({{ effective_text_color_rgb }} / var(--opacity-5));
+        --input-disabled-text-color: rgb({{ effective_text_color_rgb }} / var(--opacity-50));
+        --checkbox-border: 1px solid rgb({{ effective_text_color_rgb }} / var(--opacity-35-55));
+      }
+    {% endunless %}
+
+    .color-custom-{{ section_id }} {
+      color: var(--color, var(--color-foreground));
+      background-color: var(--color-background);
+    }
+  {% endstyle %}
+{% elsif text_color != blank %}
+  {% liquid
+    if border_color != blank
+      assign effective_no_bg_border = border_color
+      assign effective_no_bg_border_rgb = border_color.rgb
+    else
+      assign effective_no_bg_border = text_color
+      assign effective_no_bg_border_rgb = text_color.rgb
+    endif
+  %}
+  {% style %}
+    .color-custom-{{ section_id }},
+    .color-custom-{{ section_id }} .text-block {
+      --color: {{ text_color }};
+      --color-rgb: {{ text_color.rgb }};
+      --color-foreground: {{ text_color }};
+      --color-foreground-rgb: {{ text_color.rgb }};
+      --color-foreground-muted: rgb({{ text_color.rgb }} / var(--opacity-muted-text));
+      --color-foreground-subdued: rgb({{ text_color.rgb }} / var(--opacity-subdued-text));
+
+      {% if preset == 'ui' %}
+        --color-border: {{ effective_no_bg_border }};
+        --color-border-rgb: {{ effective_no_bg_border_rgb }};
+      {% endif %}
+
+    }
+
+    .color-custom-{{ section_id }} {
+      /* Form-related tokens stay on .color-custom only. */
+      --input-disabled-background-color: rgb({{ text_color.rgb }} / var(--opacity-10));
+      --input-disabled-border-color: rgb({{ text_color.rgb }} / var(--opacity-5));
+      --input-disabled-text-color: rgb({{ text_color.rgb }} / var(--opacity-50));
+      --checkbox-border: 1px solid rgb({{ text_color.rgb }} / var(--opacity-35-55));
+    }
+
+    {% if preset == 'ui' %}
+      .color-custom-{{ section_id }} {
+        color: {{ text_color }};
+      }
+    {% else %}
+      .color-custom-{{ section_id }} {
+        color: var(--color-foreground);
+      }
+
+      .color-custom-{{ section_id }} .text-block,
+      .color-custom-{{ section_id }} .footer-utilities__text,
+      .color-custom-{{ section_id }} .custom-typography,
+      .color-custom-{{ section_id }} .footer-utilities__icons,
+      .color-custom-{{ section_id }} .social-icons__wrapper {
+        color: var(--color, var(--color-foreground));
+      }
+    {% endif %}
+  {% endstyle %}
+{% endif %}

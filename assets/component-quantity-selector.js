@@ -218,6 +218,10 @@ export class QuantitySelectorComponent extends Component {
     const { quantityInput } = this.refs;
     if (!(event.target instanceof HTMLInputElement) || document.activeElement !== quantityInput) return;
 
+    // Non-empty value so morph's PRESERVED_ATTRIBUTES keeps the marker across a section
+    // morph (its onBeforeUpdate ignores empty-valued attributes). skipsValueUpdate only
+    // checks presence, not the value.
+    quantityInput.setAttribute('data-skip-value-update', 'true');
     quantityInput.select();
   }
 
@@ -231,6 +235,11 @@ export class QuantitySelectorComponent extends Component {
 
     event.preventDefault();
     const { quantityInput } = this.refs;
+    // Blur always ends the edit, so the morph opt-out has to be cleared before any
+    // validation branch can return early. Leaving it set would make morph's
+    // PRESERVED_ATTRIBUTES copy it onto every incoming server node, freezing this
+    // input's displayed value against all later server renders.
+    quantityInput.removeAttribute('data-skip-value-update');
     const { min, step } = this.getCurrentValues();
     const effectiveMax = this.getEffectiveMax();
 

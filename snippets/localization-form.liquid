@@ -25,8 +25,11 @@
   endif
 
   assign show_popular_countries = false
+  assign other_countries = localization.available_countries
   if localization.available_countries.size > 9 and popular_countries.size > 1
     assign show_popular_countries = true
+    # Popular countries get their own list above, so drop them here to avoid listing a country twice.
+    assign other_countries = localization.available_countries | reject: 'popular?'
   endif
 
   assign show_currencies = false
@@ -107,7 +110,7 @@
           class="visually-hidden"
           id="{{ localization_style }}-CountryLabel"
         >
-          Country/Region
+          {{- 'accessibility.country_region' | t -}}
         </h2>
         {% if show_country_filter %}
           <div
@@ -184,7 +187,7 @@
             >
               {{- 'content.no_results_found' | t -}}
             </span>
-            {%- for country in localization.available_countries -%}
+            {%- for country in other_countries -%}
               {% liquid
                 assign aliases = ''
                 case country.iso_code
@@ -238,7 +241,7 @@
     {% endif %}
 
     {% if show_language %}
-      <div class="language-selector{% if show_country %} top-shadow{% else %} language-selector--collapse-space{% endif %}{% if show_country == false and localization_style == 'drawer' %} h5{% endif %}">
+      <div class="language-selector{% if show_country %} language-selector--top-shadow{% else %} language-selector--collapse-space{% endif %}{% if show_country == false and localization_style == 'drawer' %} h5{% endif %}">
         <h2
           class="visually-hidden"
           id="{{ localization_style }}-LanguageLabel"
@@ -296,7 +299,7 @@
   }
 
   localization-form-component .button:is(:not(.country-filter__reset-button)) {
-    --button-color: var(--color-primary);
+    --button-color: var(--color-foreground);
     --button-background-color: var(--language-button-background-color, var(--color-background));
     --button-border-color: var(--language-button-border-color, var(--color-border));
 
@@ -309,15 +312,15 @@
   localization-form-component .button:is(:not(.country-filter__reset-button)):hover,
   .localization-form__list-item:hover,
   .localization-form__list-item:focus {
-    --button-color: var(--color-primary-hover);
+    --button-color: var(--color-foreground-subdued);
 
-    background-color: rgb(var(--color-primary-hover-rgb) / var(--opacity-8));
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-8));
   }
 
   .localization-form__list-item[aria-current='true'] {
     --button-color: var(--color-primary-active);
 
-    background-color: rgb(var(--color-primary-hover-rgb) / var(--opacity-10));
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-10));
   }
 
   .localization-form__list-item-disabled {
@@ -398,11 +401,11 @@
   .localization-form__list-item#no-results-message {
     grid-template-columns: 1fr;
     text-align: center;
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+    color: var(--color-foreground-subdued);
   }
 
   .is-searching .localization-form__list-item .country {
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-80));
+    color: var(--color-foreground-subdued);
   }
 
   .localization-form__list-item .country mark {
@@ -438,16 +441,25 @@
     width: 100%;
   }
 
+  .language-selector--top-shadow::before {
+    content: '';
+    box-shadow: 0 0 10px var(--color-shadow);
+    position: absolute;
+    z-index: var(--layer-lowest);
+    inset: 0;
+    clip-path: inset(-50px 0 0 0); /* stylelint-disable-line */
+  }
+
   .language-selector__label {
     flex-shrink: 0;
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+    color: var(--color-foreground-subdued);
   }
 
   .localization-form__select {
     border: none;
     color: var(--color-foreground);
     appearance: none;
-    background-color: var(--color-input-background);
+    background-color: var(--color-background);
     padding-block: var(--padding-3xs);
     padding-inline: var(--padding-xs) calc(var(--icon-size-xs) + var(--padding-xs));
     text-align: right;

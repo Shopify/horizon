@@ -15,12 +15,8 @@
   "tag": null,
   "settings": [
     {
-      "type": "paragraph",
-      "content": "t:content.resource_reference_product_variant_picker"
-    },
-    {
-      "type": "paragraph",
-      "content": "t:content.edit_variants_in_theme_settings"
+      "type": "header",
+      "content": "t:content.type"
     },
     {
       "type": "select",
@@ -43,6 +39,99 @@
       "id": "show_swatches",
       "label": "t:settings.swatches",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color",
+      "id": "option_label_text_color",
+      "label": "t:settings.text_color",
+      "placeholder": "t:settings.default",
+      "alpha": true
+    },
+    {
+      "type": "select",
+      "id": "variant_style_class",
+      "label": "t:settings.variant_button_style",
+      "options": [
+        {
+          "value": "default",
+          "label": "t:options.default"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "default",
+      "info": "t:info.edit_variants_in_theme_settings"
+    },
+    {
+      "type": "color",
+      "id": "custom_variant_background",
+      "label": "t:settings.background",
+      "default": "{{ settings.color_palette.background }}",
+      "alpha": true,
+      "visible_if": "{{ block.settings.variant_style_class == 'custom' }}"
+    },
+    {
+      "type": "color",
+      "id": "custom_variant_text",
+      "label": "t:settings.text",
+      "default": "{{ settings.color_palette.foreground }}",
+      "alpha": true,
+      "visible_if": "{{ block.settings.variant_style_class == 'custom' }}"
+    },
+    {
+      "type": "color",
+      "id": "custom_variant_border",
+      "label": "t:settings.borders",
+      "default": "{{ settings.color_palette.foreground }}",
+      "alpha": true,
+      "visible_if": "{{ block.settings.variant_style_class == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "selected_variant_style_class",
+      "label": "t:settings.selected_variant_button_style",
+      "options": [
+        {
+          "value": "default",
+          "label": "t:options.default"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "default",
+      "visible_if": "{{ block.settings.variant_style == 'buttons' }}"
+    },
+    {
+      "type": "color",
+      "id": "custom_selected_variant_background",
+      "label": "t:settings.background",
+      "default": "{{ settings.color_palette.foreground }}",
+      "alpha": true,
+      "visible_if": "{{ block.settings.variant_style == 'buttons' and block.settings.selected_variant_style_class == 'custom' }}"
+    },
+    {
+      "type": "color",
+      "id": "custom_selected_variant_text",
+      "label": "t:settings.text",
+      "default": "{{ settings.color_palette.background }}",
+      "alpha": true,
+      "visible_if": "{{ block.settings.variant_style == 'buttons' and block.settings.selected_variant_style_class == 'custom' }}"
+    },
+    {
+      "type": "color",
+      "id": "custom_selected_variant_border",
+      "label": "t:settings.borders",
+      "default": "{{ settings.color_palette.foreground }}",
+      "alpha": true,
+      "visible_if": "{{ block.settings.variant_style == 'buttons' and block.settings.selected_variant_style_class == 'custom' }}"
     },
     {
       "type": "text_alignment",

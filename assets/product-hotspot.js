@@ -236,14 +236,12 @@ export class ProductHotspotComponent extends Component {
 
     const isLeavingTrigger = e.target === trigger;
     const isLeavingDialog = e.target === dialog;
-    const isGoingToDialog =
-      e.relatedTarget === dialog ||
-      (e.relatedTarget instanceof Element && e.relatedTarget.closest('dialog') === dialog);
+    const isGoingToDialog = e.relatedTarget instanceof Element && dialog.contains(e.relatedTarget);
     const isGoingToTrigger = e.relatedTarget === trigger;
 
-    if ((isLeavingTrigger && !isGoingToDialog) || (isLeavingDialog && !isGoingToTrigger)) {
-      this.closeDialog();
-    }
+    if (isGoingToDialog || (isLeavingDialog && isGoingToTrigger)) return;
+
+    if (isLeavingTrigger || isLeavingDialog) this.closeDialog();
   };
 
   /**

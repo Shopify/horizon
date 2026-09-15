@@ -136,6 +136,12 @@
       "visible_if": "{{ settings.logo == blank and settings.logo_inverse == blank or block.settings.inverse == false }}"
     },
     {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:settings.color",
+      "visible_if": "{{ settings.logo == blank and settings.logo_inverse == blank or block.settings.inverse == false }}"
+    },
+    {
       "type": "paragraph",
       "content": "t:content.edit_logo_in_theme_settings"
     },

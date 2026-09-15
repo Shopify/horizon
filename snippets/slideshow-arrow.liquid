@@ -33,9 +33,11 @@
     button button-unstyled button-unstyled--transparent
     {% if action == 'previous' %} flip-x{% endif %}
   "
-  {% # theme-check-disable %}
-  aria-label="{{ 'accessibility.slideshow_' | append: action | t }}"
-  {% # theme-check-enable %}
+  {% if action == 'previous' %}
+    aria-label="{{ 'accessibility.slideshow_previous' | t }}"
+  {% else %}
+    aria-label="{{ 'accessibility.slideshow_next' | t }}"
+  {% endif %}
   on:click="/{{ action }}"
   ref="{{ action }}"
 >

@@ -220,7 +220,12 @@ if (window.Shopify?.designMode && !isIOS) {
         isOpen: (el) => {
           const shadowRoot = el.shadowRoot;
           if (!shadowRoot) return false;
-          return shadowRoot.querySelector('dialog[open], [popover]:popover-open') != null;
+
+          // The polyfill does not patch ShadowRoot.querySelector; it marks open popovers with a class instead.
+          const openPopoverSelector = Theme.supportsNativePopover
+            ? '[popover]:popover-open'
+            : '[popover].\\:popover-open';
+          return shadowRoot.querySelector(`dialog[open], ${openPopoverSelector}`) != null;
         },
         async open(el) {
           await customElements.whenDefined('shopify-account');
@@ -256,18 +261,6 @@ if (window.Shopify?.designMode && !isIOS) {
         isOpen: (el) => el.getAttribute('open') != null,
         // @ts-ignore
         open: (el) => el.showDialog(),
-      },
-      {
-        name: 'cart-drawer',
-        selector: 'cart-drawer-component',
-        matches(el) {
-          return !!el.closest(this.selector);
-        },
-        isOpen: (el) => el.getAttribute('open') != null,
-        open: (el) => {
-          // @ts-ignore
-          el.open();
-        },
       },
       {
         name: 'header-drawer',
@@ -308,7 +301,7 @@ if (window.Shopify?.designMode && !isIOS) {
         isOpen: (el) => el.getAttribute('open') != null,
         open: (el, instanceId) => {
           const button = document.querySelector(
-            `product-form-component[data-product-id="${instanceId}"] .quick-add__button--choose`
+            `quick-add-component[data-product-id="${instanceId}"] .quick-add__button--choose`
           );
 
           // @ts-ignore

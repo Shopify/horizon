@@ -13,16 +13,9 @@ body {
 }
 
 :root {
-  --hover-lift-amount: 4px;
-  --hover-scale-amount: 1.03;
-  --hover-subtle-zoom-amount: 1.015;
-  --hover-shadow-color: var(--color-shadow);
   --hover-transition-duration: 0.25s;
   --hover-transition-timing: ease-out;
-  --surface-transition-duration: 0.3s;
-  --surface-transition-timing: var(--ease-out-quad);
   --submenu-animation-speed: 360ms;
-  --submenu-animation-easing: cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 html {
@@ -32,8 +25,43 @@ html {
   scroll-behavior: smooth;
 }
 
-html[scroll-lock] {
+@media (min-width: 990px) {
+  html:has(.page-wrapper),
+  html:has(.page-wrapper) body {
+    height: 100dvh;
+    overflow: hidden;
+  }
+}
+
+html[scroll-lock],
+html[scroll-lock] .page-wrapper {
   overflow: hidden;
+}
+
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  transition: margin-right var(--animation-speed) var(--animation-timing-fade-out);
+}
+
+@media (min-width: 990px) {
+  .page-wrapper {
+    height: 100dvh;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--color-foreground-rgb) / var(--opacity-40)) var(--color-background);
+  }
+
+  .page-wrapper--drawer-open shopify-account::part(dialog) {
+    translate: calc(-1 * var(--theme-drawer-width, var(--sidebar-width)));
+  }
+}
+
+.page-wrapper--drawer-open {
+  margin-right: var(--theme-drawer-width, var(--sidebar-width));
+  transition-timing-function: var(--animation-timing-fade-in);
 }
 
 img,
@@ -57,79 +85,10 @@ select {
   border-radius: var(--style-border-radius-inputs);
 }
 
-input:hover,
-textarea:hover {
-  background-color: var(--color-input-hover-background);
-}
-
 /** override ios and firefox defaults */
 select {
   background-color: var(--color-background);
   color: currentcolor;
-}
-
-.collection-card,
-.featured-blog-posts-card {
-  width: 100%;
-  position: relative;
-  height: 100%;
-}
-
-/* Editorial layout */
-.resource-list:not(.hidden--desktop) .collection-card--flexible-aspect-ratio,
-.resource-list:not(.hidden--desktop) .blog-post-card--flexible-aspect-ratio {
-  .collection-card__image,
-  .featured-blog-posts-card__image,
-  .blog-placeholder-svg {
-    aspect-ratio: 99;
-    height: 100%;
-  }
-
-  .collection-card__inner,
-  .featured-blog-posts-card__inner {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-
-  .collection-card__content,
-  .featured-blog-posts-card__content {
-    flex-shrink: 0;
-  }
-
-  &:not(.collection-card--image-bg) .collection-card__content,
-  .featured-blog-posts-card__content {
-    height: auto;
-  }
-}
-
-.collection-card__inner,
-.featured-blog-posts-card__inner {
-  width: 100%;
-  overflow: hidden;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  z-index: var(--layer-flat);
-  pointer-events: none;
-}
-
-.collection-card__content,
-.featured-blog-posts-card__content {
-  display: flex;
-  position: relative;
-  height: 100%;
-  width: 100%;
-  gap: var(--gap);
-}
-
-.collection-card__link,
-.featured-blog-posts-card__link {
-  position: absolute;
-  inset: 0;
-
-  /* allows focus outline to have radius in supported browsers */
-  border-radius: var(--border-radius);
 }
 
 .product-card,
@@ -149,39 +108,7 @@ select {
 
 .product-card__content {
   position: relative;
-}
-
-.product-card__content {
   cursor: pointer;
-}
-
-@media (any-pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .card-hover-effect-lift .product-card:hover,
-  .card-hover-effect-lift .collection-card:hover,
-  .card-hover-effect-lift .predictive-search-results__card:hover {
-    transform: translateY(calc(-1 * var(--hover-lift-amount)));
-  }
-
-  .card-hover-effect-scale .product-card:hover,
-  .card-hover-effect-scale .collection-card:hover,
-  .card-hover-effect-scale .predictive-search-results__card:hover {
-    transform: scale(var(--hover-scale-amount));
-  }
-
-  .card-hover-effect-subtle-zoom .card-gallery,
-  .card-hover-effect-subtle-zoom .collection-card__image,
-  .card-hover-effect-subtle-zoom .product-card__image {
-    overflow: hidden;
-    transition: transform var(--hover-transition-duration) var(--hover-transition-timing);
-  }
-
-  .card-hover-effect-subtle-zoom .product-card:hover .card-gallery,
-  .card-hover-effect-subtle-zoom .collection-card:hover .collection-card__image,
-  .card-hover-effect-subtle-zoom .product-card:hover .product-card__image,
-  .card-hover-effect-subtle-zoom .predictive-search-results__card:hover {
-    transform: scale(var(--hover-subtle-zoom-amount));
-  }
-
 }
 
 dialog {
@@ -224,11 +151,16 @@ p:empty {
 }
 
 /* view transitions */
-@media (prefers-reduced-motion: no-preference) {
-  @view-transition {
-    navigation: auto;
-  }
 
+/*
+ * The cross-document (MPA) opt-in `@view-transition { navigation: auto }` is declared per-layout
+ * (layout/theme.liquid and layout/password.liquid), because this stylesheet is shared by both layouts
+ * and a static stylesheet can't read theme settings.
+ * It is gated on the same `settings.page_transition_enabled or settings.transition_to_main_product` condition as the
+ * render blocker, so the opt-in and its opt-out switch can never disagree. The rules below only
+ * take effect once an `@view-transition` opt-in is active, so they are inert without it.
+ */
+@media (prefers-reduced-motion: no-preference) {
   /* Keep page interactive while view transitions are running */
   :root {
     view-transition-name: none;
@@ -322,12 +254,14 @@ p:empty {
   flex-grow: 1;
 }
 
-/* Set up page widths & margins */
+/* Set up page widths & margins. Gutters grow to the device safe-area insets (viewport-fit=cover)
+   so section backgrounds bleed edge-to-edge while content stays clear of the notch; taking the
+   larger of both insets keeps the centered page grid symmetric. */
 .page-width-wide,
 .page-width-normal,
 .page-width-narrow,
 .page-width-content {
-  --page-margin: 16px;
+  --page-margin: max(16px, var(--safe-area-inset-left, 0px), var(--safe-area-inset-right, 0px));
 }
 
 @media screen and (min-width: 750px) {
@@ -335,7 +269,7 @@ p:empty {
   .page-width-normal,
   .page-width-narrow,
   .page-width-content {
-    --page-margin: 40px;
+    --page-margin: max(40px, var(--safe-area-inset-left, 0px), var(--safe-area-inset-right, 0px));
   }
 }
 
@@ -350,8 +284,7 @@ p:empty {
   --page-width: calc(var(--page-content-width) + (var(--page-margin) * 2));
 }
 
-.page-width-narrow,
-.page-width-content {
+.page-width-narrow {
   /* NOTE: This results in a page width of 1400px because of how we set up margins with grid */
   --page-content-width: var(--narrow-page-width);
   --page-width: calc(var(--page-content-width) + (var(--page-margin) * 2));
@@ -415,6 +348,7 @@ p:empty {
   position: absolute;
   inset: 0;
   z-index: var(--layer-section-background);
+  background-color: var(--color-background);
 }
 
 /* For page-width sections, all content goes in the center column */
@@ -431,11 +365,6 @@ p:empty {
   .section--mobile-full-width > * {
     grid-column: 1 / -1;
   }
-}
-
-/* Some page-width sections should still extend all the way to the right edge of the page, e.g. collection carousel */
-.section--page-width.section--full-width-right > * {
-  grid-column: 2 / 4;
 }
 
 /* For full-width sections with margin, content still spans full width but with space on the sides */
@@ -518,22 +447,6 @@ p:empty {
   word-wrap: normal !important;
 }
 
-@media screen and (max-width: 749px) {
-  .is-visually-hidden-mobile:not(:focus, :active) {
-    /* stylelint-disable-next-line declaration-no-important */
-    position: absolute !important;
-    overflow: hidden;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    padding: 0;
-    border: 0;
-    clip: rect(0 0 0 0);
-    /* stylelint-disable-next-line declaration-no-important */
-    word-wrap: normal !important;
-  }
-}
-
 .contents {
   display: contents;
 }
@@ -573,17 +486,8 @@ p:empty {
   }
 }
 
-.flex {
-  display: flex;
-  gap: var(--gap-md);
-}
-
 .flip-x {
   scale: -1 1;
-}
-
-.flip-y {
-  scale: 1 -1;
 }
 
 .list-unstyled {
@@ -628,31 +532,6 @@ p:empty {
 
 .justify-right {
   justify-content: right;
-}
-
-.title--aligned-center {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.background-image-container {
-  overflow: hidden;
-  position: absolute;
-  inset: 0;
-  opacity: var(--image-opacity);
-}
-
-.background-image-container img,
-.background-image-container svg {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-}
-
-.background-image-fit img,
-.background-image-fit svg {
-  object-fit: contain;
 }
 
 .svg-wrapper {
@@ -750,7 +629,7 @@ h1,
   line-height: var(--font-h1--line-height);
   letter-spacing: var(--font-h1--letter-spacing);
   text-transform: var(--font-h1--case);
-  color: var(--color, var(--font-h1-color));
+  color: var(--color);
 }
 
 @media screen and (max-width: 1200px) {
@@ -772,7 +651,7 @@ h2,
   line-height: var(--font-h2--line-height);
   letter-spacing: var(--font-h2--letter-spacing);
   text-transform: var(--font-h2--case);
-  color: var(--color, var(--font-h2-color));
+  color: var(--color);
 }
 
 @media screen and (max-width: 1200px) {
@@ -795,7 +674,7 @@ h3,
   line-height: var(--font-h3--line-height);
   letter-spacing: var(--font-h3--letter-spacing);
   text-transform: var(--font-h3--case);
-  color: var(--color, var(--font-h3-color));
+  color: var(--color);
 }
 
 @media screen and (max-width: 1200px) {
@@ -817,7 +696,7 @@ h4,
   line-height: var(--font-h4--line-height);
   letter-spacing: var(--font-h4--letter-spacing);
   text-transform: var(--font-h4--case);
-  color: var(--color, var(--font-h4-color));
+  color: var(--color);
 }
 
 @media screen and (max-width: 1200px) {
@@ -839,7 +718,7 @@ h5,
   line-height: var(--font-h5--line-height);
   letter-spacing: var(--font-h5--letter-spacing);
   text-transform: var(--font-h5--case);
-  color: var(--color, var(--font-h5-color));
+  color: var(--color);
 }
 
 @media screen and (max-width: 1200px) {
@@ -861,7 +740,7 @@ h6,
   line-height: var(--font-h6--line-height);
   letter-spacing: var(--font-h6--letter-spacing);
   text-transform: var(--font-h6--case);
-  color: var(--color, var(--font-h6-color));
+  color: var(--color);
 }
 
 @media screen and (max-width: 1200px) {
@@ -882,9 +761,7 @@ h6,
 
 /* Links */
 a {
-  --button-color: var(--color, var(--color-primary));
-
-  color: var(--button-color);
+  color: currentcolor;
   text-decoration-color: transparent;
   text-decoration-thickness: 0.075em;
   text-underline-offset: 0.125em;
@@ -893,7 +770,7 @@ a {
 }
 
 :is(h1, h2, h3, h4, h5, h6, p) > a:hover {
-  --button-color: var(--color, var(--color-primary-hover));
+  color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / 0.7);
 }
 
 /* Add underline to text using our paragraph styles only. */
@@ -902,8 +779,8 @@ p:not(.h1, .h2, .h3, .h4, .h5, .h6) a:where(:not(.button, .button-secondary)),
   text-decoration-color: currentcolor;
 
   &:hover {
-    text-decoration-color: transparent;
-    color: var(--color-primary-hover);
+    text-decoration-color: currentcolor;
+    color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / 0.7);
   }
 }
 
@@ -913,362 +790,15 @@ p:not(.h1, .h2, .h3, .h4, .h5, .h6) a:where(:not(.button, .button-secondary)),
   background-position: center center;
 }
 
-details[open] .summary-closed {
-  display: none;
-}
-
-details:not([open]) .summary-open {
-  display: none;
-}
-
-details[open] > summary .icon-animated > svg {
-  transform: rotate(180deg);
-}
-
 /* iOS fix: hide the default arrow on the summary */
 summary::-webkit-details-marker {
   display: none;
 }
 
-/* When header is transparent, pull the first main content section up to sit under the floating header */
-body:has(.header[transparent]) .content-for-layout > .shopify-section:first-child {
-  margin-top: calc(var(--header-group-height) * -1);
-}
-
-body:has(.header[transparent]) #header-group > .header-section {
-  z-index: var(--layer-sticky);
-}
-
-/* All other header group content should be beneath the floating header,
-but above the rest of the page content */
-body:has(.header[transparent]) #header-group > *:not(.header-section) {
-  z-index: calc(var(--layer-sticky) - 1);
-}
-
-/* Featured collection block */
-.featured-collection-block {
-  width: 100%;
-}
-
-/* Product grid */
-.product-grid-container {
-  display: block;
-  width: 100%;
-  padding-block: var(--padding-block-start) var(--padding-block-end);
-
-  @media screen and (min-width: 750px) {
-    display: grid;
-  }
-}
-
-.product-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--product-grid-gap);
-  margin: auto;
-  padding: 0;
-  list-style: none;
-}
-
-@media screen and (min-width: 750px) {
-  .product-grid {
-    grid-template-columns: var(--product-grid-columns-desktop);
-  }
-}
-
-.product-grid :is(h3, p) {
-  margin: 0;
-}
-
-.product-grid__item {
-  border: var(--product-card-border-width) solid rgb(var(--color-border-rgb) / var(--product-card-border-opacity));
-}
-
-.product-grid--organic[product-grid-view='default'] .product-grid__item {
-  height: fit-content;
-}
-
-.product-grid__card.product-grid__card {
-  display: flex;
-  flex-flow: column nowrap;
-  gap: var(--product-card-gap);
-  align-items: var(--product-card-alignment);
-  text-decoration: none;
-  color: var(--color, var(--color-foreground));
-  padding-block: var(--padding-block-start) var(--padding-block-end);
-  padding-inline: var(--padding-inline-start) var(--padding-inline-end);
-  overflow: hidden;
-}
-
-[product-grid-view='zoom-out'] .product-grid__card {
-  row-gap: var(--padding-xs);
-}
-
-[product-grid-view='default'] {
-  --product-grid-gap: 16px;
-  --padding-block-start: 24px;
-  --padding-block-end: 24px;
-  --padding-inline-start: 0px;
-  --padding-inline-end: 0px;
-}
-
-[product-grid-view='default'] .product-grid__item {
-  padding-block: 0;
-}
-
-[product-grid-view='mobile-single'],
-.product-grid-mobile--large {
-  @media screen and (max-width: 749px) {
-    grid-template-columns: 1fr;
-  }
-}
-
-.product-grid__card .group-block > * {
-  @media screen and (max-width: 749px) {
-    flex-direction: column;
-  }
-}
-
-ul[product-grid-view='zoom-out'] .product-grid__card > * {
-  display: none;
-}
-
-[product-grid-view='zoom-out'] {
-  --product-grid-columns-desktop: repeat(
-    10,
-    minmax(clamp(50px, calc(100% - 9 * var(--product-grid-gap)) / 10, 80px), 1fr)
-  );
-}
-
-.product-grid-view-zoom-out--details {
-  display: none;
-}
-
-.product-grid-view-zoom-out--details .h4,
-.product-grid-view-zoom-out--details span,
-.product-grid-view-zoom-out--details s {
-  font-size: var(--font-size--xs);
-  font-family: var(--font-paragraph--family);
-}
-
-.product-grid-view-zoom-out--details span {
-  font-weight: 500;
-}
-
-.product-grid-view-zoom-out--details .h4 {
-  line-height: 1.3;
-  font-weight: 400;
-}
-
-.product-grid-view-zoom-out--details > span.h6,
-.product-grid-view-zoom-out--details > div.h6 > product-price {
-  display: inline-block;
-  line-height: 0;
-  margin-top: var(--margin-2xs);
-}
-
-.product-grid-view-zoom-out--details > span.h6 > *,
-.product-grid-view-zoom-out--details > div.h6 > * > * {
-  line-height: 1.2;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  :root:active-view-transition-type(product-grid) {
-    details[open] floating-panel-component {
-      view-transition-name: panel-content;
-
-      .checkbox *,
-      .facets__pill-label {
-        transition: none;
-      }
-
-      .facets--vertical & {
-        view-transition-name: none;
-      }
-    }
-
-    .product-grid {
-      view-transition-name: product-grid;
-    }
-
-    footer {
-      view-transition-name: footer;
-    }
-
-    .product-grid__item,
-    floating-panel-component {
-      transition: none;
-    }
-  }
-}
-
-::view-transition-group(panel-content) {
-  z-index: 1;
-}
-
-::view-transition-new(product-grid) {
-  animation-delay: 150ms;
-  animation-name: fadeInUp;
-  animation-duration: var(--animation-speed);
-  animation-timing-function: var(--animation-easing);
-}
-
-results-list[initialized] {
-  .product-grid__item {
-    transition: opacity var(--animation-speed) var(--animation-easing),
-      transform var(--animation-speed) var(--animation-easing);
-
-    @starting-style {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Collection and product list cards have equal heights */
-:is(.product-grid__item, .resource-list__item) .product-card {
-  display: grid;
-  height: 100%;
-}
-
-/* Video background */
-.video-background,
-.video-background * {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.video-background--cover * {
-  object-fit: cover;
-}
-
-.video-background--contain * {
-  object-fit: contain;
-}
-
-.text-block {
-  width: 100%;
-}
-
-.text-block > *:first-child,
-.text-block > *:first-child:empty + * {
-  margin-block-start: 0;
-}
-
-.text-block > *:last-child,
-.text-block > *:has(+ *:last-child:empty) {
-  margin-block-end: 0;
-}
-
-/* This is to deal with the margin applied to the p when custom styles are enabled. The p isn't the first child anymore due to the style tag */
-.text-block > style + * {
-  margin-block-start: 0;
-}
-
-/* Dialog */
-.dialog-modal {
-  border: none;
-  box-shadow: var(--shadow-popover);
-
-  @media screen and (min-width: 750px) {
-    border-radius: var(--style-border-radius-popover);
-    max-width: var(--normal-content-width);
-  }
-
-  @media screen and (max-width: 749px) {
-    max-width: 100%;
-    max-height: 100%;
-    height: 100dvh;
-    width: 100dvw;
-    padding: var(--padding-md);
-  }
-}
-
-.dialog-modal::backdrop {
-  transition: backdrop-filter var(--animation-speed) var(--animation-easing);
-  backdrop-filter: brightness(1);
-  background: rgb(var(--backdrop-color-rgb) / var(--backdrop-opacity));
-}
-
-.dialog-modal[open] {
-  animation: elementSlideInTop var(--animation-speed) var(--animation-easing) forwards;
-
-  &::backdrop {
-    animation: backdropFilter var(--animation-speed) var(--animation-easing) forwards;
-    transition: opacity var(--animation-speed) var(--animation-easing);
-  }
-}
-
-.dialog-modal.dialog-closing {
-  animation: elementSlideOutTop var(--animation-speed) var(--animation-easing) forwards;
-
-  &::backdrop {
-    opacity: 0;
-  }
-}
-
-/* stylelint-disable value-keyword-case */
-.dialog-drawer {
-  --dialog-drawer-opening-animation: move-and-fade;
-  --dialog-drawer-closing-animation: move-and-fade;
-}
-
-.dialog-drawer--right {
-  --dialog-drawer-opening-animation: move-and-fade;
-  --dialog-drawer-closing-animation: move-and-fade;
-}
-/* stylelint-enable value-keyword-case */
-
-.dialog-drawer[open] {
-  --start-x: var(--custom-transform-from, 100%);
-  --end-x: var(--custom-transform-to, 0px);
-  --start-opacity: 1;
-
-  animation: var(--dialog-drawer-opening-animation) var(--animation-speed) var(--animation-easing) forwards;
-}
-
-.dialog-drawer[open].dialog-closing {
-  --start-x: 0px;
-  --end-x: 100%;
-  --start-opacity: 1;
-  --end-opacity: 1;
-
-  animation: var(--dialog-drawer-closing-animation) var(--animation-speed) var(--animation-easing);
-}
-
-.dialog-drawer--right[open] {
-  --start-x: -100%;
-  --start-opacity: 1;
-}
-
-.dialog-drawer--right[open].dialog-closing {
-  --start-x: 0px;
-  --end-x: -100%;
-  --start-opacity: 1;
-  --end-opacity: 1;
-
-  animation: var(--dialog-drawer-closing-animation) var(--animation-speed) var(--animation-easing);
-}
-
 /* Buttons */
 .button,
 .button-secondary,
+.button-custom,
 button.shopify-payment-button__button--unbranded {
   --text-align: center;
 
@@ -1303,7 +833,7 @@ button.shopify-payment-button__button--unbranded {
 }
 
 .button:not(.button-secondary, .button-unstyled) {
-  outline-color: var(--button-background-color);
+  outline-color: var(--button-focus-outline-color, var(--button-background-color));
 }
 
 .button-secondary {
@@ -1325,7 +855,7 @@ input:not([type='checkbox'], [type='radio']) {
 
 textarea::placeholder,
 input::placeholder {
-  color: var(--color-input-text);
+  color: rgb(var(--color-input-text-rgb) / var(--opacity-muted-text));
 }
 
 textarea:not(:placeholder-shown)::placeholder,
@@ -1351,6 +881,7 @@ button.shopify-payment-button__button--unbranded {
   --button-background-color: var(--color-primary-button-background);
   --button-border-color: var(--color-primary-button-border);
   --button-border-width: var(--style-border-width-primary);
+  --button-focus-outline-color: var(--color-primary-button-focus-outline);
 }
 
 .button:hover,
@@ -1373,6 +904,25 @@ button.shopify-payment-button__button--unbranded:hover:not([disabled]) {
   --button-border-color: var(--color-secondary-button-hover-border);
 }
 
+.button-custom {
+  --button-color: var(--color-primary-button-text);
+  --button-background-color: var(--color-primary-button-background);
+  --button-border-color: var(--color-primary-button-border);
+  --button-border-width: var(--style-border-width-secondary);
+  --button-focus-outline-color: var(--color-primary-button-focus-outline);
+
+  font-family: var(--button-font-family-primary);
+  text-transform: var(--button-text-case-primary);
+  border-radius: var(--style-border-radius-buttons-primary);
+  outline-color: var(--button-focus-outline-color, var(--button-background-color));
+}
+
+.button-custom:hover {
+  --button-color: var(--color-primary-button-hover-text);
+  --button-background-color: var(--color-primary-button-hover-background);
+  --button-border-color: var(--color-primary-button-hover-border);
+}
+
 /* Needed to override the default Shopify styles */
 button.shopify-payment-button__button--unbranded:hover:not([disabled]) {
   background-color: var(--button-background-color);
@@ -1382,7 +932,7 @@ button.shopify-payment-button__button--unbranded:hover:not([disabled]) {
   display: block;
   padding: 0;
   background-color: inherit;
-  color: inherit;
+  color: var(--color-foreground);
   border: 0;
   border-radius: 0;
   overflow: hidden;
@@ -1394,6 +944,14 @@ button.shopify-payment-button__button--unbranded:hover:not([disabled]) {
 
 .button-unstyled:hover {
   background-color: inherit;
+}
+
+/* Default hover dim for link-style buttons, scoped via :where() so component-specific
+   hover rules (.facets__clear-all-link, .header-actions__action, etc.) still win. */
+:where(.button-unstyled):hover {
+  --hover-color-rgb: var(--color-foreground-rgb);
+
+  color: rgb(var(--hover-color-rgb) / var(--opacity-70));
 }
 
 .button-unstyled--with-icon {
@@ -1408,64 +966,9 @@ button.shopify-payment-button__button--unbranded:hover:not([disabled]) {
   box-shadow: none;
 }
 
-/* Show more */
-
-.show-more__button {
-  color: var(--color-primary);
-  cursor: pointer;
-}
-
-.show-more__button:hover {
-  @media screen and (min-width: 750px) {
-    color: var(--color-primary-hover);
-  }
-}
-
-.show-more__label {
-  text-align: start;
-  font-size: var(--font-size--body-md);
-  font-family: var(--font-paragraph--family);
-}
-
-.show-more__button .svg-wrapper {
-  width: var(--icon-size-xs);
-  height: var(--icon-size-xs);
-}
-
-.show-more[data-expanded='true'] .show-more__label--more,
-.show-more[data-expanded='false'] .show-more__label--less {
-  display: none;
-}
-
-.link {
-  display: inline-block;
-  text-align: center;
-}
-
-shopify-accelerated-checkout,
-shopify-accelerated-checkout-cart {
-  --shopify-accelerated-checkout-button-border-radius: var(--style-border-radius-buttons-primary);
-  --shopify-accelerated-checkout-button-block-size: var(--height-buy-buttons);
-}
-
-.product-form-buttons:has(.add-to-cart-button.button-secondary)
-  :is(shopify-accelerated-checkout, shopify-accelerated-checkout-cart) {
-  --shopify-accelerated-checkout-button-border-radius: var(--style-border-radius-buttons-secondary);
-  --shopify-accelerated-checkout-button-block-size: var(--height-buy-buttons);
-}
-
-/* Collapsible row */
-
+/* Caret icon transition */
 .icon-caret svg {
   transition: transform var(--animation-speed) var(--animation-easing);
-}
-
-.icon-caret--forward svg {
-  transform: rotate(-90deg);
-}
-
-.icon-caret--backward svg {
-  transform: rotate(90deg);
 }
 
 summary {
@@ -1477,161 +980,16 @@ summary {
 }
 
 summary:hover {
-  color: var(--color-primary-hover);
-}
-
-summary .svg-wrapper {
-  margin-inline-start: auto;
-  height: var(--icon-size-xs);
-  width: var(--icon-size-xs);
-  transition: transform var(--animation-speed) var(--animation-easing);
-}
-
-/* Shared plus/minus icon animations */
-summary .icon-plus :is(.horizontal, .vertical),
-.show-more__button .icon-plus :is(.horizontal, .vertical) {
-  transition: transform var(--animation-speed) var(--animation-easing);
-  transform: rotate(0deg);
-  transform-origin: 50% 50%;
-  opacity: 1;
-}
-
-details[open] > summary .icon-plus .horizontal,
-.show-more:where([data-expanded='true']) .show-more__button .icon-plus .horizontal {
-  transform: rotate(90deg);
-}
-
-details[open] > summary .icon-plus .vertical,
-.show-more:where([data-expanded='true']) .show-more__button .icon-plus .vertical {
-  transform: rotate(90deg);
-  opacity: 0;
-}
-
-/* Product Media */
-media-gallery {
-  display: block;
-  width: 100%;
-}
-
-:where(media-gallery, .product-grid__item) {
-  .media-gallery__grid {
-    grid-template-columns: 1fr;
-    gap: var(--image-gap);
-  }
-}
-
-:not(.dialog-zoomed-gallery) > .product-media-container {
-  --slide-width: 100%;
-
-  display: flex;
-  aspect-ratio: var(--gallery-aspect-ratio, var(--media-preview-ratio));
-  max-height: var(--constrained-height);
-  width: var(--slide-width, 100%);
-
-  /* Relative position needed for video and 3d models */
-  position: relative;
-  overflow: hidden;
-
-  &:where(.constrain-height) {
-    /* arbitrary offset value based on average theme spacing and header height */
-    --viewport-offset: 400px;
-    --constrained-min-height: 300px;
-    --constrained-height: max(var(--constrained-min-height), calc(100vh - var(--viewport-offset)));
-
-    margin-right: auto;
-    margin-left: auto;
-  }
-
-  @supports (--test: round(up, 100%, 1px)) {
-    /* width and overflow forces children to shrink to parent width */
-    --slide-width: round(up, 100%, 1px);
-  }
-}
-
-.product-media :is(deferred-media, product-model) {
-  position: absolute;
-}
-
-@media screen and (max-width: 749px) {
-  .product-media-container.constrain-height {
-    max-height: none;
-  }
-}
-
-@media screen and (min-width: 750px) {
-  .product-media-container.constrain-height {
-    --viewport-offset: var(--header-height, 100px);
-    --constrained-min-height: 500px;
-  }
-
-  body:has(header-component[transparent]) .product-media-container.constrain-height {
-    --viewport-offset: 0px;
-  }
-
-  .media-gallery--large-first-image .product-media-container:first-child,
-  .media-gallery--two-column .product-media-container:only-child {
-    /* First child spans 2 columns */
-    grid-column: span 2;
-  }
-}
-
-.product-media-container--model {
-  /* Usefull when view in your space is shown */
-  flex-direction: column;
-}
-
-.shopify-model-viewer-ui__controls-area {
-  bottom: calc(var(--minimum-touch-target) + var(--padding-sm));
-}
-
-.product-media-container img {
-  aspect-ratio: inherit;
-  object-fit: contain;
-}
-
-.product-media-container.media-fit-contain img {
-  object-position: center center;
-}
-
-.product-media-container.media-fit {
-  --product-media-fit: cover;
-
-  img {
-    object-fit: var(--product-media-fit);
-  }
-}
-
-zoom-dialog dialog {
-  width: 100vw;
-  height: 100vh;
-  border: none;
-  margin: 0;
-  padding: 0;
-  max-width: 100%;
-  max-height: 100%;
-  background: #fff;
-  opacity: 0;
-  transition: opacity var(--animation-speed) var(--animation-easing);
-  scrollbar-width: none;
-
-  &[open] {
-    opacity: 1;
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    scroll-behavior: smooth;
-  }
-
-  &::backdrop {
-    background: transparent;
-  }
+  color: rgb(var(--color-foreground-rgb) / var(--opacity-80));
 }
 
 /* Animate the UI elements in only after the view transition is complete */
 .close-button {
   position: fixed;
-  top: var(--margin-lg);
-  right: var(--margin-lg);
+
+  /* Keep the fixed close button clear of the status bar and right-side notch (viewport-fit=cover) */
+  top: max(var(--margin-lg), var(--safe-area-inset-top, 0px));
+  right: max(var(--margin-lg), var(--safe-area-inset-right, 0px));
   width: var(--minimum-touch-target);
   height: var(--minimum-touch-target);
   z-index: var(--layer-flat);
@@ -1687,638 +1045,6 @@ zoom-dialog dialog {
   flex: 1;
 }
 
-/* If the product media is already providing an image cover, hide images provided by sibling deferred-media */
-.product-media__image ~ * .deferred-media__poster-image {
-  display: none;
-}
-
-/* If the product media is playing, hide the preview image */
-.product-media-container:has(.deferred-media__playing) .product-media__image {
-  opacity: 0;
-  transition: opacity var(--animation-speed) var(--animation-easing);
-}
-
-/* Deferred media & Product model  */
-:is(product-model, deferred-media) {
-  /* Height needed to make sure when it's set to be stretched, it takes the full height */
-  height: 100%;
-  width: 100%;
-  position: relative;
-}
-
-product-model model-viewer,
-/* Media that have a poster button sibling providing the size should be absolute-positioned.
-Otherwise, it should be a block to rely on its own size */
-:is(deferred-media, product-model) > .deferred-media__poster-button ~ *:not(template) {
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-
-  /* Required to make sure the absolute position respects the padding of the wrapper: */
-  padding: inherit;
-}
-
-:is(deferred-media, .video-placeholder-wrapper).border-style {
-  /* Apply the border radius to the video */
-  overflow: hidden;
-}
-
-deferred-media {
-  /* The overflow hidden in the deferred-media won't let the button show the focus ring */
-  &:has(:focus-visible) {
-    outline: var(--focus-outline-width) solid currentcolor;
-    outline-offset: var(--focus-outline-offset);
-  }
-
-  @supports not selector(:focus-visible) {
-    &:has(:focus) {
-      outline: var(--focus-outline-width) solid currentcolor;
-      outline-offset: var(--focus-outline-offset);
-    }
-  }
-}
-
-.deferred-media__poster-button {
-  width: 100%;
-  height: 100%;
-  aspect-ratio: var(--video-aspect-ratio, auto);
-}
-
-.deferred-media__poster-button.deferred-media__playing {
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-deferred-media img {
-  height: 100%;
-  object-fit: cover;
-  transition: opacity 0.3s ease;
-}
-
-deferred-media iframe {
-  display: block;
-  width: 100%;
-  height: 100%;
-  border: none;
-  aspect-ratio: var(--size-style-aspect-ratio, auto);
-}
-
-deferred-media[data-media-loaded] img {
-  opacity: 0;
-}
-
-.deferred-media__poster-icon,
-.video-placeholder-wrapper__poster-icon {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.deferred-media__poster-icon svg,
-.video-placeholder-wrapper__poster-icon svg {
-  width: var(--button-size);
-  height: var(--button-size);
-  color: var(--color-white);
-  filter: drop-shadow(var(--shadow-button));
-
-  &:hover {
-    color: rgb(var(--color-white-rgb) / var(--opacity-80));
-  }
-
-  @media screen and (min-width: 750px) {
-    width: 4rem;
-    height: 4rem;
-  }
-}
-
-deferred-media[class] :is(.deferred-media__poster-button img, .deferred-media__poster-button ~ video) {
-  /* only apply this on the video block not product media */
-  object-fit: cover;
-  height: 100%;
-  aspect-ratio: var(--size-style-aspect-ratio, auto);
-}
-
-.button-shopify-xr {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: var(--padding-md);
-}
-
-.button-shopify-xr > svg {
-  width: var(--icon-size-sm);
-  height: var(--icon-size-sm);
-  margin-inline-end: var(--margin-md);
-}
-
-.button-shopify-xr[data-shopify-xr-hidden] {
-  display: none;
-}
-
-/* Swatches */
-.swatch {
-  --color-border: rgb(var(--color-foreground-rgb) / var(--style-border-swatch-opacity));
-  --min-width-unitless: 15.9999; /* want to avoid division by 0 */
-  --min-height-unitless: 15.9999; /* want to avoid division by 0 */
-  --min-height: 16px;
-  --min-width: 16px;
-
-  /* mobile values */
-  --scaling-factor: 0.5;
-  --max-swatch-size: 28px;
-  --max-pill-size: 20px;
-  --max-filter-size: 32px;
-
-  /* From the settings */
-  --offset-swatch-width: calc(var(--variant-picker-swatch-width-unitless) - var(--min-width-unitless));
-  --offset-swatch-height: calc(var(--variant-picker-swatch-height-unitless) - var(--min-height-unitless));
-
-  /**
-    Offset values are obtained from the following formulas:
-      offset-width = width - min-width
-      offset-height = height - min-height
-
-    The offset-scaled-width and heigth are obtained by extending the line from
-    [min,min] to [W,H] and taking the intersection with a square that starts at
-    [min,min] and ends at [max,max].
-
-    The extending line forms right angle triangles with the [min,min]->[max,max]
-    box that enable us to derive the following formulas
-
-    We also want the result to always be smaller than the input (pdp > everywhere else)
-    by some scaling factor.
-  */
-  --offset-scaled-width: calc(
-    var(--scaling-factor) * var(--offset-swatch-width) / var(--offset-swatch-height) * var(--offset-max-swatch-size)
-  );
-  --offset-scaled-height: calc(
-    var(--scaling-factor) * var(--offset-swatch-height) / var(--offset-swatch-width) * var(--offset-max-swatch-size)
-  );
-  --offset-max-swatch-size: calc(var(--max-swatch-size) - var(--min-width));
-
-  /* width = min(m + sU, (m + s * W'/H' * M'), M) */
-  --swatch-width: min(
-    calc(var(--min-width) + var(--scaling-factor) * var(--offset-swatch-width) * 1px),
-    calc(var(--min-width) + var(--offset-scaled-width)),
-    var(--max-swatch-size)
-  );
-
-  /* height = min(m + sV, (m + s * H'/W' * M'), M) */
-  --swatch-height: min(
-    calc(var(--min-height) + var(--scaling-factor) * var(--offset-swatch-height) * 1px),
-    calc(var(--min-height) + var(--offset-scaled-height)),
-    var(--max-swatch-size)
-  );
-
-  display: block;
-  background: var(--swatch-background);
-  background-position: var(--swatch-focal-point, center);
-  border-radius: var(--variant-picker-swatch-radius);
-  border: var(--style-border-swatch-width) var(--style-border-swatch-style) var(--color-border);
-  width: var(--swatch-width);
-  height: var(--swatch-height);
-
-  /* This is different than `background-size: cover` because we use `box-sizing: border-box`,
-   * doing it like makes the background clip under the border without repeating.
-   */
-  background-size: var(--swatch-width) var(--swatch-height);
-
-  &.swatch--unavailable {
-    border-style: dashed;
-  }
-
-  &.swatch--unscaled {
-    /* for when you want fixed sizing (e.g. pdp) */
-    --swatch-width: var(--variant-picker-swatch-width);
-    --swatch-height: var(--variant-picker-swatch-height);
-  }
-
-  &.swatch--filter {
-    --swatch-width: var(--max-filter-size);
-    --swatch-height: var(--max-filter-size);
-
-    border-radius: var(--variant-picker-swatch-radius);
-  }
-
-  &.swatch--pill {
-    --swatch-width: var(--max-pill-size);
-    --swatch-height: var(--max-pill-size);
-
-    border-radius: var(--variant-picker-swatch-radius);
-  }
-
-  /* swatches in filters and pills always have a border  */
-  &.swatch--filter,
-  &.swatch--pill {
-    --style-border-swatch-width: var(--variant-picker-border-width);
-    --style-border-swatch-style: var(--variant-picker-border-style);
-    --color-border: rgb(var(--color-foreground-rgb) / var(--variant-picker-border-opacity));
-  }
-
-  &.swatch--variant-image {
-    background-size: cover;
-  }
-
-  @media screen and (min-width: 750px) {
-    /* desktop values */
-    --max-swatch-size: 32px;
-    --max-pill-size: 16px;
-    --max-filter-size: 28px;
-    --scaling-factor: 0.65;
-  }
-}
-
-.variant-picker .variant-option--buttons label:has(.swatch) {
-  border-radius: var(--variant-picker-swatch-radius);
-}
-
-/* Variant option component */
-.variant-option {
-  --options-border-radius: var(--variant-picker-button-radius);
-  --options-border-width: var(--variant-picker-button-border-width);
-  --variant-option-padding-inline: var(--padding-md);
-}
-
-.variant-option + .variant-option {
-  margin-top: var(--padding-lg);
-}
-
-.variant-option--swatches {
-  --options-border-radius: var(--variant-picker-swatch-radius);
-
-  width: 100%;
-
-  overflow-list::part(list) {
-    padding-block: var(--overflow-list-padding-block, 0);
-    padding-inline: var(--overflow-list-padding-inline, 0);
-  }
-}
-
-.variant-option--swatches > overflow-list {
-  justify-content: var(--product-swatches-alignment);
-
-  @media screen and (max-width: 749px) {
-    justify-content: var(--product-swatches-alignment-mobile);
-  }
-}
-
-.variant-option--buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--gap-sm);
-  margin: 0;
-  padding: 0;
-  border: none;
-}
-
-.variant-option--buttons legend {
-  padding: 0;
-  margin-block-end: var(--margin-xs);
-}
-
-.variant-option__swatch-value {
-  padding-inline-start: var(--padding-xs);
-  color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .variant-option__button-label,
-  .variant-option__select-wrapper,
-  .variant-option__button-label::before,
-  .variant-option__button-label::after,
-  .variant-option__button-label:has([data-previous-checked='true'], [data-current-checked='true'])
-    .variant-option__button-label__pill,
-  .variant-option__button-label:not(.variant-option__button-label--has-swatch) svg line:last-of-type {
-    transition-duration: var(--animation-speed);
-    transition-timing-function: var(--animation-easing);
-  }
-
-  .variant-option__button-label__pill {
-    transition-property: transform;
-  }
-
-  .variant-option__button-label:not(.variant-option__button-label--has-swatch) svg line:last-of-type {
-    transition-property: clip-path;
-  }
-
-  .variant-option__button-label:has([data-previous-checked='true'], [data-current-checked='true'])
-    .variant-option__button-label__pill {
-    transition-property: transform;
-  }
-
-  .variant-option__button-label::after {
-    transition-property: clip-path;
-  }
-
-  .variant-option__button-label::before {
-    transition-property: border-color;
-  }
-
-  .variant-option__select-wrapper,
-  .variant-option__button-label {
-    transition-property: background-color, border-color, color;
-  }
-}
-
-.variant-option__button-label {
-  --variant-picker-stroke-color: var(--color-variant-border);
-
-  cursor: pointer;
-  display: flex;
-  flex: 0 0 3.25em;
-  align-items: center;
-  position: relative;
-  padding-block: var(--padding-sm);
-  padding-inline: var(--padding-lg);
-  border: var(--options-border-width) solid var(--color-variant-border);
-  border-radius: var(--options-border-radius);
-  overflow: clip;
-  justify-content: center;
-  min-height: 3.25em;
-  min-width: fit-content;
-  white-space: nowrap;
-  background-color: var(--color-variant-background);
-  color: var(--color-variant-text);
-  gap: 0;
-
-  &:hover,
-  &:hover:has([aria-disabled='true']):has([data-option-available='false']) {
-    background-color: var(--color-variant-hover-background);
-    border-color: var(--color-variant-hover-border);
-    color: var(--color-variant-hover-text);
-  }
-
-  /* we need something like overflow-clip-margin to use the pseudoelement but it doesn't work in Safari */
-
-  /* so instead use the layered background image trick */
-  &:not(.variant-option__button-label--has-swatch):has([data-option-available='false']) {
-    border-width: 0;
-  }
-
-  /* ::after/::before act as a fake border for the button style variant */
-
-  /* ::after is the unavailable variant border that clips in */
-  &:not(.variant-option__button-label--has-swatch)::before,
-  &:has([data-option-available='false']):not(.variant-option__button-label--has-swatch)::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border: var(--options-border-width) solid var(--color-selected-variant-border);
-    border-radius: inherit;
-    pointer-events: none;
-    z-index: 2;
-    /* stylelint-disable-next-line plugin/no-unsupported-browser-features */
-    clip-path: inset(var(--clip, 0 0 0 0));
-  }
-
-  &:has([data-option-available='false']):not(.variant-option__button-label--has-swatch)::before {
-    inset: 0;
-  }
-
-  &:not(.variant-option__button-label--has-swatch)::before {
-    /* stylelint-disable-next-line plugin/no-unsupported-browser-features */
-    clip-path: inset(0 0 0 0);
-    border-color: var(--color-variant-border);
-    inset: calc(var(--options-border-width) * -1);
-  }
-
-  &:has(:checked):not(.variant-option__button-label--has-swatch, :has([data-option-available='false']))::before {
-    border-color: var(--color-selected-variant-border);
-  }
-
-  /* setting left/right accounts for variant buttons of different widths */
-  &:not(:has(:checked)):has(~ label > :checked),
-  &:has(:checked):has(~ label > [data-previous-checked='true']) {
-    .variant-option__button-label__pill {
-      right: 0;
-      left: unset;
-    }
-  }
-
-  &:has([data-previous-checked='true']) ~ label:has([data-current-checked='true']),
-  &:has(:checked) ~ label {
-    .variant-option__button-label__pill {
-      left: 0;
-      right: unset;
-    }
-  }
-
-  &:not(:has(:checked)):has(~ label > :checked) {
-    --pill-offset: calc(100% + 1px);
-  }
-
-  &:has(:checked) ~ label {
-    --pill-offset: calc(-100% - 1px);
-  }
-
-  &:has([data-current-checked='true']):first-of-type
-    ~ label:last-of-type:not(.variant-option__button-label--has-swatch),
-  &:not(:has(:checked)):has(~ label > :checked):not(.variant-option__button-label--has-swatch) {
-    --clip: 0 0 0 100%;
-  }
-
-  &:not(:has([data-current-checked='true'])):first-of-type:has(~ label:last-of-type > :checked):not(
-      .variant-option__button-label--has-swatch
-    ),
-  &:has(:checked) ~ label:not(.variant-option__button-label--has-swatch) {
-    --clip: 0 100% 0 0;
-  }
-
-  &:has([data-previous-checked='true'], [data-current-checked='true']) .variant-option__button-label__pill {
-    width: max(var(--pill-width-current, 100%), var(--pill-width-previous, 100%));
-  }
-
-  @media screen and (min-width: 750px) {
-    padding: var(--padding-xs) var(--variant-option-padding-inline);
-  }
-}
-
-/* wrap around only for 3 or more variants in a row */
-
-/* the more complex selector rules here produce the wrap around effect for first/last variants */
-.variant-option--buttons:has(:nth-of-type(3)) {
-  .variant-option__button-label:has([data-current-checked='true']):first-of-type ~ label:last-of-type {
-    --pill-offset: calc(100% + 1px);
-  }
-
-  .variant-option__button-label:not(:has([data-current-checked='true'])):first-of-type:has(
-      ~ label:last-of-type > :checked
-    ) {
-    --pill-offset: calc(-100% - 1px);
-  }
-}
-
-.variant-option__button-label__pill {
-  background: var(--color-selected-variant-background);
-  position: absolute;
-  top: calc(var(--options-border-width) * -1);
-  bottom: calc(var(--options-border-width) * -1);
-  border-radius: inherit;
-  pointer-events: none;
-  width: 100%;
-  transform: translateX(var(--pill-offset, 0));
-}
-
-.variant-option__button-label__text {
-  pointer-events: none;
-  text-align: start;
-  text-wrap: auto;
-  z-index: 2;
-}
-
-.variant-option--equal-width-buttons {
-  --variant-min-width: clamp(44px, calc(var(--variant-option-padding-inline) * 2 + var(--variant-ch)), 100%);
-
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(var(--variant-min-width), 1fr));
-
-  .variant-option__button-label {
-    min-width: var(--variant-min-width);
-  }
-
-  .variant-option__button-label__text {
-    text-align: center;
-    text-wrap: balance;
-  }
-}
-
-.variant-option__button-label:has(:focus-visible) {
-  --variant-picker-stroke-color: var(--color-foreground);
-
-  border-color: var(--color-foreground);
-  outline: var(--focus-outline-width) solid var(--color-foreground);
-  outline-offset: var(--focus-outline-offset);
-}
-
-.variant-option__button-label--has-swatch {
-  --focus-outline-radius: var(--variant-picker-swatch-radius);
-
-  padding: 0;
-  border: none;
-  flex-basis: auto;
-  min-height: auto;
-}
-
-/* Override global label:has(input) display rule with higher specificity */
-.variant-option__button-label--has-swatch:has(input) {
-  display: block;
-}
-
-.variant-option__button-label:has(:checked) {
-  color: var(--color-selected-variant-text);
-  border-color: var(--color-selected-variant-border);
-}
-
-.variant-option__button-label:has(:checked):hover {
-  border-color: var(--color-selected-variant-hover-border);
-  color: var(--color-selected-variant-hover-text);
-
-  .variant-option__button-label__pill {
-    background-color: var(--color-selected-variant-hover-background);
-  }
-}
-
-.variant-option__button-label:has([data-option-available='false']) {
-  color: rgb(var(--color-variant-text-rgb) / var(--opacity-60));
-}
-
-.variant-option__button-label--has-swatch:hover {
-  outline: var(--focus-outline-width) solid rgb(var(--color-foreground-rgb) / var(--opacity-35-55));
-  outline-offset: var(--focus-outline-offset);
-}
-
-.variant-option__button-label--has-swatch:has(:checked) {
-  --focus-outline: var(--focus-outline-width) solid var(--color-foreground);
-
-  outline: var(--focus-outline);
-  outline-offset: var(--focus-outline-offset);
-}
-
-/* This triggers iOS < 16.4. The outline bug is not recognized as a lack of @supports */
-@supports not (background-color: rgb(from red 150 g b / alpha)) {
-  /** There is a bug in safari < 16.4 that causes the outline to not follow the elements border radius. This is a workaround. **/
-  .variant-option__button-label--has-swatch:has(:checked),
-  .variant-option__button-label:has(:focus-visible) .swatch {
-    outline: none;
-    position: relative;
-    overflow: visible;
-  }
-
-  .variant-option__button-label--has-swatch:has(:checked)::after,
-  .variant-option__button-label:has(:focus-visible) .swatch::after {
-    content: '';
-    position: absolute;
-    inset: calc(-1 * var(--focus-outline-offset));
-    border: var(--focus-outline);
-    border-radius: var(--focus-outline-radius, 50%);
-    background-color: transparent;
-    display: inherit;
-  }
-}
-
-.variant-option__button-label:has([data-option-available='false']):has(:checked) {
-  background-color: inherit;
-  color: rgb(var(--color-variant-text-rgb) / var(--opacity-60));
-}
-
-.variant-option__button-label input {
-  /* remove the checkbox from the page flow */
-  position: absolute;
-
-  /* set the dimensions to match those of the label */
-  inset: 0;
-
-  /* hide it */
-  opacity: 0;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  aspect-ratio: unset;
-  border: none;
-  border-radius: 0;
-  background: transparent;
-  appearance: auto;
-  display: block;
-  cursor: pointer;
-}
-
-.variant-option__button-label svg {
-  position: absolute;
-  left: var(--options-border-width);
-  top: var(--options-border-width);
-  height: calc(100% - (var(--options-border-width) * 2));
-  width: calc(100% - (var(--options-border-width) * 2));
-  cursor: pointer;
-  pointer-events: none;
-  stroke-width: var(--style-border-width);
-  stroke: var(--variant-picker-stroke-color);
-}
-
-.variant-option__button-label:not(.variant-option__button-label--has-swatch) svg {
-  stroke: var(--color-variant-border);
-
-  line {
-    stroke-width: var(--options-border-width);
-  }
-
-  line:last-of-type {
-    /* stylelint-disable-next-line plugin/no-unsupported-browser-features */
-    clip-path: inset(var(--clip, 0 0 0 0));
-    stroke: rgb(var(--color-variant-text-rgb) / 1);
-  }
-}
-
 .sticky-content {
   position: sticky;
   top: var(--sticky-header-offset, 0);
@@ -2331,156 +1057,6 @@ deferred-media[class] :is(.deferred-media__poster-button img, .deferred-media__p
     position: sticky;
     top: var(--sticky-header-offset, 0);
     z-index: var(--layer-flat);
-  }
-}
-
-.price,
-.compare-at-price,
-.unit-price {
-  white-space: nowrap;
-}
-
-.unit-price {
-  display: block;
-  font-size: min(0.85em, var(--font-paragraph--size));
-  color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
-}
-
-.tax-note.tax-note.tax-note {
-  font-size: min(0.85em, var(--font-paragraph--size));
-  font-weight: var(--font-paragraph--weight);
-  color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
-}
-
-.tax-note:empty {
-  display: none;
-}
-
-product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
-  margin-block: 0;
-}
-
-/* Volume pricing note should match unit-price styling (small, grey text) */
-product-price .volume-pricing-note,
-product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) .volume-pricing-note {
-  display: block;
-  font-family: var(--font-body--family);
-  font-weight: normal;
-  font-size: var(--font-size--xs);
-  line-height: normal;
-  letter-spacing: normal;
-  text-transform: none;
-  color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
-}
-
-.compare-at-price {
-  opacity: 0.4;
-  text-decoration-line: line-through;
-  text-decoration-thickness: 1.5px;
-}
-
-.price-item__group {
-  display: inline-block;
-}
-
-.price-item--sale {
-  white-space: nowrap;
-}
-
-.price__hidden {
-  display: none;
-}
-
-form.payment-terms {
-  padding-top: 0.5em;
-  font-size: min(0.85em, var(--font-paragraph--size));
-  font-weight: var(--font-paragraph--weight);
-  color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
-}
-
-.installments:not(:has(shopify-payment-terms)) {
-  display: none;
-}
-
-.card-gallery {
-  position: relative;
-}
-
-@container (max-width: 70px) {
-  .card-gallery:hover .quick-add__button {
-    display: none;
-  }
-}
-
-/* Hide "Add" button when "Choose" button is shown */
-[data-quick-add-button='choose'] add-to-cart-component {
-  display: none;
-}
-
-/* Hide "Choose" button when "Add" button is shown */
-[data-quick-add-button='add'] .quick-add__button--choose {
-  display: none;
-}
-
-/* Drawer */
-.drawer {
-  background-color: var(--color-background);
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: var(--sidebar-width);
-  z-index: var(--layer-raised);
-  transform: translateX(-120%);
-  transition: transform var(--animation-speed) var(--animation-easing);
-}
-
-.drawer[data-open='true'] {
-  transform: translateX(0);
-}
-
-.drawer-toggle {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-}
-
-.drawer__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: var(--drawer-header-block-padding) var(--drawer-inline-padding);
-}
-
-.drawer__title {
-  font-size: var(--font-h2--size);
-  margin: 0;
-}
-
-.drawer__close {
-  width: var(--minimum-touch-target);
-  height: var(--minimum-touch-target);
-}
-
-.drawer__content {
-  display: block;
-  padding: var(--drawer-content-block-padding) var(--drawer-inline-padding);
-  width: 100%;
-}
-
-/* Background overlay */
-.background-overlay {
-  position: relative;
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--background-overlay-color, rgb(0 0 0 / 15%));
   }
 }
 
@@ -2506,10 +1082,7 @@ form.payment-terms {
   --margin-inline: 0px;
   --margin-inline-start: var(--margin-inline, 0px);
   --margin-inline-end: var(--margin-inline, 0px);
-}
 
-.spacing-style,
-.inherit-spacing {
   padding-block: calc(var(--padding-block-start) + var(--section-top-offset, 0px)) var(--padding-block-end);
   padding-inline: var(--padding-inline-start) var(--padding-inline-end);
   margin-block: var(--margin-block-start) var(--margin-block-end);
@@ -2586,6 +1159,10 @@ form.payment-terms {
   display: flex;
   gap: var(--gap);
   height: 100%;
+}
+
+.shopify-block:has(> [shopify-block-empty]) {
+  display: none;
 }
 
 .layout-panel-flex--row {
@@ -2666,9 +1243,8 @@ form.payment-terms {
   }
 }
 
-.field__input:is(:focus, :hover) {
+.field__input:focus {
   box-shadow: var(--input-box-shadow-focus);
-  background-color: var(--color-input-hover-background);
 }
 
 .field__input--button-radius {
@@ -2754,96 +1330,6 @@ form.payment-terms {
 
 .shopify-policy__container {
   padding-block: var(--padding-xl);
-}
-
-.checkbox {
-  --checkbox-top: 50%;
-  --checkbox-left: 1.5px;
-  --checkbox-offset: 3px;
-  --checkbox-path-opacity: 0;
-  --checkbox-cursor: pointer;
-
-  position: relative;
-  display: flex;
-  align-items: center;
-
-  &:has(.checkbox__input:checked) {
-    --checkbox-path-opacity: 1;
-  }
-
-  &.checkbox--disabled {
-    --checkbox-cursor: not-allowed;
-  }
-}
-
-.checkbox__input {
-  position: absolute;
-  opacity: 0;
-  margin: 0;
-  padding: 0;
-  width: var(--checkbox-size);
-  height: var(--checkbox-size);
-  aspect-ratio: unset;
-  border: none;
-  border-radius: 0;
-  background: transparent;
-  appearance: auto;
-  display: block;
-  cursor: pointer;
-
-  /* Outline is on the SVG instead, to allow it to have border-radius */
-  &:focus-visible {
-    outline: none;
-  }
-
-  &:focus-visible + .checkbox__label .icon-checkmark {
-    outline: var(--focus-outline-width) solid currentcolor;
-    outline-offset: var(--focus-outline-offset);
-  }
-
-  &:checked + .checkbox__label .icon-checkmark {
-    background-color: var(--color-foreground);
-    border-color: var(--color-foreground);
-  }
-
-  &:disabled + .checkbox__label .icon-checkmark {
-    background-color: var(--input-disabled-background-color);
-    border-color: var(--input-disabled-border-color);
-  }
-}
-
-.checkbox__label {
-  position: relative;
-  display: inline-flex;
-  cursor: var(--checkbox-cursor);
-  line-height: var(--checkbox-size);
-  min-width: var(--minimum-touch-target);
-}
-
-.checkbox .icon-checkmark {
-  height: var(--checkbox-size);
-  width: var(--checkbox-size);
-  flex-shrink: 0;
-  border: var(--checkbox-border);
-  border-radius: var(--checkbox-border-radius);
-  background-color: var(--color-background);
-}
-
-.checkbox__label-text {
-  padding-inline-start: var(--checkbox-label-padding);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.checkbox .icon-checkmark path {
-  stroke: var(--color-background);
-  opacity: var(--checkbox-path-opacity);
-  transition: opacity var(--animation-speed) var(--animation-easing);
-}
-
-.checkbox__input:disabled + .checkbox__label {
-  color: var(--input-disabled-text-color);
 }
 
 /* Radio buttons and checkboxes - shared base styles */
@@ -2973,392 +1459,6 @@ input[type='radio'] {
   cursor: not-allowed;
 }
 
-/* Flexbox for labels wrapping radio buttons or checkboxes */
-label:has(input[type='radio']),
-label:has(input[type='checkbox']) {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--padding-2xs);
-  cursor: pointer;
-}
-
-label:has(input[type='radio']:disabled),
-label:has(input[type='checkbox']:disabled) {
-  cursor: not-allowed;
-}
-
-/* Override for swatch labels to maintain block display */
-.variant-option__button-label--has-swatch:has(input[type='radio']) {
-  display: block;
-}
-
-/* Add to cart button */
-.button[id^='BuyButtons-ProductSubmitButton-'] {
-  position: relative;
-  overflow: hidden;
-}
-
-/* Cart items component */
-.cart-items-component {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Cart typography */
-.cart-primary-typography {
-  font-family: var(--cart-primary-font-family);
-  font-style: var(--cart-primary-font-style);
-  font-weight: var(--cart-primary-font-weight);
-}
-
-.cart-secondary-typography {
-  font-family: var(--cart-secondary-font-family);
-  font-style: var(--cart-secondary-font-style);
-  font-weight: var(--cart-secondary-font-weight);
-}
-
-/* Quantity selector */
-.quantity-selector {
-  --quantity-selector-width: 124px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: var(--color-input-text);
-  background-color: var(--color-input-background);
-  border: var(--style-border-width-inputs) solid var(--color-input-border);
-  border-radius: var(--style-border-radius-inputs);
-  flex: 1 1 var(--quantity-selector-width);
-  align-self: stretch;
-  transition: background-color var(--animation-speed) var(--animation-easing);
-
-  &:hover {
-    background-color: var(--color-input-hover-background);
-  }
-}
-
-.product-form-buttons:has(.add-to-cart-button.button-secondary) .quantity-selector {
-  border-radius: var(--style-border-radius-buttons-secondary);
-}
-
-.quantity-selector :is(.quantity-minus, .quantity-plus) {
-  /* Unset button styles */
-  padding: 0;
-  background: transparent;
-  box-shadow: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  width: var(--minimum-touch-target);
-  height: var(--minimum-touch-target);
-  flex-shrink: 0;
-  color: var(--color-input-text);
-}
-
-.quantity-selector .quantity-minus {
-  border-start-start-radius: var(--style-border-radius-inputs);
-  border-end-start-radius: var(--style-border-radius-inputs);
-}
-
-.quantity-selector .quantity-plus {
-  border-start-end-radius: var(--style-border-radius-inputs);
-  border-end-end-radius: var(--style-border-radius-inputs);
-}
-
-.product-details .quantity-selector,
-.quick-add-modal .quantity-selector {
-  border-radius: var(--style-border-radius-buttons-primary);
-}
-
-.product-details .quantity-selector .quantity-minus,
-.quick-add-modal .quantity-selector .quantity-minus {
-  border-start-start-radius: var(--style-border-radius-buttons-primary);
-  border-end-start-radius: var(--style-border-radius-buttons-primary);
-}
-
-.product-details .quantity-selector .quantity-plus,
-.quick-add-modal .quantity-selector .quantity-plus {
-  border-start-end-radius: var(--style-border-radius-buttons-primary);
-  border-end-end-radius: var(--style-border-radius-buttons-primary);
-}
-
-.quantity-selector .svg-wrapper {
-  transition: transform var(--animation-speed) var(--animation-easing);
-}
-
-.quantity-selector svg {
-  width: var(--icon-size-xs);
-  height: var(--icon-size-xs);
-}
-
-:is(.quantity-minus, .quantity-plus):active .svg-wrapper {
-  transform: scale(0.9);
-}
-
-.quantity-selector input[type='number'] {
-  margin: 0;
-  text-align: center;
-  border: none;
-  appearance: none;
-  max-width: calc(var(--quantity-selector-width) - var(--minimum-touch-target) * 2);
-  border-radius: var(--style-border-radius-buttons);
-  color: var(--color-input-text);
-  background-color: transparent;
-}
-
-/* Chrome, Safari, Edge, Opera */
-.quantity-selector input[type='number']::-webkit-inner-spin-button,
-.quantity-selector input[type='number']::-webkit-outer-spin-button {
-  appearance: none;
-}
-
-/* Firefox */
-.quantity-selector input[type='number'] {
-  appearance: textfield;
-}
-
-/* Pills (used in facets and predictive search) */
-
-.pills__pill {
-  --pills-pill-background-color: rgb(var(--color-foreground-rgb) / var(--opacity-5-15));
-
-  color: var(--color-foreground);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: var(--gap-sm);
-  min-width: 48px;
-  padding: 6px 12px;
-  border-radius: var(--style-border-radius-pills);
-  cursor: pointer;
-  background-color: var(--pills-pill-background-color);
-  transition: background-color var(--animation-speed) var(--animation-easing);
-
-  &:hover {
-    --pills-pill-background-color: rgb(var(--color-foreground-rgb) / var(--opacity-10-25));
-  }
-
-  @media screen and (max-width: 749px) {
-    padding: var(--padding-xs) var(--padding-md);
-  }
-}
-
-.pills__pill > .svg-wrapper {
-  --close-icon-opacity: 0.4;
-  --icon-stroke-width: 1px;
-
-  color: var(--color-foreground);
-}
-
-.pills__pill--swatch {
-  @media screen and (max-width: 749px) {
-    padding-inline-start: var(--padding-sm);
-  }
-}
-
-.pills__pill--swatch .swatch {
-  margin-right: -4px;
-}
-
-.pills__pill--desktop-small {
-  @media screen and (min-width: 750px) {
-    font-size: var(--font-size--xs);
-  }
-}
-
-/* Fly to cart animation */
-fly-to-cart {
-  --offset-y: 10px;
-
-  position: fixed;
-  width: var(--width, 40px);
-  height: var(--height, 40px);
-  left: 0;
-  top: 0;
-  z-index: calc(infinity);
-  pointer-events: none;
-  border-radius: var(--style-border-radius-buttons-primary);
-  overflow: hidden;
-  object-fit: cover;
-  background-size: cover;
-  background-position: center;
-  opacity: 0;
-  background-color: var(--color-foreground);
-  translate: var(--start-x, 0) var(--start-y, 0);
-  transform: translate(-50%, -50%);
-  animation-name: travel-x, travel-y, travel-scale;
-  animation-timing-function: var(--x-timing), var(--y-timing), var(--scale-timing);
-  animation-duration: 0.6s;
-  animation-composition: accumulate;
-  animation-fill-mode: both;
-}
-
-fly-to-cart.fly-to-cart--main {
-  --x-timing: cubic-bezier(0.7, -5, 0.98, 0.5);
-  --y-timing: cubic-bezier(0.15, 0.57, 0.9, 1.05);
-  --scale-timing: cubic-bezier(0.85, 0.05, 0.96, 1);
-}
-
-fly-to-cart.fly-to-cart--quick {
-  --x-timing: cubic-bezier(0, -0.1, 1, 0.32);
-  --y-timing: cubic-bezier(0, 0.92, 0.92, 1.04);
-  --scale-timing: cubic-bezier(0.86, 0.08, 0.98, 0.98);
-
-  animation-duration: 0.6s;
-}
-
-fly-to-cart.fly-to-cart--sticky {
-  --x-timing: cubic-bezier(0.98, -0.8, 0.92, 0.5);
-  --y-timing: cubic-bezier(0.14, 0.56, 0.92, 1.04);
-  --scale-timing: cubic-bezier(0.86, 0.08, 0.98, 0.98);
-  --radius: var(--style-border-radius-buttons-primary);
-
-  @media screen and (max-width: 749px) {
-    --x-timing: cubic-bezier(0.98, -0.1, 0.92, 0.5);
-  }
-
-  animation-duration: 0.8s;
-}
-
-@keyframes travel-scale {
-  0% {
-    opacity: var(--start-opacity, 1);
-  }
-
-  5% {
-    opacity: 1;
-  }
-
-  100% {
-    border-radius: 50%;
-    opacity: 1;
-    transform: translate(-50%, calc(-50% + var(--offset-y))) scale(0.25);
-  }
-}
-
-@keyframes travel-x {
-  to {
-    translate: var(--travel-x, 0) 0;
-  }
-}
-
-@keyframes travel-y {
-  to {
-    translate: 0 var(--travel-y, 0);
-  }
-}
-
-/* ------------------------------------------------------------------------------ */
-
-/* Collection Wrapper - Shared layout CSS for collection and search pages */
-
-/* ------------------------------------------------------------------------------ */
-
-.collection-wrapper {
-  @media screen and (min-width: 750px) {
-    --facets-vertical-col-width: 6;
-
-    grid-template-columns:
-      1fr repeat(
-        var(--centered-column-number),
-        minmax(0, calc((var(--page-width) - var(--page-margin) * 2) / var(--centered-column-number)))
-      )
-      1fr;
-  }
-
-  @media screen and (min-width: 990px) {
-    --facets-vertical-col-width: 5;
-  }
-}
-
-.collection-wrapper:has(.facets-block-wrapper--full-width),
-.collection-wrapper:has(.collection-wrapper--full-width) {
-  @media screen and (min-width: 750px) {
-    grid-column: 1 / -1;
-    grid-template-columns:
-      minmax(var(--page-margin), 1fr) repeat(
-        var(--centered-column-number),
-        minmax(0, calc((var(--page-width) - var(--page-margin) * 2) / var(--centered-column-number)))
-      )
-      minmax(var(--page-margin), 1fr);
-  }
-}
-
-.collection-wrapper:has(.facets--vertical) .facets-block-wrapper--vertical:not(.hidden) ~ .main-collection-grid {
-  @media screen and (min-width: 750px) {
-    grid-column: var(--facets-vertical-col-width) / var(--full-width-column-number);
-  }
-}
-
-.collection-wrapper:has(.facets-block-wrapper--vertical:not(#filters-drawer)):has(.collection-wrapper--full-width) {
-  @media screen and (min-width: 750px) {
-    grid-column: 1 / -1;
-    grid-template-columns: 0fr repeat(var(--centered-column-number), minmax(0, 1fr)) 0fr;
-  }
-}
-
-:is(.collection-wrapper--full-width, .collection-wrapper--full-width-on-mobile)
-  [product-grid-view='default']
-  .product-grid__card {
-  @media screen and (max-width: 749px) {
-    padding-inline-start: max(var(--padding-xs), var(--padding-inline-start));
-    padding-inline-end: max(var(--padding-xs), var(--padding-inline-end));
-  }
-}
-
-:is(.collection-wrapper--full-width, .collection-wrapper--full-width-on-mobile)
-  [product-grid-view='mobile-single']
-  .product-grid__card {
-  @media screen and (max-width: 749px) {
-    padding-inline-start: max(var(--padding-xs), var(--padding-inline-start));
-    padding-inline-end: max(var(--padding-xs), var(--padding-inline-end));
-  }
-}
-
-/* Make product media go edge-to-edge by using negative margins */
-:is(.collection-wrapper--full-width) .card-gallery,
-:is(.collection-wrapper--full-width-on-mobile) .card-gallery {
-  @media screen and (max-width: 749px) {
-    margin-inline-start: calc(-1 * max(var(--padding-xs), var(--padding-inline-start)));
-    margin-inline-end: calc(-1 * max(var(--padding-xs), var(--padding-inline-end)));
-  }
-}
-
-.collection-wrapper--full-width .main-collection-grid__title {
-  margin-left: var(--page-margin);
-}
-
-.collection-wrapper--full-width-on-mobile .main-collection-grid__title {
-  @media screen and (max-width: 749px) {
-    margin-left: var(--page-margin);
-  }
-}
-
-.collection-wrapper--grid-full-width .facets--vertical:not(.facets--drawer) {
-  @media screen and (min-width: 750px) {
-    padding-inline-start: max(var(--padding-sm), var(--padding-inline-start));
-  }
-}
-
-.collection-wrapper:has(.product-grid-mobile--large) .facets-mobile-wrapper.facets-controls-wrapper {
-  @media screen and (max-width: 749px) {
-    display: none;
-  }
-}
-
-.collection-wrapper:has(> .facets--horizontal) .facets__panel[open] {
-  @media screen and (min-width: 750px) {
-    z-index: var(--facets-open-z-index);
-  }
-}
-
-/* ------------------------------------------------------------------------------ */
-
-/* ------------------------------------------------------------------------------ */
-
 /* Animation declarations - to be kept at the bottom of the file for ease of find */
 @keyframes grow {
   0% {
@@ -3413,18 +1513,6 @@ fly-to-cart.fly-to-cart--sticky {
   to {
     transform: translateY(var(--padding-sm));
     opacity: 0;
-  }
-}
-
-@keyframes elementSlideInBottom {
-  from {
-    transform: translateY(calc(-1 * var(--padding-sm)));
-    opacity: 0;
-  }
-
-  to {
-    transform: translateY(0);
-    opacity: 1;
   }
 }
 
@@ -3512,31 +1600,6 @@ fly-to-cart.fly-to-cart--sticky {
   }
 }
 
-@keyframes dialogZoom {
-  from {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-
-  to {
-    opacity: 0;
-    transform: scale(0.95) translateY(1em);
-  }
-}
-
-@keyframes thumbnail-selected {
-  0%,
-  100% {
-    box-shadow: 0 0 0 2px transparent;
-    scale: 0.9;
-  }
-
-  50% {
-    box-shadow: 0 0 0 2px #000;
-    scale: 1;
-  }
-}
-
 @keyframes backdropFilter {
   from {
     backdrop-filter: brightness(1);
@@ -3591,79 +1654,10 @@ fly-to-cart.fly-to-cart--sticky {
   }
 }
 
-.bubble {
-  display: inline-flex;
-  height: calc(var(--variant-picker-swatch-height) / 1.5);
-  font-size: var(--font-size--xs);
-  border-radius: 20px;
-  min-width: 20px;
-  padding: 0 6px;
-  background-color: rgb(var(--color-foreground-rgb) / var(--opacity-10-25));
-  color: var(--color-foreground);
-  align-items: center;
-  justify-content: center;
-}
-
-.bubble svg {
-  width: 12px;
-  height: 12px;
-}
-
-.top-shadow::before {
-  content: '';
-  box-shadow: 0 0 10px var(--color-shadow);
-  position: absolute;
-  z-index: var(--layer-lowest);
-  inset: 0;
-  clip-path: inset(-50px 0 0 0); /* stylelint-disable-line */
-}
-
-@media screen and (min-width: 750px) {
-  .top-shadow--mobile::before {
-    display: none;
-  }
-}
-
-.bottom-shadow::before {
-  content: '';
-  box-shadow: 0 0 10px var(--color-shadow);
-  position: absolute;
-  z-index: var(--layer-lowest);
-  inset: 0;
-  clip-path: inset(0 0 -50px 0); /* stylelint-disable-line */
-}
-
-@media screen and (min-width: 750px) {
-  .bottom-shadow--mobile::before {
-    display: none;
-  }
-}
-
-.video-placeholder-wrapper {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  aspect-ratio: var(--size-style-aspect-ratio, auto);
-}
-
-:not(deferred-media) > .video-placeholder-wrapper {
-  width: var(--video-placeholder-width);
-}
-
-.video-placeholder-wrapper > * {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-
 /* Slideshow Arrow Hover Animation - must stay in base.css for proper CSS cascade */
 
-:not(.media-gallery--carousel)
-  > :is(slideshow-component:hover, slideshow-component:focus-within):not(:has(slideshow-controls:hover))
-  > slideshow-container
-  > slideshow-arrows
-  .slideshow-control {
+slideshow-container[animate-arrows]:hover > slideshow-arrows .slideshow-control,
+slideshow-component:focus-within > slideshow-container[animate-arrows] > slideshow-arrows .slideshow-control {
   animation: arrowsSlideIn var(--animation-speed) var(--animation-easing) forwards;
 }
 
@@ -3691,10 +1685,6 @@ fly-to-cart.fly-to-cart--sticky {
   width: 100%;
 }
 
-.section-resource-list__content:empty {
-  display: none;
-}
-
 .section-resource-list__header:is(:empty, :has(.group-block-content:empty)),
 .section-resource-list__content:empty {
   display: none;
@@ -3708,101 +1698,13 @@ fly-to-cart.fly-to-cart--sticky {
   }
 }
 
-.resource-list--carousel-mobile {
-  display: block;
-
-  @media screen and (min-width: 750px) {
-    display: none;
-  }
-}
-
-.resource-list {
-  --resource-list-mobile-gap-max: 9999px;
-  --resource-list-column-gap: min(var(--resource-list-column-gap-desktop), var(--resource-list-mobile-gap-max));
-  --resource-list-row-gap: min(var(--resource-list-row-gap-desktop), var(--resource-list-mobile-gap-max));
-
-  width: 100%;
-
-  @media screen and (max-width: 749px) {
-    --resource-list-mobile-gap-max: 12px;
-  }
-
-  @container resource-list (max-width: 749px) {
-    --resource-list-mobile-gap-max: 12px;
-  }
-}
-
-.resource-list--grid {
-  display: grid;
-  gap: var(--resource-list-row-gap) var(--resource-list-column-gap);
-  grid-template-columns: var(--resource-list-columns-mobile);
-
-  @media screen and (min-width: 750px) {
-    grid-template-columns: var(--resource-list-columns);
-  }
-
-  @container resource-list (max-width: 449px) {
-    grid-template-columns: var(--resource-list-columns-mobile);
-  }
-
-  @container resource-list(min-width: 450px) and (max-width: 749px) {
-    --resource-list-columns-per-row: 3;
-
-    grid-template-columns: repeat(var(--resource-list-columns-per-row), 1fr);
-
-    /* Avoid orphan in last row when there are 4, 7, or 10 items */
-    &:has(.resource-list__item:first-child:nth-last-child(3n + 1)),
-    /* Clean two full rows when there are 8 items */
-    &:has(.resource-list__item:first-child:nth-last-child(8n)) {
-      --resource-list-columns-per-row: 4;
-    }
-  }
-
-  @container resource-list (min-width: 750px) {
-    grid-template-columns: repeat(var(--resource-list-columns-per-row), 1fr);
-
-    &:has(.resource-list__item:first-child:nth-last-child(n + 9)) {
-      --resource-list-columns-per-row: 5;
-    }
-
-    &:has(.resource-list__item:first-child:nth-last-child(n + 7):nth-last-child(-n + 8)) {
-      --resource-list-columns-per-row: 4;
-    }
-
-    &:has(.resource-list__item:first-child:nth-last-child(6)) {
-      --resource-list-columns-per-row: 3;
-    }
-
-    &:has(.resource-list__item:first-child:nth-last-child(5)) {
-      --resource-list-columns-per-row: 5;
-    }
-
-    &:has(.resource-list__item:first-child:nth-last-child(-n + 4)) {
-      --resource-list-columns-per-row: 4;
-    }
-  }
-
-  @container resource-list (min-width: 1200px) {
-    &:has(.resource-list__item:first-child:nth-last-child(6)) {
-      --resource-list-columns-per-row: 6;
-    }
-  }
-}
-
-.resource-list__item {
-  height: 100%;
-  color: var(--color-foreground);
-  text-decoration: none;
-}
-
 /* Base styles */
 .group-block,
 .group-block-content {
   position: relative;
 }
 
-.group-block:has(> video-background-component),
-.group-block:has(> .background-image-container) {
+.group-block:has(> video-background-component) {
   overflow: hidden;
 }
 
@@ -3852,69 +1754,6 @@ fly-to-cart.fly-to-cart--sticky {
   flex-basis: var(--size-style-height);
 }
 
-text-component {
-  --shimmer-text-color: rgb(var(--color-foreground-rgb) / var(--opacity-50));
-  --shimmer-color-light: rgb(var(--color-foreground-rgb) / var(--opacity-10));
-  --shimmer-speed: 1.25s;
-
-  display: inline-block;
-  position: relative;
-  transition: color var(--animation-speed-slow) ease;
-  line-height: 1;
-
-  &::after {
-    content: attr(value);
-    position: absolute;
-    inset: 0;
-    color: transparent;
-    opacity: 0;
-    transition: opacity var(--animation-speed-slow) var(--animation-easing);
-    pointer-events: none;
-    background-image: linear-gradient(
-      -85deg,
-      var(--shimmer-text-color) 10%,
-      var(--shimmer-color-light) 50%,
-      var(--shimmer-text-color) 90%
-    );
-    background-clip: text;
-    background-size: 200% 100%;
-    background-position: 100% 0;
-    place-content: center;
-  }
-
-  &[shimmer] {
-    color: transparent;
-
-    &::after {
-      opacity: 1;
-      animation: text-shimmer var(--shimmer-speed) infinite linear;
-    }
-  }
-}
-
-@keyframes text-shimmer {
-  0% {
-    background-position: 100% 0;
-  }
-
-  100% {
-    background-position: -100% 0;
-  }
-}
-
-/* Animation transitions */
-.transition-background-color {
-  transition: background-color var(--animation-speed-medium) ease-in-out;
-}
-
-.transition-transform {
-  transition: transform var(--animation-speed-medium) var(--animation-timing-bounce);
-}
-
-.transition-border-color {
-  transition: border-color var(--animation-speed-medium) var(--animation-timing-hover);
-}
-
 /* Global scrollbar styles */
 
 /* Webkit browsers */
@@ -3936,50 +1775,6 @@ text-component {
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: rgb(var(--color-foreground-rgb) / var(--opacity-60));
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    scroll-behavior: smooth;
-  }
-}
-
-/* Product card title truncation - applied only to zoom-out view */
-[product-grid-view='zoom-out'] :is(.product-card, .product-grid__card) :is(h4, .h4) {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  -webkit-line-clamp: 3;
-}
-
-/* Product card title truncation - applied on mobile regardless of view */
-@media screen and (max-width: 749px) {
-  :is(.product-card, .product-grid__card) :is(h4, .h4) {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    -webkit-line-clamp: 3;
-  }
-}
-
-.product-card:hover,
-.collection-card:hover,
-.predictive-search-results__card--product:hover,
-.predictive-search-results__card:hover {
-  position: relative;
-  z-index: var(--layer-raised);
-  transition: transform var(--hover-transition-duration) var(--hover-transition-timing),
-    box-shadow var(--hover-transition-duration) var(--hover-transition-timing);
-}
-
-.predictive-search-results__inner {
-  flex-grow: 1;
-  overflow-y: auto;
-  padding-block: var(--padding-lg);
-  container-type: inline-size;
-  color: var(--color-foreground);
 }
 
 /* Prevent iOS zoom on input focus by ensuring minimum 16px font size on mobile */
@@ -4013,203 +1808,22 @@ text-component {
   }
 }
 
-.product-recommendations {
-  display: block;
-}
+/* When the header is transparent, and when there is no header-section below it, offset the first main-section with
+ * the height of the header
+ */
+main > .shopify-section:first-child .section:not(.disable-section-top-offset) {
+  &.spacing-style,
+  .spacing-style {
+    --section-top-offset: calc(var(--header-height) * var(--transparent-header-offset-boolean));
 
-.product-recommendations__skeleton-item {
-  aspect-ratio: 3 / 4;
-  background-color: var(--color-foreground);
-  opacity: var(--skeleton-opacity);
-  border-radius: 4px;
-}
-
-@media screen and (max-width: 749px) {
-  .product-recommendations__skeleton-item:nth-child(2n + 1) {
-    display: none;
-  }
-}
-
-product-recommendations:has([data-has-recommendations='false']) {
-  display: none;
-}
-
-.add-to-cart-button {
-  --text-speed: 0.26;
-  --base-delay: calc(var(--text-speed) * 0.25);
-  --tick-speed: 0.1;
-  --ring-speed: 0.2;
-  --check-speed: 0.2;
-  --burst-speed: 0.32;
-  --step-delay: 3;
-  --speed: 1;
-
-  user-select: none;
-  transition-property: color, box-shadow, background-color, scale, translate;
-  transition-duration: var(--animation-speed);
-  transition-timing-function: var(--ease-out-cubic);
-
-  &:active {
-    scale: 0.99;
-    translate: 0 1px;
-  }
-}
-
-.add-to-cart-button .svg-wrapper .checkmark-burst {
-  width: 30px;
-  height: 30px;
-}
-
-.add-to-cart-text {
-  --atc-opacity: 0;
-  --atc-destination: -1em;
-
-  display: flex;
-  gap: var(--gap-2xs);
-  align-items: center;
-  justify-content: center;
-  animation-duration: var(--animation-speed);
-  animation-timing-function: var(--animation-easing);
-  animation-fill-mode: forwards;
-  transition: width var(--animation-speed) var(--animation-easing),
-    opacity var(--animation-speed) var(--animation-easing);
-}
-
-.add-to-cart__added {
-  --atc-opacity: 1;
-  --atc-destination: 0px;
-
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  translate: -50% -50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.3rem;
-}
-
-.add-to-cart__added-icon {
-  width: 32px;
-  height: 32px;
-}
-
-[data-added='true'] .add-to-cart-text,
-[data-added='true'] .add-to-cart__added {
-  animation-name: atc-slide;
-}
-
-.checkmark-burst {
-  opacity: 0;
-  overflow: visible;
-
-  .burst {
-    rotate: 20deg;
-  }
-
-  .check {
-    opacity: 0.2;
-    scale: 0.8;
-    filter: blur(2px);
-    transform: translateZ(0);
-  }
-
-  :is(.ring, .line, .check, .burst, .tick) {
-    transform-box: fill-box;
-    transform-origin: center;
-  }
-
-  :is(.line) {
-    stroke-dasharray: 1.5 1.5;
-    stroke-dashoffset: -1.5;
-    translate: 0 -180%;
-  }
-
-  g {
-    transform-origin: center;
-    rotate: calc(var(--index) * (360 / 8) * 1deg);
-  }
-}
-
-.add-to-cart-button[data-added='true'] .checkmark-burst {
-  opacity: 1;
-}
-
-.add-to-cart-button[data-added='true'] {
-  .check {
-    opacity: 1;
-    scale: 1;
-    filter: blur(0);
-  }
-
-  .tick {
-    scale: 1.75;
-  }
-
-  .ring {
-    opacity: 0;
-    scale: 1;
-  }
-
-  .line {
-    stroke-dashoffset: 1.5;
-  }
-
-  .add-to-cart-text {
-    /* stylelint-disable-next-line plugin/no-unsupported-browser-features */
-    clip-path: circle(0% at 50% 50%);
-    filter: blur(2px);
-    opacity: 0;
-    translate: 0 4px;
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .add-to-cart-button[data-added='true'] {
-    .check {
-      transition-property: opacity, scale, filter;
-      transition-duration: calc(calc(var(--check-speed) * 1s));
-      transition-delay: calc((var(--base-delay) * 1s));
-      transition-timing-function: var(--ease-out-quad);
-    }
-
-    .tick {
-      transition-property: scale;
-      transition-duration: calc((calc(var(--tick-speed) * 1s)));
-      transition-delay: calc(((var(--base-delay) + (var(--check-speed) * (var(--step-delay) * 1.1))) * 1s));
-      transition-timing-function: ease-out;
-    }
-
-    .ring {
-      transition-property: opacity, scale;
-      transition-duration: calc((calc(var(--ring-speed) * 1s)));
-      transition-delay: calc(((var(--base-delay) + (var(--check-speed) * var(--step-delay))) * 1s));
-      transition-timing-function: var(--ease-out-quad);
-    }
-
-    .line {
-      transition-property: stroke-dashoffset;
-      transition-duration: calc((calc(var(--burst-speed) * 1s)));
-      transition-delay: calc(((var(--base-delay) + (var(--check-speed) * var(--step-delay))) * 1s));
-      transition-timing-function: var(--ease-out-cubic);
+    /* Any nested sections should not be offset */
+    .spacing-style {
+      --section-top-offset: 0px;
     }
   }
 
-  .add-to-cart-text {
-    transition-property: clip-path, opacity, filter, translate;
-    transition-duration: calc((var(--text-speed) * 0.6s)), calc((var(--text-speed) * 1s));
-    transition-timing-function: ease-out;
-  }
-}
-
-.add-to-cart-text {
-  /* stylelint-disable-next-line plugin/no-unsupported-browser-features */
-  clip-path: circle(100% at 50% 50%);
-}
-
-@keyframes atc-slide {
-  to {
-    opacity: var(--atc-opacity, 1);
-    translate: 0px var(--atc-destination, 0px);
+  /* Make sticky content immediately stick to the top of the page */
+  .sticky-content {
+    margin-top: calc(var(--header-height) * var(--transparent-header-offset-boolean) * -1);
   }
 }

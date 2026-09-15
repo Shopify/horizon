@@ -67,30 +67,32 @@
     "view_pricing_info": "Afficher les informations de tarification",
     "slideshow": "Diaporama",
     "header_navigation_label": "Principale",
-    "home_logo_alt": "{{ store_name }} – Accueil",
+    "home_logo_alt": "{{ store_name }} - Accueil",
     "active_filters": "Activez des filtres :",
     "product_details": "Détails du produit",
     "show_product_details": "Afficher les détails du produit pour {{ product_name }}",
+    "show_submenu": "Afficher le sous-menu {{ title }}",
     "featured_product": "Produit en vedette",
     "search_suggestions_available": "Rechercher des suggestions disponibles pour « {{ query }} »",
     "price_filter_low": "Prix bas",
-    "price_filter_high": "Prix élevé"
+    "price_filter_high": "Prix élevé",
+    "view_disclosure_information_for_product": "Afficher les informations sur le produit {{ product_title }}"
   },
   "actions": {
     "add_to_cart": "Ajouter au panier",
     "clear_all": "Tout effacer",
     "remove": "Retirer",
-    "view_in_your_space": "Afficher dans votre espace",
+    "view_in_your_space": "Voir dans votre espace",
     "show_filters": "Filtrer",
     "clear": "Effacer",
-    "continue_shopping": "Continuer les achats",
+    "continue_shopping": "Continuer vos achats",
     "log_in_html": "Vous possédez un compte ? <a href=\"{{ link }}\">Connectez-vous</a> pour payer plus vite.",
     "see_items": {
       "one": "Voir {{ count }} article",
-      "other": "Voir {{ count }} articles",
-      "many": "Voir {{ count }} articles"
+      "other": "Voir {{ count }} articles",
+      "many": "Voir {{ count }} articles"
     },
-    "view_all": "Voir tout",
+    "view_all": "Tout afficher",
     "add": "Ajouter",
     "choose": "Choisir",
     "added": "Ajouté",
@@ -117,6 +119,7 @@
     "show_all_options": "Afficher toutes les options",
     "open": "Ouvrir",
     "back_to": "Retour à {{ title }}",
+    "back_to_main_menu": "Retour au menu principal",
     "zoom_media": "Zoom du support multimédia {{ index }}"
   },
   "content": {
@@ -278,7 +281,8 @@
       "other": "{{ count }} articles ajoutés au panier",
       "many": "{{ count }} articles ajoutés au panier"
     },
-    "quick_order_list": "Liste de commande rapide"
+    "quick_order_list": "Liste de commande rapide",
+    "product_disclosures": "Informations sur le produit"
   },
   "gift_cards": {
     "issued": {

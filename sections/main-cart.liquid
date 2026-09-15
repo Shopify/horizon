@@ -1,3 +1,11 @@
+{% liquid
+  assign custom_color = false
+  if section.settings.background_color != blank or section.settings.text_color != blank
+    assign custom_color = true
+    render 'contrast-override', background_color: section.settings.background_color, text_color: section.settings.text_color, section_id: section.id
+  endif
+%}
+
 {% capture cart_page_more_blocks_content %}
   <div class="cart-page__more-blocks">
     {%- content_for 'blocks' -%}
@@ -6,9 +14,9 @@
 
 {% capture cart_items_children %}
   <template id="empty-cart-template">
-    <div class="section-background color-{{ section.settings.color_scheme }}"></div>
+    <div class="section-background{% if custom_color %} color-custom-{{ section.id }}{% endif %}"></div>
     <div
-      class="section color-{{ section.settings.color_scheme }} section--{{ section.settings.section_width }}"
+      class="section{% if custom_color %} color-custom-{{ section.id }}{% endif %} section--{{ section.settings.section_width }}"
     >
       <div
         class="cart-page spacing-style{% if cart.empty? %} cart-page--empty{% endif %}"
@@ -25,10 +33,9 @@
     </div>
   </template>
 
-  {% # theme-check-disable UniqueStaticBlockId %}
-  <div class="section-background color-{{ section.settings.color_scheme }}"></div>
+  <div class="section-background{% if custom_color %} color-custom-{{ section.id }}{% endif %}"></div>
   <div
-    class="section color-{{ section.settings.color_scheme }} section--{{ section.settings.section_width }}"
+    class="section{% if custom_color %} color-custom-{{ section.id }}{% endif %} section--{{ section.settings.section_width }}"
   >
     <div
       class="cart-page spacing-style{% if cart.empty? %} cart-page--empty{% endif %}"
@@ -51,7 +58,6 @@
       {{ cart_page_more_blocks_content }}
     </div>
   </div>
-  {% # theme-check-enable UniqueStaticBlockId %}
 {% endcapture %}
 {% render 'cart-items-component', children: cart_items_children, section_id: section.id %}
 
@@ -182,10 +188,16 @@
       "default": "page-width"
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:settings.color_scheme",
-      "default": "scheme-1"
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "placeholder": "t:settings.default"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:settings.text_color",
+      "placeholder": "t:settings.default"
     },
     {
       "type": "header",

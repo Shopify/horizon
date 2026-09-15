@@ -1,0 +1,57 @@
+{%- doc -%}
+  Shared pill styles used by active filters and predictive-search query suggestions.
+
+  @example
+  {% render 'pills-styles' %}
+{%- enddoc -%}
+
+{% stylesheet %}
+  /* Pills (used in facets and predictive search) */
+
+  .pills__pill {
+    --pills-pill-background-color: rgb(var(--color-foreground-rgb) / var(--opacity-5-15));
+
+    color: var(--color-foreground);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--gap-sm);
+    min-width: 48px;
+    padding: 6px 12px;
+    border-radius: var(--style-border-radius-pills);
+    cursor: pointer;
+    background-color: var(--pills-pill-background-color);
+    transition: background-color var(--animation-speed) var(--animation-easing);
+
+    &:hover {
+      --pills-pill-background-color: rgb(var(--color-foreground-rgb) / var(--opacity-10-25));
+    }
+
+    @media screen and (max-width: 749px) {
+      padding: var(--padding-xs) var(--padding-md);
+    }
+  }
+
+  .pills__pill > .svg-wrapper {
+    --close-icon-opacity: 0.4;
+    --icon-stroke-width: 1px;
+
+    color: var(--color-foreground);
+  }
+
+  .pills__pill--swatch {
+    @media screen and (max-width: 749px) {
+      padding-inline-start: var(--padding-sm);
+    }
+  }
+
+  .pills__pill--swatch .swatch {
+    margin-right: -4px;
+  }
+
+  .pills__pill--desktop-small {
+    @media screen and (min-width: 750px) {
+      font-size: var(--font-size--xs);
+    }
+  }
+{% endstylesheet %}

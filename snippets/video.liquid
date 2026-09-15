@@ -202,14 +202,5 @@
   </div>
 {% endif %}
 
-{% stylesheet %}
-  .video-interaction-hint {
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: var(--layer-flat);
-  }
-
-  .video-interaction-hint:hover {
-    opacity: 1;
-  }
-{% endstylesheet %}
+{% render 'video-placeholder-styles' %}
+{% render 'deferred-media-video-styles' %}

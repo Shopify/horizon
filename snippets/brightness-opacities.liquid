@@ -1,0 +1,34 @@
+{% doc %}
+  Outputs opacity CSS custom properties adjusted for background brightness.
+
+  Dark backgrounds (brightness < 64) get higher opacity values so overlaid
+  semi-transparent elements remain visible. Light backgrounds use lower values.
+
+  Must be rendered inside a {% style %} block / CSS rule.
+
+  @param {color} background - The background color to evaluate.
+
+  @example
+  .my-selector {
+    {% render 'brightness-opacities', background: my_bg_color %}
+  }
+{% enddoc %}
+
+{%- liquid
+  assign bg_brightness = background | color_brightness
+  if bg_brightness < 64
+    assign o_5_15 = 0.15
+    assign o_10_25 = 0.25
+    assign o_35_55 = 0.55
+    assign o_40_60 = 0.60
+    assign o_30_60 = 0.60
+  else
+    assign o_5_15 = 0.05
+    assign o_10_25 = 0.1
+    assign o_35_55 = 0.35
+    assign o_40_60 = 0.40
+    assign o_30_60 = 0.30
+  endif
+-%}
+--opacity-5-15: {{ o_5_15 }}; --opacity-10-25: {{ o_10_25 }}; --opacity-35-55: {{ o_35_55 }}; --opacity-40-60:
+{{ o_40_60 }}; --opacity-30-60: {{ o_30_60 }}; --opacity-60: 0.6;

@@ -1,0 +1,63 @@
+{%- doc -%}
+  Shared price styles used by product price, unit price, cart item pricing, quick order list pricing,
+  and quick add's dynamically injected product content.
+
+  Render this snippet from any file that directly emits price classes such as
+  `.price`, `.compare-at-price`, `.unit-price`, `.tax-note`, `.volume-pricing-note`,
+  or `.price-item__group`, unless that file renders the `price` or `unit-price` snippet.
+
+  @example
+  {% render 'price-styles' %}
+{%- enddoc -%}
+
+{% stylesheet %}
+  .price,
+  .compare-at-price,
+  .unit-price {
+    white-space: nowrap;
+  }
+
+  .unit-price {
+    display: block;
+    font-size: min(0.85em, var(--font-paragraph--size));
+    color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-subdued-text));
+  }
+
+  .tax-note.tax-note.tax-note {
+    font-size: min(0.85em, var(--font-paragraph--size));
+    font-weight: var(--font-paragraph--weight);
+    color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-subdued-text));
+  }
+
+  .tax-note:empty {
+    display: none;
+  }
+
+  product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
+    margin-block: 0;
+  }
+
+  /* Volume pricing note should match unit-price styling (small, grey text) */
+  product-price .volume-pricing-note,
+  product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) .volume-pricing-note {
+    display: block;
+    font-family: var(--font-body--family);
+    font-weight: normal;
+    font-size: var(--font-size--xs);
+    line-height: normal;
+    letter-spacing: normal;
+    text-transform: none;
+    color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-subdued-text));
+  }
+
+  .compare-at-price {
+    color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-subdued-text));
+    text-decoration-line: line-through;
+    text-decoration-thickness: 1.5px;
+    text-decoration-color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-30));
+  }
+
+  .price-item__group {
+    display: inline-block;
+  }
+{% endstylesheet %}

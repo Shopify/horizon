@@ -5,6 +5,8 @@
   type="module"
 ></script>
 
+{% render 'dialog-styles' %}
+
 <dialog-component
   class="popup-link"
   {{ block.shopify_attributes }}
@@ -20,7 +22,7 @@
 
   <dialog
     ref="dialog"
-    class="popup-link__content dialog-modal color-{{ settings.popover_color_scheme }}{% if block_settings.behavior == 'drawer' %} popup-link__content--drawer dialog-drawer{% endif %}"
+    class="popup-link__content dialog-modal color-custom-popover{% if block_settings.behavior == 'drawer' %} popup-link__content--drawer dialog-drawer{% endif %}"
     scroll-lock
     aria-labelledby="popup-dialog-heading"
   >
@@ -80,6 +82,16 @@
     max-width: 95vw;
     height: 100%;
     margin: 0 0 0 auto;
+
+    /* Right-anchored drawer spans the full physical viewport (viewport-fit=cover); keep its
+       content clear of the right-side notch and home indicator */
+    padding-inline-end: calc(var(--padding-xl) + var(--safe-area-inset-right));
+    padding-block-end: calc(var(--padding-xl) + var(--safe-area-inset-bottom));
+
+    @media screen and (min-width: 750px) {
+      padding-inline-end: calc(var(--padding-5xl) + var(--safe-area-inset-right));
+      padding-block-end: calc(var(--padding-5xl) + var(--safe-area-inset-bottom));
+    }
   }
 
   /* Needed to ensure the drawer is full height */
@@ -92,6 +104,12 @@
     right: var(--margin-2xs);
     opacity: 0.8;
     animation: none;
+  }
+
+  /* The close button is absolutely positioned so it bypasses the drawer's safe-area padding */
+  .popup-link__content--drawer .popup-link__close {
+    top: max(var(--margin-2xs), var(--safe-area-inset-top));
+    right: max(var(--margin-2xs), var(--safe-area-inset-right));
   }
 {% endstylesheet %}
 

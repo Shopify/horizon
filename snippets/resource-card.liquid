@@ -9,6 +9,7 @@
   @param {string} [image_aspect_ratio] - The aspect ratio to display the image. Defaults to image's natural ratio
   @param {boolean} [image_hover] - Whether to show a secondary image on hover and focus
   @param {string} [image_sizes] - The sizes attribute for responsive images. Defaults to 'auto'
+  @param {string} [product_view_context] - The context for product view events (e.g., 'search'). Omit to disable view events.
 {%- enddoc -%}
 
 {% liquid
@@ -25,20 +26,30 @@
     assign single_thumbnail_collection = true
   endif
 
-  if resource_type == 'product' and settings.transition_to_main_product
-    assign featured_media_url = resource.selected_or_first_available_variant.featured_image | image_url: width: image_width
-    if featured_media_url == blank
-      assign featured_media_url = resource.featured_media.preview_image | image_url: width: image_width
+  if resource_type == 'product'
+    assign product_wrapper_tag = 'product-component'
+    if settings.transition_to_main_product
+      assign product_wrapper_tag = 'product-card-link'
+      assign featured_media_url = resource.selected_or_first_available_variant.featured_image | image_url: width: image_width
+      if featured_media_url == blank
+        assign featured_media_url = resource.featured_media.preview_image | image_url: width: image_width
+      endif
     endif
   endif
 %}
 
-{%- if resource_type == 'product' and settings.transition_to_main_product -%}
-  <product-card-link
-    data-product-id="{{ resource.id }}"
-    data-featured-media-url="{{ featured_media_url }}"
-    data-product-transition="true"
-    on:click="/handleViewTransition"
+{%- if resource_type == 'product' -%}
+  <{{ product_wrapper_tag }}
+    class="resource-card__wrapper"
+    {% if settings.transition_to_main_product %}
+      data-product-id="{{ resource.id }}"
+      data-featured-media-url="{{ featured_media_url }}"
+      data-product-transition="true"
+      on:click="/handleViewTransition"
+    {% endif %}
+    {% # theme-check-disable UnknownFilter %}
+    view-event-payload="{{ resource | standard_event_data: 'view', context: product_view_context | escape }}"
+    {% # theme-check-enable UnknownFilter %}
   >
 {%- endif -%}
 <div
@@ -156,11 +167,16 @@
     {% endif %}
   </div>
 </div>
-{%- if resource_type == 'product' and settings.transition_to_main_product -%}
-  </product-card-link>
+{%- if resource_type == 'product' -%}
+  </{{ product_wrapper_tag }}>
 {%- endif -%}
 
 {% stylesheet %}
+  .resource-card__wrapper {
+    display: block;
+    height: 100%;
+  }
+
   .resource-card {
     --resource-card-secondary-image-opacity: 0;
     --resource-card-primary-image-opacity: calc(1 - var(--resource-card-secondary-image-opacity));
@@ -200,7 +216,7 @@
       line-height: normal;
       letter-spacing: normal;
       text-transform: none;
-      color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+      color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-subdued-text));
     }
   }
 
@@ -296,14 +312,14 @@
   }
 
   .resource-card__subtext {
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+    color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-subdued-text));
     margin-block-start: 0;
   }
 
   .resource-card__subtext.paragraph {
     font-size: var(--font-size--body-sm);
     line-height: var(--line-height--body-tight);
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+    color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-subdued-text));
   }
 
   .resource-card:has(.resource-card__image--secondary) {

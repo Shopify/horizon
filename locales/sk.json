@@ -68,14 +68,16 @@
     "view_pricing_info": "Zobraziť informácie o cenách",
     "slideshow": "Prezentácia",
     "header_navigation_label": "Primárna",
-    "home_logo_alt": "{{ store_name }} – Domov",
+    "home_logo_alt": "{{ store_name }} - Domovská stránka",
     "active_filters": "Aktívne filtre:",
     "product_details": "Detaily produktu",
     "show_product_details": "Zobraziť detaily produktu {{ product_name }}",
     "featured_product": "Odporúčaný produkt",
     "search_suggestions_available": "Návrhy vyhľadávania dostupné pre „{{ query }}“",
     "price_filter_low": "Nízka cena",
-    "price_filter_high": "Vysoká cena"
+    "price_filter_high": "Vysoká cena",
+    "view_disclosure_information_for_product": "Zobraziť zverejnené informácie o produkte {{ product_title }}",
+    "show_submenu": "Zobraziť podponuku {{ title }}"
   },
   "actions": {
     "add_to_cart": "Pridať do košíka",
@@ -88,9 +90,9 @@
     "log_in_html": "Máte konto? <a href=\"{{ link }}\">Prihláste</a> sa a prejdite pokladňou rýchlejšie.",
     "see_items": {
       "one": "Zobraziť {{ count }} položku",
-      "other": "Zobraziť {{ count }} položky/položiek",
-      "few": "Zobraziť {{ count }} položky/položiek",
-      "many": "Zobraziť {{ count }} položky/položiek"
+      "other": "Zobraziť {{ count }} položiek",
+      "few": "Zobraziť {{ count }} položiek",
+      "many": "Zobraziť {{ count }} položiek"
     },
     "view_all": "Zobraziť všetko",
     "add": "Pridať",
@@ -119,7 +121,8 @@
     "show_all_options": "Zobraziť všetky možnosti",
     "open": "Otvoriť",
     "back_to": "Späť na: {{ title }}",
-    "zoom_media": "Nástroj na priblíženie {{ index }}"
+    "zoom_media": "Nástroj na priblíženie {{ index }}",
+    "back_to_main_menu": "Späť do hlavnej ponuky"
   },
   "content": {
     "reviews": "recenz.",
@@ -221,7 +224,7 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts": "Dane a doprava sa vypočítajú pri platbe.",
     "taxes_included_shipping_at_checkout_with_policy_without_discounts_html": "Vrátane daní. Doprava sa vypočíta pri platbe.",
     "taxes_included_shipping_at_checkout_without_policy_without_discounts": "Vrátane daní. Doprava sa vypočíta pri platbe.",
-    "view_more_details": "Zobraziť viac podrobností",
+    "view_more_details": "Zobraziť ďalšie podrobnosti",
     "inventory_low_stock": "Nízky stav zásob",
     "inventory_in_stock": "Skladom",
     "inventory_out_of_stock": "Vypredané",
@@ -284,7 +287,8 @@
       "many": "Počet položiek pridaných do košíka: {{ count }}"
     },
     "item_count_cutoff": "Viac ako {{ count }} položky/položiek",
-    "quick_order_list": "Rýchly zoznam objednávok"
+    "quick_order_list": "Rýchly zoznam objednávok",
+    "product_disclosures": "Zverejnené informácie o produkte"
   },
   "gift_cards": {
     "issued": {
@@ -323,7 +327,7 @@
     }
   },
   "fields": {
-    "separator": "k"
+    "separator": "do"
   },
   "placeholders": {
     "password": "Heslo",

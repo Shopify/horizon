@@ -66,14 +66,16 @@
     "view_pricing_info": "檢視定價資訊",
     "slideshow": "素材輪播",
     "header_navigation_label": "主要",
-    "home_logo_alt": "{{ store_name }} – 首頁",
+    "home_logo_alt": "{{ store_name }} - 首頁",
     "active_filters": "啟用篩選條件：",
     "product_details": "商品詳情",
     "show_product_details": "顯示 {{ product_name }} 的商品詳情",
     "featured_product": "精選商品",
     "search_suggestions_available": "可用於「{{ query }}」的搜尋建議",
     "price_filter_low": "低價",
-    "price_filter_high": "高價"
+    "price_filter_high": "高價",
+    "view_disclosure_information_for_product": "檢視 {{ product_title }} 的揭露資訊",
+    "show_submenu": "顯示 {{ title }} 子選單"
   },
   "actions": {
     "add_to_cart": "加入購物車",
@@ -115,7 +117,8 @@
     "show_all_options": "顯示所有選項",
     "open": "開啟",
     "back_to": "返回「{{ title }}」",
-    "zoom_media": "Zoom 多媒體檔案 {{ index }}"
+    "zoom_media": "Zoom 多媒體檔案 {{ index }}",
+    "back_to_main_menu": "返回主選單"
   },
   "content": {
     "reviews": "評論數",
@@ -212,7 +215,7 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts": "結帳時計算稅額和運費。",
     "taxes_included_shipping_at_checkout_with_policy_without_discounts_html": "已包含稅額。結帳時計算運費。",
     "taxes_included_shipping_at_checkout_without_policy_without_discounts": "已包含稅額。結帳時計算運費。",
-    "view_more_details": "檢視更多詳細資訊",
+    "view_more_details": "檢視更多詳情",
     "wrong_password": "密碼錯誤",
     "inventory_low_stock": "庫存不足",
     "inventory_in_stock": "有庫存",
@@ -272,7 +275,8 @@
       "other": "{{ count }} 個品項已加入購物車"
     },
     "item_count_cutoff": "超過 {{ count }} 個品項",
-    "quick_order_list": "快速訂購清單"
+    "quick_order_list": "快速訂購清單",
+    "product_disclosures": "商品揭露資訊"
   },
   "gift_cards": {
     "issued": {

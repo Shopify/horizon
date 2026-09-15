@@ -6,6 +6,27 @@
 {%- enddoc -%}
 
 {% stylesheet %}
+  /* Product Media */
+  media-gallery {
+    display: block;
+    width: 100%;
+  }
+
+  :where(media-gallery, .product-grid__item) {
+    .media-gallery__grid {
+      grid-template-columns: 1fr;
+      gap: var(--image-gap);
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    .media-gallery--large-first-image .product-media-container:first-child,
+    .media-gallery--two-column .product-media-container:only-child {
+      /* First child spans 2 columns */
+      grid-column: span 2;
+    }
+  }
+
   media-gallery:where(.media-gallery--grid) .media-gallery__grid {
     display: none;
   }
@@ -27,6 +48,32 @@
 
     media-gallery:where(.media-gallery--grid) .media-gallery__grid {
       display: grid;
+    }
+  }
+
+  zoom-dialog dialog {
+    width: 100vw;
+    height: 100vh;
+    border: none;
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    max-height: 100%;
+    background: #fff;
+    opacity: 0;
+    transition: opacity var(--animation-speed) var(--animation-easing);
+    scrollbar-width: none;
+
+    &[open] {
+      opacity: 1;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      scroll-behavior: smooth;
+    }
+
+    &::backdrop {
+      background: transparent;
     }
   }
 

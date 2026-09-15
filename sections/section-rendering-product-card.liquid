@@ -30,6 +30,9 @@
 
 <product-card
   data-product-id="{{ product.id }}"
+  {% # theme-check-disable UnknownFilter %}
+  view-event-payload="{{ product | standard_event_data: 'view' | escape }}"
+  {% # theme-check-enable UnknownFilter %}
   {% if settings.transition_to_main_product %}
     data-product-transition="true"
     {% if featured_media_url != blank %}

@@ -60,12 +60,7 @@
         </div>
         {% if hotspot_product != blank %}
           {% if hotspot_product.available %}
-            {% render 'quick-add',
-              product: hotspot_product,
-              section_id: section.id,
-              block: block,
-              color_scheme: section.settings.color_scheme
-            %}
+            {% render 'quick-add', product: hotspot_product, section_id: section.id, block: block %}
           {% else %}
             <div class="hotspot-dialog__sold-out-badge">
               {{ 'content.product_badge_sold_out' | t }}

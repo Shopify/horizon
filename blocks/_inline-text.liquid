@@ -4,6 +4,8 @@
   @param {string} suffix
 {%- enddoc -%}
 
+{% render 'text-block-styles' %}
+
 {% assign block_settings = block.settings %}
 {% assign plain_text = block_settings.text | strip_newlines | strip_html | strip %}
 
@@ -16,7 +18,10 @@
       {% if block_settings.weight != blank %}custom-font-weight{% endif %}
       {% if block_settings.font_size != blank %}custom-font-size{% endif %}
     "
-    style="{% render 'typography-style', preset: 'custom', settings: block_settings, type: 'heading' %}"
+    style="
+      {% render 'typography-style', preset: 'custom', settings: block_settings, type: 'heading' %}
+      --width: fit-content;
+    "
     {{ block.shopify_attributes }}
   >
     <span>{{ block.settings.text }}</span>{{ suffix }}

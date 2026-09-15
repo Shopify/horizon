@@ -79,6 +79,12 @@
     endif
   endif
 
+  # Carousel arrows are always visible, so they don't animate in on hover
+  assign animate_arrows = true
+  if media_presentation == 'carousel'
+    assign animate_arrows = false
+  endif
+
   if slideshow_controls_style == 'thumbnails'
     assign pagination_position = block_settings.thumbnail_position
   else
@@ -180,6 +186,11 @@
     src="{{ 'drag-zoom-wrapper.js' | asset_url }}"
     type="module"
   ></script>
+{%- endif -%}
+
+{%- if block_settings.constrain_to_viewport -%}
+  {% # `.constrain-height` consumes `--header-height` at first paint (product-media-container-styles.liquid) %}
+  {% render 'measure-header-heights', only_on_desktop: true %}
 {%- endif -%}
 
 {% style %}
@@ -441,6 +452,7 @@
       slide_count: sorted_media.size,
       slideshow_arrows: slideshow_arrows,
       arrows_position: icons_position,
+      animate_arrows: animate_arrows,
       controls: controls
     %}
 
@@ -470,8 +482,7 @@
                 {% if block_settings.zoom %}
                   on:pointerenter="/preloadImage/{{ forloop.index0 }}"
                 {% endif %}
-              >
-              </button>
+              ></button>
             {%- endif -%}
             {%- liquid
               if needs_both_sizes and forloop.first
@@ -638,6 +649,7 @@
   </media-gallery>
 {% endif %}
 
+{% render 'product-media-container-styles' %}
 {% render 'product-media-gallery-content-styles' %}
 
 {% stylesheet %}
@@ -647,6 +659,11 @@
     bottom: 0;
     display: flex;
     z-index: var(--layer-raised);
+
+    /* Container touches the physical viewport edges (viewport-fit=cover); keep the
+       thumbnails clear of the home indicator and side notch */
+    padding-block-end: var(--safe-area-inset-bottom);
+    padding-inline: var(--safe-area-inset-left) var(--safe-area-inset-right);
   }
 
   .dialog-thumbnails-list {
@@ -675,7 +692,9 @@
       position: fixed;
       flex-direction: column;
       inset: 50% var(--margin-lg) auto auto;
-      right: 0;
+
+      /* Keep the right-anchored thumbnail rail clear of the right-side notch (viewport-fit=cover) */
+      right: var(--safe-area-inset-right);
       max-height: calc(100vh - 200px);
       overflow-y: auto;
       animation: thumbnailsSlideInTop var(--spring-d220-b0-duration) var(--spring-d220-b0-easing) forwards;

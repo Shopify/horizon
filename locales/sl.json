@@ -67,7 +67,7 @@
     "remove": "Odstrani",
     "view_pricing_info": "Prikaži podatke o cenah",
     "slideshow": "Slikovni prikaz",
-    "header_navigation_label": "Primarno",
+    "header_navigation_label": "Glavno",
     "home_logo_alt": "{{ store_name }} – Domov",
     "active_filters": "Aktivni filtri:",
     "product_details": "Podrobnosti o izdelku",
@@ -75,22 +75,24 @@
     "featured_product": "Izpostavljen izdelek",
     "search_suggestions_available": "Predlogi za iskanje, ki so na voljo za »{{ query }}«",
     "price_filter_low": "Nizka cena",
-    "price_filter_high": "Visoka cena"
+    "price_filter_high": "Visoka cena",
+    "view_disclosure_information_for_product": "Ogled informacij o razkritjih za {{ product_title }}",
+    "show_submenu": "Prikaži podmeni {{ title }}"
   },
   "actions": {
     "add_to_cart": "Dodaj v košarico",
     "clear_all": "Počisti vse",
     "remove": "Odstrani",
-    "view_in_your_space": "Prikaži v prostoru",
+    "view_in_your_space": "Oglejte si v svojem prostoru",
     "show_filters": "Filter",
     "clear": "Počisti",
-    "continue_shopping": "Nadaljuj nakup",
+    "continue_shopping": "Nadaljuj nakupovanje",
     "log_in_html": "Imate račun? Za hitrejši zaključek nakupa se <a href=\"{{ link }}\">prijavite</a>.",
     "see_items": {
       "one": "Prikaži {{ count }} artikel",
-      "other": "Prikaži {{ count }} artiklov",
-      "few": "Prikaži {{ count }} artiklov",
-      "two": "Prikaži {{ count }} artiklov"
+      "other": "Oglejte si {{ count }} kosov",
+      "few": "Oglejte si {{ count }} kosov",
+      "two": "Oglejte si {{ count }} kosov"
     },
     "view_all": "Prikaži vse",
     "add": "Dodaj",
@@ -119,7 +121,8 @@
     "show_all_options": "Prikaži vse možnosti",
     "open": "Odpri",
     "back_to": "Nazaj na: {{ title }}",
-    "zoom_media": "Povečava predstavnosti {{ index }}"
+    "zoom_media": "Povečava predstavnosti {{ index }}",
+    "back_to_main_menu": "Nazaj na glavni meni"
   },
   "content": {
     "reviews": "ocen.",
@@ -284,7 +287,8 @@
       "few": "Toliko izdelkov je dodanih v košarico: {{ count }}",
       "two": "Toliko izdelkov je dodanih v košarico: {{ count }}"
     },
-    "quick_order_list": "Seznam za hitro naročanje"
+    "quick_order_list": "Seznam za hitro naročanje",
+    "product_disclosures": "Razkritja o izdelku"
   },
   "gift_cards": {
     "issued": {

@@ -1,11 +1,19 @@
-<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+{% liquid
+  if section.settings.background_color != blank
+    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  endif
+%}
+
 <div
-  class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
+  class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+></div>
+<div
+  class="section section--{{ section.settings.section_width }}{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
   {{ section.shopify_attributes }}
 >
   <div
     class="utilities utilities--blocks-{{ section.blocks.size }} spacing-style"
-    style="{% render 'spacing-style', settings: section.settings %} --border-width: {{ section.settings.divider_thickness }}px; --gap: {{ section.settings.gap }}px;"
+    style="{% render 'spacing-style', settings: section.settings %} --border-width: {{ section.settings.divider_thickness }}px;{% if section.settings.divider_color != blank %} --divider-color: {{ section.settings.divider_color }};{% endif %} --gap: {{ section.settings.gap }}px;"
     data-testid="footer-utilities"
   >
     {% content_for 'blocks' %}
@@ -20,7 +28,7 @@
     align-items: center;
     gap: var(--gap);
     text-wrap: nowrap;
-    border-top: var(--border-width) solid var(--color-border);
+    border-top: var(--border-width) solid var(--divider-color, var(--color-border));
     color: var(--color-foreground-muted);
 
     @media screen and (min-width: 750px) {
@@ -33,8 +41,9 @@
     }
   }
 
-  .utilities a {
-    color: var(--color-foreground-muted);
+  .utilities a,
+  .utilities button {
+    color: var(--color-utilities, var(--color-foreground-muted));
   }
 
   .utilities > * {
@@ -123,6 +132,12 @@
       "default": 24
     },
     {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "default": "{{ settings.color_palette.foreground }}"
+    },
+    {
       "type": "range",
       "id": "divider_thickness",
       "label": "t:settings.divider_thickness",
@@ -133,10 +148,10 @@
       "default": 1
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:settings.color_scheme",
-      "default": "scheme-1"
+      "type": "color",
+      "id": "divider_color",
+      "label": "t:settings.divider_color",
+      "visible_if": "{{ section.settings.divider_thickness > 0 }}"
     },
     {
       "type": "header",

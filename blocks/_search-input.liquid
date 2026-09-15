@@ -1,14 +1,8 @@
-{%- assign block_settings = block.settings -%}
-
 <script
   src="{{ 'search-page-input.js' | asset_url }}"
   defer
   type="module"
 ></script>
-
-{% if block_settings.inherit_color_scheme == false %}
-  {% assign color_scheme = block_settings.color_scheme | prepend: ' color-' %}
-{% endif %}
 
 <form
   action="{{ routes.search_url }}"
@@ -17,7 +11,15 @@
   class="search-page-input__parent"
 >
   <search-page-input-component
-    style="{% render 'size-style', settings: block_settings %}{% render 'spacing-style', settings: block_settings %}"
+    style="
+      {% render 'size-style', settings: block.settings %}
+      {% render 'spacing-style', settings: block.settings %}
+      {% if block.settings.input_style == 'custom' %}
+        {% render 'input-custom-styles', block_settings: block.settings %}
+        --style-border-width-inputs: {{ block.settings.border_width }}px;
+        --style-border-radius-inputs: {{ block.settings.border_radius }}px;
+      {% endif %}
+    "
     {{ block.shopify_attributes }}
   >
     <label
@@ -26,7 +28,7 @@
     >
       {{ 'content.search_input_label' | t }}
     </label>
-    <span class="svg-wrapper search__icon{{ color_scheme }}">
+    <span class="svg-wrapper search__icon">
       {{ 'icon-search.svg' | inline_asset_content }}
     </span>
     <input
@@ -35,7 +37,7 @@
       type="hidden"
     >
     <input
-      class="search-page-input{{ color_scheme }}"
+      class="search-page-input"
       id="SearchPageInput--{{ block.id }}"
       type="search"
       name="q"
@@ -46,7 +48,7 @@
     >
     <a
       href="{{ routes.search_url }}?type=product&q="
-      class="search__reset-button{{ color_scheme }}"
+      class="search__reset-button"
       aria-label="{{ 'accessibility.reset_search' | t }}"
     >
       <span class="svg-wrapper search__reset-button-icon">
@@ -229,17 +231,68 @@
       "visible_if": "{{ block.settings.width == \"custom\" }}"
     },
     {
-      "type": "checkbox",
-      "id": "inherit_color_scheme",
-      "label": "t:settings.inherit_color_scheme",
-      "default": true
+      "type": "header",
+      "content": "t:content.input"
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:settings.color_scheme",
-      "default": "scheme-1",
-      "visible_if": "{{ block.settings.inherit_color_scheme == false }}"
+      "type": "select",
+      "id": "input_style",
+      "label": "t:settings.style",
+      "options": [
+        {
+          "value": "default",
+          "label": "t:options.default"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "default",
+      "info": "t:info.edit_input_field_in_theme_settings"
+    },
+    {
+      "type": "color",
+      "id": "input_background_color",
+      "label": "t:settings.background",
+      "default": "{{ settings.color_palette.background }}",
+      "visible_if": "{{ block.settings.input_style == \"custom\" }}"
+    },
+    {
+      "type": "color",
+      "id": "input_text_color",
+      "label": "t:settings.text",
+      "default": "{{ settings.color_palette.foreground }}",
+      "visible_if": "{{ block.settings.input_style == \"custom\" }}"
+    },
+    {
+      "type": "color",
+      "id": "input_border_color",
+      "label": "t:settings.borders",
+      "default": "{{ settings.color_palette.foreground }}",
+      "visible_if": "{{ block.settings.input_style == \"custom\" }}"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "t:settings.border_width",
+      "min": 0,
+      "max": 4,
+      "step": 0.5,
+      "unit": "px",
+      "default": 1,
+      "visible_if": "{{ block.settings.input_style == \"custom\" }}"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.input_style == \"custom\" }}"
     }
   ],
   "presets": []

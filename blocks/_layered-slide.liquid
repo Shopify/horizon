@@ -5,6 +5,10 @@
   if block.settings.media_type_1 == 'video'
     assign preview_image = block.settings.video_1.preview_image
   endif
+
+  if block.settings.background_color != blank
+    render 'contrast-override', background_color: block.settings.background_color, section_id: block.id, skip_contrast: true
+  endif
 -%}
 
 <div
@@ -71,7 +75,7 @@
       {{ placeholder_name | placeholder_svg_tag: 'layered-slideshow__image' }}
     {%- endif -%}
     <div
-      class="layered-slideshow__content spacing-style{% unless block.settings.inherit_color_scheme %} color-{{ block.settings.color_scheme }}{% endunless %} background-transparent"
+      class="layered-slideshow__content spacing-style{% if block.settings.background_color != blank %} color-custom-{{ block.id }}{% endif %} background-transparent"
       style="{% render 'spacing-style', settings: block.settings %}"
     >
       <div
@@ -290,17 +294,10 @@
       "content": "t:content.appearance"
     },
     {
-      "type": "checkbox",
-      "id": "inherit_color_scheme",
-      "label": "t:settings.inherit_color_scheme",
-      "default": true
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:settings.color_scheme",
-      "default": "scheme-6",
-      "visible_if": "{{ block.settings.inherit_color_scheme == false }}"
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "placeholder": "t:settings.default"
     },
     {
       "type": "checkbox",

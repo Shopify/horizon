@@ -73,13 +73,15 @@
     "featured_product": "Sản phẩm nổi bật",
     "search_suggestions_available": "Gợi ý tìm kiếm dành cho \"{{ query }}\"",
     "price_filter_low": "Giá thấp",
-    "price_filter_high": "Giá cao"
+    "price_filter_high": "Giá cao",
+    "view_disclosure_information_for_product": "Xem thông tin công bố của {{ product_title }}",
+    "show_submenu": "Hiển thị menu phụ {{ title }}"
   },
   "actions": {
     "add_to_cart": "Thêm vào giỏ hàng",
     "clear_all": "Xóa tất cả",
     "remove": "Xóa",
-    "view_in_your_space": "Xem tại không gian của bạn",
+    "view_in_your_space": "Xem trong không gian của bạn",
     "show_filters": "Bộ lọc",
     "clear": "Xóa",
     "continue_shopping": "Tiếp tục mua sắm",
@@ -96,7 +98,7 @@
     "show_more": "Hiển thị thêm",
     "close": "Đóng",
     "more": "Thêm",
-    "reset": "Đặt lại",
+    "reset": "Thiết lập lại",
     "zoom": "Thu phóng",
     "close_dialog": "Đóng hộp thoại",
     "back": "Quay lại",
@@ -115,7 +117,8 @@
     "show_all_options": "Hiển thị tất cả tùy chọn",
     "open": "Mở",
     "back_to": "Quay lại {{ title }}",
-    "zoom_media": "Thu phóng nội dung {{ index }}"
+    "zoom_media": "Thu phóng nội dung {{ index }}",
+    "back_to_main_menu": "Quay lại menu chính"
   },
   "content": {
     "reviews": "đánh giá",
@@ -213,7 +216,7 @@
     "taxes_included_shipping_at_checkout_with_policy_without_discounts_html": "Đã bao gồm thuế. Phí vận chuyển được tính khi thanh toán.",
     "taxes_included_shipping_at_checkout_without_policy_without_discounts": "Đã bao gồm thuế. Phí vận chuyển được tính khi thanh toán.",
     "wrong_password": "Sai mật khẩu!",
-    "view_more_details": "Xem thêm thông tin",
+    "view_more_details": "Xem thêm chi tiết",
     "inventory_low_stock": "Sắp hết hàng",
     "inventory_in_stock": "Còn hàng",
     "inventory_out_of_stock": "Hết hàng",
@@ -272,7 +275,8 @@
       "other": "Đã thêm {{ count }} mặt hàng vào giỏ hàng"
     },
     "item_count_cutoff": "Hơn {{ count }} mặt hàng",
-    "quick_order_list": "Danh sách đặt hàng nhanh"
+    "quick_order_list": "Danh sách đặt hàng nhanh",
+    "product_disclosures": "Thông tin công bố sản phẩm"
   },
   "gift_cards": {
     "issued": {

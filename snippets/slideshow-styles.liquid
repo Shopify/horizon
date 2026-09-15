@@ -123,13 +123,19 @@
     grid-area: container;
     container-type: inline-size;
     background-color: var(--color-background);
+
+    /* Prevents the sliding-in arrows from overflowing and flashing a horizontal scrollbar */
+    overflow-x: clip;
   }
 
   /*
    * Be specific about HTML children structure to avoid targeting nested slideshows.
    * Ensure that the content is 'visible' while scrolling instead of 'auto' to avoid issues in Safari.
    */
-  slideshow-component:is([dragging], [transitioning], :hover) > slideshow-container > slideshow-slides > slideshow-slide {
+  slideshow-component:is([dragging], [transitioning], :hover)
+    > slideshow-container
+    > slideshow-slides
+    > slideshow-slide {
     content-visibility: visible;
   }
 
@@ -193,8 +199,18 @@
     display: grid;
   }
 
-  .slideshow--content-below-media slideshow-slide :is(.slide__image-container, .slide__content) {
+  .slideshow--content-below-media slideshow-slide .slide__content {
     position: static;
+  }
+
+  /*
+   * The media container has to leave the absolute positioning used by the on-media layout so it
+   * occupies its own grid row, but it must stay a positioned ancestor. Its absolutely positioned
+   * children (the video poster and the media overlay) would otherwise resolve against
+   * slideshow-slide and stretch across the content row as well.
+   */
+  .slideshow--content-below-media slideshow-slide .slide__image-container {
+    position: relative;
   }
 
   .slideshow--content-below-media slideshow-slide {

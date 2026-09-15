@@ -68,14 +68,16 @@
     "view_pricing_info": "Wyświetl informacje o cenach",
     "slideshow": "Pokaz slajdów",
     "header_navigation_label": "Główna",
-    "home_logo_alt": "{{ store_name }} – Strona główna",
+    "home_logo_alt": "{{ store_name }} - Strona główna",
     "active_filters": "Aktywne filtry:",
     "product_details": "Szczegóły produktu",
     "show_product_details": "Pokaż szczegóły produktu dla {{ product_name }}",
     "featured_product": "Polecany produkt",
     "search_suggestions_available": "Dla „{{ query }}” dostępne są podpowiedzi wyszukiwania",
     "price_filter_low": "Niska cena",
-    "price_filter_high": "Wysoka cena"
+    "price_filter_high": "Wysoka cena",
+    "view_disclosure_information_for_product": "Wyświetl dodatkowe informacje dla produktu {{ product_title }}",
+    "show_submenu": "Pokaż podmenu {{ title }}"
   },
   "actions": {
     "add_to_cart": "Dodaj do koszyka",
@@ -88,9 +90,9 @@
     "log_in_html": "Masz już konto? <a href=\"{{ link }}\">Zaloguj się</a>, aby szybciej realizować zakupy.",
     "see_items": {
       "one": "Zobacz {{ count }} pozycję",
-      "other": "Zobacz {{ count }} pozycje(-i)",
-      "few": "Zobacz {{ count }} pozycje(-i)",
-      "many": "Zobacz {{ count }} pozycje(-i)"
+      "other": "Zobacz {{ count }} poz.",
+      "few": "Zobacz {{ count }} poz.",
+      "many": "Zobacz {{ count }} poz."
     },
     "view_all": "Wyświetl wszystko",
     "add": "Dodaj",
@@ -100,7 +102,7 @@
     "show_more": "Pokaż więcej",
     "close": "Zamknij",
     "more": "Więcej",
-    "reset": "Zresetuj",
+    "reset": "Resetuj",
     "zoom": "Powiększenie",
     "close_dialog": "Zamknij okno dialogowe",
     "back": "Powrót",
@@ -119,7 +121,8 @@
     "show_all_options": "Pokaż wszystkie opcje",
     "open": "Otwórz",
     "back_to": "Powrót do {{ title }}",
-    "zoom_media": "Powiększenie multimediów {{ index }}"
+    "zoom_media": "Powiększenie multimediów {{ index }}",
+    "back_to_main_menu": "Wróć do menu głównego"
   },
   "content": {
     "reviews": "recenzje",
@@ -133,7 +136,7 @@
     "quantity": "Ilość",
     "product_total": "Produkt łącznie",
     "cart_estimated_total": "Przewidywana suma",
-    "seller_note": "Specjalne instrukcje",
+    "seller_note": "Instrukcje specjalne",
     "cart_subtotal": "Suma częściowa",
     "discounts": "Rabaty",
     "discount": "Rabat",
@@ -284,7 +287,8 @@
       "many": "Dodano {{ count }} pozycje(-i) do koszyka"
     },
     "item_count_cutoff": "Więcej niż {{ count }} pozycje(-i)",
-    "quick_order_list": "Lista do szybkiego zamawiania"
+    "quick_order_list": "Lista do szybkiego zamawiania",
+    "product_disclosures": "Dodatkowe informacje o produkcie"
   },
   "gift_cards": {
     "issued": {

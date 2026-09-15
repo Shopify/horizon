@@ -5,14 +5,28 @@
 
   @param {boolean} [force_empty] - Force render empty cart state
   @param {block} [block] - The block object providing settings and editor attributes.
+  @param {string} [context] - Render context — pass `'drawer'` when rendered inside the cart drawer to enable drawer-specific styles.
 
   @example
   {% render 'cart-products', force_empty: true %}
 {% enddoc %}
 
+{% render 'cart-typography-styles' %}
+{% render 'price-styles' %}
+
 {% liquid
   assign block_settings = block.settings
 %}
+
+{%- if block_settings.input_style == 'custom' -%}
+  {%- capture custom_style -%}
+    {%- render 'input-custom-styles', block_settings: block_settings -%}
+    --style-border-width-inputs: {{ block_settings.border_width }}px;
+    --style-border-radius-inputs: {{ block_settings.border_radius }}px;
+    --style-border-radius-buttons-primary: {{ block_settings.border_radius }}px;
+    --style-border-radius-buttons-secondary: {{ block_settings.border_radius }}px;
+  {%- endcapture -%}
+{%- endif -%}
 
 <script
   src="{{ 'component-cart-items.js' | asset_url }}"
@@ -30,12 +44,18 @@
   fetchpriority="low"
 ></script>
 
+{% render 'text-component-shimmer-styles' %}
+
 <div
   {{ block.shopify_attributes }}
-  class="cart-items__wrapper"
-  {% if settings.product_title_case == 'uppercase' %}
-    style="--product-title-case: uppercase;"
+  class="cart-items__wrapper{% if context == 'drawer' and cart.empty? or force_empty %} cart-items__wrapper--drawer-empty{% endif %}"
+  {% if context == 'drawer' and cart.empty? or force_empty %}
+    data-cart-drawer-empty
   {% endif %}
+  style="
+    {%- if settings.product_title_case == 'uppercase' -%}--product-title-case: uppercase;{%- endif -%}
+    {{- custom_style -}}
+  "
 >
   {% if cart.empty? or force_empty %}
     {%- if shop.customer_accounts_enabled and customer == null -%}
@@ -68,7 +88,7 @@
     >
       <div
         class="cart-items spacing-style{% if block_settings.dividers %} cart-items--dividers{% endif %}"
-        style="{%  render 'spacing-style', settings: block_settings %} --cart-items-gap:{{ block_settings.gap | append: "px" }};"
+        style="{% render 'spacing-style', settings: block_settings %} --cart-items-gap:{{ block_settings.gap | append: "px" }};"
       >
         <table
           class="cart-items__table"
@@ -124,8 +144,9 @@
           <tbody role="rowgroup">
             {% for item in cart.items %}
               <tr
+                id="CartItem-{{ item.key }}"
                 role="row"
-                class="cart-items__table-row{% if item.parent_relationship.parent != null %} cart-items__nested-line{% endif %}{% unless item.unit_price_measurement %} cart-items__table-row--full-width-variants{% endunless %}"
+                class="cart-items__table-row{% if item.parent_relationship.parent != null %} cart-items__nested-line{% endif %}{% if context == 'drawer' %}{% unless item.unit_price_measurement %} cart-items__table-row--full-width-variants{% endunless %}{% endif %}"
                 ref="cartItemRows[]"
                 data-parent-key="{{ item.parent_relationship.parent.key }}"
                 data-key="{{ item.key }}"
@@ -167,7 +188,13 @@
                   headers="productInformation"
                 >
                   <div class="cart-items__product-info">
-                    <p>
+                    {%- liquid
+                      assign cart_disclosure_unique_id = 'page-' | append: item.index
+                      if context == 'drawer'
+                        assign cart_disclosure_unique_id = 'drawer-' | append: item.index
+                      endif
+                    -%}
+                    <div class="cart-items__title-row">
                       <a
                         href="{{ item.url }}"
                         class="cart-items__title"
@@ -177,7 +204,12 @@
                       >
                         {{- item.product.title -}}
                       </a>
-                    </p>
+                      {% render 'cart-disclosure-tooltip',
+                        product: item.product,
+                        unique_id: cart_disclosure_unique_id,
+                        mode: 'trigger'
+                      %}
+                    </div>
                     {% if item.product.vendor and block_settings.vendor %}
                       <p>
                         {{ item.product.vendor }}
@@ -389,6 +421,19 @@
             {% endfor %}
           </tbody>
         </table>
+        {% for item in cart.items %}
+          {%- liquid
+            assign cart_disclosure_unique_id = 'page-' | append: item.index
+            if context == 'drawer'
+              assign cart_disclosure_unique_id = 'drawer-' | append: item.index
+            endif
+          -%}
+          {% render 'cart-disclosure-tooltip',
+            product: item.product,
+            unique_id: cart_disclosure_unique_id,
+            mode: 'dialog'
+          %}
+        {% endfor %}
       </div>
     </form>
   {%- endif -%}
@@ -408,15 +453,18 @@
     pointer-events: none;
   }
 
-  .cart-page--empty .cart-items__wrapper {
+  .cart-items__wrapper {
     display: flex;
     flex-direction: column;
+  }
+
+  .cart-page--empty .cart-items__wrapper {
     align-items: center;
     margin-block-start: 0;
     text-align: center;
   }
 
-  .cart-drawer:not(:has(.cart-form)) .cart-items__wrapper {
+  .cart-items__wrapper--drawer-empty {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -448,8 +496,18 @@
     margin-bottom: var(--margin-lg);
   }
 
+  .cart-items__details {
+    grid-area: details;
+    min-width: 0;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
+  }
+
+  .cart-items__product-info {
+    min-width: 0;
+  }
+
   /* Cart drawer: separate grid areas for variants and unit price */
-  .cart-drawer .cart-items__table-row--full-width-variants {
+  .cart-items__table-row--full-width-variants {
     grid-template-columns: clamp(2.5rem, 15cqi, 7.5rem) minmax(0, 1fr) auto;
     grid-template-rows: repeat(4, min-content) 1fr;
     grid-template-areas:
@@ -520,12 +578,33 @@
     }
   }
 
+  .cart-items__table-row.adding {
+    interpolate-size: allow-keywords;
+    overflow: hidden;
+    animation: addRow calc(var(--animation-speed) * 2) var(--animation-easing) forwards;
+  }
+
+  @keyframes addRow {
+    0% {
+      opacity: 0;
+      height: 0;
+      padding-bottom: 0;
+      margin-bottom: 0;
+      border-color: transparent;
+    }
+
+    100% {
+      opacity: 1;
+      height: auto;
+    }
+  }
+
   .cart-items__table-row:last-child {
     padding-bottom: 0;
   }
 
   .cart-items--dividers .cart-items__table-row {
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-10-25));
     margin-bottom: var(--cart-items-gap);
   }
 
@@ -538,11 +617,6 @@
     border-block-end: none;
     padding-block-end: 0;
     margin-bottom: 0;
-  }
-
-  .cart-items__details {
-    grid-area: details;
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
   }
 
   .cart-items__details > * + *,
@@ -558,18 +632,27 @@
     text-decoration: none;
   }
 
+  .cart-items__title-row {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gap-xs);
+    max-width: 100%;
+    min-width: 0;
+  }
+
   .cart-items__title {
     font-size: var(--font-size--md);
     color: var(--color-foreground);
     text-transform: var(--product-title-case);
     display: block;
-    margin-block-start: calc((var(--font-size--md) - 1lh) / 2);
+    margin-block-start: 0;
+    min-width: 0;
+    overflow-wrap: break-word;
   }
 
   .cart-items__variants {
     display: block;
   }
-
 
   .cart-items__variant {
     display: inline;
@@ -634,7 +717,6 @@
     line-height: var(--line-height);
   }
 
-
   .cart-items__price-unit {
     font-size: var(--font-size--xs);
     padding-block-start: var(--padding-2xs);
@@ -658,6 +740,7 @@
 
   .cart-items__empty-button {
     margin-top: var(--margin-md);
+    margin-inline: auto;
     padding-inline: var(--padding-4xl);
     padding-block: var(--padding-lg);
   }
@@ -726,7 +809,7 @@
     }
 
     /* Cart drawer: separate areas for variants and unit price */
-    .cart-drawer .cart-items__table-row--full-width-variants {
+    .cart-items__table-row--full-width-variants {
       grid-template-rows: min-content min-content min-content 1fr;
       grid-template-areas:
         'media details quantity price'
@@ -797,18 +880,6 @@
     }
   }
 
-  .cart-primary-typography {
-    font-family: var(--cart-primary-font-family);
-    font-style: var(--cart-primary-font-style);
-    font-weight: var(--cart-primary-font-weight);
-  }
-
-  .cart-secondary-typography {
-    font-family: var(--cart-secondary-font-family);
-    font-style: var(--cart-secondary-font-style);
-    font-weight: var(--cart-secondary-font-weight);
-  }
-
   .cart__ctas {
     width: 100%;
     display: grid;
@@ -824,6 +895,7 @@
   shopify-accelerated-checkout-cart {
     --shopify-accelerated-checkout-inline-alignment: center;
     --shopify-accelerated-checkout-button-border-radius: var(--style-border-radius-buttons-primary);
+    --shopify-accelerated-checkout-button-block-size: var(--height-buy-buttons);
     --shopify-accelerated-checkout-row-gap: var(--checkout-button-gap, 10px);
   }
 
@@ -887,8 +959,8 @@
       height: var(--button-size-md);
     }
 
-    .cart-items .quantity-selector input {
-      max-width: calc(var(--quantity-selector-width) - var(--button-size-md) * 2);
+    .cart-items .quantity-selector input[type='number'] {
+      width: calc(var(--quantity-selector-width) - var(--button-size-md) * 2);
     }
   }
 

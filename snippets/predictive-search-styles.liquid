@@ -19,6 +19,14 @@
     z-index: var(--layer-base);
   }
 
+  .predictive-search-results__inner {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-block: var(--padding-lg);
+    container-type: inline-size;
+    color: var(--color-foreground);
+  }
+
   .predictive-search-results__title {
     display: flex;
     justify-content: space-between;
@@ -202,7 +210,7 @@
   .predictive-search-results__pill mark {
     background-color: transparent;
     font-weight: 200;
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-80));
+    color: var(--color-foreground-subdued);
   }
 
   .predictive-search-results__pill:focus,

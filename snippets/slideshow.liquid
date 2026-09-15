@@ -17,6 +17,7 @@
   @param {string} [slide_size] - the height of the slides
   @param {string} [slide_position] - the vertical position of the slides, defaults to 'top'
   @param {boolean} [show_arrows] - whether the slideshow will render a slideshow-arrows component
+  @param {boolean} [animate_arrows] - whether the arrows animate in on hover/focus, defaults to true
   @param {string} [slideshow_arrows] - a custom slideshow-arrows component to render instead of the default
   @param {string} [icon_style] - The style of the icon, defaults to 'arrow'
   @param {string} [icon_shape] - The shape of the icon background (none, circle, square), defaults to 'none'
@@ -30,6 +31,7 @@
 
 {%- liquid
   assign class = class | strip | strip_newlines
+  assign animate_arrows = animate_arrows | default: true, allow_false: true
 
   if slide_position == 'stretch'
     assign class = class | append: ' slideshow--stretch-content' | strip
@@ -100,7 +102,12 @@
   {% if header != blank %}
     {{ header }}
   {% endif %}
-  <slideshow-container ref="slideshowContainer">
+  <slideshow-container
+    ref="slideshowContainer"
+    {% if animate_arrows %}
+      animate-arrows
+    {% endif %}
+  >
     {% if show_arrows %}
       {% render 'slideshow-arrows', icon_style: icon_style, icon_shape: icon_shape, arrows_position: arrows_position %}
     {% endif %}

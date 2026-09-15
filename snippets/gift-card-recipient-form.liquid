@@ -4,7 +4,7 @@
   @param {object} product - The product object.
   @param {object} form - The product form object.
   @param {object} section - The section object to which this snippet belongs.
-  @param {block} block - The block object, used for element IDs and editor attributes.
+  @param {block} block - The block object, used for element IDs, editor attributes, and recipient form / input custom styling.
 {% enddoc %}
 
 <script
@@ -15,6 +15,16 @@
 
 <gift-card-recipient-form
   class="recipient-form"
+  style="
+    {% if block.settings.input_style == 'custom' %}
+      {% render 'input-custom-styles', block_settings: block.settings %}
+      --style-border-width-inputs: {{ block.settings.border_width }}px;
+      --style-border-radius-inputs: {{ block.settings.border_radius }}px;
+    {% endif %}
+    {% if block.settings.recipient_button_style == 'custom' or block.settings.selected_recipient_button_style == 'custom' %}
+      {% render 'gift-card-recipient-button-custom-styles', block_settings: block.settings %}
+    {% endif %}
+  "
   data-section-id="{{ section.id }}"
   data-product-variant-id="{{ product.selected_or_first_available_variant.id }}"
 >

@@ -249,7 +249,7 @@
 
   .volume-pricing-info__rules,
   .volume-pricing-info__rules > span {
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+    color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-subdued-text));
   }
 
   .volume-pricing-info__table {
@@ -291,7 +291,7 @@
     display: none;
     width: var(--icon-size-sm);
     height: var(--icon-size-sm);
-    color: var(--color-primary);
+    color: var(--color-foreground);
   }
 
   .volume-pricing-info__row--active .volume-pricing-info__checkmark {

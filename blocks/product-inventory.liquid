@@ -40,9 +40,17 @@
   endif
 -%}
 
+{% if block_settings.text_color != blank %}
+  {% style %}
+    .product-inventory-{{ block.id }} {
+      color: {{ block_settings.text_color }};
+    }
+  {% endstyle %}
+{% endif %}
+
 <product-inventory
   class="
-    product-inventory spacing-style
+    product-inventory product-inventory-{{ block.id }} spacing-style
     {% if block_settings.type_preset != '' %}{{ block_settings.type_preset }}{% endif%}
   "
   style="{% render 'spacing-style', settings: block_settings %}"
@@ -127,6 +135,16 @@
       "id": "show_inventory_quantity",
       "label": "t:settings.show_inventory_quantity",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:settings.text_color",
+      "placeholder": "t:settings.default"
     },
     {
       "type": "header",

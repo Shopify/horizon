@@ -22,7 +22,7 @@
   "accessibility": {
     "play_model": "3D-Modell abspielen",
     "play_video": "Video abspielen",
-    "unit_price": "Grundpreis",
+    "unit_price": "Stückpreis",
     "country_results_count": "{{ count }} Ergebnisse",
     "slideshow_pause": "Slideshow pausieren",
     "slideshow_play": "Slideshow abspielen",
@@ -65,30 +65,32 @@
     "remove": "Entfernen",
     "view_pricing_info": "Preisinformationen anzeigen",
     "slideshow": "Slideshow",
-    "header_navigation_label": "Haupt-",
-    "home_logo_alt": "{{ store_name }} – Home",
+    "header_navigation_label": "Primär",
+    "home_logo_alt": "{{ store_name }} - Startseite",
     "active_filters": "Aktive Filter:",
     "product_details": "Produktdetails",
     "show_product_details": "Produktdetails für {{ product_name }} anzeigen",
     "featured_product": "Vorgestelltes Produkt",
     "search_suggestions_available": "Nach Vorschlägen für „{{ query }}“ suchen",
     "price_filter_low": "Niedriger Preis",
-    "price_filter_high": "Hoher Preis"
+    "price_filter_high": "Hoher Preis",
+    "view_disclosure_information_for_product": "Offenlegungsinformationen für {{ product_title }} anzeigen",
+    "show_submenu": "Untermenü {{ title }} anzeigen"
   },
   "actions": {
     "add_to_cart": "In den Warenkorb legen",
-    "clear_all": "Alles löschen",
+    "clear_all": "Alle löschen",
     "remove": "Entfernen",
-    "view_in_your_space": "In deinem Bereich anzeigen",
+    "view_in_your_space": "In deinem Raum ansehen",
     "show_filters": "Filtern",
     "clear": "Löschen",
     "continue_shopping": "Weiter einkaufen",
     "log_in_html": "Hast du ein Konto? <a href=\"{{ link }}\">Logge dich ein</a>, damit es beim Checkout schneller geht.",
     "see_items": {
       "one": "{{ count }} Artikel anzeigen",
-      "other": "{{ count }} Artikel anzeigen"
+      "other": "{{ count }} Artikel ansehen"
     },
-    "view_all": "Alle anzeigen",
+    "view_all": "Alle ansehen",
     "add": "Hinzufügen",
     "choose": "Auswählen",
     "added": "Hinzugefügt",
@@ -115,7 +117,8 @@
     "show_all_options": "Alle Optionen anzeigen",
     "open": "Öffnen",
     "back_to": "Zurück zu {{ title }}",
-    "zoom_media": "Medien {{ index }} zoomen"
+    "zoom_media": "Medien {{ index }} zoomen",
+    "back_to_main_menu": "Zurück zum Hauptmenü"
   },
   "content": {
     "reviews": "Reviews",
@@ -129,7 +132,7 @@
     "quantity": "Anzahl",
     "product_total": "Produkt insgesamt",
     "cart_estimated_total": "Geschätzter Gesamtbetrag",
-    "seller_note": "Besondere Anweisungen",
+    "seller_note": "Besondere Hinweise",
     "cart_subtotal": "Zwischensumme",
     "discounts": "Rabatte",
     "discount": "Rabatt",
@@ -163,7 +166,7 @@
     "search_results_resource_pages": "Seiten",
     "search_results_resource_products": "Produkte",
     "search_results_resource_queries": "Suchvorschläge",
-    "search_results_view_all": "Alle anzeigen",
+    "search_results_view_all": "Alle ansehen",
     "search_results_view_all_button": "Alle anzeigen",
     "search_results_resource_products_count": {
       "one": "{{ count }} Produkt",
@@ -272,7 +275,8 @@
       "one": "1 Artikel zum Warenkorb hinzugefügt",
       "other": "{{ count }} Artikel zum Warenkorb hinzugefügt"
     },
-    "quick_order_list": "Schnellbestellliste"
+    "quick_order_list": "Schnellbestellliste",
+    "product_disclosures": "Produktoffenlegungen"
   },
   "gift_cards": {
     "issued": {

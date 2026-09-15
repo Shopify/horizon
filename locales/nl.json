@@ -66,27 +66,29 @@
     "view_pricing_info": "Prijsinformatie bekijken",
     "slideshow": "Diavoorstelling",
     "header_navigation_label": "Primair",
-    "home_logo_alt": "{{ store_name }} – Home",
+    "home_logo_alt": "{{ store_name }} - Home",
     "active_filters": "Actieve filters:",
     "product_details": "Productgegevens",
     "show_product_details": "Productgegevens voor {{ product_name }} weergeven",
     "featured_product": "Uitgelicht product",
     "search_suggestions_available": "Zoek naar beschikbare suggesties voor '{{ query }}'",
     "price_filter_low": "Lage prijs",
-    "price_filter_high": "Hoge prijs"
+    "price_filter_high": "Hoge prijs",
+    "view_disclosure_information_for_product": "Informatie over productvermeldingen bekijken voor {{ product_title }}",
+    "show_submenu": "Submenu {{ title }} weergeven"
   },
   "actions": {
     "add_to_cart": "Aan winkelwagen toevoegen",
     "clear_all": "Alles wissen",
     "remove": "Verwijderen",
-    "view_in_your_space": "In ruimte bekijken",
+    "view_in_your_space": "In je eigen ruimte bekijken",
     "show_filters": "Filter",
     "clear": "Wissen",
-    "continue_shopping": "Doorgaan met winkelen",
+    "continue_shopping": "Verder winkelen",
     "log_in_html": "Heb je een account? <a href=\"{{ link }}\">Log in</a> om sneller af te rekenen.",
     "see_items": {
       "one": "{{ count }} artikel weergeven",
-      "other": "{{ count }} artikelen weergeven"
+      "other": "{{ count }} artikelen bekijken"
     },
     "view_all": "Alles bekijken",
     "add": "Toevoegen",
@@ -112,10 +114,11 @@
     "sign_up": "Aanmelden",
     "open_image_in_full_screen": "Afbeelding openen in volledig scherm",
     "sort": "Sorteren",
-    "show_all_options": "Alle opties tonen",
+    "show_all_options": "Alle opties weergeven",
     "open": "Openen",
     "back_to": "Terug naar {{ title }}",
-    "zoom_media": "In-/uitzoomen op media {{ index }}"
+    "zoom_media": "In-/uitzoomen op media {{ index }}",
+    "back_to_main_menu": "Terug naar hoofdmenu"
   },
   "content": {
     "reviews": "recensies",
@@ -272,7 +275,8 @@
       "other": "{{ count }} artikelen toegevoegd aan winkelwagen"
     },
     "item_count_cutoff": "Meer dan {{ count }} artikelen",
-    "quick_order_list": "Snelle bestellijst"
+    "quick_order_list": "Snelle bestellijst",
+    "product_disclosures": "Productvermeldingen"
   },
   "gift_cards": {
     "issued": {
@@ -309,7 +313,7 @@
     }
   },
   "fields": {
-    "separator": "aan"
+    "separator": "tot"
   },
   "placeholders": {
     "password": "Wachtwoord",

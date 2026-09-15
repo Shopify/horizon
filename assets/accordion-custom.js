@@ -42,6 +42,7 @@ class AccordionCustom extends HTMLElement {
 
     this.addEventListener('keydown', this.#handleKeyDown, { signal });
     this.summary.addEventListener('click', this.handleClick, { signal });
+    this.details.addEventListener('click', this.#handleContentClick, { signal });
     mediaQueryLarge.addEventListener('change', this.#handleMediaQueryChange, { signal });
   }
 
@@ -66,6 +67,22 @@ class AccordionCustom extends HTMLElement {
       event.preventDefault();
       return;
     }
+  };
+
+  /**
+   * Closes the accordion when a click lands inside an element marked with
+   * `[data-accordion-close]` (or one of its descendants). Used by markup that
+   * provides an explicit close-target region inside the content area.
+   *
+   * @param {MouseEvent} event - The click event.
+   */
+  #handleContentClick = (event) => {
+    if (!this.details.open) return;
+
+    if (!(/** @type {Element} */ (event.target).closest('[data-accordion-close]'))) return;
+
+    this.summary.focus({ preventScroll: true });
+    this.details.open = false;
   };
 
   /**
@@ -96,8 +113,8 @@ class AccordionCustom extends HTMLElement {
     if (event.key === 'Escape' && this.#closeWithEscape) {
       event.preventDefault();
 
-      this.details.open = false;
       this.summary.focus();
+      this.details.open = false;
     }
   }
 }
