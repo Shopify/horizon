@@ -1758,7 +1758,7 @@
               "type": "_product-list-text",
               "name": "t:names.collection_title",
               "settings": {
-                "text": "<p>Shop {{ closest.collection.title }}</p>",
+                "text": "<p>Choose a starter kit</p>",
                 "width": "100%",
                 "max_width": "none",
                 "alignment": "left",
@@ -1784,7 +1784,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "{{ closest.collection.description }}",
+                "text": "<p>Choose a Predictive Thermometer with a WiFi accessory that suits how you cook.</p>",
                 "width": "fit-content",
                 "max_width": "none",
                 "alignment": "left",
