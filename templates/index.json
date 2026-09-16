@@ -2435,6 +2435,516 @@
         "padding-block-end": 60
       }
     },
+    "section_jEyagy": {
+      "type": "section",
+      "blocks": {
+        "product_card_q68eqg": {
+          "type": "product-card",
+          "name": "t:names.product_card",
+          "settings": {
+            "product": "predictive-thermometer-wifi-booster-starter-kit",
+            "product_card_gap": 4,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "background_color": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "product_card_group_gJikra": {
+              "type": "_product-card-group",
+              "name": "t:names.group",
+              "settings": {
+                "content_direction": "row",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 12,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "custom_height": 100,
+                "background_media": "none",
+                "background_color": "",
+                "video_position": "cover",
+                "background_image_position": "cover",
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_color": "",
+                "border_radius": 0,
+                "link": "",
+                "open_in_new_tab": false,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "product_title_mwtJyH": {
+                  "type": "product-title",
+                  "name": "t:names.product_title",
+                  "settings": {
+                    "width": "fit-content",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "paragraph",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "text_color": "",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 4,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                },
+                "text_h7BGGf": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>We make things that work better and last longer. Our products solve real problems with clean design and honest materials.</p>",
+                    "width": "fit-content",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "text_color": "",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                },
+                "price_H4mCBV": {
+                  "type": "price",
+                  "name": "t:names.product_price",
+                  "settings": {
+                    "show_sale_price_first": true,
+                    "show_installments": false,
+                    "show_tax_info": false,
+                    "type_preset": "h6",
+                    "width": "100%",
+                    "alignment": "left",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "text_color": "",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "product_title_mwtJyH",
+                "text_h7BGGf",
+                "price_H4mCBV"
+              ]
+            },
+            "product_card_gallery_3yfR6w": {
+              "type": "_product-card-gallery",
+              "disabled": true,
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_color": "",
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "product_card_group_gJikra",
+            "product_card_gallery_3yfR6w"
+          ]
+        },
+        "accordion_ARNNrA": {
+          "type": "accordion",
+          "name": "t:names.accordion",
+          "settings": {
+            "icon": "caret",
+            "dividers": true,
+            "divider_color": "",
+            "type_preset": "h6",
+            "background_color": "",
+            "text_color": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "accordion_row_H97FLt": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Which starter kit is right for me?",
+                "open_by_default": true,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "group_eiegLE": {
+                  "type": "group",
+                  "name": "t:names.group",
+                  "settings": {
+                    "content_direction": "column",
+                    "vertical_on_mobile": true,
+                    "horizontal_alignment": "flex-start",
+                    "vertical_alignment": "center",
+                    "align_baseline": false,
+                    "horizontal_alignment_flex_direction_column": "flex-start",
+                    "vertical_alignment_flex_direction_column": "center",
+                    "gap": 12,
+                    "width": "fill",
+                    "custom_width": 100,
+                    "width_mobile": "fill",
+                    "custom_width_mobile": 100,
+                    "height": "fit",
+                    "custom_height": 100,
+                    "background_media": "none",
+                    "background_color": "",
+                    "video_position": "cover",
+                    "background_image_position": "cover",
+                    "toggle_overlay": false,
+                    "overlay_color": "#00000026",
+                    "overlay_style": "solid",
+                    "gradient_direction": "to top",
+                    "border": "none",
+                    "border_width": 1,
+                    "border_opacity": 100,
+                    "border_color": "",
+                    "border_radius": 0,
+                    "link": "",
+                    "open_in_new_tab": false,
+                    "placeholder": "",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                },
+                "accordion_RWijii": {
+                  "type": "accordion",
+                  "name": "t:names.accordion",
+                  "settings": {
+                    "icon": "plus",
+                    "dividers": false,
+                    "divider_color": "",
+                    "type_preset": "h6",
+                    "background_color": "{{ settings.color_palette.color4 }}",
+                    "text_color": "",
+                    "border": "none",
+                    "border_width": 1,
+                    "border_opacity": 100,
+                    "border_color": "",
+                    "border_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {
+                    "accordion_row_HNtkxm": {
+                      "type": "_accordion-row",
+                      "settings": {
+                        "heading": "Will the Giant Grill Gauge fit my grill?",
+                        "open_by_default": true,
+                        "icon": "none",
+                        "width": 20
+                      },
+                      "blocks": {
+                        "text_84hCYd": {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p>The Gauge replaces the existing dial thermometer on many grills and smokers. Check the mounting area before choosing a mount:</p><ul><li>Thermometer hole: 5/32–1/4 in</li><li>Flat mounting area: 4.3 in (109 mm) across</li><li>Clearance around the mounting point: 2.5 in (64 mm)</li></ul><p><strong>Heat Shield:</strong> for top-mounted thermometers or hotter lids, up to 750°F (399°C). <strong>Heat Deflector:</strong> for front or side mounting, up to 600°F (316°C).</p><p>Some ceramic grills need an adapter plate, and thick walls may need a longer sensor than the Gauge’s 86 mm tube. If your grill needs an adapter or does not meet these measurements, email <a href=\"mailto:support@combustion.inc\" target=\"_blank\">support@combustion.inc</a> with your grill’s make, model and a photo to confirm the fit before ordering.</p>",
+                            "width": "100%",
+                            "max_width": "normal",
+                            "alignment": "left",
+                            "type_preset": "rte",
+                            "font": "var(--font-body--family)",
+                            "font_size": "1rem",
+                            "line_height": "normal",
+                            "letter_spacing": "normal",
+                            "case": "none",
+                            "wrap": "pretty",
+                            "text_color": "",
+                            "background": false,
+                            "background_color": "#00000026",
+                            "corner_radius": 0,
+                            "padding-block-start": 0,
+                            "padding-block-end": 0,
+                            "padding-inline-start": 0,
+                            "padding-inline-end": 0
+                          },
+                          "blocks": {}
+                        }
+                      },
+                      "block_order": [
+                        "text_84hCYd"
+                      ]
+                    },
+                    "accordion_row_UeK3zd": {
+                      "type": "_accordion-row",
+                      "settings": {
+                        "heading": "Do I need a Booster to charge the thermometer?",
+                        "open_by_default": true,
+                        "icon": "none",
+                        "width": 20
+                      },
+                      "blocks": {
+                        "text_XkmReU": {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p>No. Display and Giant Grill Gauge kits without a Booster include a charging cradle. A Booster adds cordless recharging. Use your own USB-C cable and standard 5V USB power source; neither is included.</p>",
+                            "width": "100%",
+                            "max_width": "normal",
+                            "alignment": "left",
+                            "type_preset": "rte",
+                            "font": "var(--font-body--family)",
+                            "font_size": "1rem",
+                            "line_height": "normal",
+                            "letter_spacing": "normal",
+                            "case": "none",
+                            "wrap": "pretty",
+                            "text_color": "",
+                            "background": false,
+                            "background_color": "#00000026",
+                            "corner_radius": 0,
+                            "padding-block-start": 0,
+                            "padding-block-end": 0,
+                            "padding-inline-start": 0,
+                            "padding-inline-end": 0
+                          },
+                          "blocks": {}
+                        }
+                      },
+                      "block_order": [
+                        "text_XkmReU"
+                      ]
+                    },
+                    "accordion_row_6LndYN": {
+                      "type": "_accordion-row",
+                      "settings": {
+                        "heading": "How does my Predictive Thermometer connect wirelessly?",
+                        "open_by_default": true,
+                        "icon": "none",
+                        "width": 20
+                      },
+                      "blocks": {
+                        "text_YEyRtq": {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p>Your Predictive Thermometer sends readings by Bluetooth. A WiFi Booster, WiFi Display or Giant Grill Gauge receives those readings and sends them on to your phone.</p>",
+                            "width": "100%",
+                            "max_width": "normal",
+                            "alignment": "left",
+                            "type_preset": "rte",
+                            "font": "var(--font-body--family)",
+                            "font_size": "1rem",
+                            "line_height": "normal",
+                            "letter_spacing": "normal",
+                            "case": "none",
+                            "wrap": "pretty",
+                            "text_color": "",
+                            "background": false,
+                            "background_color": "#00000026",
+                            "corner_radius": 0,
+                            "padding-block-start": 0,
+                            "padding-block-end": 0,
+                            "padding-inline-start": 0,
+                            "padding-inline-end": 0
+                          },
+                          "blocks": {}
+                        }
+                      },
+                      "block_order": [
+                        "text_YEyRtq"
+                      ]
+                    },
+                    "accordion_row_KVGEJw": {
+                      "type": "_accordion-row",
+                      "settings": {
+                        "heading": "Can I add more thermometers or displays later?",
+                        "open_by_default": true,
+                        "icon": "none",
+                        "width": 20
+                      },
+                      "blocks": {
+                        "text_AYdf9m": {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p>Yes. Each WiFi accessory supports up to four Predictive Thermometers. Add another thermometer with its standard charger to cook more foods at once. You don’t need a Booster for every thermometer.</p><p>You can also add another display. Leave a Giant Grill Gauge on your smoker and add a WiFi Display in the kitchen to see the same thermometer’s readings in both places.</p><p>Linked Combustion tools form MeatNet, relaying readings between them. Adding a tool where it receives a good Bluetooth signal provides another path for the readings. Both WiFi accessories can connect to the internet; you don’t need to choose just one.</p>",
+                            "width": "100%",
+                            "max_width": "normal",
+                            "alignment": "left",
+                            "type_preset": "rte",
+                            "font": "var(--font-body--family)",
+                            "font_size": "1rem",
+                            "line_height": "normal",
+                            "letter_spacing": "normal",
+                            "case": "none",
+                            "wrap": "pretty",
+                            "text_color": "",
+                            "background": false,
+                            "background_color": "#00000026",
+                            "corner_radius": 0,
+                            "padding-block-start": 0,
+                            "padding-block-end": 0,
+                            "padding-inline-start": 0,
+                            "padding-inline-end": 0
+                          },
+                          "blocks": {}
+                        }
+                      },
+                      "block_order": [
+                        "text_AYdf9m"
+                      ]
+                    },
+                    "accordion_row_ytEQeE": {
+                      "type": "_accordion-row",
+                      "settings": {
+                        "heading": "Already own a Predictive Thermometer?",
+                        "open_by_default": true,
+                        "icon": "none",
+                        "width": 20
+                      },
+                      "blocks": {
+                        "text_MAW4F8": {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p>Add a WiFi Booster, WiFi Display or Giant Grill Gauge on its own. All three work with first- and second-generation Predictive Thermometers, so you can add WiFi without replacing your thermometer.</p>",
+                            "width": "100%",
+                            "max_width": "normal",
+                            "alignment": "left",
+                            "type_preset": "rte",
+                            "font": "var(--font-body--family)",
+                            "font_size": "1rem",
+                            "line_height": "normal",
+                            "letter_spacing": "normal",
+                            "case": "none",
+                            "wrap": "pretty",
+                            "text_color": "",
+                            "background": false,
+                            "background_color": "#00000026",
+                            "corner_radius": 0,
+                            "padding-block-start": 0,
+                            "padding-block-end": 0,
+                            "padding-inline-start": 0,
+                            "padding-inline-end": 0
+                          },
+                          "blocks": {}
+                        }
+                      },
+                      "block_order": [
+                        "text_MAW4F8"
+                      ]
+                    }
+                  },
+                  "block_order": [
+                    "accordion_row_HNtkxm",
+                    "accordion_row_UeK3zd",
+                    "accordion_row_6LndYN",
+                    "accordion_row_KVGEJw",
+                    "accordion_row_ytEQeE"
+                  ]
+                }
+              },
+              "block_order": [
+                "group_eiegLE",
+                "accordion_RWijii"
+              ]
+            }
+          },
+          "block_order": [
+            "accordion_row_H97FLt"
+          ]
+        }
+      },
+      "block_order": [
+        "product_card_q68eqg",
+        "accordion_ARNNrA"
+      ],
+      "name": "t:names.custom_section",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "small",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
     "product_list_7BkyLC": {
       "type": "product-list",
       "blocks": {
@@ -6560,6 +7070,7 @@
     "product_list_cFY8MM",
     "section_6bwLbx",
     "product_list_jdYKPa",
+    "section_jEyagy",
     "product_list_7BkyLC",
     "product_list_eMGknX",
     "product_list_736GK6",
