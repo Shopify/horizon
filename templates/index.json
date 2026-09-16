@@ -3416,6 +3416,32 @@
                               },
                               "blocks": {}
                             },
+                            "text_CQ7Vwx": {
+                              "type": "text",
+                              "name": "t:names.text",
+                              "settings": {
+                                "text": "<p><em>You only need one of these three WiFi accessories.</em></p>",
+                                "width": "fit-content",
+                                "max_width": "normal",
+                                "alignment": "left",
+                                "type_preset": "custom",
+                                "font": "var(--font-body--family)",
+                                "font_size": "1rem",
+                                "line_height": "normal",
+                                "letter_spacing": "normal",
+                                "case": "none",
+                                "wrap": "pretty",
+                                "text_color": "",
+                                "background": false,
+                                "background_color": "#00000026",
+                                "corner_radius": 0,
+                                "padding-block-start": 0,
+                                "padding-block-end": 40,
+                                "padding-inline-start": 0,
+                                "padding-inline-end": 0
+                              },
+                              "blocks": {}
+                            },
                             "text_bK9kqD": {
                               "type": "text",
                               "settings": {
@@ -3445,6 +3471,7 @@
                           "block_order": [
                             "text_YEyRtq",
                             "image_KVWPBJ",
+                            "text_CQ7Vwx",
                             "text_bK9kqD"
                           ]
                         },
@@ -6054,7 +6081,7 @@
         "splide_block_eiFJb6"
       ],
       "custom_css": [
-        "p {margin-top: 1rem; color:white;}"
+        "p {margin-top: 1rem; color: white;}"
       ],
       "name": "✅ TTA",
       "settings": {
