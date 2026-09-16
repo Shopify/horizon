@@ -477,7 +477,7 @@ export class ProductCard extends ProductCardLink {
    * @param {PointerEvent} event - The pointer event.
    */
   previewImage(event) {
-    if (event.pointerType !== 'mouse') return;
+  //  if (event.pointerType !== 'mouse') return;
 
     const { slideshow } = this.refs;
 
@@ -498,7 +498,7 @@ export class ProductCard extends ProductCardLink {
    * @param {PointerEvent} event - The pointer event.
    */
   resetImage(event) {
-    if (event.pointerType !== 'mouse') return;
+  //  if (event.pointerType !== 'mouse') return;
 
     const { slideshow } = this.refs;
 
