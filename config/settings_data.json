@@ -48,7 +48,7 @@
     "page_width": "narrow",
     "page_transition_enabled": false,
     "transition_to_main_product": false,
-    "card_hover_effect": "subtle-zoom",
+    "card_hover_effect": "none",
     "badge_position": "top-left",
     "badge_corner_radius": 4,
     "badge_sale_background_color": "{{ settings.color_palette.color2 }}",
@@ -128,7 +128,7 @@
       "color7": "#F5F5F5"
     }
   },
-"presets": {
+  "presets": {
     "Default": {
       "logo_height": 36,
       "logo_height_mobile": 28,
