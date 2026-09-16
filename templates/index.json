@@ -2704,7 +2704,7 @@
                       "type": "custom-liquid",
                       "name": "t:names.custom_liquid",
                       "settings": {
-                        "custom_liquid": "{% render 'quick-add', product: closest.product, section_id: section.id %}"
+                        "custom_liquid": "&nbsp;{% render 'quick-add', product: closest.product, section_id: section.id %}"
                       },
                       "blocks": {}
                     }
@@ -3057,8 +3057,8 @@
         "accordion_ARNNrA"
       ],
       "custom_css": [
-        "quick-add-component.quick-add.custom-color-quick-add {position: relative; width: max-content; display: block;}",
-        " .quick-add__button {width: max-content !important; padding-inline-end: var(--padding-sm) !important;font-size: var(--font-size--sm); }"
+        "quick-add-component.quick-add.custom-color-quick-add {position: relative; width: 100%; display: block;}",
+        ".quick-add__button {width: 100%;}"
       ],
       "name": "t:names.custom_section",
       "settings": {
