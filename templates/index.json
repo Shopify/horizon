@@ -1717,212 +1717,6 @@
         "padding-block-end": 40
       }
     },
-    "section_6bwLbx": {
-      "type": "section",
-      "blocks": {
-        "group_BijfPP": {
-          "type": "group",
-          "name": "t:names.group",
-          "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "width": "custom",
-            "custom_width": 30,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "background_media": "none",
-            "background_color": "",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_color": "",
-            "border_radius": 0,
-            "link": "",
-            "open_in_new_tab": false,
-            "placeholder": "",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "text_hnkFAH": {
-              "type": "text",
-              "name": "t:names.heading",
-              "settings": {
-                "text": "<h2>Rave reviews from real cooks</h2>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "text_color": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "stamped_reviews_site_badge_bgnMmT": {
-              "type": "shopify://apps/stamped-reviews/blocks/site-badge/a103faaf-2125-4b0e-89fa-de5149736723",
-              "settings": {
-                "badge_type": "minimal",
-                "color_outer": "rgba(0,0,0,0)",
-                "color_inner": "rgba(0,0,0,0)",
-                "color_ribbon": "rgba(0,0,0,0)",
-                "color_text": "#363636",
-                "color_stars": "#bd010c",
-                "title_size": 24,
-                "title": "Verified Reviews"
-              }
-            },
-            "divider_AqQcF7": {
-              "type": "_divider",
-              "name": "t:names.divider",
-              "settings": {
-                "thickness": 1,
-                "corner_radius": "square",
-                "divider_color": "#dfdfdf",
-                "width_percent": 100,
-                "padding-block-start": 0,
-                "padding-block-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "text_hnkFAH",
-            "stamped_reviews_site_badge_bgnMmT",
-            "divider_AqQcF7"
-          ]
-        },
-        "group_HMqeip": {
-          "type": "group",
-          "name": "t:names.group",
-          "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "width": "custom",
-            "custom_width": 66,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "background_media": "none",
-            "background_color": "",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_color": "",
-            "border_radius": 0,
-            "link": "",
-            "open_in_new_tab": false,
-            "placeholder": "",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "splide_block_dQcccr": {
-              "type": "splide-block",
-              "name": "Splide",
-              "settings": {
-                "include_margins": false,
-                "title": "Social Posts",
-                "splide_autoplay": false,
-                "parameters": "type: 'loop',\nfixedWidth: '18rem',\ngap: '0.5rem'",
-                "slides": "{% assign slides = metaobjects.content_group[\"hp-social\"].mixed_blocks_reviews.value %}\n{% for slide in slides %}\n<li class=\"splide__slide\">\n{% if slide.system.type == 'review' %}\n{% assign image = slide.background %}\n{% else %}\n{% assign image = slide.image %}\n{% endif %}\n{{ image | image_url: height: 1080 | image_tag }}\n{% if slide.body %}\n\t\t<div class=\"content\">\n\t\t\t{{ slide.body | metafield_tag }}\n<p class=\"name\">{{ slide.name }}</p>\n\t\t</div>\n{% if slide.name %}\n{% endif %}\n{% endif %}\n</li>\n{% endfor %}",
-                "liquid_before": "",
-                "liquid_after_inside": "",
-                "padding_top": 36,
-                "padding_bottom": 36
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "splide_block_dQcccr"
-          ]
-        }
-      },
-      "block_order": [
-        "group_BijfPP",
-        "group_HMqeip"
-      ],
-      "custom_css": [
-        ".content {padding: 0.625rem; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(37, 40, 42, 0.5); width: calc(100% - 2 * 1rem); border-radius: 0.75rem;}",
-        ".content p {color: white; font-weight: 500;}",
-        "img {box-shadow: 0px 0px 10px 0px rgb(0 0 0 / 20%); border-radius: 1rem;}",
-        ".splide__slide {overflow: unset; padding: 1rem;}",
-        "div#stamped-badge-2 > * {font-family: \"ScandiaWeb\" !important;}",
-        ".shopify-block {max-width: 100%;}"
-      ],
-      "name": "t:names.custom_section",
-      "settings": {
-        "content_direction": "row",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 12,
-        "section_width": "page-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "background_media": "none",
-        "background_color": "{{ settings.color_palette.color7 }}",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_color": "",
-        "border_radius": 0,
-        "padding-block-start": 60,
-        "padding-block-end": 0
-      }
-    },
     "product_list_jdYKPa": {
       "type": "product-list",
       "blocks": {
@@ -5116,6 +4910,374 @@
         "padding-block-end": 60
       }
     },
+    "section_9FVT9F": {
+      "type": "section",
+      "blocks": {
+        "group_U4H6eH": {
+          "type": "group",
+          "name": "t:names.group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "background_media": "none",
+            "background_color": "",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "text_YHeTBU": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<h2>What makes it the best?</h2>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "center",
+                "type_preset": "h1",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "text_color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "text_Dwk9NA": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<h3>Take a quick look at the 2nd generation <br/>Combustion Predictive Thermometer </h3>",
+                "width": "fit-content",
+                "max_width": "none",
+                "alignment": "center",
+                "type_preset": "h4",
+                "font": "var(--font-subheading--family)",
+                "font_size": "1.25rem",
+                "line_height": "tight",
+                "letter_spacing": "tight",
+                "case": "none",
+                "wrap": "balance",
+                "text_color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_YHeTBU",
+            "text_Dwk9NA"
+          ]
+        },
+        "splide_block_qXNj6A": {
+          "type": "splide-block",
+          "name": "Splide",
+          "settings": {
+            "include_margins": false,
+            "title": "Highlights",
+            "splide_autoplay": true,
+            "parameters": "type: 'loop',\nbreakpoints: {\n  749: {\n    perPage: 1,\n\trewindByDrag: true,\narrows: true,\n\tpadding: { right: '10%', left: '10%' },\narrows: false,\n  }\n},\ngap: '20px',\nfocus: 'center',\nvideo: {\n\tautoplay: true,\n\tmute: true,\n\thideControls: true,\n\tdisableOverlayUI: true,\nloop: true,\n},\narrows: true,\n// rewind: true,\npadding: { right: '6rem' },\nupdateOnMove: true,\npagination: true,\npaginationKeyboard: true,\nlive: false,\ndrag: 'free',\nsnap: true,\nautoplay: true,\n//dragMinThreshold: 1,\nflickMaxPages: 0.3,\npauseOnHover: false,\nautoHeight: true,\n// fixedWidth: '288px',\n    perPage: 3,",
+            "slides": "{% assign slides = metaobjects.content_group[\"hp-highlights\"].videos.value %}\n{% for slide in slides %}\n\t<li class=\"splide__slide\" data-splide-vimeo=\"https://vimeo.com/{{ slide.vimeo_id }}\" data-splide-interval=\"{{ slide.length | times: 1000 }}\">\n\t\t<div class=\"splide__slide__container\"> \n\t\t{{- slide.thumbnail | image_url: height: 360 | image_tag -}}\n\t\t</div>\n<div class=\"touch-overlay\"></div>\n\t</li>\n{% endfor %}",
+            "liquid_before": "",
+            "liquid_after_inside": "<div class=\"splide__arrows\"></div>",
+            "padding_top": 36,
+            "padding_bottom": 36
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "group_U4H6eH",
+        "splide_block_qXNj6A"
+      ],
+      "custom_css": [
+        "img {width: 100%; height: 100%;}",
+        ".autoplay-controls {display: flex; justify-content: center; align-items: center;}",
+        "button.splide__toggle {width: 2.625rem; border: none; background: none; padding: 1rem; color: black;}",
+        ".splide__toggle svg {vertical-align: middle;}",
+        ".splide__video__wrapper {background: none;}",
+        "ul#highlights-list {touch-action: pan-y;}",
+        ".touch-overlay {position: absolute; width: 100%; height: 100%; top: 0; touch-action: pan-y; display: block;}",
+        "h3 {font-weight: var(--font-subheading--weight);}"
+      ],
+      "name": "✅ Highlights video carousel",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "{{ settings.color_palette.color7 }}",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
+        "padding-block-start": 100,
+        "padding-block-end": 100
+      }
+    },
+    "section_6bwLbx": {
+      "type": "section",
+      "blocks": {
+        "group_BijfPP": {
+          "type": "group",
+          "name": "t:names.group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "custom",
+            "custom_width": 30,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "background_media": "none",
+            "background_color": "",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "text_hnkFAH": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<h2>Rave reviews from real cooks</h2>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "text_color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "stamped_reviews_site_badge_bgnMmT": {
+              "type": "shopify://apps/stamped-reviews/blocks/site-badge/a103faaf-2125-4b0e-89fa-de5149736723",
+              "settings": {
+                "badge_type": "minimal",
+                "color_outer": "rgba(0,0,0,0)",
+                "color_inner": "rgba(0,0,0,0)",
+                "color_ribbon": "rgba(0,0,0,0)",
+                "color_text": "#363636",
+                "color_stars": "#bd010c",
+                "title_size": 24,
+                "title": "Verified Reviews"
+              }
+            },
+            "divider_AqQcF7": {
+              "type": "_divider",
+              "name": "t:names.divider",
+              "settings": {
+                "thickness": 1,
+                "corner_radius": "square",
+                "divider_color": "#dfdfdf",
+                "width_percent": 100,
+                "padding-block-start": 0,
+                "padding-block-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_hnkFAH",
+            "stamped_reviews_site_badge_bgnMmT",
+            "divider_AqQcF7"
+          ]
+        },
+        "group_HMqeip": {
+          "type": "group",
+          "name": "t:names.group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "custom",
+            "custom_width": 66,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "background_media": "none",
+            "background_color": "",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "splide_block_dQcccr": {
+              "type": "splide-block",
+              "name": "Splide",
+              "settings": {
+                "include_margins": false,
+                "title": "Social Posts",
+                "splide_autoplay": false,
+                "parameters": "type: 'loop',\nfixedWidth: '18rem',\ngap: '0.5rem'",
+                "slides": "{% assign slides = metaobjects.content_group[\"hp-social\"].mixed_blocks_reviews.value %}\n{% for slide in slides %}\n<li class=\"splide__slide\">\n{% if slide.system.type == 'review' %}\n{% assign image = slide.background %}\n{% else %}\n{% assign image = slide.image %}\n{% endif %}\n{{ image | image_url: height: 1080 | image_tag }}\n{% if slide.body %}\n\t\t<div class=\"content\">\n\t\t\t{{ slide.body | metafield_tag }}\n<p class=\"name\">{{ slide.name }}</p>\n\t\t</div>\n{% if slide.name %}\n{% endif %}\n{% endif %}\n</li>\n{% endfor %}",
+                "liquid_before": "",
+                "liquid_after_inside": "",
+                "padding_top": 36,
+                "padding_bottom": 36
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "splide_block_dQcccr"
+          ]
+        }
+      },
+      "block_order": [
+        "group_BijfPP",
+        "group_HMqeip"
+      ],
+      "custom_css": [
+        ".content {padding: 0.625rem; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(37, 40, 42, 0.5); width: calc(100% - 2 * 1rem); border-radius: 0.75rem;}",
+        ".content p {color: white; font-weight: 500;}",
+        "img {box-shadow: 0px 0px 10px 0px rgb(0 0 0 / 20%); border-radius: 1rem;}",
+        ".splide__slide {overflow: unset; padding: 1rem;}",
+        "div#stamped-badge-2 > * {font-family: \"ScandiaWeb\" !important;}",
+        ".shopify-block {max-width: 100%;}"
+      ],
+      "name": "t:names.custom_section",
+      "settings": {
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "{{ settings.color_palette.color7 }}",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
+        "padding-block-start": 60,
+        "padding-block-end": 0
+      }
+    },
     "section_Hyw9jA": {
       "type": "section",
       "blocks": {
@@ -5456,6 +5618,7 @@
         "content_group_ixrepK",
         "text_MAN78D"
       ],
+      "disabled": true,
       "custom_css": [
         ".group-block:not(:has(.anx)):not(:first-of-type) p {color: #fff;}",
         ".group-block:not(:has(.anx)):has(.spacer-block) {max-width: 20rem; min-width: 280px; max-height: 35rem;}",
@@ -5479,168 +5642,6 @@
         "section_height_custom": 50,
         "background_media": "none",
         "background_color": "",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_color": "",
-        "border_radius": 0,
-        "padding-block-start": 100,
-        "padding-block-end": 100
-      }
-    },
-    "section_9FVT9F": {
-      "type": "section",
-      "blocks": {
-        "group_U4H6eH": {
-          "type": "group",
-          "name": "t:names.group",
-          "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "center",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "background_media": "none",
-            "background_color": "",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_color": "",
-            "border_radius": 0,
-            "link": "",
-            "open_in_new_tab": false,
-            "placeholder": "",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "text_YHeTBU": {
-              "type": "text",
-              "name": "t:names.text",
-              "settings": {
-                "text": "<h2>What makes it the best?</h2>",
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "center",
-                "type_preset": "h1",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "text_color": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "text_Dwk9NA": {
-              "type": "text",
-              "name": "t:names.heading",
-              "settings": {
-                "text": "<h3>Take a quick look at the 2nd generation <br/>Combustion Predictive Thermometer </h3>",
-                "width": "fit-content",
-                "max_width": "none",
-                "alignment": "center",
-                "type_preset": "h4",
-                "font": "var(--font-subheading--family)",
-                "font_size": "1.25rem",
-                "line_height": "tight",
-                "letter_spacing": "tight",
-                "case": "none",
-                "wrap": "balance",
-                "text_color": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "text_YHeTBU",
-            "text_Dwk9NA"
-          ]
-        },
-        "splide_block_qXNj6A": {
-          "type": "splide-block",
-          "name": "Splide",
-          "settings": {
-            "include_margins": false,
-            "title": "Highlights",
-            "splide_autoplay": true,
-            "parameters": "type: 'loop',\nbreakpoints: {\n  749: {\n    perPage: 1,\n\trewindByDrag: true,\narrows: true,\n\tpadding: { right: '10%', left: '10%' },\narrows: false,\n  }\n},\ngap: '20px',\nfocus: 'center',\nvideo: {\n\tautoplay: true,\n\tmute: true,\n\thideControls: true,\n\tdisableOverlayUI: true,\nloop: true,\n},\narrows: true,\n// rewind: true,\npadding: { right: '6rem' },\nupdateOnMove: true,\npagination: true,\npaginationKeyboard: true,\nlive: false,\ndrag: 'free',\nsnap: true,\nautoplay: true,\n//dragMinThreshold: 1,\nflickMaxPages: 0.3,\npauseOnHover: false,\nautoHeight: true,\n// fixedWidth: '288px',\n    perPage: 3,",
-            "slides": "{% assign slides = metaobjects.content_group[\"hp-highlights\"].videos.value %}\n{% for slide in slides %}\n\t<li class=\"splide__slide\" data-splide-vimeo=\"https://vimeo.com/{{ slide.vimeo_id }}\" data-splide-interval=\"{{ slide.length | times: 1000 }}\">\n\t\t<div class=\"splide__slide__container\"> \n\t\t{{- slide.thumbnail | image_url: height: 360 | image_tag -}}\n\t\t</div>\n<div class=\"touch-overlay\"></div>\n\t</li>\n{% endfor %}",
-            "liquid_before": "",
-            "liquid_after_inside": "<div class=\"splide__arrows\"></div>",
-            "padding_top": 36,
-            "padding_bottom": 36
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "group_U4H6eH",
-        "splide_block_qXNj6A"
-      ],
-      "custom_css": [
-        "img {width: 100%; height: 100%;}",
-        ".autoplay-controls {display: flex; justify-content: center; align-items: center;}",
-        "button.splide__toggle {width: 2.625rem; border: none; background: none; padding: 1rem; color: black;}",
-        ".splide__toggle svg {vertical-align: middle;}",
-        ".splide__video__wrapper {background: none;}",
-        "ul#highlights-list {touch-action: pan-y;}",
-        ".touch-overlay {position: absolute; width: 100%; height: 100%; top: 0; touch-action: pan-y; display: block;}",
-        "h3 {font-weight: var(--font-subheading--weight);}"
-      ],
-      "name": "✅ Highlights video carousel",
-      "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 12,
-        "section_width": "page-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "background_media": "none",
-        "background_color": "{{ settings.color_palette.color7 }}",
         "video_position": "cover",
         "background_image_position": "cover",
         "toggle_overlay": false,
@@ -7937,14 +7938,14 @@
     "section_QFmVjw",
     "featured_product_information_REHwGM",
     "product_list_cFY8MM",
-    "section_6bwLbx",
     "product_list_jdYKPa",
     "section_jEyagy",
     "product_list_7BkyLC",
     "product_list_eMGknX",
     "product_list_736GK6",
-    "section_Hyw9jA",
     "section_9FVT9F",
+    "section_6bwLbx",
+    "section_Hyw9jA",
     "section_R6wbhD",
     "section_djJzU4",
     "section_fpFmhR",
