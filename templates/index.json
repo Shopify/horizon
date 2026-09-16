@@ -2413,7 +2413,7 @@
         "rte-formatter p {font-weight: 500;}",
         "h3 {font-weight: bold;}",
         ".quick-add__button {right: 0;}",
-        "@media screen and (min-width: 750px) {.card-gallery:not(:has(slideshow-arrows)) {pointer-events: none; } .card-gallery a {pointer-events: auto; }}"
+        "@media screen and (max-width: 749px) {.product-card__content .card-gallery {pointer-events: none; } product-card__content .card-gallery a {pointer-events: auto; }}"
       ],
       "name": "✅ Starter Kits",
       "settings": {
