@@ -299,9 +299,9 @@
       "add_to_apple_wallet": "Dodaj v Apple Wallet",
       "qr_image_alt": "Koda QR – optično jo preberite za unovčenje darilnega bona",
       "copy_code": "Kopiraj kodo darilnega bona",
-      "expiration_date": "Poteče {{ expires_on }}",
       "copy_code_success": "Koda je uspešno kopirana",
-      "expired": "Poteklo"
+      "expired": "Poteklo",
+      "expiration_date_html": "Poteče <bdi>{{ expires_on }}</bdi>"
     }
   },
   "placeholders": {

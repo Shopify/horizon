@@ -293,9 +293,9 @@
       "add_to_apple_wallet": "Adaugă la Apple Wallet",
       "qr_image_alt": "Cod QR – scanează pentru valorificarea cardului cadou",
       "copy_code": "Copiază codul cardului cadou",
-      "expiration_date": "Expiră pe {{ expires_on }}",
       "copy_code_success": "Codul a fost copiat cu succes",
-      "expired": "Expirat"
+      "expired": "Expirat",
+      "expiration_date_html": "Expiră la <bdi>{{ expires_on }}</bdi>"
     }
   },
   "blogs": {

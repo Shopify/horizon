@@ -196,15 +196,15 @@
     cursor: pointer;
     width: 100%;
     padding-inline-end: var(--icon-size-2xs);
-    text-align: right;
+    text-align: end;
 
     /* Needed for Safari */
-    text-align-last: right;
+    text-align-last: end;
   }
 
   .sorting-filter__select .icon {
     position: absolute;
-    right: var(--padding-md);
+    inset-inline-end: var(--padding-md);
     top: 50%;
     transform: translateY(-50%);
     width: var(--icon-size-2xs);
@@ -224,7 +224,7 @@
     opacity: 0;
     position: absolute;
     top: 100%;
-    right: 0;
+    inset-inline-end: 0;
     color: var(--color-foreground);
     z-index: var(--facets-upper-z-index);
     box-shadow: var(--shadow-popover);
@@ -321,8 +321,8 @@
   }
 
   .facets-mobile-wrapper:has(> :nth-child(2)) .sorting-filter .sorting-filter__options {
-    left: 0;
-    right: unset;
+    inset-inline-start: 0;
+    inset-inline-end: unset;
   }
 
   .facets-mobile-wrapper .sorting-filter .facets__label {

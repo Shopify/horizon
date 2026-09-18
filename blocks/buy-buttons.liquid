@@ -148,12 +148,13 @@
                 <div class="volume-pricing__row volume-pricing__row--even">
                   <span>{{ variant.quantity_rule.min }}+</span>
                   <span>
-                    {%- if use_currency -%}
-                      {{- variant.price | money_with_currency | strip -}}
-                    {%- else -%}
-                      {{- variant.price | money | strip -}}
-                    {%- endif -%}
-                    /{{ 'content.each_abbreviation' | t -}}
+                    <bdi>
+                      {%- if use_currency -%}
+                        {{- variant.price | money_with_currency | strip -}}
+                      {%- else -%}
+                        {{- variant.price | money | strip -}}
+                      {%- endif -%}</bdi
+                    >/{{ 'content.each_abbreviation' | t -}}
                   </span>
                 </div>
                 {%- for price_break in variant.quantity_price_breaks limit: 2 -%}
@@ -168,12 +169,13 @@
                   <div class="{{ row_class }}">
                     <span>{{ price_break.minimum_quantity }}+</span>
                     <span>
-                      {%- if use_currency -%}
-                        {{- price_break.price | money_with_currency | strip -}}
-                      {%- else -%}
-                        {{- price_break.price | money | strip -}}
-                      {%- endif -%}
-                      /{{ 'content.each_abbreviation' | t -}}
+                      <bdi>
+                        {%- if use_currency -%}
+                          {{- price_break.price | money_with_currency | strip -}}
+                        {%- else -%}
+                          {{- price_break.price | money | strip -}}
+                        {%- endif -%}</bdi
+                      >/{{ 'content.each_abbreviation' | t -}}
                     </span>
                   </div>
                 {%- endfor -%}
@@ -194,12 +196,13 @@
                       <div class="{{ row_class }}">
                         <span>{{ price_break.minimum_quantity }}+</span>
                         <span>
-                          {%- if use_currency -%}
-                            {{- price_break.price | money_with_currency | strip -}}
-                          {%- else -%}
-                            {{- price_break.price | money | strip -}}
-                          {%- endif -%}
-                          /{{ 'content.each_abbreviation' | t -}}
+                          <bdi>
+                            {%- if use_currency -%}
+                              {{- price_break.price | money_with_currency | strip -}}
+                            {%- else -%}
+                              {{- price_break.price | money | strip -}}
+                            {%- endif -%}</bdi
+                          >/{{ 'content.each_abbreviation' | t -}}
                         </span>
                       </div>
                     {%- endfor -%}

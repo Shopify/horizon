@@ -80,12 +80,12 @@
     {% if show_compare_price %}
       <span class="price-item__group compare-at-price">
         <span class="visually-hidden">{{ 'content.price_regular' | t }}&nbsp;</span>
-        {{- compare_at_price -}}
+        <bdi>{{- compare_at_price -}}</bdi>
       </span>
     {% endif %}
     <span class="price-item__group price">
       <span class="visually-hidden">{{ 'content.price_range' | t }}&nbsp;</span>
-      {{ price_min }} - {{ price_max }}
+      <bdi>{{ price_min }} - {{ price_max }}</bdi>
     </span>
   {% else %}
     {% comment %} Standard pricing display: render only the active branch (regular or sale) {% endcomment %}
@@ -93,24 +93,26 @@
       {% if show_sale_price_first %}
         <span class="price-item__group price">
           <span class="visually-hidden">{{ 'content.price_sale' | t }}&nbsp;</span>
-          {{ price | default: '&nbsp;' }}
+          <bdi>{{ price | default: '&nbsp;' }}</bdi>
         </span>
         <span class="price-item__group price-item--regular compare-at-price">
           <span class="visually-hidden">{{ 'content.price_regular' | t }}&nbsp;</span>
-          {{- compare_at_price -}}
+          <bdi>{{- compare_at_price -}}</bdi>
         </span>
       {% else %}
         <span class="price-item__group price-item--regular compare-at-price">
           <span class="visually-hidden">{{ 'content.price_regular' | t }}&nbsp;</span>
-          {{- compare_at_price -}}
+          <bdi>{{- compare_at_price -}}</bdi>
         </span>
         <span class="price-item__group price">
           <span class="visually-hidden">{{ 'content.price_sale' | t }}&nbsp;</span>
-          {{ price | default: '&nbsp;' }}
+          <bdi>{{ price | default: '&nbsp;' }}</bdi>
         </span>
       {% endif %}
     {% else %}
-      <span class="price">{{ price | default: '&nbsp;' }}</span>
+      <span class="price"
+        ><bdi>{{ price | default: '&nbsp;' }}</bdi></span
+      >
     {% endif %}
   {% endif %}
   {%- if selected_variant.unit_price and show_unit_price %}

@@ -100,7 +100,7 @@
               data-quantity="{{ min_qty }}"
             >
               <span class="volume-pricing-info__quantity">{{ min_qty }}+</span>
-              {%- capture price_text -%}{%- if use_currency -%}{{ variant.price | money_with_currency | strip }}/{{ 'content.each_abbreviation' | t }}{%- else -%}{{ variant.price | money | strip }}/{{ 'content.each_abbreviation' | t }}{%- endif -%}{%- endcapture -%}
+              {%- capture price_text -%}{%- if use_currency -%}<bdi>{{ variant.price | money_with_currency | strip }}</bdi>/{{ 'content.each_abbreviation' | t }}{%- else -%}<bdi>{{ variant.price | money | strip }}</bdi>/{{ 'content.each_abbreviation' | t }}{%- endif -%}{%- endcapture -%}
               <span class="volume-pricing-info__price"
                 ><span class="volume-pricing-info__checkmark">{{- 'icon-checkmark.svg' | inline_asset_content -}}</span>
                 {{- price_text | strip -}}
@@ -124,7 +124,7 @@
                 data-quantity="{{ price_break.minimum_quantity }}"
               >
                 <span class="volume-pricing-info__quantity">{{ price_break.minimum_quantity }}+</span>
-                {%- capture price_text -%}{%- if use_currency -%}{{ price_break.price | money_with_currency | strip }}/{{ 'content.each_abbreviation' | t }}{%- else -%}{{ price_break.price | money | strip }}/{{ 'content.each_abbreviation' | t }}{%- endif -%}{%- endcapture -%}
+                {%- capture price_text -%}{%- if use_currency -%}<bdi>{{ price_break.price | money_with_currency | strip }}</bdi>/{{ 'content.each_abbreviation' | t }}{%- else -%}<bdi>{{ price_break.price | money | strip }}</bdi>/{{ 'content.each_abbreviation' | t }}{%- endif -%}{%- endcapture -%}
                 <span class="volume-pricing-info__price"
                   ><span class="volume-pricing-info__checkmark">
                     {{- 'icon-checkmark.svg' | inline_asset_content -}}
@@ -197,7 +197,7 @@
   .volume-pricing-info__popover {
     inset: unset;
     top: calc(anchor(bottom) + var(--volume-pricing-popover-spacing));
-    left: anchor(left);
+    inset-inline-start: anchor(start);
   }
 
   @supports (position-try-fallbacks: --top-left) {
@@ -217,10 +217,10 @@
     .volume-pricing-info__popover {
       position: fixed;
       top: calc(var(--anchor-bottom) * 1px + var(--volume-pricing-popover-spacing));
-      left: max(
+      inset-inline-start: max(
         var(--volume-pricing-popover-viewport-margin),
         min(
-          var(--anchor-left) * 1px,
+          var(--anchor-inline-start) * 1px,
           100vw - var(--volume-pricing-popover-max-width) - var(--volume-pricing-popover-viewport-margin)
         )
       );

@@ -32,7 +32,6 @@
 <div
   class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
 ></div>
-{% # theme-check-disable-next-line UnknownFilter %}
 <collection-component view-event-payload="{{ collection | standard_event_data: 'view' | escape }}">
   <results-list
     class="section product-grid-container{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"

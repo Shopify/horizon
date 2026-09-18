@@ -244,6 +244,11 @@
     flex-shrink: 0;
   }
 
+  /* Chevrons point toward reading direction, so they flip in RTL. */
+  [dir='rtl'] .pagination__link--arrow svg {
+    transform: scaleX(-1);
+  }
+
   .pagination__item--mobile-only {
     display: none;
   }
@@ -284,7 +289,7 @@
       opacity: 0;
       border-radius: calc(var(--pagination-radius) * 1px);
       background: rgb(var(--color-foreground-rgb) / var(--opacity-10));
-      transition: left var(--hover-transition-duration) var(--hover-transition-timing),
+      transition: inset-inline-start var(--hover-transition-duration) var(--hover-transition-timing),
         top var(--hover-transition-duration) var(--hover-transition-timing);
     }
 
@@ -321,7 +326,7 @@
     /* Position hover indicator using anchor */
     .pagination__list::before {
       position-anchor: --pagination-hover;
-      left: calc(anchor(left) + var(--pagination-inset));
+      inset-inline-start: calc(anchor(start) + var(--pagination-inset));
       top: calc(anchor(top) + var(--pagination-inset));
     }
 

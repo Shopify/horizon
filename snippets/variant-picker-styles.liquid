@@ -68,7 +68,7 @@
 
   .variant-option__select-wrapper .icon {
     position: absolute;
-    right: var(--padding-md);
+    inset-inline-end: var(--padding-md);
     top: 50%;
     transform: translateY(-50%);
     width: var(--icon-size-2xs);
@@ -83,7 +83,7 @@
   .variant-option__select-wrapper .swatch {
     position: absolute;
     top: 50%;
-    left: var(--padding-md);
+    inset-inline-start: var(--padding-md);
     transform: translateY(-50%);
   }
 
@@ -98,8 +98,8 @@
 
   .variant-picker--right,
   .variant-picker--right .variant-option {
-    text-align: right;
-    justify-content: right;
+    text-align: end;
+    justify-content: flex-end;
   }
 
   .variant-picker .variant-option--buttons label:has(.swatch) {
@@ -267,16 +267,16 @@
     &:not(:has(:checked)):has(~ label > :checked),
     &:has(:checked):has(~ label > [data-previous-checked='true']) {
       .variant-option__button-label__pill {
-        right: 0;
-        left: unset;
+        inset-inline-end: 0;
+        inset-inline-start: unset;
       }
     }
 
     &:has([data-previous-checked='true']) ~ label:has([data-current-checked='true']),
     &:has(:checked) ~ label {
       .variant-option__button-label__pill {
-        left: 0;
-        right: unset;
+        inset-inline-start: 0;
+        inset-inline-end: unset;
       }
     }
 
@@ -334,6 +334,11 @@
     pointer-events: none;
     width: 100%;
     transform: translateX(var(--pill-offset, 0));
+  }
+
+  /* The pill travels along the inline axis; translateX is physical, so the sign inverts in RTL */
+  [dir='rtl'] .variant-option__button-label__pill {
+    transform: translateX(calc(-1 * var(--pill-offset, 0px)));
   }
 
   .variant-option__button-label__text {
@@ -476,7 +481,7 @@
 
   .variant-option__button-label svg {
     position: absolute;
-    left: var(--options-border-width);
+    inset-inline-start: var(--options-border-width);
     top: var(--options-border-width);
     height: calc(100% - (var(--options-border-width) * 2));
     width: calc(100% - (var(--options-border-width) * 2));
@@ -497,6 +502,15 @@
     line:last-of-type {
       stroke: none;
     }
+  }
+
+  /* The strike diagonal and its clip-path reveal are drawn in physical coordinates; mirror both in RTL */
+  [dir='rtl'] .variant-option__strikethrough {
+    transform: scaleX(-1);
+  }
+
+  [dir='rtl'] .variant-option__button-label:has([data-option-available='false'])::after {
+    transform: scaleX(-1);
   }
 
   /* Override for swatch labels to maintain block display */

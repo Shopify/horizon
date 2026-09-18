@@ -299,9 +299,9 @@
       "add_to_apple_wallet": "Добавить в Apple Wallet",
       "qr_image_alt": "Отсканируйте QR-код, чтобы использовать подарочную карту",
       "copy_code": "Скопировать код подарочной карты",
-      "expiration_date": "Срок действия истекает {{ expires_on }}",
       "copy_code_success": "Код скопирован",
-      "expired": "Срок действия истек"
+      "expired": "Срок действия истек",
+      "expiration_date_html": "Истекает <bdi>{{ expires_on }}</bdi>"
     }
   },
   "blogs": {

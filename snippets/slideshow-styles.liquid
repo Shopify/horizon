@@ -192,7 +192,14 @@
 
   slideshow-slide .shopify-model-viewer-ui__controls-area.shopify-model-viewer-ui__controls-area {
     bottom: var(--padding-sm);
-    right: var(--padding-sm);
+    inset-inline-end: var(--padding-sm);
+  }
+
+  /* The external model-viewer UI stylesheet positions the controls with a physical
+     right; inset-inline-end maps to left in RTL, so clear the stale right to stop
+     the auto-width controls being constrained on both sides */
+  [dir='rtl'] slideshow-slide .shopify-model-viewer-ui__controls-area.shopify-model-viewer-ui__controls-area {
+    right: auto; /* stylelint-disable-line csstools/use-logical -- clearing an external physical right in RTL */
   }
 
   slideshow-component.slideshow--content-below-media slideshow-slide {

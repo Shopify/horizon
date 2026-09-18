@@ -287,9 +287,9 @@
       "add_to_apple_wallet": "Apple Wallet'a ekle",
       "qr_image_alt": "QR kodu: Hediye kartını kullanmak için tarayın",
       "copy_code": "Hediye kartı kodunu kopyala",
-      "expiration_date": "Sona erme tarihi: {{ expires_on }}",
       "copy_code_success": "Kod başarıyla kopyalandı",
-      "expired": "Son kullanma tarihi dolmuş"
+      "expired": "Son kullanma tarihi dolmuş",
+      "expiration_date_html": "Son kullanma tarihi: <bdi>{{ expires_on }}</bdi>"
     }
   },
   "blogs": {

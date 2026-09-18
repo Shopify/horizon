@@ -22,6 +22,9 @@
     assign formatted_price = price_value | money
   endif
 
+  # callers using this in attributes strip the bdi via strip_html
+  assign formatted_price = '<bdi>__PRICE__</bdi>' | replace: '__PRICE__', formatted_price
+
   if price_type == 'per_item'
     assign per_item_text = 'content.quantity_per_item' | t
     assign formatted_price = formatted_price | append: per_item_text

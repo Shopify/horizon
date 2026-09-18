@@ -75,8 +75,8 @@
   style="
     {%- render 'spacing-style', settings: block_settings -%}
     {%- render 'border-override', settings: block_settings -%}
-    --text-align: {{ block_settings.alignment }};
-    --horizontal-alignment: {{ block_settings.alignment }};
+    --text-align: {{ block_settings.alignment | replace: 'left', 'start' | replace: 'right', 'end' }};
+    --horizontal-alignment: {{ block_settings.alignment | replace: 'left', 'flex-start' | replace: 'right', 'flex-end' }};
     --gap: {{ block_settings.gap }}px;
   "
   {{ block.shopify_attributes }}
@@ -202,15 +202,15 @@
       "options": [
         {
           "value": "left",
-          "label": "t:options.left"
+          "label": "t:options.direction_start"
         },
         {
           "value": "center",
-          "label": "t:options.center"
+          "label": "t:options.direction_center"
         },
         {
           "value": "right",
-          "label": "t:options.right"
+          "label": "t:options.direction_end"
         }
       ],
       "default": "left"

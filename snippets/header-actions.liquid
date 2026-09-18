@@ -152,16 +152,6 @@
 ></script>
 
 {% stylesheet %}
-  .header {
-    --account-offset-top: calc(
-      var(--header-group-height) + (var(--header-height) * var(--transparent-header-offset-boolean))
-    );
-
-    &[data-sticky-state='active'] {
-      --account-offset-top: calc(var(--header-height) - 1px);
-    }
-  }
-
   .account-button {
     /* Remove the background color from the color scheme, we want to inherit the color of the header */
     background: transparent;
@@ -187,7 +177,7 @@
     --shopify-account-color-text: var(--color-foreground);
     --shopify-account-color-accent: var(--color-primary-button-background);
     --shopify-account-color-accent-text: var(--color-primary-button-text);
-    --shopify-account-dialog-position-top: var(--account-offset-top);
+    --shopify-account-dialog-position-top: calc(var(--account-dialog-top, var(--header-height, 0px)) + 10px);
 
     &:not(:defined) {
       min-width: 44px;
@@ -259,7 +249,7 @@
     position: absolute;
     width: var(--cart-bubble-size, 20px);
     top: var(--cart-bubble-top);
-    right: var(--cart-bubble-right);
+    inset-inline-end: var(--cart-bubble-right);
   }
 
   @media screen and (min-width: 750px) {
@@ -278,6 +268,16 @@
     /* Create donut mask where the cart bubble sits */
     mask: radial-gradient(
       calc(var(--cart-bubble-size) + 2px) at calc(100% - var(--cart-bubble-right)) var(--cart-bubble-top),
+      transparent 45.45%,
+      #fff 45.45%,
+      #fff 100%
+    );
+  }
+
+  /* Mask positions are physical; the bubble sits at the inline-end (left in RTL) */
+  [dir='rtl'] .header-actions__cart-icon.header-actions__cart-icon--has-cart svg {
+    mask: radial-gradient(
+      calc(var(--cart-bubble-size) + 2px) at var(--cart-bubble-right) var(--cart-bubble-top),
       transparent 45.45%,
       #fff 45.45%,
       #fff 100%

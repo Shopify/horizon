@@ -293,9 +293,9 @@
       "add_to_apple_wallet": "Agregar a Apple Wallet",
       "qr_image_alt": "Código QR — escanea para canjear la tarjeta de regalo",
       "copy_code": "Copiar el código de la tarjeta de regalo",
-      "expiration_date": "Caduca el {{ expires_on }}",
       "copy_code_success": "El código se copió correctamente",
-      "expired": "Vencida"
+      "expired": "Vencida",
+      "expiration_date_html": "Vence el <bdi>{{ expires_on }}</bdi>"
     }
   },
   "placeholders": {

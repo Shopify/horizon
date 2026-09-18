@@ -1,5 +1,5 @@
 import { Component } from '@theme/component';
-import { closest, clamp, center, getVisibleElements } from '@theme/utilities';
+import { closest, clamp, center, getDirectionMultiplier, getVisibleElements } from '@theme/utilities';
 import { SlideshowSelectEvent } from '@theme/events';
 import { Scroller } from '@theme/scrolling';
 import { cycleFocus } from '@theme/focus';
@@ -95,14 +95,20 @@ class CollectionLinks extends Component {
    * @param {KeyboardEvent} event
    */
   #handleKeydown(event) {
+    // Horizontal arrows follow reading direction; vertical arrows don't mirror.
+    const directionMultiplier = getDirectionMultiplier(this);
     let modifier = 0;
 
     switch (event.key) {
       case 'ArrowRight':
+        modifier = 1 * directionMultiplier;
+        break;
       case 'ArrowDown':
         modifier = 1;
         break;
       case 'ArrowLeft':
+        modifier = -1 * directionMultiplier;
+        break;
       case 'ArrowUp':
         modifier = -1;
         break;
@@ -196,6 +202,7 @@ class CollectionLinks extends Component {
         const wouldBeCutOff = event.clientY + cachedImageHeight + offset > viewportHeight;
         const yPos = wouldBeCutOff ? event.clientY - cachedImageHeight - offset : event.clientY + offset;
 
+        // Follows the physical pointer, so no RTL mirroring here.
         const xPos = Math.min(Math.max(offset, event.clientX + offset), viewportWidth - cachedImageWidth - offset);
 
         selectedImage.style.setProperty('--x', `${xPos}px`);

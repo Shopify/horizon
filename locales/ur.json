@@ -310,9 +310,9 @@
       "add_to_apple_wallet": "Apple Wallet میں شامل کریں",
       "qr_image_alt": "QR کوڈ — گفٹ کارڈ ریڈیم کرنے کے لیے سکین کریں",
       "copy_code": "گفٹ کارڈ کا کوڈ کاپی کریں",
-      "expiration_date": "{{ expires_on }} کو میعاد ختم ہو رہی ہے",
       "copy_code_success": "کوڈ کامیابی کے ساتھ کاپی ہو گیا",
-      "expired": "میعاد ختم ہو گئی"
+      "expired": "میعاد ختم ہو گئی",
+      "expiration_date_html": "میعاد ختم ہونے کی تاریخ <bdi>{{ expires_on }}</bdi>"
     }
   },
   "placeholders": {

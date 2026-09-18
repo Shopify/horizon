@@ -293,9 +293,9 @@
       "add_to_apple_wallet": "Adicionar a Apple Wallet",
       "qr_image_alt": "Código QR — digitalizar para resgatar cartão de oferta",
       "copy_code": "Copiar código de cartão-de oferta",
-      "expiration_date": "Expira em {{ expires_on }}",
       "copy_code_success": "Código copiado com sucesso",
-      "expired": "Expirado"
+      "expired": "Expirado",
+      "expiration_date_html": "Expira a <bdi>{{ expires_on }}</bdi>"
     }
   },
   "placeholders": {

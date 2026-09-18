@@ -48,11 +48,11 @@
     {% else %}
       --color: var(--color-foreground);
     {% endif %}
-    --text-align: {{ block_settings.alignment | default: 'left' }};
+    --text-align: {{ block_settings.alignment | default: 'left' | replace: 'left', 'start' | replace: 'right', 'end' }};
     {% if block_settings.alignment == "left" %}
-      --margin-left-nudge: {{nudge}};
+      --margin-inline-start-nudge: {{nudge}};
     {% elsif block_settings.alignment == "right" %}
-      --margin-right-nudge: {{nudge}};
+      --margin-inline-end-nudge: {{nudge}};
     {% endif %}
     --line-height: {{ block_settings.line_height | default: '1' }};
     --letter-spacing: {{ block_settings.letter_spacing | default: '-0.03em' }};
@@ -120,8 +120,8 @@
     text-transform: var(--text-transform, none);
     transition: opacity 0.3s ease;
     width: 100%;
-    margin-left: var(--margin-left-nudge, 0);
-    margin-right: var(--margin-right-nudge, 0);
+    margin-inline-start: var(--margin-inline-start-nudge, 0);
+    margin-inline-end: var(--margin-inline-end-nudge, 0);
     overflow: visible;
   }
 

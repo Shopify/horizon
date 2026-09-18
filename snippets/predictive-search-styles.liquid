@@ -14,8 +14,7 @@
     flex-direction: column;
     position: relative;
     top: 0;
-    left: 0;
-    right: 0;
+    inset-inline: 0;
     z-index: var(--layer-base);
   }
 
@@ -70,8 +69,8 @@
   }
 
   .header__column--right .predictive-search-form__content-wrapper {
-    right: 0;
-    left: unset;
+    inset-inline-end: 0;
+    inset-inline-start: unset;
   }
 
   .search-modal .predictive-search-form__content-wrapper {
@@ -97,8 +96,7 @@
 
   .predictive-search:has(.predictive-search-dropdown) .predictive-search-form__header-inner:focus-within {
     border-top-color: transparent;
-    border-right-color: transparent;
-    border-left-color: transparent;
+    border-inline-color: transparent;
 
     @media screen and (max-width: 749px) {
       border-bottom-color: transparent;
@@ -108,8 +106,7 @@
   .predictive-search:has(.predictive-search-dropdown[aria-expanded='true'])
     .predictive-search-form__header-inner:focus-within {
     border-top-color: transparent;
-    border-right-color: transparent;
-    border-left-color: transparent;
+    border-inline-color: transparent;
     border-radius: var(--search-border-radius);
 
     @media screen and (max-width: 749px) {
@@ -510,7 +507,7 @@
     opacity: 0.68;
     transition: opacity var(--animation-speed-medium) var(--animation-easing);
     padding: 0;
-    margin-left: var(--margin-sm);
+    margin-inline-start: var(--margin-sm);
 
     &:hover {
       opacity: 1;

@@ -20,6 +20,7 @@
       /* Empty alt text: the pseudo-element is a visual shimmer overlay, not announceable content.
         Without this, VoiceOver reads attr(value) in addition to the inner text node, doubling the announcement. */
       content: attr(value) / '';
+      unicode-bidi: plaintext;
       position: absolute;
       inset: 0;
       color: transparent;

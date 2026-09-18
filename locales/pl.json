@@ -299,9 +299,9 @@
       "add_to_apple_wallet": "Dodaj do Apple Wallet",
       "qr_image_alt": "Kod QR – zeskanuj, aby wykorzystać kartę prezentową",
       "copy_code": "Kopiuj kod karty prezentowej",
-      "expiration_date": "Wygasa {{ expires_on }}",
       "copy_code_success": "Kod został skopiowany",
-      "expired": "Ważność wygasła"
+      "expired": "Ważność wygasła",
+      "expiration_date_html": "Wygasa <bdi>{{ expires_on }}</bdi>"
     }
   },
   "blogs": {

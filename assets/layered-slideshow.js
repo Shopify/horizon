@@ -1,5 +1,5 @@
 import { Component } from '@theme/component';
-import { isMobileBreakpoint, mediaQueryLarge } from '@theme/utilities';
+import { getDirectionMultiplier, isMobileBreakpoint, mediaQueryLarge } from '@theme/utilities';
 
 /**
  * @typedef {Object} LayeredSlideshowRefs
@@ -14,6 +14,7 @@ import { isMobileBreakpoint, mediaQueryLarge } from '@theme/utilities';
  * @property {number} start
  * @property {number} max
  * @property {number} activeSize - The resolved pixel size of the active panel at drag start
+ * @property {1 | -1} directionMultiplier - Converts the physical pointer delta into a logical one
  * @property {boolean} left
  * @property {boolean} [dragging]
  * @property {boolean} [prevent]
@@ -116,9 +117,11 @@ export class LayeredSlideshowComponent extends Component {
     if (!tabs) return;
 
     const i = tabs.indexOf(target);
+    // Horizontal arrows follow reading direction; vertical (mobile) arrows don't mirror.
+    const directionMultiplier = this.#isMobile ? 1 : getDirectionMultiplier(this);
     const navMap = {
-      [this.#isMobile ? 'ArrowUp' : 'ArrowLeft']: -1,
-      [this.#isMobile ? 'ArrowDown' : 'ArrowRight']: 1,
+      [this.#isMobile ? 'ArrowUp' : 'ArrowLeft']: -1 * directionMultiplier,
+      [this.#isMobile ? 'ArrowDown' : 'ArrowRight']: 1 * directionMultiplier,
       Home: -i,
       End: tabs.length - 1 - i,
     };
@@ -369,6 +372,7 @@ export class LayeredSlideshowComponent extends Component {
       start: event.clientX,
       max: containerWidth * MAX_DRAG_WIDTH_RATIO,
       activeSize,
+      directionMultiplier: getDirectionMultiplier(this),
       left: initialTarget !== undefined ? initialTarget > this.#active : false,
     };
 
@@ -391,7 +395,8 @@ export class LayeredSlideshowComponent extends Component {
     const { container, tabs } = this.refs;
     if (!container || !tabs) return;
 
-    const delta = event.clientX - this.#drag.start;
+    // Logical delta: positive always means dragging toward the previous tab in reading order.
+    const delta = (event.clientX - this.#drag.start) * this.#drag.directionMultiplier;
     const move = Math.abs(delta);
 
     if (!this.#drag.dragging && move >= DRAG_THRESHOLD) {

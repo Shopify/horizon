@@ -287,9 +287,9 @@
       "add_to_apple_wallet": "加入 Apple 錢包",
       "qr_image_alt": "QR 碼：掃描以兌換禮品卡",
       "copy_code": "複製禮品卡代碼",
-      "expiration_date": "於 {{ expires_on }}到期",
       "copy_code_success": "已成功複製代碼",
-      "expired": "已到期"
+      "expired": "已到期",
+      "expiration_date_html": "於 <bdi>{{ expires_on }}</bdi> 到期"
     }
   },
   "blogs": {

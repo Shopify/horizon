@@ -19,6 +19,10 @@
     overflow: hidden;
   }
 
+  .product-grid__card swatches-variant-picker-component overflow-list::part(list) {
+    flex-wrap: wrap;
+  }
+
   /*
     Product cards are narrow, so group content stacks on mobile. A group that
     turns "vertical on mobile" off renders without .mobile-column and keeps the

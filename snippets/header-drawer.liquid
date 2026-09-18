@@ -793,6 +793,15 @@
     transform: rotate(90deg);
   }
 
+  /* Forward/backward carets follow reading direction */
+  [dir='rtl'] .icon-caret--forward svg {
+    transform: rotate(90deg);
+  }
+
+  [dir='rtl'] .icon-caret--backward svg {
+    transform: rotate(-90deg);
+  }
+
   .header__icon--menu {
     position: initial;
   }
@@ -881,23 +890,30 @@
     width: var(--drawer-width);
     max-width: var(--drawer-max-width);
     z-index: var(--layer-menu-drawer);
-    left: 0;
+    inset-inline-start: 0;
     top: 0;
 
-    /* Left-anchored drawer spans the full physical viewport (viewport-fit=cover); keep its
-       content clear of the status bar, left-side notch, and home indicator. Subtract the
+    /* Inline-start-anchored drawer spans the full physical viewport (viewport-fit=cover); keep its
+       content clear of the status bar, side notch, and home indicator. Subtract the
        designed menu gutter so link text aligns with the page / hamburger, not inset twice. */
-    padding: var(--safe-area-inset-top) 0 var(--safe-area-inset-bottom)
-      max(0px, calc(var(--safe-area-inset-left) - var(--drawer-padding)));
+    padding-block: var(--safe-area-inset-top) var(--safe-area-inset-bottom);
+    padding-inline: max(0px, calc(var(--safe-area-inset-left) - var(--drawer-padding))) 0;
     background-color: var(--color-background);
     overflow: auto;
     display: flex;
-    border-right: var(--style-border-drawer);
+    border-inline-end: var(--style-border-drawer);
     flex-direction: column;
 
     @media screen and (min-width: 750px) {
       width: 25rem;
     }
+  }
+
+  /* The drawer enters from the inline-start edge: the slide transforms and the
+     physical safe-area notch flip in RTL */
+  [dir='rtl'] .menu-drawer {
+    transform: translateX(100%);
+    padding-inline-start: max(0px, calc(var(--safe-area-inset-right) - var(--drawer-padding)));
   }
 
   /* When opening a submenu we don't want the first-level menu to be scrollable, so we reset the overflow  */
@@ -908,7 +924,7 @@
   .menu-drawer__backdrop {
     position: fixed;
     top: 0;
-    left: 0;
+    inset-inline-start: 0;
     width: 100vw;
     height: 100dvh;
     backdrop-filter: brightness(0.75);
@@ -1070,6 +1086,10 @@
     animation-fill-mode: backwards;
   }
 
+  [dir='rtl'] .menu-drawer-container[open] .menu-drawer__animated-element {
+    animation-name: menu-drawer-nav-open-rtl;
+  }
+
   .menu-drawer__menu accordion-custom .details-content--no-animation {
     animation: none;
     visibility: visible;
@@ -1205,12 +1225,18 @@
 
   .menu-drawer__close-button {
     position: relative;
-    right: auto;
+    inset-inline-end: auto;
     top: auto;
     width: fit-content;
     height: fit-content;
     color: inherit;
     padding: var(--padding-lg);
+  }
+
+  /* Match the specificity of the base [dir='rtl'] .close-button safe-area rule so
+     the relatively positioned drawer button keeps inset-inline-end: auto in RTL */
+  [dir='rtl'] .menu-drawer__close-button {
+    inset-inline-end: auto;
   }
 
   .menu-drawer__back-button {
@@ -1221,7 +1247,7 @@
     align-items: center;
     color: var(--color-foreground);
     background-color: transparent;
-    text-align: left;
+    text-align: start;
     text-decoration: none;
     white-space: nowrap;
     overflow-x: hidden;
@@ -1265,7 +1291,7 @@
     padding-inline-start: 0;
 
     .localization-form__select {
-      text-align: left;
+      text-align: start;
     }
   }
 
@@ -1292,12 +1318,12 @@
     width: 100%;
     top: 0;
     height: 100dvh;
-    left: 0;
+    inset-inline-start: 0;
 
     /* Submenus are absolutely positioned so they bypass the drawer's safe-area padding;
        apply the same insets directly */
-    padding: var(--safe-area-inset-top) 0 var(--safe-area-inset-bottom)
-      max(0px, calc(var(--safe-area-inset-left) - var(--drawer-padding)));
+    padding-block: var(--safe-area-inset-top) var(--safe-area-inset-bottom);
+    padding-inline: max(0px, calc(var(--safe-area-inset-left) - var(--drawer-padding))) 0;
     background-color: var(--color-background);
     z-index: var(--layer-flat);
     transform: translateX(-5%);
@@ -1306,8 +1332,13 @@
     opacity: 0;
   }
 
+  [dir='rtl'] .menu-drawer__submenu {
+    transform: translateX(5%);
+    padding-inline-start: max(0px, calc(var(--safe-area-inset-right) - var(--drawer-padding)));
+  }
+
   .menu-drawer__back-button > .svg-wrapper {
-    margin-right: var(--padding-md);
+    margin-inline-end: var(--padding-md);
     width: var(--icon-size-xs);
     height: var(--icon-size-xs);
   }
@@ -1338,8 +1369,8 @@
   .menu-drawer__account shop-user-avatar {
     --shop-avatar-size: 2.4rem;
 
-    margin-right: 0.55rem;
-    margin-left: -0.45rem;
+    margin-inline-end: 0.55rem;
+    margin-inline-start: -0.45rem;
   }
 
   .menu-drawer__link-image,
@@ -1354,6 +1385,20 @@
       visibility: hidden;
       opacity: 0;
       transform: translateX(-0.5rem);
+    }
+
+    100% {
+      visibility: visible;
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes menu-drawer-nav-open-rtl {
+    0% {
+      visibility: hidden;
+      opacity: 0;
+      transform: translateX(0.5rem);
     }
 
     100% {
@@ -1416,7 +1461,8 @@
     width: fit-content;
     height: fit-content;
     margin: 0;
-    padding: var(--padding-xl) var(--padding-xl) var(--padding-xl) var(--padding-xs);
+    padding-block: var(--padding-xl);
+    padding-inline: var(--padding-xs) var(--padding-xl);
   }
 
   .menu-drawer__localization:not(drawer-localization-component) .language-selector {
@@ -1483,7 +1529,11 @@
 
   .drawer-localization .language-selector .svg-wrapper.icon-caret {
     transform: translateY(-50%) rotate(0deg);
-    right: 20px;
+    inset-inline-end: 20px;
+  }
+
+  [dir='rtl'] .drawer-localization .language-selector .svg-wrapper.icon-caret {
+    right: auto; /* stylelint-disable-line csstools/use-logical -- clearing an un-converted physical right in RTL */
   }
 
   .drawer-localization .language-selector .svg-wrapper.icon-caret svg {

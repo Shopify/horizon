@@ -324,9 +324,9 @@
       "add_to_apple_wallet": "הוספה ל-Apple Wallet",
       "qr_image_alt": "קוד QR - יש לסרוק כדי לממש את כרטיס המתנה",
       "copy_code": "העתקת קוד כרטיס המתנה",
-      "expiration_date": "בתוקף עד {{ expires_on }}",
       "copy_code_success": "הקוד הועתק בהצלחה",
-      "expired": "פג תוקף"
+      "expired": "פג תוקף",
+      "expiration_date_html": "בתוקף עד <bdi>{{ expires_on }}</bdi>"
     }
   },
   "placeholders": {

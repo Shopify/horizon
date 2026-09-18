@@ -287,9 +287,9 @@
       "add_to_apple_wallet": "Zu Apple Wallet hinzufügen",
       "qr_image_alt": "QR-Code – Scannen, um Gutschein einzulösen",
       "copy_code": "Geschenkgutscheincode kopieren",
-      "expiration_date": "Gültig bis {{ expires_on }}",
       "copy_code_success": "Code erfolgreich kopiert",
-      "expired": "Abgelaufen"
+      "expired": "Abgelaufen",
+      "expiration_date_html": "Läuft ab am <bdi>{{ expires_on }}</bdi>"
     }
   },
   "placeholders": {

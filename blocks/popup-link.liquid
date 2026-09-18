@@ -81,10 +81,11 @@
     width: var(--sidebar-width);
     max-width: 95vw;
     height: 100%;
-    margin: 0 0 0 auto;
+    margin: 0;
+    margin-inline-start: auto;
 
-    /* Right-anchored drawer spans the full physical viewport (viewport-fit=cover); keep its
-       content clear of the right-side notch and home indicator */
+    /* Inline-end-anchored drawer spans the full physical viewport (viewport-fit=cover); keep its
+       content clear of the outer-edge notch and home indicator */
     padding-inline-end: calc(var(--padding-xl) + var(--safe-area-inset-right));
     padding-block-end: calc(var(--padding-xl) + var(--safe-area-inset-bottom));
 
@@ -94,6 +95,24 @@
     }
   }
 
+  /* Safe-area env() values are physical; the mirrored drawer's outer edge is the left notch in RTL */
+  [dir='rtl'] .popup-link__content--drawer {
+    padding-inline-end: calc(var(--padding-xl) + var(--safe-area-inset-left));
+
+    @media screen and (min-width: 750px) {
+      padding-inline-end: calc(var(--padding-5xl) + var(--safe-area-inset-left));
+    }
+  }
+
+  /* The drawer slides in from its anchored edge; mirror the animation in RTL */
+  [dir='rtl'] .popup-link__content--drawer[open] {
+    --start-x: -100%;
+  }
+
+  [dir='rtl'] .popup-link__content--drawer[open].dialog-closing {
+    --end-x: -100%;
+  }
+
   /* Needed to ensure the drawer is full height */
   .popup-link__content--drawer:modal {
     max-height: 100dvh;
@@ -101,15 +120,26 @@
 
   .popup-link__close {
     top: var(--margin-2xs);
-    right: var(--margin-2xs);
+    inset-inline-end: var(--margin-2xs);
     opacity: 0.8;
     animation: none;
+  }
+
+  /* Match the specificity of the base [dir='rtl'] .close-button safe-area rule so
+     the popup close button keeps its own corner inset in RTL */
+  [dir='rtl'] .popup-link__close {
+    inset-inline-end: var(--margin-2xs);
   }
 
   /* The close button is absolutely positioned so it bypasses the drawer's safe-area padding */
   .popup-link__content--drawer .popup-link__close {
     top: max(var(--margin-2xs), var(--safe-area-inset-top));
-    right: max(var(--margin-2xs), var(--safe-area-inset-right));
+    inset-inline-end: max(var(--margin-2xs), var(--safe-area-inset-right));
+  }
+
+  /* Safe-area env() values are physical; in RTL the button sits by the left-side notch */
+  [dir='rtl'] .popup-link__content--drawer .popup-link__close {
+    inset-inline-end: max(var(--margin-2xs), var(--safe-area-inset-left));
   }
 {% endstylesheet %}
 

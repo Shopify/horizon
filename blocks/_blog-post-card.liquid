@@ -26,7 +26,7 @@
 
 <div
   class="blog-post-card{% if block_settings.background_color != blank %} color-custom-{{ block.id }}{% endif %}{% if is_horizontal %} blog-post-card--horizontal{% endif %}"
-  style="--text-align: {{ block_settings.alignment }}"
+  style="--text-align: {{ block_settings.alignment | replace: 'left', 'start' | replace: 'right', 'end' }}"
 >
   {% if article.image %}
     {% content_for 'block',

@@ -165,7 +165,7 @@
 
   .layered-slideshow__panel:first-child .layered-slideshow__panel-content {
     width: var(--active-panel-width);
-    border-left: var(--border-width) solid var(--border-color);
+    border-inline-start: var(--border-width) solid var(--border-color);
   }
 
   .layered-slideshow__panel:not(:first-child) .layered-slideshow__content {
@@ -174,10 +174,10 @@
 
   .layered-slideshow__panel-content {
     border: var(--border-width) solid var(--border-color);
-    border-left: none;
+    border-inline-start: none;
     border-radius: var(--radius);
     position: absolute;
-    right: 0;
+    inset-inline-end: 0;
     top: 0;
     bottom: 0;
     overflow: hidden;
@@ -228,6 +228,12 @@
 
   .layered-slideshow__panel--drop-shadow:not(:last-child) .layered-slideshow__panel-content {
     box-shadow: 4px 0 12px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  @media screen and (min-width: 750px) {
+    [dir='rtl'] .layered-slideshow__panel--drop-shadow:not(:last-child) .layered-slideshow__panel-content {
+      box-shadow: -4px 0 12px 0 rgba(0, 0, 0, 0.1);
+    }
   }
 
   /* Shared transitions (desktop and mobile) */
@@ -298,9 +304,8 @@
       width: 100%;
       height: var(--active-panel-height);
       border-top: var(--border-width) solid var(--border-color);
-      left: 0;
-      right: 0;
-      border-left: var(--border-width) solid var(--border-color);
+      inset-inline: 0;
+      border-inline-start: var(--border-width) solid var(--border-color);
     }
 
     .layered-slideshow__panel-content {
@@ -312,8 +317,7 @@
       /* Clamp overlap to (button-height - border-width) to prevent visual issues with large radius + border */
       height: calc(var(--active-panel-height) + min(var(--radius) * 2, var(--button-height) - var(--border-width)));
       top: unset;
-      left: 0;
-      right: 0;
+      inset-inline: 0;
       bottom: 0;
       overflow: hidden;
     }

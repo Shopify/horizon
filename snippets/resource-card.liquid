@@ -47,9 +47,9 @@
       data-product-transition="true"
       on:click="/handleViewTransition"
     {% endif %}
-    {% # theme-check-disable UnknownFilter %}
-    view-event-payload="{{ resource | standard_event_data: 'view', context: product_view_context | escape }}"
-    {% # theme-check-enable UnknownFilter %}
+    {% if resource.id != blank %}
+      view-event-payload="{{ resource | standard_event_data: 'view', context: product_view_context | escape }}"
+    {% endif %}
   >
 {%- endif -%}
 <div

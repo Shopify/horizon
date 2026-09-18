@@ -1,6 +1,6 @@
 import { Component } from '@theme/component';
 import { ThemeEvents, MediaStartedPlayingEvent } from '@theme/events';
-import { DialogCloseEvent } from '@theme/dialog';
+import { DialogCloseEvent, DialogOpenEvent } from '@theme/dialog';
 
 /**
  * A deferred media element
@@ -22,6 +22,19 @@ class DeferredMedia extends Component {
     // If we're to use deferred media for images, we will need to run this only when it's not an image type media
     document.addEventListener(ThemeEvents.mediaStartedPlaying, this.pauseMedia.bind(this), { signal });
     window.addEventListener(DialogCloseEvent.eventName, this.pauseMedia.bind(this), { signal });
+
+    // Neither dialog:open nor dialog:close bubbles, and DialogComponent dispatches both on itself,
+    // so both have to be observed on the dialog element. The window listener above stays because
+    // ZoomDialog dispatches DialogCloseEvent straight at window instead.
+    const dialogComponent = this.closest('dialog-component');
+
+    dialogComponent?.addEventListener(DialogOpenEvent.eventName, this.#playOnDialogOpen, { signal });
+    dialogComponent?.addEventListener(DialogCloseEvent.eventName, this.pauseMedia.bind(this), { signal });
+
+    // dialog:open fires once. media.js is a low-priority module and popup-link loads dialog.js
+    // itself, so on a slow connection the dialog can already be open by the time this upgrade runs
+    // and the listener above would wait for an event that has been and gone.
+    if (dialogComponent && this.closest('dialog')?.open) this.#playOnDialogOpen();
   }
 
   disconnectedCallback() {
@@ -75,11 +88,51 @@ class DeferredMedia extends Component {
 
     this.refs.deferredMediaPlayButton?.classList.add('deferred-media__playing');
 
-    if (content instanceof HTMLVideoElement && content.getAttribute('autoplay')) {
-      // force autoplay for safari
+    if (content instanceof HTMLVideoElement && content.hasAttribute('autoplay')) {
+      // Force playback for browsers that do not reliably start template-cloned videos from the autoplay attribute alone.
       content.play();
     }
   }
+
+  /**
+   * `snippets/video.liquid` renders an uploaded video twice, inside `<template>` and again as a
+   * direct child, and `loadContent` appends the clone on top of both. The clone is the copy the
+   * visitor sees, so start paths need the last match in tree order, not the first.
+   *
+   * @returns {HTMLVideoElement | null}
+   */
+  #presentedVideo() {
+    const videos = this.querySelectorAll('video');
+
+    return videos[videos.length - 1] ?? null;
+  }
+
+  /**
+   * Starts an autoplay video once the dialog holding it is open.
+   *
+   * Safari does not honour the autoplay attribute on a video that was rendered inside a closed
+   * `<dialog>`, and no other code path asks it to play, so the video stays at currentTime 0 for the
+   * whole session. Only a paused video is touched, so browsers that start it on their own keep the
+   * playhead they already have.
+   */
+  #playOnDialogOpen = () => {
+    if (!this.hasAttribute('autoplay')) return;
+
+    const video = this.#presentedVideo();
+
+    if (!video || !video.paused) return;
+
+    // Announce the start before playing, the order loadContent uses. The document listener pauses
+    // every DeferredMedia on this event, including this one, so play() has to come second.
+    this.dispatchEvent(new MediaStartedPlayingEvent(this));
+
+    // A rejected play() is the browser declining on autoplay-policy grounds. There is nothing to
+    // recover, and an unhandled rejection would be noise in the merchant's console.
+    video.play().catch(() => {});
+
+    this.isPlaying = true;
+    this.updatePlayPauseHint(this.isPlaying);
+  };
 
   /**
    * Toggle play/pause state of the media
@@ -103,7 +156,7 @@ class DeferredMedia extends Component {
         '*'
       );
     } else {
-      this.querySelector('video')?.play();
+      this.#presentedVideo()?.play();
     }
     this.isPlaying = true;
     this.updatePlayPauseHint(this.isPlaying);
@@ -124,7 +177,8 @@ class DeferredMedia extends Component {
         '*'
       );
     } else {
-      this.querySelector('video')?.pause();
+      // Every copy, because the one the clone covers can still be decoding.
+      for (const video of this.querySelectorAll('video')) video.pause();
     }
     this.isPlaying = false;
 

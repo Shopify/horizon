@@ -287,9 +287,9 @@
       "add_to_apple_wallet": "Добавяне към Apple Wallet",
       "qr_image_alt": "QR код – сканирайте го, за да използвате ваучера за подарък",
       "copy_code": "Копиране на кода на ваучер за подарък",
-      "expiration_date": "Изтича на {{ expires_on }}",
       "copy_code_success": "Кодът е копиран успешно",
-      "expired": "Изтекъл"
+      "expired": "Изтекъл",
+      "expiration_date_html": "Изтича на <bdi>{{ expires_on }}</bdi>"
     }
   },
   "placeholders": {

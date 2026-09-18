@@ -293,9 +293,9 @@
       "add_to_apple_wallet": "Ajouter à Apple Wallet",
       "qr_image_alt": "Code QR : scannez‑le pour utiliser votre carte‑cadeau",
       "copy_code": "Copier le code de la carte‑cadeau",
-      "expiration_date": "Expire le {{ expires_on }}",
       "copy_code_success": "Le code a bien été copié",
-      "expired": "Expirée"
+      "expired": "Expirée",
+      "expiration_date_html": "Expire le <bdi>{{ expires_on }}</bdi>"
     }
   },
   "placeholders": {

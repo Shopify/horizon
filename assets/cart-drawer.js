@@ -1,6 +1,7 @@
 import { Component } from '@theme/component';
 import { StandardEvents } from '@shopify/events';
 import { DrawerOpenEvent } from '@theme/theme-drawer';
+import { ThemeEvents } from '@theme/events';
 
 /**
  * A custom element that manages cart drawer behavior within a `<theme-drawer>`.
@@ -32,6 +33,7 @@ class CartDrawerComponent extends Component {
     super.connectedCallback();
     document.addEventListener(StandardEvents.cartLinesUpdate, this.#handleCartLinesUpdate);
     this.#themeDrawer?.addEventListener(DrawerOpenEvent.eventName, this.#handleDrawerOpen);
+    this.addEventListener(ThemeEvents.cartSectionRestored, this.#handleCartSectionRestored);
 
     // The restore path sets [open] before this module loads, so the
     // theme-drawer:open event will have already fired. Use the attribute
@@ -45,7 +47,21 @@ class CartDrawerComponent extends Component {
     super.disconnectedCallback();
     document.removeEventListener(StandardEvents.cartLinesUpdate, this.#handleCartLinesUpdate);
     this.#themeDrawer?.removeEventListener(DrawerOpenEvent.eventName, this.#handleDrawerOpen);
+    this.removeEventListener(ThemeEvents.cartSectionRestored, this.#handleCartSectionRestored);
   }
+
+  /**
+   * Recomputes the sticky summary after a back/forward cache restore re-renders the cart items.
+   *
+   * On viewports at or above 990px an open drawer survives a navigation and is reopened during
+   * parsing (see the restore script in `snippets/theme-drawer.liquid`), so no open event fires
+   * on the way back and the measurement taken before the shopper left is the one still applied.
+   * An empty drawer measured as unpinned would keep the checkout CTA scrolling away once the
+   * restore fills it with line items.
+   */
+  #handleCartSectionRestored = () => {
+    requestAnimationFrame(() => this.#updateStickyState());
+  };
 
   /**
    * Handles the theme-drawer opening — updates sticky state and wires up the installments CTA.

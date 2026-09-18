@@ -89,4 +89,13 @@
   .slideshow-control .icon-caret {
     rotate: -90deg;
   }
+
+  /* Forward/backward arrows follow reading direction: mirror next, and undo the previous control's flip-x */
+  [dir='rtl'] .slideshow-control--next {
+    scale: -1 1;
+  }
+
+  [dir='rtl'] .slideshow-control--previous {
+    scale: 1 1;
+  }
 {% endstylesheet %}

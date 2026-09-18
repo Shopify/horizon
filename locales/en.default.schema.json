@@ -487,6 +487,18 @@
     "dairy_free": "Dairy free",
     "default": "Default",
     "diamond": "Diamond",
+    // Horizontal position that follows reading direction. In right-to-left languages (ar, he, ur) translate as "Bottom start", not "Bottom left"
+    "direction_bottom_start": "Bottom left",
+    // Horizontal position that follows reading direction. Same in all languages
+    "direction_center": "Center",
+    // Horizontal position that follows reading direction. In right-to-left languages (ar, he, ur) translate as "End", not "Right"
+    "direction_end": "Right",
+    // Horizontal position that follows reading direction. In right-to-left languages (ar, he, ur) translate as "Start", not "Left"
+    "direction_start": "Left",
+    // Horizontal position that follows reading direction. In right-to-left languages (ar, he, ur) translate as "Top end", not "Top right"
+    "direction_top_end": "Top right",
+    // Horizontal position that follows reading direction. In right-to-left languages (ar, he, ur) translate as "Top start", not "Top left"
+    "direction_top_start": "Top left",
     "dissolve": "Dissolve",
     "dots": "Dots",
     "dotted": "Dotted",

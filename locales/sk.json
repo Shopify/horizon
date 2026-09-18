@@ -299,9 +299,9 @@
       "add_to_apple_wallet": "Pridať do aplikácie Apple Wallet",
       "qr_image_alt": "QR kód – naskenujte ho a uplatnite si darčekový poukaz",
       "copy_code": "Kopírovať kód darčekového poukazu",
-      "expiration_date": "Platnosť skončí {{ expires_on }}",
       "copy_code_success": "Kód sa úspešne skopíroval",
-      "expired": "Platnosť uplynula"
+      "expired": "Platnosť uplynula",
+      "expiration_date_html": "Platí do <bdi>{{ expires_on }}</bdi>"
     }
   },
   "blogs": {

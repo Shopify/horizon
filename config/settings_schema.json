@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "Horizon",
-    "theme_version": "4.1.5",
+    "theme_version": "4.2.0",
     "theme_author": "Shopify",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://support.shopify.com/"
@@ -1185,15 +1185,15 @@
         "options": [
           {
             "value": "bottom-left",
-            "label": "t:options.bottom_left"
+            "label": "t:options.direction_bottom_start"
           },
           {
             "value": "top-left",
-            "label": "t:options.top_left"
+            "label": "t:options.direction_top_start"
           },
           {
             "value": "top-right",
-            "label": "t:options.top_right"
+            "label": "t:options.direction_top_end"
           }
         ],
         "default": "top-left",

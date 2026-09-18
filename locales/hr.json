@@ -293,9 +293,9 @@
       "add_to_apple_wallet": "Dodaj u Apple Wallet",
       "qr_image_alt": "QR kod – skenirajte ga kako biste iskoristili poklon-karticu",
       "copy_code": "Kopiraj kod poklon-kartice",
-      "expiration_date": "Istječe {{ expires_on }}",
       "copy_code_success": "Kod je uspješno kopiran",
-      "expired": "Isteklo"
+      "expired": "Isteklo",
+      "expiration_date_html": "Istječe <bdi>{{ expires_on }}</bdi>"
     }
   },
   "placeholders": {

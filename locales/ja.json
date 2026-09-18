@@ -287,9 +287,9 @@
       "add_to_apple_wallet": "Apple Walletに追加する",
       "qr_image_alt": "QRコード: スキャンしてギフトカードにクーポンを使う",
       "copy_code": "ギフトカードコードをコピーする",
-      "expiration_date": "{{ expires_on }}に期限が切れます",
       "copy_code_success": "コードは正常にコピーされました",
-      "expired": "期限切れ"
+      "expired": "期限切れ",
+      "expiration_date_html": "<bdi>{{ expires_on }}</bdi> まで有効"
     }
   },
   "placeholders": {
