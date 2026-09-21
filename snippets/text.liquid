@@ -69,7 +69,7 @@
     --width: {{ text_width }};
     --max-width: var(--max-width--{{ type }}-{{ block_settings.max_width }});
     {% if text_width == "100%" %}
-      --text-align: {{ block_settings.alignment }};
+      --text-align: {{ block_settings.alignment | replace: 'left', 'start' | replace: 'right', 'end' }};
     {% endif %}
     {% if block_settings.background %}
       --text-background-color: {{ block_settings.background_color | default: 'rgb(255 255 255 / 1.0)' }};
@@ -104,7 +104,7 @@
 
 {% stylesheet %}
   :root {
-    --text-align-default: left;
+    --text-align-default: start;
   }
 
   /* Base text-block sizing, spacing, wrapping, and helper classes live in text-block-styles.liquid. */
@@ -121,11 +121,11 @@
   }
 
   [style*='--horizontal-alignment: flex-end'] .text-block {
-    --text-align-default: right;
+    --text-align-default: end;
   }
 
   [style*='--horizontal-alignment: flex-start'] > .text-block {
-    --text-align-default: left;
+    --text-align-default: start;
   }
 
   [style*='--horizontal-alignment: center'] > .text-block {
@@ -133,7 +133,7 @@
   }
 
   [style*='--horizontal-alignment: flex-end'] > .text-block {
-    --text-align-default: right;
+    --text-align-default: end;
   }
 
   .text-block > * {

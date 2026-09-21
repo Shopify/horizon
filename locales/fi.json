@@ -287,9 +287,9 @@
       "add_to_apple_wallet": "Lisää Apple Walletiin",
       "qr_image_alt": "QR-koodi – lunasta lahjakortti skannaamalla",
       "copy_code": "Kopioi lahjakortin koodi",
-      "expiration_date": "Voimassa {{ expires_on }} asti",
       "copy_code_success": "Koodin kopioiminen onnistui",
-      "expired": "Vanhentunut"
+      "expired": "Vanhentunut",
+      "expiration_date_html": "Vanhenee <bdi>{{ expires_on }}</bdi>"
     }
   },
   "placeholders": {

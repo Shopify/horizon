@@ -287,9 +287,9 @@
       "add_to_apple_wallet": "Lägg till i Apple Wallet",
       "qr_image_alt": "QR-kod – skanna för att lösa in presentkort",
       "copy_code": "Kopiera presentkortskod",
-      "expiration_date": "Går ut {{ expires_on }}",
       "copy_code_success": "Koden kopierades",
-      "expired": "Har utgått"
+      "expired": "Har utgått",
+      "expiration_date_html": "Löper ut <bdi>{{ expires_on }}</bdi>"
     }
   },
   "blogs": {

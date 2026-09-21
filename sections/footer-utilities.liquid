@@ -37,7 +37,7 @@
       justify-content: center;
       gap: var(--gap);
       align-items: center;
-      text-align: left;
+      text-align: start;
     }
   }
 
@@ -50,7 +50,7 @@
     text-align: center;
 
     @media screen and (min-width: 750px) {
-      text-align: left;
+      text-align: start;
       justify-self: start;
     }
   }
@@ -65,7 +65,7 @@
 
     .utilities--blocks-1 > * {
       justify-self: start;
-      text-align: left;
+      text-align: start;
     }
 
     /* 2 blocks: Two equal columns, start and end aligned */
@@ -75,7 +75,7 @@
 
     .utilities--blocks-2 > *:nth-child(2) {
       justify-self: end;
-      text-align: right;
+      text-align: end;
     }
 
     /* 3 blocks: Three columns (1fr auto 1fr), start/center/end aligned */
@@ -90,7 +90,7 @@
 
     .utilities--blocks-3 > *:nth-child(3) {
       justify-self: end;
-      text-align: right;
+      text-align: end;
     }
   }
 {% endstylesheet %}

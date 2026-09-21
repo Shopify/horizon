@@ -41,20 +41,33 @@ class SectionRenderer {
    * @param {boolean} [options.injectStylesheet=false] - When true, extracts
    * `style[data-section-stylesheet]` from the response and injects it into the section wrapper.
    * @param {URL} [options.url] - The URL to render the section from
+   * @param {(html: string) => boolean} [options.shouldRender] - Return false to preserve the current section.
    * @returns {Promise<string>} The rendered section HTML
    */
   async renderSection(sectionId, options) {
     const { cache = !Shopify.designMode, mode = 'full', injectStylesheet = false } = options ?? {};
-    const { url } = options ?? {};
+    const { url, shouldRender } = options ?? {};
     this.#abortPendingMorph(sectionId);
 
     const abortController = new AbortController();
     this.#abortControllersBySectionId.set(sectionId, abortController);
 
-    const renderPromise = this.#renderSection(sectionId, { cache, mode, injectStylesheet, url }, abortController);
+    const renderPromise = this.#renderSection(
+      sectionId,
+      { cache, mode, injectStylesheet, url, shouldRender },
+      abortController
+    );
     this.#pendingRendersBySectionId.set(sectionId, { abortController, promise: renderPromise });
 
     return renderPromise;
+  }
+
+  /**
+   * Cancels a pending render for a section.
+   * @param {string} sectionId - The section ID
+   */
+  abortRender(sectionId) {
+    this.#abortPendingMorph(sectionId);
   }
 
   /**
@@ -65,10 +78,11 @@ class SectionRenderer {
    * @param {'hydration'|'full'} options.mode - Which parts of the section to morph into the DOM
    * @param {boolean} options.injectStylesheet - When true, injects stylesheet from the response
    * @param {URL} [options.url] - The URL to render the section from
+   * @param {(html: string) => boolean} [options.shouldRender] - Return false to preserve the current section.
    * @param {AbortController} abortController - The abort controller for this render
    * @returns {Promise<string>} The rendered section HTML
    */
-  async #renderSection(sectionId, { cache, mode, injectStylesheet, url }, abortController) {
+  async #renderSection(sectionId, { cache, mode, injectStylesheet, url, shouldRender }, abortController) {
     let sectionHTML = '';
 
     try {
@@ -95,8 +109,8 @@ class SectionRenderer {
       }
     }
 
-    if (!abortController.signal.aborted) {
-      morphSection(sectionId, sectionHTML, { mode, injectStylesheet });
+    if (!abortController.signal.aborted && (shouldRender?.(sectionHTML) ?? true)) {
+      await morphSection(sectionId, sectionHTML, { mode, injectStylesheet });
     }
 
     return sectionHTML;

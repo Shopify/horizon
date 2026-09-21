@@ -45,16 +45,12 @@
         >
           {%- if filter.min_value.value != null or filter.max_value.value != null %}
             {%- if filter.min_value.value != null and filter.max_value.value != null %}
-              {{- filter.min_value.value | money | strip_html -}}
-              –
-              {{- filter.max_value.value | money | strip_html -}}
+              <bdi>{{ filter.min_value.value | money | strip_html }}–{{ filter.max_value.value | money | strip_html }}</bdi>
             {%- elsif filter.min_value.value != null -%}
-              {{ filter.min_value.value | money | strip_html }}–{{ filter.range_max | money | strip_html }}
+              <bdi>{{ filter.min_value.value | money | strip_html }}–{{ filter.range_max | money | strip_html }}</bdi>
 
             {%- elsif filter.max_value.value != null -%}
-              {{- 0 | money | strip_html -}}
-              –
-              {{- filter.max_value.value | money | strip_html -}}
+              <bdi>{{ 0 | money | strip_html }}–{{ filter.max_value.value | money | strip_html }}</bdi>
             {%- endif -%}
           {%- endif -%}
         </span>
@@ -151,7 +147,7 @@
             {%- endif %}
           "
         >
-          {%- assign formatted_highest_price = filter.range_max | money -%}
+          {%- capture formatted_highest_price -%}<bdi>{{ filter.range_max | money }}</bdi>{%- endcapture -%}
           {{ 'content.price_filter_html' | t: price: formatted_highest_price }}
         </div>
 
@@ -214,8 +210,8 @@
 
   .price-facet__input {
     width: 100%;
-    text-align: right;
-    padding-left: calc(2.5 * var(--input-padding-x));
+    text-align: end;
+    padding-inline-start: calc(2.5 * var(--input-padding-x));
   }
 
   .price-facet__input::placeholder {
@@ -240,7 +236,7 @@
 
   .price-facet__label {
     top: 0;
-    left: 0;
+    inset-inline-start: 0;
     color: var(--facets-input-label-color);
     padding: var(--input-padding-y) var(--input-padding-x);
     transform: none;

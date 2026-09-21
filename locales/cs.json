@@ -299,9 +299,9 @@
       "add_to_apple_wallet": "Přidat do Apple Peněženky",
       "qr_image_alt": "QR kód: po naskenování můžete uplatnit svou dárkovou kartu",
       "copy_code": "Zkopírovat kód dárkové karty",
-      "expiration_date": "Platnost skončí {{ expires_on }}",
       "copy_code_success": "Kód byl úspěšně zkopírován",
-      "expired": "Po konci platnosti"
+      "expired": "Po konci platnosti",
+      "expiration_date_html": "Vyprší <bdi>{{ expires_on }}</bdi>"
     }
   },
   "placeholders": {

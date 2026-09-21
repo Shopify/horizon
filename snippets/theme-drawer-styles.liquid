@@ -22,25 +22,31 @@
     position: fixed;
     inset: unset;
     top: 0;
-    right: calc(-1 * var(--theme-drawer-width, var(--sidebar-width)));
+    inset-inline-end: calc(-1 * var(--theme-drawer-width, var(--sidebar-width)));
     flex-direction: column;
     width: var(--theme-drawer-width, var(--sidebar-width));
     max-width: 100%;
     max-height: none;
     height: 100dvh;
 
-    /* Right-anchored drawer spans the full physical viewport (viewport-fit=cover); keep its
-       content clear of the status bar, right-side notch, and home indicator */
-    padding: var(--safe-area-inset-top) var(--safe-area-inset-right) var(--safe-area-inset-bottom) 0;
+    /* Inline-end-anchored drawer spans the full physical viewport (viewport-fit=cover); keep its
+       content clear of the status bar, side notch, and home indicator */
+    padding-block: var(--safe-area-inset-top) var(--safe-area-inset-bottom);
+    padding-inline: 0 var(--safe-area-inset-right);
     border: none;
-    border-left: var(--style-border-drawer);
+    border-inline-start: var(--style-border-drawer);
     background-color: var(--color-background);
     color: var(--color-foreground);
   }
 
   .theme-drawer__dialog[open] {
     display: flex;
-    right: 0;
+    inset-inline-end: 0;
+  }
+
+  /* Safe-area env() values are physical; in RTL the drawer anchors to the left edge */
+  [dir='rtl'] .theme-drawer__dialog {
+    padding-inline-end: var(--safe-area-inset-left);
   }
 
   .theme-drawer__dialog--opening {
@@ -61,19 +67,19 @@
 
   @keyframes drawer-slide-in {
     from {
-      right: calc(-1 * var(--theme-drawer-width, var(--sidebar-width)));
+      inset-inline-end: calc(-1 * var(--theme-drawer-width, var(--sidebar-width)));
     }
   }
 
   @keyframes drawer-slide-in-inline-start {
     from {
-      right: calc(var(--theme-drawer-width, var(--sidebar-width)) / 2);
+      inset-inline-end: calc(var(--theme-drawer-width, var(--sidebar-width)) / 2);
     }
   }
 
   @keyframes drawer-slide-out {
     to {
-      right: calc(-1 * var(--theme-drawer-width, var(--sidebar-width)));
+      inset-inline-end: calc(-1 * var(--theme-drawer-width, var(--sidebar-width)));
     }
   }
 

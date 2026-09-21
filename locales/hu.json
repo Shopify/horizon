@@ -287,9 +287,9 @@
       "add_to_apple_wallet": "Hozzáadás az Apple Wallethoz",
       "qr_image_alt": "Ezt a QR-kódot beszkennelve beválthatod az ajándékkártyát.",
       "copy_code": "Ajándékkártya kódjának másolása",
-      "expiration_date": "Lejárat dátuma: {{ expires_on }}",
       "copy_code_success": "Sikeres volt a kód másolása",
-      "expired": "Lejárt"
+      "expired": "Lejárt",
+      "expiration_date_html": "Lejár: <bdi>{{ expires_on }}</bdi>"
     }
   },
   "blogs": {

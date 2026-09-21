@@ -287,9 +287,9 @@
       "add_to_apple_wallet": "Tambahkan ke Dompet Apple",
       "qr_image_alt": "Kode QR — pindai untuk menukarkan voucher",
       "copy_code": "Salin kode voucher",
-      "expiration_date": "Kedaluwarsa pada {{ expires_on }}",
       "copy_code_success": "Kode berhasil disalin",
-      "expired": "Kedaluwarsa"
+      "expired": "Kedaluwarsa",
+      "expiration_date_html": "Kedaluwarsa pada <bdi>{{ expires_on }}</bdi>"
     }
   },
   "placeholders": {

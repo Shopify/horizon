@@ -544,8 +544,7 @@
 
     position: absolute;
     top: 0;
-    left: 0;
-    right: 0;
+    inset-inline: 0;
 
     z-index: var(--layer-overlay);
 
@@ -1091,7 +1090,7 @@
   .dropdown-localization__button .svg-wrapper.icon-caret {
     height: var(--icon-size-xs);
     width: var(--icon-size-xs);
-    right: var(--margin-xs);
+    inset-inline-end: var(--margin-xs);
     top: calc(50% - var(--padding-2xs));
     flex-shrink: 0;
     transition: transform var(--animation-speed) var(--animation-easing);
@@ -1184,18 +1183,19 @@
   }
 
   dropdown-localization-component .localization-wrapper.right-bound {
-    right: 0;
-    left: unset;
+    inset-inline-end: 0;
+    inset-inline-start: unset;
   }
 
   dropdown-localization-component .localization-wrapper.left-bound {
-    left: -8px;
-    right: unset;
+    inset-inline-start: -8px;
+    inset-inline-end: unset;
   }
 
   /* Additional specificity due to dropdown-localization-component getting a low score */
   dropdown-localization-component .language-selector.language-selector {
-    padding: 10px 8px 10px 16px;
+    padding-block: 10px;
+    padding-inline: 16px 8px;
   }
 
   dropdown-localization-component .localization-form__currency {
@@ -1258,15 +1258,15 @@
       "options": [
         {
           "value": "left",
-          "label": "t:options.left"
+          "label": "t:options.direction_start"
         },
         {
           "value": "center",
-          "label": "t:options.center"
+          "label": "t:options.direction_center"
         },
         {
           "value": "right",
-          "label": "t:options.right"
+          "label": "t:options.direction_end"
         }
       ],
       "default": "center"
@@ -1282,15 +1282,15 @@
       "options": [
         {
           "value": "left",
-          "label": "t:options.left"
+          "label": "t:options.direction_start"
         },
         {
           "value": "center",
-          "label": "t:options.center"
+          "label": "t:options.direction_center"
         },
         {
           "value": "right",
-          "label": "t:options.right"
+          "label": "t:options.direction_end"
         }
       ],
       "default": "left"
@@ -1342,11 +1342,11 @@
       "options": [
         {
           "value": "left",
-          "label": "t:options.left"
+          "label": "t:options.direction_start"
         },
         {
           "value": "right",
-          "label": "t:options.right"
+          "label": "t:options.direction_end"
         }
       ],
       "default": "right",
@@ -1454,11 +1454,11 @@
       "options": [
         {
           "value": "left",
-          "label": "t:options.left"
+          "label": "t:options.direction_start"
         },
         {
           "value": "right",
-          "label": "t:options.right"
+          "label": "t:options.direction_end"
         }
       ],
       "default": "right",

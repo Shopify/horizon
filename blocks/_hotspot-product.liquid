@@ -8,6 +8,7 @@
 <product-hotspot-component
   class="hotspot{% if hotspot_product == blank and request.design_mode == false %} hotspot--hidden-touch hidden--mobile{% endif %}"
   style="
+    {% # Intentionally physical: x/y are coordinates on the image, which does not mirror in RTL. %}
     left: calc({{ block.settings.x-position }}% - var(--button-size) / 2);
     top: calc({{ block.settings.y-position }}% - var(--button-size) / 2);
     --hotspot-bg: {{ section.settings.hotspot_color }};

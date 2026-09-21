@@ -340,10 +340,10 @@
 
     inset: unset;
     top: var(--cart-disclosure-tooltip-popover-top, var(--cart-disclosure-tooltip-popover-native-fallback-top));
-    left: max(
+    inset-inline-start: max(
       var(--cart-disclosure-tooltip-popover-viewport-margin),
       min(
-        calc(anchor(left) - var(--cart-disclosure-tooltip-symbol-inset-inline)),
+        calc(anchor(start) - var(--cart-disclosure-tooltip-symbol-inset-inline)),
         calc(
           100vw - var(--cart-disclosure-tooltip-popover-max-width) -
             var(--cart-disclosure-tooltip-popover-viewport-margin)
@@ -372,10 +372,10 @@
     .cart-disclosure-tooltip__popover {
       position: fixed;
       top: var(--cart-disclosure-tooltip-popover-fixed-fallback-top);
-      left: max(
+      inset-inline-start: max(
         var(--cart-disclosure-tooltip-popover-viewport-margin),
         min(
-          calc((var(--anchor-left) * 1px) - var(--cart-disclosure-tooltip-symbol-inset-inline)),
+          calc((var(--anchor-inline-start) * 1px) - var(--cart-disclosure-tooltip-symbol-inset-inline)),
           calc(
             100vw - var(--cart-disclosure-tooltip-popover-max-width) -
               var(--cart-disclosure-tooltip-popover-viewport-margin)
@@ -563,6 +563,12 @@
     inset-inline-end: var(--padding-sm);
     z-index: var(--layer-raised);
     overflow: visible;
+  }
+
+  /* Match the specificity of the base [dir='rtl'] .close-button safe-area rule so
+     the absolutely positioned modal button keeps its own corner inset in RTL */
+  [dir='rtl'] .cart-disclosure-modal__close {
+    inset-inline-end: var(--padding-sm);
   }
 
   @media screen and (min-width: 750px) {

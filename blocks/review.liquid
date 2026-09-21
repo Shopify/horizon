@@ -131,6 +131,8 @@
 
   .rating-wrapper.justify-right {
     flex-direction: row-reverse;
+    /* row-reverse flips the main axis, so main-start is inline-end */
+    justify-content: flex-start;
   }
 
   .rating {
@@ -146,8 +148,7 @@
 
   .rating-count-separator {
     opacity: var(--opacity-20);
-    padding-left: calc(var(--padding-xs) / 2);
-    padding-right: var(--padding-xs);
+    padding-inline: calc(var(--padding-xs) / 2) var(--padding-xs);
   }
 
   .stars {

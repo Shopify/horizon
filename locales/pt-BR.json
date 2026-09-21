@@ -293,9 +293,9 @@
       "add_to_apple_wallet": "Adicionar ao app Wallet da Apple",
       "qr_image_alt": "Código QR (faça a leitura para resgatar o cartão-presente)",
       "copy_code": "Copiar código do cartão-presente",
-      "expiration_date": "Expira em {{ expires_on }}",
       "copy_code_success": "Código copiado",
-      "expired": "Vencido"
+      "expired": "Vencido",
+      "expiration_date_html": "Expira em <bdi>{{ expires_on }}</bdi>"
     }
   },
   "placeholders": {

@@ -287,9 +287,9 @@
       "add_to_apple_wallet": "Aan Apple Wallet toevoegen",
       "qr_image_alt": "QR-code — scan om cadeaubon te verzilveren",
       "copy_code": "Cadeauboncode kopiëren",
-      "expiration_date": "Verloopt op {{ expires_on }}",
       "copy_code_success": "Code gekopieerd",
-      "expired": "Verlopen"
+      "expired": "Verlopen",
+      "expiration_date_html": "Vervalt op <bdi>{{ expires_on }}</bdi>"
     }
   },
   "blogs": {

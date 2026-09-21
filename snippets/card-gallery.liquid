@@ -29,12 +29,17 @@
   # if section has section.settings.columns:
   # assume grid-template repeat(column-count, 1fr) and calculate the sizes attribute based on the number of columns
   if section.settings.product_card_size
+    assign mobile_image_size = '100vw'
+    if section.settings.mobile_product_card_size == 'small'
+      assign mobile_image_size = '50vw'
+    endif
+
     capture card_size
       render 'util-product-grid-card-size', section: section
     endcapture
     assign card_size = card_size | strip | replace: 'px', '' | plus: 0
     capture sizes_attribute
-      render 'util-autofill-img-size-attr', card_size: card_size, card_gap: section.settings.columns_gap_horizontal
+      render 'util-autofill-img-size-attr', card_size: card_size, card_gap: section.settings.columns_gap_horizontal, mobile_size: mobile_image_size
     endcapture
     assign image_sizes = sizes_attribute | strip
   elsif section.settings.columns and section.settings.layout_type != 'editorial'
@@ -307,25 +312,25 @@
     .product-grid[data-product-card-size='extra-large']
       .card-gallery.card-gallery--badge-top-right
       .product-card-gallery__title-placeholder {
-      padding-right: calc(var(--padding-3xl) + 50px);
+      padding-inline-end: calc(var(--padding-3xl) + 50px);
     }
 
     .product-grid[data-product-card-size='large']
       .card-gallery.card-gallery--badge-top-right
       .product-card-gallery__title-placeholder {
-      padding-right: calc(var(--padding-2xl) + 50px);
+      padding-inline-end: calc(var(--padding-2xl) + 50px);
     }
 
     .product-grid[data-product-card-size='medium']
       .card-gallery.card-gallery--badge-top-right
       .product-card-gallery__title-placeholder {
-      padding-right: calc(var(--padding-xl) + 50px);
+      padding-inline-end: calc(var(--padding-xl) + 50px);
     }
 
     .product-grid[data-product-card-size='small']
       .card-gallery.card-gallery--badge-top-right
       .product-card-gallery__title-placeholder {
-      padding-right: calc(var(--padding-sm) + 50px);
+      padding-inline-end: calc(var(--padding-sm) + 50px);
     }
 
     .product-grid[data-product-card-size='extra-large']
@@ -386,7 +391,7 @@
     .product-grid[data-product-card-size]
       .card-gallery.card-gallery--badge-top-right
       .product-card-gallery__title-placeholder {
-      padding-right: calc(var(--padding-sm) + 50px);
+      padding-inline-end: calc(var(--padding-sm) + 50px);
     }
 
     .product-grid[data-product-card-size]
@@ -432,6 +437,10 @@
 
     @container (max-width: 249px) {
       padding-inline: 0 var(--padding-sm);
+
+      [dir='rtl'] & {
+        padding-inline: var(--padding-sm) 0;
+      }
     }
   }
 

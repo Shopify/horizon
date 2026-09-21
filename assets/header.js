@@ -259,6 +259,19 @@ if (!customElements.get('header-component')) {
   customElements.define('header-component', HeaderComponent);
 }
 
+// Anchor the shopify-account dialog to the bottom of the account button itself.
+document.addEventListener(
+  'open',
+  (event) => {
+    const { target } = event;
+    if (!(target instanceof HTMLElement) || !target.matches('shopify-account')) return;
+
+    const bottom = Math.max(0, Math.round(target.getBoundingClientRect().bottom));
+    target.style.setProperty('--account-dialog-top', `${bottom}px`);
+  },
+  true
+);
+
 onDocumentLoaded(() => {
   const header = document.querySelector('header-component');
   const headerGroup = document.querySelector('#header-group');

@@ -287,9 +287,9 @@
       "add_to_apple_wallet": "添加到 Apple Wallet",
       "qr_image_alt": "二维码 — 扫描兑换礼品卡",
       "copy_code": "复制礼品卡代码",
-      "expiration_date": "过期日期：{{ expires_on }}",
       "copy_code_success": "已成功复制代码",
-      "expired": "已过期"
+      "expired": "已过期",
+      "expiration_date_html": "到期日期：<bdi>{{ expires_on }}</bdi>"
     }
   },
   "placeholders": {

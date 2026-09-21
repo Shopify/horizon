@@ -287,9 +287,9 @@
       "add_to_apple_wallet": "Thêm vào Apple Wallet",
       "qr_image_alt": "Mã QR — quét để đổi thẻ quà tặng",
       "copy_code": "Sao chép mã thẻ quà tặng",
-      "expiration_date": "Hết hạn vào {{ expires_on }}",
       "copy_code_success": "Đã sao chép mã thành công",
-      "expired": "Đã hết hạn"
+      "expired": "Đã hết hạn",
+      "expiration_date_html": "Hết hạn vào <bdi>{{ expires_on }}</bdi>"
     }
   },
   "blogs": {

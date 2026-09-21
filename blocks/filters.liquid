@@ -574,7 +574,7 @@
   }
 
   .facets-toggle__wrapper {
-    margin-left: var(--icon-offset);
+    margin-inline-start: var(--icon-offset);
   }
 
   .facets-toggle__button {
@@ -1145,7 +1145,7 @@
   .facets--horizontal .products-count-wrapper {
     @media screen and (min-width: 750px) {
       display: flex;
-      margin-left: auto;
+      margin-inline-start: auto;
       flex-shrink: 0;
       align-items: center;
       height: var(--minimum-touch-target);
@@ -1246,6 +1246,11 @@
     margin-top: auto;
     background-image: var(--to-top-gradient-background);
     background-color: var(--color-background);
+  }
+
+  /* Clear all is hidden until filters are active; its empty wrapper must not reserve gap */
+  .facets__drawer-actions:not(:has(.facets__clear-all--active)) {
+    gap: 0;
   }
 
   /* Clear all button */

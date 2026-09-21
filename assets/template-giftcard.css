@@ -133,8 +133,7 @@
   justify-content: center;
   position: absolute;
   top: calc((var(--padding-lg) + var(--font-paragraph--size)) * -1);
-  left: 0;
-  right: 0;
+  inset-inline: 0;
   transition: opacity var(--animation-speed) var(--animation-easing),
     transform var(--animation-speed) var(--animation-easing);
   opacity: 0;

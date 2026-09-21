@@ -287,9 +287,9 @@
       "add_to_apple_wallet": "เพิ่มลงใน Apple Wallet",
       "qr_image_alt": "สแกนคิวอาร์โค้ดเพื่อแลกใช้บัตรของขวัญ",
       "copy_code": "คัดลอกรหัสบัตรของขวัญ",
-      "expiration_date": "หมดอายุเมื่อ {{ expires_on }}",
       "copy_code_success": "คัดลอกรหัสสำเร็จ",
-      "expired": "หมดอายุแล้ว"
+      "expired": "หมดอายุแล้ว",
+      "expiration_date_html": "หมดอายุ <bdi>{{ expires_on }}</bdi>"
     }
   },
   "placeholders": {

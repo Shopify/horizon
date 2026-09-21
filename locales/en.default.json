@@ -338,7 +338,7 @@
       "add_to_apple_wallet": "Add to Apple Wallet",
       "qr_image_alt": "QR code — scan to redeem gift card",
       "copy_code": "Copy gift card code",
-      "expiration_date": "Expires {{ expires_on }}",
+      "expiration_date_html": "Expires <bdi>{{ expires_on }}</bdi>",
       "copy_code_success": "Code copied successfully",
       "expired": "Expired"
     }

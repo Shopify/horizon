@@ -287,9 +287,9 @@
       "add_to_apple_wallet": "Føj til Apple Wallet",
       "qr_image_alt": "QR-kode – scan for at indløse gavekort",
       "copy_code": "Kopiér gavekortskode",
-      "expiration_date": "Udløber {{ expires_on }}",
       "copy_code_success": "Koden er blevet kopieret",
-      "expired": "Udløbet"
+      "expired": "Udløbet",
+      "expiration_date_html": "Udløber <bdi>{{ expires_on }}</bdi>"
     }
   },
   "placeholders": {

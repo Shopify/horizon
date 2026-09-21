@@ -37,7 +37,9 @@
   {{ block.shopify_attributes }}
 >
   {% if product.price_varies and has_swatches_only == false and price_min != blank %}
-    <span class="price">{{ display_price }}</span>
+    <span class="price"
+      ><bdi>{{ display_price }}</bdi></span
+    >
   {% else %}
     {% render 'price',
       show_unit_price: true,

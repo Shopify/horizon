@@ -3,6 +3,7 @@
 
   @param {number} card_size - The minimum pixel-width of the product card.
   @param {number} [card_gap] - The pixel-width of the gap between product cards.
+  @param {string} [mobile_size] - The sizes attribute image width below the desktop breakpoint.
 
   @example
   {% capture size_attribute %}
@@ -27,6 +28,7 @@
   assign max_breakpoint = 2000
 
   assign min_breakpoint = 750
+  assign mobile_size = mobile_size | default: '100vw'
 
   # Calculate maximum number of columns at max width
   assign max_cols = max_breakpoint | divided_by: card_size_with_gap | floor
@@ -60,13 +62,13 @@
     assign sizes_attr = sizes_attr | append: '(min-width: ' | append: min_width_needed | append: 'px) ' | append: percentage | append: 'vw'
   endfor
 
-  # Add tablet size (50vw) and mobile size (100vw) fallbacks
+  # Add tablet and mobile fallbacks
   if sizes_attr != ''
     assign sizes_attr = sizes_attr | append: ', '
   endif
   assign sizes_attr = sizes_attr | append: '(min-width: ' | append: min_breakpoint | append: 'px) 50vw'
 
-  assign sizes_attr = sizes_attr | append: ', 100vw'
+  assign sizes_attr = sizes_attr | append: ', ' | append: mobile_size
 
   # Echo the sizes attribute
   echo sizes_attr

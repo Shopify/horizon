@@ -77,10 +77,18 @@ export class AnchoredPopoverComponent extends Component {
     const verticalPositionAnchor = this.#getVerticalPositionAnchor();
     const verticalPositions = (verticalPositionAnchor ?? trigger).getBoundingClientRect();
 
+    // Distances from each viewport edge; the inline-start value resolves from the
+    // popover's direction so consumers can position with inset-inline-start in both
+    // LTR and RTL.
+    const fromLeft = triggerPositions.left;
+    const fromRight = window.innerWidth - triggerPositions.right;
+    const isRTL = getComputedStyle(popover).direction === 'rtl';
+
     popover.style.setProperty('--anchor-top', `${verticalPositions.top}`);
-    popover.style.setProperty('--anchor-right', `${window.innerWidth - triggerPositions.right}`);
+    popover.style.setProperty('--anchor-right', `${fromRight}`);
     popover.style.setProperty('--anchor-bottom', `${window.innerHeight - verticalPositions.bottom}`);
-    popover.style.setProperty('--anchor-left', `${triggerPositions.left}`);
+    popover.style.setProperty('--anchor-left', `${fromLeft}`);
+    popover.style.setProperty('--anchor-inline-start', `${isRTL ? fromRight : fromLeft}`);
     popover.style.setProperty('--anchor-height', `${verticalPositions.height}`);
     popover.style.setProperty('--anchor-width', `${triggerPositions.width}`);
   };

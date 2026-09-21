@@ -610,7 +610,7 @@
   .facets__pill-input:disabled + .facets__pill-label svg {
     position: absolute;
     top: 0;
-    left: 0;
+    inset-inline-start: 0;
     border-radius: var(--style-border-radius-md);
   }
 
@@ -682,7 +682,7 @@
   }
 
   .facets__status--swatches .swatch + .swatch {
-    margin-left: calc(var(--variant-picker-swatch-width) / -3);
+    margin-inline-start: calc(var(--variant-picker-swatch-width) / -3);
     outline: 1px solid rgb(var(--color-background-rgb));
   }
 
@@ -935,10 +935,7 @@
   /* Position disabled-svg */
   .variant-option--images svg {
     position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
+    inset: 0;
     width: 100%;
     height: 100%;
     stroke-width: var(--border-width);

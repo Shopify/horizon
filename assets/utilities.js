@@ -444,6 +444,25 @@ export function isTouchDevice() {
 }
 
 /**
+ * Checks whether an element resolves to right-to-left text direction.
+ * @param {Element} [element] - The element to check. Defaults to the document root.
+ * @returns {boolean} True if the element's computed direction is RTL.
+ */
+export function isRTL(element = document.documentElement) {
+  return getComputedStyle(element).direction === 'rtl';
+}
+
+/**
+ * Resolves the reading-direction multiplier for an element, used to convert
+ * physical horizontal input (arrow keys, pointer deltas) into logical movement.
+ * @param {Element} element - The element whose computed direction to read.
+ * @returns {1 | -1} `-1` when the element renders right-to-left, `1` otherwise.
+ */
+export function getDirectionMultiplier(element) {
+  return getComputedStyle(element).direction === 'rtl' ? -1 : 1;
+}
+
+/**
  * Clamps a number between a minimum and maximum value.
  * @param {number} value - The input number to clamp.
  * @param {number} min - The minimum value.

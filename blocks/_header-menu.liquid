@@ -334,8 +334,7 @@
       display: none;
       top: var(--header-padding);
       height: var(--box-height);
-      left: 0;
-      right: 0;
+      inset-inline: 0;
     }
 
     &[data-safety-box='true']::after {
@@ -483,7 +482,7 @@
     visibility: hidden;
     position: absolute;
     width: 100%;
-    left: 0;
+    inset-inline-start: 0;
     top: calc(100% - 1px + var(--border-bottom-width) - (var(--full-open-header-height) - var(--submenu-height)));
     z-index: var(--layer-header-menu);
     padding-inline: var(--padding-inline);

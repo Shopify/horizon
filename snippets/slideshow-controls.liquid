@@ -305,11 +305,11 @@
     }
 
     &[pagination-position='right'] {
-      right: 0;
+      inset-inline-end: 0;
     }
 
     &[pagination-position='left'] {
-      left: 0;
+      inset-inline-start: 0;
     }
 
     &[pagination-position='center'] {
@@ -480,7 +480,7 @@
   .slideshow-controls__thumbnail-badge {
     position: absolute;
     top: var(--padding-2xs);
-    right: var(--padding-2xs);
+    inset-inline-end: var(--padding-2xs);
     width: clamp(16px, 10%, 20px);
     height: clamp(16px, 10%, 20px);
     background-color: var(--color-background);

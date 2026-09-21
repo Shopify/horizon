@@ -29,6 +29,7 @@
       "@theme/media-gallery": "{{ 'media-gallery.js' | asset_url }}",
       "@theme/quick-add": "{{ 'quick-add.js' | asset_url }}",
       "@theme/paginated-list-aspect-ratio": "{{ 'paginated-list-aspect-ratio.js' | asset_url }}",
+      "@theme/component-cart-items": "{{ 'component-cart-items.js' | asset_url }}",
       "@theme/component-quantity-selector": "{{ 'component-quantity-selector.js' | asset_url }}",
       "@theme/comparison-slider": "{{ 'comparison-slider.js' | asset_url }}",
       "@theme/sticky-add-to-cart": "{{ 'sticky-add-to-cart.js' | asset_url }}",
@@ -129,11 +130,13 @@
   type="module"
   fetchpriority="low"
 ></script>
-<script
-  src="{{ 'quick-add.js' | asset_url }}"
-  type="module"
-  fetchpriority="low"
-></script>
+{% if settings.quick_add or settings.mobile_quick_add %}
+  <script
+    src="{{ 'quick-add.js' | asset_url }}"
+    type="module"
+    fetchpriority="low"
+  ></script>
+{% endif %}
 {% if settings.show_add_discount_code %}
   <script
     src="{{ 'cart-discount.js' | asset_url }}"

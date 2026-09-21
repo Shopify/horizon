@@ -78,7 +78,7 @@
     position-anchor: --terms-policies-trigger;
     inset: unset;
     bottom: calc(anchor(top) + 1rem);
-    left: anchor(left);
+    inset-inline-start: anchor(start);
     border-radius: var(--style-border-radius-popover);
     background: linear-gradient(var(--color-background) 0 100%),
       linear-gradient(rgb(var(--color-background-rgb) / 0.15) 0 100%);
@@ -93,6 +93,15 @@
     transform-origin: 3.9em 100%;
   }
 
+  /* Mirror the scale animation origin onto the trigger in RTL */
+  [dir='rtl'] .terms-policies-popover {
+    transform-origin: calc(100% - 3.9em) 100%;
+
+    @media screen and (max-width: 749px) {
+      transform-origin: 100% 100%;
+    }
+  }
+
   .terms-policies-popover.\:popover-open,
   .terms-policies-popover:popover-open {
     opacity: 1;
@@ -101,7 +110,9 @@
   }
 
   @media screen and (max-width: 749px) {
+    /* Centering on the trigger is direction-neutral, so physical left is kept */
     .terms-policies-popover {
+      inset-inline-start: unset;
       left: anchor(center);
       transform: translate(-50%, 0);
       transform-origin: 0% 100%;
@@ -112,12 +123,13 @@
     .terms-policies-popover {
       bottom: unset;
       top: calc(var(--anchor-top) * 1px);
-      left: calc(var(--anchor-left) * 1px);
+      inset-inline-start: calc(var(--anchor-inline-start) * 1px);
       transform: translate(0, calc(-100% - 1.25rem));
     }
 
     @media screen and (max-width: 749px) {
       .terms-policies-popover {
+        inset-inline-start: unset;
         left: calc((var(--anchor-left) + (var(--anchor-width) / 2)) * 1px);
         transform: translate(-50%, calc(-100% - 1.25rem));
       }

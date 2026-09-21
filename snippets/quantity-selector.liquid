@@ -150,13 +150,14 @@
           class="price-per-item__text"
           ref="pricePerItemText"
         >
-          {{- 'content.price_at' | t }}
-          {%- if use_currency -%}
-            {{- display_price | money_with_currency -}}
-          {%- else -%}
-            {{- display_price | money -}}
-          {%- endif -%}
-          /
+          {{- 'content.price_at' | t -}}
+          <bdi>
+            {%- if use_currency -%}
+              {{- display_price | money_with_currency -}}
+            {%- else -%}
+              {{- display_price | money -}}
+            {%- endif -%}</bdi
+          >/
           {{- 'content.each_abbreviation' | t }}
         </span>
       </price-per-item>

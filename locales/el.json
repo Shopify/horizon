@@ -287,9 +287,9 @@
       "add_to_apple_wallet": "Προσθήκη στο Apple Wallet",
       "qr_image_alt": "Κωδικός QR — σαρώστε για να εξαργυρώσετε τη δωροκάρτα",
       "copy_code": "Αντιγραφή κωδικού δωροκάρτας",
-      "expiration_date": "Λήγει στις {{ expires_on }}",
       "copy_code_success": "Η αντιγραφή του κωδικού ήταν επιτυχής",
-      "expired": "Έληξε"
+      "expired": "Έληξε",
+      "expiration_date_html": "Λήγει στις <bdi>{{ expires_on }}</bdi>"
     }
   },
   "placeholders": {
