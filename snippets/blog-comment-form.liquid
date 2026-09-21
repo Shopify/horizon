@@ -7,6 +7,12 @@
   @param {string} [section_id] - The section ID
 {%- enddoc -%}
 
+{% liquid
+  assign author_error_id = section_id | append: '-blog-post-comment-author-error'
+  assign email_error_id = section_id | append: '-blog-post-comment-email-error'
+  assign body_error_id = section_id | append: '-blog-post-comment-body-error'
+%}
+
 {% form 'new_comment', article %}
   <div class="blog-post-comments__form-container">
     <h2 class="h3">{{- 'blogs.comment_form.heading' | t -}}</h2>
@@ -25,12 +31,16 @@
         {%- for field in form.errors -%}
           <li>
             {%- if form.errors.translated_fields[field] contains 'author' -%}
-              <span id="blog-post-comment-author-error">
+              <span id="{{ author_error_id }}">
                 {{- 'blogs.comment_form.name' | t -}}
               </span>
             {%- elsif form.errors.translated_fields[field] contains 'body' -%}
-              <span id="blog-post-comment-body-error">
+              <span id="{{ body_error_id }}">
                 {{- 'blogs.comment_form.message' | t -}}
+              </span>
+            {%- elsif form.errors.translated_fields[field] contains 'email' -%}
+              <span id="{{ email_error_id }}">
+                {{- 'blogs.comment_form.email' | t -}}
               </span>
             {%- else -%}
               <span id="{{ form.errors.translated_fields[field] | handleize }}-error">
@@ -80,7 +90,7 @@
           required
           {% if form.errors contains 'author' %}
             aria-invalid="true"
-            aria-describedby="blog-post-comment-author-error"
+            aria-describedby="{{ author_error_id }}"
           {% endif %}
         >
       </div>
@@ -107,7 +117,7 @@
           required
           {% if form.errors contains 'email' %}
             aria-invalid="true"
-            aria-describedby="blog-post-comment-email-error"
+            aria-describedby="{{ email_error_id }}"
           {% endif %}
         >
       </div>
@@ -130,7 +140,7 @@
           required
           {% if form.errors contains 'body' %}
             aria-invalid="true"
-            aria-describedby="blog-post-comment-body-error"
+            aria-describedby="{{ body_error_id }}"
           {% endif %}
         >
           {{- form.body -}}
