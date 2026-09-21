@@ -799,6 +799,7 @@ class ProductFormComponent extends Component {
 
       const { variantId } = this.refs;
       variantId.value = resource?.id ?? '';
+      variantId.dispatchEvent(new Event('change', { bubbles: true }));
 
       const { addToCartButtonContainer: currentAddToCartButtonContainer, acceleratedCheckoutButtonContainer } =
         this.refs;
