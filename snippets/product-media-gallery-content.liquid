@@ -75,7 +75,11 @@
     assign slideshow_class = ''
 
     if media_presentation == 'carousel'
-      assign render_slideshow_arrows = true
+      assign pdp_variant_images = selected_product.images | where: 'attached_to_variant?', true | map: 'src'
+      assign pdp_generic_media_size = selected_product.media.size | minus: pdp_variant_images.size
+      if pdp_generic_media_size > 0
+        assign render_slideshow_arrows = true
+      endif
     endif
   endif
 
