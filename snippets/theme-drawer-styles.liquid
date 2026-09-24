@@ -39,7 +39,7 @@
     color: var(--color-foreground);
   }
 
-  .theme-drawer__dialog[open] {
+  .theme-drawer__dialog:is([open], :popover-open) {
     display: flex;
     inset-inline-end: 0;
   }
@@ -89,7 +89,7 @@
 
   /* Exclude open drawers from the page navigation cross-fade so they
      stay frozen (visually unchanged) while the rest of the page transitions. */
-  html:active-view-transition-type(page-navigation) .theme-drawer__dialog[open] {
+  html:active-view-transition-type(page-navigation) .theme-drawer__dialog:is([open], :popover-open) {
     view-transition-name: theme-drawer;
   }
 

@@ -1,5 +1,14 @@
 import { Component } from '@theme/component';
-import { debounce, isClickedOutside, lockScroll, onAnimationEnd, unlockScroll } from '@theme/utilities';
+import {
+  debounce,
+  inertOutside,
+  isClickOnInertPage,
+  isClickedOutside,
+  lockScroll,
+  onAnimationEnd,
+  releaseInertOutside,
+  unlockScroll,
+} from '@theme/utilities';
 import { getScrollTop, scrollTo } from '@theme/scroll-container';
 
 /**
@@ -26,6 +35,9 @@ export class DialogComponent extends Component {
     if (this.minWidth || this.maxWidth) {
       window.removeEventListener('resize', this.#handleResize);
     }
+    document.removeEventListener('click', this.#handleClick);
+    document.removeEventListener('keydown', this.#handleKeyDown);
+    releaseInertOutside(this);
     unlockScroll(this.refs.dialog);
   }
 
@@ -42,13 +54,32 @@ export class DialogComponent extends Component {
 
   #previousScrollY = 0;
 
+  /** @type {HTMLElement | null} */
+  #previouslyFocused = null;
+
+  /**
+   * Whether the dialog opens as a manual popover with deferred page inertness instead of `showModal()`.
+   * @returns {boolean}
+   */
+  get #isPopover() {
+    return this.refs.dialog.popover === 'manual';
+  }
+
+  /**
+   * @returns {boolean} Whether the dialog is open.
+   */
+  get #isOpen() {
+    const { dialog } = this.refs;
+    return dialog.open || (this.#isPopover && dialog.matches(':popover-open'));
+  }
+
   /**
    * Shows the dialog.
    */
   showDialog() {
     const { dialog } = this.refs;
 
-    if (dialog.open) return;
+    if (this.#isOpen) return;
 
     this.#previousScrollY = getScrollTop();
 
@@ -56,12 +87,27 @@ export class DialogComponent extends Component {
     requestAnimationFrame(() => {
       lockScroll(dialog);
 
-      dialog.showModal();
+      if (this.#isPopover) {
+        this.#previouslyFocused = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+        dialog.showPopover();
+        inertOutside(this);
+      } else {
+        dialog.showModal();
+      }
       this.dispatchEvent(new DialogOpenEvent());
 
-      this.addEventListener('click', this.#handleClick);
-      this.addEventListener('keydown', this.#handleKeyDown);
+      this.#eventRoot.addEventListener('click', this.#handleClick);
+      this.#eventRoot.addEventListener('keydown', this.#handleKeyDown);
     });
+  }
+
+  /**
+   * Popover backdrops don't receive pointer events and focus can land on the inert page's body,
+   * so popover dialogs listen on the document.
+   * @returns {EventTarget}
+   */
+  get #eventRoot() {
+    return this.#isPopover ? document : this;
   }
 
   /**
@@ -70,10 +116,10 @@ export class DialogComponent extends Component {
   closeDialog = async () => {
     const { dialog } = this.refs;
 
-    if (!dialog.open) return;
+    if (!this.#isOpen) return;
 
-    this.removeEventListener('click', this.#handleClick);
-    this.removeEventListener('keydown', this.#handleKeyDown);
+    this.#eventRoot.removeEventListener('click', this.#handleClick);
+    this.#eventRoot.removeEventListener('keydown', this.#handleKeyDown);
 
     // Force browser to restart animation by resetting it
     // Temporarily remove any existing animation state
@@ -93,7 +139,14 @@ export class DialogComponent extends Component {
     unlockScroll(dialog);
     scrollTo({ top: this.#previousScrollY, behavior: 'instant' });
 
-    dialog.close();
+    if (this.#isPopover) {
+      releaseInertOutside(this);
+      dialog.hidePopover();
+      this.#previouslyFocused?.focus({ preventScroll: true });
+      this.#previouslyFocused = null;
+    } else {
+      dialog.close();
+    }
     dialog.classList.remove('dialog-closing');
 
     this.dispatchEvent(new DialogCloseEvent());
@@ -103,7 +156,7 @@ export class DialogComponent extends Component {
    * Toggles the dialog.
    */
   toggleDialog = () => {
-    if (this.refs.dialog.open) {
+    if (this.#isOpen) {
       this.closeDialog();
     } else {
       this.showDialog();
@@ -115,25 +168,27 @@ export class DialogComponent extends Component {
    *
    * @param {MouseEvent} event - The mouse event.
    */
-  #handleClick(event) {
+  #handleClick = (event) => {
     const { dialog } = this.refs;
+
+    if (this.#isPopover && event.target !== dialog && !isClickOnInertPage(event)) return;
 
     if (isClickedOutside(event, dialog)) {
       this.closeDialog();
     }
-  }
+  };
 
   /**
    * Closes the dialog when the user presses the escape key.
    *
    * @param {KeyboardEvent} event - The keyboard event.
    */
-  #handleKeyDown(event) {
+  #handleKeyDown = (event) => {
     if (event.key !== 'Escape') return;
 
     event.preventDefault();
     this.closeDialog();
-  }
+  };
 
   /**
    * Gets the minimum width of the dialog.

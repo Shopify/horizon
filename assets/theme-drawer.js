@@ -1,6 +1,14 @@
 import { Component } from '@theme/component';
 import { trapFocus, removeTrapFocus } from '@theme/focus';
-import { isClickedOutside, lockScroll, onAnimationEnd, unlockScroll } from '@theme/utilities';
+import {
+  inertOutside,
+  isClickOnInertPage,
+  isClickedOutside,
+  lockScroll,
+  onAnimationEnd,
+  releaseInertOutside,
+  unlockScroll,
+} from '@theme/utilities';
 import { getScrollTop, scrollTo } from '@theme/scroll-container';
 
 /** Viewport width below which the drawer opens as a modal overlay (no squeeze). */
@@ -18,6 +26,8 @@ const MODAL_BREAKPOINT = 990;
  * On narrow viewports (< 990px) the drawer overlays with a backdrop. The
  * panel is a modal dialog (`showModal()`) — native focus trap, scroll-lock,
  * and ARIA semantics. Same focus-on-close-button + restore-on-close UX.
+ * With the `popover-modal` attribute, the modal panel opens as a manual popover
+ * instead and the page is made inert after the first paint (see `inertOutside()`).
  *
  * Dispatches {@link DrawerOpenEvent} and {@link DrawerCloseEvent}.
  *
@@ -84,11 +94,12 @@ export class ThemeDrawer extends Component {
     }
 
     document.addEventListener('keydown', this.#onKeyDown);
-    panel.addEventListener('click', this.#onBackdropClick);
+    this.#backdropClickTarget.addEventListener('click', this.#onBackdropClick);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
+    releaseInertOutside(this);
     unlockScroll(this.refs.panel);
     this.#modalQuery.removeEventListener('change', this.#onModalBreakpointChange);
     this.#removeEventListeners();
@@ -105,6 +116,9 @@ export class ThemeDrawer extends Component {
    */
   #onBackdropClick = (event) => {
     const { panel } = this.refs;
+
+    if (!this.#modalQuery.matches) return;
+    if (this.#usesPopover && event.target !== panel && !isClickOnInertPage(event)) return;
 
     if (isClickedOutside(event, panel)) {
       if (this.#hasOpenNestedDialog()) return;
@@ -124,7 +138,7 @@ export class ThemeDrawer extends Component {
    * @returns {HTMLDialogElement | null} The open dialog nested inside the drawer panel, if any.
    */
   #getOpenNestedDialog() {
-    return /** @type {HTMLDialogElement | null} */ (this.refs.panel.querySelector('dialog[open]'));
+    return /** @type {HTMLDialogElement | null} */ (this.refs.panel.querySelector('dialog:is([open], :popover-open)'));
   }
 
   /**
@@ -143,12 +157,12 @@ export class ThemeDrawer extends Component {
 
     // Close the current dialog mode and immediately reopen in the new mode.
     // No animation — the drawer stays visually in place.
-    panel.close();
+    this.#closePanel();
     removeTrapFocus();
 
     if (this.#modalQuery.matches) {
       lockScroll(panel);
-      panel.showModal();
+      this.#showModal();
     } else {
       unlockScroll(panel);
       panel.show();
@@ -166,7 +180,7 @@ export class ThemeDrawer extends Component {
     // addEventListener deduplicates identical listeners, so this is safe
     // even if they were already registered.
     document.addEventListener('keydown', this.#onKeyDown);
-    panel.addEventListener('click', this.#onBackdropClick);
+    this.#backdropClickTarget.addEventListener('click', this.#onBackdropClick);
   };
 
   /**
@@ -218,7 +232,7 @@ export class ThemeDrawer extends Component {
 
     if (this.#modalQuery.matches) {
       lockScroll(panel);
-      panel.showModal();
+      this.#showModal();
     } else {
       panel.show();
       trapFocus(panel);
@@ -232,7 +246,7 @@ export class ThemeDrawer extends Component {
     this.dispatchEvent(new DrawerOpenEvent());
 
     document.addEventListener('keydown', this.#onKeyDown);
-    panel.addEventListener('click', this.#onBackdropClick);
+    this.#backdropClickTarget.addEventListener('click', this.#onBackdropClick);
   }
 
   /**
@@ -252,10 +266,10 @@ export class ThemeDrawer extends Component {
     // In modal mode, dialogs live in the browser's top layer where z-index
     // is ignored — stacking follows showModal() call order. Re-calling
     // showModal() moves this dialog to the top of the stack.
-    if (this.#modalQuery.matches && panel.open) {
+    if (this.#modalQuery.matches && this.#isPanelOpen) {
       lockScroll(panel);
-      panel.close();
-      panel.showModal();
+      this.#closePanel();
+      this.#showModal();
     }
 
     const openClass =
@@ -271,7 +285,65 @@ export class ThemeDrawer extends Component {
     const { panel } = this.refs;
 
     document.removeEventListener('keydown', this.#onKeyDown);
+    document.removeEventListener('click', this.#onBackdropClick);
     panel.removeEventListener('click', this.#onBackdropClick);
+  }
+
+  /**
+   * @returns {boolean} Whether the modal panel opens as a popover with deferred page inertness.
+   */
+  get #usesPopover() {
+    return this.hasAttribute('popover-modal');
+  }
+
+  /**
+   * @returns {boolean} Whether the panel is open in any mode.
+   */
+  get #isPanelOpen() {
+    const { panel } = this.refs;
+    return panel.open || panel.matches(':popover-open');
+  }
+
+  /**
+   * Popover backdrops don't receive pointer events, so popover panels detect outside clicks on the document.
+   * @returns {EventTarget}
+   */
+  get #backdropClickTarget() {
+    return this.#usesPopover ? document : this.refs.panel;
+  }
+
+  /**
+   * Opens the panel as a modal overlay. The `popover` attribute is only present while the panel is
+   * open this way, so sidebar mode keeps the plain non-modal dialog styles.
+   */
+  #showModal() {
+    const { panel } = this.refs;
+
+    if (!this.#usesPopover) {
+      panel.showModal();
+      return;
+    }
+
+    panel.popover = 'manual';
+    panel.setAttribute('aria-modal', 'true');
+    panel.showPopover();
+    inertOutside(this);
+  }
+
+  /**
+   * Closes the panel in whichever mode it is open.
+   */
+  #closePanel() {
+    const { panel } = this.refs;
+
+    if (panel.popover) {
+      releaseInertOutside(this);
+      if (panel.matches(':popover-open')) panel.hidePopover();
+      panel.removeAttribute('popover');
+      panel.removeAttribute('aria-modal');
+    }
+
+    panel.close();
   }
 
   /**
@@ -328,7 +400,7 @@ export class ThemeDrawer extends Component {
 
     unlockScroll(panel);
 
-    if (panel.open) {
+    if (this.#isPanelOpen) {
       // Cancel any in-progress open animation before starting the close.
       panel.classList.remove('theme-drawer__dialog--opening', 'theme-drawer__dialog--opening-inline-start');
 
@@ -337,7 +409,7 @@ export class ThemeDrawer extends Component {
       panel.classList.remove('theme-drawer__dialog--closing');
     }
 
-    panel.close();
+    this.#closePanel();
     this.style.removeProperty('--drawer-stack-order');
 
     if (!document.querySelector('theme-drawer[open]')) {

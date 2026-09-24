@@ -38,7 +38,7 @@
     background: rgb(var(--backdrop-color-rgb) / var(--backdrop-opacity));
   }
 
-  :where(.dialog-modal)[open] {
+  :where(.dialog-modal):is([open], :popover-open) {
     animation: elementSlideInTop var(--animation-speed) var(--animation-easing) forwards;
 
     &::backdrop {

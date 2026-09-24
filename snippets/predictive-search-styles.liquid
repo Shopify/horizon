@@ -148,7 +148,7 @@
     }
   }
 
-  .dialog-modal[open] {
+  .dialog-modal:is([open], :popover-open) {
     @media screen and (max-width: 749px) {
       border-radius: 0;
     }
