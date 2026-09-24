@@ -30,6 +30,8 @@
     on:click="/closeDialogOnClickOutside"
     on:keydown="/closeDialogOnEscapePress"
     class="search-modal__content dialog-modal"
+    popover="manual"
+    aria-modal="true"
     scroll-lock
     aria-labelledby="search-modal-heading"
   >
@@ -169,7 +171,7 @@
     }
   }
 
-  .dialog-modal[open].search-modal__content {
+  .dialog-modal.search-modal__content:is([open], :popover-open) {
     transform-origin: bottom center;
     animation: search-element-slide-in-bottom 300ms var(--ease-out-quad) forwards;
     border-radius: var(--search-border-radius);
@@ -184,7 +186,7 @@
     animation: search-element-slide-out-bottom 200ms var(--ease-out-quad) forwards;
   }
 
-  .search-modal__content[open] {
+  .search-modal__content:is([open], :popover-open) {
     display: flex;
   }
 

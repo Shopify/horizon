@@ -386,6 +386,76 @@ export function unlockScroll(owner) {
   syncScrollLock();
 }
 
+/** @type {Element[]} Owners that keep the rest of the page inert, most recent last. */
+const inertOwners = [];
+
+/** @type {Element[]} */
+let inertedElements = [];
+
+/**
+ * Applies `inert` to everything outside the most recent owner, and removes it from everything else.
+ */
+function syncInert() {
+  for (const element of inertedElements) element.removeAttribute('inert');
+  inertedElements = [];
+
+  const owner = inertOwners[inertOwners.length - 1];
+  if (!owner?.isConnected) return;
+
+  for (let node = owner; node.parentElement; node = node.parentElement) {
+    for (const sibling of node.parentElement.children) {
+      if (sibling === node || sibling.hasAttribute('inert') || sibling instanceof HTMLScriptElement) continue;
+      sibling.setAttribute('inert', '');
+      inertedElements.push(sibling);
+    }
+  }
+}
+
+/**
+ * Makes everything outside `owner` inert, like a modal dialog does, once the next frame has painted.
+ *
+ * `showModal()` applies the same inertness synchronously, and Chrome restyles every rendered
+ * element before the dialog can paint (https://issues.chromium.org/issues/517591953). Dialogs that
+ * open as popovers call this instead, so that work happens after the interaction's paint.
+ *
+ * @param {Element} owner - The element that stays interactive, usually the dialog's host.
+ */
+export function inertOutside(owner) {
+  const index = inertOwners.indexOf(owner);
+  if (index !== -1) inertOwners.splice(index, 1);
+  inertOwners.push(owner);
+
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      if (inertOwners[inertOwners.length - 1] === owner) syncInert();
+    });
+  });
+}
+
+/**
+ * Whether a click landed on the page behind a popover dialog rather than on another layer.
+ * Popover backdrops don't receive pointer events, and clicks on inert content are retargeted to the body.
+ * @param {MouseEvent} event
+ * @returns {boolean}
+ */
+export function isClickOnInertPage(event) {
+  const { target } = event;
+  if (target === document.body || target === document.documentElement) return true;
+  return target instanceof Element && target.closest('[inert]') !== null;
+}
+
+/**
+ * Releases the inertness applied by {@link inertOutside} for an owner.
+ * @param {Element} owner - The element passed to {@link inertOutside}.
+ */
+export function releaseInertOutside(owner) {
+  const index = inertOwners.indexOf(owner);
+  if (index === -1) return;
+
+  inertOwners.splice(index, 1);
+  syncInert();
+}
+
 /**
  * Check if the click is outside the element.
  * @param {MouseEvent} event The mouse event.
