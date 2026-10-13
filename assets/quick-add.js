@@ -173,6 +173,7 @@ export class QuickAddComponent extends Component {
     if (!(dialogComponent instanceof QuickAddDialog)) return;
 
     this.#stayVisibleUntilDialogCloses(dialogComponent);
+    this.#syncHeaderState(dialogComponent);
 
     dialogComponent.showDialog();
 
@@ -182,6 +183,24 @@ export class QuickAddComponent extends Component {
     if (!dialog) return;
     dialog.addEventListener('animationstart', this.#resetScroll.bind(this), { once: true });
   };
+
+  /**
+   * Mirrors the header states that product media and details styles depend on. Those rules reach page
+   * content from `#header-group` with a sibling combinator, which can't reach this body-level dialog.
+   * Scroll is locked while the dialog is open, so the header can't change state until it closes.
+   *
+   * @param {QuickAddDialog} dialogComponent
+   */
+  #syncHeaderState(dialogComponent) {
+    dialogComponent.toggleAttribute(
+      'header-transparent',
+      document.querySelector('header-component[transparent]') !== null
+    );
+    dialogComponent.toggleAttribute(
+      'header-sticky-active',
+      document.querySelector("#header-group #header-component[data-sticky-state='active']") !== null
+    );
+  }
 
   #closeQuickAddModal = () => {
     const dialogComponent = document.getElementById('quick-add-dialog');

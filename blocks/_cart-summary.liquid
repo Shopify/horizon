@@ -53,7 +53,9 @@
     }
   }
 
-  body:has(#header-group header-component[sticky]) .cart-summary__inner {
+  /* Header-dependent page rules use #header-group as the :has() subject and reach the page with `~`.
+     With body as the subject, every [open] or [aria-expanded] change in the header restyles the whole page. */
+  #header-group:has(> .header-section > header-component[sticky]) ~ * .cart-summary__inner {
     top: var(--header-height, 0);
   }
 

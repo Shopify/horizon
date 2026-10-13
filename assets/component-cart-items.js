@@ -126,6 +126,7 @@ export class CartItemsComponent extends createViewEventElement(Component) {
         if (sectionsHtml) {
           sectionRenderer.abortRender(this.sectionId);
           morphSection(this.sectionId, sectionsHtml, { mode: this.isDrawer ? 'hydration' : 'full' });
+          this.#updateCartQuantitySelectorButtonStates();
         } else {
           this.#refreshCartSection();
         }
@@ -533,15 +534,22 @@ export class CartItemsComponent extends createViewEventElement(Component) {
   #updateQuantitySelectors(updatedCart) {
     if (!updatedCart.items) return;
 
+    // Discounts such as Buy X Get Y can split one variant across several cart lines.
+    /** @type {Map<string, number>} */
+    const quantitiesByVariant = new Map();
     for (const item of updatedCart.items) {
       const variantId = item.variant_id.toString();
+      quantitiesByVariant.set(variantId, (quantitiesByVariant.get(variantId) ?? 0) + item.quantity);
+    }
+
+    for (const [variantId, quantity] of quantitiesByVariant) {
       const selectors = document.querySelectorAll(`quantity-selector-component[data-variant-id="${variantId}"]`);
 
       for (const selector of selectors) {
         const input = selector.querySelector('input[data-cart-quantity]');
         if (!input) continue;
 
-        input.setAttribute('data-cart-quantity', item.quantity.toString());
+        input.setAttribute('data-cart-quantity', quantity.toString());
 
         // Update the quantity selector's internal state
         if ('updateCartQuantity' in selector && typeof selector.updateCartQuantity === 'function') {

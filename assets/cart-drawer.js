@@ -34,6 +34,7 @@ class CartDrawerComponent extends Component {
     document.addEventListener(StandardEvents.cartLinesUpdate, this.#handleCartLinesUpdate);
     this.#themeDrawer?.addEventListener(DrawerOpenEvent.eventName, this.#handleDrawerOpen);
     this.addEventListener(ThemeEvents.cartSectionRestored, this.#handleCartSectionRestored);
+    this.addEventListener('click', this.#handleInstallmentsClick, true);
 
     // The restore path sets [open] before this module loads, so the
     // theme-drawer:open event will have already fired. Use the attribute
@@ -48,6 +49,7 @@ class CartDrawerComponent extends Component {
     document.removeEventListener(StandardEvents.cartLinesUpdate, this.#handleCartLinesUpdate);
     this.#themeDrawer?.removeEventListener(DrawerOpenEvent.eventName, this.#handleDrawerOpen);
     this.removeEventListener(ThemeEvents.cartSectionRestored, this.#handleCartSectionRestored);
+    this.removeEventListener('click', this.#handleInstallmentsClick, true);
   }
 
   /**
@@ -63,19 +65,30 @@ class CartDrawerComponent extends Component {
     requestAnimationFrame(() => this.#updateStickyState());
   };
 
-  /**
-   * Handles the theme-drawer opening — updates sticky state and wires up the installments CTA.
-   */
+  /** Handles the theme-drawer opening by updating its sticky state. */
   #handleDrawerOpen = () => {
     this.#updateStickyState();
+  };
 
-    // Close cart drawer when installments CTA is clicked to avoid overlapping dialogs.
-    // Re-queried on every open so it survives cart content re-renders that
-    // replace the shopify-payment-terms shadow root.
-    customElements.whenDefined('shopify-payment-terms').then(() => {
-      const cta = this.querySelector('shopify-payment-terms')?.shadowRoot?.querySelector('#shopify-installments-cta');
-      cta?.addEventListener('click', () => this.#themeDrawer?.close(), { once: true });
-    });
+  /**
+   * Closes the cart drawer before the installments dialog opens.
+   *
+   * The payment-terms element replaces its shadow content when cart totals change,
+   * so listen on this stable ancestor instead of binding to a particular CTA instance.
+   *
+   * @param {MouseEvent} event
+   */
+  #handleInstallmentsClick = (event) => {
+    const path = event.composedPath();
+    const ctaIndex = path.findIndex(
+      (element) => element instanceof Element && element.id === 'shopify-installments-cta'
+    );
+    if (ctaIndex === -1) return;
+
+    const ctaRoot = path.slice(ctaIndex + 1).find((element) => element instanceof ShadowRoot);
+    if (!ctaRoot?.host.matches('shopify-payment-terms')) return;
+
+    this.#themeDrawer?.close();
   };
 
   /**

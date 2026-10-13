@@ -34,6 +34,9 @@ class QuickOrderListComponent extends Component {
   /** @type {AbortController|null} */
   #abortController = null;
 
+  /** @type {Promise<unknown> | null} */
+  #pendingQuantityUpdate = null;
+
   /** @type {(event: Event) => void} */
   #debouncedHandleQuantityUpdate;
 
@@ -88,6 +91,7 @@ class QuickOrderListComponent extends Component {
 
     this.addEventListener(ThemeEvents.quantitySelectorUpdate, this.#debouncedHandleQuantityUpdate);
     document.addEventListener(StandardEvents.cartLinesUpdate, this.#boundHandleCartUpdate);
+    document.addEventListener(StandardEvents.cartDiscountUpdate, this.#handleDiscountUpdate);
     this.addEventListener('keydown', this.#handleKeyDown, true);
     this.addEventListener('keyup', this.#handleKeyup, true);
   }
@@ -97,6 +101,7 @@ class QuickOrderListComponent extends Component {
 
     this.removeEventListener(ThemeEvents.quantitySelectorUpdate, this.#debouncedHandleQuantityUpdate);
     document.removeEventListener(StandardEvents.cartLinesUpdate, this.#boundHandleCartUpdate);
+    document.removeEventListener(StandardEvents.cartDiscountUpdate, this.#handleDiscountUpdate);
     this.removeEventListener('keydown', this.#handleKeyDown, true);
     this.removeEventListener('keyup', this.#handleKeyup, true);
 
@@ -189,6 +194,8 @@ class QuickOrderListComponent extends Component {
     }
 
     await sectionRenderer.renderSection(sectionId, {
+      // Rows carry cart line keys and quantities, which a cached page may no longer match.
+      cache: false,
       url: newURL,
     });
     this.#scrollToTopOfSection();
@@ -230,13 +237,15 @@ class QuickOrderListComponent extends Component {
     this.#abortController?.abort();
     this.#abortController = new AbortController();
 
-    /** @type {Record<string, number>} */
+    /**
+     * Keyed by cart line key rather than variant ID: a variant ID only targets the
+     * first of a variant's lines, leaving any lines split off by discounts behind.
+     * @type {Record<string, number>}
+     */
     const updates = {};
 
-    if (idsToRemove.length > 0) {
-      for (const variantId of idsToRemove) {
-        updates[String(variantId)] = 0;
-      }
+    for (const lineKey of this.cartLineKeys) {
+      updates[lineKey] = 0;
     }
 
     if (Object.keys(updates).length === 0) {
@@ -320,6 +329,61 @@ class QuickOrderListComponent extends Component {
   }
 
   /**
+   * Reads the cart lines rendered for a variant row. Discounts such as Buy X Get Y
+   * can split a single variant across several cart lines.
+   * @param {HTMLElement} variantRow - The variant row element
+   * @returns {{ key: string, quantity: number }[]}
+   */
+  #getVariantCartLines(variantRow) {
+    try {
+      const keys = JSON.parse(variantRow.dataset.cartLineKeys || '[]');
+      const quantities = JSON.parse(variantRow.dataset.cartLineQuantities || '[]');
+      if (!Array.isArray(keys) || !Array.isArray(quantities)) return [];
+
+      return keys.map((key, index) => ({ key: String(key), quantity: Number(quantities[index]) || 0 }));
+    } catch {
+      return [];
+    }
+  }
+
+  /**
+   * Builds an AJAX `updates` payload, keyed by cart line key, that moves a variant's
+   * total cart quantity to `targetQuantity`.
+   *
+   * The cart applies a line update as the difference between the requested quantity
+   * and that line's current quantity. Sending the variant total to one line of a
+   * split variant therefore over-counts by the quantity held in the other lines.
+   * Increases are added to the first line; decreases are taken from the lines in order.
+   * @param {{ key: string, quantity: number }[]} lines - The variant's cart lines
+   * @param {number} currentQuantity - The variant's current total cart quantity
+   * @param {number} targetQuantity - The requested total cart quantity
+   * @returns {Record<string, number>}
+   */
+  #buildLineUpdates(lines, currentQuantity, targetQuantity) {
+    /** @type {Record<string, number>} */
+    const updates = {};
+    const [firstLine] = lines;
+    if (!firstLine) return updates;
+
+    const delta = targetQuantity - currentQuantity;
+    if (delta > 0) {
+      updates[firstLine.key] = firstLine.quantity + delta;
+      return updates;
+    }
+
+    let remaining = -delta;
+    for (const line of lines) {
+      if (remaining <= 0) break;
+
+      const removed = Math.min(line.quantity, remaining);
+      updates[line.key] = line.quantity - removed;
+      remaining -= removed;
+    }
+
+    return updates;
+  }
+
+  /**
    * Handles quantity selector updates
    * @param {CustomEvent} event - The quantity update event
    */
@@ -342,8 +406,16 @@ class QuickOrderListComponent extends Component {
     const variantId = variantRow.dataset.variantId;
     if (!variantId) return;
 
-    const quantityInput = /** @type {HTMLInputElement|null} */ (variantRow.querySelector('input[data-cart-quantity]'));
-    const currentCartQuantity = quantityInput ? parseInt(quantityInput.dataset.cartQuantity || '0') || 0 : 0;
+    const cartLines = this.#getVariantCartLines(variantRow);
+    let currentCartQuantity = 0;
+    if (cartLines.length > 0) {
+      for (const line of cartLines) currentCartQuantity += line.quantity;
+    } else {
+      const quantityInput = /** @type {HTMLInputElement|null} */ (
+        variantRow.querySelector('input[data-cart-quantity]')
+      );
+      currentCartQuantity = quantityInput ? parseInt(quantityInput.dataset.cartQuantity || '0') || 0 : 0;
+    }
 
     this.#clearSuccessMessage();
     this.#clearErrorMessage();
@@ -368,33 +440,53 @@ class QuickOrderListComponent extends Component {
       action = 'update';
     }
 
+    /** @type {Record<string, number>} */
+    const updates =
+      cartLines.length > 0
+        ? this.#buildLineUpdates(cartLines, currentCartQuantity, quantity)
+        : { [variantId]: quantity };
+
     const deferredPromise = CartLinesUpdateEvent.createPromise();
-    // First matching line for this variant; rendered by Liquid as the variant
-    // row's `data-cart-line-key` attribute.
-    //
-    // Known limitation: when the same variant has multiple lines (different
-    // properties), this is the FIRST line, while the AJAX `cart_update_url`
-    // call below uses `updates: { variantId: q }`, which rebalances the LAST
-    // line per Shopify cart semantics. So a strict consumer comparing
-    // dispatched `lines[].id` against resolved `cart.lines[].id` deltas may
-    // see a first-vs-last mismatch in that edge case. Acceptable approximation;
-    // full correctness needs cart line-id-keyed updates.
-    const lineKey = variantRow.dataset.cartLineKey ?? '';
-    this.dispatchEvent(
-      new CartLinesUpdateEvent({
-        context: 'cart',
-        ...(action === 'add'
-          ? { action, lines: [{ merchandiseId: variantId, quantity }] }
-          : { action, lines: [{ id: lineKey, quantity }] }),
-        promise: deferredPromise.promise,
-      })
-    );
+    if (action === 'add') {
+      this.dispatchEvent(
+        new CartLinesUpdateEvent({
+          action,
+          context: 'cart',
+          lines: [{ merchandiseId: variantId, quantity }],
+          promise: deferredPromise.promise,
+        })
+      );
+    } else {
+      // A decrease can empty one split line while another remains, so lines set to zero
+      // are reported as a removal rather than as an update.
+      const lineChanges = Object.entries(updates).map(([id, lineQuantity]) => ({ id, quantity: lineQuantity }));
+      const updatedLines = lineChanges.filter((line) => line.quantity > 0);
+      const removedLines = lineChanges.filter((line) => line.quantity === 0);
+
+      if (updatedLines.length > 0) {
+        this.dispatchEvent(
+          new CartLinesUpdateEvent({
+            action: 'update',
+            context: 'cart',
+            lines: updatedLines,
+            promise: deferredPromise.promise,
+          })
+        );
+      }
+
+      if (removedLines.length > 0) {
+        this.dispatchEvent(
+          new CartLinesUpdateEvent({
+            action: 'remove',
+            context: 'cart',
+            lines: removedLines,
+            promise: deferredPromise.promise,
+          })
+        );
+      }
+    }
 
     try {
-      /** @type {Record<string, number>} */
-      const updates = {};
-      updates[variantId] = quantity;
-
       // Include page parameter in sections URL to maintain pagination state
       const sectionsUrl = new URL(window.location.pathname, window.location.origin);
       sectionsUrl.searchParams.set('page', this.currentPage.toString());
@@ -446,6 +538,8 @@ class QuickOrderListComponent extends Component {
           })
         );
         this.#updateSectionHTML(data);
+        // Bundled section rendering can fail independently of the cart update.
+        this.#enableQuickOrderListItems();
 
         const quantityAdded = quantity - currentCartQuantity;
         if (quantityAdded > 0) {
@@ -472,18 +566,67 @@ class QuickOrderListComponent extends Component {
   }
 
   /**
-   * Handles cart update events from other components
+   * Re-renders the section after a discount change. Applying or removing a discount can
+   * merge or re-split cart lines, which changes the line keys and quantities on each row.
+   * Wait for quantity responses before refreshing so their morphs cannot cancel the discount refresh.
+   * @param {Event} event - The cart discount update event
+   */
+  #handleDiscountUpdate = async (event) => {
+    const { promise } = /** @type {{ promise?: Promise<unknown> }} */ (event);
+    if (!promise || !this.dataset.sectionId) return;
+
+    // Rows describe the pre-discount cart until the re-render lands, so block edits until then.
+    this.#disableQuickOrderListItems();
+
+    try {
+      const promises = [promise];
+
+      if (this.#pendingQuantityUpdate) {
+        promises.push(this.#pendingQuantityUpdate);
+      }
+
+      await Promise.allSettled(promises);
+
+      if (!this.dataset.sectionId) return;
+
+      const url = new URL(window.location.href);
+      url.searchParams.set('page', this.currentPage.toString());
+
+      await sectionRenderer.renderSection(this.dataset.sectionId, {
+        cache: false,
+        url,
+      });
+    } catch (error) {
+      if (error?.name !== 'AbortError') {
+        console.warn('[quick-order-list] Discount render failed:', error);
+      }
+    } finally {
+      this.#enableQuickOrderListItems();
+    }
+  };
+
+  /**
+   * Handles cart update events from other components. Records this component's own update
+   * promise as a settlement-only value so discount refreshes can wait without double-reporting.
    * @param {CartLinesUpdateEvent} event - The cart update event
    */
   async #handleCartUpdate(event) {
+    if (event.target === this && event.promise) {
+      this.#pendingQuantityUpdate = event.promise.catch(() => undefined);
+      return;
+    }
+
     // Abort any in-flight fetch immediately (before waiting for the promise),
     // so rapid updates cancel stale renders without delay.
     this.#enableQuickOrderListItems();
     this.#abortController?.abort();
     this.#abortController = new AbortController();
 
-    event.promise
-      ?.then(async ({ detail }) => {
+    const { promise } = event;
+    if (!promise) return;
+
+    promise
+      .then(async ({ detail }) => {
         // Don't process our own events to avoid double updates
         if (detail?.source === 'quick-order-quantity' || detail?.source === 'quick-order-remove-all') {
           return;
@@ -630,6 +773,8 @@ class QuickOrderListComponent extends Component {
     if (data.sections && this.dataset.sectionId) {
       const sectionHtml = data.sections[this.dataset.sectionId];
       if (sectionHtml) {
+        // A pending section render would otherwise morph older cart markup over this response.
+        sectionRenderer.abortRender(this.dataset.sectionId);
         morphSection(this.dataset.sectionId, sectionHtml);
       }
     }

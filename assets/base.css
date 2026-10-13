@@ -33,9 +33,16 @@ html {
   }
 }
 
-html[scroll-lock],
-html[scroll-lock] .page-wrapper {
+html[scroll-lock] {
   overflow: hidden;
+}
+
+/* Only lock .page-wrapper where it is the scroll container. Below 990px the document scrolls, and
+   overflow on .page-wrapper would make it the sticky header's scroll container, moving the header off screen. */
+@media (min-width: 990px) {
+  html[scroll-lock] .page-wrapper {
+    overflow: hidden;
+  }
 }
 
 .page-wrapper {
@@ -1668,6 +1675,20 @@ input[type='radio'] {
 slideshow-container[animate-arrows]:hover > slideshow-arrows .slideshow-control,
 slideshow-component:focus-within > slideshow-container[animate-arrows] > slideshow-arrows .slideshow-control {
   animation: arrowsSlideIn var(--animation-speed) var(--animation-easing) forwards;
+}
+
+/* Clipped controls preserve accessible paging without intercepting touch taps. */
+@media (hover: none) and (pointer: coarse) {
+  .resource-list__carousel > [animate-arrows] > :where(slideshow-arrows) > .slideshow-control:not(:focus-visible) {
+    position: absolute;
+    clip: rect(0 0 0 0);
+    animation: none;
+  }
+
+  .resource-list__carousel > [animate-arrows] > :where(slideshow-arrows) > .slideshow-control:focus-visible {
+    opacity: 1;
+    animation: none;
+  }
 }
 
 @keyframes arrowsSlideIn {

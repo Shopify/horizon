@@ -456,8 +456,8 @@
       %}
     {% endcapture %}
 
-    {% assign content = content | strip %}
-    {% if content != blank %}
+    {% assign stripped_content = content | strip %}
+    {% if stripped_content != blank %}
       <div
         class="{{ class | strip }}"
         ref="headerRowTop"
@@ -661,6 +661,12 @@
     .header[data-sticky-state='active'] {
       view-transition-name: none;
     }
+  }
+
+  /* A view-transition-name makes the header a backdrop root, so the menu drawer's backdrop-filter
+     would dim only the header instead of the page. */
+  .header[data-sticky-state='active']:has(.menu-drawer-container[open]) {
+    view-transition-name: none;
   }
 
   .header[data-sticky-state='idle'] {
@@ -1039,12 +1045,16 @@
     }
   }
 
-  /* Transparent header layout. Keep this in sync with snippets/section.liquid's first-section height compensation. */
-  body:has(#header-component[transparent]) .content-for-layout > .shopify-section:first-child {
+  /* Transparent header layout. Keep this in sync with snippets/section.liquid's first-section height compensation.
+     Header-dependent page rules use #header-group as the :has() subject and reach the page with `~`.
+     With body as the subject, every [open] or [aria-expanded] change in the header restyles the whole page. */
+  #header-group:has(> .header-section > #header-component[transparent])
+    ~ .content-for-layout
+    > .shopify-section:first-child {
     margin-top: calc(var(--header-group-height) * -1);
   }
 
-  body:has(#header-component[transparent]) #header-group > .header-section {
+  #header-group:has(> .header-section > #header-component[transparent]) > .header-section {
     z-index: var(--layer-menu-drawer);
   }
 
@@ -1052,7 +1062,7 @@
   the rest of the page content. Keep a class at the end of this selector: a `*` there
   gives the browser nothing to filter on, and it then recalculates the styles of every
   element below. */
-  body:has(#header-component[transparent]) #header-group > .shopify-section:not(.header-section) {
+  #header-group:has(> .header-section > #header-component[transparent]) > .shopify-section:not(.header-section) {
     z-index: calc(var(--layer-menu-drawer) - 1);
   }
 
@@ -1322,7 +1332,7 @@
     {
       "type": "link_list",
       "id": "customer_account_menu",
-      "label": "t:settings.menu",
+      "label": "t:settings.customer_account_menu",
       "default": "customer-account-main-menu"
     },
     {
