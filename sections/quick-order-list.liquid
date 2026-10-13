@@ -152,7 +152,8 @@
                 <div
                   class="quick-order-list__grid-row variant-item"
                   data-variant-id="{{ variant.id }}"
-                  data-cart-line-key="{{ variant_line_item.key }}"
+                  data-cart-line-keys="{{ variant_line_items | map: 'key' | json | escape }}"
+                  data-cart-line-quantities="{{ variant_line_items | map: 'quantity' | json | escape }}"
                   ref="variantRows[]"
                   role="row"
                 >

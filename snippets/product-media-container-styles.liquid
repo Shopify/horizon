@@ -45,7 +45,10 @@
       --constrained-min-height: 500px;
     }
 
-    body:has(header-component[transparent]) .product-media-container.constrain-height {
+    /* Header-dependent page rules use #header-group as the :has() subject and reach the page with `~`.
+       With body as the subject, every [open] or [aria-expanded] change in the header restyles the whole page. */
+    #header-group:has(> .header-section > header-component[transparent]) ~ * .product-media-container.constrain-height,
+    quick-add-dialog[header-transparent] .product-media-container.constrain-height {
       --viewport-offset: 0px;
     }
   }

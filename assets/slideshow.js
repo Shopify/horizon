@@ -14,6 +14,7 @@ import { SlideshowSelectEvent } from '@theme/events';
 
 // The threshold for determining visibility of slides.
 const SLIDE_VISIBLITY_THRESHOLD = 0.7;
+const DRAG_THRESHOLD = 5;
 
 /**
  * Shared viewport observer manager for lazy scroll enablement.
@@ -673,6 +674,7 @@ export class Slideshow extends Component {
   #handleMouseDown = (event) => {
     const { slides } = this;
 
+    if (event.button !== 0) return;
     if (!slides || slides.length <= 1) return;
     if (!(event.target instanceof Element)) return;
     if (this.disabled || this.#dragging) return;
@@ -690,13 +692,12 @@ export class Slideshow extends Component {
 
     const controller = new AbortController();
     const { signal } = controller;
+    const clickController = new AbortController();
     const startTime = performance.now();
     let previous = startPosition;
     let velocity = 0;
     let moved = false;
     let distanceTravelled = 0;
-
-    this.#dragging = true;
 
     /**
      * Handles the 'pointermove' event to update the scroll position.
@@ -706,15 +707,9 @@ export class Slideshow extends Component {
       const current = event[axis];
       const initialDelta = startPosition - current;
 
-      if (!initialDelta) return;
+      if (!moved && (!initialDelta || Math.abs(initialDelta) < DRAG_THRESHOLD)) return;
 
       if (!moved) {
-        moved = true;
-        this.setPointerCapture(event.pointerId);
-
-        // Prevent clicks once the user starts dragging
-        document.addEventListener('click', preventDefault, { once: true, signal });
-
         const movingRight = initialDelta < 0;
         const movingLeft = initialDelta > 0;
 
@@ -729,8 +724,16 @@ export class Slideshow extends Component {
           return;
         }
 
+        moved = true;
+        this.#dragging = true;
+        this.setPointerCapture(event.pointerId);
+
+        // Prevent clicks once the user starts dragging
+        document.addEventListener('click', preventDefault, { once: true, signal: clickController.signal });
+
         this.pause();
         this.setAttribute('dragging', '');
+        this.#scroll.snap = false;
       }
 
       // Stop the event from bubbling up to parent slideshow components
@@ -751,10 +754,13 @@ export class Slideshow extends Component {
      */
     const onPointerUp = async (event) => {
       controller.abort();
+      if (event.type !== 'pointerup') clickController.abort();
+      this.#dragging = false;
+
+      if (!moved) return;
+
       const { current, slides } = this;
       const { scroller } = this.refs;
-
-      this.#dragging = false;
 
       if (!slides?.length || !scroller) return;
 
@@ -797,8 +803,6 @@ export class Slideshow extends Component {
       this.#scroll.snap = true;
       this.resume();
     };
-
-    this.#scroll.snap = false;
 
     document.addEventListener('pointermove', onPointerMove, { signal });
     document.addEventListener('pointerup', onPointerUp, { signal });

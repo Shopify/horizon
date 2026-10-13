@@ -93,10 +93,10 @@
     display: none;
   }
 
-  body:has(#header-group > .header-section > #header-component[transparent]):not(
-      :has(#header-group > .header-section + .shopify-section)
-    )
-    #MainContent
+  /* Header-dependent page rules use #header-group as the :has() subject and reach the page with `~`.
+     With body as the subject, every [open] or [aria-expanded] change in the header restyles the whole page. */
+  #header-group:has(> .header-section > #header-component[transparent]):not(:has(> .header-section + .shopify-section))
+    ~ #MainContent
     > .section-wrapper:first-child {
     --section-height-offset: var(--header-group-height, 0);
   }

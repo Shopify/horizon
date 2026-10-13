@@ -25,37 +25,9 @@
 
 {%- if product != empty -%}
   {%- liquid
-    assign disclosures = product.metafields.shopify.disclosure.value
+    assign disclosures = product.metafields.shopify.disclosure.value | applicable_disclosures
     assign filter_by_cart_surface = true
-    assign cart_disclosure_symbol_aspect_ratio = 1
   -%}
-
-  {%- for disclosure in disclosures -%}
-    {%- liquid
-      assign render_disclosure = true
-      if filter_by_cart_surface
-        assign render_disclosure = false
-        assign surfaces = disclosure.display_preferences.value.surfaces
-        if surfaces contains 'cart'
-          assign render_disclosure = true
-        endif
-      endif
-
-      assign disclosure_title = disclosure.title.value | default: disclosure.title
-      assign disclosure_message = disclosure.message.value | default: disclosure.message
-      assign disclosure_item_heading = disclosure_title
-      if disclosure_item_heading == blank
-        assign disclosure_item_heading = disclosure_message
-      endif
-      assign disclosure_symbol = disclosure.symbol.value
-      assign disclosure_symbol_aspect_ratio = disclosure_symbol.aspect_ratio | default: 1
-    -%}
-    {%- if render_disclosure and disclosure_item_heading != blank and disclosure_symbol != blank -%}
-      {%- if disclosure_symbol_aspect_ratio > cart_disclosure_symbol_aspect_ratio -%}
-        {%- assign cart_disclosure_symbol_aspect_ratio = disclosure_symbol_aspect_ratio -%}
-      {%- endif -%}
-    {%- endif -%}
-  {%- endfor -%}
 
   {%- capture disclosure_rows -%}
     {%- for disclosure in disclosures -%}
@@ -88,6 +60,10 @@
                 width: disclosure_symbol.width,
                 height: disclosure_symbol.height
             }}
+          {%- else -%}
+            <span class="cart-disclosure-tooltip__symbol cart-disclosure-tooltip__symbol--fallback">
+              {{- 'icon-info.svg' | inline_asset_content -}}
+            </span>
           {%- endif -%}
           <p class="cart-disclosure-tooltip__title">
             {{ disclosure_title | escape }}
@@ -140,6 +116,10 @@
                 width: disclosure_symbol.width,
                 height: disclosure_symbol.height
             }}
+          {%- else -%}
+            <span class="cart-disclosure-modal__symbol cart-disclosure-modal__symbol--fallback">
+              {{- 'icon-info.svg' | inline_asset_content -}}
+            </span>
           {%- endif -%}
           <div class="cart-disclosure-modal__item-content">
             <h3 class="cart-disclosure-modal__item-heading">{{ disclosure_item_heading | escape }}</h3>
@@ -183,7 +163,6 @@
         {% endif %}
         class="cart-disclosure-tooltip"
         id="cart-disclosure-anchor-{{ popover_id }}"
-        style="--cart-disclosure-symbol-aspect-ratio: {{ cart_disclosure_symbol_aspect_ratio }};"
       >
         <button
           type="button"
@@ -226,7 +205,6 @@
       <dialog-component
         id="{{ dialog_component_id }}"
         class="cart-disclosure-tooltip__dialog"
-        style="--cart-disclosure-symbol-aspect-ratio: {{ cart_disclosure_symbol_aspect_ratio }};"
       >
         <dialog
           id="{{ dialog_id }}"
@@ -287,15 +265,10 @@
 
   .cart-items__title-row .cart-disclosure-tooltip {
     position: static;
-    align-self: flex-start;
     width: 1em;
     height: 1em;
-    margin-block-start: calc((1lh - 1em) / 2 + 0.3rem);
-    line-height: calc(var(--font-size--md) * var(--font-paragraph--line-height));
-  }
-
-  .cart-page .cart-items__title-row .cart-disclosure-tooltip {
-    margin-block-start: calc((1lh - 1em) / 2);
+    margin-inline-start: var(--gap-xs);
+    vertical-align: baseline;
   }
 
   .cart-items__title-row .cart-disclosure-tooltip__button {
@@ -317,8 +290,7 @@
     color: var(--color-foreground);
   }
 
-  .cart-disclosure-tooltip__button .svg-wrapper,
-  .cart-disclosure-tooltip__button .svg-wrapper > svg {
+  .cart-disclosure-tooltip__button .svg-wrapper {
     width: 1em;
     height: 1em;
   }
@@ -398,7 +370,7 @@
   .cart-disclosure-tooltip__row {
     display: flex;
     align-items: flex-start;
-    gap: var(--gap-sm);
+    gap: var(--gap-xs);
     padding-block: var(--padding-xs);
     padding-inline: var(--cart-disclosure-tooltip-symbol-inset-inline, var(--padding-md)) var(--padding-md);
     font-size: var(--font-size--sm);
@@ -408,28 +380,43 @@
   }
 
   .cart-disclosure-tooltip__row:has(> .cart-disclosure-tooltip__symbol) {
-    --cart-disclosure-tooltip-symbol-height: 1em;
-    --cart-disclosure-tooltip-symbol-slot-width: calc(
-      var(--cart-disclosure-tooltip-symbol-height) * var(--cart-disclosure-symbol-aspect-ratio, 1)
-    );
+    --cart-disclosure-tooltip-symbol-width: var(--icon-size-sm);
 
     display: grid;
-    grid-template-columns: var(--cart-disclosure-tooltip-symbol-slot-width) minmax(0, 1fr);
+    grid-template-columns: var(--cart-disclosure-tooltip-symbol-width) minmax(0, 1fr);
     min-inline-size: 0;
   }
 
   .cart-disclosure-tooltip__symbol {
     justify-self: center;
-    width: auto;
+    width: 100%;
     max-inline-size: 100%;
-    height: var(--cart-disclosure-tooltip-symbol-height, 1em);
+    height: auto;
     margin: 0;
     object-fit: contain;
-    translate: 0 1px;
+  }
+
+  .cart-disclosure-tooltip__symbol:not(.cart-disclosure-tooltip__symbol--fallback) {
+    min-block-size: var(--cart-disclosure-tooltip-symbol-width);
+    max-block-size: var(--cart-disclosure-tooltip-symbol-width);
+  }
+
+  .cart-disclosure-tooltip__symbol--fallback {
+    aspect-ratio: 1;
+  }
+
+  .cart-disclosure-tooltip__symbol--fallback > svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    transform: scale(1.38);
+    transform-origin: center;
   }
 
   .cart-disclosure-tooltip__title {
+    align-content: center;
     min-width: 0;
+    min-block-size: var(--cart-disclosure-tooltip-symbol-width);
     margin: 0;
     line-height: var(--line-height--body-tight);
   }
@@ -499,14 +486,11 @@
   }
 
   .cart-disclosure-modal__item {
-    --cart-disclosure-modal-symbol-height: 1.5em;
-    --cart-disclosure-modal-symbol-slot-width: calc(
-      var(--cart-disclosure-modal-symbol-height) * var(--cart-disclosure-symbol-aspect-ratio, 1)
-    );
-    --cart-disclosure-modal-heading-offset: calc((var(--cart-disclosure-modal-symbol-height) - 1em) / 2);
+    --cart-disclosure-modal-symbol-size: var(--icon-size-lg);
+    --cart-disclosure-modal-heading-offset: calc((var(--cart-disclosure-modal-symbol-size) - 1em) / 2);
 
     display: grid;
-    grid-template-columns: var(--cart-disclosure-modal-symbol-slot-width) minmax(0, 1fr);
+    grid-template-columns: var(--cart-disclosure-modal-symbol-size) minmax(0, 1fr);
     align-items: flex-start;
     column-gap: var(--gap-xs);
     row-gap: var(--gap-xs);
@@ -521,11 +505,31 @@
 
   .cart-disclosure-modal__symbol {
     justify-self: center;
-    width: auto;
+    width: var(--cart-disclosure-modal-symbol-size);
     max-inline-size: 100%;
-    height: var(--cart-disclosure-modal-symbol-height);
+    height: var(--cart-disclosure-modal-symbol-size);
     margin: 0;
     object-fit: contain;
+  }
+
+  .cart-disclosure-modal__symbol--fallback > svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    transform: scale(1.2);
+    transform-origin: center;
+  }
+
+  /* The warning path ends at y=12.0932 in a 14-unit viewBox; include its stroke when aligning the painted bottom. */
+  .cart-disclosure-tooltip__button .svg-wrapper > svg {
+    --cart-disclosure-tooltip-icon-bottom-inset: calc(1.9068px - var(--icon-stroke-width) / 2);
+
+    width: 1em;
+    height: 1em;
+  }
+
+  .cart-disclosure-tooltip__button .svg-wrapper > svg > :is(circle, path) {
+    transform: translateY(var(--cart-disclosure-tooltip-icon-bottom-inset));
   }
 
   .cart-disclosure-modal__item-content {

@@ -44,11 +44,6 @@
   {% if settings.show_cart_note or settings.show_add_discount_code %}
     <div class="cart-actions">
       {% if settings.show_cart_note %}
-        <script
-          type="module"
-          src="{{ 'cart-note.js' | asset_url }}"
-        ></script>
-
         <cart-note style="display: flex;">
           {% capture cart_note_accordion_children %}
             <details

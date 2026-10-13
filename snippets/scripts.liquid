@@ -137,6 +137,13 @@
     fetchpriority="low"
   ></script>
 {% endif %}
+{% if settings.show_cart_note %}
+  <script
+    src="{{ 'cart-note.js' | asset_url }}"
+    type="module"
+    fetchpriority="low"
+  ></script>
+{% endif %}
 {% if settings.show_add_discount_code %}
   <script
     src="{{ 'cart-discount.js' | asset_url }}"

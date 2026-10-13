@@ -138,10 +138,6 @@
           assign other_media = product.media | reject: 'src', product.featured_media
           assign media_list_to_show = product.featured_media | concat: other_media
 
-          if product.media.size > 2 and generic_media_size > 0
-            assign show_arrows = true
-          endif
-
           # Don't overfetch media if we don't need to
           assign max_visible_slide_count = 1
           if settings.product_card_carousel
@@ -192,6 +188,13 @@
               render 'slideshow-slide', slide_id: media.id, index: forloop.index0, hidden: hidden, class: class, attributes: attributes, children: slideshow_children, media_fit: media_fit
             endfor
           endcapture
+
+          # Arrows can only reach slides that are rendered visible. Variant images past
+          # the featured media are hidden, so a product whose only extra media are
+          # variant images has a single navigable slide and would get inert arrows.
+          if product.media.size > 2 and visible_slide_count > 1
+            assign show_arrows = true
+          endif
 
           assign slideshow_attributes = 'data-generic-media-size="[generic_media_size]"' | replace: '[generic_media_size]', generic_media_size
           if settings.product_card_carousel == false

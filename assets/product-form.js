@@ -277,11 +277,11 @@ class ProductFormComponent extends Component {
     const variantIdInput = this.#getVariantIdInput();
     if (!variantIdInput) return;
 
-    const cartItem = cart.items.find(
-      /** @param {any} item */
-      (item) => item.variant_id.toString() === variantIdInput.toString()
-    );
-    const cartQty = cartItem ? cartItem.quantity : 0;
+    // Discounts such as Buy X Get Y can split one variant across several cart lines.
+    let cartQty = 0;
+    for (const item of cart.items) {
+      if (item.variant_id.toString() === variantIdInput.toString()) cartQty += item.quantity;
+    }
 
     // Use public API to update quantity selector
     const quantitySelector =

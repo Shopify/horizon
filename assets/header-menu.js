@@ -16,15 +16,30 @@ const HOVER_COMMIT_DELAY_MS = 150;
  * @property {HTMLElement} overflowMenu - The overflow menu.
  * @property {HTMLElement[]} [submenu] - The submenu in each respective menu item.
  *
+ * @typedef {Object} SubmenuMeasurement
+ * @property {HTMLElement} item - The menu item that owns the active measurement.
+ * @property {HTMLElement} target - The element whose height determines the open submenu height.
+ * @property {boolean} isDefaultSlot - Whether the item is in the top-level menu.
+ * @property {boolean} hasSubmenu - Whether the item has submenu content.
+ *
  * @extends {Component<Refs>}
  */
 class HeaderMenu extends Component {
   requiredRefs = ['overflowMenu'];
 
-  /**
-   * @type {MutationObserver | null}
-   */
-  #submenuMutationObserver = null;
+  /** @type {SubmenuMeasurement | null} */
+  #submenuMeasurement = null;
+
+  /** @type {number | null} */
+  #submenuResizeAnimationFrame = null;
+
+  #submenuResizeObserver = new ResizeObserver((entries) => {
+    const measurement = this.#submenuMeasurement;
+    if (!measurement || this.#state.activeItem !== measurement.item) return;
+    if (!entries.some((entry) => entry.target === measurement.target)) return;
+
+    this.#scheduleSubmenuMeasurement(measurement);
+  });
 
   /** @type {ReturnType<typeof setTimeout> | undefined} */
   #hoverDispatchTimer;
@@ -36,6 +51,10 @@ class HeaderMenu extends Component {
     window.addEventListener('resize', this.#resizeListener);
     this.addEventListener('keydown', this.#onKeydown);
     this.overflowMenu?.addEventListener('pointerleave', this.#overflowSubmenuListener);
+    if (this.#state.activeItem) {
+      this.#startPointerTracking(this.#state.activeItem, null);
+    }
+    this.#resumeSubmenuResizeObserver();
   }
 
   disconnectedCallback() {
@@ -47,7 +66,7 @@ class HeaderMenu extends Component {
       this.#stopPointerTracking(this.#state.activeItem);
     }
     this.overflowMenu?.removeEventListener('pointerleave', this.#overflowSubmenuListener);
-    this.#cleanupMutationObserver();
+    this.#cleanupSubmenuResizeObserver();
     clearTimeout(this.#hoverDispatchTimer);
     this.#hoverDispatchTimer = undefined;
   }
@@ -274,6 +293,8 @@ class HeaderMenu extends Component {
     const previouslyActiveItem = this.#state.activeItem;
     const previouslyActiveOverflowItem = this.#state.activeOverflowItem;
 
+    this.#cleanupSubmenuResizeObserver();
+
     if (previouslyActiveItem) {
       this.#expandableFor(previouslyActiveItem).ariaExpanded = 'false';
       const previousSubmenu = findSubmenu(previouslyActiveItem);
@@ -327,53 +348,14 @@ class HeaderMenu extends Component {
       // overridden by descendants that re-assert visibility).
       submenu.inert = false;
 
-      // Cleanup any existing mutation observer from previous menu activations
-      this.#cleanupMutationObserver();
-
-      // Monitor DOM mutations to catch deferred content injection (from section hydration)
-      this.#submenuMutationObserver = new MutationObserver(() => {
-        requestAnimationFrame(() => {
-          // Double requestAnimationFrame to ensure the height is properly calculated and not defaulting to the contain-intrinsic-size
-          requestAnimationFrame(() => {
-            if (submenu.offsetHeight > 0) {
-              this.headerComponent?.style.setProperty('--submenu-height', `${submenu.offsetHeight}px`);
-              this.#cleanupMutationObserver();
-            }
-          });
-        });
-      });
-      this.#submenuMutationObserver.observe(submenu, { childList: true, subtree: true });
-
-      // Auto-disconnect after 500ms to prevent memory leaks
-      setTimeout(() => {
-        this.#cleanupMutationObserver();
-      }, 500);
-    }
-
-    let finalHeight = submenu?.offsetHeight || 0;
-
-    // For overflow menu, the height needs to be either content of the submenu or the total height of the menu list links
-    if (!isDefaultSlot) {
-      const overflowListHeight = this.#getOverflowListLinksHeight();
-      if (hasSubmenu) {
-        /* Note: When the submenu is inside the overflow menu, its offsetHeight is not valid due to the lack of padding
-         * we could add the padding variables to the submenu.offsetHeight, but measuring the overflowMenu.offsetHeight is just easier */
-        const overflowHeight = this.overflowMenu?.offsetHeight || 0;
-        finalHeight = Math.max(overflowHeight, overflowListHeight);
-      } else {
-        finalHeight = overflowListHeight;
+      const measurementTarget = isDefaultSlot ? submenu : this.overflowMenu;
+      if (measurementTarget) {
+        this.#startSubmenuResizeObserver(item, measurementTarget, isDefaultSlot, hasSubmenu);
       }
+    } else {
+      this.#setSubmenuHeights(0, 0);
     }
 
-    if (!submenu) {
-      // If there is no content to open, don't try to open it
-      finalHeight = 0;
-    }
-
-    const headerVisibleHeight = this.#getHeaderVisibleHeight();
-
-    this.headerComponent.style.setProperty('--submenu-height', `${finalHeight}px`);
-    this.#setFullOpenHeaderHeight(finalHeight, headerVisibleHeight);
     this.style.setProperty('--submenu-opacity', '1');
     this.#startPointerTracking(item, previouslyActiveItem);
   };
@@ -423,8 +405,8 @@ class HeaderMenu extends Component {
     clearTimeout(this.#hoverDispatchTimer);
     this.#hoverDispatchTimer = undefined;
 
-    this.headerComponent?.style.setProperty('--submenu-height', '0px');
-    this.#setFullOpenHeaderHeight(0, 0);
+    this.#cleanupSubmenuResizeObserver();
+    this.#setSubmenuHeights(0, 0);
     this.style.setProperty('--submenu-opacity', '0');
     this.dataset.overflowExpanded = 'false';
 
@@ -478,6 +460,84 @@ class HeaderMenu extends Component {
   }
 
   /**
+   * Observe and measure the active submenu.
+   * @param {HTMLElement} item
+   * @param {HTMLElement} target
+   * @param {boolean} isDefaultSlot
+   * @param {boolean} hasSubmenu
+   * @param {boolean} [deferMeasurement=false]
+   */
+  #startSubmenuResizeObserver(item, target, isDefaultSlot, hasSubmenu, deferMeasurement = false) {
+    const measurement = { item, target, isDefaultSlot, hasSubmenu };
+    this.#submenuMeasurement = measurement;
+    this.#submenuResizeObserver.observe(target);
+    if (deferMeasurement) {
+      this.#scheduleSubmenuMeasurement(measurement);
+    } else {
+      this.#updateSubmenuHeight(measurement);
+    }
+  }
+
+  /**
+   * Restore resize tracking when an open menu is reconnected.
+   */
+  #resumeSubmenuResizeObserver() {
+    const item = this.#state.activeItem;
+    if (!item || !this.headerComponent) return;
+
+    this.#cleanupSubmenuResizeObserver();
+
+    const listItem = item.closest('.menu-list__list-item');
+    const slot = listItem instanceof HTMLElement ? listItem.slot : '';
+    const isDefaultSlot = slot === '';
+    const isMoreTrigger = slot === 'more';
+    const itemSubmenu = findSubmenu(item);
+    const overflowItemSubmenu = isMoreTrigger ? findSubmenu(this.#state.activeOverflowItem) : null;
+    const hasSubmenu = Boolean(itemSubmenu || overflowItemSubmenu);
+    const measurementTarget = isDefaultSlot ? itemSubmenu : this.overflowMenu;
+
+    if (measurementTarget) {
+      this.#startSubmenuResizeObserver(item, measurementTarget, isDefaultSlot, hasSubmenu, true);
+    } else {
+      this.#setSubmenuHeights(0, 0);
+    }
+  }
+
+  /**
+   * Schedule a height update for the active submenu.
+   * @param {SubmenuMeasurement} measurement
+   */
+  #scheduleSubmenuMeasurement(measurement) {
+    if (this.#submenuResizeAnimationFrame !== null) return;
+
+    this.#submenuResizeAnimationFrame = requestAnimationFrame(() => {
+      this.#submenuResizeAnimationFrame = null;
+      if (this.#submenuMeasurement !== measurement || this.#state.activeItem !== measurement.item) return;
+
+      this.#updateSubmenuHeight(measurement);
+    });
+  }
+
+  /**
+   * Measure and apply the active submenu height.
+   * @param {SubmenuMeasurement} measurement
+   */
+  #updateSubmenuHeight(measurement) {
+    if (this.#submenuMeasurement !== measurement || this.#state.activeItem !== measurement.item) return;
+
+    let submenuHeight = measurement.target.offsetHeight;
+
+    if (!measurement.isDefaultSlot) {
+      const overflowListHeight = this.#getOverflowListLinksHeight();
+      submenuHeight = measurement.hasSubmenu
+        ? Math.max(measurement.target.offsetHeight, overflowListHeight)
+        : overflowListHeight;
+    }
+
+    this.#setSubmenuHeights(submenuHeight, this.#getHeaderVisibleHeight());
+  }
+
+  /**
    * Read the visible header height before submenu height writes invalidate layout.
    * @returns {number}
    */
@@ -496,13 +556,20 @@ class HeaderMenu extends Component {
    * @param {number} submenuHeight
    * @param {number} headerVisibleHeight
    */
-  #setFullOpenHeaderHeight(submenuHeight, headerVisibleHeight) {
+  #setSubmenuHeights(submenuHeight, headerVisibleHeight) {
     if (!this.headerComponent) return;
 
     const nothingToOpen = submenuHeight === 0;
     const fullOpenHeaderHeight = nothingToOpen ? 0 : submenuHeight + headerVisibleHeight;
+    const submenuHeightValue = `${submenuHeight}px`;
+    const fullOpenHeaderHeightValue = `${fullOpenHeaderHeight}px`;
 
-    this.headerComponent?.style.setProperty('--full-open-header-height', `${fullOpenHeaderHeight}px`);
+    if (this.headerComponent.style.getPropertyValue('--submenu-height') !== submenuHeightValue) {
+      this.headerComponent.style.setProperty('--submenu-height', submenuHeightValue);
+    }
+    if (this.headerComponent.style.getPropertyValue('--full-open-header-height') !== fullOpenHeaderHeightValue) {
+      this.headerComponent.style.setProperty('--full-open-header-height', fullOpenHeaderHeightValue);
+    }
   }
 
   /**
@@ -513,9 +580,14 @@ class HeaderMenu extends Component {
     images?.forEach((image) => image.removeAttribute('loading'));
   };
 
-  #cleanupMutationObserver() {
-    this.#submenuMutationObserver?.disconnect();
-    this.#submenuMutationObserver = null;
+  #cleanupSubmenuResizeObserver() {
+    this.#submenuResizeObserver.disconnect();
+    this.#submenuMeasurement = null;
+
+    if (this.#submenuResizeAnimationFrame !== null) {
+      cancelAnimationFrame(this.#submenuResizeAnimationFrame);
+      this.#submenuResizeAnimationFrame = null;
+    }
   }
 }
 

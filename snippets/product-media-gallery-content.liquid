@@ -27,6 +27,11 @@
 {%- liquid
   assign selected_product = closest.product
   assign selected_variant_media = selected_product.selected_or_first_available_variant.featured_media
+
+  if block_settings.hide_variants and selected_variant_media == blank
+    assign selected_variant_media = selected_product.featured_media
+  endif
+
   assign first_3d_model = selected_product.media | where: 'media_type', 'model' | first
 
   if block_settings.hide_variants
@@ -121,6 +126,8 @@
         assign sorted_media = sorted_media | concat: found_media
       endif
     endfor
+  elsif block_settings.hide_variants
+    assign sorted_media = '' | split: ','
   else
     assign sorted_media = selected_product.media
   endif

@@ -319,8 +319,13 @@
     }
   }
 
-  /* If the header is sticky, make product details content stick underneath the header */
-  body:has(#header-group #header-component[data-sticky-state='active']) .product-details.sticky-content--desktop {
+  /* If the header is sticky, make product details content stick underneath the header.
+     Header-dependent page rules use #header-group as the :has() subject and reach the page with `~`.
+     With body as the subject, every [open] or [aria-expanded] change in the header restyles the whole page. */
+  #header-group:has(> .header-section > #header-component[data-sticky-state='active'])
+    ~ *
+    .product-details.sticky-content--desktop,
+  quick-add-dialog[header-sticky-active] .product-details.sticky-content--desktop {
     --sticky-header-offset: var(--header-height);
   }
 {% endstylesheet %}

@@ -551,8 +551,10 @@
     --hero-height-offset: 0px;
   }
 
-  /* Being extra specific in the selector for performance reasons */
-  body:has(#header-group > .header-section > #header-component) .hero-wrapper:first-child {
+  /* Being extra specific in the selector for performance reasons.
+     Header-dependent page rules use #header-group as the :has() subject and reach the page with `~`.
+     With body as the subject, every [open] or [aria-expanded] change in the header restyles the whole page. */
+  #header-group:has(> .header-section > #header-component) ~ * .hero-wrapper:first-child {
     --hero-height-offset: var(--header-group-height, 0);
   }
 

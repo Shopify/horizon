@@ -206,11 +206,11 @@
                       >
                         {{- item.product.title -}}
                       </a>
-                      {% render 'cart-disclosure-tooltip',
+                      {%- render 'cart-disclosure-tooltip',
                         product: item.product,
                         unique_id: cart_disclosure_unique_id,
                         mode: 'trigger'
-                      %}
+                      -%}
                     </div>
                     {% if item.product.vendor and block_settings.vendor %}
                       <p>
@@ -634,18 +634,17 @@
   }
 
   .cart-items__title-row {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--gap-xs);
+    display: block;
     max-width: 100%;
     min-width: 0;
+    font-size: var(--font-size--md);
   }
 
   .cart-items__title {
     font-size: var(--font-size--md);
     color: var(--color-foreground);
     text-transform: var(--product-title-case);
-    display: block;
+    display: inline;
     margin-block-start: 0;
     min-width: 0;
     overflow-wrap: break-word;

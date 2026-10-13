@@ -57,6 +57,7 @@
 {% stylesheet %}
   .resource-list__carousel {
     --slide-width: 60vw;
+
     width: 100%;
     position: relative;
     container-type: inline-size;
@@ -88,8 +89,9 @@
     }
   }
 
-  .resource-list__carousel slideshow-slides {
+  .resource-list__carousel > slideshow-container > slideshow-slides {
     gap: var(--resource-list-column-gap);
+    cursor: default;
 
     /* Add padding to prevent hover animations from being clipped in slideshow
      15px accommodates:
@@ -110,6 +112,23 @@
     flex: 0 0 auto;
     scroll-snap-align: start;
     min-width: 0;
+  }
+
+  .resource-list__carousel > slideshow-container > slideshow-slides > .resource-list__slide {
+    cursor: var(--cursor);
+  }
+
+  .resource-list__carousel .product-card__content {
+    cursor: var(--cursor);
+  }
+
+  /* Card media links and nested slideshows follow the outer carousel's drag cursor. */
+  .resource-list__carousel .card-gallery > a {
+    cursor: var(--cursor);
+  }
+
+  .resource-list__carousel .product-card__content slideshow-component {
+    --cursor: inherit;
   }
 
   /*
