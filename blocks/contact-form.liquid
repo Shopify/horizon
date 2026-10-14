@@ -16,7 +16,14 @@
   "
   {{ block.shopify_attributes }}
 >
-  {% assign form_id = block.id | default: section.id | prepend: 'ContactForm-' %}
+  {% liquid
+    assign form_id = block.id | default: section.id | prepend: 'ContactForm-'
+    assign name_id = form_id | append: '-name'
+    assign email_id = form_id | append: '-email'
+    assign email_error_id = form_id | append: '-email-error'
+    assign phone_id = form_id | append: '-phone'
+    assign body_id = form_id | append: '-body'
+  %}
   {%- form 'contact', id: form_id, class: 'contact-form__form' -%}
     <input
       name="contact[id]"
@@ -33,6 +40,7 @@
 
     {%- if form.errors and form_matches -%}
       <div
+        id="{{ email_error_id }}"
         class="contact-form__error"
         tabindex="-1"
         autofocus
@@ -58,13 +66,13 @@
     <div class="contact-form__form-row">
       <label
         class="visually-hidden"
-        for="ContactForm-name"
+        for="{{ name_id }}"
       >
         {{- 'blocks.contact_form.name' | t -}}
       </label>
       <input
         type="text"
-        id="ContactForm-name"
+        id="{{ name_id }}"
         class="contact-form__input"
         autocomplete="name"
         name="contact[name]"
@@ -74,14 +82,14 @@
 
       <label
         class="visually-hidden"
-        for="ContactForm-email"
+        for="{{ email_id }}"
       >
         {{- 'blocks.contact_form.email' | t -}}
         <span aria-hidden="true">*</span></label
       >
       <input
         type="email"
-        id="ContactForm-email"
+        id="{{ email_id }}"
         class="contact-form__input"
         autocomplete="email"
         name="contact[email]"
@@ -91,7 +99,7 @@
         aria-required="true"
         {% if form.errors contains 'email' and form_matches %}
           aria-invalid="true"
-          aria-describedby="ContactForm-email-error"
+          aria-describedby="{{ email_error_id }}"
         {% endif %}
         placeholder="{{ 'blocks.contact_form.email' | t }}"
       >
@@ -99,13 +107,13 @@
 
     <label
       class="visually-hidden"
-      for="ContactForm-phone"
+      for="{{ phone_id }}"
     >
       {{- 'blocks.contact_form.phone' | t -}}
     </label>
     <input
       type="tel"
-      id="ContactForm-phone"
+      id="{{ phone_id }}"
       class="contact-form__input"
       autocomplete="tel"
       name="contact[phone]"
@@ -116,13 +124,13 @@
 
     <label
       class="visually-hidden"
-      for="ContactForm-body"
+      for="{{ body_id }}"
     >
       {{- 'blocks.contact_form.comment' | t -}}
     </label>
     <textarea
       rows="10"
-      id="ContactForm-body"
+      id="{{ body_id }}"
       class="contact-form__input contact-form__input--textarea"
       name="contact[body]"
       placeholder="{{ 'blocks.contact_form.comment' | t }}"
