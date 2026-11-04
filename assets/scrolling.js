@@ -102,8 +102,7 @@ export class Scroller {
     let value;
 
     if (input instanceof HTMLElement) {
-      const paddingStart = calculatePaddingStart(this.element, this.axis);
-      value = input[`offset${this.#edge}`] - paddingStart;
+      value = this.#startPosition(input);
     } else {
       value = input;
     }
@@ -160,6 +159,24 @@ export class Scroller {
       [this.#edge.toLowerCase()]: value,
       behavior: instant ? 'instant' : 'smooth',
     });
+  }
+
+  /**
+   * The scroll position that aligns an element with the scroller's inline (or block) start.
+   * @param {HTMLElement} element - A child of the scroller.
+   * @returns {number}
+   */
+  #startPosition(element) {
+    const paddingStart = calculatePaddingStart(this.element, this.axis);
+
+    // offsetLeft is physical, measured from the left edge, but in RTL the start
+    // edge is on the right and scrollLeft runs from 0 there to negative values.
+    // Align the element's right edge with the scroller's start instead.
+    if (this.axis === 'x' && isRTL(this.element)) {
+      return element.offsetLeft + element.offsetWidth - this.element.clientWidth + paddingStart;
+    }
+
+    return element[`offset${this.#edge}`] - paddingStart;
   }
 
   /**

@@ -276,7 +276,21 @@
     },
     "item_count_cutoff": "Meer dan {{ count }} artikelen",
     "quick_order_list": "Snelle bestellijst",
-    "product_disclosures": "Productvermeldingen"
+    "product_disclosures": "Productvermeldingen",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Douanerechten en belastingen inbegrepen. Kortingen, toeslagen en <a href=\"{{ link }}\">verzending</a> worden berekend bij de checkout.",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Douanerechten en belastingen inbegrepen. Toeslagen en verzending worden berekend bij de checkout.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "Douanerechten en belastingen inbegrepen. Kortingen, toeslagen en verzending worden berekend bij de checkout.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "Douanerechten en belastingen inbegrepen. Toeslagen en verzending worden berekend bij de checkout.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Douanerechten inbegrepen. Belastingen, kortingen, toeslagen en <a href=\"{{ link }}\">verzending</a> worden berekend bij de checkout.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Douanerechten inbegrepen. Toeslagen en verzending worden berekend bij de checkout.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Douanerechten inbegrepen. Belastingen, kortingen, toeslagen en verzending worden berekend bij de checkout.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Douanerechten inbegrepen. Toeslagen en verzending worden berekend bij de checkout.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Belastingen, kortingen, toeslagen en <a href=\"{{ link }}\">verzending</a> worden berekend bij de checkout.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Belastingen, toeslagen en <a href=\"{{ link }}\">verzending</a> worden berekend bij de checkout.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Belastingen, kortingen, toeslagen en verzending worden berekend bij de checkout.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Belastingen, toeslagen en verzending worden berekend bij de checkout.",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Belastingen inbegrepen. Kortingen, toeslagen en <a href=\"{{ link }}\">verzending</a> worden berekend bij de checkout.",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Belastingen inbegrepen. Kortingen, toeslagen en verzending worden berekend bij de checkout."
   },
   "gift_cards": {
     "issued": {

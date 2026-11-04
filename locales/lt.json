@@ -288,7 +288,21 @@
     },
     "item_count_cutoff": "Daugiau kaip {{ count }} prekės (-ių)",
     "quick_order_list": "Greito užsakymo sąrašas",
-    "product_disclosures": "Atskleidžiama produkto informacija"
+    "product_disclosures": "Atskleidžiama produkto informacija",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Muitai ir mokesčiai įskaičiuoti. Nuolaidos, rinkliavos ir <a href=\"{{ link }}\">pristatymas</a> apskaičiuojami atsiskaitant.",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Muitai ir mokesčiai įskaičiuoti. Rinkliavos ir pristatymas apskaičiuojami atsiskaitant.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "Muitai ir mokesčiai įskaičiuoti. Nuolaidos, rinkliavos ir pristatymas apskaičiuojami atsiskaitant.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "Muitai ir mokesčiai įskaičiuoti. Rinkliavos ir pristatymas apskaičiuojami atsiskaitant.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Muitai įskaičiuoti. Mokesčiai, nuolaidos, rinkliavos ir <a href=\"{{ link }}\">pristatymas</a> apskaičiuojami atsiskaitant.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Muitai įskaičiuoti. Rinkliavos ir pristatymas apskaičiuojami atsiskaitant.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Muitai įskaičiuoti. Mokesčiai, nuolaidos, rinkliavos ir pristatymas apskaičiuojami atsiskaitant.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Muitai įskaičiuoti. Rinkliavos ir pristatymas apskaičiuojami atsiskaitant.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Mokesčiai, nuolaidos, rinkliavos ir <a href=\"{{ link }}\">pristatymas</a> apskaičiuojami atsiskaitant.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Mokesčiai, rinkliavos ir <a href=\"{{ link }}\">pristatymas</a> apskaičiuojami atsiskaitant.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Mokesčiai, nuolaidos, rinkliavos ir pristatymas apskaičiuojami atsiskaitant.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Mokesčiai, rinkliavos ir pristatymas apskaičiuojami atsiskaitant.",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Mokesčiai įskaičiuoti. Nuolaidos, rinkliavos ir <a href=\"{{ link }}\">pristatymas</a> apskaičiuojami atsiskaitant.",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Mokesčiai įskaičiuoti. Nuolaidos, rinkliavos ir pristatymas apskaičiuojami atsiskaitant."
   },
   "gift_cards": {
     "issued": {

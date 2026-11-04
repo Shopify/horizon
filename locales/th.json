@@ -276,7 +276,21 @@
       "other": "เพิ่มสินค้า {{ count }} รายการลงในตะกร้า"
     },
     "quick_order_list": "รายการคำสั่งซื้อด่วน",
-    "product_disclosures": "ข้อมูลชี้แจงสินค้า"
+    "product_disclosures": "ข้อมูลชี้แจงสินค้า",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "รวมอากรและภาษีแล้ว ระบบจะคำนวณส่วนลด ค่าธรรมเนียม และ<a href=\"{{ link }}\">การจัดส่ง</a>เมื่อชำระเงิน",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "รวมอากรและภาษีแล้ว ระบบจะคำนวณค่าธรรมเนียมและการจัดส่งเมื่อชำระเงิน",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "รวมอากรและภาษีแล้ว ระบบจะคำนวณส่วนลด ค่าธรรมเนียม และการจัดส่งเมื่อชำระเงิน",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "รวมอากรและภาษีแล้ว ระบบจะคำนวณค่าธรรมเนียมและการจัดส่งเมื่อชำระเงิน",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "รวมอากรแล้ว ระบบจะคำนวณภาษี ส่วนลด ค่าธรรมเนียม และ<a href=\"{{ link }}\">การจัดส่ง</a>เมื่อชำระเงิน",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "รวมอากรแล้ว ระบบจะคำนวณค่าธรรมเนียมและการจัดส่งเมื่อชำระเงิน",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "รวมอากรแล้ว ระบบจะคำนวณภาษี ส่วนลด ค่าธรรมเนียม และการจัดส่งเมื่อชำระเงิน",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "รวมอากรแล้ว ระบบจะคำนวณค่าธรรมเนียมและการจัดส่งเมื่อชำระเงิน",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "ระบบจะคำนวณภาษี ส่วนลด ค่าธรรมเนียม และ<a href=\"{{ link }}\">การจัดส่ง</a>เมื่อชำระเงิน",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "ระบบจะคำนวณภาษี ค่าธรรมเนียม และ<a href=\"{{ link }}\">การจัดส่ง</a>เมื่อชำระเงิน",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "ระบบจะคำนวณภาษี ส่วนลด ค่าธรรมเนียม และการจัดส่งเมื่อชำระเงิน",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "ระบบจะคำนวณภาษี ค่าธรรมเนียม และการจัดส่งเมื่อชำระเงิน",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "รวมภาษีแล้ว ระบบจะคำนวณส่วนลด ค่าธรรมเนียม และ<a href=\"{{ link }}\">การจัดส่ง</a>เมื่อชำระเงิน",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "รวมภาษีแล้ว ระบบจะคำนวณส่วนลด ค่าธรรมเนียม และการจัดส่งเมื่อชำระเงิน"
   },
   "gift_cards": {
     "issued": {

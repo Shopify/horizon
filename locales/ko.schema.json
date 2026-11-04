@@ -323,7 +323,6 @@
     "icon_background": "아이콘 배경",
     "icons": "아이콘",
     "image_border_radius": "이미지 모서리 반경",
-    "installments": "할부",
     "integrated_button": "통합 버튼",
     "language_selector": "언어 선택기",
     "large": "크게",
@@ -575,7 +574,8 @@
     "selected_button_style": "선택한 버튼 스타일",
     "open_by_default": "기본으로 열기",
     "title_preset": "제목 사전 설정",
-    "customer_account_menu": "고객 계정 메뉴"
+    "customer_account_menu": "고객 계정 메뉴",
+    "shop_pay_payment_options": "Shop Pay 결제 옵션 표시"
   },
   "options": {
     "apple": "Apple",
@@ -1109,7 +1109,8 @@
     "page_text_color_default_info": "테마 섹션 기본값",
     "actions_display_style": "모바일에서는 항상 아이콘이 사용됩니다.",
     "edit_input_field_in_theme_settings": "[테마 설정](/editor?context=theme&category=input%20fields)에서 입력 필드 편집",
-    "edit_variants_in_theme_settings": "[테마 설정](/editor?context=theme&category=variant%20pickers)에서 이형 상품 스타일을 편집하십시오."
+    "edit_variants_in_theme_settings": "[테마 설정](/editor?context=theme&category=variant%20pickers)에서 이형 상품 스타일을 편집하십시오.",
+    "shop_pay_payment_options": "사용 가능한 경우 Shop Pay 할부 및 HSA/FSA 배지를 표시합니다."
   },
   "categories": {
     "basic": "기본",

@@ -377,6 +377,23 @@
     {% endif %}
   "
 >
+  <script>
+    /**
+     * Sets the initial menu style (inline menu vs. drawer) before the header content is parsed.
+     * The browser can paint while the rest of the page is still loading. Without a menu style, that
+     * first frame shows the drawer layout and the mobile navigation bar on desktop, and the
+     * pre-paint header measurement in layout/theme.liquid includes the navigation bar.
+     * The overflow list is not parsed yet, so only touch support decides the style here.
+     * Mimics setHeaderMenuStyle() in utilities.js
+     */
+    (function setHeaderMenuStyle() {
+      const headerComponent = document.currentScript?.parentElement;
+      if (!headerComponent) return;
+
+      const isTouchDevice = 'ontouchstart' in window && navigator.maxTouchPoints > 0;
+      headerComponent.dataset.menuStyle = isTouchDevice ? 'drawer' : 'menu';
+    })();
+  </script>
   <div class="header__underlay header__underlay-closed"></div>
   <div
     class="header__underlay header__underlay-open"
@@ -1091,6 +1108,7 @@
     align-items: center;
     gap: 4px;
     font-family: var(--menu-localization-font);
+    font-style: var(--font-paragraph--style);
     font-size: var(--menu-localization-font-size);
     font-weight: var(--menu-top-level-font-weight);
     padding-inline: var(--padding-2xs);

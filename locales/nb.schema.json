@@ -331,7 +331,6 @@
     "icon_background": "Ikonbakgrunn",
     "icons": "Ikoner",
     "image_border_radius": "Hjørneradius for bilde",
-    "installments": "Avdrag",
     "integrated_button": "Integrert knapp",
     "language_selector": "Språkvelger",
     "large": "Stor",
@@ -575,7 +574,8 @@
     "selected_button_style": "Valgt knappestil",
     "open_by_default": "Åpen som standard",
     "title_preset": "Forhåndsinnstilling for tittel",
-    "customer_account_menu": "Kundekontomeny"
+    "customer_account_menu": "Kundekontomeny",
+    "shop_pay_payment_options": "Vis betalingsalternativer for Shop Pay"
   },
   "options": {
     "apple": "Eple",
@@ -1109,7 +1109,8 @@
     "page_text_color_default_info": "Standard for temaseksjoner",
     "actions_display_style": "Ikoner brukes alltid på mobil",
     "edit_input_field_in_theme_settings": "Rediger inndatafelt i [temainnstillinger](/editor?context=theme&category=input%20fields)",
-    "edit_variants_in_theme_settings": "Rediger variantstiler i [temainnstillinger](/editor?context=theme&category=variant%20pickers)"
+    "edit_variants_in_theme_settings": "Rediger variantstiler i [temainnstillinger](/editor?context=theme&category=variant%20pickers)",
+    "shop_pay_payment_options": "Viser Avdrag via Shop Pay og HSA/FSA-merker når det er tilgjengelig."
   },
   "categories": {
     "product_list": "Utvalgt samling",

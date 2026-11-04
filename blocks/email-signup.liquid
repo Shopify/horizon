@@ -136,8 +136,10 @@
     --arrow-button-size-small: 20px;
     --arrow-icon-size: 32px;
     --arrow-icon-size-small: 24px;
+    --email-signup-input-min-width: 11em;
 
-    min-width: fit-content;
+    /* Keep the form usable at small custom widths without letting a long heading widen the block. */
+    min-width: min-content;
 
     @media screen and (max-width: 749px) {
       width: 100%;
@@ -262,6 +264,16 @@
     background-color: transparent;
     border: none;
     border-radius: 0;
+  }
+
+  /* At tablet widths a row of blocks can be narrower than the input's default 20-character width.
+     A percentage width takes that default out of the form's minimum width, so the form can shrink
+     to the input's usable minimum and stay inside the row. */
+  .layout-panel-flex--row > .email-signup-block .email-signup__input {
+    @media screen and (min-width: 750px) and (max-width: 989px) {
+      width: 100%;
+      min-width: var(--email-signup-input-min-width);
+    }
   }
 
   .email-signup__button-icon {

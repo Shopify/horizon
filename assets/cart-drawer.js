@@ -6,7 +6,7 @@ import { ThemeEvents } from '@theme/events';
 /**
  * A custom element that manages cart drawer behavior within a `<theme-drawer>`.
  *
- * Dialog lifecycle (open/close, squeeze, history, animations) is owned by `<theme-drawer>`.
+ * Dialog lifecycle (open/close, squeeze, animations) is owned by `<theme-drawer>`.
  * The `cart:view` event is auto-dispatched by `CartItemsComponent` via the
  * `view-event-trigger="dialog"` attribute (see `snippets/cart-items-component.liquid`).
  * Cart count announcements are owned by `<header-actions>`.

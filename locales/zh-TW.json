@@ -276,7 +276,21 @@
     },
     "item_count_cutoff": "超過 {{ count }} 個品項",
     "quick_order_list": "快速訂購清單",
-    "product_disclosures": "商品揭露資訊"
+    "product_disclosures": "商品揭露資訊",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "內含關稅和稅額。系統會在結帳時計算折扣、費用和<a href=\"{{ link }}\">運費</a>。",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "內含關稅和稅額。系統會在結帳時計算費用和運費。",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "內含關稅和稅額。系統會在結帳時計算折扣、費用和運費。",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "內含關稅和稅額。系統會在結帳時計算費用和運費。",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "內含關稅。系統會在結帳時計算稅額、折扣、費用和<a href=\"{{ link }}\">運費</a>。",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "內含關稅。系統會在結帳時計算費用和運費。",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "內含關稅。系統會在結帳時計算稅額、折扣、費用和運費。",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "內含關稅。系統會在結帳時計算費用和運費。",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "系統會在結帳時計算稅額、折扣、費用和<a href=\"{{ link }}\">運費</a>。",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "系統會在結帳時計算稅額、費用和<a href=\"{{ link }}\">運費</a>。",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "系統會在結帳時計算稅額、折扣、費用和運費。",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "系統會在結帳時計算稅額、費用和運費。",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "內含稅額。系統會在結帳時計算折扣、費用和<a href=\"{{ link }}\">運費</a>。",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "內含稅額。系統會在結帳時計算折扣、費用和運費。"
   },
   "gift_cards": {
     "issued": {

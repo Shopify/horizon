@@ -276,7 +276,21 @@
       "other": "{{ count }} item ditambahkan ke keranjang"
     },
     "quick_order_list": "Daftar pesanan cepat",
-    "product_disclosures": "Pengungkapan produk"
+    "product_disclosures": "Pengungkapan produk",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Termasuk bea masuk dan pajak. Diskon, biaya, dan <a href=\"{{ link }}\">pengiriman</a> dihitung saat checkout.",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Termasuk bea masuk dan pajak. Biaya dan pengiriman dihitung saat checkout.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "Termasuk bea masuk dan pajak. Diskon, biaya, dan pengiriman dihitung saat checkout.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "Termasuk bea masuk dan pajak. Biaya dan pengiriman dihitung saat checkout.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Termasuk bea masuk. Pajak, diskon, biaya, dan <a href=\"{{ link }}\">pengiriman</a> dihitung saat checkout.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Termasuk bea masuk. Biaya dan pengiriman dihitung saat checkout.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Termasuk bea masuk. Pajak, diskon, biaya, dan pengiriman dihitung saat checkout.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Termasuk bea masuk. Biaya dan pengiriman dihitung saat checkout.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Pajak, diskon, biaya, dan <a href=\"{{ link }}\">pengiriman</a> dihitung saat checkout.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Pajak, biaya, dan <a href=\"{{ link }}\">pengiriman</a> dihitung saat checkout.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Pajak, diskon, biaya, dan pengiriman dihitung saat checkout.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Pajak, biaya, dan pengiriman dihitung saat checkout.",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Termasuk pajak. Diskon, biaya, dan <a href=\"{{ link }}\">pengiriman</a> dihitung saat checkout.",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Termasuk pajak. Diskon, biaya, dan pengiriman dihitung saat checkout."
   },
   "gift_cards": {
     "issued": {

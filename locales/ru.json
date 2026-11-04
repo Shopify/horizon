@@ -288,7 +288,21 @@
     "item_count_cutoff": "Более {{ count }} товаров",
     "price_range": "Ценовой диапазон",
     "quick_order_list": "Список быстрых заказов",
-    "product_disclosures": "Дополнительная информация о товаре"
+    "product_disclosures": "Дополнительная информация о товаре",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Пошлины и налоги включены. Скидки, сборы и <a href=\"{{ link }}\">доставка</a> рассчитываются при оформлении заказа.",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Пошлины и налоги включены. Сборы и доставка рассчитываются при оформлении заказа.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "Пошлины и налоги включены. Скидки, сборы и доставка рассчитываются при оформлении заказа.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "Пошлины и налоги включены. Сборы и доставка рассчитываются при оформлении заказа.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Пошлины включены. Налоги, скидки, сборы и <a href=\"{{ link }}\">доставка</a> рассчитываются при оформлении заказа.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Пошлины включены. Сборы и доставка рассчитываются при оформлении заказа.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Пошлины включены. Налоги, скидки, сборы и доставка рассчитываются при оформлении заказа.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Пошлины включены. Сборы и доставка рассчитываются при оформлении заказа.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Налоги, скидки, сборы и <a href=\"{{ link }}\">доставка</a> рассчитываются при оформлении заказа.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Налоги, сборы и <a href=\"{{ link }}\">доставка</a> рассчитываются при оформлении заказа.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Налоги, скидки, сборы и доставка рассчитываются при оформлении заказа.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Налоги, сборы и доставка рассчитываются при оформлении заказа.",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Налоги включены. Скидки, сборы и <a href=\"{{ link }}\">доставка</a> рассчитываются при оформлении заказа.",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Налоги включены. Скидки, сборы и доставка рассчитываются при оформлении заказа."
   },
   "gift_cards": {
     "issued": {

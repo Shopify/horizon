@@ -282,7 +282,21 @@
       "many": "Se agregaron {{ count }} artículos al carrito"
     },
     "quick_order_list": "Lista de pedidos rápidos",
-    "product_disclosures": "Avisos sobre el producto"
+    "product_disclosures": "Avisos sobre el producto",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Aranceles e impuestos incluidos. Los descuentos, cargos y el <a href=\"{{ link }}\">envío</a> se calculan en el pago.",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Aranceles e impuestos incluidos. Los cargos y el envío se calculan en el pago.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "Aranceles e impuestos incluidos. Los descuentos, cargos y el envío se calculan en el pago.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "Aranceles e impuestos incluidos. Los cargos y el envío se calculan en el pago.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Aranceles incluidos. Los impuestos, descuentos, cargos y el <a href=\"{{ link }}\">envío</a> se calculan en el pago.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Aranceles incluidos. Los cargos y el envío se calculan en el pago.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Aranceles incluidos. Los impuestos, descuentos, cargos y el envío se calculan en el pago.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Aranceles incluidos. Los cargos y el envío se calculan en el pago.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Los impuestos, descuentos, cargos y el <a href=\"{{ link }}\">envío</a> se calculan en el pago.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Los impuestos, cargos y el <a href=\"{{ link }}\">envío</a> se calculan en el pago.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Los impuestos, descuentos, cargos y el envío se calculan en el pago.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Los impuestos, cargos y el envío se calculan en el pago.",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Impuestos incluidos. Los descuentos, cargos y el <a href=\"{{ link }}\">envío</a> se calculan en el pago.",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Impuestos incluidos. Los descuentos, cargos y el envío se calculan en el pago."
   },
   "gift_cards": {
     "issued": {

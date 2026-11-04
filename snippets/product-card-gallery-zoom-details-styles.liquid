@@ -10,8 +10,17 @@
     display: none;
   }
 
+  /* The card clips to its rounded corners, so the title is inset by 0.3 x the corner radius: the
+     smallest equal inline and block-end inset, r x (1 - 1/sqrt(2)), that keeps every line box inside
+     the corner arc. The card's own zoom-out padding counts toward it. The block-end inset is a
+     margin, not padding, so the line clamp keeps the fourth line hidden. */
   @media screen and (min-width: 750px) {
     ul[product-grid-view='zoom-out'] .product-grid-view-zoom-out--details {
+      --zoom-out-title-corner-inset: calc(var(--border-radius, 0px) * 0.3);
+
+      margin-block-end: max(0px, var(--zoom-out-title-corner-inset) - var(--zoom-out-padding-block-end, 0px));
+      padding-inline-start: max(0px, var(--zoom-out-title-corner-inset) - var(--zoom-out-padding-inline-start, 0px));
+      padding-inline-end: max(0px, var(--zoom-out-title-corner-inset) - var(--zoom-out-padding-inline-end, 0px));
       font-size: var(--font-size--xs);
       font-family: var(--font-paragraph--family);
       font-weight: 400;

@@ -336,7 +336,6 @@
     "icon_background": "Fondo del ícono",
     "icons": "Íconos",
     "image_border_radius": "Radio de las esquinas de la imagen",
-    "installments": "Cuotas",
     "integrated_button": "Botón integrado",
     "language_selector": "Selector de idioma",
     "large": "Grande",
@@ -575,7 +574,8 @@
     "selected_button_style": "Estilo de botón seleccionado",
     "open_by_default": "Abrir de forma predeterminada",
     "title_preset": "Preajuste del título",
-    "customer_account_menu": "Menú de la cuenta de cliente"
+    "customer_account_menu": "Menú de la cuenta de cliente",
+    "shop_pay_payment_options": "Mostrar opciones de pago de Shop Pay"
   },
   "options": {
     "apple": "Apple",
@@ -1109,7 +1109,8 @@
     "page_text_color_default_info": "Predeterminado para las secciones del tema",
     "actions_display_style": "Los íconos siempre se usan en la versión móvil",
     "edit_input_field_in_theme_settings": "Edita el campo de entrada en la [configuración del tema](/editor?context=theme&category=input%20fields)",
-    "edit_variants_in_theme_settings": "Edita el estilo de las variantes en la [configuración del tema](/editor?context=theme&category=variant%20pickers)"
+    "edit_variants_in_theme_settings": "Edita el estilo de las variantes en la [configuración del tema](/editor?context=theme&category=variant%20pickers)",
+    "shop_pay_payment_options": "Muestra los emblemas de Cuotas de Shop Pay y HSA/FSA cuando estén disponibles."
   },
   "categories": {
     "basic": "Básico",

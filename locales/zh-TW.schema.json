@@ -329,7 +329,6 @@
     "icon_background": "圖示背景",
     "icons": "圖示",
     "image_border_radius": "圖片圓角半徑",
-    "installments": "分期付款",
     "integrated_button": "內嵌按鈕",
     "language_selector": "語言選擇器",
     "large": "大",
@@ -575,7 +574,8 @@
     "selected_button_style": "已選取按鈕樣式",
     "open_by_default": "預設為開啟",
     "title_preset": "標題預設設定",
-    "customer_account_menu": "顧客帳號選單"
+    "customer_account_menu": "顧客帳號選單",
+    "shop_pay_payment_options": "顯示 Shop Pay 付款選項"
   },
   "options": {
     "apple": "Apple",
@@ -1109,7 +1109,8 @@
     "page_text_color_default_info": "佈景主題區段的預設",
     "actions_display_style": "在行動裝置上一律使用圖示",
     "edit_input_field_in_theme_settings": "在 [佈景主題設定](/editor?context=theme&category=input%20fields) 中編輯輸入欄位",
-    "edit_variants_in_theme_settings": "在[佈景主題設定](/editor?context=theme&category=variant%20pickers)中編輯子類樣式"
+    "edit_variants_in_theme_settings": "在[佈景主題設定](/editor?context=theme&category=variant%20pickers)中編輯子類樣式",
+    "shop_pay_payment_options": "可供使用時顯示 Shop Pay 分期付款和 HSA/FSA 徽章。"
   },
   "categories": {
     "basic": "基本",

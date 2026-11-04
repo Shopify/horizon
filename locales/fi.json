@@ -276,7 +276,21 @@
       "other": "{{ count }} tuotetta lisätty ostoskoriin"
     },
     "quick_order_list": "Pikatilausluettelo",
-    "product_disclosures": "Tuoteilmoitukset"
+    "product_disclosures": "Tuoteilmoitukset",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Sisältää tullit ja verot. Alennukset, maksut ja <a href=\"{{ link }}\">toimitus</a> lasketaan kassalla.",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Sisältää tullit ja verot. Maksut ja toimitus lasketaan kassalla.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "Sisältää tullit ja verot. Alennukset, maksut ja toimitus lasketaan kassalla.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "Sisältää tullit ja verot. Maksut ja toimitus lasketaan kassalla.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Sisältää tullit. Verot, alennukset, maksut ja <a href=\"{{ link }}\">toimitus</a> lasketaan kassalla.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Sisältää tullit. Maksut ja toimitus lasketaan kassalla.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Sisältää tullit. Verot, alennukset, maksut ja toimitus lasketaan kassalla.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Sisältää tullit. Maksut ja toimitus lasketaan kassalla.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Verot, alennukset, maksut ja <a href=\"{{ link }}\">toimitus</a> lasketaan kassalla.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Verot, maksut ja <a href=\"{{ link }}\">toimitus</a> lasketaan kassalla.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Verot, alennukset, maksut ja toimitus lasketaan kassalla.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Verot, maksut ja toimitus lasketaan kassalla.",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Sisältää verot. Alennukset, maksut ja <a href=\"{{ link }}\">toimitus</a> lasketaan kassalla.",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Sisältää verot. Alennukset, maksut ja toimitus lasketaan kassalla."
   },
   "gift_cards": {
     "issued": {

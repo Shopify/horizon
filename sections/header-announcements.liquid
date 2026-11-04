@@ -109,8 +109,11 @@
     height: var(--icon-size-xs);
   }
 
+  /* Prevent text descenders from being clipped by inherited slideshow-styles */
   .announcement-bar__slide {
     place-content: center;
+    overflow: visible;
+    min-width: 0;
   }
 
   .announcement-bar__text:first-child {

@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "Horizon",
-    "theme_version": "4.3.0",
+    "theme_version": "4.4.0",
     "theme_author": "Shopify",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://support.shopify.com/"
@@ -1551,7 +1551,8 @@
       {
         "type": "checkbox",
         "id": "show_installments",
-        "label": "t:settings.installments",
+        "label": "t:settings.shop_pay_payment_options",
+        "info": "t:info.shop_pay_payment_options",
         "default": true
       },
       {

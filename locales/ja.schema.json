@@ -340,7 +340,6 @@
     "icon_background": "アイコンの背景",
     "icons": "アイコン",
     "image_border_radius": "画像の角の丸み",
-    "installments": "分割払い",
     "integrated_button": "統合ボタン",
     "language_selector": "言語セレクター",
     "large": "大",
@@ -575,7 +574,8 @@
     "selected_button_style": "選択されたボタンのスタイル",
     "open_by_default": "デフォルトで開く",
     "title_preset": "タイトルプリセット",
-    "customer_account_menu": "お客様アカウントメニュー"
+    "customer_account_menu": "お客様アカウントメニュー",
+    "shop_pay_payment_options": "Shop Pay の決済オプションを表示する"
   },
   "options": {
     "apple": "Apple",
@@ -1109,7 +1109,8 @@
     "page_text_color_default_info": "テーマセクションのデフォルト",
     "actions_display_style": "モバイルでは常にアイコンが表示されます",
     "edit_input_field_in_theme_settings": "[テーマ設定](/editor?context=theme&category=input%20fields)で入力フィールドを編集する",
-    "edit_variants_in_theme_settings": "バリエーションのスタイルは[テーマ設定](/editor?context=theme&category=variant%20pickers)で編集できます"
+    "edit_variants_in_theme_settings": "バリエーションのスタイルは[テーマ設定](/editor?context=theme&category=variant%20pickers)で編集できます",
+    "shop_pay_payment_options": "利用可能な場合、Shop Payの分割払いおよび HSA/FSA バッジを表示します。"
   },
   "categories": {
     "product_list": "特集コレクション",

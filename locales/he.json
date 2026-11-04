@@ -310,7 +310,21 @@
       "other": "{{ count }} פריטים נוספו לסל",
       "many": "{{ count }} פריטים נוספו לסל",
       "two": "{{ count }} פריטים נוספו לסל"
-    }
+    },
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "מכס ומיסים כלולים. הנחות, עמלות ו<a href=\"{{ link }}\">שילוח</a> יחושבו בשלב התשלום.",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "מכס ומיסים כלולים. עמלות ושילוח יחושבו בשלב התשלום.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "מכס ומיסים כלולים. הנחות, עמלות ושילוח יחושבו בשלב התשלום.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "מכס ומיסים כלולים. עמלות ושילוח יחושבו בשלב התשלום.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "מכס כלול. מיסים, הנחות, עמלות ו<a href=\"{{ link }}\">שילוח</a> יחושבו בשלב התשלום.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "מכס כלול. עמלות ושילוח יחושבו בשלב התשלום.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "מכס כלול. מיסים, הנחות, עמלות ושילוח יחושבו בשלב התשלום.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "מכס כלול. עמלות ושילוח יחושבו בשלב התשלום.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "מיסים, הנחות, עמלות ו<a href=\"{{ link }}\">שילוח</a> יחושבו בשלב התשלום.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "מיסים, עמלות ו<a href=\"{{ link }}\">שילוח</a> יחושבו בשלב התשלום.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "מיסים, הנחות, עמלות ושילוח יחושבו בשלב התשלום.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "מיסים, עמלות ושילוח יחושבו בשלב התשלום.",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "מיסים כלולים. הנחות, עמלות ו<a href=\"{{ link }}\">שילוח</a> יחושבו בשלב התשלום.",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "מיסים כלולים. הנחות, עמלות ושילוח יחושבו בשלב התשלום."
   },
   "fields": {
     "separator": "עד"

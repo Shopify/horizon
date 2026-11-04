@@ -276,7 +276,21 @@
     },
     "item_count_cutoff": "Több mint {{ count }} tétel",
     "quick_order_list": "Gyorsrendelési lista",
-    "product_disclosures": "Terméktájékoztatók"
+    "product_disclosures": "Terméktájékoztatók",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "A vámokat és az adókat tartalmazza. A kedvezmények, díjak és a <a href=\"{{ link }}\">szállítás</a> kiszámítása a pénztárnál történik.",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "A vámokat és az adókat tartalmazza. A díjak és a szállítás kiszámítása a pénztárnál történik.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "A vámokat és az adókat tartalmazza. A kedvezmények, díjak és a szállítás kiszámítása a pénztárnál történik.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "A vámokat és az adókat tartalmazza. A díjak és a szállítás kiszámítása a pénztárnál történik.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "A vámokat tartalmazza. Az adók, kedvezmények, díjak és a <a href=\"{{ link }}\">szállítás</a> kiszámítása a pénztárnál történik.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "A vámokat tartalmazza. A díjak és a szállítás kiszámítása a pénztárnál történik.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "A vámokat tartalmazza. Az adók, kedvezmények, díjak és a szállítás kiszámítása a pénztárnál történik.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "A vámokat tartalmazza. A díjak és a szállítás kiszámítása a pénztárnál történik.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Az adók, kedvezmények, díjak és a <a href=\"{{ link }}\">szállítás</a> kiszámítása a pénztárnál történik.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Az adók, díjak és a <a href=\"{{ link }}\">szállítás</a> kiszámítása a pénztárnál történik.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Az adók, kedvezmények, díjak és a szállítás kiszámítása a pénztárnál történik.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Az adók, díjak és a szállítás kiszámítása a pénztárnál történik.",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Az adókat tartalmazza. A kedvezmények, díjak és a <a href=\"{{ link }}\">szállítás</a> kiszámítása a pénztárnál történik.",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Az adókat tartalmazza. A kedvezmények, díjak és a szállítás kiszámítása a pénztárnál történik."
   },
   "gift_cards": {
     "issued": {

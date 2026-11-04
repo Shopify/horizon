@@ -508,6 +508,12 @@
     padding-block: var(--padding-3xl) 0;
   }
 
+  /* Groups that hold the buy buttons fill the modal's details column and ignore the width set on the
+     product page, so the quantity selector keeps its row beside Add to cart */
+  .quick-add-modal__content .group-block-content > .group-block:has(.buy-buttons-block) {
+    width: 100%;
+  }
+
   .quick-add-modal__content :where(.product-details > .group-block > .group-block-content > *) {
     padding-inline: var(--padding-3xl);
   }
@@ -549,6 +555,13 @@
 
   .quick-add-modal media-gallery {
     padding: 0;
+  }
+
+  /* Modal media has no gallery padding or controls and does not stick below the page header,
+     so it keeps the usual screen-height limit. */
+  .quick-add-modal .product-media-container.constrain-height {
+    --constrained-gallery-extra-height: initial;
+    --constrained-gallery-min-height: initial;
   }
 
   .quick-add-modal__content .product-information__media slideshow-arrows {

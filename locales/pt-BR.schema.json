@@ -329,7 +329,6 @@
     "icon_background": "Plano de fundo do ícone",
     "icons": "Ícones",
     "image_border_radius": "Raio do canto da imagem",
-    "installments": "Parcelas",
     "integrated_button": "Botão integrado",
     "language_selector": "Seletor de idiomas",
     "large": "Grande",
@@ -575,7 +574,8 @@
     "selected_button_style": "Estilo do botão selecionado",
     "open_by_default": "Aberto por padrão",
     "title_preset": "Predefinição de título",
-    "customer_account_menu": "Menu da conta de cliente"
+    "customer_account_menu": "Menu da conta de cliente",
+    "shop_pay_payment_options": "Exibir opções de pagamento do Shop Pay"
   },
   "options": {
     "apple": "Apple",
@@ -1109,7 +1109,8 @@
     "page_text_color_default_info": "Padrão para seções do tema",
     "actions_display_style": "Os ícones são sempre usados em dispositivos móveis",
     "edit_input_field_in_theme_settings": "Editar campo de entrada nas [configurações do tema](/editor?context=theme&category=input%20fields)",
-    "edit_variants_in_theme_settings": "Edite o estilo da variante nas [configurações do tema](/editor?context=theme&category=variant%20pickers)"
+    "edit_variants_in_theme_settings": "Edite o estilo da variante nas [configurações do tema](/editor?context=theme&category=variant%20pickers)",
+    "shop_pay_payment_options": "Exibe os selos do Parcelamento do Shop Pay e de HSA/FSA quando disponíveis."
   },
   "categories": {
     "basic": "Básico",

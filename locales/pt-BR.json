@@ -282,7 +282,21 @@
       "many": "{{ count }} itens adicionados ao carrinho"
     },
     "quick_order_list": "Lista de pedidos rápidos",
-    "product_disclosures": "Informações de divulgação do produto"
+    "product_disclosures": "Informações de divulgação do produto",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Tributos de importação e tributos incluídos. Descontos, taxas e <a href=\"{{ link }}\">frete</a> calculados no checkout.",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Tributos de importação e tributos incluídos. Taxas e frete calculados no checkout.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "Tributos de importação e tributos incluídos. Descontos, taxas e frete calculados no checkout.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "Tributos de importação e tributos incluídos. Taxas e frete calculados no checkout.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Tributos de importação incluídos. Tributos, descontos, taxas e <a href=\"{{ link }}\">frete</a> calculados no checkout.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Tributos de importação incluídos. Taxas e frete calculados no checkout.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Tributos de importação incluídos. Tributos, descontos, taxas e frete calculados no checkout.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Tributos de importação incluídos. Taxas e frete calculados no checkout.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Tributos, descontos, taxas e <a href=\"{{ link }}\">frete</a> calculados no checkout.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Tributos, taxas e <a href=\"{{ link }}\">frete</a> calculados no checkout.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Tributos, descontos, taxas e frete calculados no checkout.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Tributos, taxas e frete calculados no checkout.",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Tributos incluídos. Descontos, taxas e <a href=\"{{ link }}\">frete</a> calculados no checkout.",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Tributos incluídos. Descontos, taxas e frete calculados no checkout."
   },
   "gift_cards": {
     "issued": {

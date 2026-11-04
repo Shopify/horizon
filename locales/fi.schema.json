@@ -329,7 +329,6 @@
     "icon_background": "Kuvakkeen tausta",
     "icons": "Kuvakkeet",
     "image_border_radius": "Kuvan kulman säde",
-    "installments": "Maksuerät",
     "integrated_button": "Integroitu painike",
     "language_selector": "Kielivalitsin",
     "large": "Suuri",
@@ -575,7 +574,8 @@
     "selected_button_style": "Valitun painikkeen tyyli",
     "open_by_default": "Avoinna oletuksena",
     "title_preset": "Otsikon esiasetus",
-    "customer_account_menu": "Asiakastilin valikko"
+    "customer_account_menu": "Asiakastilin valikko",
+    "shop_pay_payment_options": "Näytä Shop Pay -maksuvaihtoehdot"
   },
   "options": {
     "apple": "Omena",
@@ -1109,7 +1109,8 @@
     "page_text_color_default_info": "Oletus teeman osioille",
     "actions_display_style": "Kuvakkeet ovat aina käytössä mobiililaitteilla",
     "edit_input_field_in_theme_settings": "Muokkaa syöttökenttää [teeman asetuksissa](/editor?context=theme&category=input%20fields)",
-    "edit_variants_in_theme_settings": "Muokkaa versioiden tyyliä [teeman asetuksissa](/editor?context=theme&category=variant%20pickers)"
+    "edit_variants_in_theme_settings": "Muokkaa versioiden tyyliä [teeman asetuksissa](/editor?context=theme&category=variant%20pickers)",
+    "shop_pay_payment_options": "Näyttää Shop Pay -maksuerien ja HSA/FSA-tunnukset, kun ne ovat saatavilla."
   },
   "categories": {
     "basic": "Perusosat",

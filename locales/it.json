@@ -282,7 +282,21 @@
     },
     "item_count_cutoff": "Più di {{ count }} articoli",
     "quick_order_list": "Elenco per ordine rapido",
-    "product_disclosures": "Informative sul prodotto"
+    "product_disclosures": "Informative sul prodotto",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Dazi e imposte inclusi. Sconti, commissioni e <a href=\"{{ link }}\">spedizione</a> calcolati al check-out.",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Dazi e imposte inclusi. Commissioni e spedizione calcolate al check-out.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "Dazi e imposte inclusi. Sconti, commissioni e spedizione calcolati al check-out.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "Dazi e imposte inclusi. Commissioni e spedizione calcolate al check-out.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Dazi inclusi. Imposte, sconti, commissioni e <a href=\"{{ link }}\">spedizione</a> calcolati al check-out.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Dazi inclusi. Commissioni e spedizione calcolate al check-out.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Dazi inclusi. Imposte, sconti, commissioni e spedizione calcolati al check-out.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Dazi inclusi. Commissioni e spedizione calcolate al check-out.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Imposte, sconti, commissioni e <a href=\"{{ link }}\">spedizione</a> calcolati al check-out.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Imposte, commissioni e <a href=\"{{ link }}\">spedizione</a> calcolate al check-out.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Imposte, sconti, commissioni e spedizione calcolati al check-out.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Imposte, commissioni e spedizione calcolate al check-out.",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Imposte incluse. Sconti, commissioni e <a href=\"{{ link }}\">spedizione</a> calcolati al check-out.",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Imposte incluse. Sconti, commissioni e spedizione calcolati al check-out."
   },
   "gift_cards": {
     "issued": {

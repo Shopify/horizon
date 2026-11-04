@@ -61,6 +61,7 @@ export class DialogComponent extends Component {
 
       this.addEventListener('click', this.#handleClick);
       this.addEventListener('keydown', this.#handleKeyDown);
+      dialog.addEventListener('close', this.#handleNativeClose);
     });
   }
 
@@ -74,6 +75,7 @@ export class DialogComponent extends Component {
 
     this.removeEventListener('click', this.#handleClick);
     this.removeEventListener('keydown', this.#handleKeyDown);
+    dialog.removeEventListener('close', this.#handleNativeClose);
 
     // Force browser to restart animation by resetting it
     // Temporarily remove any existing animation state
@@ -90,6 +92,16 @@ export class DialogComponent extends Component {
       subtree: false,
     });
 
+    this.#finishClose();
+  };
+
+  /**
+   * Shared by `closeDialog` and a close the browser performs itself, such as
+   * on the Android Back button.
+   */
+  #finishClose() {
+    const { dialog } = this.refs;
+
     unlockScroll(dialog);
     scrollTo({ top: this.#previousScrollY, behavior: 'instant' });
 
@@ -97,6 +109,24 @@ export class DialogComponent extends Component {
     dialog.classList.remove('dialog-closing');
 
     this.dispatchEvent(new DialogCloseEvent());
+  }
+
+  /**
+   * Finishes the close when the browser closes the dialog without going
+   * through `closeDialog`. Bound as a field because it is attached to the dialog.
+   */
+  #handleNativeClose = () => {
+    const { dialog } = this.refs;
+
+    // `<theme-drawer>` closes and reopens a nested dialog to restack it,
+    // so the queued event can arrive with the dialog open again.
+    if (dialog.open) return;
+
+    this.removeEventListener('click', this.#handleClick);
+    this.removeEventListener('keydown', this.#handleKeyDown);
+    dialog.removeEventListener('close', this.#handleNativeClose);
+
+    this.#finishClose();
   };
 
   /**

@@ -18,15 +18,6 @@
       | image_url: width: 800
       | image_tag: loading: 'lazy', class: class, sizes: image_sizes
     }}
-  {% elsif link.object.products.size > 0 %}
-    {% assign product_object = link.object.products | where: 'featured_image' | first %}
-    {% if product_object.featured_image %}
-      {{
-        product_object.featured_image
-        | image_url: width: 800
-        | image_tag: loading: 'lazy', class: class, sizes: image_sizes
-      }}
-    {% endif %}
   {% endif %}
 {% elsif link.type == 'collections_link' %}
   {% assign collection_object = collections | where: 'featured_image' | first %}

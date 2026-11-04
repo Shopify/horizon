@@ -276,7 +276,21 @@
     },
     "item_count_cutoff": "{{ count }}개 이상의 품목",
     "quick_order_list": "빠른 주문 목록",
-    "product_disclosures": "제품 고지 사항"
+    "product_disclosures": "제품 고지 사항",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "관세 및 세금 포함. 할인, 수수료, <a href=\"{{ link }}\">배송</a>은 체크아웃 시 계산됩니다.",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "관세 및 세금 포함. 수수료 및 배송은 체크아웃 시 계산됩니다.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "관세 및 세금 포함. 할인, 수수료, 배송은 체크아웃 시 계산됩니다.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "관세 및 세금 포함. 수수료 및 배송은 체크아웃 시 계산됩니다.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "관세 포함. 세금, 할인, 수수료, <a href=\"{{ link }}\">배송</a>은 체크아웃 시 계산됩니다.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "관세 포함. 수수료 및 배송은 체크아웃 시 계산됩니다.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "관세 포함. 세금, 할인, 수수료, 배송은 체크아웃 시 계산됩니다.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "관세 포함. 수수료 및 배송은 체크아웃 시 계산됩니다.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "세금, 할인, 수수료, <a href=\"{{ link }}\">배송</a>은 체크아웃 시 계산됩니다.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "세금, 수수료, <a href=\"{{ link }}\">배송</a>은 체크아웃 시 계산됩니다.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "세금, 할인, 수수료, 배송은 체크아웃 시 계산됩니다.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "세금, 수수료, 배송은 체크아웃 시 계산됩니다.",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "세금 포함. 할인, 수수료, <a href=\"{{ link }}\">배송</a>은 체크아웃 시 계산됩니다.",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "세금 포함. 할인, 수수료, 배송은 체크아웃 시 계산됩니다."
   },
   "gift_cards": {
     "issued": {

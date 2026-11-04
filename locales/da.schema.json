@@ -323,7 +323,6 @@
     "icon_background": "Ikonbaggrund",
     "icons": "Ikoner",
     "image_border_radius": "Hjørneradius for billede",
-    "installments": "Rater",
     "integrated_button": "Integreret knap",
     "language_selector": "Sprogvælger",
     "large": "Stor",
@@ -575,7 +574,8 @@
     "selected_button_style": "Valgt knapstil",
     "open_by_default": "Åben som standard",
     "title_preset": "Forudindstilling for titel",
-    "customer_account_menu": "Kundekontomenu"
+    "customer_account_menu": "Kundekontomenu",
+    "shop_pay_payment_options": "Vis betalingsmuligheder for Shop Pay"
   },
   "options": {
     "apple": "Apple",
@@ -1109,7 +1109,8 @@
     "page_text_color_default_info": "Standard for temaafsnit",
     "actions_display_style": "Ikoner bruges altid på mobil",
     "edit_input_field_in_theme_settings": "Rediger indtastningsfelt i [temaindstillinger](/editor?context=theme&category=input%20fields)",
-    "edit_variants_in_theme_settings": "Rediger styling af varianter i [temaindstillinger](/editor?context=theme&category=variant%20pickers)"
+    "edit_variants_in_theme_settings": "Rediger styling af varianter i [temaindstillinger](/editor?context=theme&category=variant%20pickers)",
+    "shop_pay_payment_options": "Viser badges for Shop Pay Afbetaling og HSA/FSA, når de er tilgængelige."
   },
   "categories": {
     "basic": "Grundlæggende",

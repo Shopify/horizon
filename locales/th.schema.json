@@ -321,7 +321,6 @@
     "icon_background": "พื้นหลังไอคอน",
     "icons": "ไอคอน",
     "image_border_radius": "รัศมีมุมของรูปภาพ",
-    "installments": "การผ่อนชำระ",
     "integrated_button": "ปุ่มในตัว",
     "language_selector": "ตัวเลือกภาษา",
     "large": "ใหญ่",
@@ -575,7 +574,8 @@
     "selected_button_style": "สไตล์ปุ่มที่เลือก",
     "open_by_default": "เปิดตามค่าเริ่มต้น",
     "title_preset": "พรีเซ็ตชื่อ",
-    "customer_account_menu": "เมนูบัญชีผู้ใช้ของลูกค้า"
+    "customer_account_menu": "เมนูบัญชีผู้ใช้ของลูกค้า",
+    "shop_pay_payment_options": "แสดงตัวเลือกการชำระเงิน Shop Pay"
   },
   "options": {
     "apple": "Apple",
@@ -1109,7 +1109,8 @@
     "page_text_color_default_info": "ค่าเริ่มต้นสำหรับส่วนของธีม",
     "actions_display_style": "ใช้ไอคอนเสมอบนมือถือ",
     "edit_input_field_in_theme_settings": "แก้ไขช่องกรอกข้อมูลใน[การตั้งค่าธีม](/editor?context=theme&category=input%20fields)",
-    "edit_variants_in_theme_settings": "แก้ไขสไตล์ตัวเลือกสินค้าใน[การตั้งค่าธีม](/editor?context=theme&category=variant%20pickers)"
+    "edit_variants_in_theme_settings": "แก้ไขสไตล์ตัวเลือกสินค้าใน[การตั้งค่าธีม](/editor?context=theme&category=variant%20pickers)",
+    "shop_pay_payment_options": "แสดงเครื่องหมายการผ่อนชำระผ่าน Shop Pay และ HSA/FSA เมื่อมีให้บริการ"
   },
   "categories": {
     "basic": "พื้นฐาน",

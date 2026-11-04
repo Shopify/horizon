@@ -565,9 +565,24 @@
     --button-padding-inline: 24px;
     --button-padding-block: 16px;
 
-    /* Button font-family */
+    /* Button font: the accent font brings its own style and weight; body buttons keep the paragraph style and weight */
+    {%- liquid
+      assign button_font_primary_preset = settings.type_font_button_primary
+      if button_font_primary_preset == 'body'
+        assign button_font_primary_preset = 'paragraph'
+      endif
+
+      assign button_font_secondary_preset = settings.type_font_button_secondary
+      if button_font_secondary_preset == 'body'
+        assign button_font_secondary_preset = 'paragraph'
+      endif
+    -%}
     --button-font-family-primary: var(--font-{{ settings.type_font_button_primary }}--family);
     --button-font-family-secondary: var(--font-{{ settings.type_font_button_secondary }}--family);
+    --button-font-style-primary: var(--font-{{ button_font_primary_preset }}--style);
+    --button-font-style-secondary: var(--font-{{ button_font_secondary_preset }}--style);
+    --button-font-weight-primary: var(--font-{{ button_font_primary_preset }}--weight);
+    --button-font-weight-secondary: var(--font-{{ button_font_secondary_preset }}--weight);
 
     /* Button text case */
     --button-text-case-primary: {{ settings.button_text_case_primary }};

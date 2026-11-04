@@ -339,7 +339,6 @@
     "icon_background": "Fundo do ícone",
     "icons": "Ícones",
     "image_border_radius": "Raio do canto da imagem",
-    "installments": "Prestações",
     "integrated_button": "Botão integrado",
     "language_selector": "Seletor de idioma",
     "large": "Grande",
@@ -575,7 +574,8 @@
     "selected_button_style": "Estilo do botão selecionado",
     "open_by_default": "Aberto por predefinição",
     "title_preset": "Predefinição do título",
-    "customer_account_menu": "Menu da conta de cliente"
+    "customer_account_menu": "Menu da conta de cliente",
+    "shop_pay_payment_options": "Mostrar opções de pagamento do Shop Pay"
   },
   "options": {
     "apple": "Maçã",
@@ -1109,7 +1109,8 @@
     "page_text_color_default_info": "Predefinição para as secções do tema",
     "actions_display_style": "Os ícones são sempre utilizados em telemóvel",
     "edit_input_field_in_theme_settings": "Editar campo de introdução nas [definições do tema](/editor?context=theme&category=input%20fields)",
-    "edit_variants_in_theme_settings": "Edite o estilo da variante nas [definições do tema](/editor?context=theme&category=variant%20pickers)"
+    "edit_variants_in_theme_settings": "Edite o estilo da variante nas [definições do tema](/editor?context=theme&category=variant%20pickers)",
+    "shop_pay_payment_options": "Apresenta os selos das Prestações do Shop Pay e de HSA/FSA quando disponíveis."
   },
   "categories": {
     "basic": "Básico",

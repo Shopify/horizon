@@ -282,7 +282,21 @@
     },
     "item_count_cutoff": "Peste {{ count }} articole",
     "quick_order_list": "Lista comenzilor rapide",
-    "product_disclosures": "Mențiuni referitoare la produs"
+    "product_disclosures": "Mențiuni referitoare la produs",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Taxe vamale și taxe incluse. Reducerile, comisioanele și <a href=\"{{ link }}\">expedierea</a> se calculează la plată.",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Taxe vamale și taxe incluse. Comisioanele și expedierea se calculează la plată.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "Taxe vamale și taxe incluse. Reducerile, comisioanele și expedierea se calculează la plată.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "Taxe vamale și taxe incluse. Comisioanele și expedierea se calculează la plată.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Taxe vamale incluse. Taxele, reducerile, comisioanele și <a href=\"{{ link }}\">expedierea</a> se calculează la plată.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Taxe vamale incluse. Comisioanele și expedierea se calculează la plată.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Taxe vamale incluse. Taxele, reducerile, comisioanele și expedierea se calculează la plată.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Taxe vamale incluse. Comisioanele și expedierea se calculează la plată.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Taxele, reducerile, comisioanele și <a href=\"{{ link }}\">expedierea</a> se calculează la plată.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Taxele, comisioanele și <a href=\"{{ link }}\">expedierea</a> se calculează la plată.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Taxele, reducerile, comisioanele și expedierea se calculează la plată.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Taxele, comisioanele și expedierea se calculează la plată.",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Taxe incluse. Reducerile, comisioanele și <a href=\"{{ link }}\">expedierea</a> se calculează la plată.",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Taxe incluse. Reducerile, comisioanele și expedierea se calculează la plată."
   },
   "gift_cards": {
     "issued": {

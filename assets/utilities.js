@@ -194,29 +194,42 @@ export function fetchConfig(type = 'json', config = {}) {
  * Creates a debounced function that delays calling the provided function (fn)
  * until after wait milliseconds have elapsed since the last time
  * the debounced function was invoked. The returned function has a .cancel()
- * method to cancel any pending calls.
+ * method to cancel any pending call, and a .flush() method to run it now.
  *
  * @template {(...args: any[]) => any} T
  * @param {T} fn The function to debounce
  * @param {number} wait The time (in milliseconds) to wait before calling fn
- * @returns {T & { cancel(): void }} A debounced version of fn with a .cancel() method
+ * @returns {T & { cancel(): void, flush(): void }} A debounced version of fn with .cancel() and .flush() methods
  */
 export function debounce(fn, wait) {
   /** @type {number | undefined} */
   let timeout;
+  /** @type {{ receiver: any, args: any[] } | null} */
+  let pending = null;
 
   /** @param {...any} args */
   function debounced(...args) {
     clearTimeout(timeout);
-    timeout = setTimeout(() => fn.apply(this, args), wait);
+    pending = { receiver: this, args };
+    timeout = setTimeout(() => debounced.flush(), wait);
   }
 
   // Add the .cancel method:
   debounced.cancel = () => {
     clearTimeout(timeout);
+    pending = null;
   };
 
-  return /** @type {T & { cancel(): void }} */ (debounced);
+  // Run the pending call now, if there is one.
+  debounced.flush = () => {
+    clearTimeout(timeout);
+    if (!pending) return;
+    const { receiver, args } = pending;
+    pending = null;
+    fn.apply(receiver, args);
+  };
+
+  return /** @type {T & { cancel(): void, flush(): void }} */ (/** @type {unknown} */ (debounced));
 }
 
 /**

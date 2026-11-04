@@ -25,6 +25,21 @@
       /* First child spans 2 columns */
       grid-column: span 2;
     }
+
+    /* Constrained carousel media sticks below a sticky header with the gallery's top padding and controls. On a short
+       desktop screen, the media can go below the usual desktop minimum height, so its controls stay in view. */
+    .media-gallery--carousel {
+      --constrained-gallery-min-height: 300px;
+    }
+
+    /* A transparent sticky header covers the media only at the page top. While the media sticks, it is below the
+       header, so media with bottom thumbnails leaves room for the header, and the thumbnails stay in view. */
+    #header-group:has(> .header-section > header-component[transparent='not-sticky'])
+      ~ *
+      .media-gallery--constrain-with-thumbnails
+      .product-media-container.constrain-height {
+      --viewport-offset: var(--header-height, 100px);
+    }
   }
 
   media-gallery:where(.media-gallery--grid) .media-gallery__grid {

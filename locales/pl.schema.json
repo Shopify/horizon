@@ -337,7 +337,6 @@
     "icon_background": "Tło ikony",
     "icons": "Ikony",
     "image_border_radius": "Promień narożnika obrazu",
-    "installments": "Raty",
     "integrated_button": "Zintegrowany przycisk",
     "language_selector": "Selektor języka",
     "large": "Duży",
@@ -575,7 +574,8 @@
     "selected_button_style": "Styl wybranego przycisku",
     "open_by_default": "Domyślnie otwarte",
     "title_preset": "Gotowe ustawienie tytułu",
-    "customer_account_menu": "Menu konta klienta"
+    "customer_account_menu": "Menu konta klienta",
+    "shop_pay_payment_options": "Pokaż opcje płatności Shop Pay"
   },
   "options": {
     "apple": "Apple",
@@ -1109,7 +1109,8 @@
     "page_text_color_default_info": "Domyślne dla sekcji szablonu",
     "actions_display_style": "Na urządzeniach mobilnych zawsze używane są ikony",
     "edit_input_field_in_theme_settings": "Edytuj pole wprowadzania w [ustawieniach szablonu](/editor?context=theme&category=input%20fields)",
-    "edit_variants_in_theme_settings": "Edytuj styl wariantów w [ustawieniach szablonu](/editor?context=theme&category=variant%20pickers)"
+    "edit_variants_in_theme_settings": "Edytuj styl wariantów w [ustawieniach szablonu](/editor?context=theme&category=variant%20pickers)",
+    "shop_pay_payment_options": "Wyświetla plakietki Rat Shop Pay oraz HSA/FSA, gdy są dostępne."
   },
   "categories": {
     "product_list": "Polecana kolekcja",

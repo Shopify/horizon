@@ -28,6 +28,7 @@ const INACTIVE_SIZE = 56; // Px size of inactive tabs on desktop
 const INACTIVE_MOBILE_SIZE = 44; // Px size of inactive tabs on mobile
 const FOCUSABLE_SELECTOR =
   'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+const FORM_CONTROL_SELECTOR = 'input, textarea, select, [contenteditable]:not([contenteditable="false"])';
 
 /** @extends {Component<LayeredSlideshowRefs>} */
 export class LayeredSlideshowComponent extends Component {
@@ -339,6 +340,7 @@ export class LayeredSlideshowComponent extends Component {
 
     const { tabs } = this.refs;
     if (!tabs) return;
+    if (this.#isFormControlEvent(event)) return;
 
     const eventTarget = /** @type {HTMLElement} */ (event.target);
     const tab = eventTarget.closest('[role="tab"]');
@@ -352,6 +354,20 @@ export class LayeredSlideshowComponent extends Component {
     } else {
       this.#initializeDrag(event);
     }
+  }
+
+  /**
+   * Form controls need the default pointerdown action to take focus and place the caret,
+   * so a press that starts on one (also inside a shadow root) never starts a drag.
+   * @param {PointerEvent} event
+   * @returns {boolean}
+   */
+  #isFormControlEvent(event) {
+    for (const node of event.composedPath()) {
+      if (node === this.refs.container) return false;
+      if (node instanceof Element && node.matches(FORM_CONTROL_SELECTOR)) return true;
+    }
+    return false;
   }
 
   /**
