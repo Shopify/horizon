@@ -288,7 +288,21 @@
     },
     "item_count_cutoff": "Viac ako {{ count }} položky/položiek",
     "quick_order_list": "Rýchly zoznam objednávok",
-    "product_disclosures": "Zverejnené informácie o produkte"
+    "product_disclosures": "Zverejnené informácie o produkte",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Vrátane cla a daní. Zľavy, poplatky a <a href=\"{{ link }}\">doprava</a> sa vypočítajú v pokladni.",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Vrátane cla a daní. Poplatky a doprava sa vypočítajú v pokladni.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "Vrátane cla a daní. Zľavy, poplatky a doprava sa vypočítajú v pokladni.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "Vrátane cla a daní. Poplatky a doprava sa vypočítajú v pokladni.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Vrátane cla. Dane, zľavy, poplatky a <a href=\"{{ link }}\">doprava</a> sa vypočítajú v pokladni.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Vrátane cla. Poplatky a doprava sa vypočítajú v pokladni.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Vrátane cla. Dane, zľavy, poplatky a doprava sa vypočítajú v pokladni.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Vrátane cla. Poplatky a doprava sa vypočítajú v pokladni.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Dane, zľavy, poplatky a <a href=\"{{ link }}\">doprava</a> sa vypočítajú v pokladni.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Dane, poplatky a <a href=\"{{ link }}\">doprava</a> sa vypočítajú v pokladni.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Dane, zľavy, poplatky a doprava sa vypočítajú v pokladni.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Dane, poplatky a doprava sa vypočítajú v pokladni.",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Vrátane daní. Zľavy, poplatky a <a href=\"{{ link }}\">doprava</a> sa vypočítajú v pokladni.",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Vrátane daní. Zľavy, poplatky a doprava sa vypočítajú v pokladni."
   },
   "gift_cards": {
     "issued": {

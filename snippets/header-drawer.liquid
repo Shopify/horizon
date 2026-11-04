@@ -51,7 +51,7 @@
 
 <header-drawer
   class="header-drawer {{ class }}"
-  style="--menu-image-border-radius: {{ image_border_radius }}px; --resource-card-corner-radius: {{ image_border_radius }}px;"
+  style="--menu-image-border-radius: {{ image_border_radius }}px; --resource-card-corner-radius: {{ image_border_radius }}px;{% if block_settings.drawer_divider_color != blank %} --drawer-divider-color: {{ block_settings.drawer_divider_color }};{% endif %}"
 >
   <details
     id="Details-menu-drawer-container"
@@ -1031,7 +1031,7 @@
   }
 
   .menu-drawer__list-item--divider {
-    border-block-end: 1px solid var(--color-border);
+    border-block-end: 1px solid var(--drawer-divider-color, var(--color-border));
   }
 
   .menu-drawer__list-item--deep:not(.menu-drawer__list-item--divider) .menu-drawer__menu {
@@ -1043,7 +1043,7 @@
   }
 
   .menu-drawer__menu-container--divider {
-    border-block-end: 1px solid var(--color-border);
+    border-block-end: 1px solid var(--drawer-divider-color, var(--color-border));
   }
 
   .menu-drawer__menu > .menu-drawer__list-item {

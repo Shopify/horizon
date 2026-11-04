@@ -337,7 +337,6 @@
     "icon_background": "Simge arka planı",
     "icons": "Simgeler",
     "image_border_radius": "Görsel köşe yarıçapı",
-    "installments": "Taksitler",
     "integrated_button": "Entegre düğme",
     "language_selector": "Dil seçici",
     "large": "Büyük",
@@ -575,7 +574,8 @@
     "selected_button_style": "Seçili düğme stili",
     "open_by_default": "Varsayılan olarak açık",
     "title_preset": "Başlık ön ayarı",
-    "customer_account_menu": "Müşteri hesabı menüsü"
+    "customer_account_menu": "Müşteri hesabı menüsü",
+    "shop_pay_payment_options": "Shop Pay ödeme seçeneklerini göster"
   },
   "options": {
     "apple": "Apple",
@@ -1109,7 +1109,8 @@
     "page_text_color_default_info": "Tema bölümleri için varsayılan",
     "actions_display_style": "Mobilde her zaman simgeler kullanılır",
     "edit_input_field_in_theme_settings": "[Tema ayarlarında](/editor?context=theme&category=input%20fields) giriş alanını düzenle",
-    "edit_variants_in_theme_settings": "Varyasyon stilini [tema ayarlarından](/editor?context=theme&category=variant%20pickers) düzenleyin"
+    "edit_variants_in_theme_settings": "Varyasyon stilini [tema ayarlarından](/editor?context=theme&category=variant%20pickers) düzenleyin",
+    "shop_pay_payment_options": "Kullanılabilir olduğunda Shop Pay Taksitli Alışveriş ve HSA/FSA rozetlerini gösterir."
   },
   "categories": {
     "product_list": "Öne çıkan koleksiyon",

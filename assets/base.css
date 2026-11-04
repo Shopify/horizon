@@ -86,8 +86,13 @@ svg {
 }
 
 img {
-  width: 100%;
   height: auto;
+}
+
+/* Theme images fill their container. Images in blog post content keep the size from their width
+   attribute or their intrinsic size, and max-width keeps them inside the column. */
+img:where(:not(.blog-post-content img)) {
+  width: 100%;
 }
 
 input,
@@ -839,6 +844,8 @@ button.shopify-payment-button__button--unbranded {
 
 .button {
   font-family: var(--button-font-family-primary);
+  font-style: var(--button-font-style-primary);
+  font-weight: var(--button-font-weight-primary);
   text-transform: var(--button-text-case-primary);
   border-radius: var(--style-border-radius-buttons-primary);
 }
@@ -849,12 +856,16 @@ button.shopify-payment-button__button--unbranded {
 
 .button-secondary {
   font-family: var(--button-font-family-secondary);
+  font-style: var(--button-font-style-secondary);
+  font-weight: var(--button-font-weight-secondary);
   text-transform: var(--button-text-case-secondary);
   border-radius: var(--style-border-radius-buttons-secondary);
 }
 
 button.shopify-payment-button__button--unbranded {
   font-family: var(--button-font-family-primary);
+  font-style: var(--button-font-style-primary);
+  font-weight: var(--button-font-weight-primary);
   text-transform: var(--button-text-case-primary);
 }
 
@@ -923,6 +934,8 @@ button.shopify-payment-button__button--unbranded:hover:not([disabled]) {
   --button-focus-outline-color: var(--color-primary-button-focus-outline);
 
   font-family: var(--button-font-family-primary);
+  font-style: var(--button-font-style-primary);
+  font-weight: var(--button-font-weight-primary);
   text-transform: var(--button-text-case-primary);
   border-radius: var(--style-border-radius-buttons-primary);
   outline-color: var(--button-focus-outline-color, var(--button-background-color));
@@ -951,6 +964,11 @@ button.shopify-payment-button__button--unbranded:hover:not([disabled]) {
   font-family: var(--font-paragraph--family);
   font-style: var(--font-paragraph--style);
   font-size: var(--font-paragraph--size);
+}
+
+/* Link-style buttons that also carry a button class keep the paragraph weight, not the button font weight */
+.button-unstyled:where(.button, .button-secondary, .button-custom) {
+  font-weight: var(--font-paragraph--weight);
 }
 
 .button-unstyled:hover {

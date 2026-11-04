@@ -288,7 +288,21 @@
     },
     "item_count_cutoff": "Počet položek: více než {{ count }}",
     "quick_order_list": "Seznam pro rychlou objednávku",
-    "product_disclosures": "Povinné informace o produktu"
+    "product_disclosures": "Povinné informace o produktu",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Včetně cel a daní. Slevy, poplatky a <a href=\"{{ link }}\">doprava</a> se vypočítají v pokladně.",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Včetně cel a daní. Poplatky a doprava se vypočítají v pokladně.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "Včetně cel a daní. Slevy, poplatky a doprava se vypočítají v pokladně.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "Včetně cel a daní. Poplatky a doprava se vypočítají v pokladně.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Včetně cel. Daně, slevy, poplatky a <a href=\"{{ link }}\">doprava</a> se vypočítají v pokladně.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Včetně cel. Poplatky a doprava se vypočítají v pokladně.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Včetně cel. Daně, slevy, poplatky a doprava se vypočítají v pokladně.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Včetně cel. Poplatky a doprava se vypočítají v pokladně.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Daně, slevy, poplatky a <a href=\"{{ link }}\">doprava</a> se vypočítají v pokladně.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Daně, poplatky a <a href=\"{{ link }}\">doprava</a> se vypočítají v pokladně.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Daně, slevy, poplatky a doprava se vypočítají v pokladně.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Daně, poplatky a doprava se vypočítají v pokladně.",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Včetně daní. Slevy, poplatky a <a href=\"{{ link }}\">doprava</a> se vypočítají v pokladně.",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Včetně daní. Slevy, poplatky a doprava se vypočítají v pokladně."
   },
   "gift_cards": {
     "issued": {

@@ -288,7 +288,21 @@
     },
     "item_count_cutoff": "Więcej niż {{ count }} pozycje(-i)",
     "quick_order_list": "Lista do szybkiego zamawiania",
-    "product_disclosures": "Dodatkowe informacje o produkcie"
+    "product_disclosures": "Dodatkowe informacje o produkcie",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Cła i podatki wliczone. Rabaty, opłaty i <a href=\"{{ link }}\">wysyłka</a> obliczane podczas realizacji zakupu.",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Cła i podatki wliczone. Opłaty i wysyłka obliczane podczas realizacji zakupu.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "Cła i podatki wliczone. Rabaty, opłaty i wysyłka obliczane podczas realizacji zakupu.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "Cła i podatki wliczone. Opłaty i wysyłka obliczane podczas realizacji zakupu.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Cła wliczone. Podatki, rabaty, opłaty i <a href=\"{{ link }}\">wysyłka</a> obliczane podczas realizacji zakupu.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Cła wliczone. Opłaty i wysyłka obliczane podczas realizacji zakupu.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Cła wliczone. Podatki, rabaty, opłaty i wysyłka obliczane podczas realizacji zakupu.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Cła wliczone. Opłaty i wysyłka obliczane podczas realizacji zakupu.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Podatki, rabaty, opłaty i <a href=\"{{ link }}\">wysyłka</a> obliczane podczas realizacji zakupu.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Podatki, opłaty i <a href=\"{{ link }}\">wysyłka</a> obliczane podczas realizacji zakupu.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Podatki, rabaty, opłaty i wysyłka obliczane podczas realizacji zakupu.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Podatki, opłaty i wysyłka obliczane podczas realizacji zakupu.",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Podatki wliczone. Rabaty, opłaty i <a href=\"{{ link }}\">wysyłka</a> obliczane podczas realizacji zakupu.",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Podatki wliczone. Rabaty, opłaty i wysyłka obliczane podczas realizacji zakupu."
   },
   "gift_cards": {
     "issued": {

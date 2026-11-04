@@ -276,7 +276,21 @@
     },
     "item_count_cutoff": "Mere end {{ count }} varer",
     "quick_order_list": "Hurtig ordreliste",
-    "product_disclosures": "Produktdeklarationer"
+    "product_disclosures": "Produktdeklarationer",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Told og skatter inkluderet. Rabatter, gebyrer og <a href=\"{{ link }}\">forsendelse</a> beregnes ved betaling.",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Told og skatter inkluderet. Gebyrer og forsendelse beregnes ved betaling.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "Told og skatter inkluderet. Rabatter, gebyrer og forsendelse beregnes ved betaling.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "Told og skatter inkluderet. Gebyrer og forsendelse beregnes ved betaling.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Told inkluderet. Skatter, rabatter, gebyrer og <a href=\"{{ link }}\">forsendelse</a> beregnes ved betaling.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Told inkluderet. Gebyrer og forsendelse beregnes ved betaling.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Told inkluderet. Skatter, rabatter, gebyrer og forsendelse beregnes ved betaling.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Told inkluderet. Gebyrer og forsendelse beregnes ved betaling.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Skatter, rabatter, gebyrer og <a href=\"{{ link }}\">forsendelse</a> beregnes ved betaling.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Skatter, gebyrer og <a href=\"{{ link }}\">forsendelse</a> beregnes ved betaling.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Skatter, rabatter, gebyrer og forsendelse beregnes ved betaling.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Skatter, gebyrer og forsendelse beregnes ved betaling.",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Skatter inkluderet. Rabatter, gebyrer og <a href=\"{{ link }}\">forsendelse</a> beregnes ved betaling.",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Skatter inkluderet. Rabatter, gebyrer og forsendelse beregnes ved betaling."
   },
   "gift_cards": {
     "issued": {

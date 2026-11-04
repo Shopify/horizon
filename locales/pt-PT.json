@@ -282,7 +282,21 @@
       "many": "{{ count }} itens adicionados ao carrinho"
     },
     "quick_order_list": "Lista de encomendas rápidas",
-    "product_disclosures": "Divulgações do produto"
+    "product_disclosures": "Divulgações do produto",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Encargos e impostos incluídos. Descontos, taxas e <a href=\"{{ link }}\">portes</a> calculados na finalização da compra.",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Encargos e impostos incluídos. Taxas e portes calculados na finalização da compra.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "Encargos e impostos incluídos. Descontos, taxas e portes calculados na finalização da compra.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "Encargos e impostos incluídos. Taxas e portes calculados na finalização da compra.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Encargos incluídos. Impostos, descontos, taxas e <a href=\"{{ link }}\">portes</a> calculados na finalização da compra.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Encargos incluídos. Taxas e portes calculados na finalização da compra.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Encargos incluídos. Impostos, descontos, taxas e portes calculados na finalização da compra.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Encargos incluídos. Taxas e portes calculados na finalização da compra.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Impostos, descontos, taxas e <a href=\"{{ link }}\">portes</a> calculados na finalização da compra.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Impostos, taxas e <a href=\"{{ link }}\">portes</a> calculados na finalização da compra.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Impostos, descontos, taxas e portes calculados na finalização da compra.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Impostos, taxas e portes calculados na finalização da compra.",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Impostos incluídos. Descontos, taxas e <a href=\"{{ link }}\">portes</a> calculados na finalização da compra.",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Impostos incluídos. Descontos, taxas e portes calculados na finalização da compra."
   },
   "gift_cards": {
     "issued": {

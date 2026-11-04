@@ -288,7 +288,21 @@
       "two": "Toliko izdelkov je dodanih v košarico: {{ count }}"
     },
     "quick_order_list": "Seznam za hitro naročanje",
-    "product_disclosures": "Razkritja o izdelku"
+    "product_disclosures": "Razkritja o izdelku",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Dajatve in davki vključeni. Popusti, pristojbine in <a href=\"{{ link }}\">dostava</a> se obračunajo na blagajni.",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Dajatve in davki vključeni. Pristojbine in dostava se obračunajo na blagajni.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "Dajatve in davki vključeni. Popusti, pristojbine in dostava se obračunajo na blagajni.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "Dajatve in davki vključeni. Pristojbine in dostava se obračunajo na blagajni.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Dajatve vključene. Davki, popusti, pristojbine in <a href=\"{{ link }}\">dostava</a> se obračunajo na blagajni.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Dajatve vključene. Pristojbine in dostava se obračunajo na blagajni.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Dajatve vključene. Davki, popusti, pristojbine in dostava se obračunajo na blagajni.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Dajatve vključene. Pristojbine in dostava se obračunajo na blagajni.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Davki, popusti, pristojbine in <a href=\"{{ link }}\">dostava</a> se obračunajo na blagajni.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Davki, pristojbine in <a href=\"{{ link }}\">dostava</a> se obračunajo na blagajni.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Davki, popusti, pristojbine in dostava se obračunajo na blagajni.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Davki, pristojbine in dostava se obračunajo na blagajni.",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Davki vključeni. Popusti, pristojbine in <a href=\"{{ link }}\">dostava</a> se obračunajo na blagajni.",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Davki vključeni. Popusti, pristojbine in dostava se obračunajo na blagajni."
   },
   "gift_cards": {
     "issued": {

@@ -22,7 +22,10 @@
       /* arbitrary offset value based on average theme spacing and header height */
       --viewport-offset: 400px;
       --constrained-min-height: 300px;
-      --constrained-height: max(var(--constrained-min-height), calc(100vh - var(--viewport-offset)));
+      --constrained-height: max(
+        var(--constrained-min-height),
+        calc(100vh - var(--viewport-offset) - var(--constrained-gallery-extra-height, 0px))
+      );
 
       margin-inline: auto;
     }
@@ -42,7 +45,7 @@
   @media screen and (min-width: 750px) {
     .product-media-container.constrain-height {
       --viewport-offset: var(--header-height, 100px);
-      --constrained-min-height: 500px;
+      --constrained-min-height: var(--constrained-gallery-min-height, 500px);
     }
 
     /* Header-dependent page rules use #header-group as the :has() subject and reach the page with `~`.

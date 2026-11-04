@@ -340,7 +340,6 @@
     "icon_background": "Achtergrond pictogram",
     "icons": "Pictogrammen",
     "image_border_radius": "Hoekradius afbeelding",
-    "installments": "Termijnbetalingen",
     "integrated_button": "Geïntegreerde knop",
     "language_selector": "Taalkiezer",
     "large": "Groot",
@@ -575,7 +574,8 @@
     "selected_button_style": "Geselecteerde knopstijl",
     "open_by_default": "Standaard geopend",
     "title_preset": "Titelvoorinstelling",
-    "customer_account_menu": "Klantaccountmenu"
+    "customer_account_menu": "Klantaccountmenu",
+    "shop_pay_payment_options": "Shop Pay-betaalopties weergeven"
   },
   "options": {
     "apple": "Apple",
@@ -1109,7 +1109,8 @@
     "page_text_color_default_info": "Standaard voor themasecties",
     "actions_display_style": "Op mobiel worden altijd pictogrammen gebruikt",
     "edit_input_field_in_theme_settings": "Invoerveld bewerken in [thema-instellingen](/editor?context=theme&category=input%20fields)",
-    "edit_variants_in_theme_settings": "Variantstijl bewerken in [thema-instellingen](/editor?context=theme&category=variant%20pickers)"
+    "edit_variants_in_theme_settings": "Variantstijl bewerken in [thema-instellingen](/editor?context=theme&category=variant%20pickers)",
+    "shop_pay_payment_options": "Geeft badges voor Shop Pay-termijnbetalingen en HSA/FSA weer indien beschikbaar."
   },
   "categories": {
     "product_list": "Uitgelichte collectie",

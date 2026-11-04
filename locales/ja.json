@@ -276,7 +276,21 @@
       "other": "{{ count }}個のアイテムがカートに追加されました"
     },
     "quick_order_list": "クイック注文リスト",
-    "product_disclosures": "商品の開示情報"
+    "product_disclosures": "商品の開示情報",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "関税および税込み。ディスカウント、手数料、<a href=\"{{ link }}\">送料</a>はチェックアウト時に計算されます。",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "関税および税込み。手数料と送料はチェックアウト時に計算されます。",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "関税および税込み。ディスカウント、手数料、送料はチェックアウト時に計算されます。",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "関税および税込み。手数料と送料はチェックアウト時に計算されます。",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "関税込み。税、ディスカウント、手数料、<a href=\"{{ link }}\">送料</a>はチェックアウト時に計算されます。",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "関税込み。手数料と送料はチェックアウト時に計算されます。",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "関税込み。税、ディスカウント、手数料、送料はチェックアウト時に計算されます。",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "関税込み。手数料と送料はチェックアウト時に計算されます。",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "税、ディスカウント、手数料、<a href=\"{{ link }}\">送料</a>はチェックアウト時に計算されます。",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "税、手数料、<a href=\"{{ link }}\">送料</a>はチェックアウト時に計算されます。",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "税、ディスカウント、手数料、送料はチェックアウト時に計算されます。",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "税、手数料、送料はチェックアウト時に計算されます。",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "税込み。ディスカウント、手数料、<a href=\"{{ link }}\">送料</a>はチェックアウト時に計算されます。",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "税込み。ディスカウント、手数料、送料はチェックアウト時に計算されます。"
   },
   "gift_cards": {
     "issued": {

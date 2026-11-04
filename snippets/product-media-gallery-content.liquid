@@ -101,6 +101,16 @@
     assign pagination_position = 'center'
   endif
 
+  # A saved icon style that the schema does not offer, such as 'none' from older product templates,
+  # renders as the default arrow. The theme editor shows the default for that value too.
+  # Keep this list equal to the icons_style options in schemas/blocks/_product-media-gallery.js
+  # and schemas/blocks/_featured-product-information-carousel.js.
+  assign icons_style = block_settings.icons_style
+  assign icons_style_options = 'arrow,chevron,arrows_large,chevron_large' | split: ','
+  unless icons_style_options contains icons_style
+    assign icons_style = 'arrow'
+  endunless
+
   assign icons_position = 'center'
 
   # Put the icons on the opposite side of the pagination controls
@@ -186,6 +196,37 @@
         endif
       endif
     endfor
+  endif
+
+  # Carousel media that is limited to the screen height fits the screen together with the gallery's top padding.
+  # Desktop thumbnails below the carousel count toward the limit too, so the media and the thumbnail row fit together.
+  # The row is as tall as its tallest thumbnail plus its block padding (slideshow-controls.liquid).
+  assign constrain_with_bottom_thumbnails = false
+  assign constrained_gallery_extra_height = ''
+  if block_settings.constrain_to_viewport and media_presentation == 'carousel'
+    assign constrained_gallery_extra_height = 'var(--padding-block-start, 0px)'
+
+    if render_slideshow_controls and slideshow_controls_style == 'thumbnails' and pagination_position == 'center' and sorted_media.size > 1
+      assign constrain_with_bottom_thumbnails = true
+      assign tallest_thumbnail_ratio = block_settings.aspect_ratio
+
+      if block_settings.aspect_ratio == 'adapt'
+        assign tallest_thumbnail_ratio = 50
+
+        for media in sorted_media
+          assign thumbnail_ratio = media.preview_image.aspect_ratio | default: 1.0
+          if thumbnail_ratio < tallest_thumbnail_ratio
+            assign tallest_thumbnail_ratio = thumbnail_ratio
+          endif
+        endfor
+      endif
+
+      capture constrained_gallery_extra_height
+        echo 'clamp(44px, 7vw, var(--thumbnail-width)) / ('
+        echo tallest_thumbnail_ratio
+        echo ') + var(--slideshow-thumbnails-padding-block, var(--padding-sm)) * 2 + var(--padding-block-start, 0px)'
+      endcapture
+    endif
   endif
 -%}
 {%- if has_image_drop -%}
@@ -367,8 +408,11 @@
       {% if block_settings.extend_media %}
         media-gallery--extend
       {% endif %}
+      {% if constrain_with_bottom_thumbnails %}
+        media-gallery--constrain-with-thumbnails
+      {% endif %}
     "
-    style="{% render 'spacing-style', settings: block_settings %} --thumbnail-width: {{ block_settings.thumbnail_width }}px; --media-radius: {{ block_settings.media_radius }}px;{% if block_settings.icons_style contains 'large' %} --slideshow-icon-padding: 0px;{% endif %}--image-gap: {{ block_settings.image_gap }}px;{% unless block_settings.aspect_ratio == 'adapt' %} --gallery-aspect-ratio: {{ block_settings.aspect_ratio }};{% endunless %}"
+    style="{% render 'spacing-style', settings: block_settings %} --thumbnail-width: {{ block_settings.thumbnail_width }}px; --media-radius: {{ block_settings.media_radius }}px;{% if icons_style contains 'large' %} --slideshow-icon-padding: 0px;{% endif %}--image-gap: {{ block_settings.image_gap }}px;{% unless block_settings.aspect_ratio == 'adapt' %} --gallery-aspect-ratio: {{ block_settings.aspect_ratio }};{% endunless %}{% if constrained_gallery_extra_height != blank %} --constrained-gallery-extra-height: calc({{ constrained_gallery_extra_height }});{% endif %}"
     data-presentation="{{ media_presentation }}"
     {{ block_shopify_attributes }}
   >
@@ -448,7 +492,7 @@
 
     {% if render_slideshow_arrows %}
       {% capture slideshow_arrows %}
-        {% render 'slideshow-arrows', class: 'mobile:hidden', icon_style: block_settings.icons_style %}
+        {% render 'slideshow-arrows', class: 'mobile:hidden', icon_style: icons_style %}
       {% endcapture %}
     {% endif %}
 

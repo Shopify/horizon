@@ -324,7 +324,21 @@
       "many": "تمت إضافة {{ count }} من العناصر إلى سلة التسوق",
       "two": "تمت إضافة {{ count }} من العناصر إلى سلة التسوق",
       "zero": "تمت إضافة {{ count }} من العناصر إلى سلة التسوق"
-    }
+    },
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "الرسوم الجمركية والضرائب مشمولة. تُحسب الخصومات والرسوم و<a href=\"{{ link }}\">الشحن</a> عند الدفع.",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "الرسوم الجمركية والضرائب مشمولة. تُحسب الرسوم والشحن عند الدفع.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "الرسوم الجمركية والضرائب مشمولة. تُحسب الخصومات والرسوم والشحن عند الدفع.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "الرسوم الجمركية والضرائب مشمولة. تُحسب الرسوم والشحن عند الدفع.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "الرسوم الجمركية مشمولة. تُحسب الضرائب والخصومات والرسوم و<a href=\"{{ link }}\">الشحن</a> عند الدفع.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "الرسوم الجمركية مشمولة. تُحسب الرسوم والشحن عند الدفع.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "الرسوم الجمركية مشمولة. تُحسب الضرائب والخصومات والرسوم والشحن عند الدفع.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "الرسوم الجمركية مشمولة. تُحسب الرسوم والشحن عند الدفع.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "تُحسب الضرائب والخصومات والرسوم و<a href=\"{{ link }}\">الشحن</a> عند الدفع.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "تُحسب الضرائب والرسوم و<a href=\"{{ link }}\">الشحن</a> عند الدفع.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "تُحسب الضرائب والخصومات والرسوم والشحن عند الدفع.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "تُحسب الضرائب والرسوم والشحن عند الدفع.",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "الضرائب مشمولة. تُحسب الخصومات والرسوم و<a href=\"{{ link }}\">الشحن</a> عند الدفع.",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "الضرائب مشمولة. تُحسب الخصومات والرسوم والشحن عند الدفع."
   },
   "fields": {
     "separator": "إلى"

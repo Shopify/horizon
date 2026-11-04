@@ -326,7 +326,6 @@
     "icon_background": "Arrière-plan de l'icône",
     "icons": "Icônes",
     "image_border_radius": "Rayon de la bordure de l'image",
-    "installments": "Échéances",
     "integrated_button": "Bouton intégré",
     "language_selector": "Sélecteur de langue",
     "large": "Grande",
@@ -575,7 +574,8 @@
     "selected_button_style": "Style de bouton sélectionné",
     "open_by_default": "Ouvert par défaut",
     "title_preset": "Préréglage du titre",
-    "customer_account_menu": "Menu du compte client"
+    "customer_account_menu": "Menu du compte client",
+    "shop_pay_payment_options": "Afficher les options de paiement Shop Pay"
   },
   "options": {
     "apple": "Pomme",
@@ -1109,7 +1109,8 @@
     "page_text_color_default_info": "Par défaut pour les sections du thème",
     "actions_display_style": "Les icônes sont toujours utilisées sur mobile",
     "edit_input_field_in_theme_settings": "Modifier le champ de saisie dans les [paramètres du thème](/editor?context=theme&category=input%20fields)",
-    "edit_variants_in_theme_settings": "Modifier le style des variantes dans les [paramètres du thème](/editor?context=theme&category=variant%20pickers)"
+    "edit_variants_in_theme_settings": "Modifier le style des variantes dans les [paramètres du thème](/editor?context=theme&category=variant%20pickers)",
+    "shop_pay_payment_options": "Affiche les badges du paiement en plusieurs fois avec Shop Pay et HSA/FSA lorsqu’ils sont disponibles."
   },
   "categories": {
     "basic": "De base",

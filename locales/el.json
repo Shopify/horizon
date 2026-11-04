@@ -276,7 +276,21 @@
       "other": "{{ count }} προϊόντα προστέθηκαν στο καλάθι"
     },
     "quick_order_list": "Λίστα Quick orders",
-    "product_disclosures": "Γνωστοποιήσεις προϊόντος"
+    "product_disclosures": "Γνωστοποιήσεις προϊόντος",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Συμπεριλαμβάνονται οι δασμοί και οι φόροι. Οι εκπτώσεις, οι χρεώσεις και η <a href=\"{{ link }}\">αποστολή</a> υπολογίζονται κατά την ολοκλήρωση αγοράς.",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Συμπεριλαμβάνονται οι δασμοί και οι φόροι. Οι χρεώσεις και η αποστολή υπολογίζονται κατά την ολοκλήρωση αγοράς.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "Συμπεριλαμβάνονται οι δασμοί και οι φόροι. Οι εκπτώσεις, οι χρεώσεις και η αποστολή υπολογίζονται κατά την ολοκλήρωση αγοράς.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "Συμπεριλαμβάνονται οι δασμοί και οι φόροι. Οι χρεώσεις και η αποστολή υπολογίζονται κατά την ολοκλήρωση αγοράς.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Συμπεριλαμβάνονται οι δασμοί. Οι φόροι, οι εκπτώσεις, οι χρεώσεις και η <a href=\"{{ link }}\">αποστολή</a> υπολογίζονται κατά την ολοκλήρωση αγοράς.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Συμπεριλαμβάνονται οι δασμοί. Οι χρεώσεις και η αποστολή υπολογίζονται κατά την ολοκλήρωση αγοράς.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Συμπεριλαμβάνονται οι δασμοί. Οι φόροι, οι εκπτώσεις, οι χρεώσεις και η αποστολή υπολογίζονται κατά την ολοκλήρωση αγοράς.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Συμπεριλαμβάνονται οι δασμοί. Οι χρεώσεις και η αποστολή υπολογίζονται κατά την ολοκλήρωση αγοράς.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Οι φόροι, οι εκπτώσεις, οι χρεώσεις και η <a href=\"{{ link }}\">αποστολή</a> υπολογίζονται κατά την ολοκλήρωση αγοράς.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Οι φόροι, οι χρεώσεις και η <a href=\"{{ link }}\">αποστολή</a> υπολογίζονται κατά την ολοκλήρωση αγοράς.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Οι φόροι, οι εκπτώσεις, οι χρεώσεις και η αποστολή υπολογίζονται κατά την ολοκλήρωση αγοράς.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Οι φόροι, οι χρεώσεις και η αποστολή υπολογίζονται κατά την ολοκλήρωση αγοράς.",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Συμπεριλαμβάνονται οι φόροι. Οι εκπτώσεις, οι χρεώσεις και η <a href=\"{{ link }}\">αποστολή</a> υπολογίζονται κατά την ολοκλήρωση αγοράς.",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Συμπεριλαμβάνονται οι φόροι. Οι εκπτώσεις, οι χρεώσεις και η αποστολή υπολογίζονται κατά την ολοκλήρωση αγοράς."
   },
   "gift_cards": {
     "issued": {

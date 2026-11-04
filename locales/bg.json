@@ -276,7 +276,21 @@
       "other": "{{ count }} артикула са добавени в количката"
     },
     "quick_order_list": "Бърз списък с поръчки",
-    "product_disclosures": "Оповестявания за продукта"
+    "product_disclosures": "Оповестявания за продукта",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Включени мита и данъци. Отстъпките, таксите и <a href=\"{{ link }}\">доставката</a> се изчисляват при плащане.",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Включени мита и данъци. Таксите и доставката се изчисляват при плащане.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "Включени мита и данъци. Отстъпките, таксите и доставката се изчисляват при плащане.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "Включени мита и данъци. Таксите и доставката се изчисляват при плащане.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Включени мита. Данъците, отстъпките, таксите и <a href=\"{{ link }}\">доставката</a> се изчисляват при плащане.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Включени мита. Таксите и доставката се изчисляват при плащане.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Включени мита. Данъците, отстъпките, таксите и доставката се изчисляват при плащане.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Включени мита. Таксите и доставката се изчисляват при плащане.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Данъците, отстъпките, таксите и <a href=\"{{ link }}\">доставката</a> се изчисляват при плащане.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Данъците, таксите и <a href=\"{{ link }}\">доставката</a> се изчисляват при плащане.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Данъците, отстъпките, таксите и доставката се изчисляват при плащане.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Данъците, таксите и доставката се изчисляват при плащане.",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Включени данъци. Отстъпките, таксите и <a href=\"{{ link }}\">доставката</a> се изчисляват при плащане.",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Включени данъци. Отстъпките, таксите и доставката се изчисляват при плащане."
   },
   "gift_cards": {
     "issued": {

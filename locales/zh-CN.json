@@ -276,7 +276,21 @@
       "other": "{{ count }} 件商品已加入购物车"
     },
     "quick_order_list": "快速订购列表",
-    "product_disclosures": "产品披露信息"
+    "product_disclosures": "产品披露信息",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "包含关税和税款。折扣、费用和<a href=\"{{ link }}\">运费</a>将在结账时计算。",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "包含关税和税款。费用和运费将在结账时计算。",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "包含关税和税款。折扣、费用和运费将在结账时计算。",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "包含关税和税款。费用和运费将在结账时计算。",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "包含关税。税款、折扣、费用和<a href=\"{{ link }}\">运费</a>将在结账时计算。",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "包含关税。费用和运费将在结账时计算。",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "包含关税。税款、折扣、费用和运费将在结账时计算。",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "包含关税。费用和运费将在结账时计算。",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "税款、折扣、费用和<a href=\"{{ link }}\">运费</a>将在结账时计算。",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "税款、费用和<a href=\"{{ link }}\">运费</a>将在结账时计算。",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "税款、折扣、费用和运费将在结账时计算。",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "税款、费用和运费将在结账时计算。",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "包含税款。折扣、费用和<a href=\"{{ link }}\">运费</a>将在结账时计算。",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "包含税款。折扣、费用和运费将在结账时计算。"
   },
   "gift_cards": {
     "issued": {

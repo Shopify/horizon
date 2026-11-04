@@ -332,7 +332,6 @@
     "icon_background": "Ikonbakgrund",
     "icons": "Ikoner",
     "image_border_radius": "Bildens hörnradie",
-    "installments": "Avbetalningar",
     "integrated_button": "Integrerad knapp",
     "language_selector": "Språkväljare",
     "large": "Stor",
@@ -575,7 +574,8 @@
     "selected_button_style": "Vald knappstil",
     "open_by_default": "Öppen som standard",
     "title_preset": "Förinställning för rubrik",
-    "customer_account_menu": "Kundkontomeny"
+    "customer_account_menu": "Kundkontomeny",
+    "shop_pay_payment_options": "Visa betalningsalternativ för Shop Pay"
   },
   "options": {
     "apple": "Apple",
@@ -1109,7 +1109,8 @@
     "page_text_color_default_info": "Standard för temasektioner",
     "actions_display_style": "Ikoner används alltid på mobilen",
     "edit_input_field_in_theme_settings": "Redigera inmatningsfält i [temainställningar](/editor?context=theme&category=input%20fields)",
-    "edit_variants_in_theme_settings": "Redigera variantstil i [temainställningar](/editor?context=theme&category=variant%20pickers)"
+    "edit_variants_in_theme_settings": "Redigera variantstil i [temainställningar](/editor?context=theme&category=variant%20pickers)",
+    "shop_pay_payment_options": "Visar märken för avbetalning med Shop Pay och HSA/FSA när det är tillgängligt."
   },
   "categories": {
     "basic": "Grundläggande",

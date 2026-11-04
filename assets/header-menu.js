@@ -225,10 +225,28 @@ class HeaderMenu extends Component {
       document.body.addEventListener('pointermove', this.#onPointerMove);
     }
 
-    const rect = item.getBoundingClientRect();
     const isOverlap = this.headerComponent?.hasAttribute('data-submenu-overlap-bottom-row');
     const boundary = isOverlap ? this.headerComponent?.querySelector('.header__row--top') : this.headerComponent;
-    item.style.setProperty('--box-height', `${(boundary?.getBoundingClientRect().bottom ?? 0) - rect.top}px`);
+    item.style.setProperty(
+      '--box-height',
+      `${(boundary?.getBoundingClientRect().bottom ?? 0) - this.#safetyBoxTop(item)}px`
+    );
+  }
+
+  /**
+   * The viewport top of an item's safety box. The box sits at its `top` offset inside the item's
+   * containing block, which is above the item when the menu list is centered in a taller header
+   * row, so the box is sized from wherever it starts to keep reaching the submenu.
+   * @param {HTMLElement} item
+   * @returns {number}
+   */
+  #safetyBoxTop(item) {
+    const itemTop = item.getBoundingClientRect().top;
+    const container = item.offsetParent;
+    const offset = parseFloat(getComputedStyle(item, '::after').top);
+    if (!(container instanceof HTMLElement) || Number.isNaN(offset)) return itemTop;
+
+    return Math.min(itemTop, container.getBoundingClientRect().top + container.clientTop + offset);
   }
 
   /**

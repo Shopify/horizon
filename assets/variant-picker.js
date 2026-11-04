@@ -486,6 +486,8 @@ export default class VariantPicker extends Component {
 
   /**
    * Re-renders the desired element.
+   * Morphs a copy of the new element: morph moves nodes out of its source tree, and product select
+   * listeners (such as product-price) read their own updated markup from the same `newHtml`.
    * @param {Document} newHtml - The new HTML.
    * @param {string} elementSelector - The selector of the element to re-render.
    */
@@ -497,7 +499,7 @@ export default class VariantPicker extends Component {
       throw new Error(`No new element source found for ${elementSelector}`);
     }
 
-    morph(element, newElement);
+    morph(element, newElement.cloneNode(true));
   }
 
   /**

@@ -296,7 +296,21 @@
     "items_added_to_cart": {
       "one": "کارٹ میں 1 آئٹم شامل کر دیا گیا",
       "other": "کارٹ میں {{ count }} آئٹم شامل کر دیے گئے"
-    }
+    },
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "محصولات اور ٹیکس شامل ہیں۔ رعایتوں، فیس اور <a href=\"{{ link }}\">شپنگ</a> کا حساب چیک آؤٹ پر لگایا جاتا ہے۔",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "محصولات اور ٹیکس شامل ہیں۔ فیس اور شپنگ کا حساب چیک آؤٹ پر لگایا جاتا ہے۔",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "محصولات اور ٹیکس شامل ہیں۔ رعایتوں، فیس اور شپنگ کا حساب چیک آؤٹ پر لگایا جاتا ہے۔",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "محصولات اور ٹیکس شامل ہیں۔ فیس اور شپنگ کا حساب چیک آؤٹ پر لگایا جاتا ہے۔",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "محصولات شامل ہیں۔ ٹیکس، رعایتوں، فیس اور <a href=\"{{ link }}\">شپنگ</a> کا حساب چیک آؤٹ پر لگایا جاتا ہے۔",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "محصولات شامل ہیں۔ فیس اور شپنگ کا حساب چیک آؤٹ پر لگایا جاتا ہے۔",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "محصولات شامل ہیں۔ ٹیکس، رعایتوں، فیس اور شپنگ کا حساب چیک آؤٹ پر لگایا جاتا ہے۔",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "محصولات شامل ہیں۔ فیس اور شپنگ کا حساب چیک آؤٹ پر لگایا جاتا ہے۔",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "ٹیکس، رعایتوں، فیس اور <a href=\"{{ link }}\">شپنگ</a> کا حساب چیک آؤٹ پر لگایا جاتا ہے۔",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "ٹیکس، فیس اور <a href=\"{{ link }}\">شپنگ</a> کا حساب چیک آؤٹ پر لگایا جاتا ہے۔",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "ٹیکس، رعایتوں، فیس اور شپنگ کا حساب چیک آؤٹ پر لگایا جاتا ہے۔",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "ٹیکس، فیس اور شپنگ کا حساب چیک آؤٹ پر لگایا جاتا ہے۔",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "ٹیکس شامل ہیں۔ رعایتوں، فیس اور <a href=\"{{ link }}\">شپنگ</a> کا حساب چیک آؤٹ پر لگایا جاتا ہے۔",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "ٹیکس شامل ہیں۔ رعایتوں، فیس اور شپنگ کا حساب چیک آؤٹ پر لگایا جاتا ہے۔"
   },
   "fields": {
     "separator": "تا"

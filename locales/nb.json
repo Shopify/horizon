@@ -276,7 +276,21 @@
     },
     "item_count_cutoff": "Mer enn {{ count }} varer",
     "quick_order_list": "Hurtigbestillingsliste",
-    "product_disclosures": "Produktopplysninger"
+    "product_disclosures": "Produktopplysninger",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Tollplikter og avgifter inkludert. Rabatter, gebyrer og <a href=\"{{ link }}\">frakt</a> beregnes i kassen.",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Tollplikter og avgifter inkludert. Gebyrer og frakt beregnes i kassen.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "Tollplikter og avgifter inkludert. Rabatter, gebyrer og frakt beregnes i kassen.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "Tollplikter og avgifter inkludert. Gebyrer og frakt beregnes i kassen.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Tollplikter inkludert. Avgifter, rabatter, gebyrer og <a href=\"{{ link }}\">frakt</a> beregnes i kassen.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Tollplikter inkludert. Gebyrer og frakt beregnes i kassen.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Tollplikter inkludert. Avgifter, rabatter, gebyrer og frakt beregnes i kassen.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Tollplikter inkludert. Gebyrer og frakt beregnes i kassen.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Avgifter, rabatter, gebyrer og <a href=\"{{ link }}\">frakt</a> beregnes i kassen.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Avgifter, gebyrer og <a href=\"{{ link }}\">frakt</a> beregnes i kassen.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Avgifter, rabatter, gebyrer og frakt beregnes i kassen.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Avgifter, gebyrer og frakt beregnes i kassen.",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Avgifter inkludert. Rabatter, gebyrer og <a href=\"{{ link }}\">frakt</a> beregnes i kassen.",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Avgifter inkludert. Rabatter, gebyrer og frakt beregnes i kassen."
   },
   "gift_cards": {
     "issued": {

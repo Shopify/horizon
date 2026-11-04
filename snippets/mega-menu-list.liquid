@@ -73,7 +73,7 @@
 %}
 <ul
   data-menu-list-id="{{ id }}"
-  class="mega-menu__list list-unstyled"
+  class="mega-menu__list{% if menu_content_type == 'text' %} mega-menu__list--text{% endif %} list-unstyled"
   style="--menu-image-border-radius: {{ image_border_radius }}px;"
 >
   {% for link in parent_link.links %}
@@ -137,16 +137,16 @@
       </a>
       {% if link.links != blank %}
         <ul
-          class="list-unstyled"
+          class="list-unstyled{% if should_break_columns %} mega-menu__nested-list{% endif %}"
           {% if should_break_columns %}
-            style="column-count: {{ column_span }};"
+            style="--menu-nested-columns: {{ column_span }};"
           {% endif %}
         >
           {% for childLink in link.links %}
             {% assign break_after_modulo = forloop.index | modulo: links_before_wrap %}
             <li
               {% if break_after_modulo == 0 and should_break_columns %}
-                style="break-after: column;"
+                class="mega-menu__nested-break"
               {% endif %}
             >
               <a

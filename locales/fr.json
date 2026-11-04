@@ -282,7 +282,21 @@
       "many": "{{ count }} articles ajoutés au panier"
     },
     "quick_order_list": "Liste de commande rapide",
-    "product_disclosures": "Informations sur le produit"
+    "product_disclosures": "Informations sur le produit",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Droits de douane et taxes inclus. Réductions, frais et <a href=\"{{ link }}\">expédition</a> calculés au moment du paiement.",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Droits de douane et taxes inclus. Frais et expédition calculés au moment du paiement.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "Droits de douane et taxes inclus. Réductions, frais et expédition calculés au moment du paiement.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "Droits de douane et taxes inclus. Frais et expédition calculés au moment du paiement.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Droits de douane inclus. Taxes, réductions, frais et <a href=\"{{ link }}\">expédition</a> calculés au moment du paiement.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Droits de douane inclus. Frais et expédition calculés au moment du paiement.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Droits de douane inclus. Taxes, réductions, frais et expédition calculés au moment du paiement.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Droits de douane inclus. Frais et expédition calculés au moment du paiement.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Taxes, réductions, frais et <a href=\"{{ link }}\">expédition</a> calculés au moment du paiement.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Taxes, frais et <a href=\"{{ link }}\">expédition</a> calculés au moment du paiement.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Taxes, réductions, frais et expédition calculés au moment du paiement.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Taxes, frais et expédition calculés au moment du paiement.",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Taxes incluses. Réductions, frais et <a href=\"{{ link }}\">expédition</a> calculés au moment du paiement.",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Taxes incluses. Réductions, frais et expédition calculés au moment du paiement."
   },
   "gift_cards": {
     "issued": {

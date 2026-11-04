@@ -291,20 +291,28 @@
     }
   }
 
-  /* Wider sidebar for large screens */
+  /* Wider sidebar for large screens. A zero track minimum keeps unbreakable product details content,
+     such as text joined with non-breaking spaces, from widening its track past the 2:1 ratio.
+     The details group can then shrink with its track, also when its width is fit-content. */
   @media screen and (min-width: 1200px) {
     .product-information__grid:not(
         .product-information__grid--half,
         .product-information--media-none
       ).product-information--media-left {
-      grid-template-columns: 2fr 1fr;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
     }
 
     .product-information__grid:not(
         .product-information__grid--half,
         .product-information--media-none
       ).product-information--media-right {
-      grid-template-columns: 1fr 2fr;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    }
+
+    .product-information__grid:not(.product-information__grid--half, .product-information--media-none)
+      .product-details
+      > .group-block {
+      min-width: 0;
     }
   }
 
@@ -327,5 +335,26 @@
     .product-details.sticky-content--desktop,
   quick-add-dialog[header-sticky-active] .product-details.sticky-content--desktop {
     --sticky-header-offset: var(--header-height);
+  }
+
+  /* If the header is sticky, make the sticky product media stick underneath the header on desktop, like the product details.
+     Media that is limited to the screen height already leaves room for the header, so it keeps its size when the header becomes active. */
+  @media screen and (min-width: 750px) {
+    #header-group:has(> .header-section > #header-component[data-sticky-state='active'])
+      ~ *
+      .product-information__media
+      .sticky-content {
+      --sticky-header-offset: var(--header-height);
+    }
+
+    /* With a transparent header, constrained media is a full screen high, so while it sticks below the active header,
+       its bottom is below the screen. Pagination on the media moves up by the header height to stay in view. */
+    #header-group:has(> .header-section > header-component[transparent='not-sticky'][data-sticky-state='active'])
+      ~ *
+      .product-information__media
+      .sticky-content:has(.constrain-height)
+      slideshow-controls[controls-on-media][pagination-position='center'] {
+      bottom: var(--header-height);
+    }
   }
 {% endstylesheet %}

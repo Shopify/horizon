@@ -282,7 +282,21 @@
       "few": "Artikala dodano u košaricu: {{ count }}"
     },
     "quick_order_list": "Brzi popis narudžbi",
-    "product_disclosures": "Obavijesti o proizvodu"
+    "product_disclosures": "Obavijesti o proizvodu",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Carine, povezane pristojbe i porezi su uključeni. Popusti, naknade i <a href=\"{{ link }}\">dostava</a> izračunavaju se pri plaćanju.",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Carine, povezane pristojbe i porezi su uključeni. Naknade i dostava izračunavaju se pri plaćanju.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "Carine, povezane pristojbe i porezi su uključeni. Popusti, naknade i dostava izračunavaju se pri plaćanju.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "Carine, povezane pristojbe i porezi su uključeni. Naknade i dostava izračunavaju se pri plaćanju.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Carine i povezane pristojbe su uključene. Porezi, popusti, naknade i <a href=\"{{ link }}\">dostava</a> izračunavaju se pri plaćanju.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Carine i povezane pristojbe su uključene. Naknade i dostava izračunavaju se pri plaćanju.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Carine i povezane pristojbe su uključene. Porezi, popusti, naknade i dostava izračunavaju se pri plaćanju.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Carine i povezane pristojbe su uključene. Naknade i dostava izračunavaju se pri plaćanju.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Porezi, popusti, naknade i <a href=\"{{ link }}\">dostava</a> izračunavaju se pri plaćanju.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Porezi, naknade i <a href=\"{{ link }}\">dostava</a> izračunavaju se pri plaćanju.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Porezi, popusti, naknade i dostava izračunavaju se pri plaćanju.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Porezi, naknade i dostava izračunavaju se pri plaćanju.",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Porezi su uključeni. Popusti, naknade i <a href=\"{{ link }}\">dostava</a> izračunavaju se pri plaćanju.",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Porezi su uključeni. Popusti, naknade i dostava izračunavaju se pri plaćanju."
   },
   "gift_cards": {
     "issued": {

@@ -446,7 +446,13 @@
     margin-inline: calc(-1 * var(--menu-horizontal-gap) / 2);
   }
 
+  /* The overflow list keeps the height it measured on its first reflow. Center the list so its
+     links stay on the row's center line when the row grows later, for example when the sticky
+     header shows a logo that is hidden on the home page. */
   .overflow-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     /* stylelint-disable-next-line declaration-no-important */
     background-color: transparent !important;
     padding: var(--focus-outline-size);
@@ -731,6 +737,15 @@
     grid-column: span 4;
   }
 
+  /* A column of many child links splits them into one inner column for each grid track it spans. */
+  .mega-menu__nested-list {
+    column-count: var(--menu-nested-columns);
+  }
+
+  .mega-menu__nested-break {
+    break-after: column;
+  }
+
   .mega-menu__column--wide-collection-image {
     grid-column: span 1;
 
@@ -790,6 +805,129 @@
 
   .menu-list__list-item[slot='overflow'] .section .mega-menu__grid {
     grid-column: 1;
+  }
+
+  /*
+    In the More panel a submenu shares its row with the 200px rail, and an open
+    cart drawer narrows the page further, so it can be far narrower than the
+    viewport that picked the desktop column count. Text, featured product and
+    featured collection submenus step their column count down with the width
+    they actually have, keeping each column at least about 100px wide: the
+    tablet layout below 700px, then three columns, then two. A column of child
+    links that loses grid tracks also loses inner columns, and its links
+    balance across the inner columns that are left.
+  */
+  .menu-list__list-item[slot='overflow'] .menu-list__submenu-inner {
+    container: overflow-submenu / inline-size;
+  }
+
+  @container overflow-submenu (max-width: 699px) {
+    .mega-menu__grid:has(> .mega-menu__list--text),
+    .mega-menu__grid:has(> .mega-menu__content) {
+      grid-template-columns: repeat(var(--menu-columns-tablet), minmax(0, 1fr));
+    }
+
+    .mega-menu__list--text {
+      grid-column: 1 / -1;
+    }
+
+    .mega-menu__grid:has(> .mega-menu__content) > .mega-menu__list {
+      grid-column: span var(--menu-columns-tablet);
+    }
+
+    .mega-menu__content {
+      grid-column: span var(--menu-content-columns-tablet) / -1;
+    }
+
+    .mega-menu__content-list--products {
+      grid-template-columns: repeat(var(--menu-content-columns-tablet), minmax(0, 1fr));
+    }
+
+    .mega-menu__content-list--collections {
+      grid-template-columns: repeat(var(--menu-content-columns-tablet), minmax(0, 300px));
+    }
+
+    .mega-menu__content-list-item--hidden-tablet {
+      display: none;
+    }
+
+    .mega-menu__grid:has(> .mega-menu__content) .mega-menu__nested-list {
+      column-count: min(var(--menu-nested-columns), var(--menu-columns-tablet));
+    }
+
+    .mega-menu__grid:has(> .mega-menu__content) .mega-menu__nested-break {
+      break-after: auto;
+    }
+  }
+
+  /* Below 450px a featured submenu keeps two columns of links and one featured card. */
+  @container overflow-submenu (max-width: 449px) {
+    .mega-menu__grid:has(> .mega-menu__list--text),
+    .mega-menu__grid:has(> .mega-menu__content) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .mega-menu__list--text .mega-menu__column--span-4 {
+      grid-column: span 3;
+    }
+
+    .mega-menu__list--text .mega-menu__column--span-4 .mega-menu__nested-list {
+      column-count: 3;
+    }
+
+    .mega-menu__list--text .mega-menu__column--span-4 .mega-menu__nested-break {
+      break-after: auto;
+    }
+
+    .mega-menu__grid:has(> .mega-menu__content) > .mega-menu__list,
+    .mega-menu__grid:has(> .mega-menu__content) :is(.mega-menu__column--span-3, .mega-menu__column--span-4) {
+      grid-column: span 2;
+    }
+
+    .mega-menu__content {
+      grid-column: span 1 / -1;
+    }
+
+    .mega-menu__content-list {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .mega-menu__content-list-item:nth-child(n + 2) {
+      display: none;
+    }
+
+    .mega-menu__grid:has(> .mega-menu__content) .mega-menu__nested-list {
+      column-count: min(var(--menu-nested-columns), 2);
+    }
+  }
+
+  @container overflow-submenu (max-width: 329px) {
+    .mega-menu__grid:has(> .mega-menu__list--text),
+    .mega-menu__grid:has(> .mega-menu__content) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .mega-menu__list--text :is(.mega-menu__column--span-3, .mega-menu__column--span-4) {
+      grid-column: span 2;
+    }
+
+    .mega-menu__list--text :is(.mega-menu__column--span-3, .mega-menu__column--span-4) .mega-menu__nested-list {
+      column-count: 2;
+    }
+
+    .mega-menu__list--text :is(.mega-menu__column--span-3, .mega-menu__column--span-4) .mega-menu__nested-break {
+      break-after: auto;
+    }
+
+    .mega-menu__grid:has(> .mega-menu__content) > .mega-menu__list,
+    .mega-menu__grid:has(> .mega-menu__content)
+      :is(.mega-menu__column--span-2, .mega-menu__column--span-3, .mega-menu__column--span-4) {
+      grid-column: span 1;
+    }
+
+    .mega-menu__grid:has(> .mega-menu__content) .mega-menu__nested-list {
+      column-count: 1;
+    }
   }
 
   .mega-menu__content-list li {
@@ -1060,6 +1198,13 @@
       "id": "drawer_dividers",
       "label": "t:settings.dividers",
       "default": false
+    },
+    {
+      "type": "color",
+      "id": "drawer_divider_color",
+      "label": "t:settings.divider_color",
+      "placeholder": "t:settings.default",
+      "visible_if": "{{ block.settings.drawer_dividers }}"
     }
   ]
 }

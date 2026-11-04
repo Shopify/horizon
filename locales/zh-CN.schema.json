@@ -338,7 +338,6 @@
     "icon_background": "图标背景",
     "icons": "图标",
     "image_border_radius": "图片角半径",
-    "installments": "分期付款",
     "integrated_button": "集成式按钮",
     "language_selector": "语言选择器",
     "large": "大",
@@ -575,7 +574,8 @@
     "selected_button_style": "所选按钮样式",
     "open_by_default": "默认展开",
     "title_preset": "标题预设",
-    "customer_account_menu": "客户账户菜单"
+    "customer_account_menu": "客户账户菜单",
+    "shop_pay_payment_options": "显示 Shop Pay 付款选项"
   },
   "options": {
     "apple": "Apple",
@@ -1109,7 +1109,8 @@
     "page_text_color_default_info": "模板分区的默认设置",
     "actions_display_style": "在移动设备上始终使用图标",
     "edit_input_field_in_theme_settings": "在[模板设置](/editor?context=theme&category=input%20fields)中编辑输入字段",
-    "edit_variants_in_theme_settings": "在[模板设置](/editor?context=theme&category=variant%20pickers)中编辑多属性样式"
+    "edit_variants_in_theme_settings": "在[模板设置](/editor?context=theme&category=variant%20pickers)中编辑多属性样式",
+    "shop_pay_payment_options": "可用时显示 Shop Pay 分期付款和 HSA/FSA 徽章。"
   },
   "categories": {
     "basic": "基本",

@@ -12,6 +12,10 @@ class JumboText extends Component {
 
     // We need window listener to account for flex containers not shrinking until we reset the font size.
     window.addEventListener('resize', this.#windowResizeListener);
+
+    // A web font can finish loading after the first measurement, and before the resize observer's
+    // first notification, which it ignores. Re-measure when fonts load so the text isn't left sized for the fallback font.
+    document.fonts?.addEventListener('loadingdone', this.#fontsLoadedListener);
   }
 
   disconnectedCallback() {
@@ -20,6 +24,7 @@ class JumboText extends Component {
     this.#intersectionObserver?.disconnect();
 
     window.removeEventListener('resize', this.#windowResizeListener);
+    document.fonts?.removeEventListener('loadingdone', this.#fontsLoadedListener);
   }
 
   #firstResize = true;
@@ -186,6 +191,13 @@ class JumboText extends Component {
   };
 
   #windowResizeListener = () => this.#handleResize();
+
+  #fontsLoadedListener = () => {
+    // Before the first measurement, the intersection observer does the initial sizing.
+    if (this.#firstResize) return;
+
+    this.#handleResize();
+  };
 
   #resizeObserver = new ResizeNotifier((entries) => this.#handleResize(entries[0]?.borderBoxSize?.[0]?.inlineSize));
   /**

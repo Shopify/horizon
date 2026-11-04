@@ -276,7 +276,21 @@
       "other": "{{ count }} Artikel zum Warenkorb hinzugefügt"
     },
     "quick_order_list": "Schnellbestellliste",
-    "product_disclosures": "Produktoffenlegungen"
+    "product_disclosures": "Produktoffenlegungen",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Zollgebühren und Steuern inbegriffen. Rabatte, Gebühren und <a href=\"{{ link }}\">Versand</a> werden im Checkout berechnet.",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Zollgebühren und Steuern inbegriffen. Gebühren und Versand werden im Checkout berechnet.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "Zollgebühren und Steuern inbegriffen. Rabatte, Gebühren und Versand werden im Checkout berechnet.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "Zollgebühren und Steuern inbegriffen. Gebühren und Versand werden im Checkout berechnet.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Zollgebühren inbegriffen. Steuern, Rabatte, Gebühren und <a href=\"{{ link }}\">Versand</a> werden im Checkout berechnet.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Zollgebühren inbegriffen. Gebühren und Versand werden im Checkout berechnet.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Zollgebühren inbegriffen. Steuern, Rabatte, Gebühren und Versand werden im Checkout berechnet.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Zollgebühren inbegriffen. Gebühren und Versand werden im Checkout berechnet.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Steuern, Rabatte, Gebühren und <a href=\"{{ link }}\">Versand</a> werden im Checkout berechnet.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Steuern, Gebühren und <a href=\"{{ link }}\">Versand</a> werden im Checkout berechnet.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Steuern, Rabatte, Gebühren und Versand werden im Checkout berechnet.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Steuern, Gebühren und Versand werden im Checkout berechnet.",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Steuern inbegriffen. Rabatte, Gebühren und <a href=\"{{ link }}\">Versand</a> werden im Checkout berechnet.",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Steuern inbegriffen. Rabatte, Gebühren und Versand werden im Checkout berechnet."
   },
   "gift_cards": {
     "issued": {

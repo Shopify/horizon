@@ -244,6 +244,7 @@
     "page_text_color_default_info": "Default for theme sections",
     "manage_countries_regions": "[Manage countries/regions](/admin/settings/markets)",
     "manage_languages": "[Manage languages](/admin/settings/languages)",
+    "shop_pay_payment_options": "Displays Shop Pay Installments and HSA/FSA badges when available.",
     "transparent_background": "Review each template where transparent background is applied for readability",
     "video_alt_text": "Describe the video for assistive tech users",
     "video_autoplay": "Videos will be muted by default",
@@ -923,7 +924,6 @@
     "inventory_threshold": "Low stock threshold",
     "inverse": "Inverse",
     "inverse_logo": "Inverse logo",
-    "installments": "Installments",
     // Checkbox to embed submit button inside email input field
     "integrated_button": "Integrated button",
     "items_to_show": "Items to show",
@@ -1083,6 +1083,8 @@
     "shadow_opacity": "Shadow opacity",
     // Background shape for carousel navigation buttons
     "shape": "Shape",
+    // Checkbox that shows Shop Pay Installments and HSA/FSA badges. "Shop Pay" is a brand name
+    "shop_pay_payment_options": "Show Shop Pay payment options",
     // Checkbox label to toggle visibility of UI elements
     "show": "Show",
     "show_as_accordion": "Show as accordion on mobile",

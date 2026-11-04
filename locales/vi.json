@@ -276,7 +276,21 @@
     },
     "item_count_cutoff": "Hơn {{ count }} mặt hàng",
     "quick_order_list": "Danh sách đặt hàng nhanh",
-    "product_disclosures": "Thông tin công bố sản phẩm"
+    "product_disclosures": "Thông tin công bố sản phẩm",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Đã bao gồm thuế quan và thuế. Giảm giá, phí và <a href=\"{{ link }}\">phí vận chuyển</a> được tính tại trang thanh toán.",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Đã bao gồm thuế quan và thuế. Phí và phí vận chuyển được tính tại trang thanh toán.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "Đã bao gồm thuế quan và thuế. Giảm giá, phí và phí vận chuyển được tính tại trang thanh toán.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "Đã bao gồm thuế quan và thuế. Phí và phí vận chuyển được tính tại trang thanh toán.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Đã bao gồm thuế quan. Thuế, giảm giá, phí và <a href=\"{{ link }}\">phí vận chuyển</a> được tính tại trang thanh toán.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Đã bao gồm thuế quan. Phí và phí vận chuyển được tính tại trang thanh toán.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Đã bao gồm thuế quan. Thuế, giảm giá, phí và phí vận chuyển được tính tại trang thanh toán.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Đã bao gồm thuế quan. Phí và phí vận chuyển được tính tại trang thanh toán.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Thuế, giảm giá, phí và <a href=\"{{ link }}\">phí vận chuyển</a> được tính tại trang thanh toán.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Thuế, phí và <a href=\"{{ link }}\">phí vận chuyển</a> được tính tại trang thanh toán.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Thuế, giảm giá, phí và phí vận chuyển được tính tại trang thanh toán.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Thuế, phí và phí vận chuyển được tính tại trang thanh toán.",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Đã bao gồm thuế. Giảm giá, phí và <a href=\"{{ link }}\">phí vận chuyển</a> được tính tại trang thanh toán.",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Đã bao gồm thuế. Giảm giá, phí và phí vận chuyển được tính tại trang thanh toán."
   },
   "gift_cards": {
     "issued": {

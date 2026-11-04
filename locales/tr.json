@@ -276,7 +276,21 @@
     },
     "item_count_cutoff": "{{ count }} adetten fazla ürün",
     "quick_order_list": "Hızlı sipariş listesi",
-    "product_disclosures": "Ürün bildirimleri"
+    "product_disclosures": "Ürün bildirimleri",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Gümrük vergileri ve vergiler dâhildir. İndirimler, ücretler ve <a href=\"{{ link }}\">kargo</a> ödeme adımında hesaplanır.",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Gümrük vergileri ve vergiler dâhildir. Ücretler ve kargo ödeme adımında hesaplanır.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_with_fees": "Gümrük vergileri ve vergiler dâhildir. İndirimler, ücretler ve kargo ödeme adımında hesaplanır.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts_with_fees": "Gümrük vergileri ve vergiler dâhildir. Ücretler ve kargo ödeme adımında hesaplanır.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Gümrük vergileri dâhildir. Vergiler, indirimler, ücretler ve <a href=\"{{ link }}\">kargo</a> ödeme adımında hesaplanır.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Gümrük vergileri dâhildir. Ücretler ve kargo ödeme adımında hesaplanır.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Gümrük vergileri dâhildir. Vergiler, indirimler, ücretler ve kargo ödeme adımında hesaplanır.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Gümrük vergileri dâhildir. Ücretler ve kargo ödeme adımında hesaplanır.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_with_fees_html": "Vergiler, indirimler, ücretler ve <a href=\"{{ link }}\">kargo</a> ödeme adımında hesaplanır.",
+    "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_with_fees_html": "Vergiler, ücretler ve <a href=\"{{ link }}\">kargo</a> ödeme adımında hesaplanır.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Vergiler, indirimler, ücretler ve kargo ödeme adımında hesaplanır.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Vergiler, ücretler ve kargo ödeme adımında hesaplanır.",
+    "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Vergiler dâhildir. İndirimler, ücretler ve <a href=\"{{ link }}\">kargo</a> ödeme adımında hesaplanır.",
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Vergiler dâhildir. İndirimler, ücretler ve kargo ödeme adımında hesaplanır."
   },
   "gift_cards": {
     "issued": {

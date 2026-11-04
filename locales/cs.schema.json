@@ -323,7 +323,6 @@
     "icon_background": "Pozadí ikony",
     "icons": "Ikony",
     "image_border_radius": "Poloměr rohů obrázku",
-    "installments": "Splátky",
     "integrated_button": "Integrované tlačítko",
     "language_selector": "Výběr jazyka",
     "large": "Velké",
@@ -575,7 +574,8 @@
     "selected_button_style": "Styl vybraného tlačítka",
     "open_by_default": "Otevřeno ve výchozím stavu",
     "title_preset": "Předvolba nadpisu",
-    "customer_account_menu": "Nabídka zákaznického účtu"
+    "customer_account_menu": "Nabídka zákaznického účtu",
+    "shop_pay_payment_options": "Zobrazit platební možnosti Shop Pay"
   },
   "options": {
     "apple": "Apple",
@@ -1109,7 +1109,8 @@
     "page_text_color_default_info": "Výchozí pro sekce motivu",
     "actions_display_style": "Na mobilních zařízeních se vždy používají ikony",
     "edit_input_field_in_theme_settings": "Upravit vstupní pole v [nastavení motivu](/editor?context=theme&category=input%20fields)",
-    "edit_variants_in_theme_settings": "Styl variant upravíte v [nastavení šablony](/editor?context=theme&category=variant%20pickers)"
+    "edit_variants_in_theme_settings": "Styl variant upravíte v [nastavení šablony](/editor?context=theme&category=variant%20pickers)",
+    "shop_pay_payment_options": "Zobrazuje odznaky pro Splátky Shop Pay a HSA/FSA, pokud jsou k dispozici."
   },
   "categories": {
     "product_list": "Propagovaná kolekce",
