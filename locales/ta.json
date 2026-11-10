@@ -55,7 +55,16 @@
     "filter_count": {
       "one": "{{ count }} வடிப்பான் பயன்படுத்தப்பட்டது",
       "other": "{{ count }} வடிப்பான்கள் பயன்படுத்தப்பட்டன"
-    }
+    },
+    "link_to_product": "தயாரிப்பு: {{ title }}",
+    "link_to_blog": "வலைப்பதிவு: {{ title }}",
+    "link_to_page": "பக்கம்: {{ title }}",
+    "link_to_article": "கட்டுரை: {{ title }}",
+    "link_to_policy": "கொள்கை: {{ title }}",
+    "link_to_home": "முகப்பு",
+    "link_to_catalog": "அனைத்து தயாரிப்புகளும்",
+    "link_to_collections": "அனைத்து சேகரிப்புகளும்",
+    "link_to_collection": "சேகரிப்பு: {{ title }}"
   },
   "actions": {
     "add": "சேர்",
@@ -310,7 +319,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "செக்அவுட்டில் வரிகள், தள்ளுபடிகள், கட்டணங்கள் மற்றும் ஷிப்பிங் ஆகியவை கணக்கிடப்படும்.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "செக்அவுட்டில் வரிகள், கட்டணங்கள் மற்றும் ஷிப்பிங் ஆகியவை கணக்கிடப்படும்.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "வரிகள் சேர்க்கப்பட்டுள்ளன. செக்அவுட்டில் தள்ளுபடிகள், கட்டணங்கள் மற்றும் <a href=\"{{ link }}\">ஷிப்பிங்</a> ஆகியவை கணக்கிடப்படும்.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "வரிகள் சேர்க்கப்பட்டுள்ளன. செக்அவுட்டில் தள்ளுபடிகள், கட்டணங்கள் மற்றும் ஷிப்பிங் ஆகியவை கணக்கிடப்படும்."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "வரிகள் சேர்க்கப்பட்டுள்ளன. செக்அவுட்டில் தள்ளுபடிகள், கட்டணங்கள் மற்றும் ஷிப்பிங் ஆகியவை கணக்கிடப்படும்.",
+    "in_store_available": "ஸ்டோரில் சரக்கு இருப்பில் உள்ளது",
+    "in_store_also_available": "ஸ்டோரிலும் விற்கப்படுகிறது - இதை நீங்கள் இங்கு நேரில் வாங்கலாம்",
+    "in_store_only": "இந்த ஸ்டோரில் நேரில் வாங்குங்கள். இங்கு நேரில் பெறுதல் வழங்கப்படுவதில்லை.",
+    "in_store_available_at_html": "<b>{{ location }}</b> இல் சரக்கு இருப்பில் உள்ளது"
   },
   "fields": {
     "separator": "முதல்"

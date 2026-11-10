@@ -55,7 +55,16 @@
     "filter_count": {
       "one": "{{ count }} ఫిల్టర్ వర్తింపజేయబడింది",
       "other": "{{ count }} ఫిల్టర్‌లు వర్తింపజేయబడ్డాయి"
-    }
+    },
+    "link_to_product": "ఉత్పత్తి: {{ title }}",
+    "link_to_blog": "బ్లాగ్: {{ title }}",
+    "link_to_page": "పేజీ: {{ title }}",
+    "link_to_article": "వ్యాసం: {{ title }}",
+    "link_to_policy": "విధానం: {{ title }}",
+    "link_to_home": "హోమ్",
+    "link_to_catalog": "అన్ని ఉత్పత్తులు",
+    "link_to_collections": "అన్ని కలెక్షన్‌లు",
+    "link_to_collection": "కలెక్షన్: {{ title }}"
   },
   "actions": {
     "add": "జోడించండి",
@@ -310,7 +319,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "చెక్‌అవుట్ వద్ద పన్నులు, తగ్గింపులు, ఫీజులు మరియు షిప్పింగ్ లెక్కించబడతాయి.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "చెక్‌అవుట్ వద్ద పన్నులు, ఫీజులు మరియు షిప్పింగ్ లెక్కించబడతాయి.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "పన్నులు చేర్చబడ్డాయి. చెక్‌అవుట్ వద్ద తగ్గింపులు, ఫీజులు మరియు <a href=\"{{ link }}\">షిప్పింగ్</a> లెక్కించబడతాయి.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "పన్నులు చేర్చబడ్డాయి. చెక్‌అవుట్ వద్ద తగ్గింపులు, ఫీజులు మరియు షిప్పింగ్ లెక్కించబడతాయి."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "పన్నులు చేర్చబడ్డాయి. చెక్‌అవుట్ వద్ద తగ్గింపులు, ఫీజులు మరియు షిప్పింగ్ లెక్కించబడతాయి.",
+    "in_store_available": "స్టోర్‌లో స్టాక్ ఉంది",
+    "in_store_also_available": "స్టోర్‌లో కూడా విక్రయించబడుతుంది, మీరు దీన్ని ఇక్కడ నేరుగా కొనుగోలు చేయవచ్చు",
+    "in_store_only": "ఈ స్టోర్‌లో నేరుగా కొనుగోలు చేయండి. ఇక్కడ పికప్ అందుబాటులో లేదు.",
+    "in_store_available_at_html": "<b>{{ location }}</b> వద్ద స్టాక్ ఉంది"
   },
   "fields": {
     "separator": "వరకు"

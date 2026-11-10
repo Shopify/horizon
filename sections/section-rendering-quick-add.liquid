@@ -1,0 +1,65 @@
+{% comment %}
+  Quick add modals default to using the dedicated product page's markup, including product-price,
+  product-form-component, and variant-picker when the product has multiple variants. When required
+  elements are missing, this section provides a complete modal using default block settings.
+
+  Request this section through the Section Rendering API on a product URL. Its product grid structure
+  supports both the initial modal content and subsequent variant updates.
+{% endcomment %}
+
+{% liquid
+  assign product_resource = product
+  if product_resource == blank
+    assign product_resource = closest.product
+  endif
+%}
+
+<product-component
+  data-product-grid-content
+  data-quick-add-section-id="{{ section.id }}"
+  {% unless product_resource.id == blank %}
+    view-event-payload="{{ product_resource | standard_event_data: 'view' | escape }}"
+  {% endunless %}
+>
+  {% if product_resource.media.size > 0 %}
+    <div
+      class="product-information__media"
+      data-testid="product-information-media"
+    >
+      {% content_for 'block', type: '_product-media-gallery', id: 'media-gallery', closest.product: product_resource %}
+    </div>
+  {% endif %}
+
+  <div
+    class="product-details"
+    data-testid="product-information-details"
+  >
+    <div class="group-block">
+      <div
+        class="group-block-content layout-panel-flex layout-panel-flex--column"
+        style="--flex-direction: column; --flex-wrap: nowrap; {% render 'gap-style', value: 12 %}"
+      >
+        <div class="view-product-title">
+          <a href="{{ product_resource.selected_or_first_available_variant.url }}">
+            {{- product_resource.title -}}
+          </a>
+        </div>
+        {% content_for 'block', type: 'price', id: 'price', closest.product: product_resource %}
+        {% content_for 'block', type: 'variant-picker', id: 'variant-picker', closest.product: product_resource %}
+        {% content_for 'block', type: 'buy-buttons', id: 'buy-buttons', closest.product: product_resource %}
+      </div>
+    </div>
+  </div>
+</product-component>
+
+{% render 'quick-add-modal-styles' %}
+
+{% schema %}
+{
+  "name": "t:names.product_information",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": []
+}
+{% endschema %}

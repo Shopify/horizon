@@ -75,7 +75,16 @@
     "price_filter_low": "Ниска цена",
     "price_filter_high": "Висока цена",
     "view_disclosure_information_for_product": "Преглед на оповестената информация за {{ product_title }}",
-    "show_submenu": "Показване на подменю {{ title }}"
+    "show_submenu": "Показване на подменю {{ title }}",
+    "link_to_product": "Продукт: {{ title }}",
+    "link_to_blog": "Блог: {{ title }}",
+    "link_to_page": "Страница: {{ title }}",
+    "link_to_article": "Статия: {{ title }}",
+    "link_to_policy": "Политика: {{ title }}",
+    "link_to_home": "Начална страница",
+    "link_to_catalog": "Всички продукти",
+    "link_to_collections": "Всички колекции",
+    "link_to_collection": "Колекция: {{ title }}"
   },
   "actions": {
     "add_to_cart": "Добавяне към количката",
@@ -290,7 +299,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Данъците, отстъпките, таксите и доставката се изчисляват при плащане.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Данъците, таксите и доставката се изчисляват при плащане.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Включени данъци. Отстъпките, таксите и <a href=\"{{ link }}\">доставката</a> се изчисляват при плащане.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Включени данъци. Отстъпките, таксите и доставката се изчисляват при плащане."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Включени данъци. Отстъпките, таксите и доставката се изчисляват при плащане.",
+    "in_store_available": "В наличност в магазина",
+    "in_store_also_available": "Продава се и в магазина — можете да го закупите тук на място",
+    "in_store_only": "Закупете на място в този магазин. Тук не се предлага получаване.",
+    "in_store_available_at_html": "В наличност в <b>{{ location }}</b>"
   },
   "gift_cards": {
     "issued": {

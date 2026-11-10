@@ -75,7 +75,16 @@
     "search_suggestions_available": "Søkeforslag tilgjengelige for «{{ query }}»",
     "price_filter_low": "Lav pris",
     "price_filter_high": "Høy pris",
-    "view_disclosure_information_for_product": "Se produktopplysninger for {{ product_title }}"
+    "view_disclosure_information_for_product": "Se produktopplysninger for {{ product_title }}",
+    "link_to_product": "Produkt: {{ title }}",
+    "link_to_blog": "Blogg: {{ title }}",
+    "link_to_page": "Side: {{ title }}",
+    "link_to_article": "Artikkel: {{ title }}",
+    "link_to_policy": "Retningslinjer: {{ title }}",
+    "link_to_home": "Hjem",
+    "link_to_catalog": "Alle produkter",
+    "link_to_collections": "Alle samlinger",
+    "link_to_collection": "Samling: {{ title }}"
   },
   "actions": {
     "add_to_cart": "Legg i handlekurv",
@@ -290,7 +299,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Avgifter, rabatter, gebyrer og frakt beregnes i kassen.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Avgifter, gebyrer og frakt beregnes i kassen.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Avgifter inkludert. Rabatter, gebyrer og <a href=\"{{ link }}\">frakt</a> beregnes i kassen.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Avgifter inkludert. Rabatter, gebyrer og frakt beregnes i kassen."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Avgifter inkludert. Rabatter, gebyrer og frakt beregnes i kassen.",
+    "in_store_available": "På lager i butikk",
+    "in_store_also_available": "Selges også i butikk – du kan kjøpe dette fysisk her",
+    "in_store_only": "Kjøp fysisk i denne butikken. Henting tilbys ikke her.",
+    "in_store_available_at_html": "På lager hos <b>{{ location }}</b>"
   },
   "gift_cards": {
     "issued": {

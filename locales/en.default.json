@@ -65,7 +65,18 @@
     "view_disclosure_information_for_product": "View disclosure information for {{ product_title }}",
     "view_pricing_info": "View pricing information",
     "price_filter_low": "Low price",
-    "price_filter_high": "High price"
+    "price_filter_high": "High price",
+    // Screen reader name for a link to a store resource. {{ title }} is the title of the product, collection, page, blog, article, or policy
+    "link_to_product": "Product: {{ title }}",
+    "link_to_collection": "Collection: {{ title }}",
+    "link_to_page": "Page: {{ title }}",
+    "link_to_blog": "Blog: {{ title }}",
+    "link_to_article": "Article: {{ title }}",
+    "link_to_policy": "Policy: {{ title }}",
+    // Screen reader names for links to the home page, the page that lists all products (/collections/all), and the page that lists all collections (/collections)
+    "link_to_home": "Home",
+    "link_to_catalog": "All products",
+    "link_to_collections": "All collections"
   },
   "actions": {
     // Quick add button on product cards, shortened version of add to cart
@@ -235,6 +246,10 @@
     "pickup_available_in": "Pickup available, {{ pickup_time }}",
     "pickup_not_available": "Pickup currently not available",
     "pickup_ready_in": "{{ pickup_time }}",
+    "in_store_available_at_html": "In stock at <b>{{ location }}</b>",
+    "in_store_available": "In stock in store",
+    "in_store_only": "Buy in person at this store. Pickup isn't offered here.",
+    "in_store_also_available": "Also sold in store — you can buy this here in person",
     "powered_by": "This shop will be powered by",
     "price": "Price",
     "price_compare_at": "Compare at price",

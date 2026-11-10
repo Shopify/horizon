@@ -75,7 +75,16 @@
     "price_filter_low": "Χαμηλή τιμή",
     "price_filter_high": "Υψηλή τιμή",
     "view_disclosure_information_for_product": "Προβολή πληροφοριών γνωστοποίησης για {{ product_title }}",
-    "show_submenu": "Εμφάνιση υπομενού {{ title }}"
+    "show_submenu": "Εμφάνιση υπομενού {{ title }}",
+    "link_to_product": "Προϊόν: {{ title }}",
+    "link_to_blog": "Ιστολόγιο (blog): {{ title }}",
+    "link_to_page": "Σελίδα: {{ title }}",
+    "link_to_article": "Άρθρο: {{ title }}",
+    "link_to_policy": "Πολιτική: {{ title }}",
+    "link_to_home": "Αρχική σελίδα",
+    "link_to_catalog": "Όλα τα προϊόντα",
+    "link_to_collections": "Όλες οι συλλογές",
+    "link_to_collection": "Συλλογή: {{ title }}"
   },
   "actions": {
     "add_to_cart": "Προσθήκη στο καλάθι",
@@ -290,7 +299,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Οι φόροι, οι εκπτώσεις, οι χρεώσεις και η αποστολή υπολογίζονται κατά την ολοκλήρωση αγοράς.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Οι φόροι, οι χρεώσεις και η αποστολή υπολογίζονται κατά την ολοκλήρωση αγοράς.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Συμπεριλαμβάνονται οι φόροι. Οι εκπτώσεις, οι χρεώσεις και η <a href=\"{{ link }}\">αποστολή</a> υπολογίζονται κατά την ολοκλήρωση αγοράς.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Συμπεριλαμβάνονται οι φόροι. Οι εκπτώσεις, οι χρεώσεις και η αποστολή υπολογίζονται κατά την ολοκλήρωση αγοράς."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Συμπεριλαμβάνονται οι φόροι. Οι εκπτώσεις, οι χρεώσεις και η αποστολή υπολογίζονται κατά την ολοκλήρωση αγοράς.",
+    "in_store_available": "Σε απόθεμα στο κατάστημα",
+    "in_store_also_available": "Πωλείται επίσης στο κατάστημα. Μπορείτε να το αγοράσετε εδώ αυτοπροσώπως.",
+    "in_store_only": "Αγορά αυτοπροσώπως σε αυτό το κατάστημα. Δεν προσφέρεται παραλαβή εδώ.",
+    "in_store_available_at_html": "Σε απόθεμα σε <b>{{ location }}</b>"
   },
   "gift_cards": {
     "issued": {

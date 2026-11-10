@@ -76,7 +76,16 @@
     "price_filter_low": "Prezzo basso",
     "price_filter_high": "Prezzo alto",
     "view_disclosure_information_for_product": "Visualizza le informative per {{ product_title }}",
-    "show_submenu": "Mostra sottomenu {{ title }}"
+    "show_submenu": "Mostra sottomenu {{ title }}",
+    "link_to_product": "Prodotto: {{ title }}",
+    "link_to_blog": "Blog: {{ title }}",
+    "link_to_page": "Pagina: {{ title }}",
+    "link_to_article": "Articolo: {{ title }}",
+    "link_to_policy": "Informativa: {{ title }}",
+    "link_to_home": "Home page",
+    "link_to_catalog": "Tutti i prodotti",
+    "link_to_collections": "Tutte le collezioni",
+    "link_to_collection": "Collezione: {{ title }}"
   },
   "actions": {
     "add_to_cart": "Aggiungi al carrello",
@@ -296,7 +305,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Imposte, sconti, commissioni e spedizione calcolati al check-out.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Imposte, commissioni e spedizione calcolate al check-out.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Imposte incluse. Sconti, commissioni e <a href=\"{{ link }}\">spedizione</a> calcolati al check-out.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Imposte incluse. Sconti, commissioni e spedizione calcolati al check-out."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Imposte incluse. Sconti, commissioni e spedizione calcolati al check-out.",
+    "in_store_available": "Disponibile in negozio",
+    "in_store_also_available": "Venduto anche in negozio: puoi acquistarlo qui di persona",
+    "in_store_only": "Acquista di persona in questo negozio. Il ritiro non è disponibile qui.",
+    "in_store_available_at_html": "Disponibile presso <b>{{ location }}</b>"
   },
   "gift_cards": {
     "issued": {

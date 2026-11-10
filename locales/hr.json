@@ -76,7 +76,16 @@
     "price_filter_low": "Niska cijena",
     "price_filter_high": "Visoka cijena",
     "view_disclosure_information_for_product": "Prikaži obavijesti o proizvodu {{ product_title }}",
-    "show_submenu": "Prikaži podizbornik {{ title }}"
+    "show_submenu": "Prikaži podizbornik {{ title }}",
+    "link_to_product": "Proizvod: {{ title }}",
+    "link_to_blog": "Blog: {{ title }}",
+    "link_to_page": "Stranica: {{ title }}",
+    "link_to_article": "Članak: {{ title }}",
+    "link_to_policy": "Pravila: {{ title }}",
+    "link_to_home": "Početna stranica",
+    "link_to_catalog": "Svi proizvodi",
+    "link_to_collections": "Sve kolekcije",
+    "link_to_collection": "Kolekcija: {{ title }}"
   },
   "actions": {
     "add_to_cart": "Dodaj u košaricu",
@@ -296,7 +305,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Porezi, popusti, naknade i dostava izračunavaju se pri plaćanju.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Porezi, naknade i dostava izračunavaju se pri plaćanju.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Porezi su uključeni. Popusti, naknade i <a href=\"{{ link }}\">dostava</a> izračunavaju se pri plaćanju.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Porezi su uključeni. Popusti, naknade i dostava izračunavaju se pri plaćanju."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Porezi su uključeni. Popusti, naknade i dostava izračunavaju se pri plaćanju.",
+    "in_store_available": "Na zalihi u trgovini",
+    "in_store_also_available": "Prodaje se i u trgovini – proizvod ovdje možete kupiti osobno",
+    "in_store_only": "Kupite osobno u ovoj trgovini. Preuzimanje ovdje nije u ponudi.",
+    "in_store_available_at_html": "Na zalihi na lokaciji <b>{{ location }}</b>"
   },
   "gift_cards": {
     "issued": {

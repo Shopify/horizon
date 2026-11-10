@@ -256,23 +256,46 @@
   {%- endif -%}
 </span>
 
-{% if block_settings.show_pickup_availability %}
+{% if block_settings.show_pickup_availability or block_settings.show_physical_stores %}
   <script
     src="{{ 'local-pickup.js' | asset_url }}"
     type="module"
   ></script>
 
-  {%- assign pick_up_availabilities = closest.product.selected_or_first_available_variant.store_availabilities
-    | where: 'pick_up_enabled', true
+  {%- liquid
+    assign store_availabilities = closest.product.selected_or_first_available_variant.store_availabilities
+    assign show_pickup_availability = block_settings.show_pickup_availability
+    assign show_physical_stores = block_settings.show_physical_stores
+    assign listed_store_count = 0
+    assign closest_available_pick_up = null
+    assign closest_in_store = null
+
+    if show_pickup_availability
+      assign pick_up_availabilities = store_availabilities | where: 'pick_up_enabled', true
+      assign closest_available_pick_up = pick_up_availabilities | where: 'available', true | first
+      assign listed_store_count = pick_up_availabilities.size
+    endif
+
+    # Only read physical_storefront when the setting is on, so stores with it off render exactly as before.
+    # In-person claims read available_without_transfer: available also counts stock that a transfer can bring for
+    # pickup. A renderer without that value gives nil, so the block makes no in-person claim.
+    if show_physical_stores
+      assign in_store_availabilities = store_availabilities | where: 'physical_storefront' | where: 'available_without_transfer'
+      if show_pickup_availability
+        assign in_store_availabilities = in_store_availabilities | reject: 'pick_up_enabled'
+      endif
+      assign closest_in_store = in_store_availabilities | first
+      assign listed_store_count = listed_store_count | plus: in_store_availabilities.size
+    endif
   -%}
-  {%- assign closest_available_pick_up = pick_up_availabilities | where: 'available', true | first -%}
 
   <local-pickup
     class="spacing-style product__pickup-availabilities"
-    {% if pick_up_availabilities.size == 0 %}
+    {% if listed_store_count == 0 %}
       hidden
     {% endif %}
     data-section-id="{{ section.id }}"
+    data-block-id="{{ block.id }}"
     data-product-url="{{ closest.product.url }}"
     data-variant-id="{{ closest.product.selected_or_first_available_variant.id }}"
     style="
@@ -288,7 +311,7 @@
       <div class="pickup-availability__row">
         <div class="pickup-availability__column">
           <span class="svg-wrapper">
-            {% if closest_available_pick_up %}
+            {% if closest_available_pick_up or closest_in_store %}
               {{- 'icon-available.svg' | inline_asset_content -}}
             {% else %}
               {{- 'icon-unavailable.svg' | inline_asset_content -}}
@@ -303,6 +326,15 @@
             <p class="pickup-location__text-xs">
               {{ 'content.pickup_ready_in' | t: pickup_time: closest_available_pick_up.pick_up_time }}
             </p>
+          {% elsif closest_in_store %}
+            <p class="pickup-location__text-sm">
+              {{ 'content.in_store_available_at_html' | t: location: closest_in_store.location.name }}
+            </p>
+            {% if show_pickup_availability %}
+              <p class="pickup-location__text-xs">
+                {{ 'content.in_store_only' | t }}
+              </p>
+            {% endif %}
           {% else %}
             <p class="pickup-location__text-sm">
               {{ 'content.pickup_not_available' | t }}
@@ -358,23 +390,51 @@
             </span>
           </button>
         </div>
-        {% for pick_up_availability in pick_up_availabilities %}
+        {% for store_availability in store_availabilities %}
+          {% liquid
+            assign is_pick_up = false
+            assign is_in_store_only = false
+            if show_pickup_availability and store_availability.pick_up_enabled
+              assign is_pick_up = true
+            elsif show_physical_stores and store_availability.physical_storefront and store_availability.available_without_transfer
+              assign is_in_store_only = true
+            endif
+
+            unless is_pick_up or is_in_store_only
+              continue
+            endunless
+          %}
           <div class="pickup-location__wrapper">
-            <p class="pickup-location__text-bold">{{ pick_up_availability.location.name }}</p>
+            <p class="pickup-location__text-bold">{{ store_availability.location.name }}</p>
             <div class="pickup-location__address-wrapper">
               <span class="pickup-location__availability-wrapper">
-                {% if pick_up_availability.available %}
+                {% if is_in_store_only %}
                   {{- 'icon-available.svg' | inline_asset_content -}}
-                  {% assign pickup_time = pick_up_availability.pick_up_time | downcase %}
-                  {{ 'content.pickup_available_in' | t: pickup_time: pickup_time }}
-                {% else %}
-                  {{- 'icon-unavailable.svg' | inline_asset_content -}}
-                  {{ 'content.pickup_not_available' | t }}
+                  {{ 'content.in_store_available' | t }}
+                {% elsif show_pickup_availability and store_availability.pick_up_enabled %}
+                  {% if store_availability.available %}
+                    {{- 'icon-available.svg' | inline_asset_content -}}
+                    {% assign pickup_time = store_availability.pick_up_time | downcase %}
+                    {{ 'content.pickup_available_in' | t: pickup_time: pickup_time }}
+                  {% else %}
+                    {{- 'icon-unavailable.svg' | inline_asset_content -}}
+                    {{ 'content.pickup_not_available' | t }}
+                  {% endif %}
                 {% endif %}
               </span>
+              {% if is_in_store_only %}
+                {% if show_pickup_availability %}
+                  <p class="pickup-location__text-xs">{{ 'content.in_store_only' | t }}</p>
+                {% endif %}
+              {% elsif show_physical_stores
+                and store_availability.physical_storefront
+                and store_availability.available_without_transfer
+              %}
+                <p class="pickup-location__text-xs">{{ 'content.in_store_also_available' | t }}</p>
+              {% endif %}
               <address class="pickup-location__address">
-                {{ pick_up_availability.location.address | format_address }}
-                {{ pick_up_availability.location.address.phone }}
+                {{ store_availability.location.address | format_address }}
+                {{ store_availability.location.address.phone }}
               </address>
             </div>
           </div>
@@ -416,6 +476,13 @@
     {
       "type": "paragraph",
       "content": "t:content.local_pickup_description"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_physical_stores",
+      "label": "t:settings.show_physical_stores",
+      "info": "t:info.show_physical_stores_help",
+      "default": true
     },
     {
       "type": "header",

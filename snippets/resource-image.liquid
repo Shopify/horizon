@@ -9,6 +9,7 @@
   @param {string} parent_block_id - Parent block ID for CSS targeting
   @param {object} block_settings - Block settings object
   @param {object} [section_settings] - Section settings for layout-aware sizing
+  @param {string} [loading] - The image loading attribute: 'eager' (default) or 'lazy'. Editorial and bento layouts always load lazily
   @param {string} [block_attributes] - Block shopify attributes for theme editor
 
   @example
@@ -26,6 +27,7 @@
       parent_block_id: block.id,
       block_settings: block.settings,
       section_settings: section.settings,
+      loading: 'lazy',
       block_attributes: block.shopify_attributes
     %}
 {%- enddoc -%}
@@ -37,6 +39,7 @@
   assign block_settings = block_settings | default: empty
   assign section_settings = section_settings | default: empty
   assign block_attributes = block_attributes | default: ''
+  assign loading = loading | default: 'eager'
 
   # Early return if required parameters missing
   unless parent_block_id != blank and block_settings != empty
@@ -76,19 +79,28 @@
 
   # Generate responsive image attributes
   assign sizes = '(min-width: 750px) 50vw, 100vw'
-  assign lazy_sizes = 'auto, ' | append: sizes
-  assign loading = 'eager'
 
-  # Layout-aware sizing for resource lists
+  # Layout-aware sizing for resource lists. Below 750px the cards follow the mobile columns,
+  # or the mobile card size when the list is a carousel on mobile (see resource-list.liquid).
   if section_settings.layout_type
     case section_settings.layout_type
       when 'grid', 'carousel'
         assign calculated_width = 100 | divided_by: section_settings.columns | append: 'vw'
-        assign sizes = '(min-width: 750px) [calc-width], 100vw' | replace: '[calc-width]', calculated_width
+        if section_settings.layout_type == 'carousel' or section_settings.carousel_on_mobile
+          assign mobile_width = section_settings.mobile_card_size | default: '60cqw' | replace: 'cqw', 'vw'
+        else
+          assign mobile_columns = section_settings.mobile_columns | default: 2
+          assign mobile_width = 100 | divided_by: mobile_columns | append: 'vw'
+        endif
+        assign sizes = '(min-width: 750px) ' | append: calculated_width | append: ', ' | append: mobile_width
       when 'editorial', 'bento'
         assign loading = 'lazy'
-        assign sizes = lazy_sizes
     endcase
+  endif
+
+  # Lazy images can use their rendered width, which the browser knows before it requests them.
+  if loading == 'lazy'
+    assign sizes = 'auto, ' | append: sizes
   endif
 
   assign widths = '240, 352, 832, 1200, 1600, 1920, 2560, 3840'

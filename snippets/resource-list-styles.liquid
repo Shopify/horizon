@@ -17,11 +17,12 @@
       --resource-list-mobile-gap-max: 12px;
     }
 
-    @container resource-list (max-width: 749px) {
+    @container resource-list (width < 750px) {
       --resource-list-mobile-gap-max: 12px;
     }
   }
 
+  /* Upper bounds use `width <` so a fractional container width, such as 449.5px, gets the range below it */
   .resource-list--grid {
     display: grid;
     gap: var(--resource-list-row-gap) var(--resource-list-column-gap);
@@ -31,11 +32,11 @@
       grid-template-columns: var(--resource-list-columns);
     }
 
-    @container resource-list (max-width: 449px) {
+    @container resource-list (width < 450px) {
       grid-template-columns: var(--resource-list-columns-mobile);
     }
 
-    @container resource-list (min-width: 450px) and (max-width: 749px) {
+    @container resource-list (450px <= width < 750px) {
       --resource-list-columns-per-row: 3;
 
       grid-template-columns: repeat(var(--resource-list-columns-per-row), 1fr);

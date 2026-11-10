@@ -1,0 +1,49 @@
+{%- doc -%}
+  Renders an accessible name for a link to a store resource, made from the type of the resource
+  and its title. For example, a link to the "Spring" collection renders "Collection: Spring", and
+  a link to the home page renders "Home".
+
+  Renders nothing when used for external URLs, metaobject pages, relative paths, anchors, and
+  deleted resources.
+
+  @param {object} url - The value of a `url` setting
+
+  @example
+  {% capture link_label %}{% render 'link-label', url: block.settings.link %}{% endcapture %}
+  <a
+    href="{{ block.settings.link }}"
+    {% if link_label != blank %}
+      aria-label="{{ link_label }}"
+    {% endif %}
+  >
+{%- enddoc -%}
+
+{%- liquid
+  assign url_object = url.object
+
+  case url.type
+    when 'home_link'
+      echo 'accessibility.link_to_home' | t
+    when 'catalog_link'
+      echo 'accessibility.link_to_catalog' | t
+    when 'collections_link'
+      echo 'accessibility.link_to_collections' | t
+    when 'product_link'
+      assign resource_label = 'accessibility.link_to_product' | t: title: url_object.title
+    when 'collection_link'
+      assign resource_label = 'accessibility.link_to_collection' | t: title: url_object.title
+    when 'page_link'
+      assign resource_label = 'accessibility.link_to_page' | t: title: url_object.title
+    when 'blog_link'
+      assign resource_label = 'accessibility.link_to_blog' | t: title: url_object.title
+    when 'article_link'
+      assign resource_label = 'accessibility.link_to_article' | t: title: url_object.title
+    when 'policy_link'
+      assign resource_label = 'accessibility.link_to_policy' | t: title: url_object.title
+  endcase
+
+  # A link to a deleted resource keeps its type, but has no object to name.
+  if url_object != null
+    echo resource_label
+  endif
+-%}

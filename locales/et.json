@@ -55,7 +55,16 @@
     "filter_count": {
       "one": "{{ count }} filter rakendatud",
       "other": "{{ count }} filtrit rakendatud"
-    }
+    },
+    "link_to_product": "Toode: {{ title }}",
+    "link_to_blog": "Blogi: {{ title }}",
+    "link_to_page": "Leht: {{ title }}",
+    "link_to_article": "Artikkel: {{ title }}",
+    "link_to_policy": "Eeskiri: {{ title }}",
+    "link_to_home": "Avaleht",
+    "link_to_catalog": "Kõik tooted",
+    "link_to_collections": "Kõik kollektsioonid",
+    "link_to_collection": "Kollektsioon: {{ title }}"
   },
   "actions": {
     "add": "Lisa",
@@ -310,7 +319,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Maksud, allahindlused, tasud ja tarne arvutatakse kassas.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Maksud, tasud ja tarne arvutatakse kassas.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Maksud on hinna sees. Allahindlused, tasud ja <a href=\"{{ link }}\">tarne</a> arvutatakse kassas.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Maksud on hinna sees. Allahindlused, tasud ja tarne arvutatakse kassas."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Maksud on hinna sees. Allahindlused, tasud ja tarne arvutatakse kassas.",
+    "in_store_available": "Poes laos",
+    "in_store_also_available": "Müügil ka poes – saad seda siit kohapealt osta",
+    "in_store_only": "Osta sellest poest kohapealt. Järeletulemist siin ei pakuta.",
+    "in_store_available_at_html": "Laos asukohas <b>{{ location }}</b>"
   },
   "fields": {
     "separator": "kuni"

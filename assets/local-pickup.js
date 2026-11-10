@@ -42,9 +42,19 @@ class LocalPickup extends Component {
           const variantAvailable = resource ? resource.available : null;
           if (variantId !== this.dataset.variantId) {
             if (variantId && variantAvailable) {
-              this.removeAttribute('hidden');
+              // The variant picker has already rendered the page for this variant, so take the widget from it.
+              // When the variant picker loads another product, it morphs `main` from that page before this runs,
+              // and the morph moves nodes out of the page. This widget then already shows the variant, and the
+              // page is no longer whole, so render the section again, as when the page has no widget.
+              const morphedFromPage = String(variantId) === this.dataset.variantId;
               this.dataset.variantId = variantId;
-              this.#fetchAvailability(variantId);
+              const widget = detail.html && !morphedFromPage ? this.#findWidget(detail.html, variantId) : null;
+              if (widget) {
+                this.#activeFetch?.abort();
+                this.#update(widget);
+              } else {
+                this.#fetchAvailability(variantId);
+              }
             } else {
               this.setAttribute('hidden', '');
             }
@@ -71,7 +81,46 @@ class LocalPickup extends Component {
   }
 
   /**
-   * Fetches the availability of a variant.
+   * Finds the widget of this block for a variant. Each buy-buttons block in the section renders its own
+   * widget from its own settings, so the widget is matched to this block as well as the variant.
+   * @param {ParentNode} html - The rendered page or section.
+   * @param {string} variantId - The ID of the variant.
+   * @returns {Element | null}
+   */
+  #findWidget(html, variantId) {
+    return html.querySelector(`local-pickup[data-block-id="${this.dataset.blockId}"][data-variant-id="${variantId}"]`);
+  }
+
+  /**
+   * Updates the widget and its drawer from a rendered widget.
+   * @param {Element} wrapper - The rendered widget of this block.
+   */
+  #update(wrapper) {
+    morph(this, wrapper);
+    this.toggleAttribute('hidden', wrapper.hasAttribute('hidden'));
+
+    // Update the portaled drawer with fresh content from the server.
+    // If the page originally loaded on an unavailable variant the drawer
+    // wasn't rendered (can_add_to_cart was false), so portal it now.
+    // Resolve via the sibling relationship to avoid colliding with
+    // other buy-buttons blocks on the same page.
+    const newDrawer =
+      wrapper.nextElementSibling instanceof HTMLElement &&
+      wrapper.nextElementSibling.matches('theme-drawer.pickup-drawer')
+        ? wrapper.nextElementSibling
+        : null;
+    if (newDrawer) {
+      if (this.#pickupDrawer) {
+        morph(this.#pickupDrawer, newDrawer);
+      } else {
+        this.#pickupDrawer = newDrawer;
+        document.body.appendChild(this.#pickupDrawer);
+      }
+    }
+  }
+
+  /**
+   * Fetches the section for a variant and updates the widget from it.
    * @param {string} variantId - The ID of the variant to fetch availability for.
    */
   #fetchAvailability = (variantId) => {
@@ -88,29 +137,9 @@ class LocalPickup extends Component {
         if (abortController.signal.aborted) return;
 
         const html = new DOMParser().parseFromString(text, 'text/html');
-        const wrapper = html.querySelector(`local-pickup[data-variant-id="${variantId}"]`);
+        const wrapper = this.#findWidget(html, variantId);
         if (wrapper) {
-          this.removeAttribute('hidden');
-          morph(this, wrapper);
-
-          // Update the portaled drawer with fresh content from the server.
-          // If the page originally loaded on an unavailable variant the drawer
-          // wasn't rendered (can_add_to_cart was false), so portal it now.
-          // Resolve via the sibling relationship to avoid colliding with
-          // other buy-buttons blocks on the same page.
-          const newDrawer =
-            wrapper.nextElementSibling instanceof HTMLElement &&
-            wrapper.nextElementSibling.matches('theme-drawer.pickup-drawer')
-              ? wrapper.nextElementSibling
-              : null;
-          if (newDrawer) {
-            if (this.#pickupDrawer) {
-              morph(this.#pickupDrawer, newDrawer);
-            } else {
-              this.#pickupDrawer = newDrawer;
-              document.body.appendChild(this.#pickupDrawer);
-            }
-          }
+          this.#update(wrapper);
         } else {
           this.setAttribute('hidden', '');
         }

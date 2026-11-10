@@ -57,7 +57,16 @@
       "other": "Застосовано фільтрів: {{ count }}",
       "few": "Застосовано фільтрів: {{ count }}",
       "many": "Застосовано фільтрів: {{ count }}"
-    }
+    },
+    "link_to_product": "Товар: {{ title }}",
+    "link_to_blog": "Блог: {{ title }}",
+    "link_to_page": "Сторінка: {{ title }}",
+    "link_to_article": "Стаття: {{ title }}",
+    "link_to_policy": "Політика: {{ title }}",
+    "link_to_home": "Головна",
+    "link_to_catalog": "Усі товари",
+    "link_to_collections": "Усі колекції",
+    "link_to_collection": "Колекція: {{ title }}"
   },
   "actions": {
     "add": "Додати",
@@ -324,7 +333,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Податки, знижки, збори та доставка розраховуються під час оформлення замовлення.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Податки, збори та доставка розраховуються під час оформлення замовлення.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Податки включено. Знижки, збори та <a href=\"{{ link }}\">доставка</a> розраховуються під час оформлення замовлення.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Податки включено. Знижки, збори та доставка розраховуються під час оформлення замовлення."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Податки включено. Знижки, збори та доставка розраховуються під час оформлення замовлення.",
+    "in_store_available": "В наявності в магазині",
+    "in_store_also_available": "Також продається в магазині — можна придбати тут особисто",
+    "in_store_only": "Купуйте особисто в цьому магазині. Самовивіз тут недоступний.",
+    "in_store_available_at_html": "В наявності в <b>{{ location }}</b>"
   },
   "fields": {
     "separator": "до"

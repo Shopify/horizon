@@ -57,7 +57,16 @@
       "other": "הופעלו {{ count }} מסננים",
       "many": "הופעלו {{ count }} מסננים",
       "two": "הופעלו {{ count }} מסננים"
-    }
+    },
+    "link_to_product": "מוצר: {{ title }}",
+    "link_to_blog": "בלוג: {{ title }}",
+    "link_to_page": "עמוד: {{ title }}",
+    "link_to_article": "מאמר: {{ title }}",
+    "link_to_policy": "מדיניות: {{ title }}",
+    "link_to_home": "דף הבית",
+    "link_to_catalog": "כל המוצרים",
+    "link_to_collections": "כל האוספים",
+    "link_to_collection": "אוסף: {{ title }}"
   },
   "actions": {
     "add": "הוספה",
@@ -324,7 +333,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "מיסים, הנחות, עמלות ושילוח יחושבו בשלב התשלום.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "מיסים, עמלות ושילוח יחושבו בשלב התשלום.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "מיסים כלולים. הנחות, עמלות ו<a href=\"{{ link }}\">שילוח</a> יחושבו בשלב התשלום.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "מיסים כלולים. הנחות, עמלות ושילוח יחושבו בשלב התשלום."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "מיסים כלולים. הנחות, עמלות ושילוח יחושבו בשלב התשלום.",
+    "in_store_available": "במלאי בחנות",
+    "in_store_also_available": "נמכר גם בחנות — ניתן לרכוש כאן פיזית",
+    "in_store_only": "ניתן לרכוש פיזית בחנות זו. אפשרות איסוף אינה זמינה כאן.",
+    "in_store_available_at_html": "במלאי ב-<b>{{ location }}</b>"
   },
   "fields": {
     "separator": "עד"

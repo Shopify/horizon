@@ -55,7 +55,16 @@
     "filter_count": {
       "one": "{{ count }} ફિલ્ટર લાગુ કર્યું",
       "other": "{{ count }} ફિલ્ટર્સ લાગુ કર્યાં"
-    }
+    },
+    "link_to_product": "પ્રોડક્ટ: {{ title }}",
+    "link_to_blog": "બ્લોગ: {{ title }}",
+    "link_to_page": "પેજ: {{ title }}",
+    "link_to_article": "લેખ: {{ title }}",
+    "link_to_policy": "નીતિ: {{ title }}",
+    "link_to_home": "હોમ",
+    "link_to_catalog": "બધા પ્રોડક્ટ",
+    "link_to_collections": "બધા કલેક્શન",
+    "link_to_collection": "કલેક્શન: {{ title }}"
   },
   "actions": {
     "add": "ઉમેરો",
@@ -310,7 +319,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "કર, ડિસ્કાઉન્ટ, ફી અને શિપિંગની ગણતરી ચેકઆઉટ વખતે કરવામાં આવે છે.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "કર, ફી અને શિપિંગની ગણતરી ચેકઆઉટ વખતે કરવામાં આવે છે.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "કર શામેલ છે. ડિસ્કાઉન્ટ, ફી અને <a href=\"{{ link }}\">શિપિંગ</a>ની ગણતરી ચેકઆઉટ વખતે કરવામાં આવે છે.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "કર શામેલ છે. ડિસ્કાઉન્ટ, ફી અને શિપિંગની ગણતરી ચેકઆઉટ વખતે કરવામાં આવે છે."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "કર શામેલ છે. ડિસ્કાઉન્ટ, ફી અને શિપિંગની ગણતરી ચેકઆઉટ વખતે કરવામાં આવે છે.",
+    "in_store_available": "સ્ટોરમાં સ્ટૉકમાં છે",
+    "in_store_also_available": "સ્ટોરમાં પણ વેચાય છે - તમે આને અહીં રૂબરૂ ખરીદી શકો છો",
+    "in_store_only": "આ સ્ટોર પર રૂબરૂ ખરીદી કરો. અહીં પિકઅપ ઉપલબ્ધ નથી.",
+    "in_store_available_at_html": "<b>{{ location }}</b> પર સ્ટૉકમાં છે"
   },
   "fields": {
     "separator": "થી"

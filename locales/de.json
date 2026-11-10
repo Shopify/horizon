@@ -75,7 +75,16 @@
     "price_filter_low": "Niedriger Preis",
     "price_filter_high": "Hoher Preis",
     "view_disclosure_information_for_product": "Offenlegungsinformationen für {{ product_title }} anzeigen",
-    "show_submenu": "Untermenü {{ title }} anzeigen"
+    "show_submenu": "Untermenü {{ title }} anzeigen",
+    "link_to_product": "Produkt: {{ title }}",
+    "link_to_blog": "Blog: {{ title }}",
+    "link_to_page": "Seite: {{ title }}",
+    "link_to_article": "Beitrag: {{ title }}",
+    "link_to_policy": "Richtlinie: {{ title }}",
+    "link_to_home": "Startseite",
+    "link_to_catalog": "Alle Produkte",
+    "link_to_collections": "Alle Kollektionen",
+    "link_to_collection": "Kollektion: {{ title }}"
   },
   "actions": {
     "add_to_cart": "In den Warenkorb legen",
@@ -290,7 +299,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Steuern, Rabatte, Gebühren und Versand werden im Checkout berechnet.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Steuern, Gebühren und Versand werden im Checkout berechnet.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Steuern inbegriffen. Rabatte, Gebühren und <a href=\"{{ link }}\">Versand</a> werden im Checkout berechnet.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Steuern inbegriffen. Rabatte, Gebühren und Versand werden im Checkout berechnet."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Steuern inbegriffen. Rabatte, Gebühren und Versand werden im Checkout berechnet.",
+    "in_store_available": "Im Geschäft vorrätig",
+    "in_store_also_available": "Auch im Geschäft erhältlich – du kannst diesen Artikel hier vor Ort kaufen.",
+    "in_store_only": "Kauf vor Ort in diesem Geschäft möglich. Eine Abholung wird hier nicht angeboten.",
+    "in_store_available_at_html": "Vorrätig in <b>{{ location }}</b>"
   },
   "gift_cards": {
     "issued": {

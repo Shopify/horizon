@@ -75,7 +75,16 @@
     "search_suggestions_available": "Cari rekomendasi yang tersedia untuk \"{{ query }}\"",
     "price_filter_low": "Harga rendah",
     "price_filter_high": "Harga tinggi",
-    "view_disclosure_information_for_product": "Lihat informasi pengungkapan untuk {{ product_title }}"
+    "view_disclosure_information_for_product": "Lihat informasi pengungkapan untuk {{ product_title }}",
+    "link_to_product": "Produk: {{ title }}",
+    "link_to_blog": "Blog: {{ title }}",
+    "link_to_page": "Halaman: {{ title }}",
+    "link_to_article": "Artikel: {{ title }}",
+    "link_to_policy": "Kebijakan: {{ title }}",
+    "link_to_home": "Beranda",
+    "link_to_catalog": "Semua produk",
+    "link_to_collections": "Semua koleksi",
+    "link_to_collection": "Koleksi: {{ title }}"
   },
   "actions": {
     "add_to_cart": "Tambahkan ke keranjang",
@@ -290,7 +299,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Pajak, diskon, biaya, dan pengiriman dihitung saat checkout.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Pajak, biaya, dan pengiriman dihitung saat checkout.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Termasuk pajak. Diskon, biaya, dan <a href=\"{{ link }}\">pengiriman</a> dihitung saat checkout.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Termasuk pajak. Diskon, biaya, dan pengiriman dihitung saat checkout."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Termasuk pajak. Diskon, biaya, dan pengiriman dihitung saat checkout.",
+    "in_store_available_at_html": "Stok tersedia di <b>{{ location }}</b>",
+    "in_store_available": "Stok tersedia di toko",
+    "in_store_only": "Beli langsung di toko ini. Penjemputan tidak tersedia di sini.",
+    "in_store_also_available": "Juga dijual di toko — Anda dapat membelinya langsung di sini"
   },
   "gift_cards": {
     "issued": {

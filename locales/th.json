@@ -75,7 +75,16 @@
     "price_filter_low": "ราคาประหยัด",
     "price_filter_high": "ราคาแพง",
     "view_disclosure_information_for_product": "ดูข้อมูลชี้แจงสำหรับ{{ product_title }}",
-    "show_submenu": "แสดงเมนูย่อยของ{{ title }}"
+    "show_submenu": "แสดงเมนูย่อยของ{{ title }}",
+    "link_to_product": "สินค้า{{ title }}",
+    "link_to_blog": "บล็อก{{ title }}",
+    "link_to_page": "หน้า{{ title }}",
+    "link_to_article": "บทความ{{ title }}",
+    "link_to_policy": "นโยบาย{{ title }}",
+    "link_to_home": "หน้าแรก",
+    "link_to_catalog": "สินค้าทั้งหมด",
+    "link_to_collections": "คอลเลกชันทั้งหมด",
+    "link_to_collection": "คอลเลกชัน{{ title }}"
   },
   "actions": {
     "add_to_cart": "เพิ่มลงในตะกร้าสินค้า",
@@ -290,7 +299,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "ระบบจะคำนวณภาษี ส่วนลด ค่าธรรมเนียม และการจัดส่งเมื่อชำระเงิน",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "ระบบจะคำนวณภาษี ค่าธรรมเนียม และการจัดส่งเมื่อชำระเงิน",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "รวมภาษีแล้ว ระบบจะคำนวณส่วนลด ค่าธรรมเนียม และ<a href=\"{{ link }}\">การจัดส่ง</a>เมื่อชำระเงิน",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "รวมภาษีแล้ว ระบบจะคำนวณส่วนลด ค่าธรรมเนียม และการจัดส่งเมื่อชำระเงิน"
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "รวมภาษีแล้ว ระบบจะคำนวณส่วนลด ค่าธรรมเนียม และการจัดส่งเมื่อชำระเงิน",
+    "in_store_available": "มีสต็อกสินค้าในร้านค้า",
+    "in_store_also_available": "มีจำหน่ายที่ร้านค้าด้วย คุณสามารถมาซื้อด้วยตัวเองได้ที่นี่",
+    "in_store_only": "ซื้อด้วยตัวเองที่ร้านค้านี้ ไม่มีบริการรับสินค้าที่นี่",
+    "in_store_available_at_html": "มีสต็อกสินค้าที่ <b>{{ location }}</b>"
   },
   "gift_cards": {
     "issued": {

@@ -56,8 +56,11 @@
   }
 
   @media screen and (min-width: 750px) {
+    /* A zero minimum width lets a fit-content details group shrink to its column, so unbreakable text,
+       such as words joined with non-breaking spaces, wraps instead of overflowing both sides of the column */
     .product-details > .group-block {
       height: min-content;
+      min-width: 0;
     }
 
     .full-height--desktop {

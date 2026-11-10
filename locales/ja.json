@@ -75,7 +75,16 @@
     "price_filter_low": "低価格",
     "price_filter_high": "高価格",
     "view_disclosure_information_for_product": "{{ product_title }} の開示情報を表示",
-    "show_submenu": "{{ title }} のサブメニューを表示"
+    "show_submenu": "{{ title }} のサブメニューを表示",
+    "link_to_product": "商品：{{ title }}",
+    "link_to_blog": "ブログ：{{ title }}",
+    "link_to_page": "ページ：{{ title }}",
+    "link_to_article": "記事：{{ title }}",
+    "link_to_policy": "ポリシー：{{ title }}",
+    "link_to_home": "ホーム",
+    "link_to_catalog": "すべての商品",
+    "link_to_collections": "すべてのコレクション",
+    "link_to_collection": "コレクション：{{ title }}"
   },
   "actions": {
     "add_to_cart": "カートに追加",
@@ -290,7 +299,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "税、ディスカウント、手数料、送料はチェックアウト時に計算されます。",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "税、手数料、送料はチェックアウト時に計算されます。",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "税込み。ディスカウント、手数料、<a href=\"{{ link }}\">送料</a>はチェックアウト時に計算されます。",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "税込み。ディスカウント、手数料、送料はチェックアウト時に計算されます。"
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "税込み。ディスカウント、手数料、送料はチェックアウト時に計算されます。",
+    "in_store_available": "ストアに在庫あり",
+    "in_store_also_available": "ストアでも販売しています。店頭で直接ご購入いただけます。",
+    "in_store_only": "こちらのストアで直接ご購入ください。ここでは受取をご利用いただけません。",
+    "in_store_available_at_html": "<b>{{ location }}</b>に在庫あり"
   },
   "gift_cards": {
     "issued": {

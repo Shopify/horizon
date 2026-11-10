@@ -77,7 +77,16 @@
     "price_filter_low": "Nízká cena",
     "price_filter_high": "Vysoká cena",
     "view_disclosure_information_for_product": "Zobrazit povinné informace o produktu {{ product_title }}",
-    "show_submenu": "Zobrazit podnabídku {{ title }}"
+    "show_submenu": "Zobrazit podnabídku {{ title }}",
+    "link_to_product": "Produkt: {{ title }}",
+    "link_to_blog": "Blog: {{ title }}",
+    "link_to_page": "Stránka: {{ title }}",
+    "link_to_article": "Článek: {{ title }}",
+    "link_to_policy": "Zásady: {{ title }}",
+    "link_to_home": "Domů",
+    "link_to_catalog": "Všechny produkty",
+    "link_to_collections": "Všechny kolekce",
+    "link_to_collection": "Kolekce: {{ title }}"
   },
   "actions": {
     "add_to_cart": "Přidat do košíku",
@@ -302,7 +311,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Daně, slevy, poplatky a doprava se vypočítají v pokladně.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Daně, poplatky a doprava se vypočítají v pokladně.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Včetně daní. Slevy, poplatky a <a href=\"{{ link }}\">doprava</a> se vypočítají v pokladně.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Včetně daní. Slevy, poplatky a doprava se vypočítají v pokladně."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Včetně daní. Slevy, poplatky a doprava se vypočítají v pokladně.",
+    "in_store_available": "Skladem v obchodě",
+    "in_store_also_available": "V prodeji také v obchodě – můžete zakoupit osobně zde",
+    "in_store_only": "Zakupte osobně v tomto obchodě. Vyzvednutí zde není k dispozici.",
+    "in_store_available_at_html": "Skladem v lokalitě <b>{{ location }}</b>"
   },
   "gift_cards": {
     "issued": {

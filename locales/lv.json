@@ -56,7 +56,16 @@
       "one": "Piemērots {{ count }} filtrs",
       "other": "Piemēroti {{ count }} filtri",
       "zero": "Piemēroti {{ count }} filtri"
-    }
+    },
+    "link_to_product": "Produkts: {{ title }}",
+    "link_to_blog": "Emuārs: {{ title }}",
+    "link_to_page": "Lapa: {{ title }}",
+    "link_to_article": "Raksts: {{ title }}",
+    "link_to_policy": "Politika: {{ title }}",
+    "link_to_home": "Sākumlapa",
+    "link_to_catalog": "Visi produkti",
+    "link_to_collections": "Visas kolekcijas",
+    "link_to_collection": "Kolekcija: {{ title }}"
   },
   "actions": {
     "add": "Pievienot",
@@ -317,7 +326,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Nodokļi, atlaides, maksas un piegāde tiek aprēķināti norēķināšanās laikā.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Nodokļi, maksas un piegāde tiek aprēķināti norēķināšanās laikā.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Nodokļi iekļauti. Atlaides, maksas un <a href=\"{{ link }}\">piegāde</a> tiek aprēķinātas norēķināšanās laikā.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Nodokļi iekļauti. Atlaides, maksas un piegāde tiek aprēķinātas norēķināšanās laikā."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Nodokļi iekļauti. Atlaides, maksas un piegāde tiek aprēķinātas norēķināšanās laikā.",
+    "in_store_available": "Ir veikala krājumos",
+    "in_store_also_available": "Tiek pārdots arī veikalā – vari to iegādāties šeit klātienē",
+    "in_store_only": "Iegādājies klātienē šajā veikalā. Saņemšana šeit nav pieejama.",
+    "in_store_available_at_html": "Ir krājumos: <b>{{ location }}</b>"
   },
   "fields": {
     "separator": "līdz"

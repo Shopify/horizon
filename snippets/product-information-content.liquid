@@ -292,8 +292,7 @@
   }
 
   /* Wider sidebar for large screens. A zero track minimum keeps unbreakable product details content,
-     such as text joined with non-breaking spaces, from widening its track past the 2:1 ratio.
-     The details group can then shrink with its track, also when its width is fit-content. */
+     such as text joined with non-breaking spaces, from widening its track past the 2:1 ratio. */
   @media screen and (min-width: 1200px) {
     .product-information__grid:not(
         .product-information__grid--half,
@@ -307,12 +306,6 @@
         .product-information--media-none
       ).product-information--media-right {
       grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-    }
-
-    .product-information__grid:not(.product-information__grid--half, .product-information--media-none)
-      .product-details
-      > .group-block {
-      min-width: 0;
     }
   }
 

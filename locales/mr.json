@@ -55,7 +55,16 @@
     "filter_count": {
       "one": "{{ count }} फिल्टर लागू केला",
       "other": "{{ count }} फिल्टर्स लागू केले"
-    }
+    },
+    "link_to_product": "उत्पादन: {{ title }}",
+    "link_to_blog": "ब्लॉग: {{ title }}",
+    "link_to_page": "पृष्ठ: {{ title }}",
+    "link_to_article": "लेख: {{ title }}",
+    "link_to_policy": "धोरण: {{ title }}",
+    "link_to_home": "होम",
+    "link_to_catalog": "सर्व उत्पादने",
+    "link_to_collections": "सर्व संग्रह",
+    "link_to_collection": "संग्रह: {{ title }}"
   },
   "actions": {
     "add": "जोडा",
@@ -310,7 +319,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "कर, सवलती, फी आणि शिपिंग चेकआउटवर मोजले जातात.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "कर, फी आणि शिपिंग चेकआउटवर मोजले जातात.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "कर समाविष्ट आहेत. सवलती, फी आणि <a href=\"{{ link }}\">शिपिंग</a> चेकआउटवर मोजले जातात.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "कर समाविष्ट आहेत. सवलती, फी आणि शिपिंग चेकआउटवर मोजले जातात."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "कर समाविष्ट आहेत. सवलती, फी आणि शिपिंग चेकआउटवर मोजले जातात.",
+    "in_store_available": "स्टोअरमध्ये स्टॉकमध्ये आहे",
+    "in_store_also_available": "स्टोअरमध्येही विकले जाते. तुम्ही येथे प्रत्यक्ष खरेदी करू शकता",
+    "in_store_only": "या स्टोअरमध्ये प्रत्यक्ष खरेदी करा. येथे पिकअप उपलब्ध नाही.",
+    "in_store_available_at_html": "<b>{{ location }}</b> येथे स्टॉकमध्ये आहे"
   },
   "fields": {
     "separator": "ते"
