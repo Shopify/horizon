@@ -127,31 +127,51 @@ export function startViewTransition(callback, types) {
   }
 
   // eslint-disable-next-line no-async-promise-executor
-  return new Promise(async (resolve) => {
-    let cleanupFunctions = [];
+  return new Promise(async (resolve, reject) => {
+    /** @type {(() => void)[]} */
+    const cleanupFunctions = [];
+    const runCleanup = () => {
+      cleanupFunctions.splice(0).forEach((cleanupFunction) => cleanupFunction());
+    };
+    let started = false;
 
-    if (types) {
-      for (const type of types) {
-        if (viewTransitionTypes[type]) {
-          const cleanupFunction = await viewTransitionTypes[type]();
-          if (cleanupFunction) cleanupFunctions.push(cleanupFunction);
+    try {
+      if (types) {
+        for (const type of types) {
+          if (viewTransitionTypes[type]) {
+            const cleanupFunction = await viewTransitionTypes[type]();
+            if (cleanupFunction) cleanupFunctions.push(cleanupFunction);
+          }
         }
       }
+
+      const transition = document.startViewTransition(callback);
+      started = true;
+
+      if (!viewTransition.current) {
+        viewTransition.current = transition.finished;
+      }
+
+      // Settle on either outcome: `finished` rejects when the update callback rejects.
+      const finish = () => {
+        viewTransition.current = undefined;
+        runCleanup();
+        resolve();
+      };
+      transition.finished.then(finish, finish);
+
+      // Safari 18.0 and 18.1 support startViewTransition but not ViewTransition.types (added in 18.2).
+      if (types && transition.types) types.forEach((type) => transition.types.add(type));
+    } catch {
+      // After the transition started, `finish` settles the promise.
+      if (started) return;
+      runCleanup();
+      try {
+        resolve(callback());
+      } catch (callbackError) {
+        reject(callbackError);
+      }
     }
-
-    const transition = document.startViewTransition(callback);
-
-    if (!viewTransition.current) {
-      viewTransition.current = transition.finished;
-    }
-
-    if (types) types.forEach((type) => transition.types.add(type));
-
-    transition.finished.then(() => {
-      viewTransition.current = undefined;
-      cleanupFunctions.forEach((cleanupFunction) => cleanupFunction());
-      resolve();
-    });
   });
 }
 
