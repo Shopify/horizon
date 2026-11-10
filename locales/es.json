@@ -76,7 +76,16 @@
     "price_filter_low": "Precio bajo",
     "price_filter_high": "Precio alto",
     "view_disclosure_information_for_product": "Ver los avisos sobre el producto de {{ product_title }}",
-    "show_submenu": "Mostrar submenú de {{ title }}"
+    "show_submenu": "Mostrar submenú de {{ title }}",
+    "link_to_product": "Producto: {{ title }}",
+    "link_to_blog": "Blog: {{ title }}",
+    "link_to_page": "Página: {{ title }}",
+    "link_to_article": "Artículo: {{ title }}",
+    "link_to_policy": "Política: {{ title }}",
+    "link_to_home": "Inicio",
+    "link_to_catalog": "Todos los productos",
+    "link_to_collections": "Todas las colecciones",
+    "link_to_collection": "Colección: {{ title }}"
   },
   "actions": {
     "add_to_cart": "Agregar al carrito",
@@ -296,7 +305,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Los impuestos, descuentos, cargos y el envío se calculan en el pago.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Los impuestos, cargos y el envío se calculan en el pago.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Impuestos incluidos. Los descuentos, cargos y el <a href=\"{{ link }}\">envío</a> se calculan en el pago.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Impuestos incluidos. Los descuentos, cargos y el envío se calculan en el pago."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Impuestos incluidos. Los descuentos, cargos y el envío se calculan en el pago.",
+    "in_store_available": "En existencias en la tienda",
+    "in_store_also_available": "También se vende en la tienda: puedes comprarlo aquí en persona",
+    "in_store_only": "Compra en persona en esta tienda. No se ofrece el retiro aquí.",
+    "in_store_available_at_html": "En existencias en <b>{{ location }}</b>"
   },
   "gift_cards": {
     "issued": {

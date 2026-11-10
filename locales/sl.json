@@ -77,7 +77,16 @@
     "price_filter_low": "Nizka cena",
     "price_filter_high": "Visoka cena",
     "view_disclosure_information_for_product": "Ogled informacij o razkritjih za {{ product_title }}",
-    "show_submenu": "Prikaži podmeni {{ title }}"
+    "show_submenu": "Prikaži podmeni {{ title }}",
+    "link_to_product": "Izdelek: {{ title }}",
+    "link_to_blog": "Blog: {{ title }}",
+    "link_to_page": "Stran: {{ title }}",
+    "link_to_article": "Članek: {{ title }}",
+    "link_to_policy": "Pravilnik: {{ title }}",
+    "link_to_home": "Domača stran",
+    "link_to_catalog": "Vsi izdelki",
+    "link_to_collections": "Vse zbirke",
+    "link_to_collection": "Zbirka: {{ title }}"
   },
   "actions": {
     "add_to_cart": "Dodaj v košarico",
@@ -302,7 +311,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Davki, popusti, pristojbine in dostava se obračunajo na blagajni.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Davki, pristojbine in dostava se obračunajo na blagajni.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Davki vključeni. Popusti, pristojbine in <a href=\"{{ link }}\">dostava</a> se obračunajo na blagajni.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Davki vključeni. Popusti, pristojbine in dostava se obračunajo na blagajni."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Davki vključeni. Popusti, pristojbine in dostava se obračunajo na blagajni.",
+    "in_store_available": "Na zalogi v trgovini",
+    "in_store_also_available": "Na prodaj tudi v trgovini — tukaj lahko izdelek kupite osebno",
+    "in_store_only": "Kupite osebno v tej trgovini. Prevzem tukaj ni na voljo.",
+    "in_store_available_at_html": "Na zalogi na lokaciji <b>{{ location }}</b>"
   },
   "gift_cards": {
     "issued": {

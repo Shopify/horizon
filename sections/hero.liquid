@@ -509,9 +509,13 @@
     style="{% render 'spacing-style', settings: section.settings %}"
   >
     {%- if section.settings.link != blank -%}
+      {% capture link_label %}{% render 'link-label', url: section.settings.link %}{% endcapture %}
       <a
         href="{{ section.settings.link }}"
         class="hero__link"
+        {% if link_label != blank %}
+          aria-label="{{ link_label }}"
+        {% endif %}
         {% if section.settings.open_in_new_tab %}
           target="_blank" rel="noopener"
         {% endif %}

@@ -59,7 +59,16 @@
       "many": "تم تطبيق {{ count }} من عوامل التصفية",
       "two": "تم تطبيق {{ count }} من عوامل التصفية",
       "zero": "تم تطبيق {{ count }} من عوامل التصفية"
-    }
+    },
+    "link_to_product": "المنتج: {{ title }}",
+    "link_to_blog": "المدونة: {{ title }}",
+    "link_to_page": "الصفحة: {{ title }}",
+    "link_to_article": "المقال: {{ title }}",
+    "link_to_policy": "السياسة: {{ title }}",
+    "link_to_home": "الصفحة الرئيسية",
+    "link_to_catalog": "جميع المنتجات",
+    "link_to_collections": "جميع المجموعات",
+    "link_to_collection": "المجموعة: {{ title }}"
   },
   "actions": {
     "add": "إضافة",
@@ -338,7 +347,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "تُحسب الضرائب والخصومات والرسوم والشحن عند الدفع.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "تُحسب الضرائب والرسوم والشحن عند الدفع.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "الضرائب مشمولة. تُحسب الخصومات والرسوم و<a href=\"{{ link }}\">الشحن</a> عند الدفع.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "الضرائب مشمولة. تُحسب الخصومات والرسوم والشحن عند الدفع."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "الضرائب مشمولة. تُحسب الخصومات والرسوم والشحن عند الدفع.",
+    "in_store_available": "متوفر في المتجر",
+    "in_store_also_available": "يُباع أيضًا في المتجر — يمكنك الشراء من هنا شخصيًا",
+    "in_store_only": "اشترِ شخصيًا من هذا المتجر. خدمة استلام الطلب غير متوفرة هنا.",
+    "in_store_available_at_html": "متوفر في <b>{{ location }}</b>"
   },
   "fields": {
     "separator": "إلى"

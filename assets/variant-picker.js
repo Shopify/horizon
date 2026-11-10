@@ -283,6 +283,9 @@ export default class VariantPicker extends Component {
       'quick-add-component': 'section-rendering-product-card',
       'swatches-variant-picker-component': 'section-rendering-product-card',
       'featured-product-information': this.closest('featured-product-information')?.id,
+      // The quick add modal, when quick add filled it from its own section instead of the product page
+      '[data-quick-add-section-id]':
+        this.closest('[data-quick-add-section-id]')?.getAttribute('data-quick-add-section-id'),
     };
 
     const closestSectionId = /** @type {keyof typeof SECTION_ID_MAP} | undefined */ (

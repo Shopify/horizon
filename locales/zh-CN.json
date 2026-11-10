@@ -75,7 +75,16 @@
     "price_filter_low": "低价",
     "price_filter_high": "高价",
     "view_disclosure_information_for_product": "查看 {{ product_title }} 的披露信息",
-    "show_submenu": "显示 {{ title }} 子菜单"
+    "show_submenu": "显示 {{ title }} 子菜单",
+    "link_to_product": "产品：{{ title }}",
+    "link_to_blog": "博客：{{ title }}",
+    "link_to_page": "页面：{{ title }}",
+    "link_to_article": "文章：{{ title }}",
+    "link_to_policy": "政策：{{ title }}",
+    "link_to_home": "首页",
+    "link_to_catalog": "所有产品",
+    "link_to_collections": "所有产品系列",
+    "link_to_collection": "产品系列：{{ title }}"
   },
   "actions": {
     "add_to_cart": "添加到购物车",
@@ -290,7 +299,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "税款、折扣、费用和运费将在结账时计算。",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "税款、费用和运费将在结账时计算。",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "包含税款。折扣、费用和<a href=\"{{ link }}\">运费</a>将在结账时计算。",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "包含税款。折扣、费用和运费将在结账时计算。"
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "包含税款。折扣、费用和运费将在结账时计算。",
+    "in_store_available": "商店有库存",
+    "in_store_also_available": "商店也有售 —— 您可以亲自前往此处购买",
+    "in_store_only": "请前往此商店亲自购买。此处不提供取货服务。",
+    "in_store_available_at_html": "<b>{{ location }}</b>有库存"
   },
   "gift_cards": {
     "issued": {

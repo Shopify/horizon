@@ -77,7 +77,16 @@
     "price_filter_low": "Nízka cena",
     "price_filter_high": "Vysoká cena",
     "view_disclosure_information_for_product": "Zobraziť zverejnené informácie o produkte {{ product_title }}",
-    "show_submenu": "Zobraziť podponuku {{ title }}"
+    "show_submenu": "Zobraziť podponuku {{ title }}",
+    "link_to_product": "Produkt: {{ title }}",
+    "link_to_blog": "Blog: {{ title }}",
+    "link_to_page": "Stránka: {{ title }}",
+    "link_to_article": "Článok: {{ title }}",
+    "link_to_policy": "Zásady: {{ title }}",
+    "link_to_home": "Domov",
+    "link_to_catalog": "Všetky produkty",
+    "link_to_collections": "Všetky kolekcie",
+    "link_to_collection": "Kolekcia: {{ title }}"
   },
   "actions": {
     "add_to_cart": "Pridať do košíka",
@@ -302,7 +311,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Dane, zľavy, poplatky a doprava sa vypočítajú v pokladni.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Dane, poplatky a doprava sa vypočítajú v pokladni.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Vrátane daní. Zľavy, poplatky a <a href=\"{{ link }}\">doprava</a> sa vypočítajú v pokladni.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Vrátane daní. Zľavy, poplatky a doprava sa vypočítajú v pokladni."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Vrátane daní. Zľavy, poplatky a doprava sa vypočítajú v pokladni.",
+    "in_store_available": "Na sklade v obchode",
+    "in_store_also_available": "Predáva sa aj v obchode – môžete si ho tu kúpiť osobne",
+    "in_store_only": "Kúpte osobne v tomto obchode. Vyzdvihnutie tu nie je možné.",
+    "in_store_available_at_html": "Na sklade v lokalite <b>{{ location }}</b>"
   },
   "gift_cards": {
     "issued": {

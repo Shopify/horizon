@@ -5,6 +5,14 @@
   @param {string} parent_block_id - The block.id of the parent blog post card
 {%- enddoc -%}
 
+{% liquid
+  # Images in the first three sections can be above the fold. The Section Rendering API gives no section.index.
+  assign loading = 'eager'
+  if section.index > 3
+    assign loading = 'lazy'
+  endif
+%}
+
 {% comment %} Render using unified resource image component {% endcomment %}
 {% render 'resource-image',
   content_type: 'articles',
@@ -12,6 +20,7 @@
   parent_block_id: parent_block_id,
   block_settings: block.settings,
   section_settings: section.settings,
+  loading: loading,
   block_attributes: block.shopify_attributes
 %}
 

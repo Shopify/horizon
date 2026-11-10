@@ -75,7 +75,16 @@
     "price_filter_low": "Halpa hinta",
     "price_filter_high": "Kallis hinta",
     "view_disclosure_information_for_product": "Näytä tuotteen {{ product_title }} ilmoitustiedot",
-    "show_submenu": "Näytä kohteen {{ title }} alivalikko"
+    "show_submenu": "Näytä kohteen {{ title }} alivalikko",
+    "link_to_product": "Tuote: {{ title }}",
+    "link_to_blog": "Blogi: {{ title }}",
+    "link_to_page": "Sivu: {{ title }}",
+    "link_to_article": "Artikkeli: {{ title }}",
+    "link_to_policy": "Käytäntö: {{ title }}",
+    "link_to_home": "Etusivu",
+    "link_to_catalog": "Kaikki tuotteet",
+    "link_to_collections": "Kaikki kokoelmat",
+    "link_to_collection": "Kokoelma: {{ title }}"
   },
   "actions": {
     "add_to_cart": "Lisää ostoskoriin",
@@ -290,7 +299,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Verot, alennukset, maksut ja toimitus lasketaan kassalla.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Verot, maksut ja toimitus lasketaan kassalla.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Sisältää verot. Alennukset, maksut ja <a href=\"{{ link }}\">toimitus</a> lasketaan kassalla.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Sisältää verot. Alennukset, maksut ja toimitus lasketaan kassalla."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Sisältää verot. Alennukset, maksut ja toimitus lasketaan kassalla.",
+    "in_store_available": "Varastossa kaupassa",
+    "in_store_also_available": "Myynnissä myös kaupassa – voit ostaa tämän täältä paikan päältä",
+    "in_store_only": "Osta paikan päältä tästä kaupasta. Nouto ei ole saatavilla täällä.",
+    "in_store_available_at_html": "Varastossa sijainnissa <b>{{ location }}</b>"
   },
   "gift_cards": {
     "issued": {

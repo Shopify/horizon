@@ -76,7 +76,16 @@
     "search_suggestions_available": "Rechercher des suggestions disponibles pour « {{ query }} »",
     "price_filter_low": "Prix bas",
     "price_filter_high": "Prix élevé",
-    "view_disclosure_information_for_product": "Afficher les informations sur le produit {{ product_title }}"
+    "view_disclosure_information_for_product": "Afficher les informations sur le produit {{ product_title }}",
+    "link_to_product": "Produit : {{ title }}",
+    "link_to_blog": "Blog : {{ title }}",
+    "link_to_page": "Page : {{ title }}",
+    "link_to_article": "Article : {{ title }}",
+    "link_to_policy": "Politique : {{ title }}",
+    "link_to_home": "Accueil",
+    "link_to_catalog": "Tous les produits",
+    "link_to_collections": "Toutes les collections",
+    "link_to_collection": "Collection : {{ title }}"
   },
   "actions": {
     "add_to_cart": "Ajouter au panier",
@@ -296,7 +305,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Taxes, réductions, frais et expédition calculés au moment du paiement.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Taxes, frais et expédition calculés au moment du paiement.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Taxes incluses. Réductions, frais et <a href=\"{{ link }}\">expédition</a> calculés au moment du paiement.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Taxes incluses. Réductions, frais et expédition calculés au moment du paiement."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Taxes incluses. Réductions, frais et expédition calculés au moment du paiement.",
+    "in_store_available": "En stock en boutique",
+    "in_store_also_available": "Également vendu en boutique : vous pouvez l’acheter ici en personne",
+    "in_store_only": "Achetez en personne dans cette boutique. La collecte n’est pas proposée ici.",
+    "in_store_available_at_html": "En stock à l’emplacement <b>{{ location }}</b>"
   },
   "gift_cards": {
     "issued": {

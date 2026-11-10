@@ -75,7 +75,16 @@
     "search_suggestions_available": "Sökförslag tillgängliga för \"{{ query }}\"",
     "price_filter_low": "Lågt pris",
     "price_filter_high": "Högt pris",
-    "view_disclosure_information_for_product": "Visa produktupplysningar för {{ product_title }}"
+    "view_disclosure_information_for_product": "Visa produktupplysningar för {{ product_title }}",
+    "link_to_product": "Produkt: {{ title }}",
+    "link_to_blog": "Blogg: {{ title }}",
+    "link_to_page": "Sida: {{ title }}",
+    "link_to_article": "Artikel: {{ title }}",
+    "link_to_policy": "Policy: {{ title }}",
+    "link_to_home": "Startsida",
+    "link_to_catalog": "Alla produkter",
+    "link_to_collections": "Alla produktserier",
+    "link_to_collection": "Produktserie: {{ title }}"
   },
   "actions": {
     "add_to_cart": "Lägg till i varukorgen",
@@ -290,7 +299,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Skatt, rabatter, avgifter och frakt beräknas i kassan.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Skatt, avgifter och frakt beräknas i kassan.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Skatt ingår. Rabatter, avgifter och <a href=\"{{ link }}\">frakt</a> beräknas i kassan.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Skatt ingår. Rabatter, avgifter och frakt beräknas i kassan."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Skatt ingår. Rabatter, avgifter och frakt beräknas i kassan.",
+    "in_store_available": "I lager i butik",
+    "in_store_also_available": "Säljs även i butik – du kan köpa den här på plats",
+    "in_store_only": "Köp på plats i den här butiken. Hämtning erbjuds inte här.",
+    "in_store_available_at_html": "I lager på <b>{{ location }}</b>"
   },
   "gift_cards": {
     "issued": {

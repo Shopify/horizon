@@ -76,7 +76,16 @@
     "search_suggestions_available": "Sugestii de căutare disponibile pentru „{{ query }}”",
     "price_filter_low": "Preț mic",
     "price_filter_high": "Preț mare",
-    "view_disclosure_information_for_product": "Vizualizează mențiunile referitoare la produsul {{ product_title }}"
+    "view_disclosure_information_for_product": "Vizualizează mențiunile referitoare la produsul {{ product_title }}",
+    "link_to_product": "Produs: {{ title }}",
+    "link_to_blog": "Blog: {{ title }}",
+    "link_to_page": "Pagină: {{ title }}",
+    "link_to_article": "Articol: {{ title }}",
+    "link_to_policy": "Politică: {{ title }}",
+    "link_to_home": "Pagina principală",
+    "link_to_catalog": "Toate produsele",
+    "link_to_collections": "Toate colecțiile",
+    "link_to_collection": "Colecție: {{ title }}"
   },
   "actions": {
     "add_to_cart": "Adaugă în coș",
@@ -296,7 +305,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Taxele, reducerile, comisioanele și expedierea se calculează la plată.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Taxele, comisioanele și expedierea se calculează la plată.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Taxe incluse. Reducerile, comisioanele și <a href=\"{{ link }}\">expedierea</a> se calculează la plată.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Taxe incluse. Reducerile, comisioanele și expedierea se calculează la plată."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Taxe incluse. Reducerile, comisioanele și expedierea se calculează la plată.",
+    "in_store_available_at_html": "În stoc la <b>{{ location }}</b>",
+    "in_store_available": "În stoc în magazin",
+    "in_store_only": "Cumpărați personal din acest magazin. Ridicarea nu este disponibilă aici.",
+    "in_store_also_available": "Disponibil și în magazin — îl puteți cumpăra personal de aici"
   },
   "gift_cards": {
     "issued": {

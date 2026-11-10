@@ -75,7 +75,16 @@
     "price_filter_low": "低價",
     "price_filter_high": "高價",
     "view_disclosure_information_for_product": "檢視 {{ product_title }} 的揭露資訊",
-    "show_submenu": "顯示 {{ title }} 子選單"
+    "show_submenu": "顯示 {{ title }} 子選單",
+    "link_to_product": "商品：{{ title }}",
+    "link_to_blog": "網誌：{{ title }}",
+    "link_to_page": "頁面：{{ title }}",
+    "link_to_article": "文章：{{ title }}",
+    "link_to_policy": "政策：{{ title }}",
+    "link_to_home": "首頁",
+    "link_to_catalog": "所有商品",
+    "link_to_collections": "所有商品系列",
+    "link_to_collection": "商品系列：{{ title }}"
   },
   "actions": {
     "add_to_cart": "加入購物車",
@@ -290,7 +299,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "系統會在結帳時計算稅額、折扣、費用和運費。",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "系統會在結帳時計算稅額、費用和運費。",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "內含稅額。系統會在結帳時計算折扣、費用和<a href=\"{{ link }}\">運費</a>。",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "內含稅額。系統會在結帳時計算折扣、費用和運費。"
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "內含稅額。系統會在結帳時計算折扣、費用和運費。",
+    "in_store_available": "商店有庫存",
+    "in_store_also_available": "商店亦有販售，您可在此親自購買",
+    "in_store_only": "請至此商店親自購買。此處不提供取貨服務。",
+    "in_store_available_at_html": "<b>{{ location }}</b> 有庫存"
   },
   "gift_cards": {
     "issued": {

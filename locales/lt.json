@@ -77,7 +77,16 @@
     "price_filter_low": "Žema kaina",
     "price_filter_high": "Aukšta kaina",
     "view_disclosure_information_for_product": "Peržiūrėti atskleidžiamą informaciją apie {{ product_title }}",
-    "show_submenu": "Rodyti {{ title }} submeniu"
+    "show_submenu": "Rodyti {{ title }} submeniu",
+    "link_to_product": "Produktas: {{ title }}",
+    "link_to_blog": "Tinklaraštis: {{ title }}",
+    "link_to_page": "Puslapis: {{ title }}",
+    "link_to_article": "Straipsnis: {{ title }}",
+    "link_to_policy": "Politika: {{ title }}",
+    "link_to_home": "Pagrindinis puslapis",
+    "link_to_catalog": "Visi produktai",
+    "link_to_collections": "Visos kolekcijos",
+    "link_to_collection": "Kolekcija: {{ title }}"
   },
   "actions": {
     "add_to_cart": "Įdėti į krepšelį",
@@ -302,7 +311,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Mokesčiai, nuolaidos, rinkliavos ir pristatymas apskaičiuojami atsiskaitant.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Mokesčiai, rinkliavos ir pristatymas apskaičiuojami atsiskaitant.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Mokesčiai įskaičiuoti. Nuolaidos, rinkliavos ir <a href=\"{{ link }}\">pristatymas</a> apskaičiuojami atsiskaitant.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Mokesčiai įskaičiuoti. Nuolaidos, rinkliavos ir pristatymas apskaičiuojami atsiskaitant."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Mokesčiai įskaičiuoti. Nuolaidos, rinkliavos ir pristatymas apskaičiuojami atsiskaitant.",
+    "in_store_available": "Yra atsargų parduotuvėje",
+    "in_store_also_available": "Taip pat parduodama parduotuvėje – galite įsigyti vietoje.",
+    "in_store_only": "Įsigykite vietoje šioje parduotuvėje. Atsiėmimas čia negalimas.",
+    "in_store_available_at_html": "Yra atsargų šioje vietoje: <b>{{ location }}</b>"
   },
   "gift_cards": {
     "issued": {

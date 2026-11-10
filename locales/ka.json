@@ -55,7 +55,16 @@
     "filter_count": {
       "one": "გამოყენებულია {{ count }} ფილტრი",
       "other": "გამოყენებულია {{ count }} ფილტრი"
-    }
+    },
+    "link_to_product": "პროდუქტი: {{ title }}",
+    "link_to_blog": "ბლოგი: {{ title }}",
+    "link_to_page": "გვერდი: {{ title }}",
+    "link_to_article": "სტატია: {{ title }}",
+    "link_to_policy": "პოლიტიკა: {{ title }}",
+    "link_to_home": "მთავარი გვერდი",
+    "link_to_catalog": "ყველა პროდუქტი",
+    "link_to_collections": "ყველა კოლექცია",
+    "link_to_collection": "კოლექცია: {{ title }}"
   },
   "actions": {
     "add": "დამატება",
@@ -310,7 +319,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "გადასახადები, ფასდაკლებები, მოსაკრებლები და მიწოდება გამოითვლება შეკვეთის გაფორმებისას.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "გადასახადები, მოსაკრებლები და მიწოდება გამოითვლება შეკვეთის გაფორმებისას.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "გადასახადები შედის ფასში. ფასდაკლებები, მოსაკრებლები და <a href=\"{{ link }}\">მიწოდება</a> გამოითვლება შეკვეთის გაფორმებისას.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "გადასახადები შედის ფასში. ფასდაკლებები, მოსაკრებლები და მიწოდება გამოითვლება შეკვეთის გაფორმებისას."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "გადასახადები შედის ფასში. ფასდაკლებები, მოსაკრებლები და მიწოდება გამოითვლება შეკვეთის გაფორმებისას.",
+    "in_store_available": "მაღაზიაში მარაგშია",
+    "in_store_also_available": "ასევე იყიდება მაღაზიაში — შეგიძლია შეიძინო ადგილზე",
+    "in_store_only": "შეიძინე ადგილზე ამ მაღაზიაში. აქ გატანა არ არის ხელმისაწვდომი.",
+    "in_store_available_at_html": "მარაგშია <b>{{ location }}</b> ლოკაციაზე"
   },
   "fields": {
     "separator": "-მდე"

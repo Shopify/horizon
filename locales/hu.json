@@ -75,7 +75,16 @@
     "price_filter_low": "Ár szerint növekvő",
     "price_filter_high": "Ár szerint csökkenő",
     "view_disclosure_information_for_product": "Tájékoztató adatok megtekintése a következőhöz: {{ product_title }}",
-    "show_submenu": "{{ title }} almenü megjelenítése"
+    "show_submenu": "{{ title }} almenü megjelenítése",
+    "link_to_product": "Termék: {{ title }}",
+    "link_to_blog": "Blog: {{ title }}",
+    "link_to_page": "Oldal: {{ title }}",
+    "link_to_article": "Cikk: {{ title }}",
+    "link_to_policy": "Szabályzat: {{ title }}",
+    "link_to_home": "Kezdőlap",
+    "link_to_catalog": "Összes termék",
+    "link_to_collections": "Összes kollekció",
+    "link_to_collection": "Kollekció: {{ title }}"
   },
   "actions": {
     "add_to_cart": "Hozzáadás a kosárhoz",
@@ -290,7 +299,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Az adók, kedvezmények, díjak és a szállítás kiszámítása a pénztárnál történik.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Az adók, díjak és a szállítás kiszámítása a pénztárnál történik.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Az adókat tartalmazza. A kedvezmények, díjak és a <a href=\"{{ link }}\">szállítás</a> kiszámítása a pénztárnál történik.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Az adókat tartalmazza. A kedvezmények, díjak és a szállítás kiszámítása a pénztárnál történik."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Az adókat tartalmazza. A kedvezmények, díjak és a szállítás kiszámítása a pénztárnál történik.",
+    "in_store_available": "Készleten az üzletben",
+    "in_store_also_available": "Az üzletben is kapható, itt személyesen is megvásárolható",
+    "in_store_only": "Személyesen megvásárolható ebben az üzletben. Átvételre itt nincs lehetőség.",
+    "in_store_available_at_html": "Készleten itt: <b>{{ location }}</b>"
   },
   "gift_cards": {
     "issued": {

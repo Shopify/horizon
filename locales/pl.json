@@ -77,7 +77,16 @@
     "price_filter_low": "Niska cena",
     "price_filter_high": "Wysoka cena",
     "view_disclosure_information_for_product": "Wyświetl dodatkowe informacje dla produktu {{ product_title }}",
-    "show_submenu": "Pokaż podmenu {{ title }}"
+    "show_submenu": "Pokaż podmenu {{ title }}",
+    "link_to_product": "Produkt: {{ title }}",
+    "link_to_blog": "Blog: {{ title }}",
+    "link_to_page": "Strona: {{ title }}",
+    "link_to_article": "Artykuł: {{ title }}",
+    "link_to_policy": "Polityka: {{ title }}",
+    "link_to_home": "Strona główna",
+    "link_to_catalog": "Wszystkie produkty",
+    "link_to_collections": "Wszystkie kolekcje",
+    "link_to_collection": "Kolekcja: {{ title }}"
   },
   "actions": {
     "add_to_cart": "Dodaj do koszyka",
@@ -302,7 +311,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Podatki, rabaty, opłaty i wysyłka obliczane podczas realizacji zakupu.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Podatki, opłaty i wysyłka obliczane podczas realizacji zakupu.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Podatki wliczone. Rabaty, opłaty i <a href=\"{{ link }}\">wysyłka</a> obliczane podczas realizacji zakupu.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Podatki wliczone. Rabaty, opłaty i wysyłka obliczane podczas realizacji zakupu."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Podatki wliczone. Rabaty, opłaty i wysyłka obliczane podczas realizacji zakupu.",
+    "in_store_available": "Na stanie w sklepie",
+    "in_store_also_available": "W sprzedaży również w sklepie — możesz to tutaj kupić osobiście",
+    "in_store_only": "Kup osobiście w tym sklepie. Odbiór nie jest tutaj oferowany.",
+    "in_store_available_at_html": "Na stanie w lokalizacji <b>{{ location }}</b>"
   },
   "gift_cards": {
     "issued": {

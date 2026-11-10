@@ -75,7 +75,16 @@
     "search_suggestions_available": "\"{{ query }}\" için kullanılabilir arama önerileri",
     "price_filter_low": "Düşük fiyat",
     "price_filter_high": "Yüksek fiyat",
-    "view_disclosure_information_for_product": "{{ product_title }} için bildirim bilgilerini görüntüleyin"
+    "view_disclosure_information_for_product": "{{ product_title }} için bildirim bilgilerini görüntüleyin",
+    "link_to_product": "Ürün: {{ title }}",
+    "link_to_blog": "Blog: {{ title }}",
+    "link_to_page": "Sayfa: {{ title }}",
+    "link_to_article": "Makale: {{ title }}",
+    "link_to_policy": "Politika: {{ title }}",
+    "link_to_home": "Ana sayfa",
+    "link_to_catalog": "Tüm ürünler",
+    "link_to_collections": "Tüm koleksiyonlar",
+    "link_to_collection": "Koleksiyon: {{ title }}"
   },
   "actions": {
     "add_to_cart": "Sepete ekle",
@@ -290,7 +299,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Vergiler, indirimler, ücretler ve kargo ödeme adımında hesaplanır.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Vergiler, ücretler ve kargo ödeme adımında hesaplanır.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Vergiler dâhildir. İndirimler, ücretler ve <a href=\"{{ link }}\">kargo</a> ödeme adımında hesaplanır.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Vergiler dâhildir. İndirimler, ücretler ve kargo ödeme adımında hesaplanır."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Vergiler dâhildir. İndirimler, ücretler ve kargo ödeme adımında hesaplanır.",
+    "in_store_available": "Mağazada stokta",
+    "in_store_also_available": "Ayrıca mağazada da satılmaktadır, buradan bizzat satın alabilirsiniz.",
+    "in_store_only": "Bu mağazadan bizzat satın alın. Burada teslim alım sunulmamaktadır.",
+    "in_store_available_at_html": "<b>{{ location }}</b> konumunda stokta"
   },
   "gift_cards": {
     "issued": {

@@ -575,7 +575,8 @@
     "open_by_default": "默认展开",
     "title_preset": "标题预设",
     "customer_account_menu": "客户账户菜单",
-    "shop_pay_payment_options": "显示 Shop Pay 付款选项"
+    "shop_pay_payment_options": "显示 Shop Pay 付款选项",
+    "show_physical_stores": "显示实体店"
   },
   "options": {
     "apple": "Apple",
@@ -1110,7 +1111,8 @@
     "actions_display_style": "在移动设备上始终使用图标",
     "edit_input_field_in_theme_settings": "在[模板设置](/editor?context=theme&category=input%20fields)中编辑输入字段",
     "edit_variants_in_theme_settings": "在[模板设置](/editor?context=theme&category=variant%20pickers)中编辑多属性样式",
-    "shop_pay_payment_options": "可用时显示 Shop Pay 分期付款和 HSA/FSA 徽章。"
+    "shop_pay_payment_options": "可用时显示 Shop Pay 分期付款和 HSA/FSA 徽章。",
+    "show_physical_stores_help": "同时列出标记为实体店面且该产品有库存的地点，即使这些地点不提供取货服务。"
   },
   "categories": {
     "basic": "基本",

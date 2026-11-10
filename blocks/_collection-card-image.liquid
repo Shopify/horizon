@@ -8,6 +8,14 @@
   {% content_for 'block', type: '_collection-card-image', id: 'collection-card-image', parent_block_id: block.id %}
 {%- enddoc -%}
 
+{% liquid
+  # Images in the first three sections can be above the fold. The Section Rendering API gives no section.index.
+  assign loading = 'eager'
+  if section.index > 3
+    assign loading = 'lazy'
+  endif
+%}
+
 {% comment %} Render using unified resource image component {% endcomment %}
 {% comment %} Note: image_source auto-determined from closest.collection for collections {% endcomment %}
 {% render 'resource-image',
@@ -15,6 +23,7 @@
   parent_block_id: parent_block_id,
   block_settings: block.settings,
   section_settings: section.settings,
+  loading: loading,
   block_attributes: block.shopify_attributes
 %}
 

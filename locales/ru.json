@@ -77,7 +77,16 @@
     "price_filter_low": "Низкая цена",
     "price_filter_high": "Высокая цена",
     "view_disclosure_information_for_product": "Просмотреть дополнительную информацию о товаре {{ product_title }}",
-    "show_submenu": "Показать подменю {{ title }}"
+    "show_submenu": "Показать подменю {{ title }}",
+    "link_to_product": "Товар: {{ title }}",
+    "link_to_blog": "Блог: {{ title }}",
+    "link_to_page": "Страница: {{ title }}",
+    "link_to_article": "Статья: {{ title }}",
+    "link_to_policy": "Политика: {{ title }}",
+    "link_to_home": "Главная",
+    "link_to_catalog": "Все товары",
+    "link_to_collections": "Все коллекции",
+    "link_to_collection": "Коллекция: {{ title }}"
   },
   "actions": {
     "add_to_cart": "Добавить в корзину",
@@ -302,7 +311,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Налоги, скидки, сборы и доставка рассчитываются при оформлении заказа.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Налоги, сборы и доставка рассчитываются при оформлении заказа.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Налоги включены. Скидки, сборы и <a href=\"{{ link }}\">доставка</a> рассчитываются при оформлении заказа.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Налоги включены. Скидки, сборы и доставка рассчитываются при оформлении заказа."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Налоги включены. Скидки, сборы и доставка рассчитываются при оформлении заказа.",
+    "in_store_available": "В наличии в магазине",
+    "in_store_also_available": "Также продается в магазине — вы можете купить этот товар здесь лично",
+    "in_store_only": "Товар можно купить лично в этом магазине. Самовывоз здесь недоступен.",
+    "in_store_available_at_html": "В наличии в магазине <b>{{ location }}</b>"
   },
   "gift_cards": {
     "issued": {

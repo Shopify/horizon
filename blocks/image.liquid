@@ -67,10 +67,14 @@
     {{ image }}
   </div>
 {% else %}
+  {% capture link_label %}{% render 'link-label', url: block_settings.link %}{% endcapture %}
   <a
     href="{{ block_settings.link }}"
     class="{{ class }}"
     style="{{ style }}"
+    {% if link_label != blank %}
+      aria-label="{{ link_label }}"
+    {% endif %}
     {{ block.shopify_attributes }}
   >
     {{ image }}

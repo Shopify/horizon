@@ -55,7 +55,16 @@
     "filter_count": {
       "one": "{{ count }} filtre aplicat",
       "other": "{{ count }} filtres aplicats"
-    }
+    },
+    "link_to_product": "Producte: {{ title }}",
+    "link_to_blog": "Blog: {{ title }}",
+    "link_to_page": "Pàgina: {{ title }}",
+    "link_to_article": "Article: {{ title }}",
+    "link_to_policy": "Política: {{ title }}",
+    "link_to_home": "Inici",
+    "link_to_catalog": "Tots els productes",
+    "link_to_collections": "Totes les col·leccions",
+    "link_to_collection": "Col·lecció: {{ title }}"
   },
   "actions": {
     "add": "Afegeix",
@@ -310,7 +319,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Els impostos, els descomptes, els càrrecs i l'enviament es calculen en el moment del pagament.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Els impostos, els càrrecs i l'enviament es calculen en el moment del pagament.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Impostos inclosos. Els descomptes, els càrrecs i l'<a href=\"{{ link }}\">enviament</a> es calculen en el moment del pagament.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Impostos inclosos. Els descomptes, els càrrecs i l'enviament es calculen en el moment del pagament."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Impostos inclosos. Els descomptes, els càrrecs i l'enviament es calculen en el moment del pagament.",
+    "in_store_available": "En estoc a la botiga",
+    "in_store_also_available": "També es ven a la botiga: ho pots comprar aquí en persona",
+    "in_store_only": "Compra en persona en aquesta botiga. Aquí no s'ofereix l'opció de recollida.",
+    "in_store_available_at_html": "En estoc a <b>{{ location }}</b>"
   },
   "fields": {
     "separator": "a"

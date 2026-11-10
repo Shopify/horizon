@@ -75,7 +75,16 @@
     "price_filter_low": "Lav pris",
     "price_filter_high": "Høj pris",
     "view_disclosure_information_for_product": "Se deklarationsoplysninger for {{ product_title }}",
-    "show_submenu": "Vis undermenu for {{ title }}"
+    "show_submenu": "Vis undermenu for {{ title }}",
+    "link_to_product": "Produkt: {{ title }}",
+    "link_to_blog": "Blog: {{ title }}",
+    "link_to_page": "Side: {{ title }}",
+    "link_to_article": "Artikel: {{ title }}",
+    "link_to_policy": "Politik: {{ title }}",
+    "link_to_home": "Forside",
+    "link_to_catalog": "Alle produkter",
+    "link_to_collections": "Alle kollektioner",
+    "link_to_collection": "Kollektion: {{ title }}"
   },
   "actions": {
     "add_to_cart": "Læg i indkøbskurven",
@@ -290,7 +299,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Skatter, rabatter, gebyrer og forsendelse beregnes ved betaling.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Skatter, gebyrer og forsendelse beregnes ved betaling.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Skatter inkluderet. Rabatter, gebyrer og <a href=\"{{ link }}\">forsendelse</a> beregnes ved betaling.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Skatter inkluderet. Rabatter, gebyrer og forsendelse beregnes ved betaling."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Skatter inkluderet. Rabatter, gebyrer og forsendelse beregnes ved betaling.",
+    "in_store_available": "På lager i butikken",
+    "in_store_also_available": "Sælges også i butikken – du kan købe det fysisk her",
+    "in_store_only": "Køb fysisk i denne butik. Afhentning tilbydes ikke her.",
+    "in_store_available_at_html": "På lager på <b>{{ location }}</b>"
   },
   "gift_cards": {
     "issued": {

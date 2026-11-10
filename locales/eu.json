@@ -55,7 +55,16 @@
     "filter_count": {
       "one": "Iragazki {{ count }} aplikatu da",
       "other": "{{ count }} iragazki aplikatu dira"
-    }
+    },
+    "link_to_product": "Produktua: {{ title }}",
+    "link_to_blog": "Bloga: {{ title }}",
+    "link_to_page": "Orria: {{ title }}",
+    "link_to_article": "Artikulua: {{ title }}",
+    "link_to_policy": "Politika: {{ title }}",
+    "link_to_home": "Hasiera",
+    "link_to_catalog": "Produktu guztiak",
+    "link_to_collections": "Bilduma guztiak",
+    "link_to_collection": "Bilduma: {{ title }}"
   },
   "actions": {
     "add": "Gehitu",
@@ -310,7 +319,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Zergak, deskontuak, tasak eta bidalketa ordainketa-prozesuan kalkulatuko dira.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Zergak, tasak eta bidalketa ordainketa-prozesuan kalkulatuko dira.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Zergak barne. Deskontuak, tasak eta <a href=\"{{ link }}\">bidalketa</a> ordainketa-prozesuan kalkulatuko dira.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Zergak barne. Deskontuak, tasak eta bidalketa ordainketa-prozesuan kalkulatuko dira."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Zergak barne. Deskontuak, tasak eta bidalketa ordainketa-prozesuan kalkulatuko dira.",
+    "in_store_available": "Izakinak eskuragarri dendan",
+    "in_store_also_available": "Dendan ere salgai — aurrez aurre eros dezakezu hemen",
+    "in_store_only": "Erosi aurrez aurre denda honetan. Hemen ez da bilketarik eskaintzen.",
+    "in_store_available_at_html": "Izakinak eskuragarri <b>{{ location }}</b> kokapenean"
   },
   "fields": {
     "separator": "-"

@@ -575,7 +575,8 @@
     "open_by_default": "預設為開啟",
     "title_preset": "標題預設設定",
     "customer_account_menu": "顧客帳號選單",
-    "shop_pay_payment_options": "顯示 Shop Pay 付款選項"
+    "shop_pay_payment_options": "顯示 Shop Pay 付款選項",
+    "show_physical_stores": "顯示實體店面"
   },
   "options": {
     "apple": "Apple",
@@ -1110,7 +1111,8 @@
     "actions_display_style": "在行動裝置上一律使用圖示",
     "edit_input_field_in_theme_settings": "在 [佈景主題設定](/editor?context=theme&category=input%20fields) 中編輯輸入欄位",
     "edit_variants_in_theme_settings": "在[佈景主題設定](/editor?context=theme&category=variant%20pickers)中編輯子類樣式",
-    "shop_pay_payment_options": "可供使用時顯示 Shop Pay 分期付款和 HSA/FSA 徽章。"
+    "shop_pay_payment_options": "可供使用時顯示 Shop Pay 分期付款和 HSA/FSA 徽章。",
+    "show_physical_stores_help": "同時列出標示為實體店面且商品有庫存的地點，即使未提供取貨服務亦然。"
   },
   "categories": {
     "basic": "基本",

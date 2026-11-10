@@ -75,7 +75,16 @@
     "price_filter_low": "Giá thấp",
     "price_filter_high": "Giá cao",
     "view_disclosure_information_for_product": "Xem thông tin công bố của {{ product_title }}",
-    "show_submenu": "Hiển thị menu phụ {{ title }}"
+    "show_submenu": "Hiển thị menu phụ {{ title }}",
+    "link_to_product": "Sản phẩm: {{ title }}",
+    "link_to_blog": "Blog: {{ title }}",
+    "link_to_page": "Trang: {{ title }}",
+    "link_to_article": "Bài viết: {{ title }}",
+    "link_to_policy": "Chính sách: {{ title }}",
+    "link_to_home": "Trang chủ",
+    "link_to_catalog": "Tất cả sản phẩm",
+    "link_to_collections": "Tất cả bộ sưu tập",
+    "link_to_collection": "Bộ sưu tập: {{ title }}"
   },
   "actions": {
     "add_to_cart": "Thêm vào giỏ hàng",
@@ -290,7 +299,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Thuế, giảm giá, phí và phí vận chuyển được tính tại trang thanh toán.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Thuế, phí và phí vận chuyển được tính tại trang thanh toán.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Đã bao gồm thuế. Giảm giá, phí và <a href=\"{{ link }}\">phí vận chuyển</a> được tính tại trang thanh toán.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Đã bao gồm thuế. Giảm giá, phí và phí vận chuyển được tính tại trang thanh toán."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Đã bao gồm thuế. Giảm giá, phí và phí vận chuyển được tính tại trang thanh toán.",
+    "in_store_available": "Còn hàng tại cửa hàng",
+    "in_store_also_available": "Cũng có bán tại cửa hàng – bạn có thể mua trực tiếp tại đây",
+    "in_store_only": "Mua trực tiếp tại cửa hàng này. Không hỗ trợ lấy hàng tại đây.",
+    "in_store_available_at_html": "Còn hàng tại <b>{{ location }}</b>"
   },
   "gift_cards": {
     "issued": {

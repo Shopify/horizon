@@ -5,6 +5,9 @@ import { mediaQueryLarge, isMobileBreakpoint, getIOSVersion } from '@theme/utili
 import VariantPicker from '@theme/variant-picker';
 import { StandardEvents, ProductSelectEvent, CartLinesUpdateEvent } from '@shopify/events';
 
+/** The section that quick add renders when the product page cannot fill the modal. */
+const QUICK_ADD_SECTION_ID = 'section-rendering-quick-add';
+
 export class QuickAddComponent extends Component {
   /** @type {AbortController | null} */
   #abortController = null;
@@ -127,16 +130,8 @@ export class QuickAddComponent extends Component {
     let productGrid = this.#cachedContent.get(currentUrl);
 
     if (!productGrid) {
-      // Fetch and cache the content
-      const html = await this.fetchProductPage(currentUrl);
-      if (html) {
-        const gridElement = html.querySelector('[data-product-grid-content]');
-        if (gridElement) {
-          // Cache the cloned element to avoid modifying the original
-          productGrid = /** @type {Element} */ (gridElement.cloneNode(true));
-          this.#cachedContent.set(currentUrl, productGrid);
-        }
-      }
+      productGrid = (await this.#fetchProductGrid(currentUrl)) ?? undefined;
+      if (productGrid) this.#cachedContent.set(currentUrl, productGrid);
     }
 
     if (productGrid) {
@@ -148,6 +143,46 @@ export class QuickAddComponent extends Component {
 
     this.#openQuickAddModal();
   };
+
+  /**
+   * Fetches the product grid that fills the quick add modal.
+   * The product page's own product information is used when it has every part the modal needs. A product template
+   * can hide that section or its blocks, so otherwise the theme's quick add section is rendered for the product.
+   * @param {string} productPageUrl - The URL of the product page
+   * @returns {Promise<Element | null>} A copy of the product grid, or null when a newer request aborted this one
+   */
+  async #fetchProductGrid(productPageUrl) {
+    const html = await this.fetchProductPage(productPageUrl);
+    if (!html) return null;
+
+    const pageGrid = html.querySelector('[data-product-grid-content]');
+    if (pageGrid && this.#canFillModal(pageGrid)) return /** @type {Element} */ (pageGrid.cloneNode(true));
+
+    const sectionUrl = new URL(productPageUrl, window.location.href);
+    sectionUrl.searchParams.set('section_id', QUICK_ADD_SECTION_ID);
+
+    const sectionHtml = await this.fetchProductPage(sectionUrl.toString());
+    if (!sectionHtml) return null;
+
+    const grid = sectionHtml.querySelector('[data-product-grid-content]') ?? pageGrid;
+    return grid ? /** @type {Element} */ (grid.cloneNode(true)) : null;
+  }
+
+  /**
+   * Whether a product grid has the price, the buy buttons, and the variant picker that the product needs.
+   * Product cards inside the grid, such as product recommendations, do not count.
+   * @param {Element} productGrid - The product grid element
+   * @returns {boolean}
+   */
+  #canFillModal(productGrid) {
+    /** @param {string} selector */
+    const hasPart = (selector) =>
+      Array.from(productGrid.querySelectorAll(selector)).some((element) => !element.closest('product-card'));
+
+    if (!hasPart('product-price') || !hasPart('product-form-component')) return false;
+
+    return Number(this.dataset.productVariantsCount) <= 1 || hasPart('variant-picker');
+  }
 
   #resetScroll() {
     const dialogComponent = document.getElementById('quick-add-dialog');
@@ -287,6 +322,14 @@ export class QuickAddComponent extends Component {
     // Sync the view-event-payload attribute and morph children into the modal's product-component
     const payload = productGrid.getAttribute('view-event-payload') || '';
     modalContent.setAttribute('view-event-payload', payload);
+
+    // Variant changes in the modal render the same section that filled it
+    const quickAddSectionId = productGrid.getAttribute('data-quick-add-section-id');
+    if (quickAddSectionId) {
+      modalContent.setAttribute('data-quick-add-section-id', quickAddSectionId);
+    } else {
+      modalContent.removeAttribute('data-quick-add-section-id');
+    }
 
     morph(modalContent, productGrid);
 

@@ -55,7 +55,16 @@
     "filter_count": {
       "one": "{{ count }} filtro aplicado",
       "other": "{{ count }} filtros aplicados"
-    }
+    },
+    "link_to_product": "Produto: {{ title }}",
+    "link_to_blog": "Blog: {{ title }}",
+    "link_to_page": "Páxina: {{ title }}",
+    "link_to_article": "Artigo: {{ title }}",
+    "link_to_policy": "Política: {{ title }}",
+    "link_to_home": "Inicio",
+    "link_to_catalog": "Todos os produtos",
+    "link_to_collections": "Todas as coleccións",
+    "link_to_collection": "Colección: {{ title }}"
   },
   "actions": {
     "add": "Engadir",
@@ -310,7 +319,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "Os impostos, os descontos, os cargos e o envío calcúlanse no proceso de pagamento.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "Os impostos, os cargos e o envío calcúlanse no proceso de pagamento.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "Impostos incluídos. Os descontos, os cargos e o <a href=\"{{ link }}\">envío</a> calcúlanse no proceso de pagamento.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Impostos incluídos. Os descontos, os cargos e o envío calcúlanse no proceso de pagamento."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "Impostos incluídos. Os descontos, os cargos e o envío calcúlanse no proceso de pagamento.",
+    "in_store_available": "En stock na tenda",
+    "in_store_also_available": "Tamén se vende na tenda: podes compralo aquí en persoa",
+    "in_store_only": "Compra en persoa nesta tenda. Aquí non se ofrece a recollida.",
+    "in_store_available_at_html": "En stock en <b>{{ location }}</b>"
   },
   "fields": {
     "separator": "a"

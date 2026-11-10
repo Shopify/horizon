@@ -55,7 +55,16 @@
     "filter_count": {
       "one": "{{ count }}টি ফিল্টার প্রয়োগ করা হয়েছে",
       "other": "{{ count }}টি ফিল্টার প্রয়োগ করা হয়েছে"
-    }
+    },
+    "link_to_product": "পণ্য: {{ title }}",
+    "link_to_blog": "ব্লগ: {{ title }}",
+    "link_to_page": "পৃষ্ঠা: {{ title }}",
+    "link_to_article": "নিবন্ধ: {{ title }}",
+    "link_to_policy": "নীতি: {{ title }}",
+    "link_to_home": "হোম",
+    "link_to_catalog": "সব পণ্য",
+    "link_to_collections": "সব কালেকশন",
+    "link_to_collection": "কালেকশন: {{ title }}"
   },
   "actions": {
     "add": "যোগ করুন",
@@ -310,7 +319,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "চেকআউটে ট্যাক্স, ডিসকাউন্ট, ফি এবং শিপিং হিসাব করা হয়।",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "চেকআউটে ট্যাক্স, ফি এবং শিপিং হিসাব করা হয়।",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "ট্যাক্স অন্তর্ভুক্ত। চেকআউটে ডিসকাউন্ট, ফি এবং <a href=\"{{ link }}\">শিপিং</a> হিসাব করা হয়।",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "ট্যাক্স অন্তর্ভুক্ত। চেকআউটে ডিসকাউন্ট, ফি এবং শিপিং হিসাব করা হয়।"
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "ট্যাক্স অন্তর্ভুক্ত। চেকআউটে ডিসকাউন্ট, ফি এবং শিপিং হিসাব করা হয়।",
+    "in_store_available": "স্টোরে স্টকে আছে",
+    "in_store_also_available": "স্টোরেও বিক্রি হয়, আপনি সরাসরি এখান থেকে এটি কিনতে পারবেন",
+    "in_store_only": "এই স্টোরে সরাসরি এসে কিনুন। এখানে পিকআপের সুবিধা নেই।",
+    "in_store_available_at_html": "<b>{{ location }}</b>-এ স্টকে আছে"
   },
   "fields": {
     "separator": "থেকে"

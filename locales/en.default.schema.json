@@ -250,7 +250,8 @@
     "video_autoplay": "Videos will be muted by default",
     "video_external": "Use a YouTube or Vimeo URL",
     "pills_usage": "Used for applied filters, discount codes, and search suggestions",
-    "media_type_info": "Features are populated from your menu links"
+    "media_type_info": "Features are populated from your menu links",
+    "show_physical_stores_help": "Also list locations marked as a physical storefront that have the product in stock, even when they don't offer pickup."
   },
   "names": {
     "column": "Column",
@@ -1096,6 +1097,7 @@
     "show_grid_layout_selector": "Show grid layout selector",
     "show_inventory_quantity": "Show low stock quantity",
     "show_pickup_availability": "Show pickup availability",
+    "show_physical_stores": "Show physical stores",
     "show_powered_by_shopify": "Show \"Powered by Shopify\"",
     "show_sale_price_first": "Show sale price first",
     "show_search": "Show search",

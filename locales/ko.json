@@ -75,7 +75,16 @@
     "search_suggestions_available": "\"{{ query }}\"에 대한 검색 제안이 있습니다",
     "price_filter_low": "낮은 가격",
     "price_filter_high": "높은 가격",
-    "view_disclosure_information_for_product": "{{ product_title }}에 대한 고지 정보 보기"
+    "view_disclosure_information_for_product": "{{ product_title }}에 대한 고지 정보 보기",
+    "link_to_product": "제품: {{ title }}",
+    "link_to_blog": "블로그: {{ title }}",
+    "link_to_page": "페이지: {{ title }}",
+    "link_to_article": "게시물: {{ title }}",
+    "link_to_policy": "정책: {{ title }}",
+    "link_to_home": "홈",
+    "link_to_catalog": "모든 제품",
+    "link_to_collections": "모든 컬렉션",
+    "link_to_collection": "컬렉션: {{ title }}"
   },
   "actions": {
     "add_to_cart": "카트에 추가",
@@ -290,7 +299,11 @@
     "taxes_at_checkout_shipping_at_checkout_without_policy_with_fees": "세금, 할인, 수수료, 배송은 체크아웃 시 계산됩니다.",
     "taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts_with_fees": "세금, 수수료, 배송은 체크아웃 시 계산됩니다.",
     "taxes_included_shipping_at_checkout_with_policy_with_fees_html": "세금 포함. 할인, 수수료, <a href=\"{{ link }}\">배송</a>은 체크아웃 시 계산됩니다.",
-    "taxes_included_shipping_at_checkout_without_policy_with_fees": "세금 포함. 할인, 수수료, 배송은 체크아웃 시 계산됩니다."
+    "taxes_included_shipping_at_checkout_without_policy_with_fees": "세금 포함. 할인, 수수료, 배송은 체크아웃 시 계산됩니다.",
+    "in_store_available": "스토어에 재고 있음",
+    "in_store_also_available": "스토어에서도 판매 중 — 이곳에서 직접 구매할 수 있습니다",
+    "in_store_only": "이 스토어에서 직접 구매하십시오. 이곳에서는 픽업을 제공하지 않습니다.",
+    "in_store_available_at_html": "<b>{{ location }}</b>에 재고 있음"
   },
   "gift_cards": {
     "issued": {
